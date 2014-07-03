@@ -1,0 +1,4 @@
+---
+
+dnsclient::packages:
+  - 'bind-tools'

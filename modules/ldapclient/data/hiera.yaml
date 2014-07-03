@@ -1,0 +1,8 @@
+---
+:hierarchy:
+    - "%{clientcert}"
+    - "%{asf_osname}/%{asf_osrelease}"
+    - "common"
+
+:yaml:
+    :datadir: .

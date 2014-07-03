@@ -1,0 +1,7 @@
+---
+
+base::base_packages:
+  - 'bash-4.3.0_1'
+  - 'ca_root_nss-3.15.5'
+  - 'git-1.9.0_1'
+  - 'zsh-5.0.5'

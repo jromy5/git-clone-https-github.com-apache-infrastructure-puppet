@@ -1,0 +1,4 @@
+---
+
+pam::sshd_90_modulepath: 'pam_permit.so'
+

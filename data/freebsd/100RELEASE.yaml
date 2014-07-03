@@ -1,0 +1,11 @@
+---
+
+classes:
+    - base
+    - dnsclient
+    - ldapclient
+    - pam
+    - pkgng
+    - sudoers
+
+pkgprovider: 'pkgng'

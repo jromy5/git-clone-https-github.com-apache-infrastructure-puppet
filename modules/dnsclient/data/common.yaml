@@ -1,0 +1,9 @@
+---
+
+
+dnsclient::nameservers:
+  - '140.211.166.130'
+  - '140.211.166.131'
+
+dnsclient::searchorder: 'apache.org'
+

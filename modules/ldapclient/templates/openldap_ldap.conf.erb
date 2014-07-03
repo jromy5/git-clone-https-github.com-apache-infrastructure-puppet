@@ -1,0 +1,23 @@
+## This file is a puppet managed file. All local changes will be lost
+
+## This file is dervied from a puppet template, 
+## modules/ldapclient/templates/usr/local/etc/openldap/ldap.conf.erb
+
+
+
+# LDAP Defaults
+#
+
+# See ldap.conf(5) for details
+# This file should be world readable but not world writable.
+
+base    dc=apache,dc=org
+uri     ldaps://minotaur.apache.org:636 ldaps://eris.apache.org:636 ldaps://harmonia.apache.org:636
+
+
+#SIZELIMIT 12
+#TIMELIMIT 15
+#DEREF never
+
+ssl start_tls
+tls_cacert <%= tlscertpath %>
