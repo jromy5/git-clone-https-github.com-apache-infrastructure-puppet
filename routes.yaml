@@ -1,3 +1,4 @@
+---
 master:
   facts:
     terminus: puppetdb
