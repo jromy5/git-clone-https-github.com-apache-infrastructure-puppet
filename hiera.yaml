@@ -16,8 +16,8 @@
     - "common"
 
 :yaml:
-    :datadir: '/usr/local/etc/puppet/data'
+    :datadir: '/etc/puppet/data'
 
 :eyaml:
-    :datadir: '/usr/local/etc/puppet/data'
+    :datadir: '/etc/puppet/data'
 
