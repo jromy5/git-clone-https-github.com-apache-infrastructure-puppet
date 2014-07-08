@@ -1,0 +1,8 @@
+---
+
+subversionclient::packages:
+    - subversion
+
+subversionclient::svn_conf_config: '/etc/subversion/config'
+subversionclient::svn_conf_servers: '/etc/subversion/servers'
+

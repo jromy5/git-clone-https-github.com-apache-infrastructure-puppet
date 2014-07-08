@@ -1,0 +1,23 @@
+---
+
+## If you edit this file, you need to make sure that the webserver is restarted.
+
+
+:backends:
+    - eyaml
+    - yaml
+    - module_data
+
+:hierarchy:
+    - "%{clientcert}"
+    - "%{asf_osname}/%{asf_osrelease}"
+    - "colo/%{asf_colo}"
+    - "%{environment}"
+    - "common"
+
+:yaml:
+    :datadir: '/usr/local/etc/puppet/data'
+
+:eyaml:
+    :datadir: '/usr/local/etc/puppet/data'
+

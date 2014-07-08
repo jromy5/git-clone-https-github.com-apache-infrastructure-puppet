@@ -1,0 +1,8 @@
+---
+
+sudoers::sudoers_packages:
+  - 'sudo-1.8.10.p2'
+
+sudoers::sudoers_file: '/usr/local/etc/sudoers'
+sudoers::sudoers_template: '/usr/local/etc/puppet/modules/sudoers/templates/%{operatingsystem}-%{asf_osrelease}_sudoers.erb'
+

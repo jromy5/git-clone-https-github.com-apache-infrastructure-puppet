@@ -1,0 +1,266 @@
+---
+# Files to manage
+pam::pam_sshd: '/etc/pam.d/sshd'
+pam::pam_su: '/etc/pam.d/su'
+pam::pam_system: '/etc/pam.d/system'
+
+
+pam::generic_header: |
+ #
+ # $FreeBSD: release/10.0.0/etc/pam.d/system 197769 2009-10-05 09:28:54Z des $
+ #
+ # System-wide defaults
+ #
+
+
+## pam.d/sshd
+pam::sshd_10_facility: 'auth'
+pam::sshd_10_control: 'sufficient'
+pam::sshd_10_modulepath: 'pam_opie.so'
+pam::sshd_10_modopts: 'no_warn no_fake_prompts'
+
+pam::sshd_15_facility: 'auth'
+pam::sshd_15_control: 'sufficient'
+pam::sshd_15_modulepath: '/usr/local/lib/pam_ldap.so'
+pam::sshd_15_modopts: 'no_warn'
+
+pam::sshd_20_facility: 'auth'
+pam::sshd_20_control: 'requisite'
+pam::sshd_20_modulepath: 'pam_opieaccess.so'
+pam::sshd_20_modopts: 'no_warn allow_local'
+
+pam::sshd_25_facility: '#auth'
+pam::sshd_25_control: 'sufficient'
+pam::sshd_25_modulepath: 'pam_krb5.so'
+pam::sshd_25_modopts: 'no_warn try_first_pass'
+
+pam::sshd_30_facility: '#auth'
+pam::sshd_30_control: 'sufficient'
+pam::sshd_30_modulepath: 'pam_ssh.so'
+pam::sshd_30_modopts: 'no_warn try_first_pass'
+
+pam::sshd_35_facility: 'auth'
+pam::sshd_35_control: 'required'
+pam::sshd_35_modulepath: 'pam_unix.so'
+pam::sshd_35_modopts: 'no_warn try_first_pass'
+
+pam::sshd_50_facility: 'account'
+pam::sshd_50_control: 'required'
+pam::sshd_50_modulepath: 'pam_nologin.so'
+pam::sshd_50_modopts: ''
+
+pam::sshd_55_facility: '#account'
+pam::sshd_55_control: 'required'
+pam::sshd_55_modulepath: 'pam_krb5.so'
+pam::sshd_55_modopts: ''
+
+pam::sshd_60_facility: 'account'
+pam::sshd_60_control: 'required'
+pam::sshd_60_modulepath: 'pam_login_access.so'
+pam::sshd_60_modopts: ''
+
+pam::sshd_65_facility: 'account'
+pam::sshd_65_control: 'required'
+pam::sshd_65_modulepath: '/usr/local/lib/pam_ldap.so'
+pam::sshd_65_modopts: 'no_warn ignore_authinfo_unavail ignore_unknown_user'
+
+pam::sshd_70_facility: 'account'
+pam::sshd_70_control: 'required'
+pam::sshd_70_modulepath: 'pam_unix.so'
+pam::sshd_70_modopts: ''
+
+pam::sshd_80_facility: '#session'
+pam::sshd_80_control: 'optional'
+pam::sshd_80_modulepath: 'pam_ssh.so'
+pam::sshd_80_modopts: 'want_agent'
+
+pam::sshd_85_facility: 'session'
+pam::sshd_85_control: 'required'
+pam::sshd_85_modulepath: '/usr/local/lib/pam_mkhomedir.so'
+pam::sshd_85_modopts: 'umask=0077'
+
+pam::sshd_90_facility: 'session'
+pam::sshd_90_control: 'required'
+pam::sshd_90_modulepath: 'pam_permit.so'
+pam::sshd_90_modopts: ''
+
+pam::sshd_95_facility: '#password'
+pam::sshd_95_control: 'sufficient'
+pam::sshd_95_modulepath: 'pam_krb5.so'
+pam::sshd_95_modopts: 'no_warn try_first_pass'
+
+pam::sshd_100_facility: 'password'
+pam::sshd_100_control: 'required'
+pam::sshd_100_modulepath: 'pam_unix.so'
+pam::sshd_100_modopts: 'no_warn try_first_pass'
+
+
+## pam.d/su
+pam::su_10_facility: 'auth'
+pam::su_10_control: 'sufficient'
+pam::su_10_modulepath: 'pam_rootok.so'
+pam::su_10_modopts: 'no_warn'
+
+pam::su_15_facility: 'auth'
+pam::su_15_control: 'sufficient'
+pam::su_15_modulepath: 'pam_self.so'
+pam::su_15_modopts: 'no_warn'
+
+pam::su_20_facility: 'auth'
+pam::su_20_control: 'requisite'
+pam::su_20_modulepath: 'pam_group.so'
+pam::su_20_modopts: 'no_warn group=wheel root_only fail_safe ruser'
+
+pam::su_25_facility: 'auth'
+pam::su_25_control: 'include'
+pam::su_25_modulepath: 'system'
+pam::su_25_modopts: ''
+
+pam::su_30_facility: ''
+pam::su_30_control: ''
+pam::su_30_modulepath: ''
+pam::su_30_modopts: ''
+
+pam::su_35_facility: ''
+pam::su_35_control: ''
+pam::su_35_modulepath: ''
+pam::su_35_modopts: ''
+
+pam::su_50_facility: 'account'
+pam::su_50_control: 'include'
+pam::su_50_modulepath: 'system'
+pam::su_50_modopts: ''
+
+pam::su_55_facility: ''
+pam::su_55_control: ''
+pam::su_55_modulepath: ''
+pam::su_55_modopts: ''
+
+pam::su_60_facility: ''
+pam::su_60_control: ''
+pam::su_60_modulepath: ''
+pam::su_60_modopts: ''
+
+pam::su_65_facility: ''
+pam::su_65_control: ''
+pam::su_65_modulepath: ''
+pam::su_65_modopts: ''
+
+pam::su_70_facility: ''
+pam::su_70_control: ''
+pam::su_70_modulepath: ''
+pam::su_70_modopts: ''
+
+pam::su_80_facility: 'session'
+pam::su_80_control: 'required'
+pam::su_80_modulepath: 'pam_permit.so'
+pam::su_80_modopts: ''
+
+pam::su_85_facility: 'session'
+pam::su_85_control: 'required'
+pam::su_85_modulepath: '/usr/local/lib/pam_mkhomedir.so'
+pam::su_85_modopts: 'umask=0077'
+
+pam::su_90_facility: ''
+pam::su_90_control: ''
+pam::su_90_modulepath: ''
+pam::su_90_modopts: ''
+
+pam::su_95_facility: ''
+pam::su_95_control: ''
+pam::su_95_modulepath: ''
+pam::su_95_modopts: ''
+
+pam::su_100_facility: ''
+pam::su_100_control: ''
+pam::su_100_modulepath: ''
+pam::su_100_modopts: ''
+
+
+## pam.d/system
+pam::system_10_facility: 'auth'
+pam::system_10_control: 'sufficient'
+pam::system_10_modulepath: 'pam_opie.so'
+pam::system_10_modopts: 'no_warn no_fake_prompts'
+
+pam::system_15_facility: 'auth'
+pam::system_15_control: 'sufficient'
+pam::system_15_modulepath: '/usr/local/lib/pam_ldap.so'
+pam::system_15_modopts: 'no_warn'
+
+pam::system_20_facility: 'auth'
+pam::system_20_control: 'requisite'
+pam::system_20_modulepath: 'pam_opieaccess.so'
+pam::system_20_modopts: 'no_warn allow_local'
+
+pam::system_25_facility: '#auth'
+pam::system_25_control: 'systemfficient'
+pam::system_25_modulepath: 'pam_krb5.so'
+pam::system_25_modopts: 'no_warn try_first_pass'
+
+pam::system_30_facility: '#auth'
+pam::system_30_control: 'systemfficient'
+pam::system_30_modulepath: 'pam_ssh.so'
+pam::system_30_modopts: 'no_warn try_first_pass'
+
+pam::system_35_facility: 'auth'
+pam::system_35_control: 'required'
+pam::system_35_modulepath: 'pam_unix.so'
+pam::system_35_modopts: 'no_warn try_first_pass nullok'
+
+pam::system_50_facility: ''
+pam::system_50_control: ''
+pam::system_50_modulepath: ''
+pam::system_50_modopts: ''
+
+pam::system_55_facility: '#account'
+pam::system_55_control: 'required'
+pam::system_55_modulepath: 'pam_krb5.so'
+pam::system_55_modopts: ''
+
+pam::system_60_facility: 'account'
+pam::system_60_control: 'required'
+pam::system_60_modulepath: 'pam_login_access.so'
+pam::system_60_modopts: ''
+
+pam::system_65_facility: 'account'
+pam::system_65_control: 'required'
+pam::system_65_modulepath: '/usr/local/lib/pam_ldap.so'
+pam::system_65_modopts: 'no_warn ignore_authinfo_unavail ignore_unknown_user'
+
+pam::system_70_facility: 'account'
+pam::system_70_control: 'required'
+pam::system_70_modulepath: 'pam_unix.so'
+pam::system_70_modopts: ''
+
+pam::system_80_facility: '#session'
+pam::system_80_control: 'optional'
+pam::system_80_modulepath: 'pam_ssh.so'
+pam::system_80_modopts: 'want_agent'
+
+pam::system_85_facility: 'session'
+pam::system_85_control: 'required'
+pam::system_85_modulepath: '/usr/local/lib/pam_mkhomedir.so'
+pam::system_85_modopts: 'umask=0022'
+
+pam::system_90_facility: 'session'
+pam::system_90_control: 'required'
+pam::system_90_modulepath: 'pam_lastlog.so'
+pam::system_90_modopts: 'no_fail'
+
+pam::system_95_facility: '#password'
+pam::system_95_control: 'sufficient'
+pam::system_95_modulepath: 'pam_krb5.so'
+pam::system_95_modopts: 'no_warn try_first_pass'
+
+pam::system_100_facility: 'password'
+pam::system_100_control: 'required'
+pam::system_100_modulepath: 'pam_unix.so'
+pam::system_100_modopts: 'no_warn try_first_pass'
+
+
+
+
+
+
+

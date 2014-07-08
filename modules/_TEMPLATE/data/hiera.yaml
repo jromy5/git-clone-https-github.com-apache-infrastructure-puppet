@@ -1,0 +1,4 @@
+---
+:hierarchy:
+    - "%{asf_osname}/%{asf_osrelease}"
+    - "common"

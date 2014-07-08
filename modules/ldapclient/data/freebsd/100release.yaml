@@ -1,0 +1,11 @@
+---
+
+ldapclient::ldapclient_packages:
+  - 'openldap-client'
+  - 'nss_ldap'
+  - 'pam_ldap'
+  - 'pam_mkhomedir'
+
+ldapclient:tlscertpath: '/usr/local/etc/openldap/cacerts/cacert.pem'
+ldapclient:pamhostcheck: 'yes'
+ldapclient:bashpath: '/usr/local/bin/bash'

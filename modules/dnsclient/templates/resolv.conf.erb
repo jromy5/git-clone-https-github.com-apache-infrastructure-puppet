@@ -1,0 +1,10 @@
+## This file is a puppet managed file. All local changes will be lost
+
+## This file is dervied from a puppet template,
+## modules/dnsclient/templates/etc/resolv.conf.erb
+
+search <%= @searchorder %>
+
+nameserver <%= @nameserver1 %> 
+nameserver <%= @nameserver2 %> 
+nameserver <%= @nameserver3 %> 
