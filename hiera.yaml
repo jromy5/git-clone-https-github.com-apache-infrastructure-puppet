@@ -4,16 +4,15 @@
 
 
 :backends:
-    - eyaml
-    - yaml
     - module_data
+    - yaml
+    - eyaml
 
 # The ASF specific variables below are created in facter with customfact module.
 :hierarchy:
     - "%{clientcert}"
     - "%{asf_osname}/%{asf_osrelease}"
     - "colo/%{asf_colo}"
-    - "%{environment}"
     - "common"
 
 :yaml:
