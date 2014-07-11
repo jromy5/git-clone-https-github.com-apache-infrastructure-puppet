@@ -1,8 +1,0 @@
----
-
-base::base_packages:
-  - 'bash'
-  - 'ca_root_nss-3.15.5'
-  - 'git'
-  - 'zsh-5.0.5'
-  - 'apt-file'

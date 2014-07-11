@@ -2,7 +2,6 @@
 classes: 
   - base
 
-
 ldapclient::ldapcert: |
   -----BEGIN CERTIFICATE-----
   MIIE7jCCA9agAwIBAgIJAKVPvcTSmTbFMA0GCSqGSIb3DQEBBQUAMIGqMQswCQYD

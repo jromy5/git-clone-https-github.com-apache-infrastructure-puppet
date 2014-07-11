@@ -1,12 +1,13 @@
 #/usr/local/etc/puppet/modules/base/manifests/init.pp
 
 class base (
-  $base_packages  = [],
+  $basepackages  = hiera('base::basepackages'),
   $pkgprovider = '',
 ) {
 
 
-  package { $base_packages: 
+  package { $basepackages: 
     ensure   =>  installed,
   }
 }
+

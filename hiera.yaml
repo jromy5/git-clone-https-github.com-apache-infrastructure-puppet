@@ -4,16 +4,8 @@
 
 
 :backends:
-    - module_data
     - yaml
     - eyaml
-
-# The ASF specific variables below are created in facter with customfact module.
-:hierarchy:
-    - "%{clientcert}"
-    - "%{asf_osname}/%{asf_osrelease}"
-    - "colo/%{asf_colo}"
-    - "common"
 
 :yaml:
     :datadir: /etc/puppet/data
@@ -21,3 +13,11 @@
 :eyaml:
     :datadir: /etc/puppet/data
 
+# The ASF specific variables below are created in facter with customfact module.
+:hierarchy:
+    - "nodes/%{clientcert}"
+    - "%{::asf_osname}/%{::asf_osrelease}"
+    - "colo/%{asf_colo}"
+    - "common"
+
+:logger: console
