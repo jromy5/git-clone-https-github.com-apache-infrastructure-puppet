@@ -1,6 +1,6 @@
 ---
 :hierarchy:
-    - "%{asf_osname}/%{asf_osrelease}"
+    - "%{asfosname}/%{asfosrelease}"
     - "common"
 
 :yaml:

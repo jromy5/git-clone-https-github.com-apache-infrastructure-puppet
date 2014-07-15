@@ -1,6 +1,7 @@
 ---
 classes: 
   - base
+  - dnsclient
   - subversionclient
 
 base::basepackages:
