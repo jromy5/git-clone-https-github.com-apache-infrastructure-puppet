@@ -8,7 +8,7 @@ class ldapclient::install::ubuntu::1404 (
 
   file { 
     '/etc/ldap.conf':
-      content => template('/usr/local/etc/puppet/modules/ldapclient/templates/ldap.conf.erb');
+      content => template('ldapclient/templates/ldap.conf.erb');
     '/usr/local/etc/nss_ldap.conf':
       ensure  => link,
       target  => '/usr/local/etc/ldap.conf',

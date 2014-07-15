@@ -12,7 +12,7 @@ class ldapclient (
   }
 
 
-  class { "ldapclient::install::${asf_osname}::${asf_osrelease}":
+  class { "ldapclient::install::${asfosname}::${asfosrelease}":
     ldapcert   =>  $ldapcert,
   }
 
