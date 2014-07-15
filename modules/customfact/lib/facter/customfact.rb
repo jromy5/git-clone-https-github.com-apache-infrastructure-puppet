@@ -1,17 +1,17 @@
-Facter.add("asf_osrelease") do
+Facter.add("asfosrelease") do
   setcode do
     Facter::Util::Resolution.exec('facter operatingsystemrelease | perl -pe s/[[:punct:]]//g | sed -e "s/\(.*\)/\L\1/"')
   end
 end
 
 
-Facter.add("asf_osname") do
+Facter.add("asfosname") do
   setcode do
     Facter::Util::Resolution.exec('facter operatingsystem | sed -e "s/\(.*\)/\L\1/"')
   end
 end
 
-Facter.add("asf_colo") do
+Facter.add("asfcolo") do
   setcode do
     ipadd = Facter.value('ipaddress')
     case ipadd

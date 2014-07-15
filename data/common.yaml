@@ -1,6 +1,7 @@
 ---
 classes: 
   - base
+  - customfact
 
 ldapclient::ldapcert: |
   -----BEGIN CERTIFICATE-----
