@@ -16,8 +16,8 @@
 # The ASF specific variables below are created in facter with customfact module.
 :hierarchy:
     - "nodes/%{clientcert}"
-    - "%{::asf_osname}/%{::asf_osrelease}"
-    - "colo/%{asf_colo}"
+    - "%{::asfosname}/%{::asfosrelease}"
+    - "colo/%{asfcolo}"
     - "common"
 
 :logger: console

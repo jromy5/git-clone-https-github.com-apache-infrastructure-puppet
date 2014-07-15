@@ -8,8 +8,8 @@ ldapclient::ldapclient_packages:
     - libldap-2.4-2
 
 base::basepackages:
-  - 'bash'
-  - 'ca_root_nss-3.15.5'
-  - 'git'
-  - 'zsh-5.0.5'
-  - 'apt-file'
+  - bash
+  - ca-certificates
+  - git
+  - zsh
+  - apt-file
