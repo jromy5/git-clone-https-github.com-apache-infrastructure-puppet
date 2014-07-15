@@ -1,6 +1,7 @@
 ---
 classes: 
   - base
+  - subversionclient
 
 base::basepackages:
   - bash
