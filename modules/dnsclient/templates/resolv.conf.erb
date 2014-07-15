@@ -5,6 +5,7 @@
 
 search <%= @searchorder %>
 
-nameserver <%= @nameserver1 %> 
-nameserver <%= @nameserver2 %> 
-nameserver <%= @nameserver3 %> 
+
+<% @nameservers.each do |nsserverip| -%>
+nameserver <%= nsserverip %> 
+<% end -%>

@@ -1,9 +1,7 @@
 #/etc/puppet/modules/dnsclient/manifests/init.pp
 
 class dnsclient (
-  $nameserver1         = '',
-  $nameserver2         = '',
-  $nameserver3         = '',
+  $nameservers        = [],
   $packages            = [],
   $pkgprovider         = '',
   $resolvtemplate      = '',
