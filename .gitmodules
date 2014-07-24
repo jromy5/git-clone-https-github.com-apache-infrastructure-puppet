@@ -1,0 +1,4 @@
+[submodule "modules-ssh"]
+    path = modules/ssh
+    url = https://github.com/pctony/puppet-ssh.git
+    branch = ldapsshkeys
