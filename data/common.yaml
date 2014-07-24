@@ -2,6 +2,12 @@
 classes: 
   - base
   - customfact
+  - ssh # this pulls in both server and client by default
+
+
+
+## MODULES
+## LDAPCLIENT
 
 ldapclient::ldapcert: |
   -----BEGIN CERTIFICATE-----
@@ -33,4 +39,23 @@ ldapclient::ldapcert: |
   1BXsdDCBgYk+eXh4gG/GJaI/IvDyAp81cF2oFbqQY1fc8heMHhQ1667EOqRrqe/k
   P6Hk8NQdShbeE0/nDvYchhV5
   -----END CERTIFICATE-----
+
+
+## SSH
+
+ssh::server_options:
+    Protocol: '2'
+    ListenAddress:
+        - '127.0.0.0'
+        - '%{::hostname}'
+    PasswordAuthentication: 'no'
+    SyslogFacility: 'AUTHPRIV'
+    UsePAM: 'yes'
+    X11Forwarding: 'no'
+
+ssh::client_options:
+    'Host *':
+        SendEnv: 'LANG LC_*'
+        ForwardX11Trusted: 'no'
+        ServerAliveInterval: '10'
 
