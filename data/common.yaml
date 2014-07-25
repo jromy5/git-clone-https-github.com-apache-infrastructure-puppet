@@ -45,9 +45,7 @@ ldapclient::ldapcert: |
 
 ssh::server_options:
     Protocol: '2'
-    ListenAddress:
-        - '127.0.0.0'
-        - '%{::hostname}'
+    ListenAddress: '0.0.0.0'
     PasswordAuthentication: 'no'
     SyslogFacility: 'AUTHPRIV'
     UsePAM: 'yes'
