@@ -50,7 +50,7 @@ ssh::server_options:
     SyslogFacility: 'AUTHPRIV'
     UsePAM: 'yes'
     X11Forwarding: 'no'
-    AuthorizedKeysCommand: '/root/bin/asf-ldap-sshkeys.sh'
+    AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysCommandUser: 'root'
 
 ssh::client_options:
