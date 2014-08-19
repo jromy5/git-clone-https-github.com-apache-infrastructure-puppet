@@ -1,5 +1,8 @@
-class ldapclient::FreeBSD::10.0-RELEASE (
+class ldapclient::freebsd::100 (
 
+  $ldapcert     = '',
+  $pamhostcheck = '',
+  $tlscertpath  = '',
 
 ) {
 
