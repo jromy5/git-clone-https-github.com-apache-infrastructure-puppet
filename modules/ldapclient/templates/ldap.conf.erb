@@ -76,7 +76,12 @@ pam_login_attribute uid
 # configured for account management (authorization)
 # then the user will not be allowed to login.
 
-#pam_check_host_attr <%= pamhostcheck %>
+<% if @pamhostcheck %>
+pam_check_host_attr <%= pamhostcheck %>
+<% else %>
+#pam_check_host_attr
+<% end %>
+
 
 
 
