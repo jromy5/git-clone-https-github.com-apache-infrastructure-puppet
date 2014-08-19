@@ -9,9 +9,13 @@ class ldapclient::install::ubuntu::1404 (
   file { 
     '/etc/ldap.conf':
       content => template('ldapclient/ldap.conf.erb');
-    '/usr/local/etc/nss_ldap.conf':
+    '/etc/ldap/ldap.conf':
       ensure  => link,
-      target  => '/usr/local/etc/ldap.conf',
+      target  => '/etc/ldap.conf',
+      require => File['/etc/ldap.conf'];
+    '/etc/nss_ldap.conf':
+      ensure  => link,
+      target  => '/etc/ldap.conf',
       require => File['/etc/ldap.conf'];
     '/etc/nsswitch.conf':
       source  => 'puppet:///modules/ldapclient/etc/nsswitch.conf',
