@@ -8,4 +8,10 @@ classes:
     - pkgng
     - sudoers
 
+ldapclient::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::pamhostcheck: 'yes'
+
 pkgprovider: 'pkgng'
+
+subversionclient::svn_conf_config:  '/etc/subversion/config'
+subversionclient::svn_conf_servers: '/etc/subversion/servers'
