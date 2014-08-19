@@ -11,8 +11,8 @@ base::basepackages:
   - zsh
   - apt-file
 
-ldapclient::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
-ldapclient::pamhostcheck: 'yes'
+ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
     - ldap-auth-client
