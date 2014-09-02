@@ -9,5 +9,9 @@ class base (
   package { $basepackages: 
     ensure   =>  installed,
   }
+
+
+  class { "base::install::${asfosname}::${asfosrelease}":
+  }
 }
 
