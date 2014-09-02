@@ -5,6 +5,7 @@ classes:
   - ldapclient
   - pam
   - ssh # this pulls in both server and client by default
+  - sudoers
 
 
 
