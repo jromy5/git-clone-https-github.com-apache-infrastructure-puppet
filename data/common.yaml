@@ -9,7 +9,6 @@ classes:
 
 ## MODULES
 ## LDAPCLIENT
-
 ldapclient::ldapcert: |
   -----BEGIN CERTIFICATE-----
   MIIE7jCCA9agAwIBAgIJAKVPvcTSmTbFMA0GCSqGSIb3DQEBBQUAMIGqMQswCQYD
@@ -41,9 +40,10 @@ ldapclient::ldapcert: |
   P6Hk8NQdShbeE0/nDvYchhV5
   -----END CERTIFICATE-----
 
+ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
+ldapclient::nssbindpasswd: 'b1t3me'
 
 ## SSH
-
 ssh::server_options:
     Protocol: '2'
     ListenAddress: '0.0.0.0'

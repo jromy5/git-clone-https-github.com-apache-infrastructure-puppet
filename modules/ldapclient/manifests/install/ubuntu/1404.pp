@@ -1,8 +1,11 @@
 class ldapclient::install::ubuntu::1404 (
 
-  $ldapcert     = '',
-  $pamhostcheck = '',
-  $tlscertpath  = '',
+  $ldapcert      = '',
+  $ldapservers   = '',
+  $nssbinddn     = '',
+  $nssbindpasswd = '',
+  $pamhostcheck  = '',
+  $tlscertpath   = '',
 
 ) {
 

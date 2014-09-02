@@ -3,3 +3,5 @@
 dnsclient::nameservers:
   - '140.211.166.130'
   - '140.211.166.131'
+
+ldapclient::ldapservers: 'ldaps://minotaur.apache.org:636 ldaps://eris.apache.org:636 ldaps://harmonia.apache.org:636'

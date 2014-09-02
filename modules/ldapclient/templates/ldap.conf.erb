@@ -11,8 +11,9 @@ base dc=apache,dc=org
 # Another way to specify your LDAP server is to provide an
 # uri with the server name. This allows to use
 # Unix Domain Sockets to connect to a local LDAP Server.
-uri   ldaps://minotaur.apache.org:636 ldaps://eris.apache.org:636 ldaps://harmonia.apache.org:636
+## This URI path is derived from hiera data on a per colo basis
 
+uri   <%= ldapservers %>
 
 # The LDAP version to use (defaults to 3
 # if supported by client library)
@@ -25,16 +26,16 @@ TLS_CACERT      <%= tlscertpath %>
 
 # The distinguished name to bind to the server with.
 # Optional: default is to bind anonymously.
-binddn cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org
+binddn <%= nssbinddn %>
 
 # The credentials to bind with.
 # Optional: default is no credential.
-bindpw b1t3m3
+bindpw <%= nssbindpasswd %>
 
 # The distinguished name to bind to the server with
 # if the effective user ID is root. Password is
 # stored in /etc/ldap.secret (mode 600)
-rootbinddn cn=root,dc=apache,dc=org
+#rootbinddn cn=root,dc=apache,dc=org
 
 # The port.
 # Optional: default is 389.
