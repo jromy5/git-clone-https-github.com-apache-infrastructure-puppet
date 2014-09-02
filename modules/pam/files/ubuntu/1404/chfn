@@ -1,3 +1,11 @@
+##
+## This file is managed by puppet, all local changes will be lost 
+## during the next puppet run.
+## 
+## Source file:  puppet/modules/pam/files/ubuntu/1404/chfn
+##
+
+
 #
 # The PAM configuration file for the Shadow `chfn' service
 #
