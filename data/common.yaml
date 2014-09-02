@@ -40,6 +40,8 @@ ldapclient::ldapcert: |
   P6Hk8NQdShbeE0/nDvYchhV5
   -----END CERTIFICATE-----
 
+ldapclient::authorizedkeysfolder: '/etc/ssh/bin'
+ldapclient::authorizedkeysfile: 'asf-ldap-sshkeys.sh'
 ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
