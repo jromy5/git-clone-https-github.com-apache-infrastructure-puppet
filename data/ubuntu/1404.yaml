@@ -10,6 +10,7 @@ base::basepackages:
   - git
   - zsh
   - apt-file
+  - software-properties-common
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
