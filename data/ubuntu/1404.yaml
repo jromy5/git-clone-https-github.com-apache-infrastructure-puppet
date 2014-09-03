@@ -1,5 +1,6 @@
 ---
 classes: 
+  - apt
   - base
   - dnsclient
   - subversionclient
@@ -11,6 +12,17 @@ base::basepackages:
   - zsh
   - apt-file
   - software-properties-common
+
+
+apt::sources:
+ 'asf_internal':
+     location: 'https://pkgrepo.apache.org'
+     release: 'trusty'
+     repos: 'main'
+     key: 'E8640030'
+     key_server: 'pgp.mit.edu'
+     pin: '-10'
+     include_deb: 'true'
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
