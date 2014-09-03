@@ -25,6 +25,12 @@ apt::sources:
      include_deb: 'true'
      include_src: 'false'
 
+apt::force:
+ 'orthrus':
+  release: 'trusty'
+  version: '0.8.0-asf1'
+  require: Apt::Source['asf_internal']
+
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
 
