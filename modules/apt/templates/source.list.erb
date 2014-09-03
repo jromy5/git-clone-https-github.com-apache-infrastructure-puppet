@@ -3,6 +3,6 @@
 <%- if @include_deb then -%>
 deb <% if @architecture %>[arch=<%= @architecture %>] <% end %><%= @location %> <%= @release_real %> <%= @repos %>
 <%- end -%>
-<%- if @include_src then -%>
+<% if @include_src == 'true' %>
 deb-src <% if @architecture %>[arch=<%= @architecture %>] <% end %><%= @location %> <%= @release_real %> <%= @repos %>
 <%- end -%>
