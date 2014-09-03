@@ -23,6 +23,7 @@ apt::sources:
      key_server: 'pgp.mit.edu'
      pin: '-10'
      include_deb: 'true'
+     include_src: 'false'
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
