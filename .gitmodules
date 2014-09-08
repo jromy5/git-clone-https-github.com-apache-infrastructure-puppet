@@ -5,3 +5,7 @@
 [submodule "modules/rsyslog"]
 	path = modules/rsyslog
 	url = https://github.com/saz/puppet-rsyslog.git
+[submodule "modules/iptables"]
+	path = modules/iptables
+	url = https://github.com/pctony/puppet-iptables.git
+        branch = 20140908
