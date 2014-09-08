@@ -42,6 +42,9 @@ ldapclient::ldapclient_packages:
     - libpam-modules
     - nslcd
 
+ldapclient::ldapclient_remove_packages: 
+    - nscd
+
 subversionclient::packages: 
     - subversion
 

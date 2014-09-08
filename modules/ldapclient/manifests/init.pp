@@ -1,19 +1,24 @@
 #/etc/puppet/modules/ldapclient/manifests/init.pp
 
 class ldapclient (
-  $authorizedkeysfolder = '',
-  $authorizedkeysfile   = '',
-  $ldapclient_packages  = [],
-  $pkgprovider          = '',
-  $bashpath             = '',
-  $ldapcert             = '',
-  $ldapservers          = '',
-  $nssbinddn            = '',
-  $nssbindpasswd        = '',
+  $authorizedkeysfolder        = '',
+  $authorizedkeysfile          = '',
+  $ldapclient_packages         = [],
+  $ldapclient_remove_packages  = [],
+  $pkgprovider                 = '',
+  $bashpath                    = '',
+  $ldapcert                    = '',
+  $ldapservers                 = '',
+  $nssbinddn                   = '',
+  $nssbindpasswd               = '',
 ) {
 
   package { $ldapclient_packages: 
     ensure   =>  installed,
+  }
+
+  package { $ldapclient_remove_packages: 
+    ensure   =>  purged,
   }
 
   file { 
