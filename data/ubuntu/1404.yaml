@@ -4,15 +4,16 @@ classes:
   - base
   - dnsclient
   - orthrus
+  - postfix::server
   - subversionclient
 
 base::basepackages:
+  - apt-file
   - bash
   - ca-certificates
   - git
-  - zsh
-  - apt-file
   - software-properties-common
+  - zsh
 
 
 apt::sources:
@@ -44,6 +45,33 @@ ldapclient::ldapclient_packages:
 
 ldapclient::ldapclient_remove_packages: 
     - nscd
+
+postfix::server::myhostname:             "%{::fqdn}"
+postfix::server::mydomain:               'apache.org'
+postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost, apache.org"
+postfix::server::inet_interfaces:        'all'
+postfix::server::message_size_limit:     '15360000'
+postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
+postfix::server::virtual_mailbox_domains:
+  - 'proxy:mysql:/etc/postfix/mysql_virtual_domains_maps.cf'
+postfix::server::virtual_alias_maps:     
+  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_maps.cf'
+  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_domain_maps.cf'
+  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_domain_catchall_maps.cf'
+postfix::server::virtual_transport:      'dovecot'
+postfix::server::smtpd_sender_restrictions:
+  -  'permit_mynetworks'
+  -  'reject_unknown_sender_domain'
+postfix::server::smtpd_recipient_restrictions:    
+  -  'permit_sasl_authenticated'
+  -  'permit_mynetworks'
+  -  'reject_unauth_destination'
+postfix::server::smtpd_tls_key_file:     '/etc/ssl/wildcard.apache.org.key'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org.cert'
+postfix::server::smtpd_sasl_auth:        'true'
+postfix::server::sender_canonical_maps:  'regexp:/etc/postfix/sender_canonical'
+postfix::server::ssl:                    'wildcard.example.com'
+postfix::server::submission:             'true'
 
 subversionclient::packages: 
     - subversion
