@@ -1,5 +1,5 @@
 #!/bin/bash
 
-git pull /etc/puppet
-git submodule sync /etc/puppet
-git submodule update --recursive --init /etc/puppet
+git pull .
+git submodule sync .
+git submodule update --recursive --init .
