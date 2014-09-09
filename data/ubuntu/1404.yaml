@@ -33,6 +33,14 @@ apt::force:
   release: 'main'
   resquire: Apt::Source['asf_internal']
 
+dovecot::auth_debug:        'true'
+dovecot::auth_verbose:      'true'
+dovecot::protocols:         'none'
+dovecot::auth_mechanisms:   'plain login'
+dovecot::ssl:               'true'
+dovecot::ssl_cert:          '/etc/ssl/wildcard.apache.org.cert'
+dovecot::ssl_key:           '/etc/ssl/wildcard.apache.org.key'
+
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
 
@@ -82,11 +90,4 @@ subversionclient::packages:
 subversionclient::svn_conf_config:  '/etc/subversion/config'
 subversionclient::svn_conf_servers: '/etc/subversion/servers'
 
-dovecot::auth_debug:        'true'
-dovecot::auth_verbose:      'true'
-dovecot::protocols:         'none'
-dovecot::auth_mechanisms:   'plain login'
-dovecot::ssl:               'true'
-dovecot::ssl_cert:          '/etc/ssl/wildcard.apache.org.cert'
-dovecot::ssl_key:           '/etc/ssl/wildcard.apache.org.key'
 
