@@ -53,6 +53,7 @@ postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost, apache.org"
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
+postfix::server::relayhost:              '[mail.apache.org]:2025'
 postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
 postfix::server::virtual_mailbox_domains:
   - 'proxy:mysql:/etc/postfix/mysql_virtual_domains_maps.cf'
