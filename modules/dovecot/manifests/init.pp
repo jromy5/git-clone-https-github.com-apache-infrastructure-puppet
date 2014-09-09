@@ -61,7 +61,11 @@ class dovecot (
   dovecot::plugin { $plugins: before => Package['dovecot'] }
 
   # Main package and service it provides
-  package { 'dovecot': ensure => installed }
+  package { 'dovecot':
+    ensure => installed,
+    name => 'dovecot-core'
+  }
+
   service { 'dovecot':
     enable    => true,
     ensure    => running,
