@@ -15,6 +15,7 @@ base::basepackages:
   - git
   - software-properties-common
   - zsh
+  - dovecot-ldap
 
 
 apt::sources:
