@@ -6,6 +6,7 @@ classes:
   - orthrus
   - postfix::server
   - subversionclient
+  - dovecot
 
 base::basepackages:
   - apt-file
@@ -78,3 +79,12 @@ subversionclient::packages:
 
 subversionclient::svn_conf_config:  '/etc/subversion/config'
 subversionclient::svn_conf_servers: '/etc/subversion/servers'
+
+dovecot::auth_debug:        'true'
+dovecot::auth_verbose:      'true'
+dovecot::protocols:         'none'
+dovecot::auth_mechanisms:   'plain login'
+dovecot::ssl:               'true'
+dovecot::ssl_cert:          '/etc/ssl/wildcard.apache.org.cert'
+dovecot::ssl_key:           '/etc/ssl/wildcard.apache.org.key'
+
