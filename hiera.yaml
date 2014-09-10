@@ -13,7 +13,8 @@
 
 :eyaml:
     :datadir: /etc/puppet/data
-    :gpg_gnupghome: /root/.gnupg
+    :gpg_gnupghome: /var/lib/puppet/.gnupg
+    :gpgpghome: /var/lib/puppet/.gnupg
     :gpg_always_trust: true
 
 # The ASF specific variables below are created in facter with customfact module.
