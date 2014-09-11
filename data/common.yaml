@@ -1,5 +1,6 @@
 ---
 classes: 
+  - asf999::create_user
   - base
   - customfact
   - ldapclient
@@ -10,6 +11,9 @@ classes:
 
 
 ## MODULES
+## ASF999
+asf999::create_user::sshd_keysdir: ::ssh::params::sshd_keysdir
+
 ## LDAPCLIENT
 ldapclient::ldapcert: |
   -----BEGIN CERTIFICATE-----
@@ -48,6 +52,14 @@ ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
 ## SSH
+ssh::client_options:
+    'Host *':
+        SendEnv: 'LANG LC_*'
+        ForwardX11Trusted: 'no'
+        ServerAliveInterval: '10'
+
+ssh::params::sshd_keysdir: '/etc/sshd/ssh_keys'
+
 ssh::server_options:
     Protocol: '2'
     ListenAddress: '0.0.0.0'
@@ -57,10 +69,4 @@ ssh::server_options:
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysCommandUser: 'root'
-
-ssh::client_options:
-    'Host *':
-        SendEnv: 'LANG LC_*'
-        ForwardX11Trusted: 'no'
-        ServerAliveInterval: '10'
 
