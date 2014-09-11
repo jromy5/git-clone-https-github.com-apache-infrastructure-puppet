@@ -2,12 +2,11 @@
 
 class asf999::create_user (
 
-  $groups      = [],
-  $password    = '',
-  $shell       = '/bin/bash', #provide a default, JIC.
-  $sshkeys     = '',
-  $sshd_dir    = '',
-  $sshdkeysdir = '',
+  $groups       = [],
+  $password     = '',
+  $shell        = '/bin/bash', #provide a default, JIC.
+  $sshkeys      = '',
+  $sshd_keysdir = '',
 
 ) {
     user { 'asf999': 
@@ -21,9 +20,8 @@ class asf999::create_user (
     }
 
     ssh::user_keys { 'asf999-sshkeys':
-      $keycontent  = $sshkeys,
-      $sshd_dir    = '',
-      $sshkeysdir  = '',
-      $user        = 'asf999',
+      $keycontent    = $sshkeys,
+      $sshd_keysdir  = $sshd_keysdir
+      $user          = 'asf999',
     }
 }
