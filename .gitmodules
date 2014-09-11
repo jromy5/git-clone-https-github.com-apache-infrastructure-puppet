@@ -1,7 +1,7 @@
 [submodule "modules-ssh"]
     path = modules/ssh
     url = https://github.com/pctony/puppet-ssh.git
-    branch = ldapsshkeys
+    branch = master
 [submodule "modules/rsyslog"]
     path = modules/rsyslog
     url = https://github.com/saz/puppet-rsyslog.git
