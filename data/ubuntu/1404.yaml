@@ -6,7 +6,6 @@ classes:
   - orthrus
   - postfix::server
   - subversionclient
-  - dovecot
 
 base::basepackages:
   - apt-file
@@ -15,7 +14,6 @@ base::basepackages:
   - git
   - software-properties-common
   - zsh
-  - dovecot-ldap
 
 
 apt::sources:
@@ -32,14 +30,6 @@ apt::force:
  'orthrus':
   release: 'main'
   resquire: Apt::Source['asf_internal']
-
-dovecot::auth_debug:        'true'
-dovecot::auth_verbose:      'true'
-dovecot::protocols:         'none'
-dovecot::auth_mechanisms:   'plain login'
-dovecot::ssl:               'true'
-dovecot::ssl_cert:          '/etc/ssl/wildcard.apache.org.cert'
-dovecot::ssl_key:           '/etc/ssl/wildcard.apache.org.key'
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
