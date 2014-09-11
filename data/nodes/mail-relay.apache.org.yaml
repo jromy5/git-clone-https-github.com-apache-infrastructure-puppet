@@ -1,19 +1,12 @@
 ---
 classes: 
   - ssl::name::wildcard_apache_org
+  - dovecot
+  - dovecot::auth
+  - dovecot::ssl::ssl:              'yes'
+  - dovecot::ssl::ssl_keyfile:      'yes'
+  - dovecot::ssl::ssl_certfile:     '/etc/ssl/wildcard.apache.org.cert'
+  - dovecot::ldap::ldap_hosts:      'minotaur.apache.org'
+  - dovecot::ldap::ldap_auth_bind:  'no'
+  - dovecot::ldap::ldap_base:       'dc=apache,dc=org'
 
-
-include dovecot
-include dovecot::auth
-
-class { dovecot::ssl:
-  ssl           =>  'yes',
-  ssl_keyfile   =>  '/etc/ssl/wildcard.apache.org.key',
-  ssl_certfile  =>  '/etc/ssl/wildcard.apache.org.cert',
-}
-
-class { dovecot::ldap:
-  ldap_hosts        =>  'minotaur.apache.org',
-  ldap_auth_bind    =>  'no',
-  ldap_base         =>  'dc=apache,dc=org',
-}
