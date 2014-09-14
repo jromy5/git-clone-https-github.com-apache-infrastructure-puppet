@@ -21,7 +21,7 @@ class asf999::create_user (
 
     ssh::user_keys { 'asf999-sshkeys':
       $keycontent    = $sshkeys,
-      $sshd_keysdir  = $sshd_keysdir
+      $sshd_keysdir  = $sshd_keysdir,
       $user          = 'asf999',
     }
 }
