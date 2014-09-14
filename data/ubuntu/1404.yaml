@@ -38,6 +38,9 @@ apt::force:
     release: 'main'
   require: Apt::Source['asf_internal']
 
+foreman:
+  require: Apt::Source['foreman']
+
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
 
