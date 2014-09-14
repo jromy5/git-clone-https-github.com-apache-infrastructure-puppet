@@ -1,23 +1,32 @@
 # Install a Foreman master without a Puppet master
 # NOTE: There is some manual setup required here!
-
-class Foreman {
-  $version = '1.6.0'
-  case $lsbdistcodename{
-    trusty:
+class foreman {
+  $foreman_version = '1.6.0-1'
+  $ruby_cli_version = '0.1.3-1'
+  case $::lsbdistcodename {
+    'trusty': {
       $packages = [
         'foreman',
-        'foreman-pgsql',
+        'foreman-postgresql',
         'foreman-compute',
         'foreman-proxy',
-        'foreman-vmware'
-        'ruby-hammer-cli'
-        'ruby-hammer-cli-foreman'
+        'foreman-vmware',
+      ]
+
+      $ruby_cli = [
+        'ruby-hammer-cli',
+        'ruby-hammer-cli-foreman',
       ]
 
       package { $packages:
-        require => [ Apt::key['foreman'], Apt::source['foreman'] ],
-        ensure  => $version
+        ensure  => $foreman_version,
       }
+
+      package { $ruby_cli:
+        ensure => $ruby_cli_version
+      }
+    }
+    default: {
+    }
   }
 }
