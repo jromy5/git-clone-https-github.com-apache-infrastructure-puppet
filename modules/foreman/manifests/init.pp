@@ -1,5 +1,6 @@
 # Install a Foreman master without a Puppet master
 # NOTE: There is some manual setup required here!
+# see http://theforeman.org/manuals/1.6/index.html#3.2.3InstallationScenarios
 class foreman {
   $foreman_version = '1.6.0-1'
   $ruby_cli_version = '0.1.3-1'
@@ -24,6 +25,11 @@ class foreman {
 
       package { $ruby_cli:
         ensure => $ruby_cli_version
+      }
+
+      file { '/etc/foreman/database.yml':
+        ensure => present,
+        source => 'puppet:///modules/foreman/database.yaml',
       }
     }
     default: {
