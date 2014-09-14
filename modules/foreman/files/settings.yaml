@@ -1,0 +1,6 @@
+production:
+  adapter: postgresql
+  database: foreman
+  username: foreman
+  password: password
+  host: localhost

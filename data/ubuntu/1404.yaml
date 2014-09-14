@@ -15,7 +15,6 @@ base::basepackages:
   - software-properties-common
   - zsh
 
-
 apt::sources:
  'asf_internal':
      location: 'https://pkgrepo.apache.org'
@@ -25,11 +24,19 @@ apt::sources:
      key_server: 'pgp.mit.edu'
      include_deb: true
      include_src: false
+  'foreman':
+    location: 'http://deb.theforeman.org/'
+    release: 'trusty'
+    repos: '1.6'
+    key: '1AA043B8'
+    key_server: 'pgp.mit.edu'
+    include_deb: 'true'
+    include_src: 'false'
 
 apt::force:
- 'orthrus':
-  release: 'main'
-  resquire: Apt::Source['asf_internal']
+  'orthrus':
+    release: 'main'
+  require: Apt::Source['asf_internal']
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
