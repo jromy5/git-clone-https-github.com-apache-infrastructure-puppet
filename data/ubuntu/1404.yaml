@@ -48,7 +48,7 @@ ldapclient::ldapclient_remove_packages:
 
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
-postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost,"
+postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
@@ -68,7 +68,7 @@ postfix::server::smtpd_recipient_restrictions:
   -  'permit_mynetworks'
   -  'reject_unauth_destination'
 postfix::server::smtpd_tls_key_file:     '/etc/ssl/wildcard.apache.org.key'
-postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org.cert'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org.crt'
 postfix::server::smtpd_sasl_auth:        'true'
 postfix::server::sender_canonical_maps:  'regexp:/etc/postfix/sender_canonical'
 postfix::server::ssl:                    'wildcard.example.com'
