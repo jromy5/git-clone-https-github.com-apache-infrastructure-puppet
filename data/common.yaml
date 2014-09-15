@@ -1,6 +1,6 @@
 ---
 classes: 
-  - asf999::create_user
+#  - asf999::create_user
   - base
   - customfact
   - ldapclient
