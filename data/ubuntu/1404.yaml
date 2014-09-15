@@ -52,13 +52,8 @@ postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, loca
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::alias_maps:              'hash:/etc/aliases ldap:/etc/postfix/ldap-mail-forward-lookup.cf'
 postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
-postfix::server::virtual_mailbox_domains:
-  - 'proxy:mysql:/etc/postfix/mysql_virtual_domains_maps.cf'
-postfix::server::virtual_alias_maps:     
-  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_maps.cf'
-  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_domain_maps.cf'
-  -  'proxy:mysql:/etc/postfix/mysql_virtual_alias_domain_catchall_maps.cf'
 postfix::server::virtual_transport:      'dovecot'
 postfix::server::smtpd_sender_restrictions:
   -  'permit_mynetworks'
