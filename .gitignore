@@ -2,6 +2,7 @@
 bin-debug/
 bin-release/
 ssl/
+3rdParty-modules
 
 # Other files and folders
 .settings/
