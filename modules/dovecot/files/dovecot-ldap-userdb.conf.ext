@@ -1,0 +1,3 @@
+uris=ldaps://minotaur.apache.org:636 
+auth_bind=yes 
+base=dc=apache,dc=org 

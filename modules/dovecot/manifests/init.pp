@@ -1,27 +1,38 @@
-class dovecot {
+#/etc/puppet/modules/dovecot/manifests/init.pp
 
-  $package_name = $::osfamily ? {
-    'Debian' => 'dovecot-imapd',
-    'Redhat' => 'dovecot',
-    default  => 'dovecot-imapd',
-  }
+class dovecot (
+  $dovecot_packages         = [],
+  $dovecot_remove_packages  = [],
+  $dovecot_confdir          = '',
+  $dovecot_conffile         = '',
+  $dovecot_conffile_userdb  = '',
+  $dovecot_conffile_passwd  = '',
+  $dovecot_ldapuris         = [],
+) {
 
-  package { $package_name:
+  package { $dovecot_packages:
     ensure => installed,
-    alias  => 'dovecot',
-    before => Exec['dovecot']
   }
 
-  exec { 'dovecot':
-    command     => 'echo "dovecot packages are installed"',
-    path        => '/usr/sbin:/bin:/usr/bin:/sbin',
-    logoutput   => true,
-    refreshonly => true,
+  package { $dovecot_remove_packages:
+    ensure => purged,
+  }
+  
+  file {
+    "${dovecot_confdir}":
+      ensure => directory,
+      owner  => 'root',
+      mode   => '0755';
+    "${dovecot_confdir}/${dovecot_conffile}":
+      source => "puppet://modules/dovecot/${dovecot_conffile}",
+      mode   => '0755';
+    "${dovecot_confdir}/${dovecot_conffile_userdb}":
+      source => "puppet://modules/dovecot/${dovecot_conffile_userdb}",
+      mode   => '0755';
+    "${dovecot_confdir}/${dovecot_conffile_passdb}":
+      source => "puppet://modules/dovecot/${dovecot_conffile_passdb}",
+      mode   => '0755';
   }
 
-  service { 'dovecot':
-    ensure  => running,
-    require => Exec['dovecot'],
-    enable  => true
+  class { "dovecot::install::${asfosname}::${asfosrelease}":
   }
-}

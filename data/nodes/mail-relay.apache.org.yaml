@@ -1,3 +1,10 @@
 ---
 classes: 
   - ssl::name::wildcard_apache_org
+#  - dovecot
+
+#dovecot::dovecot_packages:
+#  - dovecot-core
+#  - dovecot-ldap
+
+
