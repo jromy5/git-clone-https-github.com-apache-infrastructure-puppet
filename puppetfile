@@ -1,0 +1,4 @@
+# Install pctony/puppet-iptables and pin to 
+mod 'iptables-v2',
+  :git    => 'https://github.com/pctony/puppet-iptables.git',
+  :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
