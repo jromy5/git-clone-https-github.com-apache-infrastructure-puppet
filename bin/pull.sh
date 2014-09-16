@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "This might be useful reading... http://joncairns.com/2011/10/how-to-use-git-submodules/"
-
 git pull .
-git submodule sync .
-git submodule update --recursive --init .
+
+if [ ! -f "./puppetfile" ] ; then 
+  echo 'It looks like you are not running this script relative to the root of the repo. Until we make it more sensible you need too. Sorry.' 
+  exit 1
+fi
+
+export PUPPETFILE_DIR=./3rdparty-modules 
+r10k puppetfile check --verbose --trace && r10k puppetfile install 
