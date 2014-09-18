@@ -16,3 +16,4 @@ class dovecot (
   class { "dovecot::install::${asfosname}::${asfosrelease}":
     ldapservers => $ldapservers,
   }
+}
