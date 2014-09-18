@@ -1,5 +1,5 @@
 class dovecot::install::ubuntu::1404 (
-  $ldapservers = '',
+  $ldapservers = heira('ldapclient::ldapservers'),
 )
 {
   file {

@@ -12,13 +12,6 @@ class dovecot (
   package { $dovecot_remove_packages:
     ensure => purged,
   }
-  
-  file {
-    "/etc/dovecot":
-      ensure => directory,
-      owner  => 'root',
-      mode   => '0755',
-  }
 
   class { "dovecot::install::${asfosname}::${asfosrelease}":
     ldapservers => $ldapservers,
