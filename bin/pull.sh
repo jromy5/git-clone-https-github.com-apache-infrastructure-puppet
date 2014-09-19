@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git pull .
+git pull
 
 if [ ! -f "./Puppetfile" ] ; then 
   echo 'It looks like you are not running this script relative to the root of the repo. Until we make it more sensible you need too. Sorry.' 
