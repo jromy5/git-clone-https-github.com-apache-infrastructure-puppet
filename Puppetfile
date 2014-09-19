@@ -11,4 +11,6 @@ mod 'rsyslog',
   :git    => 'https://github.com/pctony/puppet-rsyslog.git',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
-
+mod 'snmp',
+  :git => 'https://github.com/razorsedge/puppet-snmp.git',
+  :branch => 'master'
