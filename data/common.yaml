@@ -73,7 +73,6 @@ ssh::server_options:
     AuthorizedKeysCommandUser: 'root'
 
 
-<<<<<<< HEAD
 snmp::snmpv3_user:
   monitor:
        authpass: 'V8n92mJuu2'
@@ -81,5 +80,3 @@ snmp::agentaddres: 'udp:161'
 snmp::snmpd_config:
   - 'rouser monitor authNoPriv'
 
-=======
->>>>>>> f1cf502c8f99d9580beaebf796339fe4bb20ceea
