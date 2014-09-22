@@ -14,3 +14,22 @@ mod 'rsyslog',
 mod 'snmp',
   :git => 'https://github.com/razorsedge/puppet-snmp.git',
   :branch => 'master'
+
+mod 'stdlib',
+  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+
+mod 'concat',
+  :git => 'https://github.com/puppetlabs/puppetlabs-concat'
+
+mod 'apt',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apt'
+
+mod 'module_data',
+  :git => 'https://github.com/ripienaar/puppet-module-data'
+
+mod 'pkgng',
+  :git => 'https://github.com/xaque208/puppet-pkgng'
+
+mod 'postfix',
+  :git => 'https://github.com/thias/puppet-postfix'
+
