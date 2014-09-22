@@ -1,5 +1,0 @@
-###
-## WARNING ::
-##
-## This file is managed by puppet.  All local changes will be lost at the next puppet run.
-###
