@@ -7,6 +7,8 @@ classes:
   - pam
   - ssh # this pulls in both server and client by default
   - sudoers
+  - snmp
+  - base::snmp::createv3users
 
 
 
@@ -69,4 +71,12 @@ ssh::server_options:
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysCommandUser: 'root'
+
+
+snmp::snmpv3_user:
+  monitor:
+       authpass: 'V8n92mJuu2'
+snmp::agentaddres: 'udp:161'
+snmp::snmpd_config:
+  - 'rouser monitor authNoPriv'
 
