@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+puts `git pull origin master`
+
+cwd = File.absolute_path(File.dirname(File.dirname(__FILE__)))
+
+ENV['PUPPETFILE_DIR'] = '3rdParty'
+ENV['PUPPETFILE'] = cwd + '/Puppetfile'
+puts `r10k puppetfile check --verbose --trace`
+puts `r10k puppetfile install`
