@@ -33,8 +33,3 @@ mod 'pkgng',
 mod 'postfix',
   :git => 'https://github.com/thias/puppet-postfix'
 
-<<<<<<< HEAD
-=======
-mod 'iptables',
-  :git => 'https://github.com/pctony/puppet-iptables'
->>>>>>> f1cf502c8f99d9580beaebf796339fe4bb20ceea
