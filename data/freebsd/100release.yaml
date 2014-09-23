@@ -16,13 +16,7 @@ base::basepackages:
 ldapclient::install::freebsd::100release::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::freebsd::100release::pamhostcheck: 'yes'
 
-ldapclient::ldapclient_packages: 
-    - ldap-auth-client
-    - ldap-utils
-    - libldap-2.4-2
-    - libnss-ldap
-    - libpam-ldap
-    - libpam-modules
+#ldapclient::ldapclient_packages: 
 
 # ldapclient::ldapclient_remove_packages: 
 #    - nscd
