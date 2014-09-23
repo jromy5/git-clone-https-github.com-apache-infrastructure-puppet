@@ -1,8 +1,11 @@
 class ldapclient::install::freebsd::100release (
 
-  $ldapcert     = '',
-  $pamhostcheck = '',
-  $tlscertpath  = '',
+  $ldapcert      = '',
+  $ldapservers   = '',
+  $nssbinddn     = '',
+  $nssbindpasswd = '',
+  $pamhostcheck  = '',
+  $tlscertpath   = '',
 
 ) {
 
@@ -27,4 +30,3 @@ class ldapclient::install::freebsd::100release (
   }
 
 }
-
