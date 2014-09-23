@@ -26,10 +26,10 @@ class ldapclient::install::freebsd::100release (
       mode    => 755;
     '/usr/local/etc/openldap/cacerts':
       ensure  => directory,
-      mode    => 755;
+      mode    => 755,
       require =>  File['/usr/local/etc/openldap'];
     '/usr/local/etc/openldap/cacerts/ldap-client.pem':
-      content  =>  $ldapcert,
+      content =>  $ldapcert,
       require =>  File['/usr/local/etc/openldap/cacerts'];
   }
 
