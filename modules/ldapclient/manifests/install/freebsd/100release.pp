@@ -21,9 +21,13 @@ class ldapclient::install::freebsd::100release (
     '/etc/nsswitch.conf':
       source  => 'puppet:///modules/ldapclient/etc/nsswitch.conf',
       require => File['/usr/local/etc/ldap.conf'];
+    '/usr/local/etc/openldap':
+      ensure  => directory,
+      mode    => 755;
     '/usr/local/etc/openldap/cacerts':
       ensure  => directory,
       mode    => 755;
+      require =>  File['/usr/local/etc/openldap'];
     '/usr/local/etc/openldap/cacerts/ldap-client.pem':
       content  =>  $ldapcert,
       require =>  File['/usr/local/etc/openldap/cacerts'];
