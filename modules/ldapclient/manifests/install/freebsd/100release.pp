@@ -11,9 +11,9 @@ class ldapclient::install::freebsd::100release (
 
   file { 
     '/usr/local/etc/openldap/ldap.conf':
-      content => template('/usr/local/etc/puppet/modules/ldapclient/templates/openldap_ldap.conf.erb');
+      content => template('ldapclient/openldap_ldap.conf.erb');
     '/usr/local/etc/ldap.conf':
-      content => template('/usr/local/etc/puppet/modules/ldapclient/templates/ldap.conf.erb');
+      content => template('ldapclient/ldap.conf.erb');
     '/usr/local/etc/nss_ldap.conf':
       ensure  => link,
       target  => '/usr/local/etc/ldap.conf',
@@ -25,8 +25,8 @@ class ldapclient::install::freebsd::100release (
       ensure  => directory,
       mode    => 755;
     '/usr/local/etc/openldap/cacerts/ldap-client.pem':
-      source  =>  'puppet:///modules/ldapclient/etc/ldap-client.pem',
-      require =>  File['/etc/ldap/cacerts'];
+      content  =>  $ldapcert,
+      require =>  File['/usr/local/etc/openldap/cacerts'];
   }
 
 }
