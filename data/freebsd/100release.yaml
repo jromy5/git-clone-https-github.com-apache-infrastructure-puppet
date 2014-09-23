@@ -17,7 +17,6 @@ ldapclient::install::freebsd::100release::tlscertpath:  '/usr/local/etc/openldap
 ldapclient::install::freebsd::100release::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
-  - nss-pam-ldapd
   - nss_ldap
   - openldap-client
   - pam_ldap
