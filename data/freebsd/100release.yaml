@@ -20,6 +20,8 @@ ldapclient::ldapclient_packages:
   - nss-pam-ldapd
   - nss_ldap
   - openldap-client
+  - pam_ldap
+  - pam_mkhomedir
 
 # ldapclient::ldapclient_remove_packages: 
 #    - nscd
