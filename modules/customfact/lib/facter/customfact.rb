@@ -1,13 +1,13 @@
 Facter.add("asfosrelease") do
   setcode do
-    Facter::Util::Resolution.exec('facter operatingsystemrelease | perl -pe s/[[:punct:]]//g | sed -e "s/\(.*\)/\L\1/"')
+    Facter::Util::Resolution.exec('facter operatingsystemrelease | sed -e s/[[:punct:]]//g -e "s/\(.*\)/\L\1/"')
   end
 end
 
 
 Facter.add("asfosname") do
   setcode do
-    Facter::Util::Resolution.exec('facter operatingsystem | sed -e "s/\(.*\)/\L\1/"')
+    Facter::Util::Resolution.exec('facter operatingsystem | sed -e s/[[:punct:]]//g -e "s/\(.*\)/\L\1/"')
   end
 end
 
