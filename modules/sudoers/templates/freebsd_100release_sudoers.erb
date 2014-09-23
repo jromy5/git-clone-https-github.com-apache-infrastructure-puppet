@@ -1,0 +1,38 @@
+##
+## This file is managed by puppet, all local changes will be lost
+## during the next puppet run.
+##
+## Source file:  puppet/modules/sudoers/templates/ubuntu_1404_sudoers.erb
+##
+
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%wheel ALL=(ALL) ALL
+
+# Allow members of group root-sudoers to gain root privileges
+%root-sudoers   ALL=(ALL) ALL
+
+# Allow members of group <%= scope.lookupvar('::fqdn') %>-sudoers to gain root privileges
+%<%= scope.lookupvar('::fqdn') %>-sudoers ALL=(ALL) ALL
+
+# Allow the asf999 local user account to use sudo, without a password.
+asf999 ALL=NOPASSWD: ALL
+
+# See sudoers(5) for more information on "#include" directives:
+#includedir /etc/sudoers.d
+
+
+
+
