@@ -1,4 +1,4 @@
-class ldapclient::freebsd::100release (
+class ldapclient::install::freebsd::100release (
 
   $ldapcert     = '',
   $pamhostcheck = '',
