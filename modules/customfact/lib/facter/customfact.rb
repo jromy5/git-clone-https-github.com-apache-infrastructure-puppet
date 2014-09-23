@@ -1,6 +1,6 @@
 Facter.add("asfosrelease") do
   setcode do
-    Facter::Util::Resolution.exec("facter operatingsystemrelease | sed -e 's/[[:punct:]]//g'")
+    Facter::Util::Resolution.exec("facter operatingsystemrelease | sed -e 's/[[:punct:]]//g' | awk '{print tolower($0)}'")
   end
 end
 
