@@ -1,17 +1,58 @@
 ---
 
 classes:
-    - base
-    - dnsclient
-    - ldapclient
-    - pam
-    - pkgng
-    - sudoers
+  - base
+  - dnsclient
+  - ldapclient
+  - pam
+  - pkgng
+  - sudoers
 
-ldapclient::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
-ldapclient::pamhostcheck: 'yes'
+base::basepackages:
+  - bash
+  - git
+  - zsh
+
+ldapclient::install::freebsd::100release::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::freebsd::100release::pamhostcheck: 'yes'
+
+ldapclient::ldapclient_packages: 
+    - ldap-auth-client
+    - ldap-utils
+    - libldap-2.4-2
+    - libnss-ldap
+    - libpam-ldap
+    - libpam-modules
+
+# ldapclient::ldapclient_remove_packages: 
+#    - nscd
 
 pkgprovider: 'pkgng'
 
+
+
+postfix::server::myhostname:             "%{::fqdn}"
+postfix::server::mydomain:               'apache.org'
+postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
+postfix::server::inet_interfaces:        'all'
+postfix::server::message_size_limit:     '15360000'
+postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::alias_maps:              'hash:/usr/local/etc/aliases ldap:/usr/local/etc/postfix/ldap-mail-forward-lookup.cf'
+postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
+postfix::server::virtual_transport:      'dovecot'
+postfix::server::smtpd_sender_restrictions:
+  -  'permit_mynetworks'
+  -  'reject_unknown_sender_domain'
+postfix::server::smtpd_tls_key_file:     '/etc/ssl/wildcard.apache.org.key'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org.crt'
+postfix::server::smtpd_sasl_auth:        'true'
+postfix::server::ssl:                    'wildcard.example.com'
+postfix::server::submission:             'true'
+
+subversionclient::packages: 
+    - subversion
+
 subversionclient::svn_conf_config:  '/etc/subversion/config'
 subversionclient::svn_conf_servers: '/etc/subversion/servers'
+
+
