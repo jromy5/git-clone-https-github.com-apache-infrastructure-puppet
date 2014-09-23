@@ -13,7 +13,7 @@ base::basepackages:
   - git
   - zsh
 
-ldapclient::install::freebsd::100release::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::freebsd::100release::tlscertpath:  '/usr/local/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::freebsd::100release::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
