@@ -65,7 +65,7 @@ postfix::server::smtpd_recipient_restrictions:
 postfix::server::smtpd_tls_key_file:     '/etc/ssl/wildcard.apache.org.key'
 postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org.crt'
 postfix::server::smtpd_sasl_auth:        'true'
-postfix::server::ssl:                    'wildcard.example.com'
+postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
 
 subversionclient::packages: 
