@@ -4,7 +4,7 @@ require 'pathname'
 
 path = File.absolute_path(File.dirname(File.dirname(__FILE__)))
 path = Pathname.new(path)
-submodules = File.read(path + '.gitmodules')
+submodules = File.read(path)
 
 # Build up a list of modules we shouldn't syntax check
 excluded_modules = submodules.scan(/path = (.*)/).flatten.map{|i| i.gsub('modules/', '')}
