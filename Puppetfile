@@ -31,5 +31,6 @@ mod 'pkgng',
   :git => 'https://github.com/xaque208/puppet-pkgng'
 
 mod 'postfix',
-  :git => 'https://github.com/thias/puppet-postfix'
+  :git => 'https://github.com/pctony/puppet-postfix'
+  :commit => 'f020134ef753315247cf21c735e806c09461ccc7'
 
