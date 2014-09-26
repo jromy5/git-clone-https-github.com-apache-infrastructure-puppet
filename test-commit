@@ -1,1 +1,1 @@
-test git commit triggers a build which it does, but will it send the result to hipchat?
+test hipchat only works for an infra-puppet repo commit
