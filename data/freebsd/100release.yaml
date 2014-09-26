@@ -27,6 +27,8 @@ ldapclient::ldapclient_packages:
 
 pkgprovider: 'pkgng'
 
+ntp::interfaces:
+  - lo0
 
 
 postfix::server::myhostname:             "%{::fqdn}"
