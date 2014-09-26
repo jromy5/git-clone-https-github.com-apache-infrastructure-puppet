@@ -34,3 +34,5 @@ mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
   :commit => 'f020134ef753315247cf21c735e806c09461ccc7'
 
+mod 'ntp',
+  :git => 'https://github.com/puppetlabs/puppetlabs-ntp'
