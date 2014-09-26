@@ -55,9 +55,9 @@ ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
 ntp::servers:
-  - 0.freebsd.pool.ntp.org iburst
-  - 1.freebsd.pool.ntp.org iburst
-  - 2.freebsd.pool.ntp.org iburst
+  - 0.freebsd.pool.ntp.org
+  - 1.freebsd.pool.ntp.org
+  - 2.freebsd.pool.ntp.org
 ntp::restrict:
   - 127.0.0.1
 
