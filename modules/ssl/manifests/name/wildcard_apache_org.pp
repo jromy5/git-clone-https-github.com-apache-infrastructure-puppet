@@ -8,6 +8,8 @@ class ssl::name::wildcard_apache_org (
   $sslchainname                = 'wildcard.apache.org.chain',
   $sslkeycontents              = '',
   $sslkeyname                  = 'wildcard.apache.org.key',
+  $sslcombinedcontents         = '',
+  $sslcombinedname             = 'wildcard.apache.org-combined.cert',
   $sslrootdir                  = '/etc/ssl',
   $sslrootdirgroup             = 'root',
   $sslrootdirowner             = 'root',
@@ -36,6 +38,12 @@ class ssl::name::wildcard_apache_org (
       require  =>  File["${sslrootdir}"],
       ensure   =>  present,
       content  =>  $sslchaincontent,
+      owner    =>  "${sslrootdirowner}",
+      group    =>  "${sslrootdirgroup}";
+    "${sslrootdir}/${sslcombinedname}":
+      require  =>  File["${sslrootdir}"],
+      ensure   =>  present,
+      content  =>  $sslcombinedcontents,
       owner    =>  "${sslrootdirowner}",
       group    =>  "${sslrootdirgroup}";
   }
