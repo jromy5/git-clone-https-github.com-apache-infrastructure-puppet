@@ -1,2 +1,1 @@
 test git commit triggers a build which it does, but will it send the result to hipchat?
-
