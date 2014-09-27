@@ -2,8 +2,11 @@
 # NOTE: There is some manual setup required here!
 # see http://theforeman.org/manuals/1.6/index.html#3.2.3InstallationScenarios
 class foreman {
+  require apt
+
   $foreman_version = '1.6.0-1'
   $ruby_cli_version = '0.1.3-1'
+
   case $::lsbdistcodename {
     'trusty': {
       $packages = [

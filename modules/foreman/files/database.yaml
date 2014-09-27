@@ -1,3 +1,4 @@
+# TODO Use a real password from eyaml here
 production:
   adapter: postgresql
   database: foreman
