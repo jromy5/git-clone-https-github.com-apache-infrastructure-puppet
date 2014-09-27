@@ -23,8 +23,8 @@ apt::sources:
      repos: 'main'
      key: 'E8640030'
      key_server: 'pgp.mit.edu'
-     include_deb: 'true'
-     include_src: 'false'
+     include_deb: true
+     include_src: false
 
 apt::force:
  'orthrus':
