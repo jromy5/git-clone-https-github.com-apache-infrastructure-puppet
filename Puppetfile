@@ -36,3 +36,10 @@ mod 'postfix',
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp'
+
+mod 'apache',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
+
+mod 'postgresql',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
+
