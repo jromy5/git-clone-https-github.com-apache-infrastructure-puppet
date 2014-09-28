@@ -1,7 +1,7 @@
 # Install a Foreman master without a Puppet master
 # NOTE: There is some manual setup required here!
 # see http://theforeman.org/manuals/1.6/index.html#3.2.3InstallationScenarios
-class foreman {
+class foreman ($password) {
   require apt
   require foreman::apache
   require foreman::postgres
@@ -34,7 +34,7 @@ class foreman {
 
       file { '/etc/foreman/database.yml':
         ensure => present,
-        source => 'puppet:///modules/foreman/database.yaml',
+        content => template('foreman/database.yaml.erb'),
       }
     }
     default: {
