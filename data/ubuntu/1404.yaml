@@ -16,7 +16,7 @@ base::basepackages:
   - zsh
 
 apt::sources:
- 'asf_internal':
+  'asf_internal':
      location: 'https://pkgrepo.apache.org'
      release: 'trusty'
      repos: 'main'
@@ -26,12 +26,12 @@ apt::sources:
      include_src: false
   'foreman':
     location: 'http://deb.theforeman.org/'
-    release: '%{::lsbdistcodename}'
+    release: "%{::lsbdistcodename}"
     repos: '1.6'
     key: '1AA043B8'
     key_server: 'pgp.mit.edu'
-    include_deb: 'true'
-    include_src: 'false'
+    include_deb: true
+    include_src: false
 
 apt::force:
   'orthrus':

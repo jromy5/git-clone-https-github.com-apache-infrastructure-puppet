@@ -41,5 +41,5 @@ mod 'apache',
   :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
 
 mod 'postgresql',
-  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
+  :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git'
 
