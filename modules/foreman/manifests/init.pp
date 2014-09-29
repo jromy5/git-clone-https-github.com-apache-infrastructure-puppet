@@ -17,7 +17,6 @@ class foreman ($password) {
         'foreman-compute',
         'foreman-proxy',
         'foreman-vmware',
-        'ipmitool',
       ]
 
       $ruby_cli = [
@@ -27,6 +26,10 @@ class foreman ($password) {
 
       package { $packages:
         ensure  => $foreman_version,
+      }
+
+      package { 'ipmitool':
+        ensure => latest,
       }
 
       package { $ruby_cli:
