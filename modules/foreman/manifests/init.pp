@@ -17,6 +17,7 @@ class foreman ($password) {
         'foreman-compute',
         'foreman-proxy',
         'foreman-vmware',
+        'ipmitool',
       ]
 
       $ruby_cli = [
@@ -35,6 +36,11 @@ class foreman ($password) {
       file { '/etc/foreman/database.yml':
         ensure => present,
         content => template('foreman/database.yaml.erb'),
+      }
+
+      file { '/etc/foreman-proxy/settings.yml':
+        ensure  => present,
+        content => template('foreman/settings.yml.erb')
       }
     }
     default: {
