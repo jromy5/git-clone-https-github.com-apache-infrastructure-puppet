@@ -17,7 +17,7 @@ mod 'snmp',
 
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
-  :tag => 'v2.2.1'
+  :tag => '4.3.2'
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
