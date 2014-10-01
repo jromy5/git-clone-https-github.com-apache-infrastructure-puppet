@@ -16,30 +16,38 @@ mod 'snmp',
   :branch => 'master'
 
 mod 'stdlib',
-  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
+  :tag => 'v2.2.1'
 
 mod 'concat',
-  :git => 'https://github.com/puppetlabs/puppetlabs-concat'
+  :git => 'https://github.com/puppetlabs/puppetlabs-concat',
+  :tag => '1.1.1'
 
 mod 'apt',
-  :git => 'https://github.com/puppetlabs/puppetlabs-apt'
+  :git => 'https://github.com/puppetlabs/puppetlabs-apt',
+  :tag => '1.6.0'
 
 mod 'module_data',
-  :git => 'https://github.com/ripienaar/puppet-module-data'
+  :git => 'https://github.com/ripienaar/puppet-module-data',
+  :tag => '0.0.4'
 
 mod 'pkgng',
-  :git => 'https://github.com/xaque208/puppet-pkgng'
+  :git => 'https://github.com/xaque208/puppet-pkgng',
+  :tag => '0.2.3'
 
 mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
   :commit => 'f020134ef753315247cf21c735e806c09461ccc7'
 
 mod 'ntp',
-  :git => 'https://github.com/puppetlabs/puppetlabs-ntp'
+  :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
+  :tag => '3.2.0'
 
 mod 'apache',
-  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git',
+  :tag => '1.1.1'
 
 mod 'postgresql',
-  :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git'
+  :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
+  :tag => '4.0.0'
 
