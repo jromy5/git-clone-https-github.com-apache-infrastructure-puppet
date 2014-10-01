@@ -80,11 +80,15 @@ ssh::server_options:
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysCommandUser: 'root'
 
-
-snmp::snmpv3_user:
-  monitor:
-       authpass: 'V8n92mJuu2'
-snmp::agentaddres: 'udp:161'
+snmp::agentaddress: 'udp:*:161'
+snmp::com2sec:
+  - "circonus-broker 140.211.11.6 asfro"
+snmp::groups:
+  - "circonus-broker v2c circonus-broker"
+snmp::views:
+  - "all included .1"
+snmp::accesses:
+  - 'circonus-broker "" any noauth exact all none all'
 snmp::snmpd_config:
   - 'rouser monitor authNoPriv'
-
+  - 'smuxpeer .1.3.6.1.4.1.674.10892.1'
