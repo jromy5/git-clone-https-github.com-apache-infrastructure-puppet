@@ -25,6 +25,8 @@ Facter.add("asfcolo") do
       "rackspace"
     when /^67.195.81..([0-9]+)$/
       "yahoo"
+    when /^10.0.0.([0-9]+)$/
+      "amz-vpc-virginia"
     else
       'No Colo could be automatically determined'
     end
