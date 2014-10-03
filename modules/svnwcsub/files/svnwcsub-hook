@@ -1,0 +1,25 @@
+#!/bin/sh
+
+touch_dot_revision() {
+  # svnwcsub won't touch the working copy again while this hook is running
+  /bin/rm -f "$WCROOT"/.revision && echo "$REVNUM" > "$WCROOT"/.revision
+}
+
+main() {
+  MODE="$1"
+  if [ x"$MODE" = x"post-update" ] ; then
+    WCROOT="$2"
+    REVNUM="$3"
+    URL="$4"
+    touch_dot_revision
+  fi
+
+  if [ x"$MODE" = x"boot" ] ; then
+    WCROOT="$2"
+    REVNUM="$3"
+    URL="$4"
+    touch_dot_revision
+  fi
+}
+
+main "$@"
