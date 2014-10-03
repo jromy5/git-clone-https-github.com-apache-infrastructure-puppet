@@ -70,7 +70,7 @@ class foreman ($password) {
       concat::fragment { 'foreman_passenger':
         target  => '05-foreman.conf',
         order   => 11,
-        content => '\nPassengerAppRoot /usr/share/foreman\nPassengerMinInstances 1\nPassengerStartTimeout 600\n',
+        content => "\nPassengerAppRoot /usr/share/foreman\nPassengerMinInstances 1\nPassengerStartTimeout 600\n",
       }
 
       concat::fragment { 'foreman_prestart':
