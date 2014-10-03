@@ -37,13 +37,46 @@ class foreman ($password) {
       }
 
       file { '/etc/foreman/database.yml':
-        ensure => present,
+        ensure  => present,
         content => template('foreman/database.yaml.erb'),
       }
 
       file { '/etc/foreman-proxy/settings.yml':
         ensure  => present,
         content => template('foreman/settings.yml.erb')
+      }
+
+      apache::vhost { 'foreman':
+        require       => Package[$packages],
+        servername    => 'foreman.apache.org',
+        serveraliases => 'foreman',
+        port          => 80,
+        docroot       => '/usr/share/foreman/public',
+        options       => ['SymLinksIfOwnerMatch'],
+        prority       => '05',
+        directories   => [
+          {
+            path            => '/usr/share/foreman/public',
+            auth_require    => 'all granted',
+            custom_fragment => template('foreman/assets.erb'),
+          },
+        ],
+      }
+
+      # From the docs: 
+      # "For the order parameter for the custom fragment, the vhost defined
+      #  type uses multiples of 10, so any order that isn't a multiple of 10
+      #  should work."
+      concat::fragment { 'foreman_passenger':
+        target  => '05-foreman.conf',
+        order   => 11,
+        content => '\nPassengerAppRoot /usr/share/foreman\nPassengerMinInstances 1\nPassengerStartTimeout 600\n',
+      }
+
+      concat::fragment { 'foreman_prestart':
+        target  => '05-foreman.conf',
+        order   => 19,
+        content => 'PassengerPreStart http://foreman.apache.org',
       }
     }
     default: {
