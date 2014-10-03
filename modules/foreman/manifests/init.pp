@@ -53,7 +53,7 @@ class foreman ($password) {
         port          => 80,
         docroot       => '/usr/share/foreman/public',
         options       => ['SymLinksIfOwnerMatch'],
-        prority       => '05',
+        priority       => '05',
         directories   => [
           {
             path            => '/usr/share/foreman/public',
