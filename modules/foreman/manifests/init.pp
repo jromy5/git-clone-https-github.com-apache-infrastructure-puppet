@@ -53,11 +53,14 @@ class foreman ($password) {
         port          => 80,
         docroot       => '/usr/share/foreman/public',
         options       => ['SymLinksIfOwnerMatch'],
-        priority       => '05',
+        priority      => '05',
         directories   => [
           {
             path            => '/usr/share/foreman/public',
             auth_require    => 'all granted',
+          },
+          {
+            path            => '/usr/share/foreman/public/assets',
             custom_fragment => template('foreman/assets.erb'),
           },
         ],
@@ -70,7 +73,7 @@ class foreman ($password) {
       concat::fragment { 'foreman_passenger':
         target  => '05-foreman.conf',
         order   => 11,
-        content => "\nPassengerAppRoot /usr/share/foreman\nPassengerMinInstances 1\nPassengerStartTimeout 600\n",
+        content => "\n  PassengerAppRoot /usr/share/foreman\n  PassengerMinInstances 1\n  PassengerStartTimeout 600\n",
       }
 
       concat::fragment { 'foreman_prestart':
