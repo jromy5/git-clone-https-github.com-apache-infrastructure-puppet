@@ -6,7 +6,7 @@ class svnpubsub::common {
     }
 
     exec { 'pubsub-co':
-        command => 'svn co --force https://svn.apache.org/viewvc/subversion/trunk/tools/server-side/svnpubsub',
+        command => 'svn co http://svn.apache.org/repos/asf/subversion/trunk/tools/server-side/svnpubsub',
         path => "/usr/bin/:/bin/",
         cwd => '/opt',
         require => Package['subversion'],

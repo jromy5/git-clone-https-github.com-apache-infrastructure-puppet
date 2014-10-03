@@ -1,6 +1,5 @@
 
 class svnwcsub::config inherits svnwcsub {
-    include svnpubsub::common
 
     file { '/var/log/svnwcsub':
         ensure => directory,

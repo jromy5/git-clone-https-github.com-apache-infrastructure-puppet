@@ -1,5 +1,6 @@
 
 class svnwcsub::base inherits svnwcsub {
+    include apache
 
     user { 'svnwc':
         name => 'svnwc',
@@ -12,9 +13,16 @@ class svnwcsub::base inherits svnwcsub {
         require => Group['svnwc'],
     }
 
+
     group { 'svnwc':
         name => 'svnwc',
         ensure => present,
         gid => '9997',
+    }
+
+    exec { 'apache_perms':
+        path => ['/bin/'],
+        command => 'chown svnwc:www-data /var/www ; chmod 2755 /var/www',
+        require => [ User['svnwc'], Class['apache'] ],
     }
 }
