@@ -6,11 +6,17 @@ class svnpubsub::config inherits svnpubsub {
         ensure => directory,
     }
 
+    file { '/var/run/svnpubsub':
+        ensure => directory,
+        mode => 0755,
+        owner => 'daemon',
+        group => 'daemon',
+    }
+
     file { "/etc/init.d/svnpubsub":
-        mode => '0755',
+        mode => 0755,
         owner => 'root',
         group => 'root',
-        source => '/opt/svnpubsub/rc.d/svnpubsub.debian',
-        require => Class['svnpubsub::common'],
+        source => 'puppet:///modules/svnpubsub/svnpubsub.debian',
     }
 }
