@@ -62,19 +62,16 @@ postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, loca
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
-postfix::server::alias_maps:              'hash:/etc/aliases ldap:/etc/postfix/ldap-mail-forward-lookup.cf'
+postfix::server::alias_maps:              'hash:/etc/aliases'
 postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
-postfix::server::virtual_transport:      'dovecot'
 postfix::server::smtpd_sender_restrictions:
   -  'permit_mynetworks'
   -  'reject_unknown_sender_domain'
 postfix::server::smtpd_recipient_restrictions:    
-  -  'permit_sasl_authenticated'
   -  'permit_mynetworks'
   -  'reject_unauth_destination'
 postfix::server::smtpd_tls_key_file:     '/etc/ssl/wildcard.apache.org.key'
 postfix::server::smtpd_tls_cert_file:    '/etc/ssl/wildcard.apache.org-combined.crt'
-postfix::server::smtpd_sasl_auth:        'true'
 postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
 
