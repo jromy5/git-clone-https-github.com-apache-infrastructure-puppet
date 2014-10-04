@@ -58,6 +58,7 @@ class foreman ($password) {
           {
             path         => '/usr/share/foreman/public',
             auth_require => 'all granted',
+            options      => ['SymLinksIfOwnerMatch'],
           },
           {
             path            => '/usr/share/foreman/public/assets',
