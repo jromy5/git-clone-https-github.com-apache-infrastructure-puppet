@@ -60,10 +60,6 @@ class foreman ($password) {
             auth_require => 'all granted',
             options      => ['SymLinksIfOwnerMatch'],
           },
-          {
-            path            => '/usr/share/foreman/public/assets',
-            custom_fragment => template('foreman/assets.erb'),
-          },
         ],
       }
 
@@ -75,6 +71,12 @@ class foreman ($password) {
         target  => '05-foreman.conf',
         order   => 11,
         content => "\n  PassengerAppRoot /usr/share/foreman\n  PassengerMinInstances 1\n  PassengerStartTimeout 600\n",
+      }
+
+      concat::fragment { 'foreman_assets':
+        target  => '05-foreman.conf',
+        order   => 17,
+        content => template('foreman/assets.erb')
       }
 
       concat::fragment { 'foreman_prestart':
