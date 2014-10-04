@@ -54,13 +54,6 @@ class foreman ($password) {
         docroot       => '/usr/share/foreman/public',
         options       => ['SymLinksIfOwnerMatch'],
         priority      => '05',
-        directories   => [
-          {
-            path         => '/usr/share/foreman/public',
-            auth_require => 'all granted',
-            options      => ['SymLinksIfOwnerMatch'],
-          },
-        ],
       }
 
       # From the docs: 
