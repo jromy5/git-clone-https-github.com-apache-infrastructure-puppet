@@ -56,8 +56,8 @@ class foreman ($password) {
         priority      => '05',
         directories   => [
           {
-            path            => '/usr/share/foreman/public',
-            auth_require    => 'all granted',
+            path         => '/usr/share/foreman/public',
+            auth_require => 'all granted',
           },
           {
             path            => '/usr/share/foreman/public/assets',
@@ -79,9 +79,10 @@ class foreman ($password) {
       concat::fragment { 'foreman_prestart':
         target  => '05-foreman.conf',
         order   => 19,
-        content => 'PassengerPreStart http://foreman.apache.org',
+        content => '  PassengerPreStart http://foreman.apache.org',
       }
     }
+    # Don't do anything if not on Trusty
     default: {
     }
   }
