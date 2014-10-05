@@ -51,3 +51,22 @@ mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
   :tag => '4.0.0'
 
+# Foreman modules
+mod 'foreman',
+  :git => 'https://github.com/theforeman/puppet-foreman.git',
+  :tag => '2.2.3'
+
+mod 'tftp',
+  :git => 'https://github.com/theforeman/puppet-tftp.git',
+  :tag => '1.4.3'
+
+mod 'foreman_proxy',
+  :git => 'https://github.com/theforeman/puppet-foreman_proxy.git',
+  :tag => '2.0.1'
+  
+mod 'concat-native',
+  :git => 'https://github.com/theforeman/puppet-concat.git',
+  :tag => '1.3.1'
+
+
+

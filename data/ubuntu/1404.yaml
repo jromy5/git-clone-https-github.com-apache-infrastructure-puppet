@@ -24,14 +24,6 @@ apt::sources:
      key_server: 'pgp.mit.edu'
      include_deb: true
      include_src: false
-  'foreman':
-    location: 'http://deb.theforeman.org/'
-    release: "%{::lsbdistcodename}"
-    repos: '1.6'
-    key: '1AA043B8'
-    key_server: 'pgp.mit.edu'
-    include_deb: true
-    include_src: false
 
 apt::force:
   'orthrus':
