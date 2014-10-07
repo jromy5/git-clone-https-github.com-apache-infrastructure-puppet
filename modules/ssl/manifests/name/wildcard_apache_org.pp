@@ -22,35 +22,25 @@ class ssl::name::wildcard_apache_org (
       group    =>  "${sslrootdirgroup}",
       owner    =>  "${sslrootdirowner}",
       mode     =>  "${sslrootdirumask}";
-    "${sslrootdir}/certs":
-      ensure   =>  directory,
-      group    =>  "${sslrootdirgroup}",
-      owner    =>  "${sslrootdirowner}",
-      mode     =>  "${sslrootdirumask}";
-    "${sslrootdir}/private":
-      ensure   =>  directory,
-      group    =>  "${sslrootdirgroup}",
-      owner    =>  "${sslrootdirowner}",
-      mode     =>  "${sslrootdirumask}";
-    "${sslrootdir}/certs/${sslcertname}":
+    "${sslrootdir}/${sslcertname}":
       require  =>  File["${sslrootdir}"],
       ensure   =>  present,
       content  =>  $sslcertcontents,
       owner    =>  "${sslrootdirowner}",
       group    =>  "${sslrootdirgroup}";
-    "${sslrootdir}/private/${sslkeyname}":
+    "${sslrootdir}/${sslkeyname}":
       require  =>  File["${sslrootdir}"],
       ensure   =>  present,
       content  =>  $sslkeycontents,
       owner    =>  "${sslrootdirowner}",
       group    =>  "${sslrootdirgroup}";
-    "${sslrootdir}/certs/${sslchainname}":
+    "${sslrootdir}/${sslchainname}":
       require  =>  File["${sslrootdir}"],
       ensure   =>  present,
       content  =>  $sslchaincontent,
       owner    =>  "${sslrootdirowner}",
       group    =>  "${sslrootdirgroup}";
-    "${sslrootdir}/private/${sslcombinedname}":
+    "${sslrootdir}/${sslcombinedname}":
       require  =>  File["${sslrootdir}"],
       ensure   =>  present,
       content  =>  $sslcombinedcontents,
