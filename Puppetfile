@@ -44,7 +44,7 @@ mod 'ntp',
   :tag => '3.2.0'
 
 mod 'apache',
-  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git'
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git',
   :tag => '1.1.1'
 
 mod 'postgresql',
