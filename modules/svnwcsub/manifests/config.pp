@@ -35,4 +35,5 @@ class svnwcsub::config inherits svnwcsub {
         group => 'root',
         source => 'puppet:///modules/svnwcsub/svnwcsub.conf',
     }
+
 }

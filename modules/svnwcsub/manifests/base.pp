@@ -1,13 +1,12 @@
 
 class svnwcsub::base inherits svnwcsub {
-    include apache
 
     user { 'svnwc':
         name => 'svnwc',
         ensure => present,
         home => '/home/svnwc',
         shell => '/bin/bash',
-        uid => '9997',
+        uid => $uid,
         gid => 'svnwc',
         managehome => true,
         require => Group['svnwc'],
@@ -17,7 +16,7 @@ class svnwcsub::base inherits svnwcsub {
     group { 'svnwc':
         name => 'svnwc',
         ensure => present,
-        gid => '9997',
+        gid => $gid,
     }
 
     exec { 'apache_perms':
