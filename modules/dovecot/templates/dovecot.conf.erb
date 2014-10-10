@@ -15,8 +15,8 @@ userdb {
   args = /etc/dovecot/dovecot-ldap-userdb.conf.ext
 }
 
-ssl_cert = /etc/ssl/wildcard.apache.org.crt
-ssl_key = /etc/ssl/wildcard.apache.org.key
+ssl_cert = /etc/ssl/certs/wildcard.apache.org.crt
+ssl_key = /etc/ssl/private/wildcard.apache.org.key
 
 service auth {
   unix_listener /var/spool/postfix/private/auth {
