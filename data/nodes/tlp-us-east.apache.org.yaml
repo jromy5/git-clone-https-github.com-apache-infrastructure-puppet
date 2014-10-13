@@ -2,7 +2,6 @@
 classes:
   - apache
   - svnwcsub
-  - tlp_vhosts
 
 apache::default_vhost:      false
 
