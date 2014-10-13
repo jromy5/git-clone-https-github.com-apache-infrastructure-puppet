@@ -16,4 +16,11 @@ class dnsclient (
     '/etc/resolv.conf':
       content => template('dnsclient/resolv.conf.erb');
   }
+
+  # Disable resolveconf since we manage its contents
+  service { 'resolvconf':
+    ensure => 'stopped',
+    hasstatus => true,
+    enable => fasle,
+  }
 }
