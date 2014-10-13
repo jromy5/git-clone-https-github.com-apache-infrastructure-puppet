@@ -15,7 +15,8 @@ classes:
 
 ## MODULES
 ## ASF999
-asf999::create_user::sshd_keysdir: ::ssh::params::sshd_keysdir
+asf999::create_user::sshd_keysdir: '/etc/sshd/ssh_keys'
+asf999::create_user::user: 'asf999'
 
 ## LDAPCLIENT
 ldapclient::ldapcert: |
