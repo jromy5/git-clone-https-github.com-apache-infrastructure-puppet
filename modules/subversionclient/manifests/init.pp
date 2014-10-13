@@ -15,10 +15,12 @@ class subversionclient (
     "$svn_conf_config":
       source  => 'puppet:///modules/subversionclient/config',
       owner   => 'root',
-      mode    => '640';
+      group   => 'root',
+      mode    => '644';
     "$svn_conf_servers":
       source  => 'puppet:///modules/subversionclient/servers',
       owner   => 'root',
-      mode    => '640';
+      group   => 'root',
+      mode    => '644';
   }
 }
