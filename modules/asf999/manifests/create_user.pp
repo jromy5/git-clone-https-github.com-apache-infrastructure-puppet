@@ -16,6 +16,7 @@ class asf999::create_user (
       groups   => $groups, 
       home     => '/home/asf999',
       password => $password,
+      shell    => $shell,
       uid      => '999',
     }
 
