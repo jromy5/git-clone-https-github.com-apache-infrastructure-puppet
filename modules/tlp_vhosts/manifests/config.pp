@@ -1,7 +1,6 @@
 
 class tlp_vhosts::config inherits tlp_vhosts {
 
-    require apache
 
     apache::mod { 'macro': }
 
