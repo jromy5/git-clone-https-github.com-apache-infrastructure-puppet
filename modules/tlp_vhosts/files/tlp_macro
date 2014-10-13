@@ -1,0 +1,36 @@
+<Macro CatchAll>
+   RewriteEngine On
+   RewriteOptions inherit
+
+   RewriteMap lowercase int:tolower
+
+   # optionally enable per-project favicons
+   RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+   RewriteCond ${lowercase:%{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+   RewriteCond /var/www/%1.apache.org/favicon.ico -f
+   RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/favicon.ico [L]
+
+   # optionally enable per-project favicons for cms sites too
+   RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+   RewriteCond ${lowercase:%{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+   RewriteCond /var/www/%1.apache.org/content/favicon.ico -f
+   RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/content/favicon.ico [L]
+
+   # catchall
+   RewriteRule ^/favicon\.ico$ /var/www/www.apache.org/content/favicon.ico [L]
+
+   # Graduated podlings
+   # ### TODO: this foo.incubator.a.o->foo.a.o redirect breaks if foo ever
+   # ###       moves to the attic.
+   RewriteCond ${lowercase:%{SERVER_NAME}} ^(\w+)\.incubator(\.\w+)?\.apache\.org$
+   RewriteCond /dist/%1 -d
+   RewriteRule ^(.*)$ http://%1%2.apache.org$1 [R,L]
+
+   # change the DocumentRoot to ${DocumentRoot}/content if it exists
+   RewriteCond %{REQUEST_URI}              !^/cgi-bin/
+   RewriteCond %{REQUEST_URI}              !^/[.]revision$
+   RewriteCond ${lowercase:%{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+   RewriteCond /var/www/%1.apache.org/content -d
+   RewriteRule ^(.*)$ ${lowercase:%{SERVER_NAME}}$1 [C]
+   RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
+</Macro>
