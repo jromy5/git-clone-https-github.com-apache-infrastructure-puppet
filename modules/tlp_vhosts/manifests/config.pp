@@ -7,7 +7,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::custom_config { 'tlp_macro':
         ensure => present,
         source => 'puppet:///modules/tlp_vhosts/tlp_macro',
-        require => Apache::Mod['macro'],
     }
  
     apache::mod { 'rewrite': }
@@ -27,7 +26,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
-        require => [ Apache::Mod['macro'], Apache::Mod['rewrite'], Apache::Custom_config['tlp_macro'] ],
     }
 
     apache::vhost { 'tlp-ssl':
@@ -49,7 +47,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
-        require => [ Apache::Mod['macro'], Apache::Mod['rewrite'], Apache::Custom_config['tlp_macro'] ],
     }
 
 }
