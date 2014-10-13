@@ -5,7 +5,7 @@ mod 'iptables',
 
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
-  :commit => '042ec53bd282498294e7549a711027f43c61d60',
+  :commit => '042ec53bd282498294e7549a711027f43c61d60'
 
 mod 'rsyslog',
   :git    => 'https://github.com/pctony/puppet-rsyslog.git',
