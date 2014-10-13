@@ -19,8 +19,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www',
         override => ['FileInfo'],
         serveraliases => '*.apache.org',
-        access_log_format => '%V %h %l %u %t \"%r\" %s %b',
-        access_log_env_var => 'vcommon',
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
@@ -40,8 +38,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www',
         override => ['FileInfo'],
         serveraliases => '*.apache.org',
-        access_log_format => '%V %h %l %u %t \"%r\" %s %b',
-        access_log_env_var => 'vcommon',
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
