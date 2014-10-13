@@ -19,7 +19,7 @@ class asf999::create_user (
       uid      => '999',
     }
 
-    ssh::user_keys { 'asf999-sshkeys':
+    ssh::userkeys { 'asf999-sshkeys':
       keycontent    => $sshkeys,
       sshd_keysdir  => $sshd_keysdir,
       user          => 'asf999',
