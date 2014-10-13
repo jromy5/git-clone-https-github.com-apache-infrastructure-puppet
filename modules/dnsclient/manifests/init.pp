@@ -21,6 +21,5 @@ class dnsclient (
   service { 'resolvconf':
     ensure => 'stopped',
     hasstatus => true,
-    enable => fasle,
   }
 }
