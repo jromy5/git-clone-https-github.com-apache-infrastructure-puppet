@@ -1,17 +1,19 @@
 
 class tlp_vhosts::config inherits tlp_vhosts {
 
-    ::apache::mod { 'macro': }
+    require apache
 
-    ::apache::custom_config { 'tlp_macro':
+    apache::mod { 'macro': }
+
+    apache::custom_config { 'tlp_macro':
         ensure => present,
         source => 'puppet:///modules/tlp_vhosts/tlp_macro',
         require => Apache::Mod['macro'],
     }
  
-    ::apache::mod { 'rewrite': }
+    apache::mod { 'rewrite': }
 
-    ::apache::vhost { 'tlp':
+    apache::vhost { 'tlp':
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '80',
@@ -29,7 +31,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         require => [ Apache::Mod['macro'], Apache::Mod['rewrite'], Apache::Custom_config['tlp_macro'] ],
     }
 
-    ::apache::vhost { 'tlp-ssl':
+    apache::vhost { 'tlp-ssl':
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '443',
