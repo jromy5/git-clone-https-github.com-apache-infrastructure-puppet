@@ -8,4 +8,4 @@ apache::default_vhost:      false
 
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
-svnwcsub::service_ensure:   'stopped'
+svnwcsub::service_ensure:   'running'
