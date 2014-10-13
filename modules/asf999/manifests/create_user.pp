@@ -3,10 +3,10 @@
 class asf999::create_user (
 
   $groups       = [],
+  $keycontent   = '',
   $password     = '',
   $shell        = '/bin/bash', #provide a default, JIC.
-  $sshkeys      = '',
-  $sshd_keysdir = '',
+  $sshdkeysdir  = '/etc/ssh/ssh_keys',
 
 ) {
     user { 'asf999': 
@@ -19,9 +19,11 @@ class asf999::create_user (
       uid      => '999',
     }
 
-    ssh::userkeys { 'asf999-sshkeys':
-      keycontent    => $sshkeys,
-      sshd_keysdir  => $sshd_keysdir,
-      user          => 'asf999',
+    file {"${sshdkeysdir}/asf999.pub":
+      content  => $keycontent,
+      owner    => 'asf999',
+      mode     => '0640',
+      require  => User['asf999'],
     }
+
 }

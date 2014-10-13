@@ -15,7 +15,8 @@ classes:
 
 ## MODULES
 ## ASF999
-asf999::create_user::sshd_keysdir: '/etc/sshd/ssh_keys'
+asf999::create_user::keycontent: 'asf999'
+asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
 ## LDAPCLIENT
@@ -83,7 +84,7 @@ ssh::client_options:
         ForwardX11Trusted: 'no'
         ServerAliveInterval: '10'
 
-ssh::params::sshd_keysdir: '/etc/sshd/ssh_keys'
+ssh::params::sshd_keysdir: '/etc/ssh/ssh_keys'
 
 ssh::server_options:
     Protocol: '2'
