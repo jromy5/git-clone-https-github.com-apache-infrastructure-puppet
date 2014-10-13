@@ -45,6 +45,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::mod { 'include': }
+
     apache::vhost { 'httpd':
         port => 80,
         servername => 'httpd.apache.org',
