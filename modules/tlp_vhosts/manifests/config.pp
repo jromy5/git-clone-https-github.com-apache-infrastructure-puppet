@@ -30,10 +30,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '443',
-        ssl => true,
-        ssl_cert => '/etc/ssl/certs/wildcard.apache.org.crt',
-        ssl_chain => '/etc/ssl/certs/wildcard.apache.org.chain',
-        ssl_key => '/etc/ssl/private/wildcard.apache.org.key',
+        ssl => true,    # ssl cert, chain, key defined in apache class, as that is the main ssl stuff used
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         override => ['FileInfo'],

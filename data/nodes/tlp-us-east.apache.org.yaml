@@ -5,6 +5,9 @@ classes:
   - tlp_vhosts
 
 apache::default_vhost:      false
+apache::default_ssl_cert:   '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:  '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:    '/etc/ssl/private/wildcard.apache.org.key'
 
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
