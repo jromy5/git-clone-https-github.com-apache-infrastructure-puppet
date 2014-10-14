@@ -52,6 +52,12 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername => 'httpd.apache.org',
         serveraliases => 'httpd.*.apache.org',
         docroot => '/var/www/httpd.apache.org/content',
+        directories => [
+            { path => '/var/www/httpd.apache.org/content',
+              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
         custom_fragment => '
         AddLanguage da .da
         AddDefaultCharset off
