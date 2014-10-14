@@ -8,6 +8,7 @@ class svnwcsub::base inherits svnwcsub {
         shell => '/bin/bash',
         uid => $uid,
         gid => 'svnwc',
+        groups => ['apmirror'],
         managehome => true,
         require => Group['svnwc'],
     }
