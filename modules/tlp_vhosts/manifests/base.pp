@@ -8,7 +8,7 @@ class tlp_vhosts::base inherits tlp_vhosts {
         shell => '/bin/bash',
         uid => $uid,
         gid => 'apmirror',
-        gid => $::svnwcsub::gid,
+        groups => [$::svnwcsub::gid],
         managehome => true,
         require => Group['apmirror'],
     }
