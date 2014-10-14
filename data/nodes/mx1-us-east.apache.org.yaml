@@ -3,3 +3,4 @@ classes:
   - ssl::name::wildcard_apache_org
 
 postfix::server::postscreen: 'true'
+postfix::server::relay_domains: 'apache.org,apachecon.com'
