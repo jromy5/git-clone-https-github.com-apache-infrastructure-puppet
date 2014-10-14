@@ -10,7 +10,7 @@ class tlp_vhosts::base inherits tlp_vhosts {
         gid => 'apmirror',
         groups => ['svnwc'],
         managehome => true,
-        require => Group['apmirror'],
+        require => [ Group['apmirror'], Group['svnwc'] ],
     }
 
     group { 'apmirror':
@@ -23,6 +23,6 @@ class tlp_vhosts::base inherits tlp_vhosts {
         command => 'svn co http://svn.apache.org/repos/asf/infrastructure/site-tools/trunk/mirrors/',
         path => "/usr/bin/:/bin/",
         cwd => '/home/apmirror',
-        require => [ Package['subversion'], User['apmirror'], Class['svnwcsub::base'] ],
+        require => [ Package['subversion'], User['apmirror'] ],
     }
 }
