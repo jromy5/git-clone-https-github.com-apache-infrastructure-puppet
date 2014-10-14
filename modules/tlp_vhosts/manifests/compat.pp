@@ -33,4 +33,9 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         mode => '2775',
     }
 
+
+    package { 'python-geoip':
+        ensure => 'latest',
+    }
+
 }
