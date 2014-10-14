@@ -18,8 +18,7 @@ class dnsclient (
   }
 
   # Disable resolveconf since we manage its contents
-  service { 'resolvconf':
-    ensure => 'stopped',
-    hasstatus => true,
+  package { 'resolvconf':
+    ensure => 'purged',
   }
 }
