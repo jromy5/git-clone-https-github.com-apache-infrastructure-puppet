@@ -27,4 +27,10 @@ class tlp_vhosts::base inherits tlp_vhosts {
         group => 'apmirror',
         require => [ Package['subversion'], User['apmirror'] ],
     }
+
+    cron { 'apmirror':
+        command => '/home/apmirror/mirrors/runmirmon.sh',
+        minute => '19',
+        user => 'apmirror',
+    }
 }
