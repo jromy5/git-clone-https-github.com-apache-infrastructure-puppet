@@ -18,6 +18,11 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         ensure => 'link',
         target => '/var/www',
     }
+    
+    file { '/x1':
+        ensure => 'link',
+        target => '/var',
+    }
 
     file { '/usr/local/bin/python2.7':
         ensure => 'link',
