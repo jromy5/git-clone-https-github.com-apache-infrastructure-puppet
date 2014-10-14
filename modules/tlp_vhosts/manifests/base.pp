@@ -10,7 +10,7 @@ class tlp_vhosts::base inherits tlp_vhosts {
         gid => 'apmirror',
         groups => ['svnwc'],
         managehome => true,
-        require => [ Group['apmirror'], Group['svnwc'] ],
+        require => Group['apmirror'],
     }
 
     group { 'apmirror':
