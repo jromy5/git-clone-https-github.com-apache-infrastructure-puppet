@@ -26,7 +26,6 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         owner => 'svnwc',
         group => 'apmirror',
         mode => '2775',
-        require => Class['apache'],
     }
 
 }
