@@ -8,6 +8,7 @@ class svnwcsub::base inherits svnwcsub {
         shell => '/bin/bash',
         uid => $uid,
         gid => 'svnwc',
+        groups => ['apmirror'],
         managehome => true,
         require => Group['svnwc'],
     }
@@ -22,6 +23,6 @@ class svnwcsub::base inherits svnwcsub {
     exec { 'apache_perms':
         path => ['/bin/'],
         command => 'chown svnwc:www-data /var/www ; chmod 2755 /var/www',
-        require => [ User['svnwc'], Class['apache'] ],
+        require => User['svnwc'],
     }
 }
