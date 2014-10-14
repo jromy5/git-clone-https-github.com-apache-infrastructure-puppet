@@ -19,7 +19,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target => '/var/www',
     }
 
-    $apache_org_dirs = ['/var/www/www.apache.org', '/var/www/www.apache.org/dist', '/var/www/www.apache.org/dist/zzz']
+    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist', '/var/www/www.apache.org/dist/zzz']
 
     file { $apache_org_dirs:
         ensure => 'directory',
