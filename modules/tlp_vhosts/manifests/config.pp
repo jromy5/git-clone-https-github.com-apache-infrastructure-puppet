@@ -94,6 +94,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             'http://cvs.apache.org/snapshots/',
             'http://tac-apply.apache.org'
         ],
+        redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],
         redirectmatch_dest => ['http://www.apache.org/licenses/', 'http://www.apache.org/foundation/contributing.html'],
         custom_fragment => '
