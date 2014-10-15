@@ -42,6 +42,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::mod { 'expires': }
+
     apache::vhost { 'apache.org':
         port => 80,
         servername => 'www.apache.org',
@@ -91,7 +93,30 @@ class tlp_vhosts::config inherits tlp_vhosts {
             'http://cvs.apache.org/',
             'http://cvs.apache.org/snapshots/',
             'http://tac-apply.apache.org'
-        ]
+        ],
+        custom_fragment => '
+            RedirectMatch permanent ^/LICENSE.* http://www.apache.org/licenses/
+            RedirectMatch permanent /flyers(.*) http://www.apache.org/foundation/contributing.html
+
+            RewriteEngine on
+            RewriteOptions inherit
+            RewriteRule /docs/mod_(.*)$ http://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
+
+            # Grab referals from www.apache.com and explain where
+            # they landed.
+            RewriteCond %{HTTP_REFERER} ^http://([^/]*\.)?apache\.com/
+            RewriteRule ^/dist/.* http://www.apache.org/info/referer-dotcom.html [R,L]
+
+            # odd ddos coming from aouu.com
+            RewriteCond %{HTTP_REFERER} aouu.com
+            RewriteRule ^ - [F,L]
+
+            <IfModule mod_expires.c>
+                ExpiresActive On
+                ExpiresDefault A3600
+            </IfModule>
+        ',
+
     }
 
     apache::mod { 'include': }
