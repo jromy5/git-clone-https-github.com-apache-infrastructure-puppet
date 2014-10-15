@@ -94,10 +94,9 @@ class tlp_vhosts::config inherits tlp_vhosts {
             'http://cvs.apache.org/snapshots/',
             'http://tac-apply.apache.org'
         ],
+        redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],
+        redirectmatch_dest => ['http://www.apache.org/licenses/', 'http://www.apache.org/foundation/contributing.html'],
         custom_fragment => '
-            RedirectMatch permanent ^/LICENSE.* http://www.apache.org/licenses/
-            RedirectMatch permanent /flyers(.*) http://www.apache.org/foundation/contributing.html
-
             RewriteEngine on
             RewriteOptions inherit
             RewriteRule /docs/mod_(.*)$ http://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
