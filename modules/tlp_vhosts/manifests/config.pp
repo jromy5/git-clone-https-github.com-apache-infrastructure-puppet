@@ -42,7 +42,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
-    apache::vhost { 'www.a.o':
+    apache::vhost { 'apache.org':
         port => 80,
         servername => 'www.apache.org',
         serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
