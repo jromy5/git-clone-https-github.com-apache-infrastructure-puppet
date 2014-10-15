@@ -18,7 +18,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         override => ['FileInfo'],
-        serveraliases => '*.apache.org',
+        serveraliases => ['*.apache.org'],
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
@@ -34,7 +34,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         override => ['FileInfo'],
-        serveraliases => '*.apache.org',
+        serveraliases => ['*.apache.org'],
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
@@ -42,12 +42,63 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::vhost { 'www.a.o':
+        port => 80,
+        servername => 'www.apache.org',
+        serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
+        redirect_status => ['permanent'],
+        redirect_source => [
+            '/docs/vif.info',
+            '/docs/directives.html',
+            '/docs/API.html',
+            '/docs/FAQ.html',
+            '/manual-index.cgi/docs',
+            '/bugdb.cgi/',
+            '/bugdb.cgi',
+            '/Conference1998',
+            '/java',
+            '/perl',
+            '/docs/manual',
+            '/docs',
+            '/httpd',
+            '/httpd/',
+            '/httpd.html',
+            '/index/full',
+            '/info/css-security',
+            '/websrc/',
+            '/from-cvs/',
+            '/travel/application'
+        ],
+        redirect_dest => [
+            'http://httpd.apache.org/docs/misc/vif-info',
+            'http://httpd.apache.org/docs/mod/directives.html',
+            'http://httpd.apache.org/docs/misc/API.html',
+            'http://httpd.apache.org/docs/misc/FAQ.html',
+            'http://www.apache.org/search.html',
+            'http://bugs.apache.org/index/',
+            'http://bugs.apache.org/',
+            'http://www.apachecon.com',
+            'http://archive.apache.org/dist/java/',
+            'http://perl.apache.org',
+            'http://httpd.apache.org/docs',
+            'http://httpd.apache.org/docs',
+            'http://httpd.apache.org',
+            'http://httpd.apache.org/',
+            'http://httpd.apache.org/',
+            'http://www.apache.org',
+            'http://httpd.apache.org/info/css-security',
+            'http://cvs.apache.org/',
+            'http://cvs.apache.org/snapshots/',
+            'http://tac-apply.apache.org'
+        ]
+    }
+
     apache::mod { 'include': }
 
     apache::vhost { 'httpd':
         port => 80,
         servername => 'httpd.apache.org',
-        serveraliases => 'httpd.*.apache.org',
+        serveraliases => ['httpd.*.apache.org'],
         docroot => '/var/www/httpd.apache.org/content',
         directories => [
             { path => '/var/www/httpd.apache.org/content',
@@ -172,7 +223,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
 
     apache::vhost { 'httpd-ssl':
         servername => 'httpd.apache.org',
-        serveraliases => 'httpd.*.apache.org',
+        serveraliases => ['httpd.*.apache.org'],
         port => '443',
         ssl => true,    # ssl cert, chain, key defined in apache class, as that is the main ssl stuff used
         docroot => '/var/www/httpd.apache.org/content',
