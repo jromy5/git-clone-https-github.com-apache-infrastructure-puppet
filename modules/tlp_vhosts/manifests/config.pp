@@ -46,6 +46,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'www.apache.org',
         serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
+        docroot => '/var/www/www.apache.org',
         redirect_status => ['permanent'],
         redirect_source => [
             '/docs/vif.info',
