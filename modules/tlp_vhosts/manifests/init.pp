@@ -18,5 +18,6 @@ class tlp_vhosts (
     class { '::tlp_vhosts::base': } ->
     class { '::tlp_vhosts::compat': } ->
     class { '::tlp_vhosts::config': } ->
+    class { '::tlp_vhosts::host_fixes': } ->
     anchor { 'tlp_vhosts::end': }
 }
