@@ -6,6 +6,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::mod { 'include': }
     apache::mod { 'expires': }
     apache::mod { 'proxy': }
+    apache::mod { 'allowmethod': }
 
 
 
