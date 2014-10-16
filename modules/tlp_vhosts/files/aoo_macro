@@ -1,0 +1,77 @@
+<Macro OpenOffice $proto>
+   UseCanonicalName On
+
+   # Silence PROPFIND mod_allowmethods errors
+   # for Apache OO update check requests
+   <LocationMatch "/projects/update[^/]*/ProductUpdateService/check\.Update">
+     LogLevel allowmethods:crit
+   </LocationMatch>
+
+   # Silence PROPFIND mod_allowmethods errors
+   # for Apache OO accesses by "Microsoft-WebDAV-MiniRedir"
+   # (typical URI is "/3")
+   <If "%{REQUEST_METHOD} == 'PROPFIND' && %{HTTP_USER_AGENT} =~ /^Microsoft-WebDAV-MiniRedir/">
+     LogLevel allowmethods:crit
+   </If> 
+
+   <Location /projects> 
+     ErrorDocument 404 default 
+   </Location> 
+
+   ErrorDocument 404 /docs/custom_404.html
+
+   RewriteEngine On
+   RewriteOptions inherit
+   RewriteRule ^/favicon\.ico$ /x1/www/ooo-site.apache.org/content/favicon.ico [L]
+
+   RewriteMap lowercase int:tolower
+
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^openoffice.org$
+   RewriteRule (.*) $proto://www.openoffice.org$1 [L]
+
+   # kill update.services.openoffice.org
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^update.services.openoffice.org$
+   RewriteRule (.*) - [G,L]
+   
+
+   # qa|www.openoffice.org
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^(?:qa|www)(?:\.\w+)?\.openoffice\.org$
+   RewriteRule /issues/(.*) $proto://issues.apache.org/ooo/$1 [NE,L]
+
+   # [registration2|survey].openoffice.org
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^(?:registration2|survey)(?:\.\w+)?\.openoffice\.org$
+   RewriteRule (.*) $proto://www.openoffice.org/legacy/thankyou.html [NE,L]
+
+   # contributing.openoffice.org
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^contributing(?:\.\w+)?\.openoffice\.org$
+   RewriteRule (.*) $proto://openoffice.apache.org/get-involved.html [L]
+
+   RewriteRule /contributing/(.*) $proto://openoffice.apache.org/get-involved.html [L]
+
+   # security.openoffice.org
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^security(?:\.\w+)?\.openoffice\.org$
+   RewriteRule (.*) $proto://openoffice.apache.org/security.html [L]
+
+   # br-pt.openoffice.org typos
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^br-pt(?:\.\w+)?\.openoffice\.org$
+   RewriteRule (.*) $proto://www.openoffice.org/pt-br$1 [L]
+   
+   # change foo.openoffice.org/... to www.openoffice.org/foo/... if foo dir exists
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^(\w+)(?:\.\w+)?\.openoffice\.org$
+   RewriteCond /x1/www/ooo-site.apache.org/content/%1 -d
+   RewriteRule ^(.*)$ ${lowercase:%{HTTP_HOST}}$1 [C]
+   RewriteRule ^(\w+)(?:\.\w+)?\.openoffice\.org/(.*) $proto://www.openoffice.org/$1/$2 [NE,L,R=permanent]
+
+   # change *.openoffice.org/?lang=foo to www.openoffice.org/foo/ 
+   RewriteCond ${lowercase:%{QUERY_STRING}} lang=([a-z\-]+) 
+   RewriteCond /x1/www/ooo-site.apache.org/content/%1 -d 
+   RewriteRule .* $proto://www.openoffice.org/%1? [NE,L,R=permanent] 
+
+   # fallback for proj.openoffice.org/... to openoffice.org/projects/proj/...
+   # The most common case is redirecting
+   #    $proto://updateXXX.services.openoffice.org/ProductUpdateService/check.Update
+   # to $proto://www.openoffice.org/projects/updateXXX/ProductUpdateService/check.Update
+   RewriteCond ${lowercase:%{HTTP_HOST}} ^(?!www)(\w+)(?:\.\w+)?\.openoffice\.org$
+   RewriteRule ^(.*)$ ${lowercase:%{HTTP_HOST}}$1 [C]
+   RewriteRule ^(\w+)(?:\.\w+)?\.openoffice\.org/(.*) $proto://www.openoffice.org/projects/$1/$2 [NE,L]
+</Macro>

@@ -29,6 +29,16 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::vhost { 'aoo':
+        port => 80,
+        servername => 'www.openoffice.org',
+        serveraliases => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
+        docrot => '/var/www/ooo-site.apache.org/content',
+        custom_fragment => '
+        Use OpenOffice http
+        ',
+    }
+
     apache::vhost { 'uima':
         port => 80,
         servername => 'uima.apache.org',
