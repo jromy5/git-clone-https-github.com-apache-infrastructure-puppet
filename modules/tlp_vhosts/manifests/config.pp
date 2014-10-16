@@ -613,7 +613,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
 
     apache::vhost { 'spamassassin-redirect':
         port => 80,
-        servername => 'ServerName www.spamassassin.org',
+        servername => 'www.spamassassin.org',
         serveraliases => ['spamassassin.org', 'au.spamassassin.org', 'au2.spamassassin.org',
                             'eu.spamassassin.org', 'eu2.spamassassin.org', 'eu3.spamassassin.org',
                             'ie.spamassassin.org', 'news.spamassassin.org', 'uk.spamassassin.org',
