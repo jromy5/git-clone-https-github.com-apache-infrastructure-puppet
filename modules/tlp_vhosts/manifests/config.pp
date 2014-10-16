@@ -53,7 +53,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername => 'xml.apache.org',
         serveraliases => ['xml.*.apache.org'],
         docroot=> '/var/www/xml.apache.org',
-        redirect_status => ['permanenet'],
+        redirect_status => ['permanent'],
         redirect_source => ['/websrc/', '/from-cvs/'],
         redirect_dest => ['http://cvs.apache.org/', 'http://cvs.apache.org/snapshots/'],
         custom_fragment => '
