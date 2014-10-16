@@ -39,7 +39,8 @@ class tlp_vhosts::compat inherits tlp_vhosts {
     }
 
 
-    package { 'python-geoip':
+    $packages = ['python-geoip', 'swish-e']
+    package { $packages:
         ensure => 'latest',
     }
 
