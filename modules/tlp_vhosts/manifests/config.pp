@@ -736,3 +736,5 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_source => ['/'],
         redirect_dest => ['http://jclouds.apache.org/'],
     }
+
+}
