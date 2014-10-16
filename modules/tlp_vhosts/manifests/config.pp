@@ -29,6 +29,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         directories => [
             { path => '/var/www',
               options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+              allow_override => ['All'],
               addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
         ],
