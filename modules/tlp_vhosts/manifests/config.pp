@@ -189,11 +189,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
                         'http://www.chamas.com/bench/', 'http://perl.apache.org/maillist/email-etiquette.pod.orig', 'http://perl.apache.org/embperl/',
                         'http://perl.apache.org/docs/offsite/index.html'],
         custom_fragment => '
-            <IfDefine !MINOTAUR>
-                ProxyPass /search http://140.211.11.10/search
-                ProxyPreserveHost on
-            </IfDefine>
-
             XBithack Full
             <IfDefine !MINOTAUR>
                 ProxyPass /search http://140.211.11.10/search
