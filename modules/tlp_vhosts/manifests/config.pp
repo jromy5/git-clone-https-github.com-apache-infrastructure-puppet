@@ -130,7 +130,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_dest => ['http://cvs.apache.org/snapshots/', 'http://perl.apache.org/docs/1.0/guide', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/products/apache-modules.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/products/apache-modules.html', 'http://perl.apache.org/docs/index.html',
-                        'http://perl.apache.org/ docs/index.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/contribute/svn_howto.html',
+                        'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/contribute/svn_howto.html',
                         'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html', 'http://perl.apache.org/docs/general/perl_myth.html',
                         'http://perl.apache.org/docs/general/perl_myth.pod.orig', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html',
