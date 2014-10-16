@@ -128,7 +128,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
                             '/win32_multithread.pod', '/email-etiquette.html', '/jobs.html', '/netcraft/  index.html', '/logos/index.html',
                             '/Embperl/', '/perl/Embperl/', '/embperl.html', '/asp', '/CREDITS.html', '/contribute/cvs_howto.html', '/bench.txt',
                             '/email-etiquette.pod', '/embperl.html', '/faqs.html'],
-        redirect_est => ['http://cvs.apache.org/snapshots/', 'http://perl.apache.org/docs/1.0/guide', 'http://perl.apache.org/docs/index.html',
+        redirect_dest => ['http://cvs.apache.org/snapshots/', 'http://perl.apache.org/docs/1.0/guide', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/products/apache-modules.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/products/apache-modules.html', 'http://perl.apache.org/docs/index.html',
                         'http://perl.apache.org/ docs/index.html', 'http://perl.apache.org/docs/index.html', 'http://perl.apache.org/contribute/svn_howto.html',
