@@ -29,6 +29,13 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::vhost { 'uima':
+        port => 80,
+        servername => 'uima.apache.org',
+        serveraliases => ['uima.*.apache.org'],
+        docroot => '/var/www/uima.apache.org/pubsub',
+    }
+
     apache::vhost { 'tomee':
         port => 80,
         servername => 'tomee.apache.org',
@@ -225,7 +232,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'www.apache.org',
         serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
-        docroot => '/var/www/www.apache.org',
+        docroot => '/var/www/www.apache.org/content',
         redirect_status => ['permanent'],
         redirect_source => [
             '/docs/vif.info',
