@@ -4,7 +4,7 @@ classes:
   - svnwcsub
   - tlp_vhosts
 
-apache::keepalive:          true
+apache::keepalive:          'On'
 apache::keepalive_timeout:  '300'
 apache::default_vhost:      false
 apache::default_ssl_cert:   '/etc/ssl/certs/wildcard.apache.org.crt'
