@@ -5,7 +5,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::mod { 'macro': }
     apache::mod { 'include': }
     apache::mod { 'expires': }
-    apache::mod { 'ssl': }
     apache::mod { 'proxy': }
 
 
