@@ -72,6 +72,12 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername => 'spamassassin.apache.org',
         serveraliases => ['spamassassin.*.apache.org'],
         docroot => '/var/www/spamassassin.apache.org',
+        directories => [
+            { path => '/var/www/spamassassin.apache.org',
+              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
         rewrites => [
             { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
         ],
