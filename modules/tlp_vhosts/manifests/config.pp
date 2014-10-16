@@ -181,7 +181,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'gump.apache.org',
         serveraliases => ['gump.*.apache.org'],
-        doctroot => '/var/www/gump.apache.org',
+        docroot => '/var/www/gump.apache.org',
         custom_fragment => '
             #
             # Start the expires heading
