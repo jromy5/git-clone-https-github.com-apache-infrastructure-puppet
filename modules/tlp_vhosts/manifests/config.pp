@@ -26,7 +26,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
-        override => ['FileInfo'],
         directories => [
             { path => '/var/www',
               options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
