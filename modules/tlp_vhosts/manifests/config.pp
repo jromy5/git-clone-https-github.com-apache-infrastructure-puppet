@@ -120,7 +120,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
                             '/faq/mod_perl_api.pod', '/faq/mod_perl_cgi.pod', '/faq/mod_perl_faq.html', '/faq/mod_perl_faq.pod',
                             '/faq/mod_perl_faq.tar.gz', '/distributions.html', '/tidbits.html', '/products.html', '/isp.html', '/sites.html',
                             '/stories/index.html', '/stories/ColbyChem.html', '/stories/France-Presse.html', '/stories/adultad.html',
-                            '/stories/bsat.html', '/stories/idl-net.html', '/stories/imdb.html', '/stories/lind- waldock.html',
+                            '/stories/bsat.html', '/stories/idl-net.html', '/stories/imdb.html', '/stories/lind-waldock.html',
                             '/stories/presto.html', '/stories/seds-org.html', '/stories/singlesheaven.html', '/stories/tgix.html',
                             '/stories/uber-alles.html', '/stories/webby.html', '/stories/winamillion.html', '/stories/wmboerse.html',
                             '/win32_binaries.html', '/win32_binaries.pod', '/win32_compile.html', '/win32_compile.pod', '/win32_multithread.html',
