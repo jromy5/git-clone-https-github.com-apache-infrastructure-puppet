@@ -13,6 +13,11 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ensure => present,
         source => 'puppet:///modules/tlp_vhosts/tlp_macro',
     }
+
+    apache::custom_config { 'aoo_macro':
+        ensure => present,
+        source => 'puppet:///modules/tlp_vhosts/aoo_macro',
+    }
  
     apache::vhost { 'tlp':
         vhost_name => '*',
@@ -33,7 +38,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'www.openoffice.org',
         serveraliases => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
-        docrot => '/var/www/ooo-site.apache.org/content',
+        docroot => '/var/www/ooo-site.apache.org/content',
         custom_fragment => '
         Use OpenOffice http
         ',
