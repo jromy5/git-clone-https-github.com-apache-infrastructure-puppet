@@ -41,6 +41,27 @@ class tlp_vhosts::config inherits tlp_vhosts {
         ',
     }
 
+    apache::vhost { 'incubator':
+        vhost_name => '*',
+        servername => 'www.apache.org',
+        port => '80',
+        virtual_docroot => '/var/www/%1.0.apache.org',
+        docroot => '/var/www',
+        directories => [
+            { path => '/var/www',
+              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+              allow_override => ['All'],
+              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
+        serveraliases => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
+        custom_fragment => '
+        VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+        UseCanonicalName Off
+        Use CatchAll
+        ',
+    }
+
     apache::vhost { 'aoo':
         port => 80,
         servername => 'www.openoffice.org',
