@@ -639,7 +639,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
 
     apache::vhost { 'subversion':
         port => 80,
-        servername => 'ServerName www.subversion.org',
+        servername => 'www.subversion.org',
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirectmatch_regexp => ['^'],
