@@ -24,37 +24,46 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
     }
-#
-#    apache::vhost { 'incubator':
-#        vhost_name => '*',
-#        servername => 'www.apache.org',
-#        port => '80',
-#        virtual_docroot => '/var/www/%1.0.apache.org',
-#        docroot => '/var/www',
-#        directories => [
-#            { path => '/var/www',
-#              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-#              allow_override => ['All'],
-#              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
-#            },
-#        ],
-#        serveraliases => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
-#        custom_fragment => '
-#        VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
-#        UseCanonicalName Off
-#        Use CatchAll
-#        ',
-#    }
-#
-#    apache::vhost { 'aoo':
-#        port => 443,
-#        servername => 'www.openoffice.org',
-#        serveraliases => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
-#        docroot => '/var/www/ooo-site.apache.org/content',
-#        custom_fragment => '
-#        Use OpenOffice http
-#        ',
-#    }
+
+    apache::vhost { 'incubator':
+        priority => '98',
+        vhost_name => '*',
+        servername => 'www.apache.org',
+        port => '443',
+        ssl => true,
+        ssl_cert => '/etc/ssl/certs/wildcard.incubator.apache.org.crt',
+        ssl_chain => '/etc/ssl/certs/wildcard.incubator.apache.org.chain',
+        ssl_key => '/etc/ssl/private/wildcard.apache.org.key',
+        virtual_docroot => '/var/www/%1.0.apache.org',
+        docroot => '/var/www',
+        directories => [
+            { path => '/var/www',
+              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+              allow_override => ['All'],
+              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
+        serveraliases => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
+        custom_fragment => '
+        VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+        UseCanonicalName Off
+        Use CatchAll
+        ',
+    }
+
+    apache::vhost { 'aoo':
+        port => 443,
+        ssl => true,
+        servername => 'www.openoffice.org',
+        serveraliases => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
+        docroot => '/var/www/ooo-site.apache.org/content',
+        ssl_cert => '/etc/ssl/certs/wildcard.openoffice.org.crt',
+        ssl_chain => '/etc/ssl/certs/wildcard.openoffice.org.chain',
+        ssl_key => '/etc/ssl/private/wilcard.openoffice.org.key',
+        custom_fragment => '
+        Use OpenOffice https
+        ',
+    }
 
     apache::vhost { 'uima-ssl':
         port => 443,
