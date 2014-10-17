@@ -20,7 +20,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 #        source => 'puppet:///modules/tlp_vhosts/aoo_macro',
 #    }
 # 
-    apache::vhost { 'tlp':
+    apache::vhost { 'tlp-ssl':
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '443',
