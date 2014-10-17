@@ -55,28 +55,21 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 #        Use OpenOffice http
 #        ',
 #    }
-#
-#    apache::vhost { 'uima':
-#        port => 443,
-#        servername => 'uima.apache.org',
-#        serveraliases => ['uima.*.apache.org'],
-#        docroot => '/var/www/uima.apache.org',
-#        custom_fragment => 'RewriteMap lowercase int:tolower',
-#        rewrites => [
-#            {
-#                rewrite_cond => [
-#                '%{REQUEST_URI} !^/cgi-bin/',
-#                '%{REQUEST_URI} !^/[.]revision$',
-#                '${lowercase:%{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$',
-#                '/var/www/%1.apache.org/pubsub -d'
-#                ],
-#                rewrite_rule => [
-#                '^(.*)$ ${lowercase:%{SERVER_NAME}}$1 [C]',
-#                '^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/pubsub/$2'
-#                ],
-#            },
-#        ],
-#    }
+
+    apache::vhost { 'uima':
+        port => 443,
+        ssl => true,
+        servername => 'uima.apache.org',
+        serveraliases => ['uima.*.apache.org'],
+        docroot => '/var/www/uima.apache.org/pubsub',
+        directories => [
+            {
+                path => '/var/www/uima.apache.org/pubsub',
+                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
+    }
 
     apache::vhost { 'tomee-ssl':
         port => 443,
