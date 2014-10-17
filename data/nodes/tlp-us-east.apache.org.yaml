@@ -2,6 +2,7 @@
 classes:
   - apache
   - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_incubator_apache_org
   - svnwcsub
   - tlp_vhosts
 
