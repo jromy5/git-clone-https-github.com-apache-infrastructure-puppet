@@ -83,7 +83,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www/uima.apache.org/pubsub',
         directories => [
             {
-                path => '/var/www/uima.apache.org',
+                path => '/var/www/uima.apache.org/pubsub',
                 options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
                 addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
@@ -94,7 +94,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'tomee.apache.org',
         serveraliases => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
-        docroot => '/var/www/tomee.apache.org',
+        docroot => '/var/www/tomee.apache.org/content',
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
     }

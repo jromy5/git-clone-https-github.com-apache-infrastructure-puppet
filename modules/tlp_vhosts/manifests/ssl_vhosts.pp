@@ -76,7 +76,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl => true,
         servername => 'tomee.apache.org',
         serveraliases => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
-        docroot => '/var/www/tomee.apache.org',
+        docroot => '/var/www/tomee.apache.org/content',
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
     }
