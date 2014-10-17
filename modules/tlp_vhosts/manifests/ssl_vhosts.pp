@@ -59,7 +59,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         docroot => '/var/www/ooo-site.apache.org/content',
         ssl_cert => '/etc/ssl/certs/wildcard.openoffice.org.crt',
         ssl_chain => '/etc/ssl/certs/wildcard.openoffice.org.chain',
-        ssl_key => '/etc/ssl/private/wilcard.openoffice.org.key',
+        ssl_key => '/etc/ssl/private/wildcard.openoffice.org.key',
         custom_fragment => '
         Use OpenOffice https
         ',
