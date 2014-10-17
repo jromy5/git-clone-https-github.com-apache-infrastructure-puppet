@@ -25,7 +25,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
     }
 
-    apache::vhost { 'incubator':
+    apache::vhost { 'incubator-ssl':
         priority => '98',
         vhost_name => '*',
         servername => 'www.apache.org',
@@ -51,7 +51,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
     }
 
-    apache::vhost { 'aoo':
+    apache::vhost { 'aoo-ssl':
         port => 443,
         ssl => true,
         servername => 'www.openoffice.org',
