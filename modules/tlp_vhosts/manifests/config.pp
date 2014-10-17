@@ -76,7 +76,22 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'uima.apache.org',
         serveraliases => ['uima.*.apache.org'],
-        docroot => '/var/www/uima.apache.org/pubsub',
+        docroot => '/var/www/uima.apache.org',
+        custom_fragment => 'RewriteMap lowercase int:tolower',
+        rewrites => [
+            {
+                rewrite_cond => [
+                '%{REQUEST_URI} !^/cgi-bin/',
+                '%{REQUEST_URI} !^/[.]revision$',
+                '${lowercase:%{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$',
+                '/var/www/%1.apache.org/pubsub -d'
+                ],
+                rewrite_rule => [
+                '^(.*)$ ${lowercase:%{SERVER_NAME}}$1 [C]',
+                '^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/pubsub/$2'
+                ],
+            },
+        ],
     }
 
     apache::vhost { 'tomee':
