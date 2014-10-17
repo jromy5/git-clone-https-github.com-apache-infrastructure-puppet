@@ -3,6 +3,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
 
     apache::vhost { 'tlp-ssl':
+        priority => '99',
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '443',
@@ -531,6 +532,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
     apache::vhost { 'libcloud-ssl':
         port => 443,
+        ssl => true,
         servername => 'www.libcloud.org',
         serveraliases => ['libcloud.org', 'www.libcloud.net', 'libcloud.net', 'www.libcloud.com', 'libcloud.com'],
         docroot => '/var/www/libcloud.apache.org', # apache puppet module requires a docroot defined
@@ -593,6 +595,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
     apache::vhost { 'svn.collab-ssl':
         port => 443,
+        ssl => true,
         servername => 'svn.collab.net',
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         redirectmatch_status => ['permanent'],

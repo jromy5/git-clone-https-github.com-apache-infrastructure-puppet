@@ -21,16 +21,18 @@ class tlp_vhosts::config inherits tlp_vhosts {
     }
  
     apache::vhost { 'tlp':
+        priority => '99',
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         directories => [
-            { path => '/var/www',
-              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-              allow_override => ['All'],
-              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            {
+                path => '/var/www',
+                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override => ['All'],
+                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
         ],
         serveraliases => ['*.apache.org'],
@@ -42,16 +44,18 @@ class tlp_vhosts::config inherits tlp_vhosts {
     }
 
     apache::vhost { 'incubator':
+        priority => '98',
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         directories => [
-            { path => '/var/www',
-              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-              allow_override => ['All'],
-              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            {
+                path => '/var/www',
+                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override => ['All'],
+                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
         ],
         serveraliases => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
