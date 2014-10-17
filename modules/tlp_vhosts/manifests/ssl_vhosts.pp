@@ -24,6 +24,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         vhost_name => '*',
         servername => 'www.apache.org',
         port => '443',
+        ssl => true,
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot => '/var/www',
         directories => [
