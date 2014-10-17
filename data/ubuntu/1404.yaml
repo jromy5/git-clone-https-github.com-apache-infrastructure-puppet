@@ -5,7 +5,6 @@ classes:
   - dnsclient
   - orthrus
   - postfix::server
-  - ssl::name::wildcard_apache_org
   - subversionclient
 
 base::basepackages:

@@ -1,6 +1,7 @@
 ---
 classes:
   - apache
+  - ssl::name::wildcard_apache_org
   - svnwcsub
   - tlp_vhosts
 
