@@ -583,7 +583,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'www.subversion.org',
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
+        redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['http://subversion.apache.org/'],
     }
@@ -592,7 +592,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port => 80,
         servername => 'svn.collab.net',
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
+        redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['https://subversion.apache.org/source-code'],
     }
