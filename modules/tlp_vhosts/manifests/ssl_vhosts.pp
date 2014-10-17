@@ -56,7 +56,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 #        ',
 #    }
 
-    apache::vhost { 'uima':
+    apache::vhost { 'uima-ssl':
         port => 443,
         ssl => true,
         servername => 'uima.apache.org',
