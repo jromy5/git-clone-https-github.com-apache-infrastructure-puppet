@@ -51,8 +51,7 @@ mod 'postgresql',
   :tag => '4.0.0'
 
 mod 'collectd',
-  :git => 'https://github.com/pdxcat/puppet-module-collectd.git',
-  :tag => '3.0.1'
+  :git => 'https://github.com/pdxcat/puppet-module-collectd.git'
 
 # Foreman modules
 mod 'foreman',
