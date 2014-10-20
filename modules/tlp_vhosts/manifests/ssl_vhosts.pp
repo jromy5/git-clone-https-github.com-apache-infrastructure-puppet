@@ -23,6 +23,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'incubator-ssl':
@@ -49,6 +50,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'aoo-ssl':
@@ -63,6 +65,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         custom_fragment => '
         Use OpenOffice https
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'uima-ssl':
@@ -78,6 +81,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
         ],
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'tomee-ssl':
@@ -88,6 +92,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         docroot => '/var/www/tomee.apache.org/content',
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'spamassassin-ssl':
@@ -106,6 +111,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         rewrites => [
             { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
         ],
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'xml-ssl':
@@ -126,6 +132,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             deny from all
         </LocationMatch>
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'ws-ssl':
@@ -137,6 +144,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/xml-rpc'],
         redirect_dest => ['https://ws.apache.org/xmlrpc'],
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'xalan-ssl':
@@ -150,6 +158,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             deny from all
         </Location>
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'xerces-ssl':
@@ -163,6 +172,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             deny from all
         </LocationMatch>
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'perl-ssl':
@@ -225,6 +235,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 ProxyPreserveHost on
             </IfDefine>
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'jspwiki-ssl':
@@ -235,6 +246,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/doc', '/wiki'],
         redirect_dest => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'gump-ssl':
@@ -281,6 +293,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             RewriteEngine On
             RewriteOptions inherit
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'apache.org-ssl':
@@ -363,7 +376,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 ExpiresDefault A3600
             </IfModule>
         ',
-
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'httpd-ssl':
