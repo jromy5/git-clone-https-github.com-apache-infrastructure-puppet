@@ -41,6 +41,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
+        access_log_file => 'weblog',
     }
 
     apache::vhost { 'incubator':
