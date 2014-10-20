@@ -290,7 +290,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www/www.apache.org/content',
         directories => [
             {
-                path => '/var/www/www.apache.org',
+                path => '/var/www/www.apache.org/content',
                 options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
                 addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
