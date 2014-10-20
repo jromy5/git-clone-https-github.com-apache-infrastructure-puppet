@@ -25,7 +25,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'incubator-ssl':
@@ -54,7 +53,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'aoo-ssl':
@@ -70,7 +68,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use OpenOffice https
         ',
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -89,7 +86,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ],
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'tomee-ssl':
@@ -101,7 +97,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -122,7 +117,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
         ],
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -146,7 +140,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'ws-ssl':
@@ -159,7 +152,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_source => ['/xml-rpc'],
         redirect_dest => ['https://ws.apache.org/xmlrpc'],
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -176,7 +168,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'xerces-ssl':
@@ -191,7 +182,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -257,7 +247,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ',
         access_log_file => 'weblog',
 		error_log_file => 'errorlog',
-		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'jspwiki-ssl':
@@ -269,7 +258,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_source => ['/doc', '/wiki'],
         redirect_dest => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -318,7 +306,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             RewriteOptions inherit
         ',
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
@@ -403,7 +390,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </IfModule>
         ',
         access_log_file => 'weblog',
-		error_log_file => 'errorlog',
 		error_log_file => 'errorlog',
     }
 
