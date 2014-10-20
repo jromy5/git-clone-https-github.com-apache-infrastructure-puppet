@@ -10,9 +10,9 @@ class spamassassin (
   $required_hits         = '10.0',
   $skip_rbl_checks       = '0',
   $report_safe           = '0',
-  $use_bayes             = '0',0
-  $use_pyzor             = '0',0
-  $use_razor2            = '0',0
+  $use_bayes             = '0',
+  $use_pyzor             = '0',
+  $use_razor2            = '0',
   $dns_available         = 'yes',
   $helperhomedir         = '',
   $nouserconfig          = false,
