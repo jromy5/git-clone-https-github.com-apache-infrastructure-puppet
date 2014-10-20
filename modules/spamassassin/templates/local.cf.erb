@@ -13,10 +13,11 @@ report_safe <%= @report_safe %>
 
 #   Set which networks or hosts are considered 'trusted' by your mail
 #   server (i.e. not spammers)
-#
+<% if @trusted_networks %>
 <% @trusted_networks.each do |val| -%>
 trusted_networks <%= val %>
 <% end -%>
+<% end %>
 
 
 use_bayes <%= @use_bayes %>
