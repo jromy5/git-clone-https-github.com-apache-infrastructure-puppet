@@ -3,6 +3,6 @@ classes:
   - spamassassin
   - ssl::name::wildcard_apache_org
 
-postfix::smtp_content_filter: 'spamassassin'
+postfix::server::smtp_content_filter: 'spamassassin'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,apachecon.com'
