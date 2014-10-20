@@ -41,8 +41,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'incubator':
@@ -66,8 +66,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         UseCanonicalName Off
         Use CatchAll
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'aoo':
@@ -78,8 +78,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         custom_fragment => '
         Use OpenOffice http
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'uima':
@@ -94,8 +94,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
         ],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'tomee':
@@ -105,8 +105,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www/tomee.apache.org/content',
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'spamassassin':
@@ -123,8 +123,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         rewrites => [
             { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
         ],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'xml':
@@ -144,8 +144,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
             deny from all
         </LocationMatch>
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'ws':
@@ -156,8 +156,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/xml-rpc'],
         redirect_dest => ['http://ws.apache.org/xmlrpc'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'xalan':
@@ -170,8 +170,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
             deny from all
         </Location>
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'xerces':
@@ -184,8 +184,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
             deny from all
         </LocationMatch>
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'perl':
@@ -247,8 +247,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 ProxyPreserveHost on
             </IfDefine>
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'jspwiki':
@@ -258,8 +258,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/doc', '/wiki'],
         redirect_dest => ['http://jspwiki-doc.apache.org', 'http://jspwiki-wiki.apache.org'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'gump':
@@ -305,8 +305,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
             RewriteEngine On
             RewriteOptions inherit
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'apache.org':
@@ -388,8 +388,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 ExpiresDefault A3600
             </IfModule>
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'httpd':
@@ -516,8 +516,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         # Convert docs-2.x -> docs/2.x
         RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
         ',
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
 
@@ -531,8 +531,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://cloudstack.apache.org'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'cloudstack-docs':
@@ -542,8 +542,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://cloudstack.apache.org/docs/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'deltaspike':
@@ -554,8 +554,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://deltaspike.apache.org'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'www-jspwiki':
@@ -566,8 +566,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://jspwiki.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'libcloud':
@@ -578,8 +578,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://libcloud.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'odftoolkit':
@@ -593,8 +593,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://incubator.apache.org/odftoolkit/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'spamassassin-redirect':
@@ -612,8 +612,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://spamassassin.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'wiki-spamassassin':
@@ -623,8 +623,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/w/', '/'],
         redirect_dest => [' http://wiki.apache.org/spamassassin/', 'http://wiki.apache.org/spamassassin/'], 
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'subversion':
@@ -634,8 +634,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['http://subversion.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'svn.collab':
@@ -645,8 +645,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['https://subversion.apache.org/source-code'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'webservices':
@@ -657,8 +657,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://ws.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'ofbiz':
@@ -673,8 +673,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 rewrite_rule => ['(.*) http://ofbiz-bigfiles.apache.org/ [L]'],
             },
         ],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'myfaces':
@@ -685,8 +685,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://myfaces.apache.org'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'httpcomponents':
@@ -697,8 +697,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://hc.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'wicket':
@@ -709,8 +709,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://wicket.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'quetz':
@@ -721,8 +721,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://quetz.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'jackrabbit':
@@ -731,8 +731,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         serveraliases => ['jackrabbit.*.apache.org'],
         docroot => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico'] } ],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
     apache::vhost { 'jclouds':
@@ -743,8 +743,8 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['http://jclouds.apache.org/'],
-        access_log_file => 'weblog',
-		error_log_file => 'errorlog',
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
     }
 
 }
