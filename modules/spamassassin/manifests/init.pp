@@ -3,7 +3,7 @@
 class spamassassin (
 
   $spamassassin_packages = [],
-  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
+  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload',
 
   $listenip              = '127.0.0.1',
   $allowedips            = '127.0.0.1',
