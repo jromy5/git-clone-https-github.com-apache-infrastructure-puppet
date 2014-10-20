@@ -67,8 +67,11 @@ postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-c
 postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
 
+spamassassin::spamassassin_packages:
+  - spamassassin
+
 subversionclient::packages: 
-    - subversion
+  - subversion
 subversionclient::svn_conf_config:  '/etc/subversion/config'
 subversionclient::svn_conf_servers: '/etc/subversion/servers'
 
