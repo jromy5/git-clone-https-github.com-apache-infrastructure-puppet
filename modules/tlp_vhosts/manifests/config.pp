@@ -288,6 +288,13 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername => 'www.apache.org',
         serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
         docroot => '/var/www/www.apache.org/content',
+        directories => [
+            {
+                path => '/var/www/www.apache.org',
+                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+            },
+        ],
         redirect_status => ['permanent'],
         redirect_source => [
             '/docs/vif.info',
