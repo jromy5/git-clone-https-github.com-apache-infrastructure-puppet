@@ -51,7 +51,7 @@ class spamassassin (
            content => template('spamassassin/local.cf.erb'),
            require => Package[ $spamassassin_packages ],
            notify  => Service['spamassassin'];
-         '/etc/mail/spamassassin/init.pre'
+         '/etc/mail/spamassassin/init.pre':
            content => template('spamassassin/init.pre.erb'),
            require => Package[ $spamassassin_packages ],
            notify  => Service['spamassassin'];
