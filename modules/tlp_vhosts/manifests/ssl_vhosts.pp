@@ -24,6 +24,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'incubator-ssl':
@@ -51,6 +53,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'aoo-ssl':
@@ -66,6 +70,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use OpenOffice https
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'uima-ssl':
@@ -82,6 +88,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             },
         ],
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'tomee-ssl':
@@ -93,6 +101,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
         scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'spamassassin-ssl':
@@ -112,6 +122,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
         ],
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'xml-ssl':
@@ -133,6 +145,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'ws-ssl':
@@ -145,6 +159,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_source => ['/xml-rpc'],
         redirect_dest => ['https://ws.apache.org/xmlrpc'],
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'xalan-ssl':
@@ -159,6 +175,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </Location>
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'xerces-ssl':
@@ -173,6 +191,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'perl-ssl':
@@ -236,6 +256,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </IfDefine>
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'jspwiki-ssl':
@@ -247,6 +269,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_source => ['/doc', '/wiki'],
         redirect_dest => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'gump-ssl':
@@ -294,6 +318,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             RewriteOptions inherit
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'apache.org-ssl':
@@ -377,6 +403,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </IfModule>
         ',
         access_log_file => 'weblog',
+		error_log_file => 'errorlog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'httpd-ssl':
@@ -504,6 +532,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         # Convert docs-2.x -> docs/2.x
         RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
         ',
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
 
@@ -517,7 +547,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         docroot => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://cloudstack.apache.org']
+        redirect_dest => ['https://cloudstack.apache.org'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'cloudstack-docs-ssl':
@@ -528,6 +560,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://cloudstack.apache.org/docs/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'deltaspike-ssl':
@@ -539,6 +573,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://deltaspike.apache.org'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'www-jspwiki-ssl':
@@ -550,6 +586,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://jspwiki.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'libcloud-ssl':
@@ -561,6 +599,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://libcloud.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'odftoolkit-ssl':
@@ -575,6 +615,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://incubator.apache.org/odftoolkit/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'spamassassin-redirect-ssl':
@@ -593,6 +635,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://spamassassin.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'wiki-spamassassin-ssl':
@@ -602,7 +646,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         docroot => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/w/', '/'],
-        redirect_dest => [' https://wiki.apache.org/spamassassin/', 'https://wiki.apache.org/spamassassin/'], 
+        redirect_dest => [' https://wiki.apache.org/spamassassin/', 'https://wiki.apache.org/spamassassin/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'subversion-ssl':
@@ -613,6 +659,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['https://subversion.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'svn.collab-ssl':
@@ -623,6 +671,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['https://subversion.apache.org/source-code'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'webservices-ssl':
@@ -634,6 +684,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://ws.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'ofbiz-ssl':
@@ -649,6 +701,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 rewrite_rule => ['(.*) https://ofbiz-bigfiles.apache.org/ [L]'],
             },
         ],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'myfaces-ssl':
@@ -660,6 +714,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://myfaces.apache.org'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'httpcomponents-ssl':
@@ -671,6 +727,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://hc.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'wicket-ssl':
@@ -681,7 +739,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         docroot => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://wicket.apache.org/'], 
+        redirect_dest => ['https://wicket.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'quetz-ssl':
@@ -693,6 +753,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://quetz.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'jackrabbit-ssl':
@@ -702,6 +764,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         serveraliases => ['jackrabbit.*.apache.org'],
         docroot => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
         rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico'] } ],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
     apache::vhost { 'jclouds-ssl':
@@ -713,6 +777,8 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest => ['https://jclouds.apache.org/'],
+        access_log_file => 'weblog',
+		error_log_file => 'errorlog',
     }
 
 }
