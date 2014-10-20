@@ -1,0 +1,45 @@
+# This file is being maintained by Puppet.
+# DO NOT EDIT
+#
+###########################################################################
+
+
+
+#   Save spam messages as a message/rfc822 MIME attachment instead of
+#   modifying the original message (0: off, 2: use text/plain instead)
+#
+report_safe <%= @report_safe %>
+
+
+#   Set which networks or hosts are considered 'trusted' by your mail
+#   server (i.e. not spammers)
+#
+<% @trusted_networks.each do |val| -%>
+trusted_networks <%= val %>
+<% end -%>
+
+
+use_bayes <%= @use_bayes %>
+#use_auto_whitelist 0
+required_hits <%= @required_hits %>
+lock_method flock
+skip_rbl_checks <%= skip_rbl_checks %>
+#check_mx_attempts 0
+report_safe <%= report_safe %>
+use_pyzor <%= use_pyzor %>
+use_razor2 <%= use_razor2 %>
+dns_available <%= dns_available %>
+remove_header all Report
+
+
+## Custom Scoring
+<% @custom_scoring.each do |val| -%>
+score <%= val %>
+<% end -%>
+
+
+## Custom Rules
+<% @custom_rules.each do |val| -%>
+<%= val %>
+<% end -%>
+
