@@ -1,7 +1,7 @@
 #/etc/puppet/modules/pflogsumm/manifests/init.pp
 
 class pflogsumm {
-  $packages   = ['pflogsumm'],
+  $packages   => ['pflogsumm'],
 
 ){
 
