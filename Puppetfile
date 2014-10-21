@@ -37,7 +37,7 @@ mod 'pkgng',
 
 mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
-  :commit => '3b78771b5a2e6ea9edca7eda80a787c22a4fd97b'
+  :commit => 'a3bbe28e7898003fc1b6e46c3a4f4fcf379bae98'
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
