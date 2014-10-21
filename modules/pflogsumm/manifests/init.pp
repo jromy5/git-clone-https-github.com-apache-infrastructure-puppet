@@ -12,7 +12,7 @@ class pflogsumm (
   cron { 'create-pflogsumm':
     command  => '/root/create-pflogsumm.output.sh',
     hour     => '*',
-    minute   => '1',
+    minute   => '10',
   }
 
   file { '/root/create-pflogsumm.output.sh':
