@@ -1,5 +1,6 @@
 ---
 classes: 
+  - clamav
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
