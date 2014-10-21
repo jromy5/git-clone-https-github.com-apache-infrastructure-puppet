@@ -50,9 +50,6 @@ mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
   :tag => '4.0.0'
 
-mod 'collectd',
-  :git => 'https://github.com/pdxcat/puppet-module-collectd.git'
-
 # Foreman modules
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
