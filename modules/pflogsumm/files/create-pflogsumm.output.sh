@@ -8,7 +8,7 @@ FILENAME="${DATE_YEAR}${DATE_MONTH}${DATE_DAY}.txt"
 
 if [ ! -d "${FILEPATH}" ]; then
   mkdir -p ${FILEPATH}; 
-done
+fi
 
 cat /var/log/mail.log | pflogsumm  > ${FILEPATH}/${FILENAME} || echo "Could not create pflogsummfile. Error." 
 
