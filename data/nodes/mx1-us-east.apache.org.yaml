@@ -2,9 +2,25 @@
 classes: 
   - spamassassin
   - ssl::name::wildcard_apache_org
+  - collectd
+  - collectd::plugin::cpu
+  - collectd::plugin::load
+  - collectd::plugin::memory
+  - collectd::plugin::interface
+  - collectd::plugin::write_http
+
 
 postfix::server::smtp_content_filter: 
   - spamassassin
 postfix::server::postscreen: 'true'
 postfix::server::spamassassin_enabled: 'true'
 postfix::server::relay_domains: 'apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
+
+collectd::purge:  true
+collectd::recurse: true
+collectd::purge_config: true
+
+collectd::plugin::interface::interfaces:
+    - lo
+    - ignoreselected: true
+
