@@ -1,17 +1,17 @@
 ---
 classes:
   - apache
-  - ssl::name::wildcard_apache_org
-  - ssl::name::wildcard_incubator_apache_org
-  - ssl::name::wildcard_openoffice_org
-  - svnwcsub
-  - tlp_vhosts
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_incubator_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - svnwcsub
+  - tlp_vhosts
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '300'
@@ -21,18 +21,18 @@ apache::default_ssl_chain:  '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:    '/etc/ssl/private/wildcard.apache.org.key'
 apache::serveradmin:        'infrastructure@apache.org'
 
+collectd::purge:  true
+collectd::recurse: true
+collectd::purge_config: true
+
+collectd::plugin::interface::interfaces: 
+  - lo
+collectd::plugin::interface::ignoreselected: true
+
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
 svnwcsub::service_ensure:   'running'
 
 tlp_vhosts::uid:            '508'
 tlp_vhosts::gid:            '508'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces:
-    - lo
-    - ignoreselected: true
 

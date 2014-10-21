@@ -13,9 +13,9 @@ collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
 
-collectd::plugin::interface::interfaces:
-    - lo
-    - ignoreselected: true
+collectd::plugin::interface::interfaces: 
+  - lo
+collectd::plugin::interface::ignoreselected: true
 
 
 postfix::server::amavisd: 'true'
