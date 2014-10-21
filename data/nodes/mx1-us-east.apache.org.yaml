@@ -18,7 +18,7 @@ collectd::plugin::interface::interfaces:
 collectd::plugin::interface::ignoreselected: true
 
 
-postfix::server::amavisd: 'true'
+postfix::server::clamav_enabled: 'true'
 postfix::server::check_policy_service: 'unix:private/policy-spf'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
