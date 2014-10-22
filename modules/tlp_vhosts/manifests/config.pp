@@ -7,7 +7,10 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::mod { 'expires': }
     apache::mod { 'proxy': }
     apache::mod { 'allowmethods': }
-    apache::mod { 'status': }
+    class { 'apache::mod::status':
+        allow_from => ['all'],
+        apache_version => '2.3', # Force module to use Allow from syntax and actually allow anyone to check
+    }
 
 
     apache::custom_config { 'tlp_macro':
@@ -387,6 +390,9 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 ExpiresActive On
                 ExpiresDefault A3600
             </IfModule>
+            <Location "/server-status">
+                SetHandler server-status
+            </Location>
         ',
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',

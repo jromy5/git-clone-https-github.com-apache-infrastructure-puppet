@@ -388,6 +388,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 ExpiresActive On
                 ExpiresDefault A3600
             </IfModule>
+            <Location "/server-status">
+              SetHandler server-status
+            </Location>
         ',
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
