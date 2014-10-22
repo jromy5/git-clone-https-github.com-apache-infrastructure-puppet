@@ -7,9 +7,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::mod { 'expires': }
     apache::mod { 'proxy': }
     apache::mod { 'allowmethods': }
-    apache::mod { 'status':
-        allow_from => ['all'],
-    }
+    apache::mod { 'status': }
 
 
     apache::custom_config { 'tlp_macro':
