@@ -28,6 +28,14 @@ class spamassassin (
 
 ) {
 
+  file { 'spamfilter.sh':
+    ensure => present,
+    path => '/usr/bin/spamfilter.sh',
+    owner => 'root',
+    group => 'root',
+    mode => '0755',
+    source => 'puppet:///modules/spamassassin/spamfilter.sh',
+  }
   package { $spamassassin_packages: 
     ensure   =>  installed,
   }
