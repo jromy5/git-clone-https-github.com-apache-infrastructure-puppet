@@ -17,7 +17,6 @@ collectd::plugin::write_http::urls:
   "https://us2.noit.circonus.net:43191/module/collectd/":
     verifypeer: 'false'
     verifyhost: 'false'
-    cacert:     /etc/collectd/circonus-ca.crt
     format:     JSON
     storerates: 'false'
     user:       asf
