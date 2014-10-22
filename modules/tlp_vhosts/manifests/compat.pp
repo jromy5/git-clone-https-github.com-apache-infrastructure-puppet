@@ -14,6 +14,11 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target => '/usr/bin/wget',
     }
 
+    file { '/usr/local/bin/svn':
+        ensure => 'link',
+        target => '/usr/bin/svn',
+    }
+
     file { '/www':
         ensure => 'link',
         target => '/var/www',

@@ -29,11 +29,11 @@ class svnwcsub::config inherits svnwcsub {
         source => 'puppet:///modules/svnwcsub/svnwcsub-hook',
     }
 
-#    file { '/etc/svnwcsub.conf':
-#        mode => 0644,
-#        owner => 'root',
-#        group => 'root',
-#        source => 'puppet:///modules/svnwcsub/svnwcsub.conf',
-#    }
+    file { '/etc/svnwcsub.conf':
+        mode => 0644,
+        owner => 'root',
+        group => 'root',
+        source => 'puppet:///modules/svnwcsub/svnwcsub.conf',
+    }
 
 }
