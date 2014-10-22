@@ -12,7 +12,7 @@ class clamav (
   service {
     'clamav-daemon': 
       ensure  => running,
-      require => Package[ ['clamav'], ['clamsmtp'] ];
+      require => Service['clamav-freshclam'], Package[ ['clamav'], ['clamsmtp'] ];
     'clamav-freshclam':
       ensure  => running,
       require => Package[ ['clamav'], ['clamsmtp'] ];
