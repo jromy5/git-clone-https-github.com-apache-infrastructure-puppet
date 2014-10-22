@@ -27,11 +27,11 @@ Facter.add("asfcolo") do
       "yahoo"
     when /^172.31.33.([0-9]+)$/ # Need to expand this, the subnet is actually a /20
       "amz-vpc-virginia-1b"
-    when /^10.0.0.([0-9]+)$/
+    when /^10.0.([0-9]+).([0-9]+)$/
       "amz-vpc-virginia-1d"
-    when /^10.3.0.([0-9]+)$/
+    when /^10.3.([0-9]+).([0-9]+)$/
       "amz-vpc-us-west"
-    when /^10.2.0.([0-9]+)$/
+    when /^10.2.([0-9]+).([0-9]+)$/
       "amz-vpc-eu-west"
     else
       'No Colo could be automatically determined'
