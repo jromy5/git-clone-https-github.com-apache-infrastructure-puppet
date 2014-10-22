@@ -17,7 +17,7 @@ class pflogsumm (
 
   file { '/root/create-pflogsumm.output.sh':
     owner    => 'root',
-    mode     => '07050',
+    mode     => '0750',
     source   => 'puppet:///modules/pflogsumm/create-pflogsumm.output.sh',
   }
 
