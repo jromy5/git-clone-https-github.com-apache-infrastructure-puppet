@@ -343,8 +343,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             '/info/css-security',
             '/websrc/',
             '/from-cvs/',
-            '/travel/application',
-            '/dist'
+            '/travel/application'
         ],
         redirect_dest => [
             'https://httpd.apache.org/docs/misc/vif-info',
@@ -366,8 +365,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             'https://httpd.apache.org/info/css-security',
             'https://cvs.apache.org/',
             'https://cvs.apache.org/snapshots/',
-            'https://tac-apply.apache.org',
-            'https://dist.apache.org/'
+            'https://tac-apply.apache.org'
         ],
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],

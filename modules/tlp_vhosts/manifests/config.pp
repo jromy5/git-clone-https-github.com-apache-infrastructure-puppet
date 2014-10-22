@@ -9,7 +9,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::mod { 'allowmethods': }
 
 
-
     apache::custom_config { 'tlp_macro':
         ensure => present,
         source => 'puppet:///modules/tlp_vhosts/tlp_macro',
@@ -342,8 +341,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             '/info/css-security',
             '/websrc/',
             '/from-cvs/',
-            '/travel/application',
-            '/dist'
+            '/travel/application'
         ],
         redirect_dest => [
             'http://httpd.apache.org/docs/misc/vif-info',
@@ -365,8 +363,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             'http://httpd.apache.org/info/css-security',
             'http://cvs.apache.org/',
             'http://cvs.apache.org/snapshots/',
-            'http:/i/tac-apply.apache.org',
-            'http://dist.apache.org/'
+            'http:/i/tac-apply.apache.org'
         ],
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],

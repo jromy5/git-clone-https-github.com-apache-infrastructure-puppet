@@ -32,7 +32,7 @@ collectd::plugin::interface::ignoreselected: true
 
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
-svnwcsub::service_ensure:   'running'
+svnwcsub::service_ensure:   'stopped'
 
 tlp_vhosts::uid:            '508'
 tlp_vhosts::gid:            '508'
