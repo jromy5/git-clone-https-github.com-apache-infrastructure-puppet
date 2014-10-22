@@ -29,6 +29,10 @@ Facter.add("asfcolo") do
       "amz-vpc-virginia-1b"
     when /^10.0.0.([0-9]+)$/
       "amz-vpc-virginia-1d"
+    when /^10.3.0.([0-9]+)$/
+      "amz-vpc-us-west"
+    when /^10.2.0.([0-9]+)$/
+      "amz-vpc-eu-west"
     else
       'No Colo could be automatically determined'
     end

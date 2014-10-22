@@ -1,0 +1,5 @@
+---
+
+dnsclient::nameservers:
+  - '10.2.0.2'
+
