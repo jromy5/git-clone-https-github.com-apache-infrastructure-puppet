@@ -45,7 +45,7 @@ mod 'ntp',
 
 mod 'apache',
   :git => 'https://github.com/stumped2/puppetlabs-apache',
-  :branch => mpm_event_fix
+  :branch => 'mpm_event_fix'
 
 mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
