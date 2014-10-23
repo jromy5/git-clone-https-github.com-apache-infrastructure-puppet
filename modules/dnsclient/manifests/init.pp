@@ -15,6 +15,8 @@ class dnsclient (
   file { 
     '/etc/resolv.conf':
       content => template('dnsclient/resolv.conf.erb');
+    '/etc/dhcp/dhclient-enter-hooks.d/nodnsupdate':
+      content => '#!/bin/sh\n make_resolv_conf(){ \n : \n }'
   }
 
   # Disable resolveconf since we manage its contents
