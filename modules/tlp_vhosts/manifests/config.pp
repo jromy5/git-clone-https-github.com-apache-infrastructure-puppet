@@ -59,7 +59,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
             {
                 comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4apache.org$'],
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
                 rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
