@@ -48,8 +48,38 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
+                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+            },
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+            },
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4apache.org$'],
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+            },
+            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
                 rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
@@ -147,8 +177,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
             {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/spamassassin-$1 [R=301,L]'],
             },
         ],
         access_log_file => 'weblog.log',
@@ -234,8 +263,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
             {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/perl-$1 [R=301,L]'],
             },
         ],
         redirect_status => ['permanent'],
@@ -415,8 +443,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
             {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]'],
             },
         ],
         custom_fragment => '
@@ -463,8 +490,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
             {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/httpd-$1 [R=301,L]'],
             },
         ],
         custom_fragment => '
