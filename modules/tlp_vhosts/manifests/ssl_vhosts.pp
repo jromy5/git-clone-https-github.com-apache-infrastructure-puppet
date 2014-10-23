@@ -18,6 +18,17 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             },
         ],
         serveraliases => ['*.apache.org'],
+        rewrites => [
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox',
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            }
+        ],
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
@@ -114,7 +125,18 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             },
         ],
         rewrites => [
-            { rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'], }
+            {
+                rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'],
+            },
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox',
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            }
         ],
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
@@ -238,6 +260,17 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                         'https://www.apache-asp.org/', 'https://perl.apache.org/about/contributors/people.html', 'https://perl.apache.org/contribute/svn_howto.html',
                         'https://www.chamas.com/bench/', 'https://perl.apache.org/maillist/email-etiquette.pod.orig', 'https://perl.apache.org/embperl/',
                         'https://perl.apache.org/docs/offsite/index.html'],
+        rewrites => [
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox',
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            }
+        ],
         custom_fragment => '
             XBithack Full
             <IfDefine !MINOTAUR>
@@ -370,6 +403,17 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],
         redirectmatch_dest => ['https://www.apache.org/licenses/', 'https://www.apache.org/foundation/contributing.html'],
+        rewrites => [
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox',
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            }
+        ],
         custom_fragment => '
             RewriteEngine on
             RewriteOptions inherit
@@ -407,6 +451,17 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
               options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
               addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
             },
+        ],
+        rewrites => [
+            {
+                comment => '/mail -> mail-archives.a.o/mod_mbox',
+                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
+            },
+            {
+                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+            }
         ],
         custom_fragment => '
         AddLanguage da .da
