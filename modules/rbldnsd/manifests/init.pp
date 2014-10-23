@@ -32,12 +32,10 @@ class rbldnsd (
     '/etc/default/rbldnsd':
       owner    => 'root',
       mode     => '0750',
-      content  => 'RBLDNSD="dsbl -b 127.0.0.1 -r /etc/rbldnsd -t 21600 -c 30 sbl-xbl-pbl.spamhaus.org:ip4set:sbl/sbl sbl-xbl-pbl.spamhaus.org:ip4set:xbl/xbl sbl-xbl-pbl.spamhaus.org:ip4set:pbl/pbl dul.dnsbl.sorbs.net:ip4set:sorbs/dul.dnsbl.sorbs.net dul.dnsbl.sorbs.net:generic:sorbs/generic.sorbs.net dnsbl.apache.org:ip4set:dnsbl.apache.org"',
-      require  => Package[ $packages ];
+      content  => 'RBLDNSD="dsbl -b 127.0.0.1 -r /etc/rbldnsd -t 21600 -c 30 sbl-xbl-pbl.spamhaus.org:ip4set:sbl/sbl sbl-xbl-pbl.spamhaus.org:ip4set:xbl/xbl sbl-xbl-pbl.spamhaus.org:ip4set:pbl/pbl dul.dnsbl.sorbs.net:ip4set:sorbs/dul.dnsbl.sorbs.net dul.dnsbl.sorbs.net:generic:sorbs/generic.sorbs.net dnsbl.apache.org:ip4set:dnsbl.apache.org"';
     '/etc/rbldnsd':
       owner    => 'root',
-      mode     => '0750',
-      require  => Package[ $packages ];
+      mode     => '0750';
   }
 
 }
