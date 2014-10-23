@@ -248,7 +248,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         directories => [
                 {
                     path => '/var/www/perl.apache.org',
-                    options => ['+Indexes', '+ExecCGI'],
+                    options => ['+ExecCGI'],
                 },
         ],
         redirect_status => ['permanent'],

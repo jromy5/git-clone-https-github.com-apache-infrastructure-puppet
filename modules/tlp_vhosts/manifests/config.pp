@@ -255,7 +255,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         directories => [
                 {
                     path => '/var/www/perl.apache.org',
-                    options => ['+Indexes', '+ExecCGI'],
+                    options => ['+ExecCGI'],
                 },
         ],
         rewrites => [
