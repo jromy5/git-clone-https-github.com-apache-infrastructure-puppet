@@ -10,6 +10,6 @@ if [ ! -d "${FILEPATH}" ]; then
   mkdir -p ${FILEPATH}; 
 fi
 
-cat /var/log/mail.log | pflogsumm  > ${FILEPATH}/${FILENAME} || echo "Could not create pflogsummfile. Error." 
+cat /var/log/mail.log | /usr/sbin/pflogsumm  > ${FILEPATH}/${FILENAME} || echo "Could not create pflogsumm file. Error." 
 
 
