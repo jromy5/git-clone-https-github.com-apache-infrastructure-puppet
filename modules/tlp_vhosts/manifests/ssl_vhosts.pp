@@ -20,13 +20,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         serveraliases => ['*.apache.org'],
         rewrites => [
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox',
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
-            },
-            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]', '^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             }
         ],
         custom_fragment => '
@@ -129,13 +125,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'],
             },
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox',
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
-            },
-            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]', '^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             }
         ],
         access_log_file => 'weblog.log',
@@ -262,13 +254,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                         'https://perl.apache.org/docs/offsite/index.html'],
         rewrites => [
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox',
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
-            },
-            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]', '^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             }
         ],
         custom_fragment => '
@@ -405,13 +393,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         redirectmatch_dest => ['https://www.apache.org/licenses/', 'https://www.apache.org/foundation/contributing.html'],
         rewrites => [
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox',
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
-            },
-            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]', '^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             }
         ],
         custom_fragment => '
@@ -454,13 +438,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ],
         rewrites => [
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox',
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox'],
-            },
-            {
                 comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
                 rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]', '^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             }
         ],
         custom_fragment => '
