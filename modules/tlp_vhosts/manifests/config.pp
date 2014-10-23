@@ -253,8 +253,9 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www/perl.apache.org',
         setenv => ['SWISH_BINARY_PATH /usr/bin/swish-e'],
         directories => [
-                { path => '/var/www/perl.apache.org',
-                  options => ['+ExecCGI'],
+                {
+                    path => '/var/www/perl.apache.org',
+                    options => ['+Indexes', '+ExecCGI'],
                 },
         ],
         rewrites => [
