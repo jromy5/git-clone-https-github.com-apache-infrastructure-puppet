@@ -1,5 +1,6 @@
 ---
 classes: 
+  - apache
   - clamav
   - collectd
   - collectd::plugin::cpu
