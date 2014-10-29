@@ -615,7 +615,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
     ## Host redirect fixes
 
-    apache::vhost { 'any23':
+    apache::vhost { 'any23-ssl':
         port => 80,
         servername => 'www.any23.org',
         serveraliases => ['any23.org', 'any23.com', 'www.any23.com'],
