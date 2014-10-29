@@ -615,6 +615,18 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
     ## Host redirect fixes
 
+    apache::vhost { 'any23':
+        port => 80,
+        servername => 'www.any23.org',
+        serveraliases => ['any23.org', 'any23.com', 'www.any23.com'],
+        docroot => '/var/www/any23.apache.org', # apache puppet module requires a docroot defined
+        redirect_status => ['permanent'],
+        redirect_source => ['/'],
+        redirect_dest => ['http://any23.apache.org'],
+        access_log_file => 'weblog.log',
+        error_log_file => 'errorlog.log',
+    }
+
     apache::vhost { 'cloudstack-ssl':
         port => 443,
         ssl => true,
