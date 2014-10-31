@@ -43,6 +43,9 @@ asf999::create_user::keycontent: |
   # dnorris
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCr7U3tWvw4+mpfHCog3coeT5YRPce8WPLkbKN/X7EOLagay31FQeD4m2q7sTOhTzBokw8t96BNh2RN61KxZE9ejBq/c+TNFWhYJj5NrWMXNDZWjevJ5BWKfyM0nrLKLhTHKZ7g0o7JSN4zoBwe7Gw3CfU0tC/hfmc1eYVK6dzdOjx45XyYPnPmjA8Cbcm8QZuApZrCP+/LbQI093aWadLisaS+xAkkvqTmfC+8gILqh4U3aCfeIaW/p4fBxyICIfnWqG57Ef98KvUbulTSSMItb3JIyfXnIkgM7atqNTk4htWK+c7oVhIihNQKqHy19SlPjN2qPzjKXEhlH113Dnsn 
 
+  # ke4qqq
+  ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtqqDXzCNpuQvr3yJa1XbhHDTW/hRwGMZCbninWxwWsd/E7QkuCdstBT2iGihbizbZlnh0mchjtvhouIADkbCyizvtRdujl0Vi1pg5i6YOKKkFc5/s2BRoqsrj0FLu7d2/oHddOz2DO1B8nfGfVyC9mxcqKVpOaGqfdcalLrAH60e7MmH9FkrEVMHQIgGaq1J9W0FFczcxrsCEu5FxXaFTGEos1BmnnsrdtCmQhSJ2n41cngZxrj+yy/HJSj++aDJ2HCwyvRnOX6PX7iNtLyRDX947+A4VbCRQtAC7IbccKHvTGTHSzBXs6PUNUEleZi5VHA6Xm4ubVNiNLwmGYlthw== ke4qqq@nalleyt61.keymark.dom
+
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
