@@ -3,9 +3,9 @@ class svnwcsub::service inherits svnwcsub {
     require svnpubsub::common
 
     service { 'svnwcsub':
-        ensure => $service_ensure,
-        enable => true,
+        ensure    => $service_ensure,
+        enable    => true,
         hasstatus => false,
-        require => Class['svnpubsub::common'],
+        require   => Class['svnpubsub::common'],
     }
 }
