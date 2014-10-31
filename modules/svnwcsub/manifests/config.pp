@@ -30,6 +30,7 @@ class svnwcsub::config inherits svnwcsub {
     }
 
     file { '/etc/svnwcsub.conf':
+        notify => Service["svnwcsub"],
         mode => 0644,
         owner => 'root',
         group => 'root',
