@@ -748,7 +748,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::vhost { 'subversion':
         port => 80,
         servername => 'www.subversion.org',
-        serveralias => 'subversion.apache.org',
+        serveraliases => ['subversion.apache.org'],
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         custom_fragment => '
             <Files ~ "\.html">
