@@ -14,16 +14,16 @@ classes:
   - tlp_vhosts
 
 apache::keepalive:          'On'
-apache::keepalive_timeout:  '300'
+apache::keepalive_timeout:  '30'
 apache::default_vhost:      false
 apache::default_ssl_cert:   '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:  '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:    '/etc/ssl/private/wildcard.apache.org.key'
 
 apache::mod::event::listenbacklog: '1023'
-apache::mod::event::maxclients: '500'
+apache::mod::event::maxclients: '750'
 apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '750'
+apache::mod::event::maxrequestworkers: '3750'
 apache::mod::event::maxsparethreads: '750'
 apache::mod::event::minsparethreads: '150'
 apache::mod::event::serverlimit: '25'
