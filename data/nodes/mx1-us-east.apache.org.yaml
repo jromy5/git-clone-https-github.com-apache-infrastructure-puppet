@@ -9,7 +9,7 @@ classes:
   - collectd::plugin::interface
   - collectd::plugin::write_http
   - pflogsumm
-  - rbldnsd
+  - rbldnsd::client::setup
   - spamassassin
   - ssl::name::wildcard_apache_org
 
