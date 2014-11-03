@@ -76,15 +76,3 @@ subversionclient::packages:
 subversionclient::svn_conf_config:  '/etc/subversion/config'
 subversionclient::svn_conf_servers: '/etc/subversion/servers'
 
-ulimit::rule::ulimit_name:   'root-soft-nofile'
-ulimit::rule::ulimit_domain: 'root'
-ulimit::rule::ulimit_type:   'soft'
-ulimit::rule::ulimit_item:   'nofile'
-ulimit::rule::ulimit_value:  '8192'
-
-ulimit::rule::ulimit_name:   'root-hard-nofile'
-ulimit::rule::ulimit_domain: 'root'
-ulimit::rule::ulimit_type:   'hard'
-ulimit::rule::ulimit_item:   'nofile'
-ulimit::rule::ulimit_value:  '10240'
-
