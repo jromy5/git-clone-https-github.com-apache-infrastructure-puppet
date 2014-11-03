@@ -70,5 +70,5 @@ mod 'concat-native',
 
 mod 'ulimit',
   :git => 'https://github.com/pctony/puppet-ulimit.git',
-  :commit => '165311966761b270a8d5767c90454dbf012694cb'
+  :commit => '012c69a8d7ce963b414b0d374d66fe17591408d2'
 
