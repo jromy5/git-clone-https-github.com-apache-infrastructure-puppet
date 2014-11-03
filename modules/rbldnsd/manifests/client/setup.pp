@@ -21,6 +21,7 @@ class rbldnsd::client::setup (
       ensure   => 'directory',
       owner    => 'root',
       group    => 'rbldns',
+      backup   => 'false',
       mode     => '0770',
       recurse  => 'true',
       source   => 'puppet:///modules/rbldnsd/rbldnsd/',
