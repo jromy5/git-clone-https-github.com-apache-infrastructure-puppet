@@ -1,0 +1,6 @@
+# These folders are pulled in useing rysnc via  puppet:///modules/rbldns/master/setup.pp
+sbl/
+sorbs/
+pbl/
+xbl/
+
