@@ -1,6 +1,6 @@
-#/etc/puppet/modules/rbldnsd/manifests/init.pp
+#/etc/puppet/modules/rbldnsd/manifests/clienbt/setup.pp
 
-class rbldnsd (
+class rbldnsd::client::setup (
   $packages   = ['rbldnsd'],
 
 ){
