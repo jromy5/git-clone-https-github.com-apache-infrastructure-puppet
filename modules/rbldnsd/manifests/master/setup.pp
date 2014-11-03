@@ -2,6 +2,8 @@
 
 class rbldnsd::master::setup (
 
+  $RBLDISTDIR  =  '/etc/puppet/modules/rbldnsd/files/rbldnsd',
+  $RBLSRCDIR   =  '/var/rbldnsd'
 ){
 
   cron { 
@@ -36,7 +38,14 @@ class rbldnsd::master::setup (
       ensure   => 'directory',
       owner    => 'root',
       group    => 'root',
-      mode     => '0770',
+      mode     => '0770';
+    "${RBLDISTDIR}":
+      ensure   => link,
+      links    => follow,
+      target   => "${RBLSRCDIR}",
+      owner    => 'root',
+      group    => 'root',
+      mode     => '0770';
   }
 
 }
