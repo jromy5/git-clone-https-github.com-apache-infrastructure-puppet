@@ -35,7 +35,7 @@ class rbldnsd::master::setup (
     '/var/rbldnsd':
       ensure   => 'directory',
       owner    => 'root',
-      group    => 'rbldns',
+      group    => 'root',
       mode     => '0770',
   }
 
