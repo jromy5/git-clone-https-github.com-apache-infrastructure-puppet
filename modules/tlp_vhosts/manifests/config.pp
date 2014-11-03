@@ -469,6 +469,9 @@ class tlp_vhosts::config inherits tlp_vhosts {
             <Location "/server-status">
                 SetHandler server-status
             </Location>
+            <Location /dist/cassandra/debian>
+                Require all denied
+            </Location>
         ',
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
