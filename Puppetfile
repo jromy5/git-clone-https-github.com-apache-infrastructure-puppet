@@ -68,4 +68,7 @@ mod 'concat-native',
   :git => 'https://github.com/theforeman/puppet-concat.git',
   :tag => '1.3.1'
 
+mod 'ulimit',
+  :git => 'https://github.com/pctony/puppet-ulimit.git',
+  :commit => '923619436701af9624158274ed38532b4b34b1a8'
 
