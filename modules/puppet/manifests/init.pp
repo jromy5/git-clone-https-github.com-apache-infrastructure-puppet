@@ -25,3 +25,5 @@ class puppet {
      "puppet:///modules/puppet/puppet.conf",
      ]
   }
+
+}
