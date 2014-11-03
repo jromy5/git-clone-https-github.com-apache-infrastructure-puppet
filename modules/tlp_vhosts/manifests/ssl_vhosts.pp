@@ -739,7 +739,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 		error_log_file => 'errorlog.log',
     }
 
-    apache::vhost { 'subversion-ssl':
+    apache::vhost { 'subversion.org-ssl':
         port => 443,
         ssl => true,
         servername => 'www.subversion.org',
@@ -750,6 +750,23 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
     }
+
+    apache::vhost { 'subversion-ssl':
+	port => 443,
+	ssl => true,
+	servername => 'subversion.apache.org',
+	serveraliases => ['www.subversion.apache.org'],
+	docroot => '/var/www/subversion.apache.org',
+	custom_fragment => '
+       <Files ~ "\.html">
+         Options +Includes
+         SetOutputFilter INCLUDES
+       </Files>
+	',
+	access_log_file => 'weblog.log',
+	error_log_file => 'errorlog.log',
+	}
+	
 
     apache::vhost { 'svn.collab-ssl':
         port => 443,
