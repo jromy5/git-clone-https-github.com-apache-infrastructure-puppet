@@ -1,4 +1,4 @@
-#/etc/puppet/modules/rbldnsd/manifests/clienbt/setup.pp
+#/etc/puppet/modules/rbldnsd/manifests/client/setup.pp
 
 class rbldnsd::client::setup (
   $packages   = ['rbldnsd'],
