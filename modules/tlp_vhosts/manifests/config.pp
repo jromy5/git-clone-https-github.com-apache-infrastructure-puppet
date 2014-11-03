@@ -741,6 +741,11 @@ class tlp_vhosts::config inherits tlp_vhosts {
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['http://subversion.apache.org/'],
+        custom_fragment => '
+            <Files ~ "\.html">
+                SetOutputFilter INCLUDES
+            </Files>
+        ',
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
     }
