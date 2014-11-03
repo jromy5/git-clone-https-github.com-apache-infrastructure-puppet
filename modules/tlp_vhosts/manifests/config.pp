@@ -734,15 +734,25 @@ class tlp_vhosts::config inherits tlp_vhosts {
 		error_log_file => 'errorlog.log',
     }
 
-    apache::vhost { 'subversion':
+    apache::vhost { 'subversion.org':
         port => 80,
         servername => 'www.subversion.org',
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         redirectmatch_status => ['permanent'],
         redirectmatch_regexp => ['^'],
         redirectmatch_dest => ['http://subversion.apache.org/'],
+        access_log_file => 'weblog.log',
+		error_log_file => 'errorlog.log',
+    }
+    
+    apache::vhost { 'subversion':
+        port => 80,
+        servername => 'www.subversion.org',
+        serveralias => 'subversion.apache.org',
+        docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         custom_fragment => '
             <Files ~ "\.html">
+                Option +Includes
                 SetOutputFilter INCLUDES
             </Files>
         ',
