@@ -752,7 +752,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
         custom_fragment => '
             <Files ~ "\.html">
-                Option +Includes
+                Options +Includes
                 SetOutputFilter INCLUDES
             </Files>
         ',
