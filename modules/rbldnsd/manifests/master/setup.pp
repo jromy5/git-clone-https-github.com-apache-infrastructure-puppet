@@ -41,7 +41,6 @@ class rbldnsd::master::setup (
       mode     => '0770';
     "${RBLDISTDIR}":
       ensure   => link,
-      links    => follow,
       target   => "${RBLSRCDIR}",
       owner    => 'root',
       group    => 'root',
