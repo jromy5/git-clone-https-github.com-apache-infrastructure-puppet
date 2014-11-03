@@ -31,6 +31,7 @@ class rbldnsd::master::setup (
       minute   => '30',
   }
 
+  file {
     '/var/rbldnsd':
       ensure   => 'directory',
       owner    => 'root',
