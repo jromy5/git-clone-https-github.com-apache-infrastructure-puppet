@@ -4,7 +4,7 @@ class puppet (
 
   package { 'puppet':
     ensure  => '3.6.2-1puppetlabs1',
-    require => apt::source['asf_internal'],
+    require => apt::source['puppetlabs', 'puppetdeps'],
   }
 
   service { 'puppet':
