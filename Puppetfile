@@ -30,6 +30,11 @@ mod 'iptables',
   :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
 
 
+mod 'logrotate',
+  :git    => 'https://github.com/pctony/puppet-logrotate.git',
+  :commit => '89ee645e2350045be48df7ac3ef86cbe4cd9b096'
+
+
 mod 'module_data',
   :git => 'https://github.com/ripienaar/puppet-module-data',
   :tag => '0.0.4'
