@@ -5,6 +5,7 @@ classes:
   - dnsclient
   - orthrus
   - postfix::server
+  - puppet
   - subversionclient
   - ulimit
 
@@ -76,7 +77,7 @@ postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
 postfix::server::smtpd_sender_restrictions:
   -  'permit_mynetworks'
   -  'reject_unknown_sender_domain'
-postfix::server::smtpd_recipient_restrictions:    
+postfix::server::smtpd_recipient_restrictions:
   -  'permit_mynetworks'
   -  'reject_unauth_destination'
 postfix::server::smtpd_tls_key_file:     '/etc/ssl/private/wildcard.apache.org.key'
@@ -84,11 +85,13 @@ postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-c
 postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
 
+puppet::puppetconf:                      '/etc/puppet/puppet.conf'
+
 spamassassin::spamassassin_packages:
   - spamassassin
 
 subversionclient::packages: 
   - subversion
-subversionclient::svn_conf_config:  '/etc/subversion/config'
-subversionclient::svn_conf_servers: '/etc/subversion/servers'
+subversionclient::svn_conf_config:       '/etc/subversion/config'
+subversionclient::svn_conf_servers:      '/etc/subversion/servers'
 

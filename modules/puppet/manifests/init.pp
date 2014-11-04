@@ -1,4 +1,6 @@
-class puppet {
+class puppet (
+  $puppetconf  = '/etc/puppet/puppet.conf'
+){
 
   package { 'puppet':
     ensure  => '3.6.2-1puppetlabs1',
@@ -13,7 +15,7 @@ class puppet {
     ensure => running,
   }
 
- file { "/etc/puppet/puppet.conf" :
+ file { "${puppetconf}" :
    ensure  => 'present',
    require => Package["puppet"],
    notify  => Service["puppet"],
