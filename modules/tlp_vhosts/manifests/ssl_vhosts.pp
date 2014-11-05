@@ -3,61 +3,67 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 
 
     apache::vhost { 'tlp-ssl':
-        priority => '99',
-        vhost_name => '*',
-        servername => 'www.apache.org',
-        port => '443',
-        ssl => true,
+        priority        => '99',
+        vhost_name      => '*',
+        servername      => 'www.apache.org',
+        port            => '443',
+        ssl             => true,
         virtual_docroot => '/var/www/%1.0.apache.org',
-        docroot => '/var/www',
-        directories => [
-            { path => '/var/www',
-              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-              allow_override => ['All'],
-              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+        docroot         => '/var/www',
+        directories     => [
+            {
+                path            => '/var/www',
+                options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override  => ['All'],
+                addhandlers     => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
             },
         ],
-        serveraliases => ['*.apache.org'],
-        rewrites => [
+        serveraliases   => ['*.apache.org'],
+        rewrites        => [
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+                comment         => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
+                rewrite_rule    => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+                comment         => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
+                rewrite_rule    => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
-                comment => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
-                rewrite_rule => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
+                comment         => '/mail -> mail-archives.a.o/mod_mbox/#tlp',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
+                rewrite_rule    => ['^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.us.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
         custom_fragment => '
@@ -66,122 +72,142 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'incubator-ssl':
-        priority => '98',
-        vhost_name => '*',
-        servername => 'www.apache.org',
-        port => '443',
-        ssl => true,
-        ssl_cert => '/etc/ssl/certs/wildcard.incubator.apache.org.crt',
-        ssl_chain => '/etc/ssl/certs/wildcard.incubator.apache.org.chain',
-        ssl_key => '/etc/ssl/private/wildcard.apache.org.key',
+        priority        => '98',
+        vhost_name      => '*',
+        servername      => 'www.apache.org',
+        port            => '443',
+        ssl             => true,
+        ssl_cert        => '/etc/ssl/certs/wildcard.incubator.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.incubator.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         virtual_docroot => '/var/www/%1.0.apache.org',
-        docroot => '/var/www',
-        directories => [
-            { path => '/var/www',
-              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-              allow_override => ['All'],
-              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+        docroot         => '/var/www',
+        directories     => [
+            {
+                path            => '/var/www',
+                options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override  => ['All'],
+                addhandlers     => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
             },
         ],
-        serveraliases => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
+        serveraliases   => ['*.incubator.apache.org', '*.incubator.*.apache.org'],
         custom_fragment => '
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
         Use CatchAll
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'aoo-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.openoffice.org',
-        serveraliases => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
-        docroot => '/var/www/ooo-site.apache.org/content',
-        ssl_cert => '/etc/ssl/certs/wildcard.openoffice.org.crt',
-        ssl_chain => '/etc/ssl/certs/wildcard.openoffice.org.chain',
-        ssl_key => '/etc/ssl/private/wildcard.openoffice.org.key',
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.openoffice.org',
+        serveraliases   => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
+        docroot         => '/var/www/ooo-site.apache.org/content',
+        ssl_cert        => '/etc/ssl/certs/wildcard.openoffice.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.openoffice.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.openoffice.org.key',
         custom_fragment => '
         Use OpenOffice https
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'uima-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'uima.apache.org',
-        serveraliases => ['uima.*.apache.org'],
-        docroot => '/var/www/uima.apache.org/pubsub',
-        directories => [
+        port            => 443,
+        ssl             => true,
+        servername      => 'uima.apache.org',
+        serveraliases   => ['uima.*.apache.org'],
+        docroot         => '/var/www/uima.apache.org/pubsub',
+        directories     => [
             {
-                path => '/var/www/uima.apache.org/pubsub',
-                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+                path        => '/var/www/uima.apache.org/pubsub',
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [
+                    {
+                        handler => 'cgi-script',
+                        extensions => ['.cgi']
+                    }
+                ],
             },
         ],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'tomee-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'tomee.apache.org',
-        serveraliases => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
-        docroot => '/var/www/tomee.apache.org/content',
-        rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'] } ],
-        scriptalias => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
+        port            => 443,
+        ssl             => true,
+        servername      => 'tomee.apache.org',
+        serveraliases   => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
+        docroot         => '/var/www/tomee.apache.org/content',
+        rewrites        => [
+            {
+                rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico']
+            }
+        ],
+        scriptalias     => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'spamassassin-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'spamassassin.apache.org',
-        serveraliases => ['spamassassin.*.apache.org'],
-        docroot => '/var/www/spamassassin.apache.org',
-        directories => [
+        port            => 443,
+        ssl             => true,
+        servername      => 'spamassassin.apache.org',
+        serveraliases   => ['spamassassin.*.apache.org'],
+        docroot         => '/var/www/spamassassin.apache.org',
+        directories     => [
             {
-                path => '/var/www/spamassassin.apache.org',
-                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+                path        => '/var/www/spamassassin.apache.org',
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
             },
         ],
-        rewrites => [
+        rewrites        => [
             {
-                rewrite_rule => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'],
+                rewrite_rule    => ['^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
-                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#spamassassin [R=301,L,NE]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_rule    => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#spamassassin [R=301,L,NE]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xml-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'xml.apache.org',
-        serveraliases => ['xml.*.apache.org'],
-        docroot=> '/var/www/xml.apache.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'xml.apache.org',
+        serveraliases   => ['xml.*.apache.org'],
+        docroot         => '/var/www/xml.apache.org',
         redirect_status => ['permanent'],
         redirect_source => ['/websrc/', '/from-cvs/'],
-        redirect_dest => ['https://cvs.apache.org/', 'https://cvs.apache.org/snapshots/'],
+        redirect_dest   => ['https://cvs.apache.org/', 'https://cvs.apache.org/snapshots/'],
         custom_fragment => '
         # prevent some loops that robots get stuck in
         <Location /xalan/samples/applet>
@@ -192,62 +218,62 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'ws-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'ws.apache.org',
-        serveraliases => ['ws.*.apache.org'],
-        docroot => '/var/www/ws.apache.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'ws.apache.org',
+        serveraliases   => ['ws.*.apache.org'],
+        docroot         => '/var/www/ws.apache.org',
         redirect_status => ['permanent'],
         redirect_source => ['/xml-rpc'],
-        redirect_dest => ['https://ws.apache.org/xmlrpc'],
+        redirect_dest   => ['https://ws.apache.org/xmlrpc'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xalan-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'xalan.apache.org',
-        serveraliases => ['xalan.*.apache.org'],
-        docroot => '/var/www/xalan.apache.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'xalan.apache.org',
+        serveraliases   => ['xalan.*.apache.org'],
+        docroot         => '/var/www/xalan.apache.org',
         custom_fragment =>'
         <Location /xalan/samples/applet>
             deny from all
         </Location>
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xerces-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'xerces.apache.org',
-        serveraliases => 'xerces.*.apache.org',
-        docroot => '/var/www/xerces.apache.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'xerces.apache.org',
+        serveraliases   => 'xerces.*.apache.org',
+        docroot         => '/var/www/xerces.apache.org',
         custom_fragment => '
         <LocationMatch /xerces-c/faq-other.html/.*>
             deny from all
         </LocationMatch>
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'perl-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'perl.apache.org',
-        serveraliases => ['apache.perl.org', 'perl-new.apache.org', 'perl.*.apache.org'],
-        docroot => '/var/www/perl.apache.org',
-        setenv => ['SWISH_BINARY_PATH /usr/bin/swish-e'],
-        directories => [
+        port            => 443,
+        ssl             => true,
+        servername      => 'perl.apache.org',
+        serveraliases   => ['apache.perl.org', 'perl-new.apache.org', 'perl.*.apache.org'],
+        docroot         => '/var/www/perl.apache.org',
+        setenv          => ['SWISH_BINARY_PATH /usr/bin/swish-e'],
+        directories     => [
                 {
-                    path => '/var/www/perl.apache.org',
+                    path    => '/var/www/perl.apache.org',
                     options => ['+ExecCGI'],
                 },
         ],
@@ -266,41 +292,41 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                             '/win32_multithread.pod', '/email-etiquette.html', '/jobs.html', '/netcraft/index.html', '/logos/index.html',
                             '/Embperl/', '/perl/Embperl/', '/embperl.html', '/asp', '/CREDITS.html', '/contribute/cvs_howto.html', '/bench.txt',
                             '/email-etiquette.pod', '/embperl.html', '/faqs.html'],
-        redirect_dest => ['https://cvs.apache.org/snapshots/', 'https://perl.apache.org/docs/1.0/guide', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/products/apache-modules.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/products/apache-modules.html', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/contribute/svn_howto.html',
-                        'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html', 'https://perl.apache.org/docs/general/perl_myth.html',
-                        'https://perl.apache.org/docs/general/perl_myth.pod.orig', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
-                        'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/download/index.html', 'https://perl.apache.org/docs/offsite/articles.html',
-                        'https://perl.apache.org/products/index.html', 'https://perl.apache.org/help/isps.html', 'https://perl.apache.org/outstanding/sites.html',
-                        'https://perl.apache.org/outstanding/success_stories/index.html', 'https://perl.apache.org/outstanding/success_stories/colbychem.html',
-                        'https://perl.apache.org/outstanding/success_stories/www.afp-direct.com.html', 'https://perl.apache.org/outstanding/success_stories/adultad.html',
-                        'https://perl.apache.org/outstanding/success_stories/bsat.html', 'https://perl.apache.org/outstanding/success_stories/idl-net.html',
-                        'https://perl.apache.org/outstanding/success_stories/imdb.com.html', 'https://perl.apache.org/outstanding/success_stories/www.lind-waldock.com.html',
-                        'https://perl.apache.org/outstanding/success_stories/presto.html', 'https://perl.apache.org/outstanding/success_stories/seds.org.html',
-                        'https://perl.apache.org/outstanding/success_stories/singlesheaven.com.html', 'https://perl.apache.org/outstanding/success_stories/tgix.html',
-                        'https://perl.apache.org/outstanding/success_stories/openscape.org.html', 'https://perl.apache.org/outstanding/success_stories/imdb.com.html',
-                        'https://perl.apache.org/outstanding/success_stories/winamillion.msn.com.html', 'https://perl.apache.org/outstanding/success_stories/wmboerse.html',
-                        'https://perl.apache.org/docs/1.0/os/win32/index.html', 'https://perl.apache.org/docs/1.0/os/win32/index.html',
-                        'https://perl.apache.org/docs/1.0/os/win32/index.html', 'https://perl.apache.org/docs/1.0/os/win32/index.html',
-                        'https://perl.apache.org/docs/1.0/os/win32/multithread.html', 'https://perl.apache.org/docs/1.0/win32/multithread.pod.orig',
-                        'https://perl.apache.org/maillist/email-etiquette.html', 'https://perl.apache.org/jobs/jobs.html', 'https://perl.apache.org/outstanding/stats/netcraft.html',
-                        'https://perl.apache.org/about/link/linktous.html', 'https://perl.apache.org/embperl/', 'https://perl.apache.org/embperl/', 'https://perl.apache.org/embperl/',
-                        'https://www.apache-asp.org/', 'https://perl.apache.org/about/contributors/people.html', 'https://perl.apache.org/contribute/svn_howto.html',
-                        'https://www.chamas.com/bench/', 'https://perl.apache.org/maillist/email-etiquette.pod.orig', 'https://perl.apache.org/embperl/',
-                        'https://perl.apache.org/docs/offsite/index.html'],
-        rewrites => [
+        redirect_dest   => ['https://cvs.apache.org/snapshots/', 'https://perl.apache.org/docs/1.0/guide', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/products/apache-modules.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/products/apache-modules.html', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/contribute/svn_howto.html',
+                            'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html', 'https://perl.apache.org/docs/general/perl_myth.html',
+                            'https://perl.apache.org/docs/general/perl_myth.pod.orig', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/docs/index.html',
+                            'https://perl.apache.org/docs/index.html', 'https://perl.apache.org/download/index.html', 'https://perl.apache.org/docs/offsite/articles.html',
+                            'https://perl.apache.org/products/index.html', 'https://perl.apache.org/help/isps.html', 'https://perl.apache.org/outstanding/sites.html',
+                            'https://perl.apache.org/outstanding/success_stories/index.html', 'https://perl.apache.org/outstanding/success_stories/colbychem.html',
+                            'https://perl.apache.org/outstanding/success_stories/www.afp-direct.com.html', 'https://perl.apache.org/outstanding/success_stories/adultad.html',
+                            'https://perl.apache.org/outstanding/success_stories/bsat.html', 'https://perl.apache.org/outstanding/success_stories/idl-net.html',
+                            'https://perl.apache.org/outstanding/success_stories/imdb.com.html', 'https://perl.apache.org/outstanding/success_stories/www.lind-waldock.com.html',
+                            'https://perl.apache.org/outstanding/success_stories/presto.html', 'https://perl.apache.org/outstanding/success_stories/seds.org.html',
+                            'https://perl.apache.org/outstanding/success_stories/singlesheaven.com.html', 'https://perl.apache.org/outstanding/success_stories/tgix.html',
+                            'https://perl.apache.org/outstanding/success_stories/openscape.org.html', 'https://perl.apache.org/outstanding/success_stories/imdb.com.html',
+                            'https://perl.apache.org/outstanding/success_stories/winamillion.msn.com.html', 'https://perl.apache.org/outstanding/success_stories/wmboerse.html',
+                            'https://perl.apache.org/docs/1.0/os/win32/index.html', 'https://perl.apache.org/docs/1.0/os/win32/index.html',
+                            'https://perl.apache.org/docs/1.0/os/win32/index.html', 'https://perl.apache.org/docs/1.0/os/win32/index.html',
+                            'https://perl.apache.org/docs/1.0/os/win32/multithread.html', 'https://perl.apache.org/docs/1.0/win32/multithread.pod.orig',
+                            'https://perl.apache.org/maillist/email-etiquette.html', 'https://perl.apache.org/jobs/jobs.html', 'https://perl.apache.org/outstanding/stats/netcraft.html',
+                            'https://perl.apache.org/about/link/linktous.html', 'https://perl.apache.org/embperl/', 'https://perl.apache.org/embperl/', 'https://perl.apache.org/embperl/',
+                            'https://www.apache-asp.org/', 'https://perl.apache.org/about/contributors/people.html', 'https://perl.apache.org/contribute/svn_howto.html',
+                            'https://www.chamas.com/bench/', 'https://perl.apache.org/maillist/email-etiquette.pod.orig', 'https://perl.apache.org/embperl/',
+                            'https://perl.apache.org/docs/offsite/index.html'],
+        rewrites        => [
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
-                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_rule    => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
         custom_fragment => '
@@ -311,27 +337,27 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </IfDefine>
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'jspwiki-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'jspwiki.apache.org',
-        docroot => '/var/www/jspwiki.apache.org/content',
+        port            => 443,
+        ssl             => true,
+        servername      => 'jspwiki.apache.org',
+        docroot         => '/var/www/jspwiki.apache.org/content',
         redirect_status => ['permanent'],
         redirect_source => ['/doc', '/wiki'],
-        redirect_dest => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
+        redirect_dest   => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'gump-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'gump.apache.org',
-        serveraliases => ['gump.*.apache.org'],
-        docroot => '/var/www/gump.apache.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'gump.apache.org',
+        serveraliases   => ['gump.*.apache.org'],
+        docroot         => '/var/www/gump.apache.org',
         custom_fragment => '
             #
             # Start the expires heading
@@ -371,24 +397,29 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             RewriteOptions inherit
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'apache.org-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.apache.org',
-        serveraliases => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
-        docroot => '/var/www/www.apache.org/content',
-        directories => [
+        port                    => 443,
+        ssl                     => true,
+        servername              => 'www.apache.org',
+        serveraliases           => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
+        docroot                 => '/var/www/www.apache.org/content',
+        directories             => [
             {
-                path => '/var/www/www.apache.org/content',
-                options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-                addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+                path        => '/var/www/www.apache.org/content',
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
             },
         ],
-        redirect_status => ['permanent'],
-        redirect_source => [
+        redirect_status         => ['permanent'],
+        redirect_source         => [
             '/docs/vif.info',
             '/docs/directives.html',
             '/docs/API.html',
@@ -410,7 +441,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             '/from-cvs/',
             '/travel/application'
         ],
-        redirect_dest => [
+        redirect_dest           => [
             'https://httpd.apache.org/docs/misc/vif-info',
             'https://httpd.apache.org/docs/mod/directives.html',
             'https://httpd.apache.org/docs/misc/API.html',
@@ -432,21 +463,21 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             'https://cvs.apache.org/snapshots/',
             'https://tac-apply.apache.org'
         ],
-        redirectmatch_status => ['permanent'],
-        redirectmatch_regexp => ['^/LICENSE.*', '/flyers(.*)'],
-        redirectmatch_dest => ['https://www.apache.org/licenses/', 'https://www.apache.org/foundation/contributing.html'],
-        rewrites => [
+        redirectmatch_status    => ['permanent'],
+        redirectmatch_regexp    => ['^/LICENSE.*', '/flyers(.*)'],
+        redirectmatch_dest      => ['https://www.apache.org/licenses/', 'https://www.apache.org/foundation/contributing.html'],
+        rewrites                => [
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
-                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#asf-wdie [R=301,L,NE]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_rule    => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#asf-wdie [R=301,L,NE]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
-        custom_fragment => '
+        custom_fragment         => '
             RewriteEngine on
             RewriteOptions inherit
             RewriteRule /docs/mod_(.*)$ https://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
@@ -468,31 +499,37 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
               SetHandler server-status
             </Location>
         ',
-        access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+        access_log_file         => 'weblog.log',
+		error_log_file          => 'errorlog.log',
     }
 
     apache::vhost { 'httpd-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'httpd.apache.org',
-        serveraliases => ['httpd.*.apache.org'],
-        docroot => '/var/www/httpd.apache.org/content',
-        directories => [
-            { path => '/var/www/httpd.apache.org/content',
-              options => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-              addhandlers => [{ handler => 'cgi-script', extensions => ['.cgi']}],
+        port            => 443,
+        ssl             => true,
+        servername      => 'httpd.apache.org',
+        serveraliases   => ['httpd.*.apache.org'],
+        docroot         => '/var/www/httpd.apache.org/content',
+        directories     => [
+            {
+                path        => '/var/www/httpd.apache.org/content',
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
             },
         ],
-        rewrites => [
+        rewrites        => [
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/*',
-                rewrite_rule => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#httpd [R=301,L,NE]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/*',
+                rewrite_rule    => ['^/mail/?$ https://mail-archives.apache.org/mod_mbox/#httpd [R=301,L,NE]'],
             },
             {
-                comment => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
-                rewrite_cond => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
-                rewrite_rule => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
+                comment         => '/mail/* -> mail-archives.a.o/mod_mbox/tlp-list',
+                rewrite_cond    => ['%{HTTP_HOST} ^([^.]+)\.apache.org$'],
+                rewrite_rule    => ['^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]'],
             },
         ],
         custom_fragment => '
@@ -609,109 +646,109 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
         ',
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
 
     ## Host redirect fixes
 
     apache::vhost { 'any23-ssl':
-        port => 80,
-        servername => 'www.any23.org',
-        serveraliases => ['any23.org', 'any23.com', 'www.any23.com'],
-        docroot => '/var/www/any23.apache.org', # apache puppet module requires a docroot defined
+        port            => 80,
+        servername      => 'www.any23.org',
+        serveraliases   => ['any23.org', 'any23.com', 'www.any23.com'],
+        docroot         => '/var/www/any23.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['http://any23.apache.org'],
+        redirect_dest   => ['http://any23.apache.org'],
         access_log_file => 'weblog.log',
-        error_log_file => 'errorlog.log',
+        error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'cloudstack-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.cloudstack.org',
-        serveraliases => ['cloudstack.org', 'cloudstack.com', 'www.cloudstack.com'],
-        docroot => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.cloudstack.org',
+        serveraliases   => ['cloudstack.org', 'cloudstack.com', 'www.cloudstack.com'],
+        docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://cloudstack.apache.org'],
+        redirect_dest   => ['https://cloudstack.apache.org'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'cloudstack-docs-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'docs.cloudstack.org',
-        docroot => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'docs.cloudstack.org',
+        docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://cloudstack.apache.org/docs/'],
+        redirect_dest   => ['https://cloudstack.apache.org/docs/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'deltaspike-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.deltaspkie.org',
-        serveraliases => ['deltaspkie.org'],
-        docroot => '/var/www/delatspkie.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.deltaspkie.org',
+        serveraliases   => ['deltaspkie.org'],
+        docroot         => '/var/www/delatspkie.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://deltaspike.apache.org'],
+        redirect_dest   => ['https://deltaspike.apache.org'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'www-jspwiki-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.jspwiki.org',
-        serveraliases => ['jspwiki.org'],
-        docroot => '/var/www/jspwiki.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.jspwiki.org',
+        serveraliases   => ['jspwiki.org'],
+        docroot         => '/var/www/jspwiki.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://jspwiki.apache.org/'],
+        redirect_dest   => ['https://jspwiki.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'libcloud-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.libcloud.org',
-        serveraliases => ['libcloud.org', 'www.libcloud.net', 'libcloud.net', 'www.libcloud.com', 'libcloud.com'],
-        docroot => '/var/www/libcloud.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.libcloud.org',
+        serveraliases   => ['libcloud.org', 'www.libcloud.net', 'libcloud.net', 'www.libcloud.com', 'libcloud.com'],
+        docroot         => '/var/www/libcloud.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://libcloud.apache.org/'],
+        redirect_dest   => ['https://libcloud.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'odftoolkit-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.odftoolkit.org',
-        serveraliases => ['odftoolkit.org', 'www.odf-toolkit.com', 'odf-toolkit.com', 'www.odf-toolkit.net', 'odf-toolkit.net',
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.odftoolkit.org',
+        serveraliases   => ['odftoolkit.org', 'www.odf-toolkit.com', 'odf-toolkit.com', 'www.odf-toolkit.net', 'odf-toolkit.net',
                             'www.odf-toolkit.org', 'odf-toolkit.org', 'www.odfcoalition.com', 'odfcoalition.com',
                             'www.odfcoalition.net',  'odfcoalition.net', 'www.odfcoalition.org', 'odfcoalition.org',
                             'www.odftoolkit.com', 'odftoolkit.com', 'www.odftoolkit.net', 'odftoolkit.net'],
-        docroot => '/var/www/incubator.apache.org', # apache puppet module requires a docroot defined
+        docroot         => '/var/www/incubator.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://incubator.apache.org/odftoolkit/'],
+        redirect_dest   => ['https://incubator.apache.org/odftoolkit/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'spamassassin-redirect-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.spamassassin.org',
-        serveraliases => ['spamassassin.org', 'au.spamassassin.org', 'au2.spamassassin.org',
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.spamassassin.org',
+        serveraliases   => ['spamassassin.org', 'au.spamassassin.org', 'au2.spamassassin.org',
                             'eu.spamassassin.org', 'eu2.spamassassin.org', 'eu3.spamassassin.org',
                             'ie.spamassassin.org', 'news.spamassassin.org', 'uk.spamassassin.org',
                             'us.spamassassin.org', 'useast.spamassassin.org', 'uswest.spamassassin.org',
@@ -719,171 +756,175 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                             'www.eu2.spamassassin.org', 'www.eu3.spamassassin.org',   'www.ie.spamassassin.org',
                             'www.uk.spamassassin.org', 'www.us.spamassassin.org', 'www.useast.spamassassin.org',
                             'www.uswest.spamassassin.org'],
-        docroot => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
+        docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://spamassassin.apache.org/'],
+        redirect_dest   => ['https://spamassassin.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'wiki-spamassassin-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'wiki.spamassassin.org',
-        docroot => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'wiki.spamassassin.org',
+        docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/w/', '/'],
-        redirect_dest => [' https://wiki.apache.org/spamassassin/', 'https://wiki.apache.org/spamassassin/'],
+        redirect_dest   => [' https://wiki.apache.org/spamassassin/', 'https://wiki.apache.org/spamassassin/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'subversion.org-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.subversion.org',
-        docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirectmatch_status => ['permanent'],
-        redirectmatch_regexp => ['^'],
-        redirectmatch_dest => ['https://subversion.apache.org/'],
-        access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+        port                    => 443,
+        ssl                     => true,
+        servername              => 'www.subversion.org',
+        docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        redirectmatch_status    => ['permanent'],
+        redirectmatch_regexp    => ['^'],
+        redirectmatch_dest      => ['https://subversion.apache.org/'],
+        access_log_file         => 'weblog.log',
+		error_log_file          => 'errorlog.log',
     }
 
     apache::vhost { 'subversion-ssl':
-	port => 443,
-	ssl => true,
-	servername => 'subversion.apache.org',
-	serveraliases => ['www.subversion.apache.org'],
-	docroot => '/var/www/subversion.apache.org',
-	custom_fragment => '
-       <Files ~ "\.html">
-         Options +Includes
-         SetOutputFilter INCLUDES
-       </Files>
-	',
-	access_log_file => 'weblog.log',
-	error_log_file => 'errorlog.log',
+	    port            => 443,
+	    ssl             => true,
+	    servername      => 'subversion.apache.org',
+	    serveraliases   => ['www.subversion.apache.org'],
+	    docroot         => '/var/www/subversion.apache.org',
+	    custom_fragment => '
+        <Files ~ "\.html">
+            Options +Includes
+            SetOutputFilter INCLUDES
+        </Files>
+	    ',
+    	access_log_file => 'weblog.log',
+	    error_log_file  => 'errorlog.log',
 	}
 	
 
     apache::vhost { 'svn.collab-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'svn.collab.net',
-        docroot => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirectmatch_status => ['permanent'],
-        redirectmatch_regexp => ['^'],
-        redirectmatch_dest => ['https://subversion.apache.org/source-code'],
-        access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+        port                    => 443,
+        ssl                     => true,
+        servername              => 'svn.collab.net',
+        docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        redirectmatch_status    => ['permanent'],
+        redirectmatch_regexp    => ['^'],
+        redirectmatch_dest      => ['https://subversion.apache.org/source-code'],
+        access_log_file         => 'weblog.log',
+		error_log_file          => 'errorlog.log',
     }
 
     apache::vhost { 'webservices-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'webservices.apache.org',
-        serveraliases => 'webservices.*.apache.org',
-        docroot => '/var/www/ws.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'webservices.apache.org',
+        serveraliases   => 'webservices.*.apache.org',
+        docroot         => '/var/www/ws.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://ws.apache.org/'],
+        redirect_dest   => ['https://ws.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'ofbiz-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.ofbiz.org',
-        serveraliases => ['ofbiz.org'],
-        docroot => '/var/www/ofbiz.apache.org', # apache puppet module requires a docroot defined
-        rewrites => [
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.ofbiz.org',
+        serveraliases   => ['ofbiz.org'],
+        docroot         => '/var/www/ofbiz.apache.org', # apache puppet module requires a docroot defined
+        rewrites        => [
             {
-                comment => 'bigfiles.ofbiz.org',
-                rewrite_cond => ['${lowercase:%{HTTP_HOST}} ^bigfiles(?:\.\w+)?\.ofbiz\.org$'],
-                rewrite_rule => ['(.*) https://ofbiz-bigfiles.apache.org/ [L]'],
+                comment         => 'bigfiles.ofbiz.org',
+                rewrite_cond    => ['${lowercase:%{HTTP_HOST}} ^bigfiles(?:\.\w+)?\.ofbiz\.org$'],
+                rewrite_rule    => ['(.*) https://ofbiz-bigfiles.apache.org/ [L]'],
             },
         ],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'myfaces-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.myfaces.org',
-        serveraliases => ['myfaces.org'],
-        docroot => '/var/www/myfaces.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.myfaces.org',
+        serveraliases   => ['myfaces.org'],
+        docroot         => '/var/www/myfaces.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://myfaces.apache.org'],
+        redirect_dest   => ['https://myfaces.apache.org'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'httpcomponents-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'httpcomponents.apache.org',
-        serveraliases => ['httpcomponents.*.apache.org'],
-        docroot => '/var/www/hc.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'httpcomponents.apache.org',
+        serveraliases   => ['httpcomponents.*.apache.org'],
+        docroot         => '/var/www/hc.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://hc.apache.org/'],
+        redirect_dest   => ['https://hc.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'wicket-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'wicketframework.org',
-        serveraliases => ['wicket-framework.org'],
-        docroot => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'wicketframework.org',
+        serveraliases   => ['wicket-framework.org'],
+        docroot         => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://wicket.apache.org/'],
+        redirect_dest   => ['https://wicket.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'quetz-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'quetzalcoatl.apache.org',
-        serveraliases => ['python.apache.org'],
-        docroot => '/var/www/quetz.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'quetzalcoatl.apache.org',
+        serveraliases   => ['python.apache.org'],
+        docroot         => '/var/www/quetz.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://quetz.apache.org/'],
+        redirect_dest   => ['https://quetz.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'jackrabbit-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'jackrabbit.apache.org',
-        serveraliases => ['jackrabbit.*.apache.org'],
-        docroot => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
-        rewrites => [ { rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico'] } ],
+        port            => 443,
+        ssl             => true,
+        servername      => 'jackrabbit.apache.org',
+        serveraliases   => ['jackrabbit.*.apache.org'],
+        docroot         => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
+        rewrites        => [
+            {
+                rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico']
+            }
+        ],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'jclouds-ssl':
-        port => 443,
-        ssl => true,
-        servername => 'www.jclouds.org',
-        serveraliases => ['www.jclouds.net', 'www.jclouds.com', 'jclouds.org', 'jclouds.net', 'jclouds.com'],
-        docroot => '/var/www/jclouds.apache.org', # apache puppet module requires a docroot defined
+        port            => 443,
+        ssl             => true,
+        servername      => 'www.jclouds.org',
+        serveraliases   => ['www.jclouds.net', 'www.jclouds.com', 'jclouds.org', 'jclouds.net', 'jclouds.com'],
+        docroot         => '/var/www/jclouds.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
-        redirect_dest => ['https://jclouds.apache.org/'],
+        redirect_dest   => ['https://jclouds.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file => 'errorlog.log',
+		error_log_file  => 'errorlog.log',
     }
 
 }

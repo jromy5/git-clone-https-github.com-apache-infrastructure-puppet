@@ -1,7 +1,7 @@
 
 class svnwcsub (
-    $uid    = $svnwcsub::params::uid,
-    $gid    = $svnwcsub::params::gid,
+    $uid            = $svnwcsub::params::uid,
+    $gid            = $svnwcsub::params::gid,
     $service_ensure = $svnwcsub::params::service_ensure
 ) inherits svnwcsub::params {
     

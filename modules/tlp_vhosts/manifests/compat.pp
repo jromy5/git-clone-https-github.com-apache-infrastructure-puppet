@@ -43,8 +43,6 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         mode    => '2775',
     }
 
-    $dist_files = ['.htaccess', '.message', 'README.html', 'HEADER.html', 'favicon.ico']
-
     file { '.htaccess':
         ensure  => present,
         path    => '/var/www/www.apache.org/dist/.htaccess',
