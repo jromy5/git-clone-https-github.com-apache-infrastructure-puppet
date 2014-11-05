@@ -33,7 +33,7 @@ apt::sources:
      key_server: 'pgp.mit.edu'
      include_deb: true
      include_src: false
-   'puppetdeps':
+  'puppetdeps':
      location: 'http://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'dependencies'
