@@ -800,7 +800,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
                 allow_override  => ['All'],
             }
-        ]
+        ],
 	    custom_fragment => '
         <Files ~ "\.html">
             Options +Includes
