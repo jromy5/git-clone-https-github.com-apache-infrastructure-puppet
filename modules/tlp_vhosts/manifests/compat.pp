@@ -45,13 +45,53 @@ class tlp_vhosts::compat inherits tlp_vhosts {
 
     $dist_files = ['.htaccess', '.message', 'README.html', 'HEADER.html', 'favicon.ico']
 
-    file { $dist_files:
+    file { '.htaccess':
         ensure  => present,
-        path    => "/var/www/www.apache.org/dist/$dist_files",
+        path    => '/var/www/www.apache.org/dist/.htaccess',
         mode    => 0644,
         owner   => 'svnwc',
         group   => 'svnwc',
-        source  => "puppet:///modules/tlp_vhosts/$dist_files",
+        source  => 'puppet:///modules/tlp_vhosts/.htaccess',
+        require => File['/var/www/www.apache.org/dist'],
+    }
+
+    file { '.message':
+        ensure  => present,
+        path    => '/var/www/www.apache.org/dist/.message',
+        mode    => 0644,
+        owner   => 'svnwc',
+        group   => 'svnwc',
+        source  => 'puppet:///modules/tlp_vhosts/.message',
+        require => File['/var/www/www.apache.org/dist'],
+    }
+
+    file { 'README.html':
+        ensure  => present,
+        path    => '/var/www/www.apache.org/dist/README.html',
+        mode    => 0644,
+        owner   => 'svnwc',
+        group   => 'svnwc',
+        source  => 'puppet:///modules/tlp_vhosts/README.html',
+        require => File['/var/www/www.apache.org/dist'],
+    }
+
+    file { 'HEADER.html':
+        ensure  => present,
+        path    => '/var/www/www.apache.org/dist/HEADER.html',
+        mode    => 0644,
+        owner   => 'svnwc',
+        group   => 'svnwc',
+        source  => 'puppet:///modules/tlp_vhosts/HEADER.html',
+        require => File['/var/www/www.apache.org/dist'],
+    }
+
+    file { 'favicon.ico':
+        ensure  => present,
+        path    => '/var/www/www.apache.org/dist/favicon.ico',
+        mode    => 0644,
+        owner   => 'svnwc',
+        group   => 'svnwc',
+        source  => 'puppet:///modules/tlp_vhosts/favicon.ico',
         require => File['/var/www/www.apache.org/dist'],
     }
 
