@@ -34,7 +34,7 @@ apt::sources:
      include_deb: true
      include_src: false
    'puppetdeps':
-    location: 'http://apt.puppetlabs.com'
+     location: 'http://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'dependencies'
      key: '4BD6EC30'
