@@ -43,8 +43,20 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         mode => '2775',
     }
 
+    $dist_files = ['.htaccess', '.message', 'README.html', 'HEADER.html', 'favicon.ico']
+
+    file { $dist_files:
+        ensure => present,
+        path => '/var/www/www.apache.org/dist/HEADER.html',
+        mode => 0644,
+        owner => 'svnwc',
+        group => 'svnwc',
+        source => "puppet:///modules/tlp_vhosts/$dist_files",
+        require => File['/var/www/www.apache.org/dist'],
+    }
 
     $packages = ['python-geoip', 'swish-e', 'python-flup']
+
     package { $packages:
         ensure => 'latest',
     }

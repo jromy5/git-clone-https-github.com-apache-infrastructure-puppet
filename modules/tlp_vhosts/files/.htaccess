@@ -1,0 +1,12 @@
+# directive gone : DefaultType text/plain
+AddType application/x-gzip .gz
+AddType application/x-compress .Z
+AddType text/plain .asc .md5 .sha .sha1
+AddDescription "Portable Runtime project" apr/
+AddDescription "HTTP Server project" httpd/
+AddDescription "Jakarta project" jakarta/
+AddDescription "Java-Apache (old)" java/
+AddDescription "Perl project" perl/
+AddDescription "Tcl project" tcl/
+AddDescription "XML project" xml/
+RemoveEncoding .gz .Z
