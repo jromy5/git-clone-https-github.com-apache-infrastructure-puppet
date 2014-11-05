@@ -794,6 +794,13 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 	    servername      => 'subversion.apache.org',
 	    serveraliases   => ['www.subversion.apache.org'],
 	    docroot         => '/var/www/subversion.apache.org',
+        directories     => [
+            {
+                path            => '/var/www/subversion.apache.org',
+                options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override  => ['All'],
+            }
+        ]
 	    custom_fragment => '
         <Files ~ "\.html">
             Options +Includes
