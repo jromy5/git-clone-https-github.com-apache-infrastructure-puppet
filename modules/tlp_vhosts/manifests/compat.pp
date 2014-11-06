@@ -9,11 +9,6 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target  => '/usr/bin/rsync',
     }
 
-    file { '/usr/local/bin/wget':
-        ensure  => 'link',
-        target  => '/usr/bin/wget',
-    }
-
     file { '/usr/local/bin/svn':
         ensure  => 'link',
         target  => '/usr/bin/svn',
