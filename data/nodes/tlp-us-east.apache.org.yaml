@@ -1,6 +1,7 @@
 ---
 classes:
   - apache
+  - apmirror
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
@@ -34,6 +35,9 @@ apache::mod::event::threadsperchild: '150'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+apmirror::uid:            '508'
+apmirror::gid:            '508'
+
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
@@ -45,7 +49,4 @@ collectd::plugin::interface::ignoreselected: true
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
 svnwcsub::service_ensure:   'running'
-
-tlp_vhosts::uid:            '508'
-tlp_vhosts::gid:            '508'
 
