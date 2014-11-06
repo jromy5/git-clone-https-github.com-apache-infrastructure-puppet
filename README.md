@@ -9,4 +9,4 @@ Install all of the dependencies
     gem install bundler
     bundle install
 
-You can use the bin/pull script to clone down all of the 3rd party modules and sync the repo.
+You can use the bin/pull script to clone all of the 3rd party modules and sync the repo.
