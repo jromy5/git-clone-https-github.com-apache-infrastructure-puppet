@@ -12,6 +12,8 @@ classes:
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
+  - rsync
+  - rsync::server
   - tlp_vhosts
 
 apache::keepalive:          'On'
@@ -50,4 +52,7 @@ svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
 svnwcsub::conf_file:        'svnwcsub.conf'
 svnwcsub::service_ensure:   'running'
+
+rsync::package_ensure: 'latest'
+rsync::server::use_xinetd: false
 
