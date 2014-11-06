@@ -1,7 +1,7 @@
 
 class apmirror (
-    $uid            = 508
-    $gid            = 508
+    $uid            = 508,
+    $gid            = 508,
 ){
 
    user { 'apmirror':
