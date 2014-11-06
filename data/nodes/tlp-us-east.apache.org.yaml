@@ -48,5 +48,6 @@ collectd::plugin::interface::ignoreselected: true
 
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
+svnwcsub::conf_file:        'svnwcsub.conf'
 svnwcsub::service_ensure:   'running'
 
