@@ -34,7 +34,7 @@ class svnwcsub::config inherits svnwcsub {
         mode   => 0644,
         owner  => 'root',
         group  => 'root',
-        source => 'puppet:///modules/svnwcsub/svnwcsub.conf',
+        source => "puppet:///modules/svnwcsub/$conf_file",
     }
 
 }

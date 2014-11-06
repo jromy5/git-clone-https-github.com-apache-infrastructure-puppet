@@ -1,5 +1,5 @@
 
-class svnwcsub::base inherits svnwcsub {
+class svnwcsub::user inherits svnwcsub {
 
     user { 'svnwc':
         name       => 'svnwc',
