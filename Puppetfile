@@ -57,6 +57,8 @@ mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
   :tag => '4.0.0'
 
+mod 'rsync',
+  :git => 'https://github.com/puppetlabs/puppetlabs-rsync.git'
 
 mod 'rsyslog',
   :git    => 'https://github.com/pctony/puppet-rsyslog.git',
