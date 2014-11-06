@@ -532,7 +532,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             },
         ],
         custom_fragment => '
-        AddType text/html .es
+        AddType text/html .es .ja
         AddLanguage da .da
         AddDefaultCharset off
         
