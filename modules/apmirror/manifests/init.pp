@@ -1,5 +1,5 @@
 
-class apmirror {
+class apmirror (
     $uid            = 508
     $gid            = 508
 ){
