@@ -14,6 +14,7 @@ classes:
   - svnwcsub
   - rsync
   - rsync::server
+  - rsync_mirror
   - tlp_vhosts
 
 apache::keepalive:          'On'
