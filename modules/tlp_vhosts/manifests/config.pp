@@ -898,6 +898,12 @@ class tlp_vhosts::config inherits tlp_vhosts {
                 rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico']
             }
         ],
+	directories     => [
+            {
+                path            => '/var/www/jackrabbit.apache.org',
+                allow_override  => ['All'],
+            },
+        ],
         access_log_file => 'weblog.log',
 		error_log_file => 'errorlog.log',
     }
