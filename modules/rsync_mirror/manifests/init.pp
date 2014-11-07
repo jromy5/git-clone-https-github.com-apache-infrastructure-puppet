@@ -15,13 +15,6 @@ class rsync_mirror (
             '89.216.2.122', '204.45.15.106', '202.199.24.90', '1.207.63.21'
             ]
 
-    file { '/var/log/rsync':
-        ensure => 'directory',
-        owner => 'root',
-        group => 'root',
-        mode => '0755',
-    }
-
     rsync::server::module { 'apache-dist-for-archive':
         path => '/www/www.apache.org/dist',
         comment => 'Identical to apache-dist, but without exclusions',
@@ -30,46 +23,48 @@ class rsync_mirror (
         max_connections => 80,
         read_only => 'yes',
         list => 'no',
-        outgoing_
+        outgoing_chmod => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
         exclude => ['/.rsync.td/', '/tmp/'],
         hosts_deny => $deny,
     } 
 
-	rsync::server::module { 'apache-dist':
-		path => '/www/www.apache.org/dist',
-		comment => 'Apache software distribution (up to 90GB disk)',
-		uid => 'nobody',
-		gid => 'nogroup',
-		max_connections => 80,
-		read_only => 'yes',
-		list => 'yes',
-		exclude => ['/openoffice/4.1.0', '/openoffice/4.1.1/binaries', '/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/zzz/rsync-module/apache-dist-most'],
-		hosts_deny => $deny,
-	}
+    rsync::server::module { 'apache-dist':
+        path => '/www/www.apache.org/dist',
+        comment => 'Apache software distribution (up to 90GB disk)',
+        uid => 'nobody',
+        gid => 'nogroup',
+        max_connections => 80,
+        read_only => 'yes',
+        list => 'yes',
+        outgoing_chmod => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+        exclude => ['/openoffice/4.1.0', '/openoffice/4.1.1/binaries', '/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/zzz/rsync-module/apache-dist-most'],
+        hosts_deny => $deny,
+    }
 
-	rsync::server::module { 'apache-dist-most':
-		path => '/www/www.apache.org/dist',
-		comment => 'like apache-dist, without high bandwidth projects (up to 60GB disk)',
-		uid => 'nobody',
-		gid => 'nogroup',
-		max_connections => 80,
-		read_only => 'yes',
-		list => 'yes',
-		exclude => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
-		hosts_deny => $deny,
-		
-	}
+    rsync::server::module { 'apache-dist-most':
+        path => '/www/www.apache.org/dist',
+        comment => 'like apache-dist, without high bandwidth projects (up to 60GB disk)',
+        uid => 'nobody',
+        gid => 'nogroup',
+        max_connections => 80,
+        read_only => 'yes',
+        list => 'yes',
+        outgoing_chmod => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+        exclude => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
+        hosts_deny => $deny,
+    }
 
-	rsync::server::module { 'SF-aoo-401':
-		path => '/www/www.apache.org/dist/openoffice/4.0.1',
-		comment => 'AOO 4.0.1 for Source Forge',
-		uid => 'nobody',
-		gid => 'nogroup',
-		max_connections => 80,
-		read_only => 'yes', 
-        list => 'yes',	
-		exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
-		hosts_deny => $deny,
+    rsync::server::module { 'SF-aoo-401':
+        path => '/www/www.apache.org/dist/openoffice/4.0.1',
+        comment => 'AOO 4.0.1 for Source Forge',
+        uid => 'nobody',
+        gid => 'nogroup',
+        max_connections => 80,
+        read_only => 'yes',
+        list => 'yes',
+        outgoing_chmod => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+        exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
+        hosts_deny => $deny,
 	}
 
     rsync::server::module { 'rsync-logs':
@@ -80,6 +75,7 @@ class rsync_mirror (
         max_connections => 80,
         read_only => 'yes',
         list => 'no',
+        outgoing_chmod => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
         hosts_deny => ['*'],
         hosts_allow => ['140.211.11.9', 'localhost'],
     }
