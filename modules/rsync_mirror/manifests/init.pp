@@ -1,6 +1,15 @@
 class rsync_mirror (
 ){
 
+    logrotate::rule { 'rsync':
+        path => '/var/log/rsync/rsync',
+        rotate => 7,
+        rotate_every => 'day',
+        compress => 'yes',
+        compresscmd => '/bin/bzip2',
+        compressext => '.bz2',
+    }
+
 	$deny = [ 
             '150.164.76.110', '202.189.39.33', '209.115.248.62', '220.80.108.131', '131.151.1.23',
             '202.172.248.46', '207.45.221.24', '195.219.14.24', '140.109.13.44', '66.79.190.190',
