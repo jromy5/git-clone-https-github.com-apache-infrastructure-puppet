@@ -5,7 +5,7 @@ class rsync_mirror (
         path            => '/var/log/rsync/rsync',
         rotate          => 7,
         rotate_every    => 'day',
-        compress        => 'yes',
+        compress        => true,
         compresscmd     => '/bin/bzip2',
         compressext     => '.bz2',
     }
