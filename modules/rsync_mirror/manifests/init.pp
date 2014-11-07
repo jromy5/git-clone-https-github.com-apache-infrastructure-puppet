@@ -63,4 +63,17 @@ class rsync_mirror (
 		exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
 		hosts_deny => $deny,
 	}
+
+    rsync::server::module { 'rsync-logs':
+        path => '/var/log/rsync',
+        comment => 'rsync logs for mino (not for mirrors)',
+        uid => 'nobody',
+        gid => 'nogroup',
+        max_connections => 80,
+        read_only => 'yes',
+        list => 'no',
+        hosts_deny => ['*'],
+        hosts_allow => ['140.211.11.9', 'localhost'],
+    }
+
 }
