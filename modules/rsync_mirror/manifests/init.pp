@@ -15,7 +15,14 @@ class rsync_mirror (
             '89.216.2.122', '204.45.15.106', '202.199.24.90', '1.207.63.21'
             ]
 
-   rsync::server::module { 'apache-dist-for-archive':
+    file { '/var/log/rsync':
+        ensure => 'directory',
+        owner => 'root',
+        group => 'root',
+        mode => '0755',
+    }
+
+    rsync::server::module { 'apache-dist-for-archive':
         path => '/www/www.apache.org/dist',
         comment => 'Identical to apache-dist, but without exclusions',
         uid => 'nobody',
@@ -23,6 +30,7 @@ class rsync_mirror (
         max_connections => 80,
         read_only => 'yes',
         list => 'no',
+        outgoing_
         exclude => ['/.rsync.td/', '/tmp/'],
         hosts_deny => $deny,
     } 
