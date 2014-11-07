@@ -5,9 +5,11 @@ class rsync_mirror (
         path            => '/var/log/rsync/rsync',
         rotate          => 7,
         rotate_every    => 'day',
+        missingok       => true,
         compress        => true,
         compresscmd     => '/bin/bzip2',
         compressext     => '.bz2',
+        postrotate      => ['if /etc/init.d/rsync status > /dev/null ; then /etc/init.d/rsync reload > /dev/null; fi;'],
     }
 
 	$deny = [ 
