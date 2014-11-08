@@ -1,7 +1,7 @@
 ---
 classes:
   - foreman
-  - foreman-proxy
+  - foreman_proxy
   - foreman::compute::vmware
   - foreman::compute::rackspace
   - foreman::compute::ec2
