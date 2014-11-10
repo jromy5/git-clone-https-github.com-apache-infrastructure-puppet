@@ -57,7 +57,7 @@ mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
   :tag => '4.0.0'
 
-mod 'puppet-foreman',
+mod 'puppet',
   :git => 'https://github.com/theforeman/puppet-puppet.git',
   :tag => '2.2.1'
 
