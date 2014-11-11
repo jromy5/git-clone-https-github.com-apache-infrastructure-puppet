@@ -65,18 +65,19 @@ class rsync_mirror (
         hosts_deny      => $deny,
     }
 
-    rsync::server::module { 'SF-aoo-401':
-        path            => '/www/www.apache.org/dist/openoffice/4.0.1',
-        comment         => 'AOO 4.0.1 for Source Forge',
-        uid             => 'nobody',
-        gid             => 'nogroup',
-        max_connections => 80,
-        read_only       => 'yes',
-        list            => 'yes',
-        outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-        exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
-        hosts_deny      => $deny,
-	}
+    # This module is no longer used, but leaving for history
+#    rsync::server::module { 'SF-aoo-401':
+#        path            => '/www/www.apache.org/dist/openoffice/4.0.1',
+#        comment         => 'AOO 4.0.1 for Source Forge',
+#        uid             => 'nobody',
+#        gid             => 'nogroup',
+#        max_connections => 80,
+#        read_only       => 'yes',
+#        list            => 'yes',
+#        outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+#        exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
+#        hosts_deny      => $deny,
+#	}
 
     rsync::server::module { 'rsync-logs':
         path            => '/var/log/rsync',
