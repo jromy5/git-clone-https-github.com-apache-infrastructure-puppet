@@ -29,7 +29,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target  => '/usr/bin/python2.7',
     }
 
-    $apache_org_dirs = ['/ivar/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist']
+    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist']
 
     file { $apache_org_dirs:
         ensure  => 'directory',
