@@ -44,7 +44,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         group   => 'apmirror',
         path    => '/var/www/www.apache.org/dist/.htaccess',
         source  => 'puppet:///modules/tlp_vhosts/dist/.htaccess',
-        require => File['/var/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org/dist'],
     }
 
     file { '.message':
@@ -53,7 +53,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         group   => 'apmirror',
         path    => '/var/www/www.apache.org/dist/.message',
         source  => 'puppet:///modules/tlp_vhosts/dist/.message',
-        require => File['/var/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org/dist'],
     }
 
     file { 'favicon.ico':
@@ -62,7 +62,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         group   => 'apmirror',
         path    => '/var/www/www.apache.org/dist/favicon.ico',
         source  => 'puppet:///modules/tlp_vhosts/dist/favicon.ico',
-        require => File['/var/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org/dist'],
     }
 
     file { 'HEADER.html':
@@ -71,7 +71,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         group   => 'apmirror',
         path    => '/var/www/www.apache.org/dist/HEADER.html',
         source  => 'puppet:///modules/tlp_vhosts/dist/HEADER.html',
-        require => File['/var/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org/dist'],
     }
 
     file { 'README.html':
@@ -80,7 +80,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         group   => 'apmirror',
         path    => '/var/www/www.apache.org/dist/README.html',
         source  => 'puppet:///modules/tlp_vhosts/dist/README.html',
-        require => File['/var/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org/dist'],
     }
 
     file { '/var/www/www.apache.org/dist/zzz':
