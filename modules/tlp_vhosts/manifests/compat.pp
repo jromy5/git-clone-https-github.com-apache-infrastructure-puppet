@@ -29,7 +29,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target  => '/usr/bin/python2.7',
     }
 
-    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist']
+    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org']
 
     file { $apache_org_dirs:
         ensure  => 'directory',
@@ -38,63 +38,13 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         mode    => '2775',
     }
 
-    file { '/var/www/www.apache.org/dist/zzz':
+    file { '/var/www/www.apache.org/dist':
         ensure  => 'directory',
         owner   => 'svnwc',
         group   => 'apmirror',
-        source  => 'puppet:///modules/tlp_vhosts/zzz',
+        source  => 'puppet:///modules/tlp_vhosts/dist',
         recurse => true,
-        require => File['/var/www/www.apache.org/dist'],
-    }
-
-    file { '.htaccess':
-        ensure  => present,
-        path    => '/var/www/www.apache.org/dist/.htaccess',
-        mode    => 0644,
-        owner   => 'svnwc',
-        group   => 'svnwc',
-        source  => 'puppet:///modules/tlp_vhosts/.htaccess',
-        require => File['/var/www/www.apache.org/dist'],
-    }
-
-    file { '.message':
-        ensure  => present,
-        path    => '/var/www/www.apache.org/dist/.message',
-        mode    => 0644,
-        owner   => 'svnwc',
-        group   => 'svnwc',
-        source  => 'puppet:///modules/tlp_vhosts/.message',
-        require => File['/var/www/www.apache.org/dist'],
-    }
-
-    file { 'README.html':
-        ensure  => present,
-        path    => '/var/www/www.apache.org/dist/README.html',
-        mode    => 0644,
-        owner   => 'svnwc',
-        group   => 'svnwc',
-        source  => 'puppet:///modules/tlp_vhosts/README.html',
-        require => File['/var/www/www.apache.org/dist'],
-    }
-
-    file { 'HEADER.html':
-        ensure  => present,
-        path    => '/var/www/www.apache.org/dist/HEADER.html',
-        mode    => 0644,
-        owner   => 'svnwc',
-        group   => 'svnwc',
-        source  => 'puppet:///modules/tlp_vhosts/HEADER.html',
-        require => File['/var/www/www.apache.org/dist'],
-    }
-
-    file { 'favicon.ico':
-        ensure  => present,
-        path    => '/var/www/www.apache.org/dist/favicon.ico',
-        mode    => 0644,
-        owner   => 'svnwc',
-        group   => 'svnwc',
-        source  => 'puppet:///modules/tlp_vhosts/favicon.ico',
-        require => File['/var/www/www.apache.org/dist'],
+        require => File['/var/www/www.apache.org'],
     }
 
     $packages = ['python-geoip', 'swish-e', 'python-flup']
