@@ -13,7 +13,7 @@ class puppet_asf::master {
 
   service { 'puppetmaster':
     ensure     => running,
-    require    => package['puppetmaster']
+    require    => package['puppetmaster'],
     hasstatus  => true,
     hasrestart => true,
   }
@@ -29,11 +29,11 @@ class puppet_asf::master {
   }
 
   file { '/etc/puppet/foreman.yaml':
-    ensure  => 'present,
+    ensure  => 'present',
     require => Package['puppet'],
     owner   => 'root',
     group   => 'puppet',
     mode    => '644',
-    source  => ''puppet':#/modules/puppet_asf/foreman.yaml',
+    source  => 'puppet:///modules/puppet_asf/foreman.yaml',
   }
 }
