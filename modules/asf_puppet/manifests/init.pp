@@ -23,8 +23,8 @@ class puppet (
    group   => "puppet",
    mode    => 755,
    source  => [ 
-     "puppet:///modules/puppet/puppet.$hostname.conf",
-     "puppet:///modules/puppet/puppet.conf",
+     "puppet:///modules/puppet_asf/puppet.$hostname.conf",
+     "puppet:///modules/puppet_asf/puppet.conf",
      ]
   }
 
