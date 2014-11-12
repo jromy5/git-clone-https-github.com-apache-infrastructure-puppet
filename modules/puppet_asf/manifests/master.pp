@@ -1,5 +1,5 @@
 class puppet_asf::master {
-
+  include puppet_asf
   cron { 'updatepuppet':
     command => 'cd /etc/puppet; /usr/bin/git pull',
     user    => root,
