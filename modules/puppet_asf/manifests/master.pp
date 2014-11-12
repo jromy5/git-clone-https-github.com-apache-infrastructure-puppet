@@ -25,7 +25,7 @@ class puppet_asf::master {
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
-    source  => 'puppet:///modules/asf_puppet/foreman.rb'
+    source  => 'puppet:///modules/puppet_asf/foreman.rb'
   }
 
   file { '/etc/puppet/foreman.yaml':
