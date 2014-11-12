@@ -1,4 +1,4 @@
 ---
 classes: 
   - rbldnsd::master::setup
-  - asf_puppet::master
+  - puppet_asf::master
