@@ -1,4 +1,4 @@
-class puppet::master {
+class puppet_asf::master {
 
   cron { 'updatepuppet':
     command => 'cd /etc/puppet; /usr/bin/git pull',
@@ -34,6 +34,6 @@ class puppet::master {
     owner   => 'root',
     group   => 'puppet',
     mode    => '644',
-    source  => 'puppet:///modules/puppet_asf/foreman.yaml',
-  } 
+    source  => ''puppet':#/modules/puppet_asf/foreman.yaml',
+  }
 }

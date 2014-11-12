@@ -1,4 +1,4 @@
-class puppet (
+class puppet_asf (
   $puppetconf  = '/etc/puppet/puppet.conf'
 ){
 
