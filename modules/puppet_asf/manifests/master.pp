@@ -11,17 +11,10 @@ class puppet_asf::master {
     require => apt::source['puppetlabs', 'puppetdeps'],
   }
 
-  service { 'puppetmaster':
-    ensure     => running,
-    require    => package['puppetmaster'],
-    hasstatus  => true,
-    hasrestart => true,
-  }
 
   file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
     ensure  => 'present',
     require => Package['puppet'],
-    notify  => Service['puppetmaster'],
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
