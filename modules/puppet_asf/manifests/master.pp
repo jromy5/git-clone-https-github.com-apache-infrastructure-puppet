@@ -30,7 +30,7 @@ class puppet_asf::master {
 
   file { '/etc/puppet/foreman.yaml':
     ensure  => 'present',
-    require => Package['puppet'],
+    require => Package['puppetmaster'],
     owner   => 'root',
     group   => 'puppet',
     mode    => '644',
@@ -38,7 +38,7 @@ class puppet_asf::master {
   }
 
   file { 'puppetmaster':
-    require => Package['puppet'],
+    require => Package['puppetmaster'],
     path    => '/usr/share/puppet/rack/puppetmasterd',
     ensure  => directory,
     owner   => 'puppet',
