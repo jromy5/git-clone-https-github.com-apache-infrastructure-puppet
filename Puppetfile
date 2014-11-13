@@ -62,7 +62,8 @@ mod 'puppet',
   :tag => '2.2.1'
 
 mod 'rsync',
-  :git => 'https://github.com/puppetlabs/puppetlabs-rsync.git'
+  :git => 'https://github.com/stumped2/puppetlabs-rsync.git',
+  :branch => 'add_logfile'
 
 mod 'rsyslog',
   :git    => 'https://github.com/pctony/puppet-rsyslog.git',
