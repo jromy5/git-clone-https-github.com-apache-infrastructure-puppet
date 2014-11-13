@@ -56,6 +56,4 @@ svnwcsub::service_ensure:   'running'
 
 rsync::package_ensure: 'latest'
 rsync::server::use_xinetd: false
-rsync::server::log_dir: '/var/log/rsync'
-rsync::server:transfer_logging: true
 
