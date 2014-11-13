@@ -8,7 +8,7 @@ class puppet_asf (
   }
 
   service { 'puppet':
-    require => package['puppet'],
+    require => Package['puppet'],
     hasstatus => true,
     hasrestart => true,
     enable => true,
@@ -16,12 +16,12 @@ class puppet_asf (
   }
 
  file { "${puppetconf}" :
-   ensure  => 'present',
+   ensure  => present,
    require => Package["puppet"],
    notify  => Service["puppet"],
-   owner   => "root",
-   group   => "puppet",
-   mode    => 755,
+   owner   => 'root',
+   group   => 'puppet',
+   mode    => '0755',
    source  => [ 
      "puppet:///modules/puppet_asf/puppet.$hostname.conf",
      "puppet:///modules/puppet_asf/puppet.conf",

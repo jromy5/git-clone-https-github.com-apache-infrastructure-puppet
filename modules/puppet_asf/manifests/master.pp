@@ -2,7 +2,7 @@ class puppet_asf::master {
 
   cron { 'updatepuppet':
     command => 'cd /etc/puppet; /usr/bin/git pull',
-    user    => root,
+    user    => 'root',
     minute  => '*/5',
   }
 
@@ -13,13 +13,13 @@ class puppet_asf::master {
 
   service { 'puppetmaster':
     ensure     => running,
-    require    => package['puppetmaster'],
+    require    => Package['puppetmaster'],
     hasstatus  => true,
     hasrestart => true,
   }
 
   file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
-    ensure  => 'present',
+    ensure  => present,
     require => Package['puppetmaster'],
     notify  => Service['puppetmaster'],
     owner   => 'root',
@@ -29,11 +29,11 @@ class puppet_asf::master {
   }
 
   file { '/etc/puppet/foreman.yaml':
-    ensure  => 'present',
+    ensure  => present,
     require => Package['puppetmaster'],
     owner   => 'root',
     group   => 'puppet',
-    mode    => '644',
+    mode    => '0644',
     source  => 'puppet:///modules/puppet_asf/foreman.yaml',
   }
 
