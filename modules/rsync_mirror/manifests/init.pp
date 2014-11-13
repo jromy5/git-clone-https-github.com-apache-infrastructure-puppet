@@ -79,6 +79,20 @@ class rsync_mirror (
 #        hosts_deny      => $deny,
 #	}
 
+    rsync::server::module { 'www-bootstrap':
+        path            => '/www',
+        comment         => 'bootstrap www via rsync (not for mirrors)',
+        uid             => 'nobody',
+        gid             => 'nogroup',
+        max_connections => 80,
+        read_only       => 'yes',
+        list            => 'no',
+        outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+        exclude         => ['/www.apache.org/dist/.rsync.td/'],
+        hosts_deny      => ['*'],
+        hosts_allow     => ['192.87.106.229', '140.211.11.131', '140.211.11.9', '54.172.167.43'],
+    }
+
     rsync::server::module { 'rsync-logs':
         path            => '/var/log/rsync',
         comment         => 'rsync logs for mino (not for mirrors)',
