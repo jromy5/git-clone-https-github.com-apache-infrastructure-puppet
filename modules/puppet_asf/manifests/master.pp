@@ -20,7 +20,7 @@ class puppet_asf::master {
 
   file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
     ensure  => 'present',
-    require => Package['puppet'],
+    require => Package['puppetmaster'],
     notify  => Service['puppetmaster'],
     owner   => 'root',
     group   => 'puppet',
