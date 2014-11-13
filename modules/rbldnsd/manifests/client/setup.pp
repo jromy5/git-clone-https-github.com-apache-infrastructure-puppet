@@ -31,5 +31,6 @@ class rbldnsd::client::setup (
   service { 'rbldnsd':
     ensure     => 'running',
     require    => File['/etc/rbldnsd'],
+    pattern    => 'rbldnsd',
   }
 }
