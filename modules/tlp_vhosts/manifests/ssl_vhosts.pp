@@ -255,6 +255,18 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'xerces.apache.org',
         serveraliases   => 'xerces.*.apache.org',
         docroot         => '/var/www/xerces.apache.org',
+        directories     => [
+            {
+                path        => '/var/www/xerces.apache.org',
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                addhandlers => [
+                    {
+                        handler     => 'cgi-script',
+                        extensions  => ['.cgi']
+                    }
+                ],
+            },
+        ],
         custom_fragment => '
         <LocationMatch /xerces-c/faq-other.html/.*>
             deny from all
