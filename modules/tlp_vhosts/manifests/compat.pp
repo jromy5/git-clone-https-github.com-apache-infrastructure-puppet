@@ -85,7 +85,7 @@ class tlp_vhosts::compat inherits tlp_vhosts {
 
     file { '/var/www/www.apache.org/dist/zzz':
         ensure  => 'directory',
-        owner   => 'svnwc',
+        owner   => 'apmirror',
         group   => 'apmirror',
         source  => 'puppet:///modules/tlp_vhosts/zzz',
         recurse => true,
