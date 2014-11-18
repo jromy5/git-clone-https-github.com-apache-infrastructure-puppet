@@ -83,7 +83,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl             => true,
         ssl_cert        => '/etc/ssl/certs/wildcard.incubator.apache.org.crt',
         ssl_chain       => '/etc/ssl/certs/wildcard.incubator.apache.org.chain',
-        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
+        ssl_key         => '/etc/ssl/private/wildcard.incubator.apache.org.key',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot         => '/var/www',
         directories     => [
