@@ -29,13 +29,20 @@ class tlp_vhosts::compat inherits tlp_vhosts {
         target  => '/usr/bin/python2.7',
     }
 
-    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist']
+    $apache_org_dirs = ['/var/www', '/var/www/www.apache.org']
 
     file { $apache_org_dirs:
         ensure  => 'directory',
         owner   => 'svnwc',
         group   => 'apmirror',
         mode    => '2775',
+    }
+
+    file { '/var/www/www.apache.org/dist':
+        ensure  => 'directory',
+        owner   => 'apmirror',
+        group   => 'apmirror',
+        mode    => '0775',
     }
 
     file { '.htaccess':
