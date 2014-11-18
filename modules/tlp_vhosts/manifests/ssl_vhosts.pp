@@ -120,7 +120,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl_key         => '/etc/ssl/private/wildcard.openoffice.org.key',
         custom_fragment => '
         Use OpenOffice https
-	<Files ~ "\.html">
+	<Files ~ "\.html$">
 	    Options +Includes
 	    SetOutputFilter INCLUDES
 	</Files>

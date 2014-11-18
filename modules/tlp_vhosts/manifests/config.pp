@@ -135,7 +135,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot         => '/var/www/ooo-site.apache.org/content',
         custom_fragment => '
         Use OpenOffice http
-	<Files ~ "\.html">
+	<Files ~ "\.html$">
 	    Options +Includes
 	    SetOutputFilter INCLUDES
 	</Files>
