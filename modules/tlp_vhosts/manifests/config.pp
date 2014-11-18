@@ -135,6 +135,10 @@ class tlp_vhosts::config inherits tlp_vhosts {
         docroot         => '/var/www/ooo-site.apache.org/content',
         custom_fragment => '
         Use OpenOffice http
+	<Files ~ "\.html">
+	    Options +Includes
+	    SetOutputFilter INCLUDES
+	</Files>
         ',
         access_log_file => 'weblog.log',
 		error_log_file  => 'errorlog.log',
