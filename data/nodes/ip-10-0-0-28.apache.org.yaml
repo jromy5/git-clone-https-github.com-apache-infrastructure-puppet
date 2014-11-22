@@ -7,7 +7,7 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-
+  - puppet
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      false
