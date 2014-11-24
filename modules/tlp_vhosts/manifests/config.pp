@@ -708,7 +708,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => 80,
         servername      => 'www.deltaspike.org',
         serveraliases   => ['deltaspike.org'],
-        docroot         => '/var/www/delatspike.apache.org', # apache puppet module requires a docroot defined
+        docroot         => '/var/www/deltaspike.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://deltaspike.apache.org'],

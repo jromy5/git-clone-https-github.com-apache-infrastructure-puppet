@@ -712,7 +712,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl             => true,
         servername      => 'www.deltaspike.org',
         serveraliases   => ['deltaspike.org'],
-        docroot         => '/var/www/delatspike.apache.org', # apache puppet module requires a docroot defined
+        docroot         => '/var/www/deltaspike.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['https://deltaspike.apache.org'],
