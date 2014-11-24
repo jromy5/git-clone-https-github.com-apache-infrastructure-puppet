@@ -711,6 +711,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         port            => 443,
         ssl             => true,
         servername      => 'www.deltaspkie.org',
+        priority        => 15,
         serveraliases   => ['deltaspkie.org'],
         docroot         => '/var/www/delatspkie.apache.org', # apache puppet module requires a docroot defined
         redirect_status => ['permanent'],
