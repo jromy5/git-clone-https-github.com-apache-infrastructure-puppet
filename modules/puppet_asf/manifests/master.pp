@@ -1,7 +1,7 @@
 class puppet_asf::master {
 
   cron { 'updatepuppet':
-    command => 'cd /etc/puppet; /usr/bin/git pull',
+    command => 'cd /etc/puppet; ./bin/pull',
     user    => 'root',
     minute  => '*/5',
   }
