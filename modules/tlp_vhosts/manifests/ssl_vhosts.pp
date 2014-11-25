@@ -138,6 +138,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'uima.apache.org',
         serveraliases   => ['uima.*.apache.org'],
         docroot         => '/var/www/uima.apache.org/pubsub',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         directories     => [
             {
                 path        => '/var/www/uima.apache.org/pubsub',
