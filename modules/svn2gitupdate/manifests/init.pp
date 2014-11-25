@@ -43,6 +43,6 @@ class svn2gitupdate (
         refreshonly => true,
         path    => "/usr/bin/:/bin/",
         cwd => "/usr/local/etc/svn2gitupdate",
-        command => 'python /usr/local/etc/svn2gitupdate.py stop && python /usr/local/etc/svn2gitupdate.py start',
+        command => 'python /usr/local/etc/svn2gitupdate.py restart',
     }
 }
