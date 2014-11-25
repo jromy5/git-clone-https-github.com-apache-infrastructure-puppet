@@ -32,7 +32,7 @@ class svn2gitupdate (
     }
     
     # Restart daemon if settings change
-    file { '/usr/local/etc/svn2gitupdate.cfg':
+    file { '/usr/local/etc/svn2gitupdate/svn2gitupdate.cfg':
         audit => 'content',
         ensure => file,
         notify => Exec['restart_svn2gitupdate']
