@@ -10,6 +10,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl             => true,
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot         => '/var/www',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         directories     => [
             {
                 path            => '/var/www',
@@ -72,7 +75,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'incubator-ssl':
@@ -106,7 +109,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         Use CatchAll
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'aoo-ssl':
@@ -126,7 +129,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
 	</Files>
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'uima-ssl':
@@ -157,6 +160,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'tomee.apache.org',
         serveraliases   => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
         docroot         => '/var/www/tomee.apache.org/content',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         rewrites        => [
             {
                 rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico']
@@ -164,7 +170,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ],
         scriptalias     => '/cgi-bin/ /x1/www/tomee.apache.org/cgi-bin/',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'spamassassin-ssl':
@@ -173,6 +179,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'spamassassin.apache.org',
         serveraliases   => ['spamassassin.*.apache.org'],
         docroot         => '/var/www/spamassassin.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         directories     => [
             {
                 path        => '/var/www/spamassassin.apache.org',
@@ -200,7 +209,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             },
         ],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xml-ssl':
@@ -209,6 +218,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'xml.apache.org',
         serveraliases   => ['xml.*.apache.org'],
         docroot         => '/var/www/xml.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/websrc/', '/from-cvs/'],
         redirect_dest   => ['https://cvs.apache.org/', 'https://cvs.apache.org/snapshots/'],
@@ -222,7 +234,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'ws-ssl':
@@ -231,11 +243,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'ws.apache.org',
         serveraliases   => ['ws.*.apache.org'],
         docroot         => '/var/www/ws.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/xml-rpc'],
         redirect_dest   => ['https://ws.apache.org/xmlrpc'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+		    error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xalan-ssl':
@@ -244,13 +259,16 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'xalan.apache.org',
         serveraliases   => ['xalan.*.apache.org'],
         docroot         => '/var/www/xalan.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         custom_fragment =>'
         <Location /xalan/samples/applet>
             deny from all
         </Location>
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'xerces-ssl':
@@ -259,6 +277,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'xerces.apache.org',
         serveraliases   => 'xerces.*.apache.org',
         docroot         => '/var/www/xerces.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         directories     => [
             {
                 path        => '/var/www/xerces.apache.org',
@@ -277,7 +298,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         </LocationMatch>
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'perl-ssl':
@@ -286,6 +307,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'perl.apache.org',
         serveraliases   => ['apache.perl.org', 'perl-new.apache.org', 'perl.*.apache.org'],
         docroot         => '/var/www/perl.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         setenv          => ['SWISH_BINARY_PATH /usr/bin/swish-e'],
         directories     => [
                 {
@@ -353,7 +377,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </IfDefine>
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'jspwiki-ssl':
@@ -361,11 +385,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         ssl             => true,
         servername      => 'jspwiki.apache.org',
         docroot         => '/var/www/jspwiki.apache.org/content',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/doc', '/wiki'],
         redirect_dest   => ['https://jspwiki-doc.apache.org', 'https://jspwiki-wiki.apache.org'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+	    	error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'gump-ssl':
@@ -374,6 +401,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'gump.apache.org',
         serveraliases   => ['gump.*.apache.org'],
         docroot         => '/var/www/gump.apache.org',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         custom_fragment => '
             #
             # Start the expires heading
@@ -413,7 +443,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             RewriteOptions inherit
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'apache.org-ssl':
@@ -422,6 +452,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername              => 'www.apache.org',
         serveraliases           => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
         docroot                 => '/var/www/www.apache.org/content',
+        ssl_cert                => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain               => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key                 => '/etc/ssl/private/wildcard.apache.org.key',
         directories             => [
             {
                 path            => '/var/www/www.apache.org/content',
@@ -517,7 +550,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             </Location>
         ',
         access_log_file         => 'weblog.log',
-		error_log_file          => 'errorlog.log',
+    		error_log_file          => 'errorlog.log',
     }
 
     apache::vhost { 'httpd-ssl':
@@ -526,6 +559,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'httpd.apache.org',
         serveraliases   => ['httpd.*.apache.org'],
         docroot         => '/var/www/httpd.apache.org/content',
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         directories     => [
             {
                 path        => '/var/www/httpd.apache.org/content',
@@ -664,183 +700,9 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
         ',
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
-
-    ## Host redirect fixes
-
-    apache::vhost { 'any23-ssl':
-        port            => 80,
-        servername      => 'www.any23.org',
-        serveraliases   => ['any23.org', 'any23.com', 'www.any23.com'],
-        docroot         => '/var/www/any23.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['http://any23.apache.org'],
-        access_log_file => 'weblog.log',
-        error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'cloudstack-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.cloudstack.org',
-        serveraliases   => ['cloudstack.org', 'cloudstack.com', 'www.cloudstack.com'],
-        docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://cloudstack.apache.org'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'cloudstack-docs-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'docs.cloudstack.org',
-        docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://cloudstack.apache.org/docs/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'deltaspike-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.deltaspike.org',
-        serveraliases   => ['deltaspike.org'],
-        docroot         => '/var/www/deltaspike.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://deltaspike.apache.org'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'www-jspwiki-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.jspwiki.org',
-        serveraliases   => ['jspwiki.org'],
-        docroot         => '/var/www/jspwiki.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://jspwiki.apache.org/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'libcloud-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.libcloud.org',
-        serveraliases   => ['libcloud.org', 'www.libcloud.net', 'libcloud.net', 'www.libcloud.com', 'libcloud.com'],
-        docroot         => '/var/www/libcloud.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://libcloud.apache.org/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'odftoolkit-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.odftoolkit.org',
-        serveraliases   => ['odftoolkit.org', 'www.odf-toolkit.com', 'odf-toolkit.com', 'www.odf-toolkit.net', 'odf-toolkit.net',
-                            'www.odf-toolkit.org', 'odf-toolkit.org', 'www.odfcoalition.com', 'odfcoalition.com',
-                            'www.odfcoalition.net',  'odfcoalition.net', 'www.odfcoalition.org', 'odfcoalition.org',
-                            'www.odftoolkit.com', 'odftoolkit.com', 'www.odftoolkit.net', 'odftoolkit.net'],
-        docroot         => '/var/www/incubator.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://incubator.apache.org/odftoolkit/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'spamassassin-redirect-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.spamassassin.org',
-        serveraliases   => ['spamassassin.org', 'au.spamassassin.org', 'au2.spamassassin.org',
-                            'eu.spamassassin.org', 'eu2.spamassassin.org', 'eu3.spamassassin.org',
-                            'ie.spamassassin.org', 'news.spamassassin.org', 'uk.spamassassin.org',
-                            'us.spamassassin.org', 'useast.spamassassin.org', 'uswest.spamassassin.org',
-                            'www.au.spamassassin.org', 'www.au2.spamassassin.org', 'www.eu.spamassassin.org',
-                            'www.eu2.spamassassin.org', 'www.eu3.spamassassin.org',   'www.ie.spamassassin.org',
-                            'www.uk.spamassassin.org', 'www.us.spamassassin.org', 'www.useast.spamassassin.org',
-                            'www.uswest.spamassassin.org'],
-        docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://spamassassin.apache.org/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'wiki-spamassassin-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'wiki.spamassassin.org',
-        docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/w/', '/'],
-        redirect_dest   => [' https://wiki.apache.org/spamassassin/', 'https://wiki.apache.org/spamassassin/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'subversion.org-ssl':
-        port                    => 443,
-        ssl                     => true,
-        servername              => 'www.subversion.org',
-        docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirectmatch_status    => ['permanent'],
-        redirectmatch_regexp    => ['^'],
-        redirectmatch_dest      => ['https://subversion.apache.org/'],
-        access_log_file         => 'weblog.log',
-		error_log_file          => 'errorlog.log',
-    }
-
-    apache::vhost { 'subversion-ssl':
-	    port            => 443,
-	    ssl             => true,
-	    servername      => 'subversion.apache.org',
-	    serveraliases   => ['www.subversion.apache.org'],
-	    docroot         => '/var/www/subversion.apache.org',
-        directories     => [
-            {
-                path            => '/var/www/subversion.apache.org',
-                options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
-                allow_override  => ['All'],
-            }
-        ],
-	    custom_fragment => '
-        <Files ~ "\.html">
-            Options +Includes
-            SetOutputFilter INCLUDES
-        </Files>
-	    ',
-    	access_log_file => 'weblog.log',
-	    error_log_file  => 'errorlog.log',
-	}
-	
-
-    apache::vhost { 'svn.collab-ssl':
-        port                    => 443,
-        ssl                     => true,
-        servername              => 'svn.collab.net',
-        docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
-        redirectmatch_status    => ['permanent'],
-        redirectmatch_regexp    => ['^'],
-        redirectmatch_dest      => ['https://subversion.apache.org/source-code'],
-        access_log_file         => 'weblog.log',
-		error_log_file          => 'errorlog.log',
-    }
 
     apache::vhost { 'webservices-ssl':
         port            => 443,
@@ -848,41 +710,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'webservices.apache.org',
         serveraliases   => 'webservices.*.apache.org',
         docroot         => '/var/www/ws.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['https://ws.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'ofbiz-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.ofbiz.org',
-        serveraliases   => ['ofbiz.org'],
-        docroot         => '/var/www/ofbiz.apache.org', # apache puppet module requires a docroot defined
-        rewrites        => [
-            {
-                comment         => 'bigfiles.ofbiz.org',
-                rewrite_cond    => ['${lowercase:%{HTTP_HOST}} ^bigfiles(?:\.\w+)?\.ofbiz\.org$'],
-                rewrite_rule    => ['(.*) https://ofbiz-bigfiles.apache.org/ [L]'],
-            },
-        ],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'myfaces-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.myfaces.org',
-        serveraliases   => ['myfaces.org'],
-        docroot         => '/var/www/myfaces.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://myfaces.apache.org'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'httpcomponents-ssl':
@@ -891,11 +726,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'httpcomponents.apache.org',
         serveraliases   => ['httpcomponents.*.apache.org'],
         docroot         => '/var/www/hc.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['https://hc.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'wicket-ssl':
@@ -904,11 +742,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'wicketframework.org',
         serveraliases   => ['wicket-framework.org'],
         docroot         => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['https://wicket.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'quetz-ssl':
@@ -917,11 +758,14 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'quetzalcoatl.apache.org',
         serveraliases   => ['python.apache.org'],
         docroot         => '/var/www/quetz.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['https://quetz.apache.org/'],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+	    	error_log_file  => 'errorlog.log',
     }
 
     apache::vhost { 'jackrabbit-ssl':
@@ -930,32 +774,22 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         servername      => 'jackrabbit.apache.org',
         serveraliases   => ['jackrabbit.*.apache.org'],
         docroot         => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
         rewrites        => [
             {
                 rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico']
             }
         ],
-	directories     => [
+	      directories     => [
             {
                 path            => '/var/www/jackrabbit.apache.org',
                 allow_override  => ['All'],
             },
         ],
         access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
-    }
-
-    apache::vhost { 'jclouds-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'www.jclouds.org',
-        serveraliases   => ['www.jclouds.net', 'www.jclouds.com', 'jclouds.org', 'jclouds.net', 'jclouds.com'],
-        docroot         => '/var/www/jclouds.apache.org', # apache puppet module requires a docroot defined
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://jclouds.apache.org/'],
-        access_log_file => 'weblog.log',
-		error_log_file  => 'errorlog.log',
+    		error_log_file  => 'errorlog.log',
     }
 
 }
