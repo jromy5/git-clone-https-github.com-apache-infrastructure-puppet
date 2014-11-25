@@ -41,6 +41,8 @@ class svn2gitupdate (
     }
     exec { 'restart_svn2gitupdate':
         refreshonly => true,
-        command => '"/usr/bin/python /usr/local/etc/svn2gitupdate.py stop && /usr/bin/python /usr/local/etc/svn2gitupdate.py start"',
+        path    => "/usr/bin/:/bin/",
+        cwd => "/usr/local/etc/svn2gitupdate",
+        command => 'python /usr/local/etc/svn2gitupdate.py stop && python /usr/local/etc/svn2gitupdate.py start',
     }
 }
