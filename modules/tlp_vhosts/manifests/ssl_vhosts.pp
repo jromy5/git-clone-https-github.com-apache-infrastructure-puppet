@@ -739,22 +739,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
     		error_log_file  => 'errorlog.log',
     }
 
-    apache::vhost { 'wicket-ssl':
-        port            => 443,
-        ssl             => true,
-        servername      => 'wicketframework.org',
-        serveraliases   => ['wicket-framework.org'],
-        docroot         => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
-        ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
-        ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
-        ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
-        redirect_status => ['permanent'],
-        redirect_source => ['/'],
-        redirect_dest   => ['https://wicket.apache.org/'],
-        access_log_file => 'weblog.log',
-    		error_log_file  => 'errorlog.log',
-    }
-
     apache::vhost { 'quetz-ssl':
         port            => 443,
         ssl             => true,
