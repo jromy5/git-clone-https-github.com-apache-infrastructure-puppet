@@ -26,7 +26,7 @@ class svn2gitupdate (
         "svn2gitupdate.py",
         "svn2gitupdate.cfg"
         ]:
-        site => "https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate/",
+        site => "https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate",
         cwd => "/usr/local/etc/svn2gitupdate",
         creates => "/usr/local/etc/svn2gitupdate/$name",
         require => File["/usr/local/etc/svn2gitupdate"],
