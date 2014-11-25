@@ -32,4 +32,15 @@ class svn2gitupdate (
         require => File["/usr/local/etc/svn2gitupdate"],
         user => 'root',
     }
+    
+    # Restart daemon if settings change
+    file { '/usr/local/etc/svn2gitupdate.cfg':
+        audit => 'content',
+        ensure => file,
+        notify => Exec['restart_svn2gitupdate']
+    }
+    exec { 'restart_svn2gitupdate':
+        refreshonly => true,
+        command => '"/usr/bin/python /usr/local/etc/svn2gitupdate.py stop && /usr/bin/python /usr/local/etc/svn2gitupdate.py start"',
+    }
 }
