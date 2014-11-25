@@ -10,7 +10,7 @@ classes:
   - puppet_asf
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
-apache::default_vhost:      false
+apache::default_vhost:      true
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
@@ -26,7 +26,7 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-
+ 
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
