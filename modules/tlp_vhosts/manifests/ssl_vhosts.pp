@@ -81,7 +81,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
     apache::vhost { 'incubator-ssl':
         priority        => '98',
         vhost_name      => '*',
-        servername      => 'www.apache.org',
+        servername      => 'incubator.apache.org',
         port            => '443',
         ssl             => true,
         ssl_cert        => '/etc/ssl/certs/wildcard.incubator.apache.org.crt',
