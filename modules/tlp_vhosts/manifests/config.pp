@@ -101,7 +101,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
     apache::vhost { 'incubator':
         priority        => '98',
         vhost_name      => '*',
-        servername      => incubator.apache.org',
+        servername      => 'incubator.apache.org',
         port            => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot         => '/var/www',
