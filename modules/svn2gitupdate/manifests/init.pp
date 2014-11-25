@@ -9,6 +9,7 @@ class svn2gitupdate (
     
         exec { $name: 
             command => "wget ${site}/${name}",
+            path    => "/usr/bin/:/bin/",
             cwd => $cwd,
             creates => "${cwd}/${name}",
             require => $require,
