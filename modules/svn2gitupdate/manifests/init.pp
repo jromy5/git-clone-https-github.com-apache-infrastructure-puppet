@@ -11,7 +11,6 @@ class svn2gitupdate (
             command => "wget ${site}/${name}",
             path    => "/usr/bin/:/bin/",
             cwd => $cwd,
-            creates => "${cwd}/${name}",
             require => $require,
             user => $user,
         }
