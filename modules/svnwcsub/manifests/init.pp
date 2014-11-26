@@ -1,30 +1,77 @@
 
 class svnwcsub (
-  $uid            = $svnwcsub::params::uid,
-  $gid            = $svnwcsub::params::gid,
-  $conf_path      = $svnwcsub::params::conf_path,
-  $conf_file      = $svnwcsub::params::conf_file,
-  $groupname      = $svnwcsub::params::groupname,
-  $groups         = $svnwcsub::params::groups,
-  $service_ensure = $svnwcsub::params::service_ensure,
-  $service_name   = $svnwcsub::params::service_name,
-  $shell          = $svnwcsub::params::shell,
-  $username       = $svnwcsub::params::username
+  $uid            = 9997,
+  $gid            = 9997,
+  $conf_path      = '/etc',
+  $conf_file      = 'svnwcsub.conf',
+  $groupname      = 'svnwc',
+  $groups         = [''],
+  $service_ensure = 'running',
+  $service_name   = 'svnwc',
+  $shell          = '/bin/bash',
+  $username       = 'svnwc',
 
-) inherits svnwcsub::params {
-    
-    require stdlib
+){
 
-    unless is_integer($uid) {
-        fail('Invalid UID. Should be integer')
+   user { "${username}":
+        name       => "${username}",
+        ensure     => present,
+        home       => "/home/${username}",
+        shell      => "${shell}",
+        uid        => "${uid}",
+        gid        => "${groupname}",
+        groups     => "${groups}",
+        managehome => true,
+        require    => Group["${groupname}"],
     }
 
-    validate_string($service_ensure)
+    group { "${groupname}":
+        name   => "${groupname}",
+        ensure => present,
+        gid    => "${gid}",
+    } 
 
+    file { "/var/log/${service_name}":
+        ensure => directory,
+        mode   => 0755,
+        owner  => "${username}",
+        group  => "${groupname}",
+    }
 
-    anchor { 'svnwcsub::begin': } ->
-    class { '::svnwcsub::user': } ->
-    class { '::svnwcsub::config': } ~>
-    class { '::svnwcsub::service': } ->
-    anchor { 'svnwcsub::end': }
+    file { "/var/run/${service_name}":
+        ensure => directory,
+        mode   => 0755,
+        owner  => "${username}",
+        group  => "${groupname}",
+    }
+
+    file { "/etc/init.d/${service_name}":
+        mode   => 0755,
+        owner  => 'root',
+        group  => 'root',
+        source => "puppet:///modules/svnwcsub/svnwcsub.${asfosname}",
+    }
+
+    file { "/home/${username}/${service_name}-hook":
+        mode   => 0755,
+        owner  => "${username}",
+        group  => "${groupname}",
+        source => 'puppet:///modules/svnwcsub/svnwcsub-hook',
+    }
+
+    file { "${conf_path}/${conf_file}":
+        notify => Service["${service_name}"],
+        mode   => 0644,
+        owner  => 'root',
+        group  => 'root',
+        source => "puppet:///modules/svnwcsub/$conf_file",
+    }
+
+    service { 'svnwcsub':
+        ensure    => $service_ensure,
+        enable    => true,
+        hasstatus => false,
+        require   => Class['svnpubsub::common'],
+    }
+
 }
