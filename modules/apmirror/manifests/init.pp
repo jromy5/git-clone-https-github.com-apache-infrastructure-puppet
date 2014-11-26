@@ -3,7 +3,7 @@ class apmirror (
   $uid            = 508,
   $gid            = 508,
   $groupname      = 'apmirror',
-  $groups         = [''],
+  $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'svnwc',
   $shell          = '/bin/bash',

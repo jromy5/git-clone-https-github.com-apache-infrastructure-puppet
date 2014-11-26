@@ -5,7 +5,7 @@ class svnwcsub (
   $conf_path      = '/etc',
   $conf_file      = 'svnwcsub.conf',
   $groupname      = 'svnwc',
-  $groups         = [''],
+  $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'svnwcsub',
   $shell          = '/bin/bash',
