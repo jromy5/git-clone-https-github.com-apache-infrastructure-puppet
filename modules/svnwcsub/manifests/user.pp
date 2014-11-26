@@ -13,7 +13,7 @@ class svnwcsub::user inherits svnwcsub {
         require    => Group["${groupname}"],
     }
 
-'
+
     group { "${groupname}":
         name   => "${groupname}",
         ensure => present,
