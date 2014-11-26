@@ -37,6 +37,8 @@ apache::serveradmin:        'infrastructure@apache.org'
 
 apmirror::uid:            '508'
 apmirror::gid:            '508'
+apmirror::groups:
+  - 'svnwc'
 
 collectd::purge:  true
 collectd::recurse: true
