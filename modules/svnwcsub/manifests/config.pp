@@ -19,7 +19,7 @@ class svnwcsub::config inherits svnwcsub {
         mode   => 0755,
         owner  => 'root',
         group  => 'root',
-        source => 'puppet:///modules/svnwcsub/svnwcsub.debian',
+        source => "puppet:///modules/svnwcsub/svnwcsub.${asfosname}",
     }
 
     file { '/home/svnwc/svnwcsub-hook':
