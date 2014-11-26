@@ -6,6 +6,7 @@ class svnwcsub::params {
     $groupname      = 'svnwc'
     $groups         = ['']
     $service_ensure = 'running'
+    $service_name   = 'svnwc'
     $shell          = '/bin/bash'
     $username       = 'svnwc'
 }
