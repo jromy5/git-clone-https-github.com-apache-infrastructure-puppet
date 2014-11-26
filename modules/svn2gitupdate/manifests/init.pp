@@ -21,6 +21,13 @@ class svn2gitupdate (
         ensure => "directory",
     }
     
+    file { "/x1/git/mirrors":
+        ensure => "directory",
+        owner  => "git",
+        group  => "git",
+        mode   => 755,
+    }
+    
     download_file { [
         "svn2gitupdate.py",
         "svn2gitupdate.cfg"
