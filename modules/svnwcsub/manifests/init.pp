@@ -1,9 +1,16 @@
 
 class svnwcsub (
-    $uid            = $svnwcsub::params::uid,
-    $gid            = $svnwcsub::params::gid,
-    $conf_file      = $svnwcsub::params::conf_file,
-    $service_ensure = $svnwcsub::params::service_ensure
+  $uid            = $svnwcsub::params::uid,
+  $gid            = $svnwcsub::params::gid,
+  $conf_path      = $svnwcsub::params::conf_path,
+  $conf_file      = $svnwcsub::params::conf_file,
+  $groupname      = $svnwcsub::params::groupname,
+  $groups         = $svnwcsub::params::groups,
+  $service_ensure = $svnwcsub::params::service_ensure,
+  $service_name   = $svnwcsub::params::service_name,
+  $shell          = $svnwcsub::params::shell,
+  $username       = $svnwcsub::params::username
+
 ) inherits svnwcsub::params {
     
     require stdlib
