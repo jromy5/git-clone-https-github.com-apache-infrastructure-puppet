@@ -13,6 +13,8 @@ class svnwcsub (
 
 ){
 
+   require svnpubsub::common
+
    user { "${username}":
         name       => "${username}",
         ensure     => present,
