@@ -55,7 +55,7 @@ svnwcsub::groupname:        'svnwc'
 svnwcsub::groups:
   - 'svnwc'
 svnwcsub::service_ensure:   'running'
-svnwcsub::service_name:     'svnwc'
+svnwcsub::service_name:     'svnwcsub'
 svnwcsub::shell:            '/bin/bash'
 svnwcsub::username:         'svnwc'
 
