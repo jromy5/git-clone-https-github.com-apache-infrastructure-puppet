@@ -14,6 +14,7 @@ apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      true
 apache::docroot:            '/x1/git/mirrors'
+apache::docroot_owner:      'git'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
