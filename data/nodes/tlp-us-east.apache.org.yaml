@@ -50,6 +50,13 @@ svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
 svnwcsub::conf_file:        'svnwcsub.conf'
 svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/',
+svnwcsub::groupname:        'svnwc',
+svnwcsub::groups:           'svnwc',
+svnwcsub::service_ensure:   'running',
+svnwcsub::service_name:     'svnwc',
+svnwcsub::shell:            '/bin/bash',
+svnwcsub::username:         'svnwc'
 
 rsync::package_ensure: 'latest'
 rsync::server::use_xinetd: false
