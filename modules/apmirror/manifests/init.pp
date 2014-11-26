@@ -23,12 +23,13 @@ class apmirror (
     }
 
     exec { 'apmirror-co':
-        command     => 'svn co http://svn.apache.org/repos/asf/infrastructure/site-tools/trunk/mirrors/',
-        path        => "/usr/bin/:/bin/",
-        cwd         => '/home/apmirror',
-        user        => 'apmirror',
-        group       => 'apmirror',
-        require     => [ Package['subversion'], User['apmirror'] ],
+        command => 'svn co http://svn.apache.org/repos/asf/infrastructure/site-tools/trunk/mirrors/',
+        path    => "/usr/bin/:/bin/",
+        cwd     => '/home/apmirror',
+        user    => 'apmirror',
+        group   => 'apmirror',
+        creates => '/home/apmirror/mirrors',
+        require => [ Package['subversion'], User['apmirror'] ],
     }
 
     cron { 'apmirror':
