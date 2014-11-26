@@ -29,7 +29,7 @@ class svnwcsub::config inherits svnwcsub {
         source => 'puppet:///modules/svnwcsub/svnwcsub-hook',
     }
 
-    file { '/etc/svnwcsub.conf':
+    file { "${conf_path}/${conf_file}":
         notify => Service["svnwcsub"],
         mode   => 0644,
         owner  => 'root',

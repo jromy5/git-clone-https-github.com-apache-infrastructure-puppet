@@ -1,23 +1,23 @@
 
 class svnwcsub::user inherits svnwcsub {
 
-    user { 'svnwc':
-        name       => 'svnwc',
+    user { 'svnwc_user':
+        name       => "${username}",
         ensure     => present,
-        home       => '/home/svnwc',
-        shell      => '/bin/bash',
-        uid        => $uid,
-        gid        => 'svnwc',
-        groups     => ['apmirror'],
+        home       => "/home/${username}",
+        shell      => "${shell}",
+        uid        => "${uid}",
+        gid        => "${groupname}",
+        groups     => "${groups}",
         managehome => true,
-        require    => Group['svnwc'],
+        require    => Group["${groupname}"],
     }
 
-
-    group { 'svnwc':
-        name   => 'svnwc',
+'
+    group { 'svnwc_group':
+        name   => "${groupname}",
         ensure => present,
-        gid    => $gid,
+        gid    => "${gid}",
     }
 
 }
