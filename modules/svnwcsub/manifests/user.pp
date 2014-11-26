@@ -1,7 +1,7 @@
 
 class svnwcsub::user inherits svnwcsub {
 
-    user { 'svnwc_user':
+    user { "${username}":
         name       => "${username}",
         ensure     => present,
         home       => "/home/${username}",
@@ -14,7 +14,7 @@ class svnwcsub::user inherits svnwcsub {
     }
 
 '
-    group { 'svnwc_group':
+    group { "${groupname}":
         name   => "${groupname}",
         ensure => present,
         gid    => "${gid}",
