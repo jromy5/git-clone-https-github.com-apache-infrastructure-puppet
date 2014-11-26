@@ -64,7 +64,7 @@ class svnwcsub (
         mode   => 0644,
         owner  => 'root',
         group  => 'root',
-        source => "puppet:///modules/svnwcsub/$conf_file",
+        source => "puppet:///modules/svnwcsub/${conf_file}",
     }
 
     service { 'svnwcsub':
