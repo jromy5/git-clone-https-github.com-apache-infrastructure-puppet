@@ -25,9 +25,9 @@ class wiki_asf {
   }
 
   exec {'enable-wiki-site':
-    command   => "/usr/sbin/a2ensite wiki.apache.org",
-    unless    => "/usr/bin/test -f /etc/apache2/sites-enabled/wiki.apache.org",
-    creates   => "/etc/apache2/sites-enabled/wiki.apache.org",
+    command   => "/usr/sbin/a2ensite 10-wiki.apache.org",
+    unless    => "/usr/bin/test -f /etc/apache2/sites-enabled/10-wiki.apache.org",
+    creates   => "/etc/apache2/sites-enabled/10-wiki.apache.org",
   }
 }
 
