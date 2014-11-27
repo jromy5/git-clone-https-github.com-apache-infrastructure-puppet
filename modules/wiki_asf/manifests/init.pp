@@ -23,7 +23,7 @@ class wiki_asf {
       loadfile_name => "allowmethods";
     "enable-log-debug":
       loadfile_name => "log_debug";
-    "enable-log-debug":
+    "enable-log-forensic":
       loadfile_name => "log_forensic";
   }
 
