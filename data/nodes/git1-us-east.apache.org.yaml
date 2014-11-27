@@ -8,7 +8,7 @@ classes:
   - collectd::plugin::interface
   - collectd::plugin::write_http
   - puppet_asf
-  - svn2gitupdate
+  - gitmirrorupdater
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
