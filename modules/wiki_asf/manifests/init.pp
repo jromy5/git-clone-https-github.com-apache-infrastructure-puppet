@@ -20,11 +20,11 @@ class wiki_asf {
 
   apache::mod {
     "enable-allowmethods":
-      loadfile_name => "allowmethods";
+      loadfile_name => "allowmethods.load";
     "enable-log-debug":
-      loadfile_name => "log_debug";
+      loadfile_name => "log_debug.load";
     "enable-log-forensic":
-      loadfile_name => "log_forensic";
+      loadfile_name => "log_forensic.load";
   }
 
   $packages = [ 'libapache2-mod-wsgi' ]
