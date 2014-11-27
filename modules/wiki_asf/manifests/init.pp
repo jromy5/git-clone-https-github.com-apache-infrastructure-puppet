@@ -9,12 +9,12 @@ class wiki_asf {
     require   => Class['apache'],
   }
 
-  apache::mod::cache
-  apache::mod::expires
-  apache::mod::rewrite
-  apache::mod::ssl
-  apache::mod::status
-  apache::mod::wsgi
+  include apache::mod::cache
+  include apache::mod::expires
+  include apache::mod::rewrite
+  include apache::mod::ssl
+  include apache::mod::status
+  include apache::mod::wsgi
 
   $packages = [ 'libapache2-mod-wsgi' ]
 
