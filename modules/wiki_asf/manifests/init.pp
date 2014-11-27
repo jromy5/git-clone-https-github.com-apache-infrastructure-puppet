@@ -16,4 +16,9 @@ class wiki_asf {
   apache::mod::status
   apache::mod::wsgi
 
+  $packages = [ 'libapache2-mod-wsgi' ]
+
+  package { $packages:
+    ensure   =>  installed,
+  }
 }
