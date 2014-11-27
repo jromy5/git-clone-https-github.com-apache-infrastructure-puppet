@@ -13,6 +13,7 @@ base::basepackages:
   - bash
   - ca-certificates
   - git
+  - htop
   - sockstat
   - software-properties-common
   - zsh
