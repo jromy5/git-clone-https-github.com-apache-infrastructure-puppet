@@ -9,4 +9,11 @@ class wiki_asf {
     require   => Class['apache'],
   }
 
+  apache::mod::cache
+  apache::mod::expires
+  apache::mod::rewrite
+  apache::mod::ssl
+  apache::mod::status
+  apache::mod::wsgi
+
 }
