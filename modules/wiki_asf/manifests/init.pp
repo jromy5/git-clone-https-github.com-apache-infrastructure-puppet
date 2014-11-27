@@ -13,6 +13,8 @@ class wiki_asf {
 
   include apache::mod::cache
   include apache::mod::expires
+  include apache::mod::log_debug
+  include apache::mod::log_forensic
   include apache::mod::rewrite
   include apache::mod::ssl
   include apache::mod::status
