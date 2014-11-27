@@ -19,13 +19,13 @@ class wiki_asf {
   include apache::mod::wsgi
 
   apache::mod {
-    "enable-allowmethods":
+    "allowmethods":
       loadfile_name => "allowmethods.load",
       path          => "/usr/lib/apache2/modules/mod_allowmethods.so";
-    "enable-log-debug":
+    "log_debug":
       loadfile_name => "log_debug.load",
       path          => "/usr/lib/apache2/modules/mod_log_debug.so";
-    "enable-log-forensic":
+    "log_forensic":
       loadfile_name => "log_forensic.load",
       path          => "/usr/lib/apache2/modules/mod_log_forensic.so";
   }
