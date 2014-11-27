@@ -1,4 +1,4 @@
-class svn2gitupdate (
+class gitmirrorupdater (
 ) {
     define download_file(
             $site="",
