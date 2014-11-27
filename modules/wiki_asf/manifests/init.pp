@@ -4,9 +4,11 @@ class wiki_asf {
 
   apache::custom_config { 'wiki.apache.org':
     source    => "puppet:///modules/wiki_asf/wiki.apache.org.conf",
+    confdir   => "/etc/apache2/sites-available",
     priority  => '10',
     ensure    => present,
     require   => Class['apache'],
+    notify    => Exec['enable-wiki-site'],
   }
 
   include apache::mod::cache
@@ -21,4 +23,12 @@ class wiki_asf {
   package { $packages:
     ensure   =>  installed,
   }
+
+  exec {'enable-wiki-site':
+    command   => "/usr/sbin/a2ensite wiki.apache.org",
+    unless    => "/usr/bin/test -f /etc/apache2/sites-enabled/wiki.apache.org",
+    creates   => "/etc/apache2/sites-enabled/wiki.apache.org",
+  }
 }
+
+
