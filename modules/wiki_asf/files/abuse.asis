@@ -1,0 +1,14 @@
+Status: 404
+Cache-Control: no-cache
+Content-Type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+  <body bgcolor="#FFFFFF" text="#000000">
+    <p>You have been blocked from retrieving this resource due to previous excessive
+       requests. If you want this ban to be lifted please contact us via
+       infrastructure (at) apache (dot) org.</p>
+    <p>Thanks, ASF Infrastructure Team</p>
+  </body>
+</html>
+

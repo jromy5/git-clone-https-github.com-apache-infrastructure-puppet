@@ -29,6 +29,15 @@ class wiki_asf {
     unless    => "/usr/bin/test -f /etc/apache2/sites-enabled/10-wiki.apache.org",
     creates   => "/etc/apache2/sites-enabled/10-wiki.apache.org",
   }
+
+  file {
+    '/etc/apache2/wiki-abusers':
+      ensure  => directory,
+      require => Package['apache2'];
+    '/etc/apache2/wiki-abusers/abuse-asis':
+      source  => "puppet:///modules/wiki_asf/abuse.asis",
+      require => [Package['apache2'],File['/etc/apache2/wiki-abusers']];
+  }
 }
 
 
