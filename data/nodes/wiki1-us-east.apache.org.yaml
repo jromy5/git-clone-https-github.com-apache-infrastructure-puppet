@@ -8,6 +8,7 @@ classes:
   - collectd::plugin::interface
   - collectd::plugin::write_http
   - puppet_asf
+  - ssl::name::wildcard_apache_org
   - wiki_asf
   
 apache::keepalive:          'On'
