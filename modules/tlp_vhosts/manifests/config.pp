@@ -480,7 +480,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
             'http://httpd.apache.org/info/css-security',
             'http://cvs.apache.org/',
             'http://cvs.apache.org/snapshots/',
-            'http:/i/tac-apply.apache.org'
+            'http://tac-apply.apache.org'
         ],
         redirectmatch_status    => ['permanent'],
         redirectmatch_regexp    => ['^/LICENSE.*', '/flyers(.*)'],
