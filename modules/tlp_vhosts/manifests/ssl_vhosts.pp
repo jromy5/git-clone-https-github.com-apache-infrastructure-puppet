@@ -73,6 +73,10 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
         UseCanonicalName Off
         Use CatchAll
+        <Directory /var/www/trafficserver.apache.org>
+          Options +Includes
+          AddOutputFilter INCLUDES .html
+        </Directory>
         ',
         access_log_file => 'weblog.log',
 		    error_log_file  => 'errorlog.log',
