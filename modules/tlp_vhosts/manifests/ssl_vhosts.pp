@@ -551,6 +551,33 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
             <Location "/server-status">
               SetHandler server-status
             </Location>
+
+            <DirectoryMatch /\.svn>
+                Order allow,deny
+                Deny from all
+            </DirectoryMatch>
+
+            <Directory /var/www/www.apache.org/dist/httpd>
+                IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
+            </Directory>
+
+            <Directory /var/www/www.apache.org/dist/httpd>
+                IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
+            </Directory>
+            
+            ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
+            <LocationMatch ^/dist/.*>
+                Header set Access-Control-Allow-Origin "*"
+            </LocationMatch>
+
+            <Directory /var/www/www.apache.org/content/dist>
+                IndexOptions FancyIndexing NameWidth=* FoldersFirst ScanHTMLTitles DescriptionWidth=*
+                HeaderName HEADER.html
+                ReadmeName README.html
+                AllowOverride FileInfo Indexes
+                Options Indexes SymLinksIfOwnerMatch
+            </Directory>
+
         ',
         access_log_file         => 'weblog.log',
     		error_log_file          => 'errorlog.log',
