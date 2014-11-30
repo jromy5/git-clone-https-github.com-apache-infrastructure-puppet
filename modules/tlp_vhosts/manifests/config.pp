@@ -529,10 +529,6 @@ class tlp_vhosts::config inherits tlp_vhosts {
             <Directory /var/www/www.apache.org/dist/httpd>
                 IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
             </Directory>
-
-            <Directory /var/www/www.apache.org/dist/httpd>
-                IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
-            </Directory>
             
             ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
             <LocationMatch ^/dist/.*>

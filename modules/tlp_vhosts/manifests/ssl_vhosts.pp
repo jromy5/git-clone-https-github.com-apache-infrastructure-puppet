@@ -565,10 +565,6 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
                 IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
             </Directory>
 
-            <Directory /var/www/www.apache.org/dist/httpd>
-                IndexOptions FoldersFirst ScanHTMLTitles DescriptionWidth=*
-            </Directory>
-            
             ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
             <LocationMatch ^/dist/.*>
                 Header set Access-Control-Allow-Origin "*"
