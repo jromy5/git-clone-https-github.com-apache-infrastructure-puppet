@@ -733,6 +733,32 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
     		error_log_file  => 'errorlog.log',
     }
 
+    apache::vhost { 'subversion-ssl':
+        port          => 443,
+        ssl           => true,
+        servername    => 'subversion.apache.org',
+        serveraliases => ['www.subversion.apache.org', 'subversion.*.apache.org'],
+        docroot       => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        ssl_cert      => '/etc/ssl/certs/wildcard.apache.org.crt',
+        ssl_chain     => '/etc/ssl/certs/wildcard.apache.org.chain',
+        ssl_key       => '/etc/ssl/private/wildcard.apache.org.key',
+        directories   => [
+            {
+                path            => '/var/www/subversion.apache.org',
+                options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                allow_override  => ['All'],
+            }
+        ],
+        custom_fragment => '
+            <Files ~ "\.html">
+                Options +Includes
+                SetOutputFilter INCLUDES
+            </Files>
+        ',
+        access_log_file => 'weblog.log',
+        error_log_file  => 'errorlog.log',
+    }
+
 
     apache::vhost { 'webservices-ssl':
         port            => 443,
