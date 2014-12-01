@@ -595,7 +595,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
         directories     => [
             {
                 path        => '/var/www/httpd.apache.org/content',
-                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI', 'Includes'],
                 addhandlers => [
                     {
                         handler     => 'cgi-script',

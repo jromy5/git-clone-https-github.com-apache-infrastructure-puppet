@@ -555,7 +555,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         directories     => [
             {
                 path        => '/var/www/httpd.apache.org/content',
-                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+                options     => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI', 'Includes'],
                 addhandlers => [
                     {
                         handler     => 'cgi-script',
