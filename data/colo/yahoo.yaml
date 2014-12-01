@@ -2,5 +2,6 @@
 
 dnsclient::searchorder: 'apache.org'
 
-dnsclient::nameserver1: '8.8.8.8'
-dnsclient::nameserver2: '8.8.4.4'
+dnsclient::nameservers:
+  - '8.8.8.8'
+  - '8.8.4.4'

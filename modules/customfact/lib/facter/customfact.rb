@@ -11,9 +11,25 @@ Facter.add("asfosname") do
   end
 end
 
+Facter.add("ipaddress_primary") do
+  setcode do
+    if Facter.value('ipaddress_eth0')
+      Facter.value('ipaddress_eth0')
+    elsif Facter.value('ipaddress_em0')
+      Facter.value('ipaddress_em0')
+    elsif Facter.value('ipaddress_eth1')
+      Facter.value('ipaddress_eth1')
+    elsif Facter.value('ipaddress_em1')
+      Facter.value('ipaddress_em1')
+    else
+      Facter.value('ipaddress')
+    end
+  end
+end
+
 Facter.add("asfcolo") do
   setcode do
-    ipadd = Facter.value('ipaddress')
+    ipadd = Facter.value('ipaddress_primary')
     case ipadd
     when /^140.211.11.([0-9]+)$/
       "osuosl"
@@ -36,7 +52,7 @@ Facter.add("asfcolo") do
     when /^162.209.6.([0-9]+)$/
       "rax-vpc-us-mid"
     else
-      'No Colo could be automatically determined'
+      "yahoo"
     end
   end
 end
