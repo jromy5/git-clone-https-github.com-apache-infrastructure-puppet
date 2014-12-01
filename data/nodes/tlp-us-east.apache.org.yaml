@@ -21,6 +21,9 @@ apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      false
 
+apache::logrotate_owner:    'root'
+apache::logrotate_group:    'apbackup'
+
 apache::mod::event::listenbacklog: '1023'
 apache::mod::event::maxclients: '750'
 apache::mod::event::maxconnectionsperchild: '200000'
