@@ -65,6 +65,7 @@ ldapclient::ldapclient_remove_packages:
     - nscd
 
 ntp::interfaces:
+    - eth0
     - lo
 
 postfix::server::myhostname:             "%{::fqdn}"

@@ -93,12 +93,16 @@ ldapclient::authorizedkeysfile: 'asf-ldap-sshkeys.sh'
 ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
+ntp::diable_monitor: true
 ntp::servers:
   - 0.freebsd.pool.ntp.org
   - 1.freebsd.pool.ntp.org
   - 2.freebsd.pool.ntp.org
 ntp::restrict:
-  - 127.0.0.1
+  - '127.0.0.1'
+  - '::1'
+  - '-4 default kod notrap nomodify nopeer noquery'
+  - '-6 default kod notrap nomodify nopeer noquery'
 
 ## SNMP
 snmp::agentaddress: 'udp:*:161'
