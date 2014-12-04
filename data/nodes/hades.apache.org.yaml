@@ -5,7 +5,6 @@ classes:
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::ssl
-  - apache::mod::cgi
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
