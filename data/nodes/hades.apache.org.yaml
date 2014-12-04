@@ -17,6 +17,7 @@ classes:
   - puppet_asf
   - rootbin_asf
   - ssl::name::wildcard_apache_org
+  - svnpubsub
   - subversion_server
   - vhosts_asf::modules
   - vhosts_asf::vhosts
