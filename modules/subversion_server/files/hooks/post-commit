@@ -98,7 +98,7 @@ PREV_REV=`expr $REV - 1`
 if expr `minfo_cnt $PREV_REV` - `minfo_cnt $REV` | grep ....... >/dev/null; then
   echo "Commit succeeded, but triggered a minfo_cnt bug; please contact infrastructure@apache.org" >&2
   (/root/bin/dump-noderev.pl $REPOS / $PREV_REV; /root/bin/dump-noderev.pl $REPOS / $REV) \
-     | /usr/bin/mail -s "[$HOSTNAME] r$REV triggered a corruption: minfo_cnt" danielsh@apache.org
+     | /usr/bin/mail -s "[$HOSTNAME] r$REV triggered a corruption: minfo_cnt" root@apache.org
   exit 1
 fi
 skipped_root_noderevs() {
@@ -107,7 +107,7 @@ skipped_root_noderevs() {
 if [ "`skipped_root_noderevs $PREV_REV`" -ne "`skipped_root_noderevs $REV`" ]; then
   echo "Commit succeeded, but triggered a skipped_root_noderevs bug; please contact infrastructure@apache.org" >&2
   (/root/bin/dump-noderev.pl $REPOS / $PREV_REV; /root/bin/dump-noderev.pl $REPOS / $REV) \
-     | /usr/bin/mail -s "[$HOSTNAME] r$REV triggered a corruption: skipped_root_noderevs" danielsh@apache.org
+     | /usr/bin/mail -s "[$HOSTNAME] r$REV triggered a corruption: skipped_root_noderevs" root@apache.org
   exit 2
 fi
 
