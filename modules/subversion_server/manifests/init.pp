@@ -13,6 +13,19 @@ class subversion_server {
 
   # File block to deploy fodlers, scripts etc
   file {
+   '/etc/viewvc/viewvc.conf':
+     ensure   => present,
+     owner    => 'www-data',
+     group    => 'svnadmins',
+     mode     => '0775',
+     source   => "puppet:///modules/subversion_server/viewvc/conf/viewvc.conf";
+   '/etc/viewvc/templates':
+     ensure   => present,
+     recurse  => true,
+     owner    => 'www-data',
+     group    => 'svnadmins',
+     mode     => '0775',
+     source   => "puppet:///modules/subversion_server/viewvc/templates";
    '/x1/svn/hooks':
      ensure   => present,
      recurse  => true,
