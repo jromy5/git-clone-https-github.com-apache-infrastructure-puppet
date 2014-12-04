@@ -16,7 +16,7 @@ class httpd_modules::mod_svn_check_path (
       source  => 'puppet:///modules/httpd_modules/mod_svn_check_path',
     }
 
-    package { "${required_packages}":
+    package { $required_packages:
       ensure => latest,
     }
 

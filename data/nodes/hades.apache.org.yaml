@@ -72,6 +72,7 @@ httpd_modules::dev_package:
   - apache2-dev
 httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
+  - libapreq2-dev
 httpd_modules::mod_svn_check_path::args: '-I /usr/include/subversion-1 -DFILTERING -i -a -c'
 
 vhosts_asf::modules::modules:
