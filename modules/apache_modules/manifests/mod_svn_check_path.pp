@@ -15,8 +15,8 @@ class apache_modules::mod_svn_check_path (
     }
 
     exec { 'compile mod_svn_check_path':
-      command => 'apxs2 -U /usr/include/subversion-1 -i -a -c mod_svn_check_path.c',
+      command => 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c',
       cwd     => '/opt/mod_svn_check_path',
-      path    => ['/usr/bin', '/bin'],
+      path    => ['/usr/bin', '/bin', '/usr/sbin'],
     }
 }
