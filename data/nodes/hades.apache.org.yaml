@@ -35,6 +35,16 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+asf-fail2ban::jails::jails:
+  httpd-svn:
+    filter: asf-httpd
+    action: 
+      - asf-ban-httpd
+      - asf-sendmail[name="HTTPD (Authentication)", hostname="hades", dest=root@apache.org, sender=fail2ban@apache.org, logpath="/var/log/vc/error_log"]
+    logpath: /var/log/vc/error_log
+    findtime: 1800
+    maxretry: 100
+  
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
