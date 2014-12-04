@@ -5,6 +5,7 @@ classes:
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::ssl
+  - apache::mod::cgi
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
@@ -92,11 +93,12 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
+      ScriptAlias /viewvc /usr/lib/cgi-bin/viewvc.cgi
       # The main repository
       RewriteEngine On
-
+      
       # tlp migrations
-
+      
       RewriteCond %%{}{IS_SUBREQ} =false
       RewriteCond %%{}{REQUEST_METHOD} =GET [OR]
       RewriteCond %%{}{REQUEST_METHOD} =HEAD
@@ -167,6 +169,7 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
+      ScriptAlias /viewvc /usr/lib/cgi-bin/viewvc.cgi
       # The main repository
       RewriteEngine On
       
