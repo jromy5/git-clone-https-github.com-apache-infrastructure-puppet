@@ -49,6 +49,12 @@ asf-fail2ban::config::jails:
     logpath: /var/log/vc/error_log
     findtime: 1800
     maxretry: 100
+
+asf-fail2ban::config::filters:
+  asf-httpd:
+    filterfailregex:  ' [[]client <HOST>[]] user .* authentication failure
+                        [[]client <HOST>[]] user .* not found
+                        [[]client <HOST>[]] user .* password mismatch'
   
 collectd::purge:  true
 collectd::recurse: true
