@@ -16,6 +16,7 @@ base::basepackages:
   - htop
   - sockstat
   - software-properties-common
+  - stunnel4
   - zsh
 
 apt::sources:
