@@ -66,6 +66,8 @@ collectd::plugin::interface::ignoreselected: true
 vhosts_asf::modules::modules:
   authz_svn:
     name: 'authz_svn'
+  svn_check_path:
+    name: 'svn_check_path'
 
 vhosts_asf::vhosts::vhosts:
     svn:
