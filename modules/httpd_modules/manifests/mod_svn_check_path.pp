@@ -13,7 +13,7 @@ class httpd_modules::mod_svn_check_path (
     file { 'mod_svn_check_path':
       path    => "${mod_path}",
       recurse => true,
-      source  => 'puppet:///modules/apache_modules/mod_svn_check_path',
+      source  => 'puppet:///modules/httpd_modules/mod_svn_check_path',
     }
 
     package { "${required_packages}":
