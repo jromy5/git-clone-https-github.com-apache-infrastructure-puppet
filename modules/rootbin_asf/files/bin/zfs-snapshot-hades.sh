@@ -24,7 +24,7 @@ DAY=`/bin/date +%d`
 
 if [ -n "$DATASET" ]; then
     # loop over existing snapshots for this day in the last month and destroy them
-    for SNAP in `/sbin/zfs list -t snapshot -Ho name | grep "$DATASET@[0-9]\{6\}$DAY"`; do 
+    for SNAP in `/usr/bin/sudo /sbin/zfs list -t snapshot -Ho name | grep "$DATASET@[0-9]\{6\}$DAY"`; do 
         /usr/bin/sudo /sbin/zfs destroy -r $SNAP
     done
 
