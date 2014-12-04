@@ -1,4 +1,4 @@
-class vhost_asf::modules (
+class vhosts_asf::modules (
 
   $modules,
 ) {
