@@ -1,11 +1,17 @@
 class apache_modules::mod_svn_check_path (
-  $required_packages = [],
+  $args              = '-I /usr/include/subversion-2 -i -a -c',
+  $compiler          = 'apxs2',
+  $creates           = '/usr/lib/apache2/modules/mod_svn_check_path.so',
+  $mod_path          = '/opt/mod_svn_check_path',
+  $module            = 'mod_svn_check_patch.c',
+  $required_packages = ['libsvn-dev'],
+  $shell_path        = ['/usr/bin', '/bin', '/usr/sbin'],
 ) {
 
     require apache_modules
 
     file { 'mod_svn_check_path':
-      path    => '/opt/mod_svn_check_path',
+      path    => "${mod_path}",
       recurse => true,
       source  => 'puppet:///modules/apache_modules/mod_svn_check_path',
     }
@@ -15,9 +21,9 @@ class apache_modules::mod_svn_check_path (
     }
 
     exec { 'compile mod_svn_check_path':
-      command => 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c',
-      cwd     => '/opt/mod_svn_check_path',
-      path    => ['/usr/bin', '/bin', '/usr/sbin'],
-      creates => '/usr/lib/apache2/modules/mod_svn_check_path.so',
+      command => "${compiler} ${args} ${module}",
+      cwd     => "${mod_path}",
+      path    => "${shell_path}",
+      creates => "${creates}",
     }
 }
