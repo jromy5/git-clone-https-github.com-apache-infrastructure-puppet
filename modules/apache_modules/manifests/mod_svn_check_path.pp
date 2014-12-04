@@ -26,4 +26,6 @@ class apache_modules::mod_svn_check_path (
       path    => $shell_path,
       creates => "${creates}",
     }
+
+    apache::mod { 'svn_check_path': }
 }
