@@ -3,6 +3,7 @@
 class subversion_server {
 
 
+  # File block to deploy fodlers, scripts etc
   file {
    '/x1/svn/hooks':
      ensure   => present,
@@ -27,4 +28,70 @@ class subversion_server {
      source   => "puppet:///modules/subversion_server/authorization";
   }
 
+  # File block to setup the plethora of symlinks needed
+  # Generic Files
+  file { 
+    '/x1/svn/asf-mailer.conf':
+      ensure  => link,
+      target  => '/x1/svn/authorization/asf-mailer.conf'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn';
+
+    # /repos/asf specific files
+    '/x1/svn/repos/asf/hooks/pre-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-commit'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/start-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/start-commit'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/post-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-commit'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/pre-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-lock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/post-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-lock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/post-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-revprop-change'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/pre-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-revprop-change'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/pre-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-unlock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+    '/x1/svn/repos/asf/hooks/post-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-unlock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/asf/hooks';
+  }
 }
