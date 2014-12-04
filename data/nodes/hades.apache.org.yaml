@@ -96,45 +96,45 @@ vhosts_asf::vhosts::vhosts:
 
       # tlp migrations
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =GET [OR]
-      RewriteCond %{REQUEST_METHOD} =HEAD
-      RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
+      RewriteCond %%{}{IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =GET [OR]
+      RewriteCond %%{}REQUEST_METHOD} =HEAD
+      RewriteCond %%{}REQUEST_URI} /repos/asf/incubator/(.+)
       RewriteCond /repos/asf/%1?ckpath -U
       RewriteRule .* /repos/asf/%1 [L,R=301]
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =PROPFIND
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =PROPFIND
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
       RewriteCond /repos/asf/%2?ckpath -U
       RewriteRule .* /repos/asf/%2 [L,R=301]
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =REPORT
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =REPORT
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
       RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
-      RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteRule .* %%{}PATH_INFO} [L,R=301]
 
       # openejb -> tomee
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =GET [OR]
-      RewriteCond %{REQUEST_METHOD} =HEAD
-      RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =GET [OR]
+      RewriteCond %%{}REQUEST_METHOD} =HEAD
+      RewriteCond %%{}REQUEST_URI} /repos/asf/openejb/(.+)
       RewriteCond /repos/asf/tomee/%1?ckpath -U
       RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =PROPFIND
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =PROPFIND
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
       RewriteCond /repos/asf/tomee/%2?ckpath -U
       RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
 
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =REPORT
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =REPORT
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
       RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
-      RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteRule .* %%{}PATH_INFO} [L,R=301]
 
       <Location /repos/asf>
         DAV svn
@@ -171,45 +171,45 @@ vhosts_asf::vhosts::vhosts:
       
       # tlp migrations
       
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =GET [OR]
-      RewriteCond %{REQUEST_METHOD} =HEAD
-      RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =GET [OR]
+      RewriteCond %%{}REQUEST_METHOD} =HEAD
+      RewriteCond %%{}REQUEST_URI} /repos/asf/incubator/(.+)
       RewriteCond /repos/asf/%1?ckpath -U
       RewriteRule .* /repos/asf/%1 [L,R=301]
         
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =PROPFIND
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =PROPFIND
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
       RewriteCond /repos/asf/%2?ckpath -U
       RewriteRule .* /repos/asf/%2 [L,R=301]
       
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =REPORT
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =REPORT
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
       RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
-      RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteRule .* %%{}PATH_INFO} [L,R=301]
         
       # openejb -> tomee
         
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =GET [OR]
-      RewriteCond %{REQUEST_METHOD} =HEAD
-      RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =GET [OR]
+      RewriteCond %%{}REQUEST_METHOD} =HEAD
+      RewriteCond %%{}REQUEST_URI} /repos/asf/openejb/(.+)
       RewriteCond /repos/asf/tomee/%1?ckpath -U
       RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
         
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =PROPFIND
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =PROPFIND
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
       RewriteCond /repos/asf/tomee/%2?ckpath -U
       RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
         
-      RewriteCond %{IS_SUBREQ} =false
-      RewriteCond %{REQUEST_METHOD} =REPORT
-      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond %%{}IS_SUBREQ} =false
+      RewriteCond %%{}REQUEST_METHOD} =REPORT
+      RewriteCond %%{}REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
       RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
-      RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteRule .* %%{}PATH_INFO} [L,R=301]
         
       <Location /repos/asf>
         DAV svn
