@@ -30,7 +30,8 @@ class subversion_server {
      owner    => 'www-data',
      group    => 'svnadmins',
      mode     => '0775',
-     source   => "puppet:///modules/subversion_server/authorization";
+     source   => "puppet:///modules/subversion_server/authorization",
+     require  => File['/x1/svn/authorization'];
   }
 
   # File block to setup the plethora of symlinks needed
@@ -38,10 +39,34 @@ class subversion_server {
   file { 
     '/x1/svn/asf-mailer.conf':
       ensure  => link,
-      target  => '/x1/svn/authorization/asf-mailer.conf'
+      target  => '/x1/svn/authorization/templates/asf-mailer.conf'
       owner   => 'www-data',
       group   => 'svnadmins',
+      require => File['/x1/svn/authorization'],
       onlyif  => '/usr/bin/test -d /x1/svn';
+    '/x1/svn/asf-authorization':
+      ensure  => link,
+      target  => '/x1/svn/authorization/asf-authorization'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      require => File['/x1/svn/authorization'],
+      onlyif  => '/usr/bin/test -d /x1/svn';
+    '/x1/svn/pit-authorization':
+      ensure  => link,
+      target  => '/x1/svn/authorization/pit-authorization'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      require => File['/x1/svn/authorization'],
+      onlyif  => '/usr/bin/test -d /x1/svn';
+    '/x1/svn/asf-dist-authorization':
+      ensure  => link,
+      target  => '/x1/svn/authorization/asf-dist-authorization'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      require => File['/x1/svn/authorization'],
+      onlyif  => '/usr/bin/test -d /x1/svn';
+
+
 
     # /repos/asf specific files
     '/x1/svn/repos/asf/hooks/pre-commit':
