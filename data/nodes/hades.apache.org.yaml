@@ -52,10 +52,11 @@ asf-fail2ban::config::jails:
 
 asf-fail2ban::config::filters:
   asf-httpd:
-    filterfailregex:  ' [[]client <HOST>[]] user .* authentication failure
-                        [[]client <HOST>[]] user .* not found
-                        [[]client <HOST>[]] user .* password mismatch'
-  
+    filterfailregex: | 
+      [[]client <HOST>[]] user .* authentication failure
+      [[]client <HOST>[]] user .* not found
+      [[]client <HOST>[]] user .* password mismatch
+
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
