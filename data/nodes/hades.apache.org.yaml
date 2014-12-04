@@ -4,6 +4,7 @@ classes:
   - apache::mod::authnz_ldap
   - apache::mod::dav_svn
   - apache::mod::rewrite
+  - apache::mod::proxy
   - apache::mod::ssl
   - collectd
   - collectd::plugin::cpu
@@ -92,7 +93,7 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
-      ScriptAlias /viewvc /usr/lib/cgi-bin/viewvc.cgi
+      ProxyPass /viewvc http://localhost:49152/viewvc
       # The main repository
       RewriteEngine On
       
@@ -168,7 +169,7 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
-      ScriptAlias /viewvc /usr/lib/cgi-bin/viewvc.cgi
+      ProxyPass /viewvc http://localhost:49152/viewvc 
       # The main repository
       RewriteEngine On
       
