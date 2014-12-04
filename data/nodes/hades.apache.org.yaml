@@ -23,7 +23,7 @@ classes:
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
-apache::default_vhost:      true
+apache::default_vhost:      false
 apache::docroot:            '/x1/www/htdocs'
 
 apache::mod::event::listenbacklog: '511'
