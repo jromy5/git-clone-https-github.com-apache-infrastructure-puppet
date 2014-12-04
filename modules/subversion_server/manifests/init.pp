@@ -2,6 +2,10 @@
 
 class subversion_server {
 
+  #packages needed 
+  package { 'python-svn':
+    ensure  => present
+  } 
 
   # File block to deploy fodlers, scripts etc
   file {
@@ -109,6 +113,10 @@ class subversion_server {
     '/x1/svn/repos/asf/hooks/post-unlock':
       ensure  => link,
       target  => '/x1/svn/hooks/post-unlock',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/hot-backups.d':
+      ensure  => directory,
       owner   => 'www-data',
       group   => 'svnadmins';
     }
