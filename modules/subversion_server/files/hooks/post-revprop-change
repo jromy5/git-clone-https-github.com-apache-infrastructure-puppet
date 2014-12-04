@@ -33,13 +33,8 @@
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
 SVNLOOK=/usr/bin/svnlook
-<<<<<<< HEAD
-MAILER=/root/bin/svn/svn-mailer
-SUDO=/usr/bin/sudo
-=======
 MAILER=/usr/bin/svn-mailer
 SUDO=/usr/local/bin/sudo
->>>>>>> change to use ubuntu instance of svn-mailer
 SVNSYNC=/usr/bin/svnsync
 SETLOCK=/root/bin/setlock.pl
 MASTER_HOSTNAME=hades.apache.org
