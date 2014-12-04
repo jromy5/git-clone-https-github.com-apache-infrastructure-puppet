@@ -55,8 +55,8 @@ collectd::plugin::interface::ignoreselected: true
 fail2ban_asf::config::jails:
   httpd-svn:
     filter: apache-auth
-#    action:
-#      - %(action_mwl)s
+    action:
+      - iptables-allports
     logpath: /var/log/apache2/svn_https_error_ssl.log
     findtime: 1800
     maxretry: 5
