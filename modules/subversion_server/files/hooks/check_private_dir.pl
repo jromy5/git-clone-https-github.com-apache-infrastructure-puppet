@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 my $file = '/x1/svn/asf-authorization';
-my $svn_look = '/usr/local/svn-install/current/bin/svnlook';
+my $svn_look = '/usr/bin/svnlook';
 my $dir = undef;
 
 sub parse_auth_file {

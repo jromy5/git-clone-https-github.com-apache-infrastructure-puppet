@@ -30,12 +30,12 @@
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
 # 
-SVN=/usr/local/svn-install/current/bin/svn
-SVNLOOK=/usr/local/svn-install/current/bin/svnlook
-SVNADMIN=/usr/local/svn-install/current/bin/svnadmin
+SVN=/usr/bin/svn
+SVNLOOK=/usr/bin/svnlook
+SVNADMIN=/usr/bin/svnadmin
 MAILER=/root/bin/svn/svn-mailer
 PUBSUB=/usr/local/svnpubsub/commit-hook.py
-MASTER_HOSTNAME=eris.apache.org
+MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
 
 REPOS="$1"

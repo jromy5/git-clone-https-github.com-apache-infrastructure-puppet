@@ -40,7 +40,7 @@ USER="$3"
 # to be stolen (e.g., with 'svn lock --force ...').
 
 # (Maybe this script could send email to the lock owner?)
-SVNLOOK=/usr/local/svn-install/current/bin/svnlook
+SVNLOOK=/usr/bin/svnlook
 GREP=/usr/bin/grep
 SED=/usr/bin/sed
 

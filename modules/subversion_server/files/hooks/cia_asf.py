@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 #
 # Originally based on the CIA bot by Micah Dowty at
 #  http://cia.navi.cx/clients/svn/ciabot_svn.py

@@ -30,10 +30,10 @@
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
 # 
-SVN=/usr/local/svn-install/current/bin/svn
-SVNLOOK=/usr/local/svn-install/current/bin/svnlook
-SVNADMIN=/usr/local/svn-install/current/bin/svnadmin
-SVNSYNC=/usr/local/svn-install/current/bin/svnsync
+SVN=/usr/bin/svn
+SVNLOOK=/usr/bin/svnlook
+SVNADMIN=/usr/bin/svnadmin
+SVNSYNC=/usr/bin/svnsync
 #MAILER=/usr/local/svn-install/hooks/mailer.py
 MAILER=/root/bin/svn/svn-mailer
 SUDO=/usr/local/bin/sudo

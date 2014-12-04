@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 
 # this requires python >=2.3 for the 'sets' module.
 
@@ -34,7 +34,7 @@ import private
 
 # svnlook is in a non-standard location.
 
-SL="/usr/local/svn-install/current/bin/svnlook"
+SL="/usr/bin/svnlook"
 
 # We have hackish "-d" handling here rather than in the Options
 # subclass below because a common error will be to not have twisted in

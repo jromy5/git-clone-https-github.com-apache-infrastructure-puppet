@@ -4,8 +4,8 @@
 REPOS="$1"
 TXN="$2"
 
-SVNLOOK=/usr/local/svn-install/current/bin/svnlook
-SVNAUTHZ_VALIDATE=/usr/local/svn-install/current/bin/svn-tools/svnauthz-validate
+SVNLOOK=/usr/bin/svnlook
+SVNAUTHZ_VALIDATE=/usr/bin/svnauthz-validate
 AUTHZ_BOGUS_USERNAMES=/root/bin/svn/authz-bogus-usernames
 PERL=/usr/bin/perl
 

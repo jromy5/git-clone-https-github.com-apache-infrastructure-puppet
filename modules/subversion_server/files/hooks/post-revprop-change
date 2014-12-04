@@ -32,12 +32,12 @@
 # 
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
-SVNLOOK=/usr/local/svn-install/current/bin/svnlook
+SVNLOOK=/usr/bin/svnlook
 MAILER=/root/bin/svn/svn-mailer
 SUDO=/usr/local/bin/sudo
-SVNSYNC=/usr/local/svn-install/current/bin/svnsync
+SVNSYNC=/usr/bin/svnsync
 SETLOCK=/root/bin/setlock.pl
-MASTER_HOSTNAME=eris.apache.org
+MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
 SED=/usr/bin/sed
 
