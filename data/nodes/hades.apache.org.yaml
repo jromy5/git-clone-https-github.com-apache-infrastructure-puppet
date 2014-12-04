@@ -11,6 +11,7 @@ classes:
   - collectd::plugin::write_http
   - puppet_asf
   - ssl::name::wildcard_apache_org
+  - tlp_vhosts::vhost
   - zfs_on_ubuntu
   
 apache::keepalive:          'On'
@@ -39,4 +40,11 @@ collectd::purge_config: true
 collectd::plugin::interface::interfaces: 
   - lo
 collectd::plugin::interface::ignoreselected: true
+
+tlp_vhosts::vhosts_asf:vhosts:
+    svn:
+      vhost_name: 'svn.apache.org'
+      port: 80
+      docroot: '/x1/svn.apache.org'
+      
 
