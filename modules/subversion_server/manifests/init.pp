@@ -23,7 +23,7 @@ class subversion_server {
      ensure   => directory,
      owner    => 'www-data',
      group    => 'svnadmins',
-     mode     => '0775',
+     mode     => '0775';
    '/x1/svn/authorization/templates':
      ensure   => present,
      recurse  => true,
