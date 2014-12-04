@@ -69,7 +69,7 @@ fi
 # Trigger the SVN authz file to be rebuilt if the template file is modified
 $SVNLOOK dirs-changed -r "$REV" "$REPOS" | grep -q "^infrastructure/trunk/subversion/authorization" \
  && $SUDO -H -u svn $SVN up /x1/svn/config/authorization \
- && $SUDO -H -u svn /x1/authz-gen/operation/gen_asf-authorization_on_template_commit.pl > /dev/null
+ && $SUDO -H -u svn /x1/svn/scripts/authorization/gen_asf-authorization_on_template_commit.pl > /dev/null
 
 
 #
