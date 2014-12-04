@@ -36,7 +36,7 @@ class subversion_server {
      mode     => '0775',
      source   => "puppet:///modules/subversion_server/authorization",
      require  => File['/x1/svn/authorization'];
-   '/var/log/svnmailer/errors';
+   [ '/var/log/svnmailer', '/var/log/svnmailer/errors'];
      ensure   => directory,
      owner    => 'www-data',
      group    => 'svnadmins',
