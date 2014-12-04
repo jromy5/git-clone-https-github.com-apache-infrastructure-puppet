@@ -59,6 +59,10 @@ mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
   :tag => '4.0.0'
 
+mod 'puppi',
+  :git => 'https://github.com/example42/puppi.git',
+  :tag => 'v2.1.10'
+
 mod 'rsync',
   :git => 'https://github.com/stumped2/puppetlabs-rsync.git',
   :branch => 'add_logfile'
