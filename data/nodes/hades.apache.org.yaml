@@ -89,6 +89,7 @@ vhosts_asf::vhosts::vhosts:
         - hades.*.apache.org
       rewrites:
         -
+          comment: ' tlp migrations'
           rewrite_cond:
             - '%%{}{IS_SUBREQ} =false' # %%{}{VAR} is a nasty hack for %{} escaping
             - '%%{}{REQUEST_METHOD} =GET [OR]'
