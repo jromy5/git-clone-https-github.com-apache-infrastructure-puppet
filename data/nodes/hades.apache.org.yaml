@@ -11,6 +11,7 @@ classes:
   - collectd::plugin::write_http
   - puppet_asf
   - ssl::name::wildcard_apache_org
+  - zfs_on_ubuntu
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
@@ -30,8 +31,6 @@ apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
-
-apt::ppa: 'ppa:zfs-native/stable'
 
 collectd::purge:  true
 collectd::recurse: true
