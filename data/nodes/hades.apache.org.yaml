@@ -11,7 +11,7 @@ classes:
   - collectd::plugin::write_http
   - puppet_asf
   - ssl::name::wildcard_apache_org
-  - tlp_vhosts::vhost
+  - tlp_vhosts::vhosts_asf
   - zfs_on_ubuntu
   
 apache::keepalive:          'On'
