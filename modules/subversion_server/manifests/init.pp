@@ -45,7 +45,7 @@ class subversion_server {
       require => File['/x1/svn/authorization'];
     '/x1/svn/asf-authorization':
       ensure  => link,
-      target  => '/x1/svn/authorization/asf-authorization';
+      target  => '/x1/svn/authorization/asf-authorization',
       owner   => 'www-data',
       group   => 'svnadmins',
       require => File['/x1/svn/authorization'];
