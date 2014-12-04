@@ -1,4 +1,4 @@
-class tlp_vhosts::modules_asf (
+class vhost_asf::modules (
 
   $modules,
 ) {

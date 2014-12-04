@@ -17,8 +17,8 @@ classes:
   - puppet_asf
   - ssl::name::wildcard_apache_org
   - subversion_server
-  - tlp_vhosts::modules_asf
-  - tlp_vhosts::vhosts_asf
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
   - zfs_on_ubuntu
   
 apache::keepalive:          'On'
@@ -63,11 +63,11 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-tlp_vhosts::modules_asf::modules:
+vhosts_asf::modules::modules:
   authz_svn:
     name: 'authz_svn'
 
-tlp_vhosts::vhosts_asf::vhosts:
+vhosts_asf::vhosts::vhosts:
     svn:
       vhost_name: 'svn.apache.org'
       port: 80

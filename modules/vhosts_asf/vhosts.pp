@@ -1,4 +1,4 @@
-class tlp_vhosts::vhosts_asf (
+class vhosts_asf::vhosts (
 
   $vhosts,
 ) {
