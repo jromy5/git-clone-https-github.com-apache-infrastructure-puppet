@@ -1,9 +1,8 @@
 class apache_modules (
+  $dev_package = [],
 ) {
 
-    file { 'mod_svn_check_path':
-      path    => '/opt/mod_svn_check_path',
-      recurse => true,
-      source  => 'puppet:///modules/apache_modules/mod_svn_check_path',
+    package { "${dev_package}":
+      ensure => latest,
     }
 }
