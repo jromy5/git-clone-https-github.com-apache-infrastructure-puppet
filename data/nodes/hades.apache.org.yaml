@@ -17,6 +17,7 @@ classes:
   - puppet_asf
   - ssl::name::wildcard_apache_org
   - subversion_server
+  - tlp_vhosts::modules_asf
   - tlp_vhosts::vhosts_asf
   - zfs_on_ubuntu
   
@@ -61,6 +62,9 @@ collectd::purge_config: true
 collectd::plugin::interface::interfaces: 
   - lo
 collectd::plugin::interface::ignoreselected: true
+
+tlp_vhosts::modules_asf::modules:
+    authz_svn:
 
 tlp_vhosts::vhosts_asf::vhosts:
     svn:
