@@ -55,7 +55,7 @@ fail2ban_asf::config::jails:
   httpd-svn:
     filter: asf-httpd
     action:
-      - asf-ban-httpd
+      - iptables-allports
       - asf-sendmail[name="HTTPD (Authentication)", hostname="hades", dest=root@apache.org, sender=fail2ban@apache.org, logpath="/var/log/vc/error_log"]
     logpath: /var/log/apache2/svn_https_error_ssl.log
     findtime: 1800
