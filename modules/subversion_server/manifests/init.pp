@@ -149,5 +149,62 @@ class subversion_server {
       owner   => 'www-data',
       group   => 'svnadmins',
       onlyif  => '/usr/bin/test -d /x1/svn/repos/dist/hooks';
+
+    # /repos/infra specific files
+    '/x1/svn/repos/infra/hooks/pre-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-commit-infra'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/start-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/start-commit'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/post-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-commit-infra'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/pre-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-lock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/post-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-lock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/post-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-revprop-change'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/pre-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-revprop-change'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/pre-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-unlock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+    '/x1/svn/repos/infra/hooks/post-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-unlock'
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      onlyif  => '/usr/bin/test -d /x1/svn/repos/infra/hooks';
+
   }
 }
