@@ -12,6 +12,7 @@ classes:
   - collectd::plugin::write_http
   - puppet_asf
   - ssl::name::wildcard_apache_org
+  - subversion_server
   - tlp_vhosts::vhosts_asf
   - zfs_on_ubuntu
   

@@ -1,0 +1,3 @@
+## This folder and all of it's file are managed by puppet. 
+## All changes should be made via puppet, otherwise they 
+## will be lost during the next catalog run.
