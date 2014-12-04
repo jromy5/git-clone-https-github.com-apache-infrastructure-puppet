@@ -46,7 +46,7 @@ tlp_vhosts::vhosts_asf::vhosts:
     svn:
       vhost_name: 'svn.apache.org'
       port: 80
-      docroot: '/x1/svn.apache.org'
+      docroot: '/x1/svn'
       servername: 'svn.apache.org'
       serveraliases:
         - svn-master.apache.org
@@ -63,4 +63,37 @@ tlp_vhosts::vhosts_asf::vhosts:
             - '/repos/asf/%1?ckpath -U'
           rewrite_rule:
             - '.* /repos/asf/%1 [L,R=301]'
+        -
+          rewrite_cond:
+            - '%%{}{IS_SUBREQ} =false'
+            - '%%{}{REQUEST_METHOD} =PROPFIND'
+            - '%%{}{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)'
+            - '/repos/asf/%2?ckpath -U'
+          rewrite_rule:
+            - '.* /repos/asf/%2 [L,R=301]'
+        -
+          rewrite_cond:
+            - '%%{}{IS_SUBREQ} =false'
+            - '%%{}{REQUEST_METHOD} =REPORT'
+            - '%%{}{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)'
+            - '/repos/asf?ckpath=/repos/asf/incubator -U'
+          rewrite_rule:
+            - '.* %%{}{PATH_INFO} [L,R=301]'
+        custom_fragment: |
+          <Location /repos/asf>'
+            DAV svn
+            SVNPath /x1/svn/asf
+            SVNCheckPathPrefix  /repos/asf
+
+            SetOutputFilter DEFLATE
+            AuthzSVNAccessFile /x1/svn/asf-authorization
+            
+            LimitRequestBody 100000000
+
+            <LimitExcept GET POST OPTIONS PROPFIND REPORT>
+              Order allow,deny
+              Deny from all
+            </LimitExcept>
+          </Location>
+
 
