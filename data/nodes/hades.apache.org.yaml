@@ -118,20 +118,18 @@ vhosts_asf::vhosts::vhosts:
           rewrite_rule:
             - '.* %%{}{PATH_INFO} [L,R=301]'
       custom_fragment: |
-        <Location /repos/asf>'
+        <Location /repos/asf>
           DAV svn
           SVNPath /x1/svn/repos/asf
           SVNCheckPathPrefix  /repos/asf
-
           SetOutputFilter DEFLATE
           AuthzSVNAccessFile /x1/svn/asf-authorization
             
           LimitRequestBody 100000000
-
           <LimitExcept GET POST OPTIONS PROPFIND REPORT>
             Order allow,deny
             Deny from all
           </LimitExcept>
         </Location>
-
+        
 
