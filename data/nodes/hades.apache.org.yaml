@@ -284,7 +284,7 @@ vhosts_asf::vhosts::vhosts:
       # This repository is private to the Foundation
       <Location /repos/private>
         DAV svn
-        SVNPath /x1/svn/repos-private
+        SVNPath /x1/svn/repos/private
         
         SetOutputFilter DEFLATE
         
