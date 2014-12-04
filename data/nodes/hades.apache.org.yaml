@@ -1,0 +1,39 @@
+---
+classes:
+  - apache
+  - collectd
+  - collectd::plugin::cpu
+  - collectd::plugin::load
+  - collectd::plugin::memory
+  - collectd::plugin::interface
+  - collectd::plugin::write_http
+  - puppet_asf
+  - ssl::name::wildcard_apache_org
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '30'
+apache::default_vhost:      true
+apache::docroot:            '/x1/www/htdocs'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '150'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '250'
+apache::mod::event::threadsperchild: '50'
+
+apache::mpm_module:         'event'
+apache::serveradmin:        'infrastructure@apache.org'
+
+collectd::purge:  true
+collectd::recurse: true
+collectd::purge_config: true
+
+collectd::plugin::interface::interfaces: 
+  - lo
+collectd::plugin::interface::ignoreselected: true
+
