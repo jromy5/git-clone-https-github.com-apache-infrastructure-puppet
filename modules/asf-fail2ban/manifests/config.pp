@@ -1,3 +1,5 @@
+include fail2ban
+
 class asf-fail2ban::config (
   $filters,
   $jails,

@@ -7,13 +7,13 @@ classes:
   - apache::mod::ssl
   - apache_modules
   - apache_modules::mod_svn_check_path
+  - asf-fail2ban::config
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-  - fail2ban
   - puppet_asf
   - ssl::name::wildcard_apache_org
   - subversion_server
