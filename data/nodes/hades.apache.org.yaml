@@ -12,7 +12,7 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-#  - fail2ban
+  - fail2ban
   - puppet_asf
   - ssl::name::wildcard_apache_org
   - subversion_server
