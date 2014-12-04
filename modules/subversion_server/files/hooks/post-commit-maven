@@ -34,9 +34,14 @@ SVN=/usr/bin/svn
 SVNLOOK=/usr/bin/svnlook
 SVNADMIN=/usr/bin/svnadmin
 SVNSYNC=/usr/bin/svnsync
+<<<<<<< HEAD
 #MAILER=/usr/local/svn-install/hooks/mailer.py
 MAILER=/root/bin/svn/svn-mailer
 SUDO=/usr/bin/sudo
+=======
+MAILER=/usr/bin/svn-mailer
+SUDO=/usr/local/bin/sudo
+>>>>>>> change to use ubuntu instance of svn-mailer
 
 #
 REPOS="$1"

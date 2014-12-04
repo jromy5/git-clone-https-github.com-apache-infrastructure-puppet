@@ -35,8 +35,7 @@
 # 'post-lock.bat' or 'post-lock.exe',
 # but the basic idea is the same.
 
-MAILER=/root/bin/svn/svn-mailer
-
+MAILER=/usr/bin/svn-mailer
 REPOS="$1"
 USER="$2"
 

@@ -35,7 +35,7 @@
 # 
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
-MAILER=/root/bin/svn/svn-mailer
+MAILER=/usr/bin/svn-mailer
 
 REPOS="$1"
 USER="$2"
