@@ -37,7 +37,7 @@ REV="$2"
 # run all programs in the background to let the commit proceed
 
 # send the commit email
-$MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer.conf &
+$MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV &
 
 # run the indexer for each wiki page set
 /usr/local/subwiki/instance/run-indexer.py /usr/local/subwiki/instance/subwiki.conf &

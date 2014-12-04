@@ -50,7 +50,7 @@ $SVNADMIN dump --incremental -r "$REV" "$REPOS" > /x1/svn/hot-backups/dist.$REV 
 if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ] 
 then
     # Send the commit mail
-    $MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer-dist.conf \
+    $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
         2>>/var/log/svnmailer/errors/mailer-stderr &
 fi
 

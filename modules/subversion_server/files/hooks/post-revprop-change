@@ -70,8 +70,9 @@ then
     # Sync the mirrors!
     $SETLOCK /var/tmp/svnsync.lock $SUDO -H -u svn $SVNSYNC copy-revprops --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/${REPOS_URLNAME}-proxy-sync $REV 2>>/var/log/svnsynclog &
 
-    $MAILER propchange2 "$REPOS" "$REV" "$USER" "$PROPNAME" "$ACTION" \
-        /x1/svn/asf-mailer.conf \
+#    $MAILER propchange2 "$REPOS" "$REV" "$USER" "$PROPNAME" "$ACTION" \
+#        /x1/svn/asf-mailer.conf \
+$MAILER --propchange --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV --author=$USER --propname=$PROPNAME --action=$ACTION \
         2>>/var/log/svnmailer/errors/mailer-stderr-pc <&0 &
 
 fi

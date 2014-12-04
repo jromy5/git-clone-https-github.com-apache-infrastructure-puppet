@@ -45,7 +45,7 @@ then
     #/usr/local/svn/bin/svnadmin dump --incremental -r "$REV" "$REPOS" > /x1/svn/backups/tck/tck.$REV
 
     # send the commit mail
-    $MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer.conf \
+    $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
         2>>/var/log/svnmailer/errors/tck-mailer-stderr &
 
     # sync the mirrors!

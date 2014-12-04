@@ -46,6 +46,5 @@ REV="$2"
 #$SVNADMIN dump --incremental -r "$REV" "$REPOS" > /x1/svn/private-backups/private.$REV &
 
 # Send the commit mail
-$MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer.conf \
+$MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
     2>>/var/log/svnmailer/errors/maven-mailer-stderr &
-

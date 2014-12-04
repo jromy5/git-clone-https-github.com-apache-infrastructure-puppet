@@ -40,5 +40,6 @@ REPOS="$1"
 USER="$2"
 
 # this sucks up STDIN:
-$MAILER lock "$REPOS" "$USER" /x1/svn/asf-mailer.conf \
+# $MAILER lock "$REPOS" "$USER" /x1/svn/asf-mailer.conf \
+$MAILER --lock --config=/x1/svn/asf-mailer.conf --repository=$REPOS --author=$USER \
     2>>/var/log/svnmailer/errors/mailer-stderr-lock <&0 &

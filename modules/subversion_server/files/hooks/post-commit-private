@@ -55,7 +55,7 @@ then
     $SVNADMIN dump --incremental -r "$REV" "$REPOS" | gzip > $backup_dir/private.$REV.gz &
 
     # Send the commit mail
-    $MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer.conf \
+    $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
 	2>>/var/log/svnmailer/errors/private-mailer-stderr &
 
     # Sync the mirrors!
