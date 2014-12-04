@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::dav_svn
+  - apache::mode:rewrite
   - apache::mod::ssl
   - collectd
   - collectd::plugin::cpu
@@ -46,5 +47,20 @@ tlp_vhosts::vhosts_asf::vhosts:
       vhost_name: 'svn.apache.org'
       port: 80
       docroot: '/x1/svn.apache.org'
-      
+      servername: 'svn.apache.org'
+      serveraliases:
+        - svn-master.apache.org
+        - svn.*.apache.org
+        - hades.apache.org
+        - hades.*.apache.org
+      rewrites:
+        -
+          rewrite_cond:
+            - '%%{}{IS_SUBREQ} =false' # %%{}{VAR} is a nasty hack for %{} escaping
+            - '%%{}{REQUEST_METHOD} =GET [OR]'
+            - '%%{}{REQUEST_METHOD} =HEAD'
+            - '%%{}{REQUEST_URI} /repos/asf/incubator/(.+)'
+            - '/repos/asf/%1?ckpath -U'
+          rewrite_rule:
+            - '.* /repos/asf/%1 [L,R=301]'
 
