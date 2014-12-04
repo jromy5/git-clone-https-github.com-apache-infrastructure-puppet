@@ -31,7 +31,7 @@
 
 SVNSYNC=/usr/bin/svnsync
 MAILER=/root/bin/svn/svn-mailer
-SUDO=/usr/local/bin/sudo
+SUDO=/usr/bin/sudo
 SETLOCK=/root/bin/setlock.pl
 MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
