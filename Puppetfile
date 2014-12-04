@@ -6,7 +6,6 @@ mod 'apt',
   :git => 'https://github.com/puppetlabs/puppetlabs-apt',
   :tag => '1.6.0'
 
-
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
   :tag => '1.1.1'
@@ -15,6 +14,9 @@ mod 'concat-native',
   :git => 'https://github.com/theforeman/puppet-concat.git',
   :tag => '1.3.1'
 
+mod 'fail2ban',
+  :git => 'https://github.com/netmanagers/puppet-fail2ban',
+  :branch => 'master'
 
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
