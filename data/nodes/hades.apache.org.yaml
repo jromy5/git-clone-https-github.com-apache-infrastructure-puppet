@@ -37,7 +37,7 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-apache::modules::mod_svn_check_path::dev_package:
+apache_modules::dev_package:
   - apache2-dev
 
 asf-fail2ban::jails::jails:
