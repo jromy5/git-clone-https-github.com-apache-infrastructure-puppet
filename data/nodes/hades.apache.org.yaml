@@ -1,6 +1,8 @@
 ---
 classes:
   - apache
+  - apache::mod::dav_svn
+  - apache::mod::ssl
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
