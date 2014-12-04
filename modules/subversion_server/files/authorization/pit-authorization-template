@@ -1,0 +1,1375 @@
+### *** DO *NOT* CHANGE THE LIVE FILE.  Change it in SVN, and update.
+
+[groups]
+committers={reuse:asf-authorization:committers}
+
+### marker for tlpreq to add new entries ###
+abdera={reuse:asf-authorization:abdera}
+abdera-pmc={ldap:cn=abdera,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ace={reuse:asf-authorization:ace}
+ace-pmc={ldap:cn=ace,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+activemq={reuse:asf-authorization:activemq}
+activemq-pmc={ldap:cn=activemq,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+accumulo={reuse:asf-authorization:accumulo}
+accumulo-pmc={ldap:cn=accumulo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+airavata={reuse:asf-authorization:airavata}
+airavata-pmc={ldap:cn=airavata,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+allura={reuse:asf-authorization:allura}
+allura-pmc={ldap:cn=allura,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ambari={reuse:asf-authorization:ambari}
+ambari-pmc={ldap:cn=ambari,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+any23={reuse:asf-authorization:any23}
+any23-pmc={ldap:cn=any23,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ant={reuse:asf-authorization:ant}
+ant-pmc={ldap:cn=ant,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+apr={reuse:asf-authorization:apr}
+apr-pmc={ldap:cn=apr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+archiva={reuse:asf-authorization:archiva}
+archiva-pmc={ldap:cn=archiva,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+aries={reuse:asf-authorization:aries}
+aries-pmc={ldap:cn=aries,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+avro={reuse:asf-authorization:avro}
+avro-pmc={ldap:cn=avro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+axis={reuse:asf-authorization:axis}
+axis-pmc={ldap:cn=axis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# awf={reuse:asf-authorization:# awf}
+bigtop={reuse:asf-authorization:bigtop}
+bigtop-pmc={ldap:cn=bigtop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+bloodhound={reuse:asf-authorization:bloodhound}
+bloodhound-pmc={ldap:cn=bloodhound,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+blur={reuse:asf-authorization:blur}
+buildr={reuse:asf-authorization:buildr}
+buildr-pmc={ldap:cn=buildr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+bval={reuse:asf-authorization:bval}
+bval-pmc={ldap:cn=bval,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+camel={reuse:asf-authorization:camel}
+camel-pmc={ldap:cn=camel,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cassandra={reuse:asf-authorization:cassandra}
+cassandra-pmc={ldap:cn=cassandra,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cayenne={reuse:asf-authorization:cayenne}
+cayenne-pmc={ldap:cn=cayenne,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+celix={reuse:asf-authorization:celix}
+celix-pmc={ldap:cn=celix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+chemistry={reuse:asf-authorization:chemistry}
+chemistry-pmc={ldap:cn=chemistry,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+chukwa={reuse:asf-authorization:chukwa}
+chukwa-pmc={ldap:cn=chukwa,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+clerezza={reuse:asf-authorization:clerezza}
+clerezza-pmc={ldap:cn=clerezza,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+climate={reuse:asf-authorization:climate}
+climate-pmc={ldap:cn=climate,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cloudstack={reuse:asf-authorization:cloudstack}
+cloudstack-pmc={ldap:cn=cloudstack,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cocoon={reuse:asf-authorization:cocoon}
+cocoon-pmc={ldap:cn=cocoon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+commons={reuse:asf-authorization:commons}
+commons-pmc={ldap:cn=commons,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+continuum={reuse:asf-authorization:continuum}
+continuum-pmc={ldap:cn=continuum,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cordova={reuse:asf-authorization:cordova}
+cordova-pmc={ldap:cn=cordova,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+couchdb={reuse:asf-authorization:couchdb}
+couchdb-pmc={ldap:cn=couchdb,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+creadur={reuse:asf-authorization:creadur}
+creadur-pmc={ldap:cn=creadur,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+crunch={reuse:asf-authorization:crunch}
+crunch-pmc={ldap:cn=crunch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ctakes={reuse:asf-authorization:ctakes}
+ctakes-pmc={ldap:cn=ctakes,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+curator={reuse:asf-authorization:curator}
+curator-pmc={ldap:cn=curator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+cxf={reuse:asf-authorization:cxf}
+cxf-pmc={ldap:cn=cxf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+db={reuse:asf-authorization:db}
+db-pmc={ldap:cn=db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+db-site={reuse:asf-authorization:db-site}
+deltacloud={reuse:asf-authorization:deltacloud}
+deltacloud-pmc={ldap:cn=deltacloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+deltaspike={reuse:asf-authorization:deltaspike}
+deltaspike-pmc={ldap:cn=deltaspike,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# depot={reuse:asf-authorization:# depot}
+derby={reuse:asf-authorization:derby}
+devicemap={reuse:asf-authorization:devicemap}
+directmemory={reuse:asf-authorization:directmemory}
+directmemory-pmc={ldap:cn=directmemory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+directory={reuse:asf-authorization:directory}
+directory-pmc={ldap:cn=directory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+drill={reuse:asf-authorization:drill}
+droids={reuse:asf-authorization:droids}
+easyant={reuse:asf-authorization:easyant}
+empire-db={reuse:asf-authorization:empire-db}
+empire-db-pmc={ldap:cn=empire-db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+etch={reuse:asf-authorization:etch}
+etch-pmc={ldap:cn=etch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+felix={reuse:asf-authorization:felix}
+felix-pmc={ldap:cn=felix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+flex={reuse:asf-authorization:flex}
+flex-pmc={ldap:cn=flex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+flume={reuse:asf-authorization:flume}
+flume-pmc={ldap:cn=flume,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+forrest={reuse:asf-authorization:forrest}
+forrest-pmc={ldap:cn=forrest,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+geronimo={reuse:asf-authorization:geronimo}
+geronimo-pmc={ldap:cn=geronimo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+giraph={reuse:asf-authorization:giraph}
+giraph-pmc={ldap:cn=giraph,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+gora={reuse:asf-authorization:gora}
+gora-pmc={ldap:cn=gora,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+gump={reuse:asf-authorization:gump}
+#only here to ease LDAP migration
+gump-pmc={ldap:cn=gump,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+hadoop={reuse:asf-authorization:hadoop}
+hadoop-pmc={ldap:cn=hadoop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+hama={reuse:asf-authorization:hama}
+hama-pmc={ldap:cn=hama,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+hbase={reuse:asf-authorization:hbase}
+hbase-pmc={ldap:cn=hbase,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+hcatalog={reuse:asf-authorization:hcatalog}
+helix={reuse:asf-authorization:helix}
+helix-pmc={ldap:cn=helix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+hive={reuse:asf-authorization:hive}
+hive-pmc={ldap:cn=hive,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+httpcomponents={reuse:asf-authorization:httpcomponents}
+httpcomponents-pmc={ldap:cn=httpcomponents,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+httpd={reuse:asf-authorization:httpd}
+httpd-pmc={ldap:cn=httpd,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# imperius={reuse:asf-authorization:# imperius}
+incubator={reuse:asf-authorization:incubator}
+incubator-pmc={ldap:cn=incubator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+incubator-site={reuse:asf-authorization:incubator-site}
+isis={reuse:asf-authorization:isis}
+isis-pmc={ldap:cn=isis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jackrabbit={reuse:asf-authorization:jackrabbit}
+jackrabbit-pmc={ldap:cn=jackrabbit,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+james={reuse:asf-authorization:james}
+james-pmc={ldap:cn=james,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jclouds={reuse:asf-authorization:jclouds}
+jclouds-pmc={ldap:cn=jclouds,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jena={reuse:asf-authorization:jena}
+jena-pmc={ldap:cn=jena,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jmeter={reuse:asf-authorization:jmeter}
+jmeter-pmc={ldap:cn=jmeter,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jspwiki={reuse:asf-authorization:jspwiki}
+jspwiki-pmc={ldap:cn=jspwiki,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+juddi={reuse:asf-authorization:juddi}
+juddi-pmc={ldap:cn=juddi,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# juice={reuse:asf-authorization:# juice}
+karaf={reuse:asf-authorization:karaf}
+karaf-pmc={ldap:cn=karaf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+knox={reuse:asf-authorization:knox}
+knox-pmc={ldap:cn=knox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+kafka={reuse:asf-authorization:kafka}
+kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+labs-pmc={ldap:cn=labs,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+lenya={reuse:asf-authorization:lenya}
+lenya-pmc={ldap:cn=lenya,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+libcloud={reuse:asf-authorization:libcloud}
+libcloud-pmc={ldap:cn=libcloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+logging={reuse:asf-authorization:logging}
+logging-pmc={ldap:cn=logging,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+lucene={reuse:asf-authorization:lucene}
+lucene-pmc={ldap:cn=lucene,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# Note: 'lucene-lucy' is legacy lucene subproject, 'lucy' is newer podling project
+# Note: 'lucene-lucy' - the lucy podling just graduated.
+lucenenet={reuse:asf-authorization:lucenenet}
+lucenenet-pmc={ldap:cn=lucenenet,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+lucy={reuse:asf-authorization:lucy}
+lucy-pmc={ldap:cn=lucy,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+mahout={reuse:asf-authorization:mahout}
+mahout-pmc={ldap:cn=mahout,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+manifoldcf={reuse:asf-authorization:manifoldcf}
+manifoldcf-pmc={ldap:cn=manifoldcf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+marmotta={reuse:asf-authorization:marmotta}
+marmotta-pmc={ldap:cn=marmotta,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+maven={reuse:asf-authorization:maven}
+maven-pmc={ldap:cn=maven,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+mesos={reuse:asf-authorization:mesos}
+mesos-pmc={ldap:cn=mesos,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+metamodel={reuse:asf-authorization:metamodel}
+# Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
+mina={reuse:asf-authorization:mina}
+mina-pmc={ldap:cn=mina,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+mrunit={reuse:asf-authorization:mrunit}
+mrunit-pmc={ldap:cn=mrunit,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+myfaces={reuse:asf-authorization:myfaces}
+myfaces-pmc={ldap:cn=myfaces,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+npanday={reuse:asf-authorization:npanday}
+nutch={reuse:asf-authorization:nutch}
+nutch-pmc={ldap:cn=nutch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+nuvem={reuse:asf-authorization:nuvem}
+ode={reuse:asf-authorization:ode}
+ode-pmc={ldap:cn=ode,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ofbiz={reuse:asf-authorization:ofbiz}
+ofbiz-pmc={ldap:cn=ofbiz,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+olingo={reuse:asf-authorization:olingo}
+olingo-pmc={ldap:cn=olingo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+oltu={reuse:asf-authorization:oltu}
+oltu-pmc={ldap:cn=oltu,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+onami={reuse:asf-authorization:onami}
+onami-pmc={ldap:cn=onami,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+oodt={reuse:asf-authorization:oodt}
+oodt-pmc={ldap:cn=oodt,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+oozie={reuse:asf-authorization:oozie}
+oozie-pmc={ldap:cn=oozie,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+openjpa={reuse:asf-authorization:openjpa}
+openjpa-pmc={ldap:cn=openjpa,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+openmeetings={reuse:asf-authorization:openmeetings}
+openmeetings-pmc={ldap:cn=openmeetings,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+opennlp={reuse:asf-authorization:opennlp}
+opennlp-pmc={ldap:cn=opennlp,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+openoffice={reuse:asf-authorization:openoffice}
+openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+openoffice-security=robweir,orw,malte,hdu,wolfhalton,jsc,alg,af,arielch,maho,zhangjf
+openwebbeans={reuse:asf-authorization:openwebbeans}
+openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+pdfbox={reuse:asf-authorization:pdfbox}
+pdfbox-pmc={ldap:cn=pdfbox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+pig={reuse:asf-authorization:pig}
+pig-pmc={ldap:cn=pig,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+perl={reuse:asf-authorization:perl}
+perl-pmc={ldap:cn=perl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+phoenix={reuse:asf-authorization:phoenix}
+phoenix-pmc={ldap:cn=phoenix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+pivot={reuse:asf-authorization:pivot}
+pivot-pmc={ldap:cn=pivot,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+poi={reuse:asf-authorization:poi}
+poi-pmc={ldap:cn=poi,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+portals={reuse:asf-authorization:portals}
+portals-pmc={ldap:cn=portals,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+qpid={reuse:asf-authorization:qpid}
+qpid-pmc={ldap:cn=qpid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+rave={reuse:asf-authorization:rave}
+rave-pmc={ldap:cn=rave,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+river={reuse:asf-authorization:river}
+river-pmc={ldap:cn=river,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+roller={reuse:asf-authorization:roller}
+roller-pmc={ldap:cn=roller,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+s4={reuse:asf-authorization:s4}
+santuario={reuse:asf-authorization:santuario}
+santuario-pmc={ldap:cn=santuario,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+sentry={reuse:asf-authorization:sentry}
+servicemix={reuse:asf-authorization:servicemix}
+servicemix-pmc={ldap:cn=servicemix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+shindig={reuse:asf-authorization:shindig}
+shindig-pmc={ldap:cn=shindig,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+shiro={reuse:asf-authorization:shiro}
+shiro-pmc={ldap:cn=shiro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+sis={reuse:asf-authorization:sis}
+sis-pmc={ldap:cn=sis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+slider={reuse:asf-authorization:slider}
+sling={reuse:asf-authorization:sling}
+sling-pmc={ldap:cn=sling,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+spamassassin={reuse:asf-authorization:spamassassin}
+spamassassin-pmc={ldap:cn=spamassassin,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+spark={reuse:asf-authorization:spark}
+spark-pmc={ldap:cn=spark,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+sqoop={reuse:asf-authorization:sqoop}
+sqoop-pmc={ldap:cn=sqoop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+stanbol={reuse:asf-authorization:stanbol}
+stanbol-pmc={ldap:cn=stanbol,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+steve={reuse:asf-authorization:steve}
+steve-pmc={ldap:cn=steve,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+stratos={reuse:asf-authorization:stratos}
+stratos-pmc={ldap:cn=stratos,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+struts={reuse:asf-authorization:struts}
+struts-pmc={ldap:cn=struts,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+subversion={reuse:asf-authorization:subversion}
+subversion-pmc={ldap:cn=subversion,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+synapse={reuse:asf-authorization:synapse}
+synapse-pmc={ldap:cn=synapse,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+syncope={reuse:asf-authorization:syncope}
+syncope-pmc={ldap:cn=syncope,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tajo={reuse:asf-authorization:tajo}
+tajo-pmc={ldap:cn=tajo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# tashi={reuse:asf-authorization:tashi}
+tapestry={reuse:asf-authorization:tapestry}
+tapestry-pmc={ldap:cn=tapestry,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tcl={reuse:asf-authorization:tcl}
+tcl-pmc={ldap:cn=tcl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tez={reuse:asf-authorization:tez}
+tez-pmc={ldap:cn=tez,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+thrift={reuse:asf-authorization:thrift}
+thrift-pmc={ldap:cn=thrift,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tika={reuse:asf-authorization:tika}
+tika-pmc={ldap:cn=tika,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tiles={reuse:asf-authorization:tiles}
+tiles-pmc={ldap:cn=tiles,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tomee={reuse:asf-authorization:tomee}
+tomee-pmc={ldap:cn=tomee,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tomcat={reuse:asf-authorization:tomcat}
+tomcat-pmc={ldap:cn=tomcat,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+trafficserver={reuse:asf-authorization:trafficserver}
+trafficserver-pmc={ldap:cn=trafficserver,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+turbine={reuse:asf-authorization:turbine}
+turbine-pmc={ldap:cn=turbine,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tuscany={reuse:asf-authorization:tuscany}
+tuscany-pmc={ldap:cn=tuscany,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+uima={reuse:asf-authorization:uima}
+uima-pmc={ldap:cn=uima,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+vcl={reuse:asf-authorization:vcl}
+vcl-pmc={ldap:cn=vcl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+velocity={reuse:asf-authorization:velocity}
+velocity-pmc={ldap:cn=velocity,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+vxquery={reuse:asf-authorization:vxquery}
+vxquery-pmc={ldap:cn=vxquery,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+wave={reuse:asf-authorization:wave}
+whirr={reuse:asf-authorization:whirr}
+whirr-pmc={ldap:cn=whirr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+wicket={reuse:asf-authorization:wicket}
+wicket-pmc={ldap:cn=wicket,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+wink={reuse:asf-authorization:wink}
+wink-pmc={ldap:cn=wink,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+wookie={reuse:asf-authorization:wookie}
+wookie-pmc={ldap:cn=wookie,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ws={reuse:asf-authorization:ws}
+ws-pmc={ldap:cn=ws,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+xalan={reuse:asf-authorization:xalan}
+xalan-pmc={ldap:cn=xalan,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+xerces={reuse:asf-authorization:xerces}
+xerces-pmc={ldap:cn=xerces,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# xml-pmc={ldap:cn=xml,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+xmlgraphics={reuse:asf-authorization:xmlgraphics}
+xmlgraphics-pmc={ldap:cn=xmlgraphics,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# yoko={reuse:asf-authorization:# yoko}
+zookeeper={reuse:asf-authorization:zookeeper}
+zookeeper-pmc={ldap:cn=zookeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+
+# JCP
+jcp-axis-nda=dims,hemapani,venkat,gdaniels,tomj,ias,guillaume,azeez,dug,dblevins
+jcp-tomee-nda=adc,ammulder,dain,dblevins,djencks,gawor,gdamour,hogstrom,jgallimore,jgenender,jlaskowski,jlmonteiro,kevan,kmalhi,rickmcguire,xuhaihong,stephenc,tveronezi,simoneg,rmannibucau,mnour,andygumbrecht
+jcp-servicemix-nda=geirm,bsnyder,gnodet,ulhasbhole,gertv
+jcp-j2ee-nda=geirm,jboynes,dain,dblevins,gregw,djencks,adc,chirino,gdamour,dims,jstrachan,hemapani,jlaskowski,jgenender,ammulder,jsisson,bsnyder,hogstrom,kevan,rickmcguire,jdillon,jbohn,sppatel,ccardona,pmcmahan,gawor,matzew,prasad,akulshreshtha,hcunico,mcconne,jaydm,jawarner,dwoods,linsun,xuhaihong,genspring,delos,vamsic007,xiaming,rwonly,hanhongfang,violalu,michaelfang,johnxiao
+jcp-j2ee-nda-ro=dkulp,dandiep,dmiddlem,baranda,vmz,gtully,gerdogdu,kmalhi,jgallimore,jlmonteiro,stephenc,tveronezi,simoneg,rmannibucau,mnour,curtisr7,geronimotck,openejb-tck,andygumbrecht
+jcp-jaxrs-nda=dkulp,elman,jdillon,martins,sergeyb,ashakirin
+jcp-jaxws-nda=dkulp,dandiep,jliu,gawor,ema,jgenender,sandakith,gdaniels,isurues,sagara,asoldano,ashakirin
+# note jcp-nda is in the same order as foundation/Correspondence/JCP
+# Do not make changes to jcp-nda without agreement from the person(s) in charge of the JCP NDA agreement
+jcp-nda=jsisson,jgenender,jlaskowski,jules,dblevins,gdamour,djencks,chirino,bsnyder,adc,dims,janb,gregw,ammulder,jboynes,dain,jstrachan,geirm,hogstrom,oros,matzew,tomsp,manolito,bdudney,mmarinschek,grantsmith,svieujot,baranda,mbr,ias,hemapani,venkat,cziegeler,aslom,rkellogg,brett,ate,ddewolf,yoavs,kevan,markt,zheng,azeez,dug,cdoremus,chinthaka,ajith,ruchithf,dennisbyrne,jhook,mkienenb,rickmcguire,jdillon,fhanik,gnodet,wsmoak,aadamchik,jbohn,jdcasey,clr,jmitchell,jukka,hcunico,rajith,steshaw,ritchiem,rgreig,bhupendrab,rajdavies,sppatel,pmcmahan,mprudhom,dkulp,ccardona,dandiep,ema,jliu,adisakala,gawor,deepal,prasad,gvanmatre,pcl,dmiddlem,akulshreshtha,mcconne,jaydm,vmz,jawarner,dwoods,jfclere,gtully,sergeyb,xuhaihong,elman,talial,martins,sagara,isurues,linsun,rjung,fmeschbe,genspring,delos,asoldano,vamsic007,gerdogdu,jgallimore,kmalhi,zoe,lu4242,xiaming,rwonly,mturk,hanhongfang,jim,violalu,jlmonteiro,tveronezi,simoneg,rmannibucau,mnour,davidb,cumminsh,kwsutter,allee8285,cschneider,ashakirin,johnxiao,anierbeck,andygumbrecht
+jcp=markt,dkulp,kevan
+osgi-rw=rickhall,fmeschbe,davidb
+
+# Not TLPs or podlings.  
+accounting=gmorris,mball,jjimenez
+apachecon=coar,ben,lars,jerenkrantz,rbowen,farra,mvdb,danese,wrowe,curcuru,cliff,noel,nick,zoe,svanderwaal
+apsite={ldap:cn=apsite,ou=groups,dc=apache,dc=org}
+attic-pmc={ldap:cn=attic,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+audit={ldap:cn=audit,ou=groups,ou=services,dc=apache,dc=org}
+board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
+comdev={ldap:cn=comdev,ou=groups,dc=apache,dc=org}
+comdev-pmc={ldap:cn=comdev,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+concom={ldap:cn=concom,ou=groups,dc=apache,dc=org}
+exec-officers=brett,gstein,rbowen,mattmann,rgardler,clr,rubys,jcarman
+fundraising=serge,upayavira
+infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
+infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
+infrastructure-adminsearch={ldap:cn=infrastructure-adminsearch,ou=groups,ou=services,dc=apache,dc=org}
+infrastructure-root={ldap:cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org}
+legal=
+member={ldap:cn=member,ou=groups,dc=apache,dc=org}
+pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
+security={ldap:cn=security,ou=groups,dc=apache,dc=org}
+security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell
+tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# Don't drop staff as it has rules attached to it (see r771650 log message)
+staff=
+
+[/]
+# Disable all anonymous access to repos/
+* = 
+# Let the SVN admins have r/w access for now
+@svnadmins = rw
+
+[/apachecon]
+@apachecon = rw
+@svnadmins = rw
+@concom = rw
+* = 
+
+# REPOS_NAME:PATH, where REPOS_NAME comes from the URL component
+[infra:/apachecon]
+@apachecon = rw
+@svnadmins = rw
+@concom = rw
+* = r
+
+# used by nagios
+[private:/emptydir]
+* = r
+
+# svnwc needs access
+[/apachecon/archive.apachecon.com]
+@apachecon = rw
+@concom = rw
+@member = rw
+* = r
+
+[/apachecon/site]
+@member = rw
+@concom = rw
+
+[/axis-tck]
+@jcp = rw
+@jcp-axis-nda = rw
+@svnadmins = rw
+* =
+
+[/committers]
+@committers  = rw
+@svnadmins = rw
+# apsite needs access to urls.txt
+apsiteread = r
+whimsysvn = r
+* =
+
+# Allow read only access for the rptremind account
+# to allow the marvin reminders to go out
+[/committers/board]
+rptremind = r
+
+[/committers/info]
+comdev_role = r
+apsiteread = r
+
+[/committers/local-outreach]
+comdev_role = r
+
+[/documents]
+@member = rw
+@legal = rw
+@pmc-chairs = rw
+@staff = rw
+@svnadmins = rw
+whimsysvn = r
+* =
+
+[/documents/received]
+apsecmail = rw
+
+[/financials]
+@board = rw
+@exec-officers = rw
+@legal = r
+@audit = rw
+@accounting = rw
+@svnadmins = rw
+@infrastructure-root = rw
+ea = r
+* =
+
+[/financials/Bills]
+@board = rw
+@exec-officers = rw
+@legal = r
+@audit = r
+@accounting = rw
+@svnadmins = rw
+@pmc-chairs = rw
+@staff = rw
+ea = rw
+sk = rw
+@infrastructure = rw
+whimsysvn = r
+* =
+
+[/financials/Expenses]
+@member = rw
+@pmc-chairs = rw
+ea = rw
+# inherit from ^/financials
+
+[/financials/Invoices]
+@fundraising = rw
+# inherit from ^/financials
+
+[/financials/Statements]
+upayavira = r
+# inherit from ^/financials
+
+[/financials/site]
+@board = rw
+@exec-officers = rw
+@audit = rw
+@svnadmins = rw
+@infrastructure-root = rw
+* = r
+
+[/foundation]
+@member = rw
+@legal = rw
+@svnadmins = rw
+whimsysvn = r
+ea = rw
+* =
+
+[/foundation/board]
+@pmc-chairs = rw
+@exec-officers = rw
+whimsysvn = rw
+
+[/foundation/officers]
+@pmc-chairs = rw
+@exec-officers = rw
+# apsite login needs access to iclas.txt:
+apsiteread = r
+acrequser = r
+
+[/foundation/staff]
+@pmc-chairs = rw
+@staff = rw
+
+# Temporary permission easing until after the RFP is out
+[/foundation/Events/RFP_2011]
+@member = rw
+# ConCom interested non-members helping with the RFP
+issac = rw
+@svnadmins = rw
+* =
+
+[/geronimo-tck]
+@jcp = rw
+@jcp-j2ee-nda = rw
+@jcp-j2ee-nda-ro = r
+@svnadmins = rw
+* =
+
+[/infrastructure]
+@infrastructure = rw
+@member = r
+@infrastructure-interest = r
+@svnadmins = rw
+# deny all access to everyone else.
+* =
+
+[/infrastructure/apmail]
+@infrastructure = rw
+@infrastructure-interest = rw
+clr = rw
+whimsysvn = r
+acrequser = r
+@member = r
+
+[/infrastructure/apwiki]
+@infrastructure = rw
+@member = r
+* = r
+
+[/infrastructure/apwiki/trunk/config]
+@pmc-chairs = rw
+
+[/infrastructure/apworkflow]
+@infrastructure = rw
+@member = r
+* = r
+
+[/infrastructure/bugzilla]
+@infrastructure-interest = rw
+@infrastructure = rw
+
+[/infrastructure/buildbot]
+@infrastructure = rw
+@committers = r
+buildbot = r
+* =
+
+[/infrastructure/buildbot/aegis/buildmaster/master1/projects]
+@infrastructure = rw
+@committers = rw
+buildbot = r
+* =
+
+[/infrastructure/buildbot/aegis/buildmaster/master1/public_html/projects]
+@infrastructure = rw
+@committers = rw
+buildbot = r
+* =
+
+[/infrastructure/hudson]
+@infrastructure-interest = rw
+@infrastructure = rw
+
+[/infrastructure/qpsmtpd]
+@infrastructure = rw
+@member = r
+
+[/infrastructure/selfserve]
+@infrastructure = rw
+#@infrastructure-interest = rw
+#@committers  = rw
+* = r
+
+[/infrastructure/trunk/acreq]
+acrequser = rw
+whimsysvn = r
+@exec-officers = rw
+
+[/infrastructure/trunk/mlreq]
+acrequser = rw
+whimsysvn = r
+@member = rw
+@pmc-chairs = rw
+ea = rw
+
+[/infrastructure/trunk/tlpreq]
+mostarda = rw
+
+[/infrastructure/trunk/tlpreq/input]
+whimsysvn = rw
+
+[/infrastructure/trunk/subreq]
+whimsysvn = r
+apezmlm = rw
+@member = rw
+
+[/infrastructure/trunk/cmsreq]
+acrequser = rw
+whimsysvn = r
+@member = rw
+@pmc-chairs = rw
+
+[/infrastructure/trunk/admin-search]
+@infrastructure-adminsearch = rw
+@member = r
+@svnadmins = rw
+* =
+
+[/infrastructure/trunk/auth]
+@infrastructure-root = rw
+# harmonia drac access
+uli = rw
+* =
+
+[/infrastructure/trunk/CA]
+@infrastructure-root = rw
+* =
+
+[/infrastructure/trunk/crontabs]
+@infrastructure = rw
+@member = r
+svn = r
+* =
+
+[/infrastructure/trunk/dns]
+@infrastructure = rw
+nick = rw
+@member = r
+svn = r
+# used by /root/bin/svn_update_pgeodns.sh cron on MXes
+* = r
+
+[/infrastructure/trunk/docs]
+@infrastructure = rw
+@infrastructure-interest = rw
+@member = r
+@svnadmins = rw
+ea = r
+# deny all access to everyone else.
+* =
+
+[/infrastructure/trunk/docs/services/svn-qavm2.apache.org]
+@subversion = rw
+
+[/infrastructure/trunk/ldap/authz-gen-test]
+@svnadmins = r
+@infrastructure = rw
+svn = r
+
+[/infrastructure/trunk/machines]
+@infrastructure-interest = rw
+
+[/infrastructure/trunk/machines/root]
+# restore rule from /infrastructure
+@infrastructure-interest = r
+@infrastructure = rw
+
+[/infrastructure/trunk/machines/root/bin]
+puppetsvn = r
+
+[/infrastructure/trunk/machines/vms/svn-qavm2.apache.org]
+@subversion = rw
+
+[/infrastructure/trunk/nagios]
+@infrastructure-interest = rw
+
+[/infrastructure/trunk/projects]
+@infrastructure = rw
+@infrastructure-interest = rw
+@committers  = rw
+* = r
+
+# Historic, PHP version of modules.apache.org site.
+[/infrastructure/trunk/projects/modules.a.o]
+@infrastructure = rw
+@infrastructure-interest = rw
+@committers  = rw
+* = 
+
+[/infrastructure/trunk/puppet]
+puppetsvn = r
+
+[/infrastructure/trunk/puppet/hosts/svn-qavm2]
+@subversion = rw
+
+[/infrastructure/trunk/qmail]
+smtpd = r
+@member = rw
+
+[/infrastructure/trunk/roller]
+@infrastructure-interest = rw
+
+
+[/infrastructure/trunk/ssh_keys]
+puppetsvn = r
+
+[/infrastructure/trunk/ssh_keys/people]
+@committers  = rw
+@infrastructure = rw
+@infrastructure-interest = rw
+@svnadmins = rw
+
+[/infrastructure/trunk/ssh_keys/services]
+puppetsvn = r
+@infrastructure = rw
+@infrastructure-interest = rw
+@svnadmins = rw
+* =
+
+[/infrastructure/trunk/subversion/authorization]
+@member = rw
+@pmc-chairs = rw
+@svnadmins = rw
+@board = rw
+@exec-officers = rw
+whimsysvn = r
+svn = r
+# apsite needs access to asf-authorization-template
+apsiteread = r
+
+[/infrastructure/trunk/subversion/authorization/pit-authorization-template]
+# Reduce from 'rw' access that they have to the parent dir.
+@member = r
+@pmc-chairs = r
+apsiteread = r
+@jcp = rw
+# Restore inherited permissions
+@infrastructure = rw
+@svnadmins = rw
+@board = rw
+@exec-officers = rw
+
+[/infrastructure/trunk/tools]
+apsiteread = r
+acrequser = r
+
+[/infrastructure/trunk/tools/board_reminders]
+@infrastructure = r
+@board = rw
+@exec-officers = rw
+@svnadmins = rw
+jim = rw
+
+[/infrastructure/vendor]
+@infrastructure-interest = rw
+@infrastructure = rw
+
+[/jaxrs-tck]
+@jcp = rw
+@jcp-jaxrs-nda = rw
+@svnadmins = rw
+* =
+
+[/jaxws-tck]
+@jcp = rw
+@jcp-jaxws-nda = rw
+@svnadmins = rw
+* =
+
+[/tomee-tck]
+@jcp = rw
+@jcp-tomee-nda = rw
+@svnadmins = rw
+# historical pre-PMC-rename name
+openejb-tck = r
+* =
+
+# Required to allow read access to svn history
+# prior to the openejb-tck -> tomee-tck rename
+[/openejb-tck]
+@jcp = r
+@jcp-tomee-nda = r
+@svnadmins = r
+openejb-tck = r
+* =
+
+[/osgi-cts]
+@jcp = rw
+@osgi-rw = rw
+@jcp-nda = r
+# deny all access to everyone else.
+@svnadmins = rw
+* =
+
+[/pmc]
+@member = rw
+@svnadmins = rw
+* =
+
+[/pmc/accumulo]
+@accumulo = rw
+
+[/pmc/airavata]
+@airavata-pmc = rw
+
+[/pmc/apr]
+@apr = rw
+
+[/pmc/archiva]
+@archiva-pmc = rw
+
+[/pmc/aries]
+@aries-pmc = rw
+
+[/pmc/bloodhound]
+@bloodhound-pmc = rw
+
+[/pmc/camel]
+@camel-pmc = rw
+
+[/pmc/cloudstack]
+@cloudstack-pmc = rw
+
+[/pmc/cocoon]
+@cocoon = rw
+
+[/pmc/commons]
+@commons-pmc = rw
+
+[/pmc/continuum]
+@continuum-pmc = rw
+
+[/pmc/cordova]
+@cordova-pmc = rw
+
+[/pmc/cxf]
+@cxf-pmc = rw
+
+[/pmc/forrest]
+@forrest-pmc = rw
+
+[/pmc/flume]
+@flume-pmc = rw
+
+[/pmc/geronimo]
+@geronimo-pmc=rw
+
+[/pmc/gump]
+@gump-pmc = rw
+
+[/pmc/hadoop]
+@hadoop-pmc = rw
+
+[/pmc/harmony]
+@attic-pmc = rw
+
+[/pmc/hive]
+@hive-pmc = rw
+
+[/pmc/httpcomponents]
+@httpcomponents-pmc = rw
+
+[/pmc/httpd]
+@httpd-pmc = rw
+
+[/pmc/incubator]
+@incubator-pmc = rw
+
+[/pmc/jclouds]
+@jclouds-pmc = rw
+
+[/pmc/jmeter]
+@jmeter-pmc = rw
+
+[/pmc/openoffice]
+@openoffice-pmc = rw
+
+[/pmc/openoffice-security]
+@openoffice-security = rw
+@security = rw
+
+[/pmc/jackrabbit]
+@jackrabbit = rw
+
+# [/pmc/jakarta]
+# @jakarta-pmc = rw
+
+[/pmc/juddi]
+@juddi-pmc = rw
+
+[/pmc/lenya]
+@lenya = rw
+
+[/pmc/libcloud]
+@libcloud-pmc = rw
+
+[/pmc/logging]
+@logging-pmc = rw
+
+[/pmc/lucene]
+@lucene-pmc = rw
+
+[/pmc/lucene/committers]
+@lucene = rw
+
+[/pmc/lucy]
+@lucy = rw
+
+[/pmc/maven]
+@maven-pmc = rw
+
+[/pmc/myfaces]
+@myfaces = rw
+
+[/pmc/oodt]
+@oodt-pmc = rw
+
+[/pmc/perl]
+@perl-pmc = rw
+
+[/pmc/pig]
+@pig-pmc = rw
+
+[/pmc/rave]
+@rave = rw
+
+[/pmc/shiro]
+@shiro-pmc = rw
+
+[/pmc/sqoop]
+@sqoop-pmc = rw
+
+[/pmc/steve]
+@steve-pmc = rw
+
+[/pmc/struts]
+@struts-pmc = rw
+
+[/pmc/subversion]
+@subversion-pmc = rw
+
+[/pmc/subversion/machines]
+@subversion = rw
+
+[/pmc/synapse]
+@synapse-pmc = rw
+
+[/pmc/tapestry]
+@tapestry = rw
+
+[/pmc/tcl]
+@tcl = rw
+
+[/pmc/thrift]
+@thrift-pmc = rw
+
+[/pmc/tomcat]
+@tomcat-pmc = rw
+
+[/pmc/trafficserver]
+@trafficserver-pmc = rw
+
+[/pmc/tuscany]
+@tuscany-pmc = rw
+
+[/pmc/wicket]
+@wicket = rw
+
+[/pmc/xml]
+# @xml-pmc = rw
+
+[/pmc/zookeeper]
+@zookeeper-pmc = rw
+
+[/security]
+@security = rw
+@svnadmins = rw
+* =
+
+[/servicemix-tck]
+@jcp = rw
+@jcp-servicemix-nda = rw
+@svnadmins = rw
+* =
+
+[/sun-tcks]
+@jcp = rw
+@jcp-nda = r
+# deny all access to everyone else.
+@svnadmins = rw
+* =
+
+[/sun-tcks/jaxrs]
+@jcp = rw
+@jcp-jaxrs-nda = r
+# deny all access to everyone else.
+@svnadmins = rw
+* =
+
+[/sun-tcks/jaxws]
+@jcp = rw
+@jcp-jaxws-nda = r
+# deny all access to everyone else.
+@svnadmins = rw
+* =
+
+[/travel-assistance]
+@member = rw
+@svnadmins = rw
+* =
+
+[/travel-assistance/past-recipients]
+@svnadmins = rw
+@tac-pmc = rw
+* =
+
+[/websites]
+@infrastructure = rw
+* = r
+
+[/websites/cms/conversion-utilities]
+@committers = rw
+
+[/websites/cms/webgui/content]
+buildbot = rw
+
+[/websites/production/accumulo]
+@accumulo = rw
+
+[/websites/production/ace]
+@ace = rw
+
+[/websites/production/activemq]
+buildbot = rw
+@activemq = rw
+
+[/websites/production/airavata]
+@airavata = rw
+
+[/websites/production/allura]
+@allura = rw
+
+[/websites/production/aries]
+@aries = rw
+
+[/websites/production/blur]
+@blur = rw
+
+[/websites/production/bval]
+@bval = rw
+
+[/websites/production/bigtop]
+@bigtop = rw
+
+[/websites/production/callback]
+@cordova = rw
+
+[/websites/production/camel]
+@camel = rw
+buildbot = rw
+
+[/websites/production/cayenne]
+@cayenne = rw
+buildbot = rw
+
+[/websites/production/celix]
+@celix = rw
+
+[/websites/production/chemistry]
+@chemistry = rw
+
+[/websites/production/climate]
+@climate = rw
+
+[/websites/production/cloudstack]
+@cloudstack = rw
+
+[/websites/production/commons]
+@commons = rw
+
+[/websites/production/community]
+@comdev = rw
+ea = rw
+
+[/websites/production/creadur]
+@creadur = rw
+
+[/websites/production/crunch]
+@crunch = rw
+
+[/websites/production/ctakes]
+@ctakes = rw
+
+[/websites/production/cxf]
+@cxf = rw
+buildbot = rw
+
+[/websites/production/db]
+@db = rw
+
+[/websites/production/deltaspike]
+@deltaspike = rw
+
+[/websites/production/devicemap]
+@incubator = rw
+
+[/websites/production/directory]
+@directory = rw
+
+[/websites/production/drill]
+@drill = rw
+
+[/websites/production/esme]
+@attic-pmc = rw
+
+[/websites/production/etch]
+@etch = rw
+
+[/websites/production/events]
+@concom = rw
+
+[/websites/production/felix]
+@felix = rw
+
+[/websites/production/flume]
+@flume = rw
+
+[/websites/production/flex]
+@flex = rw
+
+[/websites/production/gora]
+@gora = rw
+
+[/websites/production/geronimo]
+@geronimo = rw
+buildbot = rw
+
+[/websites/production/hive]
+@hive = rw
+
+[/websites/production/httpd]
+@httpd = rw
+
+[/websites/production/incubator]
+@incubator = rw
+@member = rw
+
+[/websites/production/isis]
+@isis = rw
+
+[/websites/production/jackrabbit]
+@jackrabbit = rw
+
+[/websites/production/james]
+@james = rw
+
+[/websites/production/jena]
+@jena = rw
+
+[/websites/production/jspwiki]
+@jspwiki = rw
+
+[/websites/production/juddi]
+@juddi = rw
+
+# retired
+[/websites/production/kitty]
+@incubator = rw
+
+[/websites/production/labs]
+@committers = rw
+
+[/websites/production/libcloud]
+@libcloud = rw
+
+[/websites/production/logging]
+@logging = rw
+
+[/websites/production/logging/content/log4cxx]
+@incubator = rw
+
+[/websites/production/lucene]
+@lucene = rw
+buildbot = rw
+
+[/websites/production/lucene.net]
+@lucenenet = rw
+
+[/websites/production/lucy]
+@committers = rw
+
+[/websites/production/mahout]
+@mahout = rw
+
+[/websites/production/maven]
+@maven = rw
+
+[/websites/production/marmotta]
+@marmotta = rw
+
+[/websites/production/maven-doxia]
+@maven = rw
+
+[/websites/production/metamodel]
+@incubator = rw
+
+[/websites/production/mina]
+@mina = rw
+
+[/websites/production/mrunit]
+@mrunit = rw
+
+[/websites/production/myfaces]
+@myfaces = rw
+
+[/websites/production/nutch]
+@nutch = rw
+
+[/websites/production/ode]
+@ode = rw
+
+[/websites/production/odftoolkit]
+@incubator = rw
+
+[/websites/production/pdfbox]
+@pdfbox = rw
+
+[/websites/production/tomee]
+@tomee = rw
+buildbot = rw
+
+[/websites/production/oodt]
+@oodt = rw
+
+[/websites/production/openjpa]
+@openjpa = rw
+
+[/websites/production/opennlp]
+@opennlp = rw
+
+[/websites/production/openoffice]
+@openoffice = rw
+
+[/websites/production/oozie]
+@oozie = rw
+
+[/websites/production/olingo]
+@olingo = rw
+
+[/websites/production/ooo-site]
+@openoffice = rw
+
+[/websites/production/openwebbeans]
+@openwebbeans = rw
+buildbot = rw
+
+[/websites/production/rat]
+@creadur = rw
+
+[/websites/production/rave]
+@rave = rw
+
+[/websites/production/river]
+@river = rw
+
+[/websites/production/roller]
+@roller = rw
+
+[/websites/production/santuario]
+@santuario = rw
+buildbot = rw
+
+[/websites/production/sentry]
+@incubator = rw
+
+[/websites/production/shindig]
+@shindig = rw
+
+[/websites/production/shiro]
+@shiro = rw
+
+[/websites/production/sis]
+@sis = rw
+
+[/websites/production/slider]
+@incubator = rw
+
+[/websites/production/slider]
+@incubator = rw
+
+[/websites/production/sling]
+@sling = rw
+
+[/websites/production/sqoop]
+@sqoop = rw
+
+[/websites/production/stanbol]
+@stanbol = rw
+
+[/websites/production/steve]
+@steve = rw
+
+[/websites/production/stratos]
+@stratos = rw
+
+[/websites/production/streams]
+@incubator = rw
+
+[/websites/production/struts]
+@struts = rw
+
+[/websites/production/tapestry]
+@tapestry = rw
+buildbot = rw
+
+[/websites/production/thrift]
+@thrift = rw
+
+[/websites/production/trafficserver]
+@trafficserver = rw
+
+[/websites/production/treasurer]
+@incubator = rw
+
+[/websites/production/turbine]
+@turbine = rw
+
+[/websites/production/vcl]
+@vcl = rw
+
+[/websites/production/wave]
+@wave = rw
+
+[/websites/production/wink]
+@wink = rw
+
+[/websites/production/wookie]
+@wookie = rw
+
+[/websites/production/www]
+@member = rw
+@apsite = rw
+@pmc-chairs = rw
+buildbot = rw
+ea = rw
+
+[/websites/production/xmlgraphics]
+@xmlgraphics = rw
+
+[/websites/production/zookeeper]
+@zookeeper = rw
+
+[/websites/staging]
+@committers = rw
+buildbot = rw
+
+[/~~~]
+# No-op section to act as sentinel for tlpreq/scripts/svnmv

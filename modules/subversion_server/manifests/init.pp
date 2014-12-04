@@ -18,6 +18,13 @@ class subversion_server {
      group    => 'svnadmins',
      mode     => '0775',
      source   => "puppet:///modules/subversion_server/scripts";
+   '/x1/svn/authorization':
+     ensure   => present,
+     recurse  => true,
+     owner    => 'www-data',
+     group    => 'svnadmins',
+     mode     => '0775',
+     source   => "puppet:///modules/subversion_server/authorization";
   }
 
 }

@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# various constants
+SVNADMINS="joes,pquerna,gmcdonald,pctony,danielsh,humbedooh,jfarrell"
+
+UNIXBASE="ou=groups,dc=apache,dc=org"
+BASE="ou=pmc,ou=committees,ou=groups,dc=apache,dc=org"
+LDAPSEARCH="ldapsearch"
+
+XARGS="xargs"
+SED="sed"
+
+pmcs=`$LDAPSEARCH -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
+committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: "
+
+# preamble
+cat <<EOF
+#
+# THIS IS A GENERATED FILE --- DO NOT EDIT
+#
+
+# Generated on: `date`
+
+[/]
+@svnadmins = rw
+* = r
+
+[groups]
+svnadmins=$SVNADMINS
+EOF
+
+# fill in [groups]
+for pmc in $pmcs incubator; do
+  printf "%s=" "$pmc"
+  $LDAPSEARCH -LLL -b "cn=$pmc,$UNIXBASE" 'cn=*' memberUid | $SED -ne 's/^memberUid: //p' | $XARGS | $SED -e 's/ /,/g'
+  printf "%s-pmc=" "$pmc"
+  $LDAPSEARCH -LLL -b "cn=$pmc,$BASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
+done
+
+echo
+
+# fill in per-PMC sections
+for pmc in $pmcs; do
+  echo
+  echo "# $pmc"
+  for path in "/dev/$pmc" "/release/$pmc"; do
+    echo
+    echo "[$path]"
+    echo "@svnadmins = rw"
+    echo "@$pmc-pmc = rw"
+    if echo "$path" | grep "/dev/" > /dev/null; then
+      echo "@$pmc = rw"
+    fi
+    if echo "$committers_may_release" | grep ":$pmc:" > /dev/null; then
+      echo "@$pmc = rw"
+    fi
+    if [ x"$pmc" = x"esme" ]; then
+      echo "@attic-pmc = rw"
+    fi
+  done
+  echo
+done
+
+# postamble
+echo
+echo "# incubator"
+echo
+printf "[/dev/incubator]\n@svnadmins = rw \n@incubator-pmc = rw\n@incubator = rw\n"
+printf "[/release/incubator]\n@svnadmins = rw \n@incubator-pmc = rw\n@incubator = rw\n"
+echo
