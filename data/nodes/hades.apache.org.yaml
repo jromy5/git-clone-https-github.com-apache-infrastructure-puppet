@@ -43,7 +43,7 @@ apache_modules::dev_package:
 apache_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
 
-asf-fail2ban::jails::jails:
+asf-fail2ban::config::jails:
   httpd-svn:
     filter: asf-httpd
     action: 
