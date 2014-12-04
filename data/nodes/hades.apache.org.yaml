@@ -53,7 +53,7 @@ collectd::plugin::interface::ignoreselected: true
 
 fail2ban_asf::config::jails:
   httpd-svn:
-    filter: asf-httpd
+    filter: apache-auth
     action:
       - iptables-allports
     logpath: /var/log/apache2/svn_https_error_ssl.log
