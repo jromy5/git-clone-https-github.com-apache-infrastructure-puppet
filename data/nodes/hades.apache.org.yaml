@@ -80,343 +80,343 @@ vhosts_asf::modules::modules:
     name: 'svn_check_path'
 
 vhosts_asf::vhosts::vhosts:
-    svn:
-      vhost_name: '*'
-      port: 80
-      docroot: '/x1/svn'
-      servername: 'svn.apache.org'
-      serveraliases:
-        - svn-master.apache.org
-        - svn.*.apache.org
-        - hades.apache.org
-        - hades.*.apache.org
-      custom_fragment: |
-        # The main repository
-        RewriteEngine On
+  svn:
+    vhost_name: '*'
+    port: 80
+    docroot: '/x1/svn'
+    servername: 'svn.apache.org'
+    serveraliases:
+      - svn-master.apache.org
+      - svn.*.apache.org
+      - hades.apache.org
+      - hades.*.apache.org
+    custom_fragment: |
+      # The main repository
+      RewriteEngine On
 
-        # tlp migrations
+      # tlp migrations
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =GET [OR]
-        RewriteCond %{REQUEST_METHOD} =HEAD
-        RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
-        RewriteCond /repos/asf/%1?ckpath -U
-        RewriteRule .* /repos/asf/%1 [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =GET [OR]
+      RewriteCond %{REQUEST_METHOD} =HEAD
+      RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
+      RewriteCond /repos/asf/%1?ckpath -U
+      RewriteRule .* /repos/asf/%1 [L,R=301]
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =PROPFIND
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
-        RewriteCond /repos/asf/%2?ckpath -U
-        RewriteRule .* /repos/asf/%2 [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =PROPFIND
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
+      RewriteCond /repos/asf/%2?ckpath -U
+      RewriteRule .* /repos/asf/%2 [L,R=301]
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =REPORT
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
-        RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
-        RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =REPORT
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
+      RewriteRule .* %{PATH_INFO} [L,R=301]
 
-        # openejb -> tomee
+      # openejb -> tomee
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =GET [OR]
-        RewriteCond %{REQUEST_METHOD} =HEAD
-        RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
-        RewriteCond /repos/asf/tomee/%1?ckpath -U
-        RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =GET [OR]
+      RewriteCond %{REQUEST_METHOD} =HEAD
+      RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
+      RewriteCond /repos/asf/tomee/%1?ckpath -U
+      RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =PROPFIND
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
-        RewriteCond /repos/asf/tomee/%2?ckpath -U
-        RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =PROPFIND
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
+      RewriteCond /repos/asf/tomee/%2?ckpath -U
+      RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
 
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =REPORT
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
-        RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
-        RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =REPORT
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
+      RewriteRule .* %{PATH_INFO} [L,R=301]
 
-        <Location /repos/asf>
-          DAV svn
-          SVNPath /x1/svn/repos/asf
-          SVNCheckPathPrefix  /repos/asf
-          SetOutputFilter DEFLATE
-          AuthzSVNAccessFile /x1/svn/asf-authorization
+      <Location /repos/asf>
+        DAV svn
+        SVNPath /x1/svn/repos/asf
+        SVNCheckPathPrefix  /repos/asf
+        SetOutputFilter DEFLATE
+        AuthzSVNAccessFile /x1/svn/asf-authorization
             
-          LimitRequestBody 100000000
-          <LimitExcept GET POST OPTIONS PROPFIND REPORT>
-            Order allow,deny
-            Deny from all
-          </LimitExcept>
-        </Location>
+        LimitRequestBody 100000000
+        <LimitExcept GET POST OPTIONS PROPFIND REPORT>
+          Order allow,deny
+          Deny from all
+        </LimitExcept>
+      </Location>
   
       
   svn_https:
-      vhost_name: '*'
-      port: 443
-      ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
-      ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
-      ssl_key:  '/etc/ssl/private/wildcard.apache.org.key'
-      ssl: true
-      docroot: '/x1/svn'
-      servername: 'svn.apache.org'
-      serveraliases:
-        - svn-master.apache.org
-        - svn.*.apache.org
-        - hades.apache.org
-        - hades.*.apache.org
-      custom_fragment: |
-        # The main repository
-        RewriteEngine On
+    vhost_name: '*'
+    port: 443
+    ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key:  '/etc/ssl/private/wildcard.apache.org.key'
+    ssl: true
+    docroot: '/x1/svn'
+    servername: 'svn.apache.org'
+    serveraliases:
+      - svn-master.apache.org
+      - svn.*.apache.org
+      - hades.apache.org
+      - hades.*.apache.org
+    custom_fragment: |
+      # The main repository
+      RewriteEngine On
+      
+      # tlp migrations
+      
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =GET [OR]
+      RewriteCond %{REQUEST_METHOD} =HEAD
+      RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
+      RewriteCond /repos/asf/%1?ckpath -U
+      RewriteRule .* /repos/asf/%1 [L,R=301]
         
-        # tlp migrations
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =PROPFIND
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
+      RewriteCond /repos/asf/%2?ckpath -U
+      RewriteRule .* /repos/asf/%2 [L,R=301]
+      
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =REPORT
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
+      RewriteRule .* %{PATH_INFO} [L,R=301]
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =GET [OR]
-        RewriteCond %{REQUEST_METHOD} =HEAD
-        RewriteCond %{REQUEST_URI} /repos/asf/incubator/(.+)
-        RewriteCond /repos/asf/%1?ckpath -U
-        RewriteRule .* /repos/asf/%1 [L,R=301]
+      # openejb -> tomee
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =PROPFIND
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/incubator/(.+)
-        RewriteCond /repos/asf/%2?ckpath -U
-        RewriteRule .* /repos/asf/%2 [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =GET [OR]
+      RewriteCond %{REQUEST_METHOD} =HEAD
+      RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
+      RewriteCond /repos/asf/tomee/%1?ckpath -U
+      RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =REPORT
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
-        RewriteCond /repos/asf?ckpath=/repos/asf/incubator -U
-        RewriteRule .* %{PATH_INFO} [L,R=301]
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =PROPFIND
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
+      RewriteCond /repos/asf/tomee/%2?ckpath -U
+      RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
         
-        # openejb -> tomee
+      RewriteCond %{IS_SUBREQ} =false
+      RewriteCond %{REQUEST_METHOD} =REPORT
+      RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
+      RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
+      RewriteRule .* %{PATH_INFO} [L,R=301]
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =GET [OR]
-        RewriteCond %{REQUEST_METHOD} =HEAD
-        RewriteCond %{REQUEST_URI} /repos/asf/openejb/(.+)
-        RewriteCond /repos/asf/tomee/%1?ckpath -U
-        RewriteRule .* /repos/asf/tomee/%1 [L,R=301]
+      <Location /repos/asf>
+        DAV svn
+        SVNPath /x1/svn/repos/asf
+        SVNCheckPathPrefix  /repos/asf
+        SetOutputFilter DEFLATE
+          
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap file
+          
+        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthzLDAPAuthoritative off
+          
+        #Fall back to to using the local htpasswd file if LDAP fails.
+        AuthUserFile /x1/svn/asf-committers
+          
+        ### use a different authorization file?
+        AuthzSVNAccessFile /x1/svn/asf-authorization
+          
+        Require valid-user
+        Satisfy any
+          
+      </Location>
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =PROPFIND
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(?:bc|rvr)/(\d+)/openejb/(.+)
-        RewriteCond /repos/asf/tomee/%2?ckpath -U
-        RewriteRule .* /repos/asf/tomee/%2 [L,R=301]
+      # Needed for sync
+      <Location /repos/asf-proxy-sync>
+        DAV svn
+        SVNPath /x1/svn/repos/asf
+        Order deny,allow
+        Allow from 140.211.11.4
+        Deny from all
+          
+        AuthName "ASF sync"
+        AuthType Basic
+        AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require user asf-sync-process
+      </Location>
         
-        RewriteCond %{IS_SUBREQ} =false
-        RewriteCond %{REQUEST_METHOD} =REPORT
-        RewriteCond %{REQUEST_URI} /repos/asf/!svn/(vcc/default|me)
-        RewriteCond /repos/asf/tomee?ckpath=/repos/asf/openejb -U
-        RewriteRule .* %{PATH_INFO} [L,R=301]
+      # Needed for sync
+      <Location /repos/private-proxy-sync>
+        DAV svn
+        SVNPath /x1/svn/repos/private
+        Order deny,allow
+        Allow from 140.211.11.4
+        Deny from all
+          
+        AuthName "ASF sync"
+        AuthType Basic
+        AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require user asf-sync-process
+      </Location>
         
-        <Location /repos/asf>
-          DAV svn
-          SVNPath /x1/svn/repos/asf
-          SVNCheckPathPrefix  /repos/asf
-          SetOutputFilter DEFLATE
+      # Needed for sync
+      <Location /repos/tck-proxy-sync>
+        DAV svn
+        SVNPath /x1/svn/repos/tck
+        Order deny,allow
+        Allow from 140.211.11.4
+        Deny from all
           
-          AuthName "ASF Committers"
-          AuthType Basic
-          AuthBasicProvider ldap file
-          
-          AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthzLDAPAuthoritative off
-          
-          #Fall back to to using the local htpasswd file if LDAP fails.
-          AuthUserFile /x1/svn/asf-committers
-          
-          ### use a different authorization file?
-          AuthzSVNAccessFile /x1/svn/asf-authorization
-          
-          Require valid-user
-          Satisfy any
-          
-        </Location>
+        AuthName "ASF sync"
+        AuthType Basic
+        AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require user asf-sync-process
+      </Location>
         
-        # Needed for sync
-        <Location /repos/asf-proxy-sync>
-          DAV svn
-          SVNPath /x1/svn/repos/asf
-          Order deny,allow
-          Allow from 140.211.11.4
-          Deny from all
-          
-          AuthName "ASF sync"
-          AuthType Basic
-          AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require user asf-sync-process
-        </Location>
+      # This repository is private to the Foundation
+      <Location /repos/private>
+        DAV svn
+        SVNPath /x1/svn/repos-private
         
-        # Needed for sync
-        <Location /repos/private-proxy-sync>
-          DAV svn
-          SVNPath /x1/svn/repos/private
-          Order deny,allow
-          Allow from 140.211.11.4
-          Deny from all
-          
-          AuthName "ASF sync"
-          AuthType Basic
-          AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require user asf-sync-process
-        </Location>
+        SetOutputFilter DEFLATE
         
-        # Needed for sync
-        <Location /repos/tck-proxy-sync>
-          DAV svn
-          SVNPath /x1/svn/repos/tck
-          Order deny,allow
-          Allow from 140.211.11.4
-          Deny from all
+        AuthName "ASF Members"
+        AuthType Basic
+        AuthBasicProvider ldap file
           
-          AuthName "ASF sync"
-          AuthType Basic
-          AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require user asf-sync-process
-        </Location>
+        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthzLDAPAuthoritative off
+         
+        #Fall back to to using the local htpasswd file if LDAP fails.
+        AuthUserFile /x1/svn/asf-committers
+          
+        ### use a different authorization file?
+        AuthzSVNAccessFile /x1/svn/pit-authorization
+          
+        Require valid-user
+        Satisfy any
+          
+      </Location>
         
-        # This repository is private to the Foundation
-        <Location /repos/private>
-          DAV svn
-          SVNPath /x1/svn/repos-private
-          
-          SetOutputFilter DEFLATE
-          
-          AuthName "ASF Members"
-          AuthType Basic
-          AuthBasicProvider ldap file
-          
-          AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthzLDAPAuthoritative off
-          
-          #Fall back to to using the local htpasswd file if LDAP fails.
-          AuthUserFile /x1/svn/asf-committers
-          
-          ### use a different authorization file?
-          AuthzSVNAccessFile /x1/svn/pit-authorization
-          
-          Require valid-user
-          Satisfy any
-          
-        </Location>
+      # This repository is private to the Geronimo group for the J2EE TCK
+      <Location /repos/tck>
+        DAV svn
+        SVNPath /x1/svn/repos/tck
         
-        # This repository is private to the Geronimo group for the J2EE TCK
-        <Location /repos/tck>
-          DAV svn
-          SVNPath /x1/svn/repos/tck
+        SetOutputFilter DEFLATE
           
-          SetOutputFilter DEFLATE
+        AuthName "ASF TCK Users"
+        AuthType Basic
+        AuthBasicProvider ldap file
+         
+        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthzLDAPAuthoritative off
           
-          AuthName "ASF TCK Users"
-          AuthType Basic
-          AuthBasicProvider ldap file
+        AuthUserFile /x1/svn/asf-committers
           
-          AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthzLDAPAuthoritative off
+        ### use a different authorization file?
+        AuthzSVNAccessFile /x1/svn/pit-authorization
           
-          AuthUserFile /x1/svn/asf-committers
-          
-          ### use a different authorization file?
-          AuthzSVNAccessFile /x1/svn/pit-authorization
-          
-          Require valid-user
-        </Location>
+        Require valid-user
+      </Location>
         
-        # infra repo
-        <Location /repos/infra>
-          DAV svn
-          SVNPath /x1/svn/repos/infra
+      # infra repo
+      <Location /repos/infra>
+        DAV svn
+        SVNPath /x1/svn/repos/infra
+        
+        SetOutputFilter DEFLATE
           
-          SetOutputFilter DEFLATE
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap file
           
-          AuthName "ASF Committers"
-          AuthType Basic
-          AuthBasicProvider ldap file
+        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthzLDAPAuthoritative off
           
-          AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthzLDAPAuthoritative off
+        #Fall back to to using the local htpasswd file if LDAP fails.
+        AuthUserFile /x1/svn/asf-committers
           
-          #Fall back to to using the local htpasswd file if LDAP fails.
-          AuthUserFile /x1/svn/asf-committers
+        ### use a different authorization file?
+        AuthzSVNAccessFile /x1/svn/pit-authorization
           
-          ### use a different authorization file?
-          AuthzSVNAccessFile /x1/svn/pit-authorization
+        Require valid-user
+        Satisfy any
           
-          Require valid-user
-          Satisfy any
-          
-          # Always require authentication on non-read access 
+        # Always require authentication on non-read access 
         #    <LimitExcept GET OPTIONS PROPFIND REPORT>
         #      Require valid-user
         #    </LimitExcept>
-          </Location>
+      </Location>
           
         # Needed for sync
-        <Location /repos/infra-proxy-sync>
-          DAV svn
-          SVNPath /x1/svn/repos/infra
-          Order deny,allow
-          Allow from 140.211.11.4
-          Deny from all
+      <Location /repos/infra-proxy-sync>
+        DAV svn
+        SVNPath /x1/svn/repos/infra
+        Order deny,allow
+        Allow from 140.211.11.4
+        Deny from all
           
-          AuthName "ASF sync"
-          AuthType Basic
-          AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require user asf-sync-process
-        </Location>
+        AuthName "ASF sync"
+        AuthType Basic
+        AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require user asf-sync-process
+      </Location>
         
-        # Test repository for committers
-        <Location /repos/test>
-          DAV svn
-          SVNPath /x1/svn/test
+      # Test repository for committers
+      <Location /repos/test>
+        DAV svn
+        SVNPath /x1/svn/test
           
-          SetOutputFilter DEFLATE
+        SetOutputFilter DEFLATE
           
-          AuthName "ASF Committers"
-          AuthType Basic
-          AuthBasicProvider ldap
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
           
-          AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthzLDAPAuthoritative off
+        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthzLDAPAuthoritative off
           
-          # Always require authentication on non-read access 
-          <LimitExcept GET OPTIONS PROPFIND REPORT>
-            require valid-user
-          </LimitExcept>
-        </Location>
+        # Always require authentication on non-read access 
+        <LimitExcept GET OPTIONS PROPFIND REPORT>
+          require valid-user
+        </LimitExcept>
+      </Location>
         
-        # These are the infrastructure web forms which are committers-only
-        <Location /dev/forms>
-          Order allow,deny
-          Allow from all
+      # These are the infrastructure web forms which are committers-only
+      <Location /dev/forms>
+        Order allow,deny
+        Allow from all
           
-          AuthName "ASF SVN Committers"
-          AuthType Basic
-          #AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require valid-user
-        </Location>
+        AuthName "ASF SVN Committers"
+        AuthType Basic
+        #AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require valid-user
+      </Location>
         
-        <Location /dyn/asf-mailer.cgi>
-          Order allow,deny
-          Allow from all
+      <Location /dyn/asf-mailer.cgi>
+        Order allow,deny
+        Allow from all
           
-          AuthName "ASF SVN Committers"
-          AuthType Basic
-          #AuthBasicProvider file
-          AuthUserFile /x1/svn/asf-committers
-          Require valid-user
-        </Location>
+        AuthName "ASF SVN Committers"
+        AuthType Basic
+        #AuthBasicProvider file
+        AuthUserFile /x1/svn/asf-committers
+        Require valid-user
+      </Location>
         
 
