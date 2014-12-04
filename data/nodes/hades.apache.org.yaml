@@ -223,7 +223,7 @@ vhosts_asf::vhosts::vhosts:
           
         AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthzLDAPAuthoritative off
+        #AuthzLDAPAuthoritative off
           
         #Fall back to to using the local htpasswd file if LDAP fails.
         AuthUserFile /x1/svn/asf-committers
@@ -294,7 +294,7 @@ vhosts_asf::vhosts::vhosts:
           
         AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthzLDAPAuthoritative off
+        #AuthzLDAPAuthoritative off
          
         #Fall back to to using the local htpasswd file if LDAP fails.
         AuthUserFile /x1/svn/asf-committers
@@ -320,7 +320,7 @@ vhosts_asf::vhosts::vhosts:
          
         AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthzLDAPAuthoritative off
+        #AuthzLDAPAuthoritative off
           
         AuthUserFile /x1/svn/asf-committers
           
@@ -343,7 +343,7 @@ vhosts_asf::vhosts::vhosts:
           
         AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthzLDAPAuthoritative off
+        #AuthzLDAPAuthoritative off
           
         #Fall back to to using the local htpasswd file if LDAP fails.
         AuthUserFile /x1/svn/asf-committers
@@ -388,7 +388,7 @@ vhosts_asf::vhosts::vhosts:
           
         AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthzLDAPAuthoritative off
+        #AuthzLDAPAuthoritative off
           
         # Always require authentication on non-read access 
         <LimitExcept GET OPTIONS PROPFIND REPORT>
