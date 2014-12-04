@@ -120,7 +120,7 @@ vhosts_asf::vhosts::vhosts:
       custom_fragment: |
         <Location /repos/asf>'
           DAV svn
-          SVNPath /x1/svn/asf
+          SVNPath /x1/svn/repos/asf
           SVNCheckPathPrefix  /repos/asf
 
           SetOutputFilter DEFLATE
