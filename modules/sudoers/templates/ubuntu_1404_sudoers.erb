@@ -47,7 +47,7 @@ Cmnd_ALias TS = /usr/sbin/service trafficserver start, /usr/sbin/service traffic
 Cmnd_Alias RESTART = /sbin/reboot, /sbin/shutdown -r now
 
 <% if fqdn == 'hades.apache.org' -%>
-apbackup  apbackup=NOPASSWD: /sbin/zfs
+apbackup  ALL=NOPASSWD: /sbin/zfs
 <% end -%>
 
 <% if fqdn == 'bloodhound-vm2.apache.org' -%>
