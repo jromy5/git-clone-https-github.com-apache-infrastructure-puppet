@@ -41,7 +41,7 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-tlp_vhosts::vhosts_asf:vhosts:
+tlp_vhosts::vhosts_asf::vhosts:
     svn:
       vhost_name: 'svn.apache.org'
       port: 80
