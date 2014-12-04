@@ -12,7 +12,7 @@ class rootbin_asf {
         /^ubuntu$/    => 'root',
         /^freebsd$/   => 'wheel',
         default       => 'root',
-      }
+      },
       mode     => '0770',
   }
 }
