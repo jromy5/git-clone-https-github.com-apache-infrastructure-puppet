@@ -9,6 +9,6 @@ class zfs_on_ubuntu {
 
   package { "$packages":
     ensure   => installed,
-    require  => Apt::Source['debian_unstable'],
+    require  => apt::ppa['ppa:zfs-native/stable'],
   }
 }
