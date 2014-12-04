@@ -60,7 +60,7 @@ fail2ban::disable: true
 fail2ban::jails_config: 'concat'
 fail2ban::puppi: 'false'
 fail2ban::monitor: 'false'
-fail2ban::mailto: 'fail2ban@apache.org'
+fail2ban::mailto: 'root@apache.org'
 fail2ban::bantime: 604800
 fail2ban::findtime: 3600
 fail2ban::maxretry: 3
