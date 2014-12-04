@@ -1,10 +1,15 @@
 class svnpubsub (
   
+  $packages       = ['python-twisted']
   $service_ensure = 'running',
   $service_name   = 'svnpubsub',
 ) {
 
     include svnpubsub::common
+
+    package { $packages:
+      ensure => latest,
+    }
 
     file { "/var/log/${service_name}":
         ensure => directory,
