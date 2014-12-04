@@ -40,9 +40,9 @@ SUDO=/usr/local/bin/sudo
 SETLOCK=/root/bin/setlock.pl
 MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
-BUILDBOT=/usr/local/svn-install/hooks/svn_buildbot.py
-BUILDBOT_PROJECT_PATHS=/usr/local/svn-install/hooks/buildbot_project_paths
-PUBSUB=/usr/local/svnpubsub/commit-hook.py
+BUILDBOT=/x1/svn/hooks/svn_buildbot.py
+BUILDBOT_PROJECT_PATHS=/x1/svn/hooks/buildbot_project_paths
+PUBSUB=/opt/svnpubsub/commit-hook.py
 
 #
 REPOS="$1"
