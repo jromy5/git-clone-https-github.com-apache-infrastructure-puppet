@@ -81,7 +81,7 @@ vhosts_asf::modules::modules:
 
 vhosts_asf::vhosts::vhosts:
     svn:
-      vhost_name: 'svn.apache.org'
+      vhost_name: '*'
       port: 80
       docroot: '/x1/svn'
       servername: 'svn.apache.org'
