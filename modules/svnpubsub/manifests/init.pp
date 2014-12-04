@@ -1,6 +1,6 @@
 class svnpubsub (
   
-  $packages       = ['python-twisted']
+  $packages       = ['python-twisted'],
   $service_ensure = 'running',
   $service_name   = 'svnpubsub',
 ) {
