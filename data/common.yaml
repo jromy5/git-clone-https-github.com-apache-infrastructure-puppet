@@ -64,6 +64,8 @@ fail2ban::mailto: 'root@apache.org'
 fail2ban::bantime: 604800
 fail2ban::findtime: 3600
 fail2ban::maxretry: 3
+fail2ban::source_dir: 'puppet:///modules/asf-fail2ban/fail2ban/conf'
+fail2ban::source_dir_purge: true
 
 ## LDAPCLIENT
 ldapclient::ldapcert: |
