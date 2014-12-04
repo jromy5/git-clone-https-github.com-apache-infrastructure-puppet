@@ -29,6 +29,8 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+apt::ppa: 'zfs-native/stable'
+
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
