@@ -73,7 +73,7 @@ httpd_modules::dev_package:
 httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
   - libapreq2-dev
-httpd_modules::mod_svn_check_path::args: '-I /usr/include/subversion-1 -DFILTERING -i -a -c'
+httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
 
 vhosts_asf::modules::modules:
   authz_svn:

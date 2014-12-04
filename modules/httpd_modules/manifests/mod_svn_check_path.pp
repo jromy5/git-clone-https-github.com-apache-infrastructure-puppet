@@ -1,10 +1,8 @@
 class httpd_modules::mod_svn_check_path (
-  $args              = '-I /usr/include/subversion-1 -i -a -c',
-  $compiler          = 'apxs2',
+  $command           = 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c',
   $creates           = '/usr/lib/apache2/modules/mod_svn_check_path.so',
   $mod_path          = '/opt/mod_svn_check_path',
-  $module            = 'mod_svn_check_path.c',
-  $required_packages = ['libsvn-dev'],
+  $required_packages = ['libsvn-dev', 'libapreq2-dev'],
   $shell_path        = ['/usr/bin', '/bin', '/usr/sbin'],
 ) {
 
@@ -21,7 +19,7 @@ class httpd_modules::mod_svn_check_path (
     }
 
     exec { 'compile mod_svn_check_path':
-      command => "${compiler} ${args} ${module}",
+      command => "${command}",
       cwd     => "${mod_path}",
       path    => $shell_path,
       creates => "${creates}",
