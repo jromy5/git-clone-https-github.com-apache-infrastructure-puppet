@@ -1,0 +1,140 @@
+#! /usr/bin/perl -w
+
+use strict ;
+
+my %zipper =
+  ( 'bz2' => 'bzip2 -f'
+  , 'gz'  => 'gzip -f'
+  ) ;
+
+my $prog = substr($0,rindex($0,'/')+1) ;
+my $Usage = <<USAGE ;
+Usage: $prog [-v] [-q] [-d] [-p path] [-c bz2|gz] file num
+option v : be verbose
+option q : be quiet
+option d : show debug info
+option n : dry run
+option p : absolute path-prefix for default zippers
+option c : compress with
+           gz  : $zipper{gz}
+           bz2 : $zipper{bz2}
+argument file : rotate <file>
+argument num  : keep <num> previous versions ; file.0 .. file.num-1
+                or file.0.suff .. file.num-1.suff
+examples : $prog       some-log 12
+         : $prog -c gz some-log 12
+USAGE
+sub Usage { die "$_[0]$Usage" ; }
+sub Error { die "$prog: $_[0]\n" ; }
+sub Warn  { warn "$prog: $_[0]\n" ; }
+
+# usage: &GetOptions(ARG,ARG,..) defines $opt_ID as 1 or user spec'ed value
+# usage: &GetOptions(\%opt,ARG,ARG,..) defines $opt{ID} as 1 or user value
+# ARG = 'ID' | 'ID=SPC' | 'ID:SPC' for no-arg, required-arg or optional-arg
+# ID  = perl identifier
+# SPC = i|f|s for integer, fixedpoint real or string argument
+
+use Getopt::Long ;
+Getopt::Long::config('no_ignore_case') ;
+my %opt = () ; Usage('') unless GetOptions
+  ( \%opt, qw(v q d n p=s c=s) ) ;
+Usage("Arg count\n") unless @ARGV == 2 ;
+
+$opt{v} ||= $opt{n} ;
+$opt{v} ||= $opt{d} ;
+
+my $FILE = shift ;
+my $NUM  = shift ;
+
+my $TAG  = $opt{n} ? 'WOULD' : 'DOING' ;
+
+Error "argument $FILE not found" unless -f $FILE ;
+Error "argument $FILE is a symlink" if -l $FILE ;
+Error "argument $NUM is not a number" unless $NUM =~ /^\d+$/ ;
+Error sprintf "bad value for -c (%s) ; should be one of %s"
+  , $opt{c}, join ( '|', sort keys %zipper ) 
+      if $opt{c} and ! exists $zipper { $opt{c} } ;
+
+# set absolute paths for default zippers
+if ( $opt{p} )
+  { Error "path -p ($opt{p}) not found" unless -d $opt{p} ;
+    $opt{p} .= '/' unless $opt{p} =~ m!/$! ;
+    for my $xz ( sort keys %zipper )
+      { $zipper { $xz } = $opt{p} . $zipper { $xz } ; }
+  }
+
+my $zipper = $zipper { $opt{c} } || ''    if $opt{c} ;
+my $suffix = '' ; $suffix = '.' . $opt{c} if $opt{c} ;
+
+sub name
+  { my $i = shift ; sprintf "%s.%d%s", $FILE, $i, $suffix ; }
+
+sub Zip
+  { my ( $src ) = @_ ;
+    my @cmd = ( split ( ' ', $zipper ), $src ) ;
+    if ( $opt{v} )
+      { printf "$TAG zip : %s\n", "@cmd" ; }
+    unless ( $opt{n} )
+      { system ( @cmd ) == 0 or Error "system '@cmd' failed ($?)" ; }
+  }
+
+sub Rename
+  { my ( $src, $dst ) = @_ ;
+    if ( -f $src )
+      { if ( $opt{v} )
+          { print "$TAG rename $src, $dst\n" ; }
+        unless ( $opt{n} )
+          { rename $src, $dst or Error "can't rename $src, $dst ($!)" ; }
+      }
+  }
+
+sub Unlink
+  { my ( $src ) = @_ ;
+    if ( -f $src )
+      { if ( $opt{v} )
+          { print "$TAG unlink $src\n" ; }
+        unless ( $opt{n} )
+          { unlink $src or Error "can't unlink $src ($!)" ; }
+      }
+  }
+
+my ( $MODE, $UID, $GID ) = ( stat $FILE ) [ 2, 4, 5 ] ;
+my @range = ( 1 .. $NUM ) ;
+my $last  = name $NUM - 1 ;
+my $frst  = "$FILE.0" ;
+
+if ( -f $last )
+  { Unlink $last ; }
+elsif ( $opt{d} )
+  { printf "unlink last file : file %s not found\n", $last ; }
+
+# shift the logs up
+for ( my $i = $NUM - 2 ; $i >= 0 ; $i -- )
+  { my $src = name $i ;
+    my $dst = name $i + 1 ;
+    if ( -f $src )
+      { Rename $src, $dst ; }
+    elsif ( $opt{d} )
+      { printf "renaming : file %s not found\n", $src ; }
+
+  } ;
+
+# create new empty temp with proper mode, uid, gid
+my $TEMP = "$FILE.next" ;
+if ( $opt{v} )
+  { printf "$TAG create $TEMP $UID:$GID 0%o\n", $MODE ; }
+unless ( $opt{n} )
+  { open TEMP, ">$TEMP" or Error "can't write $TEMP ($!)" ;
+    close TEMP ;
+    chmod $MODE, $TEMP or Error sprintf "can't chmod 0%o $TEMP ($!)", $MODE ;
+    chown $UID, $GID, $TEMP or Error "can't chown $UID:$GID $TEMP ($!)" ;
+  }
+
+# rename the log ; rename temp log
+Rename $FILE, $frst ;
+if ( $opt{n} ) { printf "$TAG rename $TEMP, $FILE\n" ; }
+Rename $TEMP, $FILE ;
+
+# ... and compress the log
+Zip $frst if $opt{c} ;
+

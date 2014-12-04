@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+import getpass
+import os
+import signal
+import stat
+import sys
+
+import SocketServer
+
+SOCKET = '%s/.pty-agent/socket' % os.getenv('HOME')
+
+opiepasswd = getpass.getpass("OPIE Password: ")
+ldappasswd = getpass.getpass("LDAP Password: ")
+
+class SecretsHandler(SocketServer.StreamRequestHandler):
+
+    #def __init__(self, *args, **kwargs):
+        #SocketServer.StreamRequestHandler.__init__(self, *args, **kwargs)
+
+    def handle(self):
+        global opiepasswd
+        global ldappasswd
+        for line in self.rfile:
+            line = line[:-1]
+            rv = None
+            if False: pass
+            elif line == 'GET OPIE': rv = opiepasswd
+            elif line == 'GET LDAP': rv = ldappasswd
+            elif line.startswith('SET OPIE '): opiepasswd = line[9:]
+            elif line.startswith('SET LDAP '): ldappasswd = line[9:]
+            else: pass
+            if rv is not None: self.wfile.write(rv + "\n")
+
+def main():
+    if os.path.exists(SOCKET) and stat.S_ISSOCK(os.stat(SOCKET).st_mode):
+        os.unlink(SOCKET)
+
+    # Sanity check permissions
+    if os.stat(os.path.dirname(SOCKET)).st_mode & 07077:
+        raise Exception("Insane permissions on '%s'" % SOCKET)
+
+    # fork. parent runs a server, child runs argv[1:].
+    def handler(signum, stackframe):
+        pid, exit = os.wait()
+        sys.exit(exit)
+    server = SocketServer.UnixStreamServer(SOCKET, SecretsHandler)
+    if os.fork(): # parent
+        signal.signal(signal.SIGCHLD, handler)
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        server.serve_forever()
+    else: # child
+        os.execvp(sys.argv[1], sys.argv[1:])
+
+if __name__ == '__main__':
+    main()

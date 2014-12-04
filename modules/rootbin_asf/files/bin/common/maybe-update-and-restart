@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+SVN=/usr/local/bin/svn
+
+wc="$1"
+cmd="$2"
+
+is_sudoer() {
+  if [ x"$(uname)" = x"FreeBSD" ]; then
+    if id -G "$1" | grep -w 0; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+# cd, but allow $wc to be a file.
+if [ -L "$wc" ] ; then
+  cd "$(dirname "$wc")"
+elif [ -d "$wc" ]; then
+  cd "$wc" 
+else
+  cd "$(dirname "$wc")"
+fi
+
+$SVN cleanup
+logline=`$SVN log -l1 -r HEAD:0 -q --incremental | grep '^r'`
+revnum=`printf %s "$logline" | sed -e 's/ .*//' -e 's/^r//'`
+author=`printf %s "$logline" | cut -d '|' -f2 | sed -e 's/^.//' -e 's/.$//'`
+if is_sudoer "$author" ; then
+  $SVN up -r "$revnum"
+  if [ -z "$cmd" ]; then
+    sudo -- ${cmd} # does word splitting!
+  fi
+fi

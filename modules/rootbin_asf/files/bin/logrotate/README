@@ -1,0 +1,8 @@
+Put all log rotation scripts here.
+
+When migrating the various logrotate scripts
+from the bin directory to here note, that their
+path will likely be inside cron tables. Either
+fix all references of the path or replace the
+original file with a symlink pointing to the new
+location here.

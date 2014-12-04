@@ -1,0 +1,13 @@
+#!/bin/sh
+set -x
+
+## Sniff $REPOSDIR from $1, and shift it.
+REPOSDIR=`for d in $1 /x1/svn/repos-$1 /x1/svn/$1; do if [ -d $d ] ; then echo $d; break; fi; done`
+if [ -d "$REPOSDIR" ] && [ -n "$REPOSDIR" ]; then shift; else exit 1; fi
+
+## All other arguments are revisions to be remailed.
+for i in "$@" ; do
+  /root/bin/svn/svn-mailer \
+    commit "$REPOSDIR" $i /x1/svn/asf-mailer.conf
+   sleep 5
+done

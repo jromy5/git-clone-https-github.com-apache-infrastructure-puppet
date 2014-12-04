@@ -1,0 +1,4 @@
+#!/bin/sh
+# /var/qmail/bin/qmail-qstat counts messages.
+# This counts unmade deliveries.
+mailq | fgrep -vw done | fgrep -w remote | wc -l

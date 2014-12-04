@@ -1,0 +1,2 @@
+#!/bin/sh
+ldapsearch -LLL -b ou=pmc,ou=committees,ou=groups,dc=apache,dc=org -s one cn  | sed -ne 's#^cn: ##p'

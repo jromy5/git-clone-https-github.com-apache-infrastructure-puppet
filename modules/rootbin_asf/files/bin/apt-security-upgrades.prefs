@@ -1,0 +1,16 @@
+
+Package: *
+Pin: release a=lucid-security
+Pin-Priority: 990
+
+Package: *
+Pin: release a=lucid-updates
+Pin-Priority: 50
+
+Package: *
+Pin: release a=lucid
+Pin-Priority: 50
+
+Package: *
+Pin: release a=now
+Pin-Priority: 100

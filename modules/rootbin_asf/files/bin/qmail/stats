@@ -1,0 +1,5 @@
+#!/bin/sh
+printf '%s,' `date +'%s,%a,%Y-%m-%d,%H:%M:%S'`
+/var/qmail/bin/qmail-qstat | perl -lpe 's/\D//g' | perl -012l054pe1
+# /root/bin/qmail/qmail-delistat | perl -012l054pe1
+echo ""

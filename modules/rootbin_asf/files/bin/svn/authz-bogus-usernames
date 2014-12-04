@@ -1,0 +1,29 @@
+#! /usr/bin/env perl
+use warnings;
+use strict;
+
+delete $ENV{PATH}; # we're calledby pre-commit, so pretend %ENV is empty.
+
+my ($ASF_COMMITTERS) = '/x1/svn/asf-committers';
+my ($BASE_DN) = 'ou=people,dc=apache,dc=org';
+
+my ($target) = @ARGV;
+
+my @population;
+push @population, map /^([^#]+?):/, split /\n/, `/bin/cat $ASF_COMMITTERS`;
+push @population, map /^uid: (\S+?)$/, split /\n/, `/usr/local/bin/ldapsearch -LLLb $BASE_DN uid`;
+my %population = map { $_ => 1 } @population;
+undef @population;
+
+my (%actual) =
+               map { $_ => 1 }
+               map { split /,/ }
+               grep s/^(\w[\w\d-]*?)\s*=//,
+               grep !/= *rw? *$/, # ignore =r / =rw rules outside of [groups]
+               split /\n/, `cat -- "$target"`;
+my (@actual) = keys %actual;
+undef %actual;
+
+my (@difference) = grep { !exists $population{$_} } @actual;
+map { warn "Unknown username '$_' in '$target'\n" } @difference;
+exit @difference;

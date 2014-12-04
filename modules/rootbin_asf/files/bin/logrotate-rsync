@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/root/bin/rotlog -c bz2 -p /usr/bin /var/log/rsync/rsync 7

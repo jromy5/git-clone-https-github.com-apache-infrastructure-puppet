@@ -1,0 +1,20 @@
+include GENERIC
+ident ASF
+
+# DTRACE
+makeoptions DEBUG="-g"     # build kernel with gdb(1) debug symbols
+makeoptions WITH_CTF=1
+
+# altq(4) for pf(4) -- needed on eos
+options ALTQ
+options ALTQ_CBQ
+options ALTQ_RED
+options ALTQ_RIO
+options ALTQ_HFSC
+options ALTQ_CDNR
+options ALTQ_PRIQ
+
+# DTRACE
+options KDTRACE_HOOKS      # all architectures - enable general DTrace hooks
+options DDB_CTF            # all architectures - kernel ELF linker loads CTF data
+options KDTRACE_FRAME      # amd64 - ensure frames are compiled in

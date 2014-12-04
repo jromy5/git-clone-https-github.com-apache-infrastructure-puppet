@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r227802 | delphij | 2011-11-21 20:26:22 +0000 (Mon, 21 Nov 2011) | 14 lines
+Changed paths:
+   M /head/sys/fs/tmpfs/tmpfs.h
+
+Improve the way to calculate available pages in tmpfs:
+
+ - Don't deduct wired pages from total usable counts because it does not
+   make any sense.  To make things worse, on systems where swap size is
+   smaller than physical memory and use a lot of wired pages (e.g. ZFS),
+   tmpfs can suddenly have free space of 0 because of this;
+ - Count cached pages as available; [1]
+ - Don't count inactive pages as available, technically we could but that
+   might be too aggressive; [1]
+
+[1] Suggested by kib@
+
+MFC after:	1 week
+
+------------------------------------------------------------------------
+Index: sys/fs/tmpfs/tmpfs.h
+===================================================================
+--- sys/fs/tmpfs/tmpfs.h	(revision 227801)
++++ sys/fs/tmpfs/tmpfs.h	(revision 227802)
+@@ -502,11 +502,8 @@
+ static __inline size_t
+ tmpfs_mem_info(void)
+ {
+-	size_t size;
+ 
+-	size = swap_pager_avail + cnt.v_free_count + cnt.v_inactive_count;
+-	size -= size > cnt.v_wire_count ? cnt.v_wire_count : size;
+-	return size;
++	return (swap_pager_avail + cnt.v_free_count + cnt.v_cache_count);
+ }
+ 
+ /* Returns the maximum size allowed for a tmpfs file system.  This macro
