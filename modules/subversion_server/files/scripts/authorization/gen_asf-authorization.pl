@@ -89,7 +89,7 @@ sub rebuild {
     push( @newauthzfile, "#placeholder" );
     while (<TEMPLATE>) {
         if ($_ !~ m/^#/ && $_ =~ m/{reuse:((?:asf|pit)-authorization):(\w[\w\d-]*?)}/ ) {
-            my (@lines) = `/bin/grep '^$2 *= *' $DIR/$1-template`;
+            my (@lines) = `/bin/grep '^$2 *= *' $DIR/templates/$1-template`;
             die "Uh-oh: found '@lines', expected one line; at '$_'" unless @lines == 1;
             $_ = $lines[0];
         }
