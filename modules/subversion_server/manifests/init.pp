@@ -5,6 +5,10 @@ class subversion_server {
   #packages needed 
   package { 'python-svn':
     ensure  => present
+  }
+  
+  package { 'viewvc':
+    ensure  => present
   } 
 
   # File block to deploy fodlers, scripts etc
