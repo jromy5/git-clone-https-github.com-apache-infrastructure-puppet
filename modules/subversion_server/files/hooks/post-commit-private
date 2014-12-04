@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# POST-COMMIT HOOK
+#
+# The post-commit hook is invoked after a commit. Subversion runs
+# this hook by invoking a program (script, executable, binary,
+# etc.) named `post-commit' (for which
+# this file is a template) with the following ordered arguments:
+#
+#   [1] REPOS-PATH   (the path to this repository)
+#   [2] REV          (the number of the revision just committed)
+#
+# Because the commit has already completed and cannot be undone,
+# the exit code of the hook program is ignored.  The hook program
+# can use the `svnlook' utility to help it examine the
+# newly-committed tree.
+#
+# On a Unix system, the normal procedure is to have `post-commit'
+# invoke other programs to do the real work, though it may do the
+# work itself too.
+#
+# Note that `post-commit' must be executable by the user(s) who will
+# invoke it (typically the user httpd runs as), and that user must
+# have filesystem-level permission to access the repository.
+#
+# On a Windows system, you should name the hook program
+# `post-commit.bat' or `post-commit.exe',
+# but the basic idea is the same.
+# 
+# Here is an example hook script, for a Unix /bin/sh interpreter:
+
+# 
+SVN=/usr/local/svn-install/current/bin/svn
+SVNLOOK=/usr/local/svn-install/current/bin/svnlook
+SVNADMIN=/usr/local/svn-install/current/bin/svnadmin
+SVNSYNC=/usr/local/svn-install/current/bin/svnsync
+#MAILER=/usr/local/svn-install/hooks/mailer.py
+MAILER=/root/bin/svn/svn-mailer
+SUDO=/usr/local/bin/sudo
+SETLOCK=/root/bin/setlock.pl
+MASTER_HOSTNAME=eris.apache.org
+HOSTNAME=`/bin/hostname`
+
+#
+REPOS="$1"
+REV="$2"
+shard=`expr $REV / 1000`
+
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
+then
+    # Deltify predecessors of things changed in this revision.
+    #nice -2 $SVNADMIN deltify "$REPOS" -r "$REV" &
+    #$SVNADMIN deltify "$REPOS" -r "$REV"
+    backup_dir=/x1/svn/private-backups.d/private.$shard
+    [ -d $backup_dir ] || mkdir $backup_dir
+    $SVNADMIN dump --incremental -r "$REV" "$REPOS" | gzip > $backup_dir/private.$REV.gz &
+
+    # Send the commit mail
+    $MAILER commit "$REPOS" "$REV" /x1/svn/asf-mailer.conf \
+	2>>/var/log/svnmailer/errors/private-mailer-stderr &
+
+    # Sync the mirrors!
+    $SETLOCK /var/tmp/privatesync.lock $SUDO -H -u svn $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/private-proxy-sync 2>>/var/log/svnprivatesynclog &
+fi

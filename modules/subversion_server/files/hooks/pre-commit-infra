@@ -1,0 +1,46 @@
+#!/usr/local/bin/bash
+#
+#
+REPOS="$1"
+TXN="$2"
+
+SVNLOOK=/usr/local/svn-install/current/bin/svnlook
+SVNAUTHZ_VALIDATE=/usr/local/svn-install/current/bin/svn-tools/svnauthz-validate
+AUTHZ_BOGUS_USERNAMES=/root/bin/svn/authz-bogus-usernames
+PERL=/usr/bin/perl
+
+AUTHZ_PATH=infrastructure/trunk/subversion/authorization/asf-authorization-template
+MAINTENANCE=/etc/nocommit
+
+if [ -f $MAINTENANCE ]; then
+  echo "Write access is currently disabled. The ASF SVN repository is currently undergoing maintenance."  > /dev/stderr
+  exit 1
+fi
+
+if [ ! -x $SVNAUTHZ_VALIDATE ]; then
+  echo "Tell infrastructure@apache.org they need to install svnauthz-validate" \
+    > /dev/stderr
+  exit 1
+fi
+
+$SVNLOOK changed -t "$TXN" "$REPOS" | grep -q "$AUTHZ_PATH"
+if [ $? -eq 0 ]; then
+  TEMP_FILE=`mktemp -t pre-commit`
+  $SVNLOOK cat -t "$TXN" "$REPOS" "$AUTHZ_PATH" > $TEMP_FILE
+  $SVNAUTHZ_VALIDATE $TEMP_FILE
+  if [ $? -ne 0 ]; then
+    rm -f $TEMP_FILE
+    exit 1
+  fi
+  # Don't bother verifying replaceables, nor the pit-authorization file ---
+  # svn@eris crontab takes care of both of those.
+  $PERL -pi -e 's/{ldap:.*?}//; s/{reuse:.*?}//;' $TEMP_FILE
+  $AUTHZ_BOGUS_USERNAMES $TEMP_FILE
+  if [ $? -ne 0 ]; then
+    rm -f $TEMP_FILE
+    exit 2
+  fi
+  rm -f $TEMP_FILE
+fi
+
+exit 0

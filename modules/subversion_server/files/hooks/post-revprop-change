@@ -1,0 +1,77 @@
+#!/usr/local/bin/bash
+
+# POST-REVPROP-CHANGE HOOK
+#
+# The post-revprop-change hook is invoked after a revision property
+# has been changed. Subversion runs this hook by invoking a program
+# (script, executable, binary, etc.) named 'post-revprop-change'
+# (for which this file is a template), with the following ordered
+# arguments:
+#
+#   [1] REPOS-PATH   (the path to this repository)
+#   [2] REV          (the revision that was tweaked)
+#   [3] USER         (the username of the person tweaking the property)
+#   [4] PROPNAME     (the property that was changed)
+#
+# Because the propchange has already completed and cannot be undone,
+# the exit code of the hook program is ignored.  The hook program
+# can use the 'svnlook' utility to help it examine the
+# new property value.
+#
+# On a Unix system, the normal procedure is to have 'post-revprop-change'
+# invoke other programs to do the real work, though it may do the
+# work itself too.
+#
+# Note that 'post-revprop-change' must be executable by the user(s) who will
+# invoke it (typically the user httpd runs as), and that user must
+# have filesystem-level permission to access the repository.
+#
+# On a Windows system, you should name the hook program
+# 'post-revprop-change.bat' or 'post-revprop-change.exe',
+# but the basic idea is the same.
+# 
+# Here is an example hook script, for a Unix /bin/sh interpreter:
+
+SVNLOOK=/usr/local/svn-install/current/bin/svnlook
+MAILER=/root/bin/svn/svn-mailer
+SUDO=/usr/local/bin/sudo
+SVNSYNC=/usr/local/svn-install/current/bin/svnsync
+SETLOCK=/root/bin/setlock.pl
+MASTER_HOSTNAME=eris.apache.org
+HOSTNAME=`/bin/hostname`
+SED=/usr/bin/sed
+
+
+REPOS="$1"
+REV="$2"
+USER="$3"
+PROPNAME="$4"
+ACTION="$5"
+
+REPOS_BASENAME=`/usr/bin/basename "$REPOS"`
+REPOS_URLNAME=`echo "$REPOS_BASENAME" | $SED -e 's/^repos-//'`
+
+shard=`expr $REV / 1000`
+backup_shard=/x1/svn/hot-backups.d/$REPOS_BASENAME.$shard
+backup_file=$backup_shard/$REPOS_BASENAME.$REV.propchanged
+
+[ -d $backup_shard ] || mkdir $backup_shard
+
+echo "--`date`--" >> $backup_file
+echo $USER >> $backup_file
+echo $PROPNAME >> $backup_file
+$SVNLOOK propget --revprop -r $REV $REPOS $PROPNAME >> $backup_file
+echo "" >> $backup_file
+echo "--" >> $backup_file
+
+
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
+then
+    # Sync the mirrors!
+    $SETLOCK /var/tmp/svnsync.lock $SUDO -H -u svn $SVNSYNC copy-revprops --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/${REPOS_URLNAME}-proxy-sync $REV 2>>/var/log/svnsynclog &
+
+    $MAILER propchange2 "$REPOS" "$REV" "$USER" "$PROPNAME" "$ACTION" \
+        /x1/svn/asf-mailer.conf \
+        2>>/var/log/svnmailer/errors/mailer-stderr-pc <&0 &
+
+fi

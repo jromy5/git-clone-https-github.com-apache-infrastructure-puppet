@@ -1,0 +1,11 @@
+#!/usr/local/bin/bash
+#
+#
+
+MAINTENANCE=/etc/nocommit
+
+if [ -f $MAINTENANCE ]; then
+  echo "Write access is currently disabled. The ASF SVN repository is currently undergoing maintenance."  > /dev/stderr
+  exit 1
+fi
+exit 0
