@@ -36,6 +36,11 @@ class subversion_server {
      mode     => '0775',
      source   => "puppet:///modules/subversion_server/authorization",
      require  => File['/x1/svn/authorization'];
+   '/var/log/svnmailer/errors';
+     ensure   => directory,
+     owner    => 'www-data',
+     group    => 'svnadmins',
+     mode     => 0775;
   }
 
   # File block to setup the plethora of symlinks needed
