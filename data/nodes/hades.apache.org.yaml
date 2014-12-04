@@ -5,7 +5,7 @@ classes:
   - apache::mod::rewrite
   - apache::mod::ssl
   - apache_modules
-  - apache::modules::mod_svn_check_path
+  - apache_modules::mod_svn_check_path
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
