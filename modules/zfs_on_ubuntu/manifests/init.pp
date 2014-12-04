@@ -2,7 +2,7 @@
 
 class zfs_on_ubuntu {
 
-  $packages = ['zfs-dkms', 'ubuntu-zfs'],
+  $packages = ['zfs-dkms', 'ubuntu-zfs']
 
   apt::ppa { 'ppa:zfs-native/stable':
   }
