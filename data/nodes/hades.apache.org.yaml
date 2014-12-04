@@ -5,6 +5,7 @@ classes:
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::ssl
+  - asf-fail2ban::config
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - collectd
