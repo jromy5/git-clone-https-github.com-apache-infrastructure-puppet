@@ -5,15 +5,15 @@ classes:
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::ssl
-  - asf-fail2ban::config
-  - httpd_modules
-  - httpd_modules::mod_svn_check_path
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
+  - fail2ban_asf::config
+  - httpd_modules
+  - httpd_modules::mod_svn_check_path
   - puppet_asf
   - ssl::name::wildcard_apache_org
   - subversion_server
@@ -40,23 +40,6 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-asf-fail2ban::config::jails:
-  httpd-svn:
-    filter: asf-httpd
-    action: 
-      - asf-ban-httpd
-      - asf-sendmail[name="HTTPD (Authentication)", hostname="hades", dest=root@apache.org, sender=fail2ban@apache.org, logpath="/var/log/vc/error_log"]
-    logpath: /var/log/vc/error_log
-    findtime: 1800
-    maxretry: 100
-
-asf-fail2ban::config::filters:
-  asf-httpd:
-    filterfailregex: | 
-      [[]client <HOST>[]] user .* authentication failure
-      [[]client <HOST>[]] user .* not found
-      [[]client <HOST>[]] user .* password mismatch
-
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
@@ -64,6 +47,23 @@ collectd::purge_config: true
 collectd::plugin::interface::interfaces: 
   - lo
 collectd::plugin::interface::ignoreselected: true
+
+fail2ban_asf::config::jails:
+  httpd-svn:
+    filter: asf-httpd
+    action:
+      - asf-ban-httpd
+      - asf-sendmail[name="HTTPD (Authentication)", hostname="hades", dest=root@apache.org, sender=fail2ban@apache.org, logpath="/var/log/vc/error_log"]
+    logpath: /var/log/vc/error_log
+    findtime: 1800
+    maxretry: 100
+
+fail2ban_asf::config::filters:
+  asf-httpd:
+    filterfailregex: |
+      [[]client <HOST>[]] user .* authentication failure
+      [[]client <HOST>[]] user .* not found
+      [[]client <HOST>[]] user .* password mismatch
 
 httpd_modules::dev_package:
   - apache2-dev

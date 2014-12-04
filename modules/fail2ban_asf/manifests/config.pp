@@ -1,5 +1,5 @@
 
-class asf-fail2ban::config (
+class fail2ban_asf::config (
   $filters,
   $jails,
 ) {
