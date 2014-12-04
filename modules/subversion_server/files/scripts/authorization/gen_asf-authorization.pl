@@ -21,7 +21,7 @@ use Net::LDAP::Constant qw(
   LDAP_SYNC_REFRESH_AND_PERSIST
   LDAP_SUCCESS );
 
-my $LDAPHOST  = "ldaps://127.0.0.1";
+my $LDAPHOST  = "ldaps://minotaur.apache.org";
 my $debug         = 1;
 my ( $cookie, $ldap, %watchlist );
 
@@ -30,16 +30,16 @@ $ldap->bind;
 
 die "Bad usage" if @ARGV*@ARGV - 3*@ARGV + 2;
 my ($MODE, $DIR) = @ARGV;
-$DIR ||= "/x1/svn/config/authorization";
+$DIR ||= "/x1/svn/authorization";
 die "Usage: (ldap_change|template_commit) [DIR]"
     unless $MODE =~ m/^ldap_change$|^template_commit$/
        and -d $DIR;
 
 rebuild_if_needed(
-  "$DIR/asf-authorization-template",
+  "$DIR/templates/asf-authorization-template",
   "$DIR/asf-authorization");
 rebuild_if_needed(
-  "$DIR/pit-authorization-template",
+  "$DIR/templates/pit-authorization-template",
   "$DIR/pit-authorization");
 
 sub rebuild_if_needed {
@@ -89,7 +89,7 @@ sub rebuild {
     push( @newauthzfile, "#placeholder" );
     while (<TEMPLATE>) {
         if ($_ !~ m/^#/ && $_ =~ m/{reuse:((?:asf|pit)-authorization):(\w[\w\d-]*?)}/ ) {
-            my (@lines) = `/usr/bin/grep '^$2 *= *' $DIR/$1-template`;
+            my (@lines) = `/bin/grep '^$2 *= *' $DIR/$1-template`;
             die "Uh-oh: found '@lines', expected one line; at '$_'" unless @lines == 1;
             $_ = $lines[0];
         }
