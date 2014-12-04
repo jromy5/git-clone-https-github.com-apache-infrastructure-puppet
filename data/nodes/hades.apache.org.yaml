@@ -64,7 +64,8 @@ collectd::plugin::interface::interfaces:
 collectd::plugin::interface::ignoreselected: true
 
 tlp_vhosts::modules_asf::modules:
-    authz_svn:
+  authz_svn:
+    name: 'authz_svn'
 
 tlp_vhosts::vhosts_asf::vhosts:
     svn:
