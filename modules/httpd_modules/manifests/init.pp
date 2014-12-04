@@ -1,4 +1,4 @@
-class apache_modules (
+class httpd_modules (
   $dev_package = [],
 ) {
 

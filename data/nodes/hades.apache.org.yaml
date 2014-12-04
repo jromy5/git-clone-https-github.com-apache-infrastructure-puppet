@@ -5,9 +5,8 @@ classes:
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::ssl
-  - apache_modules
-  - apache_modules::mod_svn_check_path
-  - asf-fail2ban::config
+  - httpd_modules
+  - httpf_modules::mod_svn_check_path
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::load
@@ -40,11 +39,6 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-apache_modules::dev_package:
-  - apache2-dev
-apache_modules::mod_svn_check_path::required_packages:
-  - libsvn-dev
-
 asf-fail2ban::config::jails:
   httpd-svn:
     filter: asf-httpd
@@ -62,6 +56,11 @@ collectd::purge_config: true
 collectd::plugin::interface::interfaces: 
   - lo
 collectd::plugin::interface::ignoreselected: true
+
+httpd_modules::dev_package:
+  - apache2-dev
+httpd_modules::mod_svn_check_path::required_packages:
+  - libsvn-dev
 
 vhosts_asf::modules::modules:
   authz_svn:

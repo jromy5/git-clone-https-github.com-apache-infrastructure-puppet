@@ -1,4 +1,4 @@
-class apache_modules::mod_svn_check_path (
+class httpd_modules::mod_svn_check_path (
   $args              = '-I /usr/include/subversion-1 -i -a -c',
   $compiler          = 'apxs2',
   $creates           = '/usr/lib/apache2/modules/mod_svn_check_path.so',
