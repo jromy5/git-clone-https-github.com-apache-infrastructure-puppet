@@ -8,7 +8,7 @@ class httpd_modules::mod_svn_check_path (
   $shell_path        = ['/usr/bin', '/bin', '/usr/sbin'],
 ) {
 
-    require apache_modules
+    require httpd_modules
 
     file { 'mod_svn_check_path':
       path    => "${mod_path}",
