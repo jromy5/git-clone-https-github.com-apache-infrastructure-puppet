@@ -81,4 +81,6 @@ define perl::module (
 
 
 ## ASF required modules
-perl::module { 'Net::LDAP' }
+perl::module {'Net::LDAP':
+  use_package => true,
+}
