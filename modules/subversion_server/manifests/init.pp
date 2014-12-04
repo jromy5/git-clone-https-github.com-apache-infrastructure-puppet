@@ -258,5 +258,9 @@ class subversion_server {
       target  => '/x1/svn/hooks/post-unlock',
       owner   => 'www-data',
       group   => 'svnadmins';
+    '/x1/svn/private-backups.d':
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins';
     }
 }
