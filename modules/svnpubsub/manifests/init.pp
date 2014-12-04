@@ -4,7 +4,7 @@ class svnpubsub (
   $service_name   = 'svnpubsub',
 ) {
 
-    require svnpubsub::common
+    include svnpubsub::common
 
     file { "/var/log/${service_name}":
         ensure => directory,
