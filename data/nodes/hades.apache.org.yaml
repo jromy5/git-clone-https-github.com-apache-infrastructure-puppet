@@ -2,7 +2,7 @@
 classes:
   - apache
   - apache::mod::dav_svn
-  - apache::mod:rewrite
+  - apache::mod::rewrite
   - apache::mod::ssl
   - collectd
   - collectd::plugin::cpu
