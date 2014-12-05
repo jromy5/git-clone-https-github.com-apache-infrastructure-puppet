@@ -87,6 +87,8 @@ vhosts_asf::modules::modules:
     name: 'authz_svn'
   svn_check_path:
     name: 'svn_check_path'
+  cgi:
+    name: 'cgi'
 
 vhosts_asf::vhosts::vhosts:
   svn:
@@ -100,7 +102,7 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
-      ProxyPass /viewvc http://localhost:49152/viewvc
+      ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       # The main repository
       RewriteEngine On
       
