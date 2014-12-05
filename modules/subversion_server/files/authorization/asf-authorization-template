@@ -452,7 +452,7 @@ xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,meh
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 zookeeper={ldap:cn=zookeeper,ou=groups,dc=apache,dc=org}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
-zookeeper-bookkeeper=breed,dhruba,fpj,utkarsh,ivank,umamahesh,jiannan
+bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 
 # Not TLPs or podlings.  
 apsite={reuse:pit-authorization:apsite}
@@ -1655,8 +1655,8 @@ svn-role = rw
 [/zookeeper]
 @zookeeper = rw
 
-[/zookeeper/bookkeeper]
-@zookeeper-bookkeeper = rw
+[/bookkeeper]
+@bookkeeper = rw
 
 [/~~~]
 # No-op section to act as sentinel for tlpreq/scripts/svnmv
