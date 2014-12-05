@@ -305,7 +305,8 @@ class subversion_server (
     file { '/x1/svn/asf-committers':
       owner   => 'root',
       group   => 'www-data',
-      content => $asf_committers_authz
+      content => $asf_committers_authz,
+      mode    => '0640',
     }
 
   cron {
