@@ -297,4 +297,27 @@ class subversion_server {
       owner   => 'www-data',
       group   => 'svnadmins';
     }
+
+  cron {
+    'svnsync-repos-asf':
+      minute  => '*/6',
+      hour    => '*',
+      user    => 'www-data',
+      command => '/root/bin/check_svnmirror_lock.pl --master=https://svn-master.apache.org/repos/asf-proxy-sync --slave=https://harmonia.apache.org/repos/asf-proxy-sync --lock=/var/tmp/svnsync.lock --slack=2';
+    'svnsync-repos-infra':
+      minute  => '*/6',
+      hour    => '*',
+      user    => 'www-data',
+      command => '/root/bin/check_svnmirror_lock.pl --master=https://svn-master.apache.org/repos/infra-proxy-sync --slave=https://harmonia.apache.org/repos/infra-proxy-sync --lock=/var/tmp/infrasync.lock --slack=1';
+    'svnsync-repos-private':
+      minute  => '*/6',
+      hour    => '*',
+      user    => 'www-data',
+      command => '/root/bin/check_svnmirror_lock.pl --master=https://svn-master.apache.org/repos/private-proxy-sync --slave=https://harmonia.apache.org/repos/private-proxy-sync --lock=/var/tmp/privatesync.lock --slack=2';
+    'svnsync-repos-tck':
+      minute  => '*/6',
+      hour    => '*',
+      user    => 'www-data',
+      command => '/root/bin/check_svnmirror_lock.pl --master=https://svn-master.apache.org/repos/tck-proxy-sync --slave=https://harmonia.apache.org/repos/tck-proxy-sync --lock=/var/tmp/tcksync.lock --slack=0';
+  }
 }
