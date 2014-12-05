@@ -147,7 +147,7 @@ deltaspike={ldap:cn=deltaspike,ou=groups,dc=apache,dc=org}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
 derby=abrown,andreask,bakksjo,bandaram,bernt,bpendleton,chaase3,dag,davidvc,djd,dyre,fernanda,fuzzylogic,johnemb,halleypo,jboynes,jorgenlo,jta,kahatlen,kmarsden,kristwaa,mamta,mikem,myrnavl,ole,oysteing,rhillegas,scotsmatrix,suresht,thomanie,tmnk,vnarayanan
-devicemap=pjespersen,bdelacretaz,chregu,scottbw,sylvain,asavory,brianleroux,sandreani,abellucci,timfernando,rezan,radu,esjr,wkeil
+devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
 directmemory={ldap:cn=directmemory,ou=groups,dc=apache,dc=org}
 directmemory-pmc={reuse:pit-authorization:directmemory-pmc}
@@ -873,7 +873,7 @@ ea = rw
 [/incubator/datafu]
 @datafu = rw
 
-[/incubator/devicemap]
+[/devicemap]
 @devicemap = rw
 
 [/incubator/drill]
