@@ -50,6 +50,16 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+apt::sources:
+  'openmanage'
+    location: 'http://linux.dell.com/repo/community/ubuntu'
+    release: 'trusty'
+    repos: 'openmanage'
+    key: '1285491434D8786F'
+    keyserver: 'pool.sks-keyservers.net'
+    include_deb: true
+    include_src: false
+
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
