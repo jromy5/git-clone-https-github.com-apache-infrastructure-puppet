@@ -319,5 +319,10 @@ class subversion_server {
       hour    => '*',
       user    => 'www-data',
       command => '/root/bin/check_svnmirror_lock.pl --master=https://svn-master.apache.org/repos/tck-proxy-sync --slave=https://harmonia.apache.org/repos/tck-proxy-sync --lock=/var/tmp/tcksync.lock --slack=0';
+    'authz-rebuild':
+      minute  => '*/3',
+      hour    => '*',
+      user    => 'www-data',
+      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
   }
 }
