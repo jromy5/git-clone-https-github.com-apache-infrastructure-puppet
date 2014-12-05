@@ -55,7 +55,7 @@ apt::sources:
     location: 'http://linux.dell.com/repo/community/ubuntu'
     release: 'trusty'
     repos: 'openmanage'
-    key: '1285491434D8786F'
+    key: '1285491434D8786F' # key taken from here: http://linux.dell.com/repo/community/ubuntu/
     keyserver: 'pool.sks-keyservers.net'
     include_deb: true
     include_src: false
