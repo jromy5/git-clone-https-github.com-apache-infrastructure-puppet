@@ -2,7 +2,6 @@
 classes:
   - apache
   - apache::mod::authnz_ldap
-  - apache::mod::fcgid
   - apache::mod::dav_svn
   - apache::mod::rewrite
   - apache::mod::proxy
