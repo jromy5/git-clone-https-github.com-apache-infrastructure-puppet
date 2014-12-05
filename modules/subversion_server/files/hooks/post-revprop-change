@@ -68,7 +68,7 @@ echo "--" >> $backup_file
 if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
 then
     # Sync the mirrors!
-    $SETLOCK /var/tmp/svnsync.lock $SUDO -H -u svn $SVNSYNC copy-revprops --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/${REPOS_URLNAME}-proxy-sync $REV 2>>/var/log/svnsynclog &
+    $SETLOCK /var/tmp/svnsync.lock $SVNSYNC copy-revprops --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/${REPOS_URLNAME}-proxy-sync $REV 2>>/var/log/svnsynclog &
 
 #    $MAILER propchange2 "$REPOS" "$REV" "$USER" "$PROPNAME" "$ACTION" \
 #        /x1/svn/asf-mailer.conf \

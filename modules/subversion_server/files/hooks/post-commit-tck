@@ -49,5 +49,5 @@ then
         2>>/var/log/svnmailer/errors/tck-mailer-stderr &
 
     # sync the mirrors!
-    $SETLOCK /var/tmp/tcksync.lock $SUDO -H -u svn $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/tck-proxy-sync 2>>/var/log/svntcksynclog &
+    $SETLOCK /var/tmp/tcksync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/tck-proxy-sync 2>>/var/log/svntcksynclog &
 fi

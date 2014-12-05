@@ -62,13 +62,13 @@ then
         2>>/var/log/svnmailer/errors/infra-mailer-stderr &
 
     # Sync the mirrors!
-    $SETLOCK /var/tmp/infrasync.lock $SUDO -H -u svn $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/infra-proxy-sync 2>>/var/log/svninfrasynclog &
+    $SETLOCK /var/tmp/infrasync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/infra-proxy-sync 2>>/var/log/svninfrasynclog &
 fi
 
 # Trigger the SVN authz file to be rebuilt if the template file is modified
 $SVNLOOK dirs-changed -r "$REV" "$REPOS" | grep -q "^infrastructure/trunk/subversion/authorization" \
- && $SUDO -H -u svn $SVN up /x1/svn/config/authorization \
- && $SUDO -H -u svn /x1/svn/scripts/authorization/gen_asf-authorization_on_template_commit.pl > /dev/null
+ && $SVN up /x1/svn/config/authorization \
+ && /x1/svn/scripts/authorization/gen_asf-authorization_on_template_commit.pl > /dev/null
 
 
 #

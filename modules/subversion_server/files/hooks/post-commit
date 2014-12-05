@@ -74,7 +74,7 @@ then
     # Sync the mirrors!
     # N.B. When we upgrade svn master to 1.5+, this should be:
     # --source-username / --sync-username
-    $SETLOCK /var/tmp/svnsync.lock $SUDO -H -u svn $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/asf-proxy-sync 2>>/var/log/svnsynclog &
+    $SETLOCK /var/tmp/svnsync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/asf-proxy-sync 2>>/var/log/svnsynclog &
 fi
 
 #
