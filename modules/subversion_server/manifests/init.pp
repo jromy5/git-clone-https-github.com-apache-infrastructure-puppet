@@ -2,7 +2,7 @@
 
 class subversion_server (
 
-  $asf-committers-authz = '',
+  $asf_committers_authz = '',
 
 ) {
 
@@ -305,7 +305,7 @@ class subversion_server (
     file { '/x1/svn/asf-committers':
       owner   => 'root',
       group   => 'www-data',
-      content => $asf-committers-authz
+      content => $asf_committers_authz
     }
 
   cron {
