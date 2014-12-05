@@ -208,10 +208,11 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
+      RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # The main repository
-      RewriteEngine On
+      
       
       # tlp migrations
       
@@ -290,10 +291,11 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
+      RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # The main repository
-      RewriteEngine On
+      
       
       # tlp migrations
       
