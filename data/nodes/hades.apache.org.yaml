@@ -91,6 +91,104 @@ vhosts_asf::modules::modules:
     name: 'cgi'
 
 vhosts_asf::vhosts::vhosts:
+  dist:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www'
+    servername: 'dist.apache.org'
+    serveraliases:
+      - 'dist.*.apache.org'
+    custom_fragment: |
+      RedirectMatch permanent ^/$ https://dist.apache.org/repos/dist
+
+      <Directory "/var/www">
+        Order allow,deny
+        Allow from all
+      </Directory>
+
+  dist_https:
+    vhost_name: '*'
+    port: 443
+    ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key:  '/etc/ssl/private/wildcard.apache.org.key'
+    ssl: true
+    docroot: '/var/www'
+    servername: 'dist.apache.org'
+    serveraliases:
+      - 'dist.*.apache.org'
+    custom_fragment: |
+      SetEnvIf User-Agent ".*MSIE [2-5].*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+
+      RedirectMatch permanent ^/$ https://dist.apache.org/repos/dist
+
+      <Location /repos/dist>
+        DAV svn
+        SVNPath /x1/svn/repos/dist
+
+        SetOutputFilter DEFLATE
+        SetEnvIfNoCase Request_URI \.(?:t?gz|zip|bz2|Z)$ no-gzip dont-vary
+
+        AuthLDAPurl "ldaps://ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType basic
+        AuthBasicProvider ldap
+        AuthzSVNAccessFile /x1/svn/asf-dist-authorization
+
+        # Disallow PUTs (or anything, really) that are larger than 200M. If a PMC
+        # needs something larger, they can ask Infra to commit it via ra_local.
+        # If they will regularly commit artifacts larger than 200M, they can
+        # request a LocationMatch section (see below) to set a specific limit.
+        LimitRequestBody 200000000
+
+        <LimitExcept GET OPTIONS PROPFIND REPORT>
+          require valid-user
+        </LimitExcept>
+
+        # Some pages make Chrome auto-detect Galician, of all things. Chrome
+        # then offers (erroneously) to translate the page for the user. For now,
+        # we will assume the entire site is in English. However, this may screw
+        # up any pages that have been translated and hosted on the site. But
+        # let's just assume those are using rules which override this default.
+        DefaultLanguage en
+
+      </Location>
+
+      # When a large PUT arrives, it will be directed towards !svn/txr or !svn/wrk
+      # (depending upon the svn client version). The next path component is
+      # specified by the client or server (again, based on the client version),
+      # and then we have the "interesting" path. Based on that match, we define
+      # the limit for that path/PMC.
+      #
+      # NOTE: Infrastructure defines the limit for each path/PMC. Contact them
+      #       for a value larger than the global 100M setting.
+      #
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/servicemix/>
+        LimitRequestBody 35000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/ctakes/>
+        LimitRequestBody 450000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/spark/>
+        LimitRequestBody 450000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
+        LimitRequestBody 400000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/ctakes/>
+        LimitRequestBody 700000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/manifoldcf/>
+        LimitRequestBody 350000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/release/hadoop/>
+        LimitRequestBody 500000000
+      </LocationMatch>
+      #<LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/$PMC/>
+      #  LimitRequestBody $LIMIT
+      #</LocationMatch>
+
   svn:
     vhost_name: '*'
     port: 80
