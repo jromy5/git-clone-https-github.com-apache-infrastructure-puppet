@@ -1,6 +1,10 @@
 #/etc/puppet/modules/subversion_server/manifests/init.pp
 
-class subversion_server {
+class subversion_server (
+
+  $asf-committers-authz = '',
+
+) {
 
   #packages needed 
   package { 'python-svn':
@@ -296,6 +300,12 @@ class subversion_server {
       ensure  => directory,
       owner   => 'www-data',
       group   => 'svnadmins';
+    }
+
+    file { '/x1/svn/asf-committers':
+      owner   => 'root',
+      group   => 'www-data',
+      content => $asf-committers-authz
     }
 
   cron {
