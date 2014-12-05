@@ -6,6 +6,7 @@ classes:
   - apache::mod::rewrite
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::status
   - apache::mod::ssl
   - collectd
   - collectd::plugin::cpu
@@ -41,6 +42,10 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '250'
 apache::mod::event::threadsperchild: '50'
+
+apache::mod::status::allow_from:
+  - all
+apache::mod::status::apache_version: '2.3'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
@@ -152,6 +157,10 @@ vhosts_asf::vhosts::vhosts:
           Order allow,deny
           Deny from all
         </LimitExcept>
+      </Location>
+
+      <Location "/server-status">
+        SetHandler server-status
       </Location>
   
       
@@ -422,6 +431,10 @@ vhosts_asf::vhosts::vhosts:
         #AuthBasicProvider file
         AuthUserFile /x1/svn/asf-committers
         Require valid-user
+      </Location>
+
+      <Location "/server-status">
+        SetHandler server-status
       </Location>
         
 
