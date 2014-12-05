@@ -82,8 +82,8 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
 
-svnwcsub::gid:              '9997'
-svnwcsub::uid:              '9997'
+svnwcsub::gid:              '9996'
+svnwcsub::uid:              '9996'
 svnwcsub::conf_file:        'svnwcsub.conf'
 svnwcsub::service_ensure:   'running'
 svnwcsub:::conf_path:       '/etc/'
