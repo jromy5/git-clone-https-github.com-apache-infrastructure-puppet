@@ -246,7 +246,7 @@ vhosts_asf::vhosts::vhosts:
         DAV svn
         SVNPath /x1/svn/repos/asf
         Order deny,allow
-        Allow from 140.211.11.4
+        Allow from 140.211.11.105
         Deny from all
           
         AuthName "ASF sync"
@@ -261,7 +261,7 @@ vhosts_asf::vhosts::vhosts:
         DAV svn
         SVNPath /x1/svn/repos/private
         Order deny,allow
-        Allow from 140.211.11.4
+        Allow from 140.211.11.105
         Deny from all
           
         AuthName "ASF sync"
@@ -276,7 +276,7 @@ vhosts_asf::vhosts::vhosts:
         DAV svn
         SVNPath /x1/svn/repos/tck
         Order deny,allow
-        Allow from 140.211.11.4
+        Allow from 140.211.11.105
         Deny from all
           
         AuthName "ASF sync"
@@ -370,7 +370,7 @@ vhosts_asf::vhosts::vhosts:
         DAV svn
         SVNPath /x1/svn/repos/infra
         Order deny,allow
-        Allow from 140.211.11.4
+        Allow from 140.211.11.105
         Deny from all
           
         AuthName "ASF sync"
