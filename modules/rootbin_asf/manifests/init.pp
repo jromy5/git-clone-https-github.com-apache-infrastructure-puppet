@@ -13,6 +13,6 @@ class rootbin_asf {
         /^freebsd$/   => 'wheel',
         default       => 'root',
       },
-      mode     => '0770',
+      mode     => '0775',
   }
 }
