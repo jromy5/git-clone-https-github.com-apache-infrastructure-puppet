@@ -256,6 +256,7 @@ vhosts_asf::vhosts::vhosts:
 
       <Location "/server-status">
         SetHandler server-status
+        Require local
       </Location>
   
       
@@ -530,4 +531,5 @@ vhosts_asf::vhosts::vhosts:
 
       <Location "/server-status">
         SetHandler server-status
+        Require local
       </Location>
