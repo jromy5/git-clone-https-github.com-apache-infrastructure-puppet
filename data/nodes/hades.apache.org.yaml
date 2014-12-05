@@ -21,6 +21,7 @@ classes:
   - rootbin_asf
   - ssl::name::wildcard_apache_org
   - svnpubsub
+  - svnwcsub
   - subversion_server
   - vhosts_asf::modules
   - vhosts_asf::vhosts
@@ -80,6 +81,19 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
+
+svnwcsub::gid:              '9997'
+svnwcsub::uid:              '9997'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_ensure:   'running'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::username:         'svnwc'
 
 vhosts_asf::modules::modules:
   authz_svn:
