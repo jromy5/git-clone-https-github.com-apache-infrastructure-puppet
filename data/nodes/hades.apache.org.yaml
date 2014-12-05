@@ -101,11 +101,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       RedirectMatch permanent ^/$ https://dist.apache.org/repos/dist
 
-      <Directory "/var/www">
-        Order allow,deny
-        Allow from all
-      </Directory>
-
   dist_https:
     vhost_name: '*'
     port: 443
