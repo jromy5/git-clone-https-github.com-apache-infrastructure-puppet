@@ -20,11 +20,11 @@ mod 'fail2ban',
 
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
-  :tag => '2.2.4'
+  :tag => '2.3.0'
 
 mod 'foreman_proxy',
   :git => 'https://github.com/theforeman/puppet-foreman_proxy.git',
-  :tag => '2.0.2'
+  :tag => '2.1.0'
   
 
 mod 'iptables',
