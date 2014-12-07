@@ -29,7 +29,7 @@ foreman_proxy::ssldir: "%{hiera('foreman::ssldir')}"
 foreman_proxy::ssl_ca: "%{hiera('foreman::ssl_ca')}"
 foreman_proxy::ssl_cert: "%{hiera('foreman::ssl_cert')}"
 foreman_proxy::ssl_key: "%{hiera('foreman::ssl_key')}"
-foreman_proxy::registered_proxy_url: "https://foreman.apache.org:%{hiera('foreman_proxy::port')}"
+foreman_proxy::registered_proxy_url: "http://foreman-vm.apache.org:%{hiera('foreman_proxy::port')}"
 foreman_proxy::oauth_consumer_key: "%{hiera('foreman::oauth_consumer_key')}"
 foreman_proxy::oauth_consumer_secret: "%{hiera('foreman::oauth_consumer_secret')}"
 foreman_proxy::trusted_hosts:
