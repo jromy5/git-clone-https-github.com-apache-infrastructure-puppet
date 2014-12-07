@@ -9,7 +9,7 @@ classes:
 
 # SSL is proxied through erebus-ssl
 foreman::ssl: false
-foreamn_proxy::ssl: false
+foreman_proxy::ssl: false
 
 foreman::oauth_map_users: true
 foreman_proxy::puppet_url: 'https://foreman.apache.org'
