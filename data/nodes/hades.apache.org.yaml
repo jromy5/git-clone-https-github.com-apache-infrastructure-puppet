@@ -17,7 +17,6 @@ classes:
   - fail2ban_asf::config
   - httpd_modules
   - httpd_modules::mod_svn_check_path
-  - puppet_asf
   - rootbin_asf
   - ssl::name::wildcard_apache_org
   - svnpubsub
