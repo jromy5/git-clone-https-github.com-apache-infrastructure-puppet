@@ -14,6 +14,10 @@ mod 'concat-native',
   :git => 'https://github.com/theforeman/puppet-concat.git',
   :tag => '1.3.1'
 
+mod 'dell',
+  :git => 'https://github.com/camptocamp/puppet-dell',
+  :tag => '0.1.1'
+
 mod 'fail2ban',
   :git => 'https://github.com/netmanagers/puppet-fail2ban',
   :branch => 'master'
