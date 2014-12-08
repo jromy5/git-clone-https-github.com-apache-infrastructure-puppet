@@ -51,7 +51,7 @@ apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
 apt::sources:
-  'asf_internal':
+  'openamange':
      location: 'http://linux.dell.com/repo/community/ubuntu' # key taken from here: http://linux.dell.com/repo/community/ubuntu/
      release: 'trusty'
      repos: 'openmanage'
