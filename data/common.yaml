@@ -120,6 +120,7 @@ ntp::restrict:
 snmp::agentaddress: 'udp:*:161'
 snmp::com2sec:
   - "circonus-broker 140.211.11.6 asfro"
+  - "circonus-broker 37.139.9.72 asfro"
 snmp::groups:
   - "circonus-broker v2c circonus-broker"
 snmp::views:
