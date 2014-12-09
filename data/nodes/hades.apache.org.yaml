@@ -25,6 +25,7 @@ classes:
   - svnpubsub
   - svnwcsub
   - subversion_server
+  - vhosts_asf::custom_config
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - zfs_on_ubuntu
