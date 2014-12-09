@@ -75,6 +75,13 @@ fail2ban_asf::config::jails:
     logpath: /var/log/apache2/svn_https_error_ssl.log
     findtime: 1800
     maxretry: 5
+  ssh:
+    filter: sshd
+    action:
+      - iptables-allports
+    logpath: /var/log/auth.log
+    findtime: 1800
+    maxretry: 5
 
 fail2ban_asf::config::filters:
   asf-httpd:
