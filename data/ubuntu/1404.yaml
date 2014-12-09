@@ -3,6 +3,7 @@ classes:
   - apt
   - base
   - dnsclient
+  - fail2ban_asf::config
   - orthrus
   - postfix::server
   - subversionclient
@@ -57,6 +58,15 @@ apt::force:
   'orthrus':
     release: 'main'
   require: Apt::Source['asf_internal']
+
+fail2ban_asf::config::jails:
+  ssh:
+    filter: sshd
+    action:
+      - iptables-allports
+    logpath: /var/log/auth.log
+    findtime: 1800
+    maxretry: 5
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
