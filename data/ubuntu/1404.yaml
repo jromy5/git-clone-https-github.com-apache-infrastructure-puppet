@@ -59,6 +59,8 @@ apt::force:
     release: 'main'
   require: Apt::Source['asf_internal']
 
+fail2ban::service_status: true
+
 fail2ban_asf::config::jails:
   ssh:
     filter: sshd
@@ -67,6 +69,7 @@ fail2ban_asf::config::jails:
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
+    enable: true
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'

@@ -45,26 +45,6 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-fail2ban::service_autorestart: true
-fail2ban::disable: false
-fail2ban::service_status: true
-
-fail2ban_asf::config::jails:
-  ssh:
-    filter: sshd
-    action:
-      - iptables-allports
-    logpath: /var/log/auth.log
-    findtime: 1800
-    maxretry: 5
-    enable: true
-
-fail2ban_asf::config::filters:
-  asf-httpd:
-    filterfailregex: |
-      [[]client <HOST>[]] user .* authentication failure
-      [[]client <HOST>[]] user .* not found
-      [[]client <HOST>[]] user .* password mismatch
 
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'

@@ -17,7 +17,6 @@ classes:
   - dell
   - dell::openmanage
   - dell::openmanage::debian
-  - fail2ban_asf::config
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - rootbin_asf
@@ -73,10 +72,6 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-fail2ban::service_autorestart: true
-fail2ban::disable: false
-fail2ban::service_status: true
-
 fail2ban_asf::config::jails:
   httpd-svn:
     filter: apache-auth
@@ -95,13 +90,6 @@ fail2ban_asf::config::jails:
     findtime: 1800
     maxretry: 5
     enable: true
-
-fail2ban_asf::config::filters:
-  asf-httpd:
-    filterfailregex: |
-      [[]client <HOST>[]] user .* authentication failure
-      [[]client <HOST>[]] user .* not found
-      [[]client <HOST>[]] user .* password mismatch
 
 httpd_modules::dev_package:
   - apache2-dev
