@@ -487,7 +487,11 @@ ea = rw
 sk = rw
 @infrastructure = rw
 whimsysvn = r
+@tac-pmc = r
 * =
+
+[/financials/Bills/received]
+@tac-pmc = rw
 
 [/financials/Expenses]
 @member = rw
