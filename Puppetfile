@@ -82,7 +82,7 @@ mod 'rsyslog',
 
 
 mod 'snmp',
-  :git => 'https://github.com/razorsedge/puppet-snmp.git',
+  :git => 'https://github.com/Humbedooh/puppet-snmp.git',
   :branch => 'master'
 
 mod 'ssh',
