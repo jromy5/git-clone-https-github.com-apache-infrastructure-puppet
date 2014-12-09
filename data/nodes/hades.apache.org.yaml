@@ -17,6 +17,7 @@ classes:
   - dell
   - dell::openmanage
   - dell::openmanage::debian
+  - dell::snmp
   - fail2ban_asf::config
   - httpd_modules
   - httpd_modules::mod_svn_check_path
