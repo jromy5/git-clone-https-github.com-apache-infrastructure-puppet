@@ -76,7 +76,6 @@ apr={ldap:cn=apr,ou=groups,dc=apache,dc=org}
 apr-pmc={reuse:pit-authorization:apr-pmc}
 archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
 archiva-pmc={reuse:pit-authorization:archiva-pmc}
-argus=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rmani,sneethir,sradia
 aries={ldap:cn=aries,ou=groups,dc=apache,dc=org}
 aries-pmc={reuse:pit-authorization:aries-pmc}
 aurora=jfarrell,benh,dlester,mattmann,hsaputra,jonboulle,wfarner,mansu,maxim,kevints,wickman,mchucarroll
@@ -91,10 +90,12 @@ bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
 blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
+bookkeeper=breed,dhruba,fpj,utkarsh,ivank,umamahesh,jiannan
 buildr={ldap:cn=buildr,ou=groups,dc=apache,dc=org}
 buildr-pmc={reuse:pit-authorization:buildr-pmc}
 bval={ldap:cn=bval,ou=groups,dc=apache,dc=org}
 bval-pmc={reuse:pit-authorization:bval-pmc}
+calcite=jhyde,jacques,jamestaylor,cwensel,vladimirsitnikov
 camel={ldap:cn=camel,ou=groups,dc=apache,dc=org}
 camel-pmc={reuse:pit-authorization:camel-pmc}
 cassandra={ldap:cn=cassandra,ou=groups,dc=apache,dc=org}
@@ -117,7 +118,6 @@ cocoon={ldap:cn=cocoon,ou=groups,dc=apache,dc=org}
 cocoon-pmc={reuse:pit-authorization:cocoon-pmc}
 commons={ldap:cn=commons,ou=groups,dc=apache,dc=org}
 commons-pmc={reuse:pit-authorization:commons-pmc}
-commons-sandbox=bimargulies,brianm,ceki,dblevins,dmeikle,doogie,dwoods,froehlich,gpetracek,guixl,harishkswamy,jacopoc,jakobk,jbeard,jlmonteiro,jpountz,mkalen,mnour,nicolas,oalexeev,reinhard,rmannibucau,stevendolg,struberg,tommaso,tomdz
 continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
@@ -134,7 +134,7 @@ curator={ldap:cn=curator,ou=groups,dc=apache,dc=org}
 curator-pmc={reuse:pit-authorization:curator-pmc}
 cxf={ldap:cn=cxf,ou=groups,dc=apache,dc=org}
 cxf-pmc={reuse:pit-authorization:cxf-pmc}
-datafu=evion,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rvs,samshah,tdunning,wvaughan
+datafu=cestella,evion,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
 db={ldap:cn=db,ou=groups,dc=apache,dc=org}
 db-ddlutils=arminw,brianm,brj,henning,mattbaird,mkalen,mvdb,rsfeir,seade,tfischer,thma,tomdz
 db-site={ldap:cn=db-site,ou=groups,dc=apache,dc=org}
@@ -148,12 +148,14 @@ deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
 derby=abrown,andreask,bakksjo,bandaram,bernt,bpendleton,chaase3,dag,davidvc,djd,dyre,fernanda,fuzzylogic,johnemb,halleypo,jboynes,jorgenlo,jta,kahatlen,kmarsden,kristwaa,mamta,mikem,myrnavl,ole,oysteing,rhillegas,scotsmatrix,suresht,thomanie,tmnk,vnarayanan
 devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
+devicemap-pmc={reuse:pit-authorization:devicemap-pmc}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
 directmemory={ldap:cn=directmemory,ou=groups,dc=apache,dc=org}
 directmemory-pmc={reuse:pit-authorization:directmemory-pmc}
 directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
-drill=cwensel,isabel,gera,gsingers,jason,kbotzum,rawson,srivas,tdunning,tnachen,tshiran,jacques
+drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
+drill-pmc={reuse:pit-authorization:drill-pmc}
 droids=gsingers,javier,mingfai,olegk,ryan,thorsten,rfrovarp,bchapuis,tobr
 easyant=antelder,antoine,bodewig,hibou,jbenois,jlboudart,kpsiddharth,xavier
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
@@ -165,7 +167,7 @@ felix={ldap:cn=felix,ou=groups,dc=apache,dc=org}
 felix-pmc={reuse:pit-authorization:felix-pmc}
 flex={ldap:cn=flex,ou=groups,dc=apache,dc=org}
 flex-pmc={reuse:pit-authorization:flex-pmc}
-flink=gates,srowen,tdunning,hsaputra,hashutosh,omalley,sewen,fhueske,warneke,rmetzger,uce,aljoscha,ktzoumas,ssc
+flink=aljoscha,gates,hsaputra,hashutosh,ktzoumas,fhueske,gyfora,mbalassi,omalley,rmetzger,sewen,srowen,ssc,tdunning,trohrmann,uce,warneke
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
@@ -181,15 +183,6 @@ gump={ldap:cn=gump,ou=groups,dc=apache,dc=org}
 gump-pmc={reuse:pit-authorization:gump-pmc}
 hadoop-pmc={reuse:pit-authorization:hadoop-pmc}
 hadoop={ldap:cn=hadoop,ou=groups,dc=apache,dc=org}
-hadoop-hdfs=acmurthy,amareshwari,amarrk,arp,arpit,atm,aw,bikas,bobby,boryas,brandonli,cdouglas,cmccabe,cnauroth,cos,cutting,daryn,ddas,devaraj,dhruba,eli,enis,eric14,eyang,gkesavan,hairong,harsh,hitesh,ivanmi,jeagles,jianhe,jing9,jitendra,jlowe,jghoman,johan,junping_du,kasha,kihwal,kimballa,knoguchi,kzhang,llu,lohit,mahadev,matei,mattf,mayank,molkov,nigel,ojoshi,omalley,ramya,rangadi,ravigummadi,raviprak,rvs,sandy,schen,sharad,shv,sradia,sreekanth,sseth,stevel,suresh,szetszwo,tanping,tgraves,todd,tomwhite,tucu,umamahesh,vinayakumarb,vinodkv,wang,wheat9,xgong,yhemanth,zjshen,zshao
-hadoop-nightly=gkesavan,cos
-hadoop-mapreduce=acmurthy,amareshwari,amarrk,arp,arpit,atm,aw,bikas,bobby,boryas,brandonli,cdouglas,cmccabe,cnauroth,cos,cutting,daryn,ddas,devaraj,dhruba,eli,enis,eric14,eyang,gkesavan,hairong,harsh,hitesh,ivanmi,jeagles,jianhe,jing9,jitendra,jlowe,jghoman,johan,junping_du,kasha,kihwal,kimballa,knoguchi,kzhang,llu,lohit,mahadev,matei,mattf,mayank,molkov,nigel,ojoshi,omalley,ramya,rangadi,ravigummadi,raviprak,rvs,sandy,schen,sharad,shv,sradia,sreekanth,sseth,stevel,suresh,szetszwo,tanping,tgraves,todd,tomwhite,tucu,umamahesh,vinayakumarb,vinodkv,wang,wheat9,xgong,yhemanth,zjshen,zshao
-hadoop-branch-security=lmccay,haifengchen,drankye
-hadoop-branch-YARN-1492=ctrezzo,sjlee
-hadoop-branch-YARN-1051=curino,subru
-hadoop-branch-HADOOP-10388=abe,bchang,pengw,yjzhangal
-hadoop-branch-fs-encryption=clamb,yliu
-hadoop-branch-MR-2841=bchang,seanzhong
 hama={ldap:cn=hama,ou=groups,dc=apache,dc=org}
 hama-pmc={reuse:pit-authorization:hama-pmc}
 hbase={ldap:cn=hbase,ou=groups,dc=apache,dc=org}
@@ -201,6 +194,7 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog=gates,khorgath,toffer,daijy,avandana,travis,mithun
+htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk
 httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=groups,dc=apache,dc=org}
@@ -212,6 +206,7 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
+ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -225,6 +220,7 @@ jena={ldap:cn=jena,ou=groups,dc=apache,dc=org}
 jena-pmc={reuse:pit-authorization:jena-pmc}
 jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
+johnzon=dblevins,dkulp,gpetracek,grobmeier,jlmonteiro,jmclean,rmannibucau,sagara,salyh,struberg
 jspwiki={ldap:cn=jspwiki,ou=groups,dc=apache,dc=org}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=groups,dc=apache,dc=org}
@@ -240,6 +236,7 @@ kafka-pmc={reuse:pit-authorization:kafka-pmc}
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
 labs-pmc={reuse:pit-authorization:labs-pmc}
+lens=amareshwari,cdouglas,gunther,jbonofre,jdhok,jghoman,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
 lenya={ldap:cn=lenya,ou=groups,dc=apache,dc=org}
 lenya-pmc={reuse:pit-authorization:lenya-pmc}
 #Lenya summer of code group
@@ -272,7 +269,8 @@ maven={ldap:cn=maven,ou=groups,dc=apache,dc=org}
 maven-pmc={reuse:pit-authorization:maven-pmc}
 mesos={ldap:cn=mesos,ou=groups,dc=apache,dc=org}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
-metamodel=hsaputra,nslater,arvind,mfranklin,kaspersor,ankitkumar2711,sarora,delostilos,tomaszguzialek
+metamodel={ldap:cn=metamodel,ou=groups,dc=apache,dc=org}
+metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
@@ -311,7 +309,7 @@ openoffice={ldap:cn=openoffice,ou=groups,dc=apache,dc=org}
 openoffice-pmc={reuse:pit-authorization:openoffice-pmc}
 openwebbeans={ldap:cn=openwebbeans,ou=groups,dc=apache,dc=org}
 openwebbeans-pmc={reuse:pit-authorization:openwebbeans-pmc}
-parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong
+parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue
 pdfbox={ldap:cn=pdfbox,ou=groups,dc=apache,dc=org}
 pdfbox-pmc={reuse:pit-authorization:pdfbox-pmc}
 pig={ldap:cn=pig,ou=groups,dc=apache,dc=org}
@@ -336,15 +334,17 @@ portals-pmc={reuse:pit-authorization:portals-pmc}
 # provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
 qpid={ldap:cn=qpid,ou=groups,dc=apache,dc=org}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
+ranger=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rmani,sneethir,sradia
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
+reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,jerryjung,johnyangk,joshrosen,jrlee,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
 ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,jukka,raymondcamden
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
 s4=acmurthy,omalley,phunt,fpj,mmorel,leoneu,robbins,kishoreg,dferro
-samza=acmurthy,cdouglas,garryturk,jghoman,jkreps,martinkl,rvs,criccomini,sriramsub,yanfang,zjshen
+samza=acmurthy,cdouglas,cpsoman,garryturk,jghoman,jkreps,martinkl,rvs,criccomini,sriramsub,yanfang,zjshen
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani
@@ -356,7 +356,7 @@ shiro={ldap:cn=shiro,ou=groups,dc=apache,dc=org}
 shiro-pmc={reuse:pit-authorization:shiro-pmc}
 sis={ldap:cn=sis,ou=groups,dc=apache,dc=org}
 sis-pmc={reuse:pit-authorization:sis-pmc}
-slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron
+slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron,gourksaha
 sling={ldap:cn=sling,ou=groups,dc=apache,dc=org}
 sling-pmc={reuse:pit-authorization:sling-pmc}
 sling-emeritus=farra,jukka
@@ -371,11 +371,12 @@ stanbol={ldap:cn=stanbol,ou=groups,dc=apache,dc=org}
 stanbol-pmc={reuse:pit-authorization:stanbol-pmc}
 steve={ldap:cn=steve,ou=groups,dc=apache,dc=org}
 steve-pmc={reuse:pit-authorization:steve-pmc}
-storm=cutting,tdunning,arvind,ddas,mfranklin,benh,xumingming,afeng,mrflip,ptgoetz,bobby,dagit,nathanmarz
+storm={ldap:cn=storm,ou=groups,dc=apache,dc=org}
+storm-pmc={reuse:pit-authorization:storm-pmc}
 stratos={ldap:cn=stratos,ou=groups,dc=apache,dc=org}
 stratos-pmc={reuse:pit-authorization:stratos-pmc}
 #stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
-streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon
+streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks
 struts={ldap:cn=struts,ou=groups,dc=apache,dc=org}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
@@ -389,9 +390,11 @@ syncope-pmc={reuse:pit-authorization:syncope-pmc}
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=groups,dc=apache,dc=org}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
+tamaya=
 # tashi=clr,mriou,pzf,stroucki,mryan3,rgass
 tapestry={ldap:cn=tapestry,ou=groups,dc=apache,dc=org}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
+taverna=andy,mattmann,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,hainesr,ianwdunlop,jgarrido,redmitry,shoaibsufi,stain,stuzart
 tcl={ldap:cn=tcl,ou=groups,dc=apache,dc=org}
 tcl-pmc={reuse:pit-authorization:tcl-pmc}
 tez={ldap:cn=tez,ou=groups,dc=apache,dc=org}
@@ -416,7 +419,7 @@ tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
 twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
 uima-pmc={reuse:pit-authorization:uima-pmc}
-usergrid=snoopdave,jfarrell,jim,lewismc,lresende,timanglade,stliu,sfeldman,rockerston
+usergrid=snoopdave,jfarrell,jim,lewismc,lresende,timanglade,stliu,sfeldman,rockerston,sungju
 vcl={ldap:cn=vcl,ou=groups,dc=apache,dc=org}
 vcl-pmc={reuse:pit-authorization:vcl-pmc}
 velocity={ldap:cn=velocity,ou=groups,dc=apache,dc=org}
@@ -453,7 +456,6 @@ xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,meh
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 zookeeper={ldap:cn=zookeeper,ou=groups,dc=apache,dc=org}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
-bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 
 # Not TLPs or podlings.  
 apsite={reuse:pit-authorization:apsite}
@@ -518,7 +520,13 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/any23]
 @any23 = r
 
+[/any23/committers]
+@any23 = rw
+
 [/any23/site]
+@any23 = rw
+
+[/any23/site-cms]
 @any23 = rw
 
 [/apr]
@@ -556,6 +564,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/bloodhound]
 @committers = rw
+
+[/bookkeeper/site]
+@bookkeeper = rw
 
 [/buildr]
 * = r
@@ -620,13 +631,17 @@ svnadmins={reuse:pit-authorization:svnadmins}
 ea = rw
 
 [/commons]
-@commons = rw
+@committers = rw
 
 [/commons/dormant]
-@commons-sandbox = rw
+@committers = rw
+
+# Now using Git:
+[/commons/proper/math]
+* = r
 
 [/commons/sandbox]
-@commons-sandbox = rw
+@committers = rw
 
 [/concom]
 @concom = rw
@@ -705,11 +720,17 @@ ea = rw
 [/deltaspike]
 @deltaspike = rw
 
+[/devicemap]
+@devicemap = rw
+
 [/directmemory]
 @directmemory = rw
 
 [/directory]
 @directory = rw
+
+[/drill]
+@drill = rw
 
 [/empire-db]
 @empire-db = rw
@@ -792,19 +813,16 @@ ea = rw
 * = r
 
 [/hadoop]
-@hadoop-pmc = rw
+@hadoop-pmc = r
 
 [/hadoop/common]
-@hadoop-hdfs = rw
-@hadoop-mapreduce = rw
+@hadoop = r
 
-[/hadoop/common/branches]
-@hadoop-branch-security = rw
-@hadoop-branch-YARN-1492 = rw
-@hadoop-branch-HADOOP-10388 = rw
-@hadoop-branch-fs-encryption = rw
-@hadoop-branch-YARN-1051 = rw
-@hadoop-branch-MR-2841 = rw
+[/hadoop/common/dist]
+@hadoop = rw
+
+[/hadoop/common/site]
+@hadoop = rw
 
 [/hadoop/nightly]
 @hadoop-nightly = rw
@@ -850,9 +868,6 @@ ea = rw
 [/incubator/alois]
 * = r
 
-[/incubator/argus]
-@argus = rw
-
 [/incubator/aurora]
 @aurora = rw
 
@@ -862,23 +877,23 @@ ea = rw
 [/incubator/awf]
 * = r
 
+[/incubator/batchee/site]
+@incubator = rw
+
 [/incubator/blur]
 @blur = rw
 
 [/incubator/brooklyn]
 @incubator = rw
 
+[/incubator/calcite]
+@calcite = rw
+
 [/incubator/callback]
 @incubator = rw
 
 [/incubator/datafu]
 @datafu = rw
-
-[/devicemap]
-@devicemap = rw
-
-[/incubator/drill]
-@drill = rw
 
 [/incubator/droids]
 @droids = rw
@@ -904,6 +919,15 @@ ea = rw
 [/incubator/heraldry]
 * = r
 
+[/incubator/htrace]
+@htrace = rw
+
+[/incubator/ignite]
+@ignite = rw
+
+[/incubator/johnzon/site]
+@incubator = rw
+
 [/incubator/juice]
 * = r
 
@@ -916,6 +940,9 @@ ea = rw
 [/incubator/lcf]
 @lucene-connectors = rw
 
+[/incubator/lens]
+@lens = rw
+
 [/incubator/log4cxx]
 @log4cxx = rw
 
@@ -924,9 +951,6 @@ ea = rw
 
 [/incubator/lucene4c]
 * = r
-
-[/incubator/metamodel]
-@metamodel = rw
 
 [/incubator/mrql]
 @mrql= rw
@@ -969,6 +993,12 @@ ea = rw
 @apsite = rw
 @incubator-site = rw
 
+[/incubator/ranger]
+@ranger = rw
+
+[/incubator/reef]
+@reef = rw
+
 [/incubator/ripple]
 @ripple = rw
 
@@ -990,9 +1020,6 @@ ea = rw
 [/incubator/socialsite]
 * = r
 
-[/incubator/storm]
-@storm = rw
-
 [/incubator/streams]
 * = r
 
@@ -1001,6 +1028,9 @@ ea = rw
 
 [/incubator/tashi]
 * = r
+
+[/incubator/taverna]
+@taverna = rw
 
 [/incubator/triplesoup]
 * = r
@@ -1071,7 +1101,7 @@ ea = rw
 @committers  = rw
 
 [/jakarta]
-* = r
+@svnadmins = rw
 
 [/james]
 @james = rw
@@ -1132,6 +1162,9 @@ ea = rw
 
 [/logging]
 @logging = rw
+
+[/logging/log4j/log4j2]
+@logging = r
 
 [/logging/log4php]
 @logging = r
@@ -1270,6 +1303,9 @@ ea = rw
 [/mina]
 @mina = r
 
+[/metamodel]
+@metamodel = rw
+
 [/mina/metadata]
 @mina = rw
 
@@ -1304,7 +1340,7 @@ ea = rw
 @oltu = rw
 
 [/onami]
-@onami = r
+@onami = rw
 
 [/oodt]
 @oodt = rw
@@ -1385,6 +1421,12 @@ ea = rw
 [/qpid]
 @qpid = rw
 
+[/qpid/jms]
+@qpid = r
+
+[/qpid/proton]
+@qpid = r
+
 [/quetzalcoatl]
 * = r
 
@@ -1464,6 +1506,9 @@ spamassassin_role = rw
 [/steve]
 @steve = rw
 
+[/storm]
+@storm = rw
+
 [/stratos]
 @incubator = rw
 
@@ -1478,6 +1523,9 @@ svn-role = rw
 @synapse = rw
 
 [/syncope]
+@syncope = rw
+
+[/syncope/site]
 @syncope = rw
 
 [/tajo]
@@ -1658,9 +1706,6 @@ svn-role = rw
 
 [/zookeeper]
 @zookeeper = rw
-
-[/bookkeeper]
-@bookkeeper = rw
 
 [/~~~]
 # No-op section to act as sentinel for tlpreq/scripts/svnmv
