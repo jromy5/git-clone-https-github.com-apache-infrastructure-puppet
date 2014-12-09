@@ -150,6 +150,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'dist.*.apache.org'
     custom_fragment: |
+      LimitXMLRequestBody 10000000
       SetEnvIf User-Agent ".*MSIE [2-5].*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
       RedirectMatch permanent ^/$ https://dist.apache.org/repos/dist
@@ -315,6 +316,7 @@ vhosts_asf::vhosts::vhosts:
       - hades.apache.org
       - hades.*.apache.org
     custom_fragment: |
+      LimitXMLRequestBody 10000000
       RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
