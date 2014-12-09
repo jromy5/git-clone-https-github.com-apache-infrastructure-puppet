@@ -16,6 +16,7 @@ classes:
   - collectd::plugin::write_http
   - dell
   - dell::openmanage
+  - dell::openmanage::debian
   - fail2ban_asf::config
   - httpd_modules
   - httpd_modules::mod_svn_check_path
