@@ -25,11 +25,17 @@ classes:
   - svnpubsub
   - svnwcsub
   - subversion_server
+  - vhosts_asf::custom_config
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - zfs_on_ubuntu
   - perl
   
+apache::custom_config:
+  test:
+    priority: 25,
+    content: '# Test'
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      false
