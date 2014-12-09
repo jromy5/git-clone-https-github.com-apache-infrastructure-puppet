@@ -10,6 +10,7 @@ class rootbin_asf {
       owner    => 'root',
       group    => $::asfosname ? {
         /^ubuntu$/    => 'root',
+        /^centos$/    => 'root',
         /^freebsd$/   => 'wheel',
         default       => 'root',
       },

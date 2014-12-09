@@ -1,0 +1,195 @@
+---
+classes: 
+  - base
+  - dnsclient
+  - epel
+  - orthrus
+  - postfix::server
+  - subversionclient
+  - ulimit
+
+base::basepackages:
+  - bash
+  - ca-certificates
+  - git
+  - htop
+  - sockstat
+  - software-properties-common
+  - stunnel4
+  - zsh
+
+base::install::centos::6x::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos6x'
+  
+ldapclient::install::centos::6x::tlscertpath:  '/etc/openldap/cacerts/ldap-client.pem'
+ldapclient::install::centos::6x::pamhostcheck: 'yes'
+
+ldapclient::ldapclient_packages: 
+  - openldap
+  - openldap-clients
+  - nss-pam-ldapd
+  - pam-devel
+
+ldapclient::ldapclient_remove_packages: 
+    - nscd
+
+ntp::interfaces:
+    - eth0
+    - lo
+
+postfix::server::myhostname:             "%{::fqdn}"
+postfix::server::mydomain:               'apache.org'
+postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
+postfix::server::inet_interfaces:        'all'
+postfix::server::message_size_limit:     '15360000'
+postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::alias_maps:              'hash:/etc/aliases'
+postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
+postfix::server::smtpd_sender_restrictions:
+  -  'permit_mynetworks'
+  -  'reject_unknown_sender_domain'
+postfix::server::smtpd_recipient_restrictions:
+  -  'permit_mynetworks'
+  -  'reject_unauth_destination'
+postfix::server::smtpd_tls_key_file:     '/etc/ssl/private/wildcard.apache.org.key'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-combined.crt'
+postfix::server::ssl:                    'wildcard.apache.org'
+postfix::server::submission:             'true'
+
+puppet::puppetconf:                      '/etc/puppet/puppet.conf'
+
+spamassassin::spamassassin_packages:
+  - spamassassin
+
+subversionclient::packages: 
+  - subversion
+subversionclient::svn_conf_config:       '/etc/subversion/config'
+subversionclient::svn_conf_servers:      '/etc/subversion/servers'
+
+build_slaves::distro_packages:
+  - ant
+  - apr-devel
+  - apr-util-devel
+  - asciidoc
+  - autoconf
+  - automake
+  - bison
+  - boost-devel
+  - boost-filesystem
+  - boost-program-options
+  - boost-system
+  - boost-test
+  - bzip
+  - bzip-devel
+  - cabal-install
+  - cmake
+  - cppcheck
+  - cppunit-devel
+  - curl
+  - cyrus-sasl-devel
+  - docker-io
+  - eclipse-swt
+  - emacs-nox
+  - erlang
+  - erlang-eunit
+  - flex
+  - fuse-devel
+  - gcc
+  - gcc-c+++
+  - ghc
+  - ghc-binary-devel
+  - ghc-hashable-devel
+  - ghc-http-devel
+  - ghc-network-devel
+  - ghc-unordered-containers-devel
+  - ghc-vector-devel
+  - git
+  - glib2-devel
+  - golang
+  - golang-go
+  - libcurl-devel
+  - libevent-devel
+  - libjpeg-turbo-devel
+  - libstdc++-devel
+  - libtool
+  - lua
+  - lua-devel
+  - lzo-devel
+  - mingw32
+  - mingw32-binutils
+  - mingw32-runtime
+  - mingw32-nsis
+  - mono-devel
+  - mono-web-devel
+  - ncurses-devel
+  - ncurses-libs
+  - nodejs
+  - nodejs-devel
+  - npm
+  - openssl-devel
+  - perl-Bit-Vector
+  - perl-Class-Accessor
+  - perl-XML-XPath
+  - php-pear
+  - php
+  - php-cli
+  - php-devel
+  - pkgconfig
+  - protobuf-compiler
+  - python
+  - python-devel
+  - python-boto
+  - python-pip
+  - python-setuptools
+  - python-support
+  - qt-devel
+  - re2c
+  - ruby
+  - ruby-devel
+  - screen
+  - sharutils
+  - sloccount
+  - snappy-devel
+  - subversion-devel
+  - tmux
+  - unzip
+  - xorg-x11-server-Xvfb
+  - zlib-devel
+
+build_slaves::jenkins::jenkins_packages:
+  - asf-build-apache-ant-1.9.4
+  - asf-build-apache-forrest-0.9
+  - asf-build-apache-maven-2.2.1
+  - asf-build-apache-maven-3.0.4
+  - asf-build-apache-maven-3.2.1
+  - asf-build-clover-ant-2.4.3
+  - asf-build-findbugs-2.0.3
+  - asf-build-harmony-jdk-713673
+  - asf-build-ibmjava2-142
+  - asf-build-ibmjava2-amd64-142
+  - asf-build-ibm-java2-i386-50
+  - asf-build-ibm-java2-x86-64-50
+  - asf-build-ibm-java-i386-60
+  - asf-build-ibm-java-x86-64-60
+  - asf-build-ibm-java-x86-64-70
+  - asf-build-j2sdk1.4.2-19
+  - asf-build-jdk1.5.0-17-32
+  - asf-build-jdk1.5.0-17-64
+  - asf-build-jdk1.5.0-22-32
+  - asf-build-jdk1.5.0-22-64
+  - asf-build-jdk1.6.0-11-32
+  - asf-build-jdk1.6.0-11-64
+  - asf-build-jdk1.6.0-20-32
+  - asf-build-jdk1.6.0-20-32-unlimited-security
+  - asf-build-jdk1.6.0-20-64
+  - asf-build-jdk1.6.0-27-32
+  - asf-build-jdk1.6.0-27-64
+  - asf-build-jdk1.6.0-45-32
+  - asf-build-jdk1.6.0-45-64
+  - asf-build-jdk1.7.0-04
+  - asf-build-jdk1.7.0-25-32
+  - asf-build-jdk1.7.0-25-64
+  - asf-build-jdk1.7.0-32
+  - asf-build-jdk1.7.0-55
+  - asf-build-jdk1.7.0-64
+  - asf-build-jdk1.8.0
+  - asf-build-jira-cli-2.1.0

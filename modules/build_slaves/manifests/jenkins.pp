@@ -107,7 +107,6 @@ class build_slaves::jenkins (
   }
 
   package { $jenkins_packages:
-    require  => Apt::Source['lxc_docker'],
     ensure   => installed,
   }
 }

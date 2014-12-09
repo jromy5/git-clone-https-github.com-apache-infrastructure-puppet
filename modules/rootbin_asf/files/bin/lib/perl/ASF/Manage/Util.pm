@@ -84,6 +84,7 @@ sub systems {
         /fedora/     and $v->{os} = "fedora"  and next;
         /sunos/      and $v->{os} = "solaris" and next;
         /^10\.\d$/   and $v->{os} = "mac"     and next;
+        /centos/     and $v->{os} = "centos"  and next;
     }
 
     return $sys_h;
