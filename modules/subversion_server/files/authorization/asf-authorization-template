@@ -818,9 +818,6 @@ ea = rw
 [/hadoop/common/site]
 @hadoop = rw
 
-[/hadoop/nightly]
-@hadoop-nightly = rw
-
 [/hama]
 @hama = rw
 
