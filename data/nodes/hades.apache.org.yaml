@@ -67,6 +67,10 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
+fail2ban::service_autorestart: true
+fail2ban::disable: false
+fail2ban::service_status: true
+
 fail2ban_asf::config::jails:
   httpd-svn:
     filter: apache-auth
@@ -75,6 +79,8 @@ fail2ban_asf::config::jails:
     logpath: /var/log/apache2/svn_https_error_ssl.log
     findtime: 1800
     maxretry: 5
+    enable: true
+
   ssh:
     filter: sshd
     action:
@@ -82,6 +88,7 @@ fail2ban_asf::config::jails:
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
+    enable: true
 
 fail2ban_asf::config::filters:
   asf-httpd:
