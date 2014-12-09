@@ -39,7 +39,7 @@ SVNSYNC=/usr/bin/svnsync
 SETLOCK=/root/bin/setlock.pl
 MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
-SED=/usr/bin/sed
+SED=/bin/sed
 
 
 REPOS="$1"
@@ -49,7 +49,7 @@ PROPNAME="$4"
 ACTION="$5"
 
 REPOS_BASENAME=`/usr/bin/basename "$REPOS"`
-REPOS_URLNAME=`echo "$REPOS_BASENAME" | $SED -e 's/^repos-//'`
+REPOS_URLNAME=`echo "$REPOS_BASENAME"`
 
 shard=`expr $REV / 1000`
 backup_shard=/x1/svn/hot-backups.d/$REPOS_BASENAME.$shard
