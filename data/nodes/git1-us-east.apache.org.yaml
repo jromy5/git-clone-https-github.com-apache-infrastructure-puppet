@@ -39,3 +39,4 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
+postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
