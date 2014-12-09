@@ -633,15 +633,9 @@ ea = rw
 [/commons]
 @committers = rw
 
-[/commons/dormant]
-@committers = rw
-
 # Now using Git:
 [/commons/proper/math]
 * = r
-
-[/commons/sandbox]
-@committers = rw
 
 [/concom]
 @concom = rw

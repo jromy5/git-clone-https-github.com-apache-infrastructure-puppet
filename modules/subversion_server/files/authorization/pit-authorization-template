@@ -38,6 +38,8 @@ bigtop-pmc={ldap:cn=bigtop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 bloodhound={reuse:asf-authorization:bloodhound}
 bloodhound-pmc={ldap:cn=bloodhound,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 blur={reuse:asf-authorization:blur}
+bookkeeper={reuse:asf-authorization:bookkeeper}
+bookkeeper-pmc={ldap:cn=bookkeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 buildr={reuse:asf-authorization:buildr}
 buildr-pmc={ldap:cn=buildr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 bval={reuse:asf-authorization:bval}
@@ -90,11 +92,13 @@ deltaspike-pmc={ldap:cn=deltaspike,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 # depot={reuse:asf-authorization:# depot}
 derby={reuse:asf-authorization:derby}
 devicemap={reuse:asf-authorization:devicemap}
+devicemap-pmc={ldap:cn=devicemap,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 directmemory={reuse:asf-authorization:directmemory}
 directmemory-pmc={ldap:cn=directmemory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 drill={reuse:asf-authorization:drill}
+drill-pmc={ldap:cn=drill,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 droids={reuse:asf-authorization:droids}
 easyant={reuse:asf-authorization:easyant}
 empire-db={reuse:asf-authorization:empire-db}
@@ -186,6 +190,7 @@ maven-pmc={ldap:cn=maven,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 mesos={reuse:asf-authorization:mesos}
 mesos-pmc={ldap:cn=mesos,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 metamodel={reuse:asf-authorization:metamodel}
+metamodel-pmc={ldap:cn=metamodel,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={reuse:asf-authorization:mina}
 mina-pmc={ldap:cn=mina,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
@@ -270,6 +275,8 @@ stanbol={reuse:asf-authorization:stanbol}
 stanbol-pmc={ldap:cn=stanbol,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 steve={reuse:asf-authorization:steve}
 steve-pmc={ldap:cn=steve,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+storm={reuse:asf-authorization:storm}
+storm-pmc={ldap:cn=storm,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 stratos={reuse:asf-authorization:stratos}
 stratos-pmc={ldap:cn=stratos,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 struts={reuse:asf-authorization:struts}
@@ -282,9 +289,11 @@ syncope={reuse:asf-authorization:syncope}
 syncope-pmc={ldap:cn=syncope,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tajo={reuse:asf-authorization:tajo}
 tajo-pmc={ldap:cn=tajo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tamaya={reuse:asf-authorization:tamaya}
 # tashi={reuse:asf-authorization:tashi}
 tapestry={reuse:asf-authorization:tapestry}
 tapestry-pmc={ldap:cn=tapestry,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+taverna={reuse:asf-authorization:taverna}
 tcl={reuse:asf-authorization:tcl}
 tcl-pmc={ldap:cn=tcl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tez={reuse:asf-authorization:tez}
@@ -348,6 +357,7 @@ jcp-jaxws-nda=dkulp,dandiep,jliu,gawor,ema,jgenender,sandakith,gdaniels,isurues,
 jcp-nda=jsisson,jgenender,jlaskowski,jules,dblevins,gdamour,djencks,chirino,bsnyder,adc,dims,janb,gregw,ammulder,jboynes,dain,jstrachan,geirm,hogstrom,oros,matzew,tomsp,manolito,bdudney,mmarinschek,grantsmith,svieujot,baranda,mbr,ias,hemapani,venkat,cziegeler,aslom,rkellogg,brett,ate,ddewolf,yoavs,kevan,markt,zheng,azeez,dug,cdoremus,chinthaka,ajith,ruchithf,dennisbyrne,jhook,mkienenb,rickmcguire,jdillon,fhanik,gnodet,wsmoak,aadamchik,jbohn,jdcasey,clr,jmitchell,jukka,hcunico,rajith,steshaw,ritchiem,rgreig,bhupendrab,rajdavies,sppatel,pmcmahan,mprudhom,dkulp,ccardona,dandiep,ema,jliu,adisakala,gawor,deepal,prasad,gvanmatre,pcl,dmiddlem,akulshreshtha,mcconne,jaydm,vmz,jawarner,dwoods,jfclere,gtully,sergeyb,xuhaihong,elman,talial,martins,sagara,isurues,linsun,rjung,fmeschbe,genspring,delos,asoldano,vamsic007,gerdogdu,jgallimore,kmalhi,zoe,lu4242,xiaming,rwonly,mturk,hanhongfang,jim,violalu,jlmonteiro,tveronezi,simoneg,rmannibucau,mnour,davidb,cumminsh,kwsutter,allee8285,cschneider,ashakirin,johnxiao,anierbeck,andygumbrecht
 jcp=markt,dkulp,kevan
 osgi-rw=rickhall,fmeschbe,davidb
+osgi-ro=bob
 
 # Not TLPs or podlings.  
 accounting=gmorris,mball,jjimenez
@@ -370,8 +380,10 @@ member={ldap:cn=member,ou=groups,dc=apache,dc=org}
 pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
 security={ldap:cn=security,ou=groups,dc=apache,dc=org}
 security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell
+svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
+
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
 
@@ -447,6 +459,9 @@ whimsysvn = r
 [/documents/received]
 apsecmail = rw
 
+[/documents/contracts]
+@accounting = r
+
 [/financials]
 @board = rw
 @exec-officers = rw
@@ -455,6 +470,7 @@ apsecmail = rw
 @accounting = rw
 @svnadmins = rw
 @infrastructure-root = rw
+@virtualmgmt = rw
 ea = r
 * =
 
@@ -806,6 +822,7 @@ openejb-tck = r
 @jcp = rw
 @osgi-rw = rw
 @jcp-nda = r
+@osgi-ro = r
 # deny all access to everyone else.
 @svnadmins = rw
 * =
@@ -1120,7 +1137,7 @@ buildbot = rw
 @deltaspike = rw
 
 [/websites/production/devicemap]
-@incubator = rw
+@devicemap = rw
 
 [/websites/production/directory]
 @directory = rw
@@ -1220,7 +1237,7 @@ buildbot = rw
 @maven = rw
 
 [/websites/production/metamodel]
-@incubator = rw
+@metamodel = rw
 
 [/websites/production/mina]
 @mina = rw
@@ -1330,9 +1347,15 @@ buildbot = rw
 [/websites/production/struts]
 @struts = rw
 
+[/websites/production/tamaya]
+@incubator = rw
+
 [/websites/production/tapestry]
 @tapestry = rw
 buildbot = rw
+
+[/websites/production/taverna]
+@incubator = rw
 
 [/websites/production/thrift]
 @thrift = rw
