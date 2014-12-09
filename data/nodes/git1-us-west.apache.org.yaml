@@ -7,11 +7,14 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
+  - gitserver_asf
+  - ssl::name::wildcard_apache_org
+
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      true
-apache::docroot:            '/x1/git/repos'
+apache::docroot:            '/x1/git/htdocs'
 apache::docroot_owner:      'git'
 
 apache::mod::event::listenbacklog: '511'
@@ -48,24 +51,24 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'git-wip-us.*.apache.org'
     custom_fragment: |
-      <Directory /usr/local/www/git-wip-us.apache.org/htdocs>
+      <Directory /x1/git/htdocs>
         Allow from all
       </Directory>
       
-      <Directory /usr/local/www/git-wip-us.apache.org/repos/asf>
+      <Directory /x1/git/repos/asf>
           Allow from all
       </Directory>
       
-      <Directory /usr/local/www/git-wip-us.apache.org/repos/svn>
+      <Directory /x1/git/repos/svn>
           Allow from all
       </Directory>
       
-      <Directory /usr/local/www/git-wip-us.apache.org/cgi-bin>
+      <Directory /x1/git/cgi-bin>
           Allow from all
           Options ExecCGI
       </Directory>
       
-      <Directory /usr/local/etc/asfgit-admin/cgi-bin>
+      <Directory /etc/asfgit-admin/cgi-bin>
           Allow from all
           Options ExecCGI
       </Directory>
@@ -95,18 +98,18 @@ vhosts_asf::vhosts::vhosts:
       
       <VirtualHost *:80>
           ServerName git-wip-us.apache.org
-          DocumentRoot "/usr/local/www/git-wip-us.apache.org/htdocs"
+          DocumentRoot "/x1/git/htdocs"
           RewriteEngine on
       
-          ErrorLog "/usr/local/www/git-wip-us.apache.org/logs/error_log"
-          CustomLog "/usr/local/www/git-wip-us.apache.org/logs/access_log" common
+          ErrorLog "/var/log/apache2/git-wip-us_http_error_log"
+          CustomLog "/var/log/apache2/git-wip-us_http_access_log" common
       
           RewriteCond %{QUERY_STRING} service=git-receive-pack
           RewriteRule .* - [F]
       
           RewriteRule ^/repos/infra.* https://git-wip-us.apache.org/repos/infra [L,R]
       
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /usr/local/www/git-wip-us.apache.org/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
       
           <LocationMatch "^/repos/.*/git-receive-pack$">
               Order allow,deny
@@ -114,29 +117,29 @@ vhosts_asf::vhosts::vhosts:
               Satisfy all
           </LocationMatch>
       
-          Include /usr/local/etc/apache22/extra/gitweb.conf
+          Include /etc/apache2/gitweb.conf
       
       </VirtualHost>
       
       <VirtualHost git-wip-us.apache.org:443>
           ServerName git-wip-us.apache.org
-          DocumentRoot "/usr/local/www/git-wip-us.apache.org/htdocs"
+          DocumentRoot "/x1/git/htdocs"
           RewriteEngine on
       
-          ErrorLog "/usr/local/www/git-wip-us.apache.org/logs/error_log"
-          CustomLog "/usr/local/www/git-wip-us.apache.org/logs/access_log" common
+          ErrorLog "/var/log/apache2/git-wip-us_https_error_log"
+          CustomLog "/var/log/apache2/git-wip-us_https_access_log" common
       
-      #    SSLEngine on
-      #    SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
-      #    SSLCertificateFile "/etc/ap-ssl/wildcard.apache.org.crt"
-      #    SSLCertificateKeyFile "/etc/ap-ssl/wildcard.apache.org.key"
-      #    SSLCertificateChainFile "/etc/ap-ssl/Thawte-SSL_CA_Bundle.pem"
+          SSLEngine on
+          SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+          SSLCertificateFile "/etc/ssl/certs/wildcard.apache.org.crt"
+          SSLCertificateKeyFile "/etc/ssl/private/wildcard.apache.org.key"
+          SSLCertificateChainFile "/etc/certs/wildcard.apache.org.chain"
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /usr/local/etc/asfgit-admin/
+          SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
           SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /usr/local/etc/asfgit-admin/conf/auth.cfg
-          SetEnv GIT_REPOS_ROOT /usr/local/www/git-wip-us.apache.org/repos
+          SetEnv AUTH_FILE /etc/asfgit-admin/conf/auth.cfg
+          SetEnv GIT_REPOS_ROOT /x1/git/repos
       
           <Location /repos/asf>
               SetEnv WEB_HOST http://git-wip-us.apache.org
@@ -153,12 +156,12 @@ vhosts_asf::vhosts::vhosts:
           RewriteCond %{QUERY_STRING} service=git-receive-pack
           RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
       
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /usr/local/www/git-wip-us.apache.org/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
       
           BrowserMatch ".*MSIE.*" \
               nokeepalive ssl-unclean-shutdown \
               downgrade-1.0 force-response-1.0
-          Include /usr/local/etc/apache22/extra/gitweb.conf
+          Include /etc/apache2/gitweb.conf
       
           # INFRA-4331: Handler for Github pull request notifications
           ScriptAliasMatch ^/github$ /usr/local/etc/asfgit-admin/cgi-bin/github.cgi
@@ -166,17 +169,17 @@ vhosts_asf::vhosts::vhosts:
       
       <VirtualHost 192.168.0.51:8080>
           ServerName git-wip-us.apache.org
-          DocumentRoot "/usr/local/www/git-wip-us.apache.org/htdocs"
+          DocumentRoot "/x1/git/htdocs"
           RewriteEngine on
       
-          ErrorLog "/usr/local/www/git-wip-us.apache.org/logs/error_log"
-          CustomLog "/usr/local/www/git-wip-us.apache.org/logs/access_log" common
+          ErrorLog "/var/log/apache2/error_log"
+          CustomLog "/var/log.apache2/access_log" common
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /usr/local/etc/asfgit-admin/
+          SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
           SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /usr/local/etc/asfgit-admin/conf/auth.cfg
-          SetEnv GIT_REPOS_ROOT /usr/local/www/git-wip-us.apache.org/repos
+          SetEnv AUTH_FILE /etc/asfgit-admin/conf/auth.cfg
+          SetEnv GIT_REPOS_ROOT /x1/git/repos
       
           <Location /repos/asf>
               SetEnv WEB_HOST http://git-wip-us.apache.org
@@ -193,13 +196,14 @@ vhosts_asf::vhosts::vhosts:
           RewriteCond %{QUERY_STRING} service=git-receive-pack
           RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
       
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /usr/local/www/git-wip-us.apache.org/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
       
-          Include /usr/local/etc/apache22/extra/gitweb.conf
+          Include /etc/apache2/gitweb.conf
       
           # INFRA-4331: Handler for Github pull request notifications
-          ScriptAliasMatch ^/github$ /usr/local/etc/asfgit-admin/cgi-bin/github.cgi
+          ScriptAliasMatch ^/github$ /etc/asfgit-admin/cgi-bin/github.cgi
       
           # Handler for Travis notifications
-          ScriptAliasMatch ^/travis$ /usr/local/etc/asfgit-admin/cgi-bin/travis.cgi
+          ScriptAliasMatch ^/travis$ /etc/asfgit-admin/cgi-bin/travis.cgi
       </VirtualHost>
+
