@@ -98,6 +98,8 @@ postfix::server::submission:             'true'
 
 puppet::puppetconf:                      '/etc/puppet/puppet.conf'
 
+snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
+
 spamassassin::spamassassin_packages:
   - spamassassin
 
