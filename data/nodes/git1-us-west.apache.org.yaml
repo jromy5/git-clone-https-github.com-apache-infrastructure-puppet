@@ -31,9 +31,6 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-base::basepackages:
-  - gitweb
- 
 collectd::purge:  true
 collectd::recurse: true
 collectd::purge_config: true
