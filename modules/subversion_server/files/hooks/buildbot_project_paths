@@ -162,3 +162,4 @@
 ^(incubator/nifi\/site|nifi\/site)/(.*)
 ^(incubator/tamaya\/site|tamaya\/site)/(.*)
 ^(incubator/taverna\/site|taverna\/site)/(.*)
+^(incubator/ignite\/site|ignite\/site)/(.*)
