@@ -111,19 +111,6 @@ gitserver_asf::custom_fragment_80: |
       </VirtualHost>
 
 gitserver_asf::custom_fragment_443: |
-      <VirtualHost git-wip-us.apache.org:443>
-          ServerName git-wip-us.apache.org
-          DocumentRoot "/x1/git/htdocs"
-          RewriteEngine on
-      
-          ErrorLog "/var/log/apache2/git-wip-us_https_error_log"
-          CustomLog "/var/log/apache2/git-wip-us_https_access_log" common
-      
-          SSLEngine on
-          SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
-          SSLCertificateFile "/etc/ssl/certs/wildcard.apache.org.crt"
-          SSLCertificateKeyFile "/etc/ssl/private/wildcard.apache.org.key"
-          SSLCertificateChainFile "/etc/certs/wildcard.apache.org.chain"
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
           SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
