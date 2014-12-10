@@ -85,14 +85,6 @@ gitserver_asf::custom_fragment_80: |
           </Files>
       </Directory>
       
-      <VirtualHost *:80>
-          ServerName git-wip-us.apache.org
-          DocumentRoot "/x1/git/htdocs"
-          RewriteEngine on
-      
-          ErrorLog "/var/log/apache2/git-wip-us_http_error_log"
-          CustomLog "/var/log/apache2/git-wip-us_http_access_log" common
-      
           RewriteCond %{QUERY_STRING} service=git-receive-pack
           RewriteRule .* - [F]
       
@@ -108,7 +100,6 @@ gitserver_asf::custom_fragment_80: |
       
           Include /etc/apache2/gitweb.conf
       
-      </VirtualHost>
 
 gitserver_asf::custom_fragment_443: |
       
@@ -142,15 +133,8 @@ gitserver_asf::custom_fragment_443: |
       
           # INFRA-4331: Handler for Github pull request notifications
           ScriptAliasMatch ^/github$ /usr/local/etc/asfgit-admin/cgi-bin/github.cgi
-      </VirtualHost>
       
-      <VirtualHost 192.168.0.51:8080>
-          ServerName git-wip-us.apache.org
-          DocumentRoot "/x1/git/htdocs"
-          RewriteEngine on
-      
-          ErrorLog "/var/log/apache2/error_log"
-          CustomLog "/var/log.apache2/access_log" common
+gitserver_asf::custom_fragment_8080: |
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
           SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
@@ -182,5 +166,4 @@ gitserver_asf::custom_fragment_443: |
       
           # Handler for Travis notifications
           ScriptAliasMatch ^/travis$ /etc/asfgit-admin/cgi-bin/travis.cgi
-      </VirtualHost>
 
