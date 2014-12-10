@@ -2,7 +2,7 @@
 
 class gitserver_asf (
 
-$packages = []
+$packages = ['gitweb']
 
 ) {
 
