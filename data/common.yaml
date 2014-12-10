@@ -69,6 +69,7 @@ fail2ban::source_dir: 'puppet:///modules/fail2ban_asf/fail2ban/conf'
 fail2ban::source_dir_purge: true
 
 # GITSERVER_ASF
+giserver_asf::packages
 gitserver_asf::gitweb_vhost_data: |
   AliasMatch /static/([^/]+) /usr/local/www/git-wip-us.apache.org/htdocs/static/$1
   AliasMatch ^/repos/(asf|svn)/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /usr/local/www/git-wip-us.apache.org/repos/$1/$2
