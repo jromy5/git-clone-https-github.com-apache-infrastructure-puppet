@@ -1016,11 +1016,11 @@ ea = rw
 [/incubator/streams/site]
 @streams = rw
 
-[/incubator/tashi]
-* = r
-
 [/incubator/tamaya/site]
 @incubator = rw
+
+[/incubator/tashi]
+* = r
 
 [/incubator/taverna]
 @taverna = rw

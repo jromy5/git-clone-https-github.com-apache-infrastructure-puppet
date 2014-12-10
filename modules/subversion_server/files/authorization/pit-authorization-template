@@ -289,7 +289,6 @@ syncope={reuse:asf-authorization:syncope}
 syncope-pmc={ldap:cn=syncope,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tajo={reuse:asf-authorization:tajo}
 tajo-pmc={ldap:cn=tajo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-tamaya={reuse:asf-authorization:tamaya}
 # tashi={reuse:asf-authorization:tashi}
 tapestry={reuse:asf-authorization:tapestry}
 tapestry-pmc={ldap:cn=tapestry,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
@@ -492,6 +491,7 @@ whimsysvn = r
 
 [/financials/Bills/received]
 @tac-pmc = rw
+
 
 [/financials/Expenses]
 @member = rw
