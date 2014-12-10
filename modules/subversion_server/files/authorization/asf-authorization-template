@@ -390,7 +390,6 @@ syncope-pmc={reuse:pit-authorization:syncope-pmc}
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=groups,dc=apache,dc=org}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
-tamaya=
 # tashi=clr,mriou,pzf,stroucki,mryan3,rgass
 tapestry={ldap:cn=tapestry,ou=groups,dc=apache,dc=org}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
@@ -1019,6 +1018,9 @@ ea = rw
 
 [/incubator/tashi]
 * = r
+
+[/incubator/tamaya/site]
+@incubator = rw
 
 [/incubator/taverna]
 @taverna = rw
