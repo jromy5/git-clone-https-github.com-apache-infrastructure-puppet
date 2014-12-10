@@ -106,6 +106,10 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
 
+ntp::interfaces:
+  - em1
+  - lo
+
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
 svnwcsub::conf_file:        'svnwcsub.conf'
