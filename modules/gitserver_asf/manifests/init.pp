@@ -28,7 +28,7 @@ apache::vhost { 'git-wip-us-ssl':
     servername      => 'git-wip-us.apache.org',
     port            => '443',
     ssl             => true,
-    docroot         => '/x1/git/htocs',
+    docroot         => '/x1/git/htdocs',
     ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
     ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
     ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
