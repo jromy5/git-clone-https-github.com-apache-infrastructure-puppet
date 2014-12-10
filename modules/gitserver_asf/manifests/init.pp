@@ -2,9 +2,9 @@
 
 class gitserver_asf (
 
-$gitserver_asf::custom_fragment_80: ''
-$gitserver_asf::custom_fragment_443: ''
-$packages = ['gitweb']
+  $custom_fragment_80: ''
+  $custom_fragment_443: ''
+  $packages = ['gitweb']
 
 
 ) {
@@ -46,7 +46,7 @@ apache::vhost { 'git-wip-us-ssl':
         },
     ],
     serveraliases   => ['git1-us-west.apache.org'],
-    custom_fragment => $gitserver_asf::custom_fragment_443
+    custom_fragment => $custom_fragment_443,
     error_log_file  => 'git-wip-us_error.log',
   }
 }
