@@ -39,7 +39,7 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-gitserver_asf::custom_fragment: |
+gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
         Allow from all
       </Directory>
@@ -109,7 +109,8 @@ gitserver_asf::custom_fragment: |
           Include /etc/apache2/gitweb.conf
       
       </VirtualHost>
-      
+
+gitserver_asf::custom_fragment_443: |
       <VirtualHost git-wip-us.apache.org:443>
           ServerName git-wip-us.apache.org
           DocumentRoot "/x1/git/htdocs"
