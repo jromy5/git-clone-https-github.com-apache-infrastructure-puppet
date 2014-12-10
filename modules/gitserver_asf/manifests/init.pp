@@ -1,4 +1,4 @@
-#/etc/puppet/modules/_TEMPLATE/manifests/init.pp
+#/etc/puppet/modules/gitserver_asf/manifests/init.pp
 
-class _TEMPLATE {
+class gitserver_asf {
 }
