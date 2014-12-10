@@ -39,15 +39,7 @@ collectd::plugin::interface::interfaces:
   - lo
 collectd::plugin::interface::ignoreselected: true
 
-vhosts_asf::vhosts::vhosts:
-  git-wip-us:
-    vhost_name: '*'
-    port: 80
-    docroot: '/x1/git/htdocs'
-    servername: 'git-wip-us.apache.org'
-    serveraliases:
-      - 'git-wip-us.*.apache.org'
-    custom_fragment: |
+gitserver_asf::custom_fragment: |
       <Directory /x1/git/htdocs>
         Allow from all
       </Directory>
