@@ -28,8 +28,34 @@ file {
   }
 
 ## Unless declared otherwise the default behaviour is to enable these modules
+apache::mod { 'authnz_ldap': }
 apache::mod { 'ldap': }
 apache::mod { 'rewrite': }
+
+apache::vhost { 'git-wip-us-80':
+    priority        => '99',
+    vhost_name      => '*',
+    servername      => 'git-wip-us.apache.org',
+    port            => '80',
+    ssl             => true,
+    docroot         => '/x1/git/htdocs',
+    directories     => [
+        {
+            path            => '/x1/git/htdocs',
+            options         => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+            allow_override  => ['All'],
+            addhandlers     => [
+                {
+                    handler     => 'cgi-script',
+                    extensions  => ['.cgi']
+                }
+            ],
+        },
+    ],
+    serveraliases   => ['git1-us-west.apache.org'],
+    custom_fragment => $custom_fragment_80,
+    error_log_file  => 'git-wip-us_error.log',
+  }
 
 apache::vhost { 'git-wip-us-ssl':
     priority        => '99',
