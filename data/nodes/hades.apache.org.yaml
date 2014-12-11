@@ -54,6 +54,10 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '250'
 apache::mod::event::threadsperchild: '50'
 
+apache::mod::reqtimeout::timeouts:
+  - 'header=30,MinRate=400'
+  - 'body=60,MinRate=300'
+
 apache::mod::status::allow_from:
   - all
 apache::mod::status::apache_version: '2.3'
