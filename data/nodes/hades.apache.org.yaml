@@ -240,6 +240,8 @@ vhosts_asf::vhosts::vhosts:
       - svn.*.apache.org
       - hades.apache.org
       - hades.*.apache.org
+    override:
+      - 'All'
     custom_fragment: |
       RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
@@ -323,6 +325,8 @@ vhosts_asf::vhosts::vhosts:
       - svn.*.apache.org
       - hades.apache.org
       - hades.*.apache.org
+    override:
+      - 'all'
     custom_fragment: |
       LimitXMLRequestBody 10000000
       RewriteEngine On
