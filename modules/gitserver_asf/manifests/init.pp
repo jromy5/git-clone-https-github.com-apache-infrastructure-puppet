@@ -20,7 +20,17 @@ file {
     owner    => 'root',
     group    => 'www-data',
     mode     => '0750';
+  '/etc/apache2/gitweb.conf':
+    ensure   => present,
+    source   => "puppet:///modules/gitserver_asf/gitweb.conf",
+    notify   => Service['apache2'],
+    require  => Package['apache2'];
   }
+
+## Unless declared otherwise the default behaviour is to enable these modules
+apache::mod { 'ldap': }
+apache::mod { 'rewrite': }
+apache::mod { 'ssl': }
 
 apache::vhost { 'git-wip-us-ssl':
     priority        => '99',
