@@ -85,7 +85,7 @@ gitserver_asf::custom_fragment_80: |
           </Files>
       </Directory>
       
-          RewriteCond %{QUERY_STRING} service=git-receive-pack
+          RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
           RewriteRule .* - [F]
       
           RewriteRule ^/repos/infra.* https://git-wip-us.apache.org/repos/infra [L,R]
@@ -121,7 +121,7 @@ gitserver_asf::custom_fragment_443: |
               Deny from all
           </LocationMatch>
       
-          RewriteCond %{QUERY_STRING} service=git-receive-pack
+          RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
           RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
       
           RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
