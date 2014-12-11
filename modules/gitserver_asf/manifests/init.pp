@@ -30,7 +30,6 @@ file {
 ## Unless declared otherwise the default behaviour is to enable these modules
 apache::mod { 'ldap': }
 apache::mod { 'rewrite': }
-apache::mod { 'ssl': }
 
 apache::vhost { 'git-wip-us-ssl':
     priority        => '99',
