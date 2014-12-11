@@ -74,7 +74,6 @@ gitserver_asf::custom_fragment_80: |
               AuthBasicProvider ldap file
               AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
               AuthLDAPGroupAttribute memberUid
-              AuthzLDAPAuthoritative off
               AuthLDAPGroupAttributeIsDN off
               Require ldap-attribute gidNumber=5000
               Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
