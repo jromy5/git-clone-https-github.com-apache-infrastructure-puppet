@@ -69,7 +69,7 @@ fail2ban_asf::config::filters:
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
 svnwcsub::conf_file:        'svnwcsub.conf'
-svnwcsub::service_ensure:   'stopped'
+svnwcsub::service_ensure:   'running'
 svnwcsub:::conf_path:       '/etc/'
 svnwcsub::groupname:        'svnwc'
 svnwcsub::groups:
