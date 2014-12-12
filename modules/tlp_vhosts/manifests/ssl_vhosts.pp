@@ -77,6 +77,7 @@ class tlp_vhosts::ssl_vhosts inherits tlp_vhosts {
           Options +Includes
           AddOutputFilter INCLUDES .html
         </Directory>
+        AddType text/plain sha512
         ',
         access_log_file => 'weblog.log',
 		    error_log_file  => 'errorlog.log',
