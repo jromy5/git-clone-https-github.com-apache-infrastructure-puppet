@@ -76,4 +76,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     docroot: '/x1/www/status'
     servername: 'status.apache.org'
+    directoryindex: 'index.html manage.cgi'
+    custom_fragment: |
+      AddHandler cgi-script .cgi
 
