@@ -77,6 +77,11 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/x1/www/status'
     servername: 'status.apache.org'
     directoryindex: 'index.html manage.cgi'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
     custom_fragment: |
       AddHandler cgi-script .cgi
 
