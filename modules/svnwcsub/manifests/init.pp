@@ -9,6 +9,7 @@ class svnwcsub (
   $service_ensure = 'running',
   $service_name   = 'svnwcsub',
   $shell          = '/bin/bash',
+  $source         = 'svnwcsub.conf',
   $username       = 'svnwc',
 
 ){
@@ -66,7 +67,7 @@ class svnwcsub (
         mode   => 0644,
         owner  => 'root',
         group  => 'root',
-        source => "puppet:///modules/svnwcsub/${conf_file}",
+        source => "puppet:///modules/svnwcsub/${source}",
     }
 
     service { "${service_name}":
