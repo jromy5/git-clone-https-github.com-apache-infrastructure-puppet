@@ -76,6 +76,7 @@ svnwcsub::groups:
   - 'svnwc'
 svnwcsub::service_name:     'svnwcsub'
 svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.ubuntu'
 svnwcsub::username:         'svnwc'
 
 vhosts_asf::modules::modules:
