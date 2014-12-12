@@ -335,5 +335,15 @@ class subversion_server (
       hour    => '*',
       user    => 'www-data',
       command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
+    'zfs-snapshot':
+      minute  => '30',
+      hour    => '21',
+      user    => 'www-data',
+      command => '/root/bin/zfs-snapshot-hades.sh x1';
+    'svn-abi-backup':
+      minute  => '15',
+      hour    => '1',
+      user    => 'www-data',
+      command => '/home/apbackup/bin/backup/hades-daily-abi.sh';
   }
 }
