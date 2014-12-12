@@ -10,6 +10,7 @@ classes:
   - collectd::plugin::write_http
   - svnpubsub
   - vhosts_asf::vhosts
+  - vhosts_asf::modules
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -65,9 +66,14 @@ fail2ban_asf::config::filters:
       [[]client <HOST>[]] user .* not found
       [[]client <HOST>[]] user .* password mismatch
 
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
 vhosts_asf::vhosts::vhosts:
   status:
     vhost_name: '*'
     port: 80
     docroot: '/x1/www/status'
     servername: 'status.apache.org'
+
