@@ -69,5 +69,5 @@ vhosts_asf::vhosts::vhosts:
   status:
     vhost_name: '*'
     port: 80
-    docroot: '/var/www'
+    docroot: '/x1/www/status'
     servername: 'status.apache.org'
