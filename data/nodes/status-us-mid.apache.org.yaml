@@ -8,7 +8,7 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-  - svnpubsub
+  - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   
@@ -65,6 +65,19 @@ fail2ban_asf::config::filters:
       [[]client <HOST>[]] user .* authentication failure
       [[]client <HOST>[]] user .* not found
       [[]client <HOST>[]] user .* password mismatch
+
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_ensure:   'running'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::username:         'svnwc'
 
 vhosts_asf::modules::modules:
   cgi:
