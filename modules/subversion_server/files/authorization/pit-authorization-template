@@ -1091,6 +1091,9 @@ buildbot = rw
 [/websites/production/bigtop]
 @bigtop = rw
 
+[/websites/production/bookkeeper]
+@bookkeeper = rw
+
 [/websites/production/callback]
 @cordova = rw
 
