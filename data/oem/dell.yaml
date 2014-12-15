@@ -2,4 +2,3 @@
 classes:
   - dell
   - dell::openmanage
-  - dell::openmanage::debian
