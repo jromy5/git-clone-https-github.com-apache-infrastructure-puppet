@@ -57,3 +57,12 @@ Facter.add("asfcolo") do
   end
 end
 
+Facter.add("oem") do
+  setcode do
+    oem = Facter.value('bios_vendor')
+    if oem =~ /dell/i
+      "dell"
+    end
+  end
+end
+
