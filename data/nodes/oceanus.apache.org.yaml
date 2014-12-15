@@ -33,6 +33,14 @@ fail2ban_asf::config::jails:
     maxretry: 5
     enable: true
 
+fail2ban_asf::config::filters:
+  asf-httpd:
+    filterfailregex: |
+      [[]client <HOST>[]] user .* authentication failure
+      [[]client <HOST>[]] user .* not found
+      [[]client <HOST>[]] user .* password mismatch
+
+
 ntp::interfaces:
   - em1
   - lo
