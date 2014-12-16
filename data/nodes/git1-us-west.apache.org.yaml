@@ -41,32 +41,31 @@ collectd::plugin::interface::ignoreselected: true
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
-        Allow from all
+       Require all granted 
       </Directory>
       
       <Directory /x1/git/repos/asf>
-          Allow from all
+          Require all granted
       </Directory>
       
       <Directory /x1/git/repos/svn>
-          Allow from all
+          Require all granted
       </Directory>
       
       <Directory /x1/git/cgi-bin>
-          Allow from all
+          Require all granted
           Options ExecCGI
       </Directory>
       
       <Directory /etc/asfgit-admin/cgi-bin>
-          Allow from all
+         Require all granted 
           Options ExecCGI
       </Directory>
       
       <Directory /usr/local/libexec/git-core>
           <Files git-http-backend>
               Options ExecCGI
-              Order allow,deny
-              Allow from all
+              Require all granted
               Deny from env=AUTHREQUIRED
       
               AuthType Basic
@@ -92,9 +91,7 @@ gitserver_asf::custom_fragment_80: |
           RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
       
           <LocationMatch "^/repos/.*/git-receive-pack$">
-              Order allow,deny
-              Deny from all
-              Satisfy all
+              Require all denied
           </LocationMatch>
       
           Include /etc/apache2/gitweb.conf
