@@ -15,8 +15,8 @@ mod 'concat-native',
   :tag => '1.3.1'
 
 mod 'dell',
-  :git => 'https://github.com/camptocamp/puppet-dell',
-  :tag => '0.1.1'
+  :git => 'https://github.com/stumped2/puppet-dell.git',
+  :branch => 'openmanage_ubuntu'
 
 mod 'fail2ban',
   :git => 'https://github.com/netmanagers/puppet-fail2ban',
