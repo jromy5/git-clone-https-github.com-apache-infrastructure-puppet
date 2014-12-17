@@ -85,7 +85,7 @@ mod 'ssh',
 
 mod 'stahnma-epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
-  :tag => 1.0.0'
+  :tag => '1.0.0'
 
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
