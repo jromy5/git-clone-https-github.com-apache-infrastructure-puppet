@@ -14,9 +14,6 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-  - dell
-  - dell::openmanage
-  - dell::openmanage::debian
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - rootbin_asf
