@@ -6,9 +6,6 @@ classes:
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
-  - dell
-  - dell::openmanage
-  - dell::openmanage::debian
   - fail2ban_asf::config
   
 collectd::purge:  true
