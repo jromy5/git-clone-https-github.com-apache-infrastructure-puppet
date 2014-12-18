@@ -196,7 +196,7 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/ctakes/>
         LimitRequestBody 450000000
       </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/spark/>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/spark/>
         LimitRequestBody 450000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
