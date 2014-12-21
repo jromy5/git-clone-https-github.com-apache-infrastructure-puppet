@@ -1,11 +1,27 @@
 ---
 classes:
+  - fail2ban_asf::config
   - foreman
   - foreman_proxy
   - foreman::compute::vmware
   - foreman::compute::rackspace
   - foreman::compute::ec2
   - tftp
+
+fail2ban_asf::config::jails:
+  foreman:
+    filter: asf-foreman
+    action:
+      - iptables-allports
+    logpath: /usr/share/foreman/log/production.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-foreman:
+    filterfailregex: |
+      ^Started POST "/users/login" for <HOST>.*$
 
 # SSL is proxied through erebus-ssl
 foreman::ssl: false
