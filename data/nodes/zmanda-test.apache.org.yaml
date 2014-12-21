@@ -1,0 +1,8 @@
+---
+classes:
+  - collectd
+  - collectd::plugin::cpu
+  - collectd::plugin::load
+  - collectd::plugin::memory
+  - collectd::plugin::interface
+  - collectd::plugin::write_http
