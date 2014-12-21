@@ -4,6 +4,7 @@ classes:
   - apmirror
   - collectd
   - collectd::plugin::cpu
+  - collectd::plugin::df
   - collectd::plugin::disk
   - collectd::plugin::load
   - collectd::plugin::memory
