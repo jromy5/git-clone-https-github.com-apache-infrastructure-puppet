@@ -8,12 +8,6 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::status
   - apache::mod::ssl
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - rootbin_asf
@@ -60,14 +54,6 @@ apache::mod::status::apache_version: '2.3'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces: 
-  - lo
-collectd::plugin::interface::ignoreselected: true
 
 fail2ban_asf::config::jails:
   httpd-svn:

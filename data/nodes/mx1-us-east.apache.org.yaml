@@ -2,25 +2,10 @@
 classes: 
   - apache
   - clamav
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - pflogsumm
   - rbldnsd::client::setup
   - spamassassin
   - ssl::name::wildcard_apache_org
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces: 
-  - lo
-collectd::plugin::interface::ignoreselected: true
-
 
 postfix::server::clamav_enabled: 'true'
 postfix::server::check_policy_service: 'unix:private/policy-spf'

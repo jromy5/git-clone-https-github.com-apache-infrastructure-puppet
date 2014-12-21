@@ -1,12 +1,5 @@
 ---
 classes: 
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::disk
-  - collectd::plugin::interface
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::write_http
   - dovecot
   - ssl::name::wildcard_apache_org
 

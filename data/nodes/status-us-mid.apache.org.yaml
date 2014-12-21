@@ -2,12 +2,6 @@
 classes:
   - apache
   - apache::mod::status
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
@@ -36,15 +30,6 @@ apache::mod::status::apache_version: '2.3'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces: 
-  - lo
-collectd::plugin::interface::ignoreselected: true
-
 
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'

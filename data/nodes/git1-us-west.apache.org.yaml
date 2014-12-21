@@ -1,12 +1,6 @@
 ---
 classes:
   - apache
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - gitserver_asf
   - ssl::name::wildcard_apache_org
 
@@ -30,14 +24,6 @@ apache::docroot_owner:      'git'
 
 apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces: 
-  - lo
-collectd::plugin::interface::ignoreselected: true
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>

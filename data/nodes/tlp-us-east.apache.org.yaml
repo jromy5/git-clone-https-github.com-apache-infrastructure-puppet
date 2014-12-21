@@ -2,14 +2,6 @@
 classes:
   - apache
   - apmirror
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::df
-  - collectd::plugin::disk
-  - collectd::plugin::load
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
@@ -46,14 +38,6 @@ apmirror::uid:            '508'
 apmirror::gid:            '508'
 apmirror::groups:
   - 'svnwc'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces: 
-  - lo
-collectd::plugin::interface::ignoreselected: true
 
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
