@@ -14,12 +14,10 @@ base::basepackages:
   - ca-certificates
   - git
   - htop
-  - sockstat
-  - software-properties-common
-  - stunnel4
+  - stunnel
   - zsh
 
-base::install::centos::65::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos65'
+base::install::centos::65::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos6x'
 
 ldapclient::install::centos::65::tlscertpath:  '/etc/openldap/cacerts/ldap-client.pem'
 ldapclient::install::centos::65::pamhostcheck: 'yes'
