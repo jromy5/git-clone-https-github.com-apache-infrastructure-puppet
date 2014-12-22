@@ -14,7 +14,7 @@ class ldapclient::install::centos::65 (
       content => template('ldapclient/ldap.conf.erb');
     '/etc/openldap/ldap.conf':
       ensure  => link,
-      target  => '/etc/openldap/ldap.conf',
+      target  => '/etc/ldap.conf',
       require => File['/etc/ldap.conf'];
     '/etc/nss_ldap.conf':
       ensure  => link,
