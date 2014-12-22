@@ -302,6 +302,59 @@ class subversion_server (
       group   => 'svnadmins';
     }
 
+    # /repos/tck specific files
+    file {
+    '/x1/svn/repos/tck/hooks/pre-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-commit-tck',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/start-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/start-commit',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/post-commit':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-commit-tck',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/pre-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-lock',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/post-lock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-lock',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/post-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-revprop-change',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/pre-revprop-change':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-revprop-change',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/pre-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/pre-unlock',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/repos/tck/hooks/post-unlock':
+      ensure  => link,
+      target  => '/x1/svn/hooks/post-unlock',
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/x1/svn/tck-backups.d':
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    }
+
     file { '/x1/svn/asf-committers':
       owner   => 'root',
       group   => 'www-data',
