@@ -4,5 +4,5 @@ sudoers::sudoers_packages:
   - 'sudo'
 
 sudoers::sudoers_file: '/etc/sudoers'
-sudoers::sudoers_template: '/usr/local/etc/puppet/modules/sudoers/templates/centos_6x_sudoers.erb'
+sudoers::sudoers_template: '/usr/local/etc/puppet/modules/sudoers/templates/centos_65_sudoers.erb'
 

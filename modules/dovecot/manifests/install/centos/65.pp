@@ -1,4 +1,4 @@
-class dovecot::install::centos::6x (
+class dovecot::install::centos::65 (
   $ldapservers = hiera('ldapclient::ldapservers'),
 )
 {

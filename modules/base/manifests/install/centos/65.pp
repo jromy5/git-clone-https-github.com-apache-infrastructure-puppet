@@ -1,4 +1,4 @@
-class base::install::centos::6x (
+class base::install::centos::65 (
   $asfinternalrepo    = ""
   ) {
   

@@ -1,7 +1,7 @@
-class sudoers::install::centos::6x ( 
+class sudoers::install::centos::65 ( 
 ) { 
 
   file {'/etc/sudoers':
-    content => template('sudoers/centos_6x_sudoers.erb');
+    content => template('sudoers/centos_65_sudoers.erb');
   }
 }

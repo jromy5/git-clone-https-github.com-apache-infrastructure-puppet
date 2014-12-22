@@ -1,4 +1,4 @@
-class pam::install::centos::6x (
+class pam::install::centos::65 (
 ) {
 
   file { '/etc/pam.d/':

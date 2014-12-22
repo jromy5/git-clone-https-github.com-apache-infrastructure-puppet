@@ -18,10 +18,10 @@ base::basepackages:
   - stunnel4
   - zsh
 
-base::install::centos::6x::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos6x'
+base::install::centos::65::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos65'
   
-ldapclient::install::centos::6x::tlscertpath:  '/etc/openldap/cacerts/ldap-client.pem'
-ldapclient::install::centos::6x::pamhostcheck: 'yes'
+ldapclient::install::centos::65::tlscertpath:  '/etc/openldap/cacerts/ldap-client.pem'
+ldapclient::install::centos::65::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
   - openldap

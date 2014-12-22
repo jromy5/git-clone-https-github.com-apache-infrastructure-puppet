@@ -1,4 +1,4 @@
-class ldapclient::install::centos::6x (
+class ldapclient::install::centos::65 (
 
   $ldapcert      = '',
   $ldapservers   = '',
