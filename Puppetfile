@@ -18,6 +18,10 @@ mod 'dell',
   :git => 'https://github.com/stumped2/puppet-dell.git',
   :branch => 'openmanage_ubuntu'
 
+mod 'epel',
+  :git => 'https://github.com/stahnma/puppet-module-epel',
+  :tag => '1.0.0'
+
 mod 'fail2ban',
   :git => 'https://github.com/netmanagers/puppet-fail2ban',
   :branch => 'master'
@@ -67,6 +71,10 @@ mod 'puppet',
   :git => 'https://github.com/theforeman/puppet-puppet.git',
   :tag => '2.3.1'
 
+mod 'puppetlabs_yum',
+  :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
+  :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+
 mod 'rsync',
   :git => 'https://github.com/stumped2/puppetlabs-rsync.git',
   :branch => 'add_logfile'
@@ -81,15 +89,7 @@ mod 'snmp',
 
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
-  :commit => '042ec53bd282498294e7549a711027f43c61d60'
-
-mod 'epel',
-  :git => 'https://github.com/stahnma/puppet-module-epel',
-  :tag => '1.0.0'
-
-mod 'puppetlabs_yum',
-  :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
-  :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+  :commit => '5c7cc56f5bd3af25035155435d1120b8e6b08bdd'
 
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
@@ -101,5 +101,5 @@ mod 'tftp',
 
 mod 'ulimit',
   :git => 'https://github.com/pctony/puppet-ulimit.git',
-  :commit => 'e10bbc4b0750ff4f78207c1a1182984951af7399'
+  :commit => '4699a103da4e1336701804ea38297e6e9fb9e008'
 

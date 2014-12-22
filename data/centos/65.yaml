@@ -3,10 +3,11 @@ classes:
   - base
   - dnsclient
   - epel
-  - puppetlabs_yum
   - orthrus
   - postfix::server
+  - puppetlabs_yum
   - subversionclient
+  - ulimit
 
 base::basepackages:
   - bash
