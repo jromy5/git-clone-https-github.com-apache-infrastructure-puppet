@@ -3,6 +3,7 @@ classes:
   - base
   - dnsclient
   - epel
+  - puppetlabs_yum
   - orthrus
   - postfix::server
   - subversionclient
@@ -18,7 +19,7 @@ base::basepackages:
   - zsh
 
 base::install::centos::65::asfinternalrepo: 'http://dl.bintray.com/apache/asf-internal-centos65'
-  
+
 ldapclient::install::centos::65::tlscertpath:  '/etc/openldap/cacerts/ldap-client.pem'
 ldapclient::install::centos::65::pamhostcheck: 'yes'
 

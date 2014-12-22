@@ -2,9 +2,21 @@ class puppet_asf (
   $puppetconf  = '/etc/puppet/puppet.conf'
 ){
 
-  package { 'puppet':
-    ensure  => '3.6.2-1puppetlabs1',
-    require => apt::source['puppetlabs', 'puppetdeps'],
+  case $asfosname { 
+    ubuntu: {
+      package { 'puppet':
+        ensure  => '3.6.2-1puppetlabs1',
+        require => apt::source['puppetlabs', 'puppetdeps'],
+      }
+    }
+    centos: {
+      package { 'puppet':
+        ensure  => '3.6.2',
+        require => Yumrepo['puppetlabs-products', 'puppetlabs-deps'],
+      }
+    }
+    default: {
+    }
   }
 
   service { 'puppet':

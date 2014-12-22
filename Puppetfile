@@ -87,6 +87,10 @@ mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
 
+mod 'puppetlabs_yum',
+  :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
+  :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
   :tag => '4.3.2'
