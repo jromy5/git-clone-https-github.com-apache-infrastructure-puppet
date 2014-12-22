@@ -6,6 +6,7 @@ class dnsclient (
   $pkgprovider         = '',
   $resolvtemplate      = '',
   $searchorder         = '',
+  $dhclienthooksfile   = '',
 ) {
 
   package { $packages: 
@@ -15,7 +16,7 @@ class dnsclient (
   file { 
     '/etc/resolv.conf':
       content => template('dnsclient/resolv.conf.erb');
-    '/etc/dhcp/dhclient-enter-hooks.d/nodnsupdate':
+    $dhclienthooksfile:
       content => "#!/bin/sh\n make_resolv_conf(){ \n : \n }",
       mode    => '0750';
   }

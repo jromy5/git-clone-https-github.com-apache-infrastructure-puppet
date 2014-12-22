@@ -2,3 +2,5 @@
 
 dnsclient::packages:
   - 'dnsutils'
+
+dnsclient::dhclienthooksfile: '/etc/dhcp/dhclient-enter-hooks.d/nodnsupdate'
