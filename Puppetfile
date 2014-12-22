@@ -83,7 +83,7 @@ mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
   :commit => '042ec53bd282498294e7549a711027f43c61d60'
 
-mod 'stahnma-epel',
+mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
 
