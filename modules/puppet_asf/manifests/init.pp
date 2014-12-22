@@ -11,7 +11,7 @@ class puppet_asf (
     }
     centos: {
       package { 'puppet':
-        ensure  => '3.6.2',
+        ensure  => '3.6.2-1.el6',
         require => Yumrepo['puppetlabs-products', 'puppetlabs-deps'],
       }
     }
