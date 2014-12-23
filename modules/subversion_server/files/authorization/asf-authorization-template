@@ -168,7 +168,7 @@ felix={ldap:cn=felix,ou=groups,dc=apache,dc=org}
 felix-pmc={reuse:pit-authorization:felix-pmc}
 flex={ldap:cn=flex,ou=groups,dc=apache,dc=org}
 flex-pmc={reuse:pit-authorization:flex-pmc}
-flink=aljoscha,gates,hsaputra,hashutosh,ktzoumas,fhueske,gyfora,mbalassi,omalley,rmetzger,sewen,srowen,ssc,tdunning,trohrmann,uce,warneke
+flink=aljoscha,gates,hsaputra,ktzoumas,fhueske,gyfora,mbalassi,rmetzger,sewen,ssc,trohrmann,uce,warneke,twalthr,vasia
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
@@ -233,6 +233,7 @@ knox={ldap:cn=knox,ou=groups,dc=apache,dc=org}
 knox-pmc={reuse:pit-authorization:knox-pmc}
 kafka={ldap:cn=kafka,ou=groups,dc=apache,dc=org}
 kafka-pmc={reuse:pit-authorization:kafka-pmc}
+kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,hsaputra
 # kato=antelder,geirm,rdonkin,sgoyal,riccole,ccristal,monteith,spoole,simuvid
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
@@ -310,7 +311,7 @@ openoffice={ldap:cn=openoffice,ou=groups,dc=apache,dc=org}
 openoffice-pmc={reuse:pit-authorization:openoffice-pmc}
 openwebbeans={ldap:cn=openwebbeans,ou=groups,dc=apache,dc=org}
 openwebbeans-pmc={reuse:pit-authorization:openwebbeans-pmc}
-parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue
+parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue,marcel,mlacour,rpecqueur
 pdfbox={ldap:cn=pdfbox,ou=groups,dc=apache,dc=org}
 pdfbox-pmc={reuse:pit-authorization:pdfbox-pmc}
 pig={ldap:cn=pig,ou=groups,dc=apache,dc=org}
@@ -931,6 +932,9 @@ ea = rw
 [/incubator/kato]
 * = r
 
+[/incubator/kylin]
+@kylin = rw
+
 [/incubator/lcf]
 @lucene-connectors = rw
 
@@ -1297,11 +1301,11 @@ ea = rw
 [/mesos/trunk]
 * = r
 
-[/mina]
-@mina = r
-
 [/metamodel]
 @metamodel = rw
+
+[/mina]
+@mina = r
 
 [/mina/metadata]
 @mina = rw
