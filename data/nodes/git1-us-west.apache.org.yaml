@@ -69,12 +69,16 @@ gitserver_asf::custom_fragment_80: |
           </Files>
       </Directory>
       
+          RewriteEngine On
+      
           RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
           RewriteRule .* - [F]
       
           RewriteRule ^/repos/infra.* https://git-wip-us.apache.org/repos/infra [L,R]
       
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          ## Deprecated in favour of AliasMatch as this is *always* filepath happy. Rewrite isn't.
+          ## RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
       
           <LocationMatch "^/repos/.*/git-receive-pack$">
               Require all denied
@@ -103,10 +107,14 @@ gitserver_asf::custom_fragment_443: |
               Deny from all
           </LocationMatch>
       
+          RewriteEngine On
+      
           RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
           RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
       
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          ## Deprecated in favour of AliasMatch as this is *always* filepath happy. Rewrite isn't.
+          ## RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
+          AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
       
           BrowserMatch ".*MSIE.*" \
               nokeepalive ssl-unclean-shutdown \
