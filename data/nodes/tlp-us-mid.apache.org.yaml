@@ -1871,7 +1871,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'tomee.apache.org'
-    docroot: '/var/www/tomee.apache.org'
+    docroot: '/var/www/tomee.apache.org/content'
     docroot_owner: "%{hiera('svnwcsub::username')}"
     docroot_group: "%{hiera('svnwcsub::groupname')}"
     serveraliases:
@@ -1900,7 +1900,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'tomee.apache.org'
-    docroot: '/var/www/tomee.apache.org'
+    docroot: '/var/www/tomee.apache.org/content'
     docroot_owner: "%{hiera('svnwcsub::username')}"
     docroot_group: "%{hiera('svnwcsub::groupname')}"
     serveraliases:
