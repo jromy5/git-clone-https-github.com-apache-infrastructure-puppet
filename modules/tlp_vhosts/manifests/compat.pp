@@ -24,6 +24,13 @@ class tlp_vhosts::compat {
         target  => '/var',
     }
 
+    file { '/dist':
+        ensure  => 'link',
+        target  => '/var/www/www.apache.org/dist',
+        require => File['/var/www/www.apache.org/dist'],
+    }
+
+
     file { '/usr/local/bin/python2.7':
         ensure  => 'link',
         target  => '/usr/bin/python2.7',
