@@ -1760,6 +1760,10 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
+      <Directory /var/www/trafficserver.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
       AddType text/plain sha512
       RewriteEngine On
 
@@ -1828,6 +1832,10 @@ vhosts_asf::vhosts::vhosts:
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
+      <Directory /var/www/trafficserver.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
       <Directory /var/www/trafficserver.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
