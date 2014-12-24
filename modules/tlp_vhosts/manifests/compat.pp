@@ -1,5 +1,5 @@
 
-class tlp_vhosts::compat inherits tlp_vhosts {
+class tlp_vhosts::compat {
 
     # Create wget and rsync symlink to the fbsd locations
     # to appease the hardcoded binary locations in the
