@@ -396,6 +396,10 @@ vhosts_asf::vhosts::vhosts:
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
+      <Location "/server-status">
+        SetHandler server-status
+      </Location>
+
       Use BlockSvn
 
   apache-ssl:
@@ -492,6 +496,10 @@ vhosts_asf::vhosts::vhosts:
       <Directory /var/www/www.apache.org/dist/httpd>
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
+
+      <Location "/server-status">
+        SetHandler server-status
+      </Location>
 
       Use BlockSvn
 
