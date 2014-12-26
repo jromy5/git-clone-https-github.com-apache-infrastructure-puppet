@@ -33,6 +33,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot         => '/var/www',
+        manage_docroot  => false,
         directories     => [
             {
                 path            => '/var/www',
@@ -110,6 +111,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => '80',
         virtual_docroot => '/var/www/%1.0.apache.org',
         docroot         => '/var/www',
+        manage_docroot  => false,
         directories     => [
             {
                 path            => '/var/www',
@@ -138,6 +140,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.openoffice.org',
         serveraliases   => ['ooo-site.apache.org', '*.openoffice.org', 'openoffice.org'],
         docroot         => '/var/www/ooo-site.apache.org/content',
+        manage_docroot  => false,
         custom_fragment => '
         Use OpenOffice http
 	<Files ~ "\.html$">
@@ -154,6 +157,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'uima.apache.org',
         serveraliases   => ['uima.*.apache.org'],
         docroot         => '/var/www/uima.apache.org/pubsub',
+        manage_docroot  => false,
         directories     => [
             {
                 path        => '/var/www/uima.apache.org/pubsub',
@@ -175,6 +179,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'tomee.apache.org',
         serveraliases   => ['tomee.*.apache.org', 'openejb.apache.org', 'openejb.*.apache.org'],
         docroot         => '/var/www/tomee.apache.org/content',
+        manage_docroot  => false,
         rewrites        => [
             {
                 rewrite_rule => ['^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico']
@@ -190,6 +195,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'spamassassin.apache.org',
         serveraliases   => ['spamassassin.*.apache.org'],
         docroot         => '/var/www/spamassassin.apache.org',
+        manage_docroot  => false,
         directories     => [
             {
                 path        => '/var/www/spamassassin.apache.org',
@@ -224,6 +230,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'xml.apache.org',
         serveraliases   => ['xml.*.apache.org'],
         docroot         => '/var/www/xml.apache.org',
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/websrc/', '/from-cvs/'],
         redirect_dest   => ['http://cvs.apache.org/', 'http://cvs.apache.org/snapshots/'],
@@ -245,6 +252,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'ws.apache.org',
         serveraliases   => ['ws.*.apache.org'],
         docroot         => '/var/www/ws.apache.org',
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/xml-rpc'],
         redirect_dest   => ['http://ws.apache.org/xmlrpc'],
@@ -257,6 +265,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'xalan.apache.org',
         serveraliases   => ['xalan.*.apache.org'],
         docroot         => '/var/www/xalan.apache.org',
+        manage_docroot  => false,
         custom_fragment => '
         <Location /xalan/samples/applet>
             deny from all
@@ -271,6 +280,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'xerces.apache.org',
         serveraliases   => 'xerces.*.apache.org',
         docroot         => '/var/www/xerces.apache.org',
+        manage_docroot  => false,
         directories     => [
             {
                 path        => '/var/www/xerces.apache.org',
@@ -297,6 +307,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'perl.apache.org',
         serveraliases   => ['apache.perl.org', 'perl-new.apache.org', 'perl.*.apache.org'],
         docroot         => '/var/www/perl.apache.org',
+        manage_docroot  => false,
         setenv          => ['SWISH_BINARY_PATH /usr/bin/swish-e'],
         directories     => [
             {
@@ -370,6 +381,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => 80,
         servername      => 'jspwiki.apache.org',
         docroot         => '/var/www/jspwiki.apache.org/content',
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/doc', '/wiki'],
         redirect_dest   => ['http://jspwiki-doc.apache.org', 'http://jspwiki-wiki.apache.org'],
@@ -382,6 +394,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'gump.apache.org',
         serveraliases   => ['gump.*.apache.org'],
         docroot         => '/var/www/gump.apache.org',
+        manage_docroot  => false,
         custom_fragment => '
             #
             # Start the expires heading
@@ -429,6 +442,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername              => 'www.apache.org',
         serveraliases           => ['apache.org', 'apachegroup.org', 'www.apachegroup.org', 'www.*.apache.org'],
         docroot                 => '/var/www/www.apache.org/content',
+        manage_docroot  => false,
         directories             => [
             {
                 path            => '/var/www/www.apache.org/content',
@@ -553,6 +567,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'httpd.apache.org',
         serveraliases   => ['httpd.*.apache.org'],
         docroot         => '/var/www/httpd.apache.org/content',
+        manage_docroot  => false,
         directories     => [
             {
                 path        => '/var/www/httpd.apache.org/content',
@@ -701,6 +716,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.any23.org',
         serveraliases   => ['any23.org', 'any23.com', 'www.any23.com'],
         docroot         => '/var/www/any23.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://any23.apache.org'],
@@ -713,6 +729,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.cloudstack.org',
         serveraliases   => ['cloudstack.org', 'cloudstack.com', 'www.cloudstack.com'],
         docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://cloudstack.apache.org'],
@@ -724,6 +741,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => 80,
         servername      => 'docs.cloudstack.org',
         docroot         => '/var/www/cloudstack.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://cloudstack.apache.org/docs/'],
@@ -736,6 +754,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.deltaspike.org',
         serveraliases   => ['deltaspike.org'],
         docroot         => '/var/www/deltaspike.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://deltaspike.apache.org'],
@@ -748,6 +767,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.jspwiki.org',
         serveraliases   => ['jspwiki.org'],
         docroot         => '/var/www/jspwiki.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://jspwiki.apache.org/'],
@@ -760,6 +780,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.libcloud.org',
         serveraliases   => ['libcloud.org', 'www.libcloud.net', 'libcloud.net', 'www.libcloud.com', 'libcloud.com'],
         docroot         => '/var/www/libcloud.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://libcloud.apache.org/'],
@@ -775,6 +796,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
                             'www.odfcoalition.net',  'odfcoalition.net', 'www.odfcoalition.org', 'odfcoalition.org',
                             'www.odftoolkit.com', 'odftoolkit.com', 'www.odftoolkit.net', 'odftoolkit.net'],
         docroot         => '/var/www/incubator.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://incubator.apache.org/odftoolkit/'],
@@ -794,6 +816,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
                             'www.uk.spamassassin.org', 'www.us.spamassassin.org', 'www.useast.spamassassin.org',
                             'www.uswest.spamassassin.org'],
         docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://spamassassin.apache.org/'],
@@ -805,6 +828,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port            => 80,
         servername      => 'wiki.spamassassin.org',
         docroot         => '/var/www/spamassassin.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/w/', '/'],
         redirect_dest   => [' http://wiki.apache.org/spamassassin/', 'http://wiki.apache.org/spamassassin/'], 
@@ -816,6 +840,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port                    => 80,
         servername              => 'www.subversion.org',
         docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirectmatch_status    => ['permanent'],
         redirectmatch_regexp    => ['^'],
         redirectmatch_dest      => ['http://subversion.apache.org/'],
@@ -828,6 +853,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'subversion.apache.org',
         serveraliases   => ['www.subversion.apache.org', 'subversion.*.apache.org'],
         docroot         => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         directories     => [
             { 
                 path            => '/var/www/subversion.apache.org',
@@ -849,6 +875,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         port                    => 80,
         servername              => 'svn.collab.net',
         docroot                 => '/var/www/subversion.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirectmatch_status    => ['permanent'],
         redirectmatch_regexp    => ['^'],
         redirectmatch_dest      => ['https://subversion.apache.org/source-code'],
@@ -861,6 +888,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername              => 'webservices.apache.org',
         serveraliases           => 'webservices.*.apache.org',
         docroot                 => '/var/www/ws.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status         => ['permanent'],
         redirect_source         => ['/'],
         redirect_dest           => ['http://ws.apache.org/'],
@@ -873,6 +901,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.ofbiz.org',
         serveraliases   => ['ofbiz.org'],
         docroot         => '/var/www/ofbiz.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         rewrites        => [
             {
                 comment         => 'bigfiles.ofbiz.org',
@@ -889,6 +918,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.myfaces.org',
         serveraliases   => ['myfaces.org'],
         docroot         => '/var/www/myfaces.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://myfaces.apache.org'],
@@ -901,6 +931,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'httpcomponents.apache.org',
         serveraliases   => ['httpcomponents.*.apache.org'],
         docroot         => '/var/www/hc.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://hc.apache.org/'],
@@ -913,6 +944,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'wicketframework.org',
         serveraliases   => ['wicket-framework.org'],
         docroot         => '/var/www/wicket.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://wicket.apache.org/'],
@@ -925,6 +957,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'quetzalcoatl.apache.org',
         serveraliases   => ['python.apache.org'],
         docroot         => '/var/www/quetz.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://quetz.apache.org/'],
@@ -937,6 +970,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'jackrabbit.apache.org',
         serveraliases   => ['jackrabbit.*.apache.org'],
         docroot         => '/var/www/jackrabbit.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         rewrites        => [
             {
                 rewrite_rule => ['^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico']
@@ -957,6 +991,7 @@ class tlp_vhosts::config inherits tlp_vhosts {
         servername      => 'www.jclouds.org',
         serveraliases   => ['www.jclouds.net', 'www.jclouds.com', 'jclouds.org', 'jclouds.net', 'jclouds.com'],
         docroot         => '/var/www/jclouds.apache.org', # apache puppet module requires a docroot defined
+        manage_docroot  => false,
         redirect_status => ['permanent'],
         redirect_source => ['/'],
         redirect_dest   => ['http://jclouds.apache.org/'],
