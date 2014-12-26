@@ -235,8 +235,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.any23.apache.org'
     docroot:    '/var/www/any23.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'any23.org'
       - 'any23.com'
@@ -252,8 +251,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.openoffice.org'
     docroot: '/var/www/openoffice.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'ooo-site.apache.org'
       - '*.openoffice.org'
@@ -278,8 +276,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'www.openoffice.org'
     docroot: '/var/www/openoffice.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'ooo-site.apache.org'
       - '*.openoffice.org'
@@ -306,6 +303,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.apache.org'
     docroot: '/var/www/www.apache.org/content'
+    manage_docroot: false
     serveraliases:
       - 'apache.org'
       - 'apachegroup.org'
@@ -407,6 +405,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'www.apache.org'
     docroot: '/var/www/www.apache.org/content'
+    manage_docroot: false
     serveraliases:
       - 'apache.org'
       - 'apachegroup.org'
@@ -507,8 +506,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.cloudstack.org'
     docroot: '/var/www/cloudstack.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'cloudstack.org'
       - 'cloudstack.com'
@@ -524,8 +522,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'docs.cloudstack.org'
     docroot: '/var/www/cloudstack.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -537,8 +534,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.deltaspike.org'
     docroot: '/var/www/deltaspike.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'deltaspike.org'
     serveradmin: 'infrastructure@apache.org'
@@ -552,8 +548,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'gump.apache.org'
     docroot: '/var/www/gump.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -582,8 +577,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'gump.apache.org'
     docroot: '/var/www/gump.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -610,8 +604,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'httpcomponents.apache.org'
     docroot: '/var/www/hc.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -625,8 +618,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'httpcomponents.apache.org'
     docroot: '/var/www/hc.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -638,8 +630,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'httpd.apache.org'
     docroot: '/var/www/httpd.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'httpd.*.apache.org'
     directories:
@@ -789,8 +780,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'httpd.apache.org'
     docroot: '/var/www/httpd.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'httpd.*.apache.org'
     directories:
@@ -942,6 +932,7 @@ vhosts_asf::vhosts::vhosts:
       - '*.incubaotr.*.apache.org'
     virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
+    manage_docroot: false
     directories:
       -
         path: '/var/www'
@@ -1004,6 +995,7 @@ vhosts_asf::vhosts::vhosts:
       - '*.incubaotr.*.apache.org'
     virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
+    manage_docroot: false
     ssl_cert: '/etc/ssl/certs/wildcard.incubator.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.incubator.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.incubator.apache.org.key'
@@ -1065,8 +1057,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'jackrabbit.*.apache.org'
     docroot: '/var/www/jackrabbit.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     override:
       - 'All'
     serveradmin: 'infrastructure@apache.org'
@@ -1095,8 +1086,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'jackrabbit.*.apache.org'
     docroot: '/var/www/jackrabbit.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     override:
       - 'All'
     serveradmin: 'infrastructure@apache.org'
@@ -1127,8 +1117,7 @@ vhosts_asf::vhosts::vhosts:
       - 'jclouds.net'
       - 'jclouds.com'
     docroot: '/var/www/jclouds.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1142,8 +1131,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1155,8 +1143,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'jspwiki.apache.org'
     docroot: '/var/www/jspwiki.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1170,8 +1157,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'jspwiki.apache.org'
     docroot: '/var/www/jspwiki.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1184,8 +1170,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.libcloud.org'
     docroot: '/var/www/libcloud.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'libcloud.org'
       - 'www.libcloud.net'
@@ -1203,8 +1188,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.myfaces.org'
     docroot: '/var/www/myfaces.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'myfaces.org'
     serveradmin: 'infrastructure@apache.org'
@@ -1218,8 +1202,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.odftoolkit.org'
     docroot: '/var/www/odftoolkit.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'odftoolkit.org'
       - 'www.odf-toolkit.com'
@@ -1249,8 +1232,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.ofbiz.org'
     docroot: '/var/www/ofbiz.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'ofbiz.org'
     serveradmin: 'infrastructure@apache.org'
@@ -1271,8 +1253,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'perl.apache.org'
     docroot: '/var/www/perl.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'apache.perl.org'
       - 'perl-new.apache.org'
@@ -1413,8 +1394,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'perl.apache.org'
     docroot: '/var/www/perl.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'apache.perl.org'
       - 'perl-new.apache.org'
@@ -1553,8 +1533,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'quetzalcoatl.apache.org'
     docroot: '/var/www/quetz.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'python.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -1569,8 +1548,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'quetzalcoatl.apache.org'
     docroot: '/var/www/quetz.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'python.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -1583,8 +1561,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/var/www/spamassassin.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     servername: 'spamassassin.apache.org'
     serveraliases:
       - 'spamassassin.*.apache.org'
@@ -1626,8 +1603,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     docroot: '/var/www/spamassassin.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     servername: 'spamassassin.apache.org'
     serveraliases:
       - 'spamassassin.*.apache.org'
@@ -1669,8 +1645,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.spamassassin.org'
     docroot: '/var/www/spamassassin.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'spamassassin.org'
       - 'au.spamassassin.org'
@@ -1705,8 +1680,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.subversion.org'
     docroot: '/var/www/subversion.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'subversion.org'
       - 'www.subversion.net'
@@ -1724,8 +1698,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'svn.collab.net'
     docroot: '/var/www/subversion.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1738,6 +1711,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'www.apache.org'
     virtual_docroot: '/var/www/www.apache.org'
     docroot: '/var/www'
+    manage_docroot: false
     serveraliases:
       - '*.apache.org'
     directories:
@@ -1814,6 +1788,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'www.apache.org'
     virtual_docroot: '/var/www/www.apache.org'
     docroot: '/var/www'
+    manage_docroot: false
     serveraliases:
       - '*.apache.org'
     directories:
@@ -1887,8 +1862,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'tomee.apache.org'
     docroot: '/var/www/tomee.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'tomee.*.apache.org'
       - 'openejb.apache.org'
@@ -1916,8 +1890,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'tomee.apache.org'
     docroot: '/var/www/tomee.apache.org/content'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'tomee.*.apache.org'
       - 'openejb.apache.org'
@@ -1944,8 +1917,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'uima.apache.org'
     docroot: '/var/www/uima.apache.org/pubsub'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'uima.*.apache.org'
     directories:
@@ -1978,8 +1950,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'uima.apache.org'
     docroot: '/var/www/uima.apache.org/pubsub'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'uima.*.apache.org'
     directories:
@@ -2011,8 +1982,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'webservices.apache.org'
     docroot: '/var/www/ws.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2027,8 +1997,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'webservices.apache.org'
     docroot: '/var/www/ws.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2042,8 +2011,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'wicketframework.apache.org'
     docroot: '/var/www/wicket.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2058,8 +2026,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'wicketframework.apache.org'
     docroot: '/var/www/wicket.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2073,8 +2040,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'wiki.spamassassin.org'
     docroot: '/var/www/spamassassin.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2087,8 +2053,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'ws.apache.org'
     docroot: '/var/www/ws.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2126,8 +2091,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'ws.apache.org'
     docroot: '/var/www/ws.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2164,8 +2128,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'www.jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'jspwiki.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2179,8 +2142,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'xalan.apache.org'
     docroot: '/var/www/xalan.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2205,8 +2167,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'xalan.apache.org'
     docroot: '/var/www/xalan.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2230,8 +2191,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'xerces.apache.org'
     docroot: '/var/www/xerces.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xerces.*.apache.org'
     directories:
@@ -2271,8 +2231,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'xerces.apache.org'
     docroot: '/var/www/xerces.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xerces.*.apache.org'
     directories:
@@ -2311,8 +2270,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'xml.apache.org'
     docroot: '/var/www/xml.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
@@ -2358,8 +2316,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'xml.apache.org'
     docroot: '/var/www/xml.apache.org'
-    docroot_owner: "%{hiera('svnwcsub::username')}"
-    docroot_group: "%{hiera('svnwcsub::groupname')}"
+    manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
     serveradmin: 'infrastructure@apache.org'
