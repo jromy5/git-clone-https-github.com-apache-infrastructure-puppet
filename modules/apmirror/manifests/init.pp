@@ -10,6 +10,8 @@ class apmirror (
   $username       = 'apmirror',
 ){
 
+   require svnwcsub
+
    user { "${username}":
         name        => "${username}",
         ensure      => present,
@@ -50,6 +52,52 @@ class apmirror (
     file { '/usr/local/bin/wget':
         ensure  => 'link',
         target  => '/usr/bin/wget',
+    }
+
+    # create mirmon file to allow mirror priming to work
+
+    file { 'mirmon.state':
+        path    => "/home/${username}/mirrors/mirmon/mirmon.state",
+        group   => "${groupname}",
+        owner   => "${username}",
+        ensure  => 'file',
+        require => [ Exec['apmirror-co'], User["${username}"] ],
+    }
+
+    file { 'mirmon.mlist':
+        path    => "/home/${username}/mirrors/mirmon/mirmon.mlist",
+        group   => "${groupname}",
+        owner   => "${username}",
+        ensure  => 'file',
+        require => [ Exec['apmirror-co'], User["${username}"] ],
+    }
+
+    exec { 'apache.org co':
+        command => 'svn co https://svn-master.apache.org/repos/infra/websites/production/www/ www.apache.org',
+        path => '/usr/bin:/bin/',
+        cwd => '/var/www/',
+        user => 'svnwc',
+        group => "${groupname}",
+        creates => '/var/www/www.apache.org/content',
+        require => [ Package['subversion'], User['svnwc'], Group["${groupname}"] ],
+    }
+
+    file { 'mirrors':
+        path => '/var/www/www.apache.org/content/mirrors',
+        mode => '2775',
+        owner => 'svnwc',
+        group => "${groupname}",
+        require => Exec['apache.org co'],
+    }
+
+    exec { 'mirmon list prime':
+        command => 'mirmon -get "all"',
+        path    => "/usr/local/bin:/usr/bin:/bin:/home/${username}/mirrors/mirmon",
+        cwd     => "/home/${username}/mirrors/mirmon/",
+        user    => "${username}",
+        group   => "${groupname}",
+        creates => "/home/${username}/mirrors/mirmon/url-mods.new",
+        require => [ File['mirmon.state'], File['mirmon.mlist'], Exec['apache.org co'], File['mirrors'] ],
     }
 
 }
