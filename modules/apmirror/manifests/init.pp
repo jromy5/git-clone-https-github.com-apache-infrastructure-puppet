@@ -64,40 +64,42 @@ class apmirror (
         require => [ Exec['apmirror-co'], User["${username}"] ],
     }
 
-    file { 'mirmon.mlist':
-        path    => "/home/${username}/mirrors/mirmon/mirmon.mlist",
+    exec { 'create mirmon.mlist':
+        command => 'perl mk_mlist mirrors.list mirmon/mirmon.mlist',
+        path    => '/usr/bin:/bin',
+        cwd     => "/home/${username}/mirrors",
+        user    => "${username}",
         group   => "${groupname}",
-        owner   => "${username}",
-        ensure  => 'file',
-        require => [ Exec['apmirror-co'], User["${username}"] ],
+        creates => "/home/${username}/mirrors/mirmon/mirmon.mlist",
+        require => Exec['apmirror-co'],
     }
 
     exec { 'apache.org co':
         command => 'svn co https://svn-master.apache.org/repos/infra/websites/production/www/ www.apache.org',
-        path => '/usr/bin:/bin/',
-        cwd => '/var/www/',
-        user => 'svnwc',
-        group => "${groupname}",
+        path    => '/usr/bin:/bin/',
+        cwd     => '/var/www/',
+        user    => 'svnwc',
+        group   => "${groupname}",
         creates => '/var/www/www.apache.org/content',
         require => [ Package['subversion'], User['svnwc'], Group["${groupname}"] ],
     }
 
     file { 'mirrors':
-        path => '/var/www/www.apache.org/content/mirrors',
-        mode => '2775',
-        owner => 'svnwc',
-        group => "${groupname}",
+        path    => '/var/www/www.apache.org/content/mirrors',
+        mode    => '2775',
+        owner   => 'svnwc',
+        group   => "${groupname}",
         require => Exec['apache.org co'],
     }
 
     exec { 'mirmon list prime':
-        command => 'mirmon -get "all"',
+        command => 'perl mirmon -get "all"',
         path    => "/usr/local/bin:/usr/bin:/bin:/home/${username}/mirrors/mirmon",
         cwd     => "/home/${username}/mirrors/mirmon/",
         user    => "${username}",
         group   => "${groupname}",
         creates => "/home/${username}/mirrors/mirmon/url-mods.new",
-        require => [ File['mirmon.state'], File['mirmon.mlist'], Exec['apache.org co'], File['mirrors'] ],
+        require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['mirrors'] ],
     }
 
 }
