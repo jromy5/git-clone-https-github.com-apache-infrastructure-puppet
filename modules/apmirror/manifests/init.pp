@@ -10,8 +10,6 @@ class apmirror (
   $username       = 'apmirror',
 ){
 
-   require svnwcsub
-
    user { "${username}":
         name        => "${username}",
         ensure      => present,
