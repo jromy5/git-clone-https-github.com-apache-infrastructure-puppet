@@ -42,7 +42,6 @@ apmirror::groups:
 svnwcsub::gid:              '9997'
 svnwcsub::uid:              '9997'
 svnwcsub::conf_file:        'svnwcsub.conf'
-svnwcsub::service_ensure:   'running'
 svnwcsub:::conf_path:       '/etc/'
 svnwcsub::groupname:        'svnwc'
 svnwcsub::groups:
