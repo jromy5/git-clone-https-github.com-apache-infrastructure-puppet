@@ -5,8 +5,9 @@ class apmirror (
   $groupname      = 'apmirror',
   $groups         = [],
   $service_ensure = 'running',
-  $service_name   = 'svnwc',
   $shell          = '/bin/bash',
+  $svnwc_group    = 'svnwc',
+  $svnwc_user     = 'svnwc',
   $username       = 'apmirror',
 ){
 
@@ -17,15 +18,25 @@ class apmirror (
         shell       => "${shell}",
         uid         => "${uid}",
         gid         => "${groupname}",
-        groups      => "${groups}",
+        groups      => $groups,
         managehome  => true,
-        require     => [ Group["${groupname}"], Group['svnwc'] ],
+        require     => [ Group["${groupname}"], Group["${apbackup::username}"] ],
     }
 
     group { "${groupname}":
-        name        => "${groupname}",
-        ensure      => present,
-        gid         => "${gid}",
+        name   => "${groupname}",
+        ensure => present,
+        gid    => "${gid}",
+    }
+
+    file { 'apmirror profile':
+        path    => "/home/${username}/.profile",
+        ensure  => 'present',
+        mode    => '0644',
+        owner   => "${username}",
+        group   => "${groupname}",
+        source  => 'puppet:///modules/apmirror/home/profile',
+        require => User["${username}"],
     }
 
     exec { 'apmirror-co':
@@ -76,18 +87,19 @@ class apmirror (
         command => 'svn co https://svn-master.apache.org/repos/infra/websites/production/www/ www.apache.org',
         path    => '/usr/bin:/bin/',
         cwd     => '/var/www/',
-        user    => 'svnwc',
-        group   => "${groupname}",
+        user    => "${svnwc_user}",
+        group   => "${svnwc_group}",
         creates => '/var/www/www.apache.org/content',
-        require => [ Package['subversion'], User['svnwc'], Group["${groupname}"] ],
+        require => [ Package['subversion'], User["${svnwc_user}"], Group["${groupname}"], Class['apache'] ],
     }
 
-    file { 'mirrors':
+    file { 'apmirror write to mirrors':
         path    => '/var/www/www.apache.org/content/mirrors',
+        ensure  => 'directory',
         mode    => '2775',
-        owner   => 'svnwc',
+        owner   => "${svnwc_user}",
         group   => "${groupname}",
-        require => Exec['apache.org co'],
+        require => [ Exec['apache.org co'], User["${svnwc_user}"] ],
     }
 
     exec { 'mirmon list prime':
@@ -97,6 +109,7 @@ class apmirror (
         user    => "${username}",
         group   => "${groupname}",
         creates => "/home/${username}/mirrors/mirmon/url-mods.new",
+        timeout => 600, # increase to this incase the host takes a while to execute the mirror list priming
         require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['mirrors'] ],
     }
 

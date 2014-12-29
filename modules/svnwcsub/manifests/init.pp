@@ -14,7 +14,7 @@ class svnwcsub (
 
 ){
 
-   require svnpubsub::common
+  include svnpubsub::common
 
    user { "${username}":
         name       => "${username}",
@@ -23,16 +23,27 @@ class svnwcsub (
         shell      => "${shell}",
         uid        => "${uid}",
         gid        => "${groupname}",
-        groups     => "${groups}",
+        groups     => $groups,
         managehome => true,
-        require    => Group["${groupname}"],
+        require    => [ Group["${groupname}"], User["${apbackup::username}"] ],
     }
 
     group { "${groupname}":
         name   => "${groupname}",
         ensure => present,
         gid    => "${gid}",
-    } 
+    }
+
+    file { 'svnwc profile':
+        path    => "/home/${username}/.profile",
+        ensure  => 'present',
+        mode    => '0644',
+        owner   => "${username}",
+        group   => "${groupname}",
+        source  => 'puppet:///modules/svnwcsub/home/profile',
+        require => User["${username}"],
+    }
+
 
     file { "/var/log/${service_name}":
         ensure => directory,

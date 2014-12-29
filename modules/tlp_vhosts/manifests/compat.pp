@@ -40,15 +40,15 @@ class tlp_vhosts::compat {
 
     file { $apache_org_dirs:
         ensure  => 'directory',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         mode    => '2775',
     }
 
     file { '.htaccess':
         ensure  => 'present',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         path    => '/var/www/www.apache.org/dist/.htaccess',
         source  => 'puppet:///modules/tlp_vhosts/dist/.htaccess',
         require => File['/var/www/www.apache.org/dist'],
@@ -56,8 +56,8 @@ class tlp_vhosts::compat {
 
     file { '.message':
         ensure  => 'present',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         path    => '/var/www/www.apache.org/dist/.message',
         source  => 'puppet:///modules/tlp_vhosts/dist/.message',
         require => File['/var/www/www.apache.org/dist'],
@@ -65,8 +65,8 @@ class tlp_vhosts::compat {
 
     file { 'favicon.ico':
         ensure  => 'present',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         path    => '/var/www/www.apache.org/dist/favicon.ico',
         source  => 'puppet:///modules/tlp_vhosts/dist/favicon.ico',
         require => File['/var/www/www.apache.org/dist'],
@@ -74,8 +74,8 @@ class tlp_vhosts::compat {
 
     file { 'HEADER.html':
         ensure  => 'present',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         path    => '/var/www/www.apache.org/dist/HEADER.html',
         source  => 'puppet:///modules/tlp_vhosts/dist/HEADER.html',
         require => File['/var/www/www.apache.org/dist'],
@@ -83,8 +83,8 @@ class tlp_vhosts::compat {
 
     file { 'README.html':
         ensure  => 'present',
-        owner   => 'svnwc',
-        group   => 'apmirror',
+        owner   => "${svnwcsub::username}",
+        group   => "${svnwcsub::groupname}",
         path    => '/var/www/www.apache.org/dist/README.html',
         source  => 'puppet:///modules/tlp_vhosts/dist/README.html',
         require => File['/var/www/www.apache.org/dist'],
@@ -92,8 +92,8 @@ class tlp_vhosts::compat {
 
     file { '/var/www/www.apache.org/dist/zzz':
         ensure  => 'directory',
-        owner   => 'apmirror',
-        group   => 'apmirror',
+        owner   => "${apmirror::username}",
+        group   => "${apbackup::groupname}",
         source  => 'puppet:///modules/tlp_vhosts/zzz',
         recurse => true,
         require => File['/var/www/www.apache.org/dist'],
