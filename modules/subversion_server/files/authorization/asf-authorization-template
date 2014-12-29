@@ -238,7 +238,7 @@ kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
 labs-pmc={reuse:pit-authorization:labs-pmc}
-lens=amareshwari,cdouglas,gunther,jbonofre,jdhok,jghoman,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
+lens=amareshwari,cdouglas,gunther,jbonofre,jdhok,jghoman,prongs,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
 lenya={ldap:cn=lenya,ou=groups,dc=apache,dc=org}
 lenya-pmc={reuse:pit-authorization:lenya-pmc}
 #Lenya summer of code group
