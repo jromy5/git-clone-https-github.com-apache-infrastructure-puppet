@@ -93,7 +93,7 @@ class apmirror (
         require => [ Package['subversion'], User["${svnwc_user}"], Group["${groupname}"], Class['apache'] ],
     }
 
-    file { 'write_mirrors':
+    file { 'writable_mirrors':
         path    => '/var/www/www.apache.org/content/mirrors',
         ensure  => 'directory',
         mode    => '2775',
@@ -110,7 +110,7 @@ class apmirror (
         group   => "${groupname}",
         creates => "/home/${username}/mirrors/mirmon/url-mods.new",
         timeout => 600, # increase to this incase the host takes a while to execute the mirror list priming
-        require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['wite_mirrors'] ],
+        require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ],
     }
 
 }
