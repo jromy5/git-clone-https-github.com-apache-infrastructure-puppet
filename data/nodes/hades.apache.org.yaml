@@ -214,6 +214,7 @@ vhosts_asf::vhosts::vhosts:
     override:
       - 'All'
     custom_fragment: |
+      AddType  text/plain; charset=ISO-8859-1  .rdf
       RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
@@ -299,6 +300,7 @@ vhosts_asf::vhosts::vhosts:
     override:
       - 'all'
     custom_fragment: |
+      AddType  text/plain; charset=ISO-8859-1  .rdf
       LimitXMLRequestBody 10000000
       RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
