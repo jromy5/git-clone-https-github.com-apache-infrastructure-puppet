@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::status
+  - apbackup
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
