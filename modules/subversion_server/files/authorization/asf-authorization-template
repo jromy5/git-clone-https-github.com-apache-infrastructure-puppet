@@ -163,7 +163,8 @@ empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
 etch={ldap:cn=etch,ou=groups,dc=apache,dc=org}
 etch-pmc={reuse:pit-authorization:etch-pmc}
-falcon=acmurthy,amareshwari,arpit,cdouglas,ddas,gates,rishumehrothra,samarthg,sanjay,shaikidris,sharad,shwethags,sriksun,suhasv,venkatesh
+falcon={ldap:cn=falcon,ou=groups,dc=apache,dc=org}
+falcon-pmc={reuse:pit-authorization:falcon-pmc}
 felix={ldap:cn=felix,ou=groups,dc=apache,dc=org}
 felix-pmc={reuse:pit-authorization:felix-pmc}
 flex={ldap:cn=flex,ou=groups,dc=apache,dc=org}
@@ -739,6 +740,9 @@ ea = rw
 [/excalibur]
 * = r
 
+[/falcon]
+@falcon = rw
+
 [/felix]
 @felix = rw
 
@@ -895,9 +899,6 @@ ea = rw
 
 [/incubator/easyant]
 @easyant = rw
-
-[/incubator/falcon]
-@falcon = rw
 
 [/incubator/flink]
 @flink = rw

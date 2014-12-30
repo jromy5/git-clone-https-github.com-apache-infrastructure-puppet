@@ -105,6 +105,8 @@ empire-db={reuse:asf-authorization:empire-db}
 empire-db-pmc={ldap:cn=empire-db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 etch={reuse:asf-authorization:etch}
 etch-pmc={ldap:cn=etch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+falcon={reuse:asf-authorization:falcon}
+falcon-pmc={ldap:cn=falcon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 felix={reuse:asf-authorization:felix}
 felix-pmc={ldap:cn=felix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 flex={reuse:asf-authorization:flex}
@@ -1090,9 +1092,6 @@ buildbot = rw
 
 [/websites/production/bigtop]
 @bigtop = rw
-
-[/websites/production/bookkeeper]
-@bookkeeper = rw
 
 [/websites/production/callback]
 @cordova = rw
