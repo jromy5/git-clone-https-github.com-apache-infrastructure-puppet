@@ -8,6 +8,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::status
   - apache::mod::ssl
+  - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - rootbin_asf
@@ -54,6 +55,9 @@ apache::mod::status::apache_version: '2.3'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
+
+apbackup::gid: 9997
+apbackup::uid: 9997
 
 fail2ban_asf::config::jails:
   httpd-svn:
