@@ -62,6 +62,7 @@ apmirror::uid:                               '508'
 apmirror::gid:                               '508'
 apmirror::groups:
   - 'svnwc'
+  - 'apbackup'
 apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
