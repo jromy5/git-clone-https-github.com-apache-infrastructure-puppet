@@ -25,7 +25,7 @@ class svnwcsub (
         gid        => "${groupname}",
         groups     => $groups,
         managehome => true,
-        require    => [ Group["${groupname}"], User["${apbackup::username}"] ],
+        require    => Group["${groupname}"],
     }
 
     group { "${groupname}":
