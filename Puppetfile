@@ -89,7 +89,7 @@ mod 'snmp',
 
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
-  :commit => '5c7cc56f5bd3af25035155435d1120b8e6b08bdd'
+  :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
 
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
