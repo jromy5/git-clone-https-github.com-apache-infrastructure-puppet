@@ -64,6 +64,9 @@ subversionclient::packages:
 subversionclient::svn_conf_config:       '/etc/subversion/config'
 subversionclient::svn_conf_servers:      '/etc/subversion/servers'
 
+ssh_asf::server_options:
+    AuthorizedKeysCommandRunAs: 'root'
+
 build_slaves::distro_packages:
   - ant
   - apr-devel

@@ -14,7 +14,7 @@ classes:
   - ldapclient
   - pam
   - puppet_asf
-  - ssh # this pulls in both server and client by default
+  - ssh_asf # this pulls in both server and client by default
   - sudoers
   - snmp
   - base::snmp::createv3users
@@ -196,7 +196,7 @@ ssh::client_options:
 
 ssh::params::sshd_keysdir: '/etc/ssh/ssh_keys'
 
-ssh::server_options:
+ssh_asf::server_options:
     Protocol: '2'
     ListenAddress: '0.0.0.0'
     PasswordAuthentication: 'no'
