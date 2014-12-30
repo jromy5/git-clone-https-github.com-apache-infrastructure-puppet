@@ -93,7 +93,7 @@ class tlp_vhosts::compat {
     file { '/var/www/www.apache.org/dist/zzz':
         ensure  => 'directory',
         owner   => "${apmirror::username}",
-        group   => "${apbackup::groupname}",
+        group   => "${apmirror::groupname}",
         source  => 'puppet:///modules/tlp_vhosts/zzz',
         recurse => true,
         require => File['/var/www/www.apache.org/dist'],
