@@ -4,12 +4,14 @@ class svnwcsub (
   $gid            = 9997,
   $conf_path      = '/etc',
   $conf_file      = 'svnwcsub.conf',
+  $group_present  = 'present',
   $groupname      = 'svnwc',
   $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'svnwcsub',
   $shell          = '/bin/bash',
   $source         = 'svnwcsub.conf',
+  $user_present   = 'present',
   $username       = 'svnwc',
 
 ){
@@ -18,7 +20,7 @@ class svnwcsub (
 
    user { "${username}":
         name       => "${username}",
-        ensure     => present,
+        ensure     => "${user_present}",
         home       => "/home/${username}",
         shell      => "${shell}",
         uid        => "${uid}",
@@ -30,7 +32,7 @@ class svnwcsub (
 
     group { "${groupname}":
         name   => "${groupname}",
-        ensure => present,
+        ensure => "${group_present}",
         gid    => "${gid}",
     }
 

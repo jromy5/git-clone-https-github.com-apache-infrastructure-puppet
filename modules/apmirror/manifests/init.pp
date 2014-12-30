@@ -2,18 +2,20 @@
 class apmirror (
   $uid            = 508,
   $gid            = 508,
+  $group_present  = 'present',
   $groupname      = 'apmirror',
   $groups         = [],
   $service_ensure = 'running',
   $shell          = '/bin/bash',
   $svnwc_group    = 'svnwc',
   $svnwc_user     = 'svnwc',
+  $user_present   = 'present',
   $username       = 'apmirror',
 ){
 
    user { "${username}":
         name        => "${username}",
-        ensure      => present,
+        ensure      => "${user_present}",
         home        => "/home/${username}",
         shell       => "${shell}",
         uid         => "${uid}",
@@ -25,7 +27,7 @@ class apmirror (
 
     group { "${groupname}":
         name   => "${groupname}",
-        ensure => present,
+        ensure => "${group_present}",
         gid    => "${gid}",
     }
 

@@ -1,17 +1,19 @@
 #/etc/puppet/modules/apbackup/manifests/init.pp
 
 class apbackup (
-  $uid            = 511,
-  $gid            = 511,
-  $groupname      = 'apbackup',
-  $groups         = [],
-  $shell          = '/bin/bash',
-  $username       = 'apbackup',
+  $uid           = 511,
+  $gid           = 511,
+  $group_present = 'present',
+  $groupname     = 'apbackup',
+  $groups        = [],
+  $shell         = '/bin/bash',
+  $user_present  = 'present',
+  $username      = 'apbackup',
 ) {
 
    user { "${username}":
         name       => "${username}",
-        ensure     => present,
+        ensure     => "${user_present}",
         home       => "/home/${username}",
         shell      => "${shell}",
         uid        => "${uid}",
@@ -23,7 +25,7 @@ class apbackup (
 
     group { "${groupname}":
         name   => "${groupname}",
-        ensure => present,
+        ensure => "${group_present}",
         gid    => "${gid}",
     }
 
