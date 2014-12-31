@@ -3,7 +3,7 @@
 class ssh_asf {
   include ssh
 
-  $server_opts = hiera_hash('ssh_asf::server_options', {})
+  $server_opts = hiera('ssh_asf::server_options', {})
   notice("server_opts: ${server_opts}")
   create_resources(ssh::server_options, $server_opts)
 
