@@ -930,10 +930,10 @@ vhosts_asf::vhosts::vhosts:
   incubator:
     vhost_name: '*'
     port: 80
-    servername: 'www.apache.org'
+    servername: 'incubator.apache.org'
     serveraliases:
       - '*.incubator.apache.org'
-      - '*.incubaotr.*.apache.org'
+      - '*.incubator.*.apache.org'
     virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
     manage_docroot: false
@@ -990,13 +990,14 @@ vhosts_asf::vhosts::vhosts:
 
 
   incubator-ssl:
+    priority: 98
     vhost_name: '*'
     port: 443
     ssl: true
-    servername: 'www.apache.org'
+    servername: 'incubator.apache.org'
     serveraliases:
+      - '*.incubator.*.apache.org'
       - '*.incubator.apache.org'
-      - '*.incubaotr.*.apache.org'
     virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
     manage_docroot: false
@@ -1786,6 +1787,7 @@ vhosts_asf::vhosts::vhosts:
 
 
   tlp-ssl:
+    priority: 99
     vhost_name: '*'
     port: 443
     ssl: true
