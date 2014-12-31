@@ -2,10 +2,10 @@
 
 class orthrus {
 
-  case $asfosname { 
+  case $asfosname {
     ubuntu: {
 
-      package { 'orthrus': 
+      package { 'orthrus':
         ensure  => present,
         require => apt::source['asf_internal'],
       }
@@ -20,7 +20,7 @@ class orthrus {
     }
     centos: {
 
-      package { 'orthrus': 
+      package { 'orthrus':
         ensure  => present,
         require => Yumrepo['asf_internal'],
       }
