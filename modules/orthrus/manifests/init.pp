@@ -4,36 +4,27 @@ class orthrus {
 
   case $asfosname {
     ubuntu: {
-
-      package { 'orthrus':
-        ensure  => present,
-        require => apt::source['asf_internal'],
-      }
-
-      exec { 'setuid-ortpasswd':
-        command => '/bin/chmod u+s /usr/local/bin/ortpasswd',
-        unless  => '/usr/bin/test -u /usr/local/bin/ortpasswd',
-        onlyif  => '/usr/bin/test -f /usr/local/bin/ortpasswd',
-        require => Package['orthrus'],
-      }
-
+      $repo_resource = Apt::Source['asf_internal']
+      $ortpasswd_path = '/usr/local/bin/ortpasswd'
     }
     centos: {
-
-      package { 'orthrus':
-        ensure  => present,
-        require => Yumrepo['asf_internal'],
-      }
-
-      exec { 'setuid-ortpasswd':
-        command => '/bin/chmod u+s /usr/bin/ortpasswd',
-        unless  => '/usr/bin/test -u /usr/bin/ortpasswd',
-        onlyif  => '/usr/bin/test -f /usr/bin/ortpasswd',
-        require => Package['orthrus'],
-      }
-
+      $repo_resource = Yumrepo['asf_internal']
+      $ortpasswd_path = '/usr/bin/ortpasswd'
     }
     default: {
     }
+  }
+
+  package { 'orthrus':
+    ensure  => present,
+    require => $repo_resource,
+  }
+
+  exec { 'setuid-ortpasswd':
+    command => "chmod u+s ${ortpasswd_path}",
+    unless  => "test -u ${ortpasswd_path}",
+    onlyif  => "test -f ${ortpasswd_path}",
+    path    => ['/bin', '/usr/bin'],
+    require => Package['orthrus'],
   }
 }
