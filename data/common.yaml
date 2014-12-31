@@ -204,6 +204,5 @@ ssh_asf::server_options:
     UsePAM: 'yes'
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
-    AuthorizedKeysCommandUser: 'root'
     AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
 
