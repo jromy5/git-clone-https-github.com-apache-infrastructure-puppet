@@ -26,9 +26,14 @@ class ldapclient::install::centos::65 (
     '/etc/openldap/cacerts':
       ensure  => directory,
       mode    => 755;
-    '/etc/openldap/cacerts/ldap-client.pem':
+    $tlscertpath:
       content  =>  $ldapcert,
       require =>  File['/etc/openldap/cacerts'];
   }
+
+  exec { "/usr/sbin/authconfig --enableldap --enableldapauth --enabletls --ldapbasedn='$nssbasedn' --ldapserver='$ldapservers' --ldaploadcacert=file:///$tlscertpath --update":
+        unless  => "/bin/grep -qr ldap /etc/pam.d",
+        require => File[$tlscertpath],
+      }
 
 }
