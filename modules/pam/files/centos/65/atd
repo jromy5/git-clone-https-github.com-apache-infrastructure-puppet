@@ -1,17 +1,9 @@
-##
-## This file is managed by puppet, all local changes will be lost 
-## during the next puppet run.
-## 
-## Source file:  puppet/modules/pam/files/centos/65/atd
-##
-
-
-#
 # The PAM configuration file for the at daemon
 #
-
-@include common-auth
-@include common-account
-@include common-session-noninteractive
-session    required   pam_limits.so
-session    required   pam_env.so user_readenv=1
+#
+auth       required    pam_env.so
+auth       include     password-auth
+account    required    pam_access.so
+account    include     password-auth
+session    required    pam_loginuid.so
+session    include     password-auth

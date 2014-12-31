@@ -1,17 +1,7 @@
-##
-## This file is managed by puppet, all local changes will be lost 
-## during the next puppet run.
-## 
-## Source file:  puppet/modules/pam/files/centos/65/sudo
-##
-
-
 #%PAM-1.0
-
-auth    required /usr/local/lib/security/pam_orthrus.so
-
-auth       required   pam_env.so readenv=1 user_readenv=0
-auth       required   pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0
-# @include common-auth
-@include common-account
-@include common-session-noninteractive
+auth	required	/usr/lib/security/pam_orthrus.so
+auth       include      system-auth
+account    include      system-auth
+password   include      system-auth
+session    optional     pam_keyinit.so revoke
+session    required     pam_limits.so
