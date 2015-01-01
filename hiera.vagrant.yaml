@@ -1,0 +1,30 @@
+---
+
+## This file is a verbatim copy of hiera.yaml with the exception of the changed
+#  `datadir` which will properly point to the location of our hiera data as
+#  Vagrant rsyncs it to the machine
+
+
+:backends:
+    - yaml
+    - eyaml
+    - module_data
+
+:yaml:
+    :datadir: /vagrant/data
+
+:eyaml:
+    :datadir: /vagrant/data
+    :gpg_gnupghome: /var/lib/puppet/.gnupg
+    :gpgpghome: /var/lib/puppet/.gnupg
+    :gpg_always_trust: true
+
+# The ASF specific variables below are created in facter with customfact module.
+:hierarchy:
+    - "nodes/%{clientcert}"
+    - "%{::asfosname}/%{::asfosrelease}"
+    - "colo/%{asfcolo}"
+    - "oem/%{::oem}"
+    - "common"
+
+:logger: console
