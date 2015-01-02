@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
 
     # Ubuntu LTS 14.04 in us-east-1 with Puppet installed from the Puppet
     # Labs apt repository, with a Docker capable (3.8) Linux kernel
-    aws.ami = 'ami-744b3e1c'
+    aws.ami = 'ami-20b4c148'
     aws.region = 'us-east-1'
     aws.instance_type = 'm3.xlarge'
 
