@@ -35,6 +35,7 @@ class puppet_asf (
    group   => 'puppet',
    mode    => '0755',
    source  => [ 
+     "puppet:///modules/puppet_asf/$asfosname.puppet.conf",
      "puppet:///modules/puppet_asf/puppet.$hostname.conf",
      "puppet:///modules/puppet_asf/puppet.conf",
      ]
