@@ -6,7 +6,7 @@ class puppet_asf (
     ubuntu: {
       package { 'puppet':
         ensure  => '3.6.2-1puppetlabs1',
-        require => apt::source['puppetlabs', 'puppetdeps'],
+        require => Apt::Source['puppetlabs', 'puppetdeps'],
       }
     }
     centos: {
