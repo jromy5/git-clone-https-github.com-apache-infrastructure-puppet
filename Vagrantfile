@@ -16,10 +16,10 @@ Vagrant.configure("2") do |config|
     aws.secret_access_key = secret_access_key
     aws.keypair_name = keypair
 
-    # Ubuntu LTS 12.04 in us-west-2 with Puppet installed from the Puppet
+    # Ubuntu LTS 14.04 in us-east-1 with Puppet installed from the Puppet
     # Labs apt repository, with a Docker capable (3.8) Linux kernel
-    aws.ami = 'ami-8f89dbbf'
-    aws.region = 'us-west-2'
+    aws.ami = 'ami-744b3e1c'
+    aws.region = 'us-east-1'
     aws.instance_type = 'm3.xlarge'
 
     override.ssh.username = "ubuntu"
