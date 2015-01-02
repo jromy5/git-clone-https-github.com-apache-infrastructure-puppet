@@ -1,9 +1,10 @@
 class puppet_asf::master {
 
   cron { 'updatepuppet':
-    command => 'cd /etc/puppet; ./bin/pull',
-    user    => 'root',
-    minute  => '*/5',
+    command     => 'cd /etc/puppet; ./bin/pull',
+    environment => 'PATH=/bin:/usr/bin:/usr/sbin:/usr/local/bin/',
+    user        => 'root',
+    minute      => '*/5',
   }
 
   package { 'puppetmaster':
