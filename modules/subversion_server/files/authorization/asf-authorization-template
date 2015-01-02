@@ -1520,6 +1520,9 @@ spamassassin_role = rw
 [/struts/archive]
 * = r
 
+[/struts/struts-master]
+* = r
+
 [/subversion]
 @committers = rw
 svn-role = rw
