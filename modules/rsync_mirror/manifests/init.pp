@@ -48,7 +48,7 @@ class rsync_mirror (
         read_only       => 'yes',
         list            => 'yes',
         outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-        exclude         => ['/openoffice/4.1.0', '/openoffice/4.1.1/binaries', '/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/zzz/rsync-module/apache-dist-most'],
+        exclude         => ['/openoffice/4.1.0', '/openoffice/4.1.1/binaries', '/tmp/', '*.md5', '*.MD5', 'MD5SUM', 'SHA*SUM*, '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/zzz/rsync-module/apache-dist-most'],
         hosts_deny      => $deny,
     }
 
@@ -61,7 +61,7 @@ class rsync_mirror (
         read_only       => 'yes',
         list            => 'yes',
         outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-        exclude         => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
+        exclude         => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', 'MD5SUM', 'SHA*SUM*, '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
         hosts_deny      => $deny,
     }
 
@@ -75,7 +75,7 @@ class rsync_mirror (
 #        read_only       => 'yes',
 #        list            => 'yes',
 #        outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-#        exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
+#        exclude => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', 'MD5SUM', 'SHA*SUM*, '*.asc', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/source'],
 #        hosts_deny      => $deny,
 #	}
 
