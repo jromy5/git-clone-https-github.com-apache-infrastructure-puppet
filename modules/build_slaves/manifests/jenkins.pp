@@ -1,5 +1,6 @@
 class build_slaves::jenkins (
   $nexus_password   = '',
+  $npmrc_passwrd    = '',
   $jenkins_pub_key  = '', 
   $jenkins_packages = []
   ) {
@@ -89,6 +90,16 @@ class build_slaves::jenkins (
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
+  }
+
+  file { "/home/jenkins/.npmrc":
+    require => File['/home/jenkins'],
+    ensure  => $ensure,
+    path    => "/home/jenkins/.npmrc",
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0640',
+    content => template('build_slaves/npmrc.erb')
   }
 
   file { "/etc/security/limits.d/jenkins.conf":
