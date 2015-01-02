@@ -61,7 +61,7 @@ class rsync_mirror (
         read_only       => 'yes',
         list            => 'yes',
         outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-        exclude         => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', 'MD5SUM', 'SHA*SUM*, '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
+        exclude         => ['/tmp/', '*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc', 'MD5SUM', 'SHA*SUM*', '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/', '/zzz/perms', '/openoffice', '/zzz/rsync-module/apache-dist'],
         hosts_deny      => $deny,
     }
 
