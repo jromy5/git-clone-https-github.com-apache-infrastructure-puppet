@@ -122,7 +122,7 @@ continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-corinthia=dortef,jani,louis,orcmid,pmkelly,svanteschubert
+corinthia=dortef,jani,louis,orcmid,pescetti,pmkelly,svanteschubert
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
 creadur={ldap:cn=creadur,ou=groups,dc=apache,dc=org}
