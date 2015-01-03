@@ -267,6 +267,10 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Use OpenOffice http
       Use BlockSvn
+      <Files ~ "\.html$">
+        Options +Includes
+        SetOutputFilter INCLUDES
+      </Files>
 
       RewriteEngine On
       #/mail/* -> mail-archives.a.o/mod_mbox/*
@@ -295,6 +299,10 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Use OpenOffice https
       Use BlockSvn
+      <Files ~ "\.html$">
+        Options +Includes
+        SetOutputFilter INCLUDES
+      </Files>
 
       RewriteEngine On
       #/mail/* -> mail-archives.a.o/mod_mbox/*
