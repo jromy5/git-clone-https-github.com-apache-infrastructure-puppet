@@ -938,6 +938,7 @@ vhosts_asf::vhosts::vhosts:
       
   incubator:
     vhost_name: '*'
+    priority: 98
     port: 80
     servername: 'incubator.apache.org'
     serveraliases:
@@ -1721,6 +1722,7 @@ vhosts_asf::vhosts::vhosts:
 
   tlp:
     vhost_name: '*'
+    priority: 99
     port: 80
     servername: 'www.apache.org'
     virtual_docroot: '/var/www/www.apache.org'
