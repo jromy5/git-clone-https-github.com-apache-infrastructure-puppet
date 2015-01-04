@@ -1757,7 +1757,7 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/trafficserver.apache.org>
+      <Directory /var/www/subversion.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
@@ -1835,7 +1835,7 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/trafficserver.apache.org>
+      <Directory /var/www/subversion.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
