@@ -1725,7 +1725,7 @@ vhosts_asf::vhosts::vhosts:
     priority: 99
     port: 80
     servername: 'www.apache.org'
-    virtual_docroot: '/var/www/www.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
     manage_docroot: false
     serveraliases:
@@ -1803,7 +1803,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'www.apache.org'
-    virtual_docroot: '/var/www/www.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
     docroot: '/var/www'
     manage_docroot: false
     serveraliases:
