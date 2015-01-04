@@ -122,7 +122,7 @@ gitserver_asf::custom_fragment_443: |
           Include /etc/apache2/gitweb.conf
       
           # INFRA-4331: Handler for Github pull request notifications
-          ScriptAliasMatch ^/github$ /usr/local/etc/asfgit-admin/cgi-bin/github.cgi
+          ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
 
       
 gitserver_asf::custom_fragment_8080: |
