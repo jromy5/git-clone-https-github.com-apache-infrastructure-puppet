@@ -86,7 +86,11 @@ fail2ban::source_dir: 'puppet:///modules/fail2ban_asf/fail2ban/conf'
 fail2ban::source_dir_purge: true
 
 # GITSERVER_ASF
-giserver_asf::packages: 'gitweb'
+giserver_asf::packages: 
+  - 'gitweb'
+  - 'libjson-perl'
+  - 'libdigest-hmac-perl'
+  - 'liblwp-useragent-determined-perl'
 
 ## LDAPCLIENT
 ldapclient::ldapcert: |
