@@ -153,8 +153,8 @@ gitserver_asf::custom_fragment_8080: |
           Include /etc/apache2/gitweb.conf
       
           # INFRA-4331: Handler for Github pull request notifications
-          ScriptAliasMatch ^/github$ /etc/asfgit-admin/cgi-bin/github.cgi
+          ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
       
           # Handler for Travis notifications
-          ScriptAliasMatch ^/travis$ /etc/asfgit-admin/cgi-bin/travis.cgi
+          ScriptAliasMatch ^/travis$ /x1/git/asfgit-admin/asf/cgi-bin/travis.cgi
 
