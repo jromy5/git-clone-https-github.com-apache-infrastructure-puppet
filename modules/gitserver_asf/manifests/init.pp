@@ -37,7 +37,7 @@ apache::vhost { 'git-wip-us-80':
     vhost_name      => '*',
     servername      => 'git-wip-us.apache.org',
     port            => '80',
-    ssl             => true,
+    ssl             => false,
     docroot         => '/x1/git/htdocs',
     directories     => [
         {
