@@ -30,62 +30,7 @@ gitserver_asf::custom_fragment_80: |
        Require all granted 
       </Directory>
       
-      <Directory /x1/git/repos/asf>
-          Require all granted
-      </Directory>
-      
-      <Directory /x1/git/repos/svn>
-          Require all granted
-      </Directory>
-      
-      <Directory /x1/git/cgi-bin>
-          Require all granted
-          Options ExecCGI
-      </Directory>
-      
-      <Directory /etc/asfgit-admin/cgi-bin>
-         Require all granted 
-          Options ExecCGI
-      </Directory>
-      
-      <Directory /usr/local/libexec/git-core>
-          <Files git-http-backend>
-              Options ExecCGI
-              Require all granted
-              Deny from env=AUTHREQUIRED
-      
-              AuthType Basic
-              AuthName "ASF Committers"
-              AuthBasicProvider ldap file
-              AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
-              AuthLDAPGroupAttribute memberUid
-              AuthLDAPGroupAttributeIsDN off
-              Require ldap-attribute gidNumber=5000
-              Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      
-              AuthUserFile /x1/svn/asf-committers
-      
-              Satisfy any
-          </Files>
-      </Directory>
-      
-          RewriteEngine On
-      
-          RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
-          RewriteRule .* - [F]
-      
-          RewriteRule ^/repos/infra.* https://git-wip-us.apache.org/repos/infra [L,R]
-      
-          ## Deprecated in favour of AliasMatch as this is *always* filepath happy. Rewrite isn't.
-          ## RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
-          AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
-      
-          <LocationMatch "^/repos/.*/git-receive-pack$">
-              Require all denied
-          </LocationMatch>
-      
-          Include /etc/apache2/gitweb.conf
-      
+      Redirect Permanent / https://git1-us-west.apache.org/
 
 gitserver_asf::custom_fragment_443: |
       
