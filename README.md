@@ -2,7 +2,6 @@ infra-puppet
 ============
 
 Apache Infrastructure Team - Puppet
-3
 
 #
 ## Getting Started
