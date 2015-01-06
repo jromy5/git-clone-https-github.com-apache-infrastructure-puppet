@@ -33,43 +33,112 @@ gitserver_asf::custom_fragment_80: |
       Redirect Permanent / https://git1-us-west.apache.org/
 
 gitserver_asf::custom_fragment_443: |
-      
-          SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
-          SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /etc/asfgit-admin/conf/auth.cfg
-          SetEnv GIT_REPOS_ROOT /x1/git/repos
-      
-          <Location /repos/asf>
-              SetEnv WEB_HOST http://git-wip-us.apache.org
-          </Location>
-      
-          <Location /repos/infra>
-              SetEnv WEB_HOST https://git-wip-us.apache.org
-          </Location>
-      
-          <LocationMatch "^/repos/.*/git-receive-pack$">
-              Deny from all
-          </LocationMatch>
-      
-          RewriteEngine On
-      
-          RewriteCond %%{}{QUERY_STRING} service=git-receive-pack
-          RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
-      
-          ## Deprecated in favour of AliasMatch as this is *always* filepath happy. Rewrite isn't.
-          ## RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
-          AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
-      
-          BrowserMatch ".*MSIE.*" \
-              nokeepalive ssl-unclean-shutdown \
-              downgrade-1.0 force-response-1.0
-          Include /etc/apache2/gitweb.conf
-      
-          # INFRA-4331: Handler for Github pull request notifications
-          ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
 
-      
+      SetEnv PATH /bin:/usr/bin:/usr/local/bin
+      SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
+      SetEnv WRITE_LOCK /etc/nocommit
+      SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
+      SetEnv GIT_REPOS_ROOT /x1/git/repos
+
+      <Location /repos/asf>
+          SetEnv WEB_HOST http://git-wip-us.apache.org
+      </Location>
+
+      <Location /repos/infra>
+          SetEnv WEB_HOST https://git-wip-us.apache.org
+      </Location>
+
+      RewriteEngine On
+
+      RewriteCond %{QUERY_STRING} service=git-receive-pack
+      RewriteCond %{REQUEST_URI} /git-receive-pack$
+      RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
+
+      <LocationMatch "^/repos/">
+              Order Deny,Allow
+              Deny from env=AUTHREQUIRED
+
+              AuthType Basic
+              AuthName "ASF Committers"
+              AuthBasicProvider ldap file
+              AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
+              AuthLDAPGroupAttribute memberUid
+              AuthLDAPGroupAttributeIsDN off
+              Require ldap-attribute gidNumber=5000
+              Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+
+              AuthUserFile /x1/svn/asf-committers
+      </LocationMatch>
+
+
+      ## Deprecated in favour of AliasMatch as this is *always* filepath happy. Rewrite isn't.
+      ## RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
+      AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
+
+      BrowserMatch ".*MSIE.*" \
+          nokeepalive ssl-unclean-shutdown \
+          downgrade-1.0 force-response-1.0
+
+      # INFRA-4331: Handler for Github pull request notifications
+      ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
+
+
+      <Directory /usr/lib/cgi-bin>
+          require all granted
+          Options ExecCGI FollowSymlinks
+          SetHandler cgi-script
+      </Directory>
+
+      AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
+      AliasMatch ^/repos/(asf|svn)/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /x1/git/repos/$1/$2
+      AliasMatch ^/repos/(asf|svn)/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /x1/git/repos/$1/$2
+      ScriptAliasMatch \
+          "(?x)^/repos/([^/]+)/(.*/(HEAD | \
+              info/refs | \
+              objects/(info/[^/]+ | \
+                  [0-9a-f]{2}/[0-9a-f]{38} | \
+                  pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
+                  git-(upload|receive)-pack))$" \
+          /usr/lib/git-core/git-http-backend/$2
+      ScriptAliasMatch /repos/([^/]+) /usr/lib/cgi-bin/gitweb.cgi
+
+      RewriteRule ^/repos/([^/]+)/$ /repos/$1 [R]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?$ /repos/$1?p=$2.git [R]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/commit/(.*)$ /repos/$1?p=$2.git;a=commit;h=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/tree/(.*)$ /repos/$1?p=$2.git;a=tree;hb=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/diff/(.*)$ /repos/$1?p=$2.git;a=commitdiff;h=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
+
+
+      SetEnv GIT_HTTP_EXPORT_ALL
+
+      <Location /repos/asf>
+          SetEnv GIT_PROJECT_ROOT /x1/git/repos/asf/
+          SetEnv GITWEB_CONFIG /x1/git/asfgit-admin/asf/conf/httpd/gitweb.asf.pl
+      </Location>
+
+      <Location /repos/svn>
+          SetEnv GIT_PROJECT_ROOT /x1/git/repos/svn/
+          SetEnv GITWEB_CONFIG /x1/git/asfgit-admin/asf/conf/httpd/gitweb.svn.pl
+      </Location>
+
+      <Location /repos/infra>
+          SetEnv GIT_PROJECT_ROOT /x1/git/repos/infra/
+          SetEnv GITWEB_CONFIG /x1/git/asfgit-admin/asf/conf/httpd/gitweb.infra.pl
+
+          AuthType Basic
+          AuthName "Git Infrastructure"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          Order allow,deny
+          Allow from 192.87.106.249
+          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+          Satisfy any
+      </Location>
+
+
 gitserver_asf::custom_fragment_8080: |
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
