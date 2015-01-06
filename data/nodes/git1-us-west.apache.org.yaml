@@ -135,36 +135,3 @@ gitserver_asf::custom_fragment_443: |
           Satisfy any
       </Location>
 
-gitserver_asf::custom_fragment_8080: |
-      
-          SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
-          SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
-          SetEnv GIT_REPOS_ROOT /x1/git/repos
-      
-          <Location /repos/asf>
-              SetEnv WEB_HOST http://git-wip-us.apache.org
-          </Location>
-      
-          <Location /repos/infra>
-              SetEnv WEB_HOST https://git-wip-us.apache.org
-          </Location>
-      
-          <LocationMatch "^/repos/.*/git-receive-pack$">
-              Deny from all
-          </LocationMatch>
-      
-          RewriteCond %{QUERY_STRING} service=git-receive-pack
-          RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
-      
-          RewriteRule ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log [T=text/plain]
-      
-          Include /etc/apache2/gitweb.conf
-      
-          # INFRA-4331: Handler for Github pull request notifications
-          ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
-      
-          # Handler for Travis notifications
-          ScriptAliasMatch ^/travis$ /x1/git/asfgit-admin/asf/cgi-bin/travis.cgi
-
