@@ -2,6 +2,7 @@ infra-puppet
 ============
 
 Apache Infrastructure Team - Puppet
+This repo can be found here https://git1-us-west.apache.org/repos/asf/infrastructure-puppet.git
 
 ## Getting Started
 Install all of the dependencies
