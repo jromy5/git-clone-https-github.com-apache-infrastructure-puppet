@@ -51,7 +51,7 @@ gitserver_asf::custom_fragment_443: |
 
       <LocationMatch "^/repos/">
         Require all denied
-        <If "%{QUERY_STRING} =~ /service=git-receive-pack/ || %{REQUEST_URI} =~ /git-receive-pack$/">
+        <If "%%{}{QUERY_STRING} =~ /service=git-receive-pack/ || %%{}{REQUEST_URI} =~ /git-receive-pack$/">
                 AuthType Basic
                 AuthName "ASF Committers"
                 AuthBasicProvider ldap
