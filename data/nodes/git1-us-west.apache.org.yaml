@@ -33,25 +33,22 @@ gitserver_asf::custom_fragment_80: |
       Redirect Permanent / https://git1-us-west.apache.org/
 
 gitserver_asf::custom_fragment_443: |
-      
-          SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
-          SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
-          SetEnv GIT_REPOS_ROOT /x1/git/repos
-      
-          <Location /repos/asf>
-              SetEnv WEB_HOST http://git-wip-us.apache.org
-          </Location>
-      
-          <Location /repos/infra>
-              SetEnv WEB_HOST https://git-wip-us.apache.org
-          </Location>
-      
-          <LocationMatch "^/repos/.*/git-receive-pack$">
-              Deny from all
-          </LocationMatch>
-      
+      SetEnv PATH /bin:/usr/bin:/usr/local/bin
+      SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
+      SetEnv WRITE_LOCK /etc/nocommit
+      SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
+      SetEnv GIT_REPOS_ROOT /x1/git/repos
+
+      <Location /repos/asf>
+          SetEnv WEB_HOST http://git-wip-us.apache.org
+      </Location>
+
+      <Location /repos/infra>
+          SetEnv WEB_HOST https://git-wip-us.apache.org
+      </Location>
+
+      RewriteEngine On
+
       RewriteCond %{QUERY_STRING} service=git-receive-pack
       RewriteCond %{REQUEST_URI} /git-receive-pack$
       RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
@@ -139,7 +136,6 @@ gitserver_asf::custom_fragment_443: |
           Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
           Satisfy any
       </Location>
-
 
 gitserver_asf::custom_fragment_8080: |
       
