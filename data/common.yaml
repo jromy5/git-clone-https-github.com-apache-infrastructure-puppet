@@ -91,6 +91,7 @@ giserver_asf::packages:
   - 'libjson-perl'
   - 'libdigest-hmac-perl'
   - 'liblwp-useragent-determined-perl'
+  - 'python-tblib'
 
 ## LDAPCLIENT
 ldapclient::ldapcert: |
