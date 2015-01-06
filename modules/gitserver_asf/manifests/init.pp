@@ -25,6 +25,9 @@ file {
     source   => "puppet:///modules/gitserver_asf/gitweb.conf",
     notify   => Service['apache2'],
     require  => Package['apache2'];
+  '/usr/local/sbin/sendmail':
+    ensure   => link,
+    target   => '/usr/sbin/sendmail';
   }
 
 ## Unless declared otherwise the default behaviour is to enable these modules
