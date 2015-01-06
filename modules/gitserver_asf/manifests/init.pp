@@ -57,11 +57,11 @@ apache::vhost { 'git-wip-us-80':
     ],
     serveraliases   => ['git1-us-west.apache.org'],
     custom_fragment => $custom_fragment_80,
-    error_log_file  => 'git-wip-us_error.log',
+    error_log_file  => 'git-wip-us_ssl_error.log',
   }
 
 apache::vhost { 'git-wip-us-ssl':
-    priority        => '99',
+    priority        => '98',
     vhost_name      => '*',
     servername      => 'git-wip-us.apache.org',
     port            => '443',
