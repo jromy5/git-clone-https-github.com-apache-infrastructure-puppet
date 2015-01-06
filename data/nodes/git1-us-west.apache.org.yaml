@@ -49,24 +49,23 @@ gitserver_asf::custom_fragment_443: |
 
       RewriteEngine On
 
-      RewriteCond %{QUERY_STRING} service=git-receive-pack
-      RewriteCond %{REQUEST_URI} /git-receive-pack$
-      RewriteRule ^/repos/ - [E=AUTHREQUIRED:yes]
-
       <LocationMatch "^/repos/">
-              Order Deny,Allow
-              Deny from env=AUTHREQUIRED
-
-              AuthType Basic
-              AuthName "ASF Committers"
-              AuthBasicProvider ldap file
-              AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
-              AuthLDAPGroupAttribute memberUid
-              AuthLDAPGroupAttributeIsDN off
-              Require ldap-attribute gidNumber=5000
-              Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-
-              AuthUserFile /x1/svn/asf-committers
+        Require all denied
+        <If "%{QUERY_STRING} =~ /service=git-receive-pack/ || %{REQUEST_URI} =~ /git-receive-pack$/">
+                AuthType Basic
+                AuthName "ASF Committers"
+                AuthBasicProvider ldap file
+                AuthLDAPUrl "ldaps://ldap1-us.apache.org:636/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPGroupAttribute memberUid
+                AuthLDAPGroupAttributeIsDN off
+                Require ldap-attribute gidNumber=5000
+                Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+                AuthUserFile /x1/svn/asf-committers
+                Require valid-user
+        </If>
+        <Else>
+                Require all granted
+        </Else>
       </LocationMatch>
 
 
