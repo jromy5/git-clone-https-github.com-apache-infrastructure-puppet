@@ -22,6 +22,7 @@ mod 'dell',
   :git => 'https://github.com/stumped2/puppet-dell.git',
   :branch => 'openmanage_ubuntu'
 
+
 mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
