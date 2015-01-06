@@ -35,9 +35,9 @@ gitserver_asf::custom_fragment_80: |
 gitserver_asf::custom_fragment_443: |
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
+          SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
           SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /etc/asfgit-admin/conf/auth.cfg
+          SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
           SetEnv GIT_REPOS_ROOT /x1/git/repos
       
           <Location /repos/asf>
@@ -73,9 +73,9 @@ gitserver_asf::custom_fragment_443: |
 gitserver_asf::custom_fragment_8080: |
       
           SetEnv PATH /bin:/usr/bin:/usr/local/bin
-          SetEnv ASFGIT_ADMIN /etc/asfgit-admin/
+          SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
           SetEnv WRITE_LOCK /etc/nocommit
-          SetEnv AUTH_FILE /etc/asfgit-admin/conf/auth.cfg
+          SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
           SetEnv GIT_REPOS_ROOT /x1/git/repos
       
           <Location /repos/asf>
