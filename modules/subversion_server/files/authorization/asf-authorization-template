@@ -169,7 +169,8 @@ felix={ldap:cn=felix,ou=groups,dc=apache,dc=org}
 felix-pmc={reuse:pit-authorization:felix-pmc}
 flex={ldap:cn=flex,ou=groups,dc=apache,dc=org}
 flex-pmc={reuse:pit-authorization:flex-pmc}
-flink=aljoscha,gates,hsaputra,ktzoumas,fhueske,gyfora,mbalassi,rmetzger,sewen,ssc,trohrmann,uce,warneke,twalthr,vasia
+flink={ldap:cn=flink,ou=groups,dc=apache,dc=org}
+flink-pmc={reuse:pit-authorization:flink-pmc}
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
@@ -775,6 +776,9 @@ ea = rw
 @flume = r
 # flume is RO because the main repo has migrated to git
 
+[/flink]
+@flink = rw
+
 [/flume/site]
 @flume = rw
 
@@ -900,9 +904,6 @@ ea = rw
 
 [/incubator/easyant]
 @easyant = rw
-
-[/incubator/flink]
-@flink = rw
 
 [/incubator/graffito]
 * = r

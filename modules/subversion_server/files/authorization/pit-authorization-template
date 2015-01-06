@@ -111,6 +111,8 @@ felix={reuse:asf-authorization:felix}
 felix-pmc={ldap:cn=felix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 flex={reuse:asf-authorization:flex}
 flex-pmc={ldap:cn=flex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+flink={reuse:asf-authorization:flink}
+flink-pmc={ldap:cn=flink,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 flume={reuse:asf-authorization:flume}
 flume-pmc={ldap:cn=flume,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 forrest={reuse:asf-authorization:forrest}
