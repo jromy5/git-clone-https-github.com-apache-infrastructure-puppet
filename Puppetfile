@@ -141,3 +141,7 @@ mod 'java',
   :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
   :tag => '1.2.0'
 
+mod 'tomcat',
+  :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
+  :tag => '1.2.0'
+
