@@ -137,3 +137,7 @@ mod 'ulimit',
   :git => 'https://github.com/pctony/puppet-ulimit.git',
   :commit => '4699a103da4e1336701804ea38297e6e9fb9e008'
 
+mod 'java',
+  :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
+  :tag => '1.2.0'
+
