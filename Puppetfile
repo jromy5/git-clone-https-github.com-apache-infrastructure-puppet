@@ -58,6 +58,11 @@ mod 'module_data',
   :tag => '0.0.4'
 
 
+mod 'mysql',
+  :git => 'https://github.com/puppetlabs/puppetlabs-mysql.git',
+  :tag => '3.1.0'
+
+
 mod 'nfs',
   :git    => 'https://github.com/pctony/puppet-nfs.git',
   :commit => '79efbe7da85fb921467f102656df3d99ddd027aa'
