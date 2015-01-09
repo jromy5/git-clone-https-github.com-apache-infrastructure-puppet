@@ -20,6 +20,7 @@ classes:
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
+  - rootbin_asf
   - rsync
   - rsync::server
   - rsync_mirror
