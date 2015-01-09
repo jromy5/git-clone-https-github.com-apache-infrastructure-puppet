@@ -1,6 +1,11 @@
 classes:
   - mysql::server
 
+mysql::server::databases:
+  bugs:
+    ensure: 'present'
+    charset: 'utf8'
+
 mysql::server::override_options:
   mysqld:
     max_allowed_packet: '100M'
