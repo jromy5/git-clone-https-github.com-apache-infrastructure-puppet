@@ -6,7 +6,16 @@ tomcat::instance:
   tomcat7:
     source_url: 'https://apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.tar.gz'
     catalina_base: '/usr/local/tomcat'
+    catalina_home: '/usr/local/tomcat'
+
 
 tomcat::service:
   default:
+    catalina_base: '/usr/local/tomcat'
+    use_init: true
+    service_name: tomcat
+
+tomcat::config::server:
+  tomcat7:
+    port: 8080
     catalina_base: '/usr/local/tomcat'
