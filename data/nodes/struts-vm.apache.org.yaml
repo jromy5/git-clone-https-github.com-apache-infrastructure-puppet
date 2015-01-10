@@ -19,3 +19,7 @@ tomcat::config::server:
   tomcat7:
     port: 8080
     catalina_base: '/usr/local/tomcat'
+
+tomcat::config::server::service:
+  tomcat7:
+    service_ensure: present
