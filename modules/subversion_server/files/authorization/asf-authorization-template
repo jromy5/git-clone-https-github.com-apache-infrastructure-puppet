@@ -1066,6 +1066,9 @@ ea = rw
 [/incubator/yoko]
 * = r
 
+[/incubator/zeppelin/site]
+@incubator = rw
+
 [/incubator/zetacomponents]
 * = r
 
