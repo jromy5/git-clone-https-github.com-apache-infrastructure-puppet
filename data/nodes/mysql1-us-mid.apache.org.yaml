@@ -6,6 +6,14 @@ mysql::server::databases:
   bugs:
     ensure: 'present'
     charset: 'utf8'
+        
+  ooobugs:
+    ensure: 'present'
+    charset: 'utf8'
+    
+  sabugs:
+    ensure: 'present'
+    charset: 'utf8'
 
 mysql::server::override_options:
   mysqld:
