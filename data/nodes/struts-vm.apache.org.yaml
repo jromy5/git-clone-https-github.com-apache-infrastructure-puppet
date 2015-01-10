@@ -1,2 +1,10 @@
 classes:
   - java
+  - tomcat
+
+tomcat::instance:
+  strutsvm:
+    source_url: 'https://apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.tar.gz'
+
+tomcat::service:
+  default:
