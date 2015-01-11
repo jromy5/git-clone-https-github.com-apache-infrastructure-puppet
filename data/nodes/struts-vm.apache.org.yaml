@@ -1,6 +1,9 @@
 classes:
   - java
   - tomcat
+  - tomcat::instance
+  - tomcat::service
+  - tomcat::config
 
 tomcat::instance:
   tomcat7:
