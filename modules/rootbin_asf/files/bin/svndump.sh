@@ -29,7 +29,7 @@ fi
 
 ## directories
 root=/x1/svn
-asf=$root/asf
+asf=$root/repos/asf
 dumps=$root/dump
 tmp_dumps=/dump-tmp
 tmp_interim=$root/dump-tmp
