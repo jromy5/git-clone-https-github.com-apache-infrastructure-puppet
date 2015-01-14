@@ -422,21 +422,21 @@ class subversion_server (
       minute   => '15',
       hour     => '1',
       user     => 'root',
-      require => File['/usr/local/bin/svn_create_dump.sh'];
+      require => File['/usr/local/bin/svn_create_dump.sh'],
       command  => '/usr/local/bin/svn_create_dump.sh';
     'svn-create-index':
       monthday => '1',
       minute   => '15',
       hour     => '2',
       user     => 'root',
-      require => File['/usr/local/bin/svn_create_index.sh'];
+      require => File['/usr/local/bin/svn_create_index.sh'],
       command  => '/usr/local/bin/svn_create_inex.sh';
     'svn_syncdump_to_aws_s3':
       monthday => '1',
       minute   => '30',
       hour     => '2',
       user     => 'root',
-      require => File['/usr/local/bin/svn_sync_to_aws_s3.sh'];
+      require => File['/usr/local/bin/svn_sync_to_aws_s3.sh'],
       command  => '/usr/local/bin/svn_sync_to_aws_s3.sh';
   }
 }
