@@ -15,6 +15,10 @@ class subversion_server (
     ensure  => present
   } 
 
+  package { 'p7zip':
+    ensure  => present
+  } 
+
   # File block to deploy fodlers, scripts etc
   file {
    '/etc/viewvc/viewvc.conf':
