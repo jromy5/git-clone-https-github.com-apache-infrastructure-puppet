@@ -61,7 +61,6 @@ class subversion_server (
      mode     => 0775;
    '/x1/svn/dump':
      ensure   => directory,
-     onlyif   => '/bin/test -d /x1/svn',
      mode     => '0775';
    '/dump-tmp':
      ensure   => directory,
@@ -69,7 +68,6 @@ class subversion_server (
    '/x1/svn/dump-tmp':
      ensure   => directory,
      mode     => '0775',
-     onlyif   => '/bin/test -d /x1/svn',
      require  => File['/x1/svn/'];
    '/usr/local/bin/svn_create_dump.sh':
      source   => "puppet:///modules/subversion_server/svn_create_dump.sh",
