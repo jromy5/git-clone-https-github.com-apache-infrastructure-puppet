@@ -49,4 +49,8 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       AddHandler cgi-script .py
+      <Location />
+        Require ip 140.211.11.75
+      </Location>
+      
 
