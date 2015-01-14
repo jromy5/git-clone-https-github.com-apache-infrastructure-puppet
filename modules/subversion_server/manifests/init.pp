@@ -74,7 +74,7 @@ class subversion_server (
    '/usr/local/bin/svn_create_index.sh':
      source   => "puppet:///modules/subversion_server/svn_create_index.sh",
      mode     => '0775';
-   '/usr/local/bin/sync_to_aws_s3.sh':
+   '/usr/local/bin/svn_sync_to_aws_s3.sh':
      source   => "puppet:///modules/subversion_server/svn_sync_to_aws_s3.sh",
      mode     => '0775';
    
