@@ -64,7 +64,7 @@ function create_gnu_index ()
             IFS=$'\n';
 
             # pretty sweet, will mimick the normal apache output
-            for L in $(find -L . -mount -depth -maxdepth 1 -type f ! -name 'index.html' ! -name 'HEADER.html' ! -name 'README' ! -name 'create_index.sh' -printf "      <a href=\"/%f\">%-44f@_@%Td-%Tb-%TY %Tk:%TM  @%f@\n"|sort|sed 's,\([\ ]\+\)@_@,</a>\1,g');
+            for L in $(find -L . -mount -depth -maxdepth 1 -type f ! -name '.youngest-dumped' ! -name 'index.html' ! -name 'HEADER.html' ! -name 'README' ! -name 'create_index.sh' -printf "      <a href=\"/%f\">%-44f@_@%Td-%Tb-%TY %Tk:%TM  @%f@\n"|sort|sed 's,\([\ ]\+\)@_@,</a>\1,g');
             do
                 # file
                 F=$(sed -e 's,^.*@\([^@]\+\)@.*$,\1,g'<<<"$L");
