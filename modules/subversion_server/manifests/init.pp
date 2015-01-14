@@ -71,9 +71,15 @@ class subversion_server (
      mode     => '0775',
      onlyif   => '/bin/test -d /x1/svn',
      require  => File['/x1/svn/'];
-   '/x1/svn/dump/create_dump.sh':
-     source   => "puppet:///modules/subversion_server/create_dump.sh",
-     require  => File['/x1/svn/dump'];
+   '/usr/local/bin/svn_create_dump.sh':
+     source   => "puppet:///modules/subversion_server/svn_create_dump.sh",
+     mode     => '0775';
+   '/usr/local/bin/svn_create_index.sh':
+     source   => "puppet:///modules/subversion_server/svn_create_index.sh",
+     mode     => '0775';
+   '/usr/local/bin/sync_to_aws_s3.sh':
+     source   => "puppet:///modules/subversion_server/svn_sync_to_aws_s3.sh",
+     mode     => '0775';
    
   }
 
