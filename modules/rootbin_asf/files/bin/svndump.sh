@@ -47,9 +47,9 @@ nice -3 p7zip $tmp_dump > /dev/null
 
 ## 'sign it'
 tmp_dump=$tmp_dump.7z
-md5 $tmp_dump > $tmp_dump.md5
-sha256 $tmp_dump > $tmp_dump.sha256
-sha1 $tmp_dump > $tmp_dump.sha1
+md5sum $tmp_dump > $tmp_dump.md5
+sha256sum $tmp_dump > $tmp_dump.sha256
+sha1sum $tmp_dump > $tmp_dump.sha1
 
 ## mv the new ones into place
 mv $tmp_dumps/* $tmp_interim && mv $tmp_interim/* $dumps
