@@ -19,3 +19,4 @@ mysql::server::override_options:
   mysqld:
     max_allowed_packet: '100M'
     ft_min_word_len: 2
+    bind-address: "%{::ipaddress_eth1}"
