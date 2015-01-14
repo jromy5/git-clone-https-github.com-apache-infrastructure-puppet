@@ -39,7 +39,7 @@ vhosts_asf::vhosts::vhosts:
   status:
     vhost_name: '*'
     port: 80
-    docroot: '/var/www/projects.apache.org'
+    docroot: '/var/www/projects.apache.org/site'
     servername: 'projects.apache.org'
     directoryindex: 'index.html'
     options:
