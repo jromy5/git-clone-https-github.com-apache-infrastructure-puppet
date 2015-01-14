@@ -8,9 +8,9 @@ class subversion_server (
 ) {
 
 #packages needed 
-  package { $packages:$
-    ensure   => installed,$
-  }$
+   package { $packages: $
+     ensure   =>  installed,$
+   }$
 
   # File block to deploy fodlers, scripts etc
   file {
