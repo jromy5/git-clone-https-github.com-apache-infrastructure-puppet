@@ -3,21 +3,14 @@
 class subversion_server (
 
   $asf_committers_authz = '',
+  $packages             = [], 
 
 ) {
 
-  #packages needed 
-  package { 'python-svn':
-    ensure  => present
-  }
-  
-  package { 'viewvc':
-    ensure  => present
-  } 
-
-  package { 'p7zip':
-    ensure  => present
-  } 
+#packages needed 
+  package { $packages:$
+    ensure   => installed,$
+  }$
 
   # File block to deploy fodlers, scripts etc
   file {
