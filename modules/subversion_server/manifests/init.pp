@@ -427,7 +427,7 @@ class subversion_server (
       hour     => '2',
       user     => 'root',
       require => File['/usr/local/bin/svn_create_index.sh'],
-      command  => '/usr/local/bin/svn_create_inex.sh';
+      command  => '/usr/local/bin/svn_create_index.sh';
     'svn_syncdump_to_aws_s3':
       monthday => '1',
       minute   => '30',
