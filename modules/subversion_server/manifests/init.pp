@@ -66,6 +66,22 @@ class subversion_server (
      owner    => 'www-data',
      group    => 'svnadmins',
      mode     => 0775;
+   '/x1/svn/dump':
+     ensure   => directory,
+     onlyif   => '/bin/test -d /x1/svn',
+     mode     => '0775';
+   '/dump-tmp':
+     ensure   => directory,
+     mode     => '0775';
+   '/x1/svn/dump-tmp':
+     ensure   => directory,
+     mode     => '0775',
+     onlyif   => '/bin/test -d /x1/svn',
+     require  => File['/x1/svn/'];
+   '/x1/svn/dump/create_dump.sh':
+     source   => "puppet:///modules/subversion_server/create_dump.sh",
+     require  => File['/x1/svn/dump'];
+   
   }
 
   # File block to setup the plethora of symlinks needed
