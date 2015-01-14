@@ -41,7 +41,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     docroot: '/var/www/projects.apache.org/site'
     servername: 'projects.apache.org'
-    directoryindex: 'index.html'
+    directoryindex: 'index.py index.html'
     options:
       - Indexes
       - FollowSymLinks
