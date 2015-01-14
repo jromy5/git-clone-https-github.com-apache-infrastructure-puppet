@@ -125,7 +125,7 @@ subversion_server::packages:
     - p7zip
     - python-svn
     - s3cmd
-    - viewvc 
+    - viewvc
 
 ssh_asf::server_options:
     AuthorizedKeysCommandUser: 'root'
