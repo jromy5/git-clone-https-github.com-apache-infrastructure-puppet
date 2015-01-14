@@ -121,6 +121,12 @@ subversionclient::packages:
 subversionclient::svn_conf_config:       '/etc/subversion/config'
 subversionclient::svn_conf_servers:      '/etc/subversion/servers'
 
+subversion_server::packages: 
+    - p7zip
+    - python-svn
+    - s3cmd
+    - viewvc 
+
 ssh_asf::server_options:
     AuthorizedKeysCommandUser: 'root'
 
