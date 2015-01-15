@@ -14,6 +14,12 @@ package { $packages:
 }
 
 file {
+  '/x1/git/htdocs':
+    ensure  => link,
+    target  => '/x1/git/asfgit-admin/asf/site/htdocs';
+  '/x1/git/htdocs/repos':
+    ensure  => link,
+    target  => '/x1/git/repos';
   '/etc/gitweb':
     ensure   => directory,
     require  => Package["$packages"],
