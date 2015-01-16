@@ -1,6 +1,9 @@
 classes:
   - java
   - tomcat
+  - tomcat::instance
+  - tomcat::params
+  - tomcat::config
 
 tomcat::params::catalina_home: '/usr/local/tomcat'
 
