@@ -34,7 +34,7 @@ apt::sources:
      release: 'trusty'
      repos: 'main'
      key: '4BD6EC30'
-     key_server: 'pgp.mit.edu'
+     key_server: 'keyserver.ubuntu.com'
      include_deb: true
      include_src: false
   'puppetdeps':
@@ -42,7 +42,7 @@ apt::sources:
      release: 'trusty'
      repos: 'dependencies'
      key: '4BD6EC30'
-     key_server: 'pgp.mit.edu'
+     key_server: 'keyserver.ubuntu.com'
      include_deb: true
      include_src: false
   'lxc_docker':
