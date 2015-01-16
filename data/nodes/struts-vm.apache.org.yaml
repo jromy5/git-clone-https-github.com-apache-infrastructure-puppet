@@ -1,5 +1,6 @@
 classes:
   - java
+  - pl-tomcat
   - tomcat
   - tomcat::params
   - tomcat::config
