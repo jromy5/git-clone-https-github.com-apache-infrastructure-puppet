@@ -1,7 +1,6 @@
 classes:
   - java
   - tomcat
-  - tomcat::instance
   - tomcat::params
   - tomcat::config
 
