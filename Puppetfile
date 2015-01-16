@@ -33,6 +33,11 @@ mod 'fail2ban',
   :branch => 'master'
 
 
+mod 'firewall',
+  :git => 'https://github.com/puppetlabs/puppetlabs-firewall.git',
+  :tag => '1.3.0'
+
+
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
   :tag => '2.3.0'
@@ -152,6 +157,11 @@ mod 'tomcat',
 
 mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
+  :tag => '1.0.2'
+
+
+mod 'sysctl',
+  :git => 'https://github.com/thias/puppet-sysctl.git',
   :tag => '1.0.2'
 
 mod 'vcsrepo',
