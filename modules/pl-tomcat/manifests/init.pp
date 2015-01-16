@@ -12,3 +12,8 @@ class pl-tomcat::params {
   $tcparams = hiera_hash('tomcat::params',{})
   create_resources(tomcat::params, $tcparams)
 }
+
+class pl-tomcat::service {
+  $tcparams = hiera_hash('tomcat::service',{})
+  create_resources(tomcat::service, $tcservice)
+}
