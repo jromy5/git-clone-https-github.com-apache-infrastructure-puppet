@@ -1,0 +1,32 @@
+---
+classes:
+  - firewall
+  - firewall_asf
+  - sysctl_asf
+
+firewall:
+  100-snat:
+    chain: 'POSTROUTING'
+    jump: 'MASQUERADE'
+    outiface: 'eth0'
+    table: 'nat'
+    proto: 'all'
+
+  100-forward-for:
+    chain: 'FORWARD'
+    iniface: 'eth0'
+    outiface: 'eth2'
+    state: ['RELATED', 'ESTABLISHED']
+    action: 'accept'
+    proto: 'all'
+
+  100-forward-from:
+    chain: 'FORWARD'
+    iniface: 'eth2'
+    outiface: 'eth0'
+    action: 'accept'
+    proto: 'all'
+
+sysctl:
+  net.ipv4.ip_forward:
+    value: 1
