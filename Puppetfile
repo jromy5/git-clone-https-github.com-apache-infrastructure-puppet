@@ -150,7 +150,7 @@ mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
   :tag => '1.2.0'
 
-mod 'staging'
+mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
   :tag => '1.0.2'
 
