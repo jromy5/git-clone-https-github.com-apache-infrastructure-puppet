@@ -11,16 +11,17 @@ classes:
   - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
+  - perl
   - rootbin_asf
   - ssl::name::wildcard_apache_org
   - svnpubsub
   - svnwcsub
   - subversion_server
+  - vcsrepo_asf
   - vhosts_asf::custom_config
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - zfs_on_ubuntu
-  - perl
   
 apache::custom_config:
   test:
@@ -570,3 +571,11 @@ vhosts_asf::vhosts::vhosts:
         SetHandler server-status
         Require local
       </Location>
+
+
+vcsrepo:
+  /tmp/authtest:
+    ensure: 'latest'
+    provider: 'svn'
+    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
+    revision: 'head'
