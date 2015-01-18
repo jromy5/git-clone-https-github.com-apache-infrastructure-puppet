@@ -13,7 +13,7 @@ tomcat::instance:
     source_url: 'https://www.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.tar.gz'
 
 tomcat::service:
-  default:
+  tomcat7:
     use_init: true
     service_name: tomcat
 
