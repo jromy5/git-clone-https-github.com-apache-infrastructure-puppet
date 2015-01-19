@@ -161,6 +161,10 @@ class subversion_server (
       ensure  => directory,
       owner   => 'www-data',
       group   => 'svnadmins';
+    '/var/log/svnsynclog':
+      ensure  => file,
+      owner   => 'www-data',
+      group   => 'svnadmins';
     }
 
     # /repos/dist specific files
@@ -263,6 +267,10 @@ class subversion_server (
       ensure  => directory,
       owner   => 'www-data',
       group   => 'svnadmins';
+    '/var/log/svninfrasynclog':
+      ensure  => file,
+      owner   => 'www-data',
+      group   => 'svnadmins';
     }
 
     # /repos/private specific files
@@ -316,6 +324,10 @@ class subversion_server (
       ensure  => directory,
       owner   => 'www-data',
       group   => 'svnadmins';
+    '/var/log/svnprivatesynclog':
+      ensure  => file,
+      owner   => 'www-data',
+      group   => 'svnadmins';
     }
 
     # /repos/tck specific files
@@ -367,6 +379,10 @@ class subversion_server (
       group   => 'svnadmins';
     '/x1/svn/tck-backups.d':
       ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins';
+    '/var/log/svntcksynclog':
+      ensure  => file,
       owner   => 'www-data',
       group   => 'svnadmins';
     }
