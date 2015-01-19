@@ -18,8 +18,33 @@ for(sort keys %$pitrefs) {
     print "$_ referenced by asf but not defined in pit\n" unless defined $pitdefs->{$_};
 }
 
-for(sort keys %$asfdefs , keys %$pitdefs) {
-    print "$_ not used anywhere\n" unless m!-pmc$! || defined $groupused{$_};
+my @unusedlist=();
+my @unusedldap=();
+for(sort keys %$asfdefs) {
+	next if  defined $groupused{$_};
+	if ($asfdefs->{$_} eq 'LIST') {
+        push @unusedlist,$_;
+	} else {
+        next if  m!-pmc$!;
+        push @unusedldap,$_;
+	}
+}
+for(sort keys %$pitdefs) {
+    next if defined $groupused{$_};
+    if ($pitdefs->{$_} eq 'LIST') {
+        push @unusedlist,$_;
+    } else {
+        next if  m!-pmc$!;
+        push @unusedldap,$_;
+    }
+}
+if (scalar @unusedlist) {
+    print "The following local lists don't appear to be used in the asf or pit auth files: ",join(' ', @unusedlist),"\n";
+}
+
+if (scalar @unusedldap) {
+    print "The following LDAP groups don't appear to be used in the asf or pit auth files: ",join(' ', @unusedldap),"\n";
+    print "Note that the LDAP groups may still be required for other purposes\n";
 }
 
 # Check for TLPs without -pmc references (affects people.apache.org site generation)
@@ -37,8 +62,14 @@ sub process_file{
     my %refs=();
     open IN,"<$file" or die "Cannot open $file $!";
     while(<IN>) {
+    	last if m!^\[groups\]!;
+    }
+    die "Could not find [groups] marker in $name" if eof;
+    while(<IN>) {
+        last if m!^\[/\]!;
         s/ +$//;# trim
-        next if m!^#! || m!^\[! || m!^\s*$! || m!^(\*|\w[-\w]+) = ?(r|rw)?$!;
+        next if m!^#! || m!^\s*$!; # comment or empty
+        next if m!^\[!; # directory header
         # committers={ldap:cn=committers,ou=groups,dc=apache,dc=org}
         if (m!^([^=]+)={ldap:cn=([^,]+),!) {
             my ($group, $cn)=($1,$2);
@@ -61,15 +92,6 @@ sub process_file{
             $error=1, print "$group already defined\n" if $refs{$group}++;
             next unless $error;
         }
-        # @ace = rw
-        if (m!^@(\w[-\w]*)\s*=\s*(r|rw)\s*$!) {
-            my $groupref=$1;
-            my $error=0;
-            $error=1, print "Group $groupref not defined\n" unless 
-                defined $groups{$groupref} or defined $refs{$groupref};
-            $groupused{$groupref}++;
-            next unless $error;
-        }
         # aurora=jfarrell,benh,...
         if (m!^(\w[^=]*)=(\w[-\w]*(,\w[-\w]*)*)?$!) {
             my $group=$1;
@@ -79,7 +101,32 @@ sub process_file{
             $groups{$group}='LIST';
             next unless $error;
         }
-        print "??: $_";
+        print "??: Line: $. $_";
+    }
+    die "Could not find [/] marker in $name" if eof;
+    while(<IN>) {
+        s/ +$//;# trim
+        next if m!^#! || m!^\s*$!; # comment or empty
+        next if m!^\[!; # directory header
+        next if m!^\* *= *r?$!; # * = r?
+        # @ace = rw
+        if (m!^@(\w[-\w]*)\s*=\s*(r|rw)\s*$!) {
+            my $groupref=$1;
+            my $error=0;
+            $error=1, print "Group $groupref not defined\n" unless 
+                defined $groups{$groupref} or defined $refs{$groupref};
+            $groupused{$groupref}++;
+            next unless $error;
+        }
+        # user = rw
+        if (m!^(\w[-\w]*)\s*=\s*(r|rw)?\s*$!) {
+        	my $usr=$1;
+            my $error=0;
+            $error=1, print "User $usr is also defined as a group\n" if 
+                defined $groups{$usr} or defined $refs{$usr};
+            next unless $error;
+        }
+        print "??: Line: $. $_";
     }
     close IN;
     return \%refs, \%groups;
