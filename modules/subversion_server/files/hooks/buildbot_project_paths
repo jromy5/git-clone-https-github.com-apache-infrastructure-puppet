@@ -36,6 +36,7 @@
 ^(libcloud/site)/(.*)
 ^(libcloud/trunk)/(.*)
 ^(tomcat/trunk)/(.*)
+^(tomcat/tc8.0.x/trunk/(.*)
 ^(tomcat/tc7.0.x/trunk)/(.*)
 ^(tomcat/tc6.0.x/trunk)/(.*)
 ^(avro/trunk)/(.*)
