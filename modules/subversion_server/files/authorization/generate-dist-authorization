@@ -10,7 +10,7 @@ LDAPSEARCH="ldapsearch"
 XARGS="xargs"
 SED="sed"
 
-pmcs=`$LDAPSEARCH -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
+pmcs=`$LDAPSEARCH -x -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
 committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: "
 
 # preamble
@@ -32,9 +32,9 @@ EOF
 # fill in [groups]
 for pmc in $pmcs incubator; do
   printf "%s=" "$pmc"
-  $LDAPSEARCH -LLL -b "cn=$pmc,$UNIXBASE" 'cn=*' memberUid | $SED -ne 's/^memberUid: //p' | $XARGS | $SED -e 's/ /,/g'
+  $LDAPSEARCH -x -LLL -b "cn=$pmc,$UNIXBASE" 'cn=*' memberUid | $SED -ne 's/^memberUid: //p' | $XARGS | $SED -e 's/ /,/g'
   printf "%s-pmc=" "$pmc"
-  $LDAPSEARCH -LLL -b "cn=$pmc,$BASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
+  $LDAPSEARCH -x -LLL -b "cn=$pmc,$BASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
 done
 
 echo
