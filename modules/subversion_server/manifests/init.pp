@@ -420,6 +420,10 @@ class subversion_server (
       hour    => '*',
       user    => 'www-data',
       command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
+    'generate-dist-atuh':
+      minute  => '*/5',
+      hour    => '*',
+      command => '/x1/svn/authorization/templates/generate-dist-authorization > /x1/svn/authorization/asf-dist-authorization.new; mv -f /x1/svn/authorization/asf-dist-authorization /x1/svn/authorization/asf-dist-authorization.old; mv -f /x1/svn/authorization/asf-dist-authorization.new /x1/svn/authorization/asf-dist-authorization';
     'zfs-snapshot':
       minute  => '30',
       hour    => '21',
