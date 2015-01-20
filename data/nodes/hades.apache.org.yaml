@@ -17,6 +17,7 @@ classes:
   - svnpubsub
   - svnwcsub
   - subversion_server
+  - subversion_server::board_reminders
   - vcsrepo_asf
   - vhosts_asf::custom_config
   - vhosts_asf::modules
@@ -89,6 +90,14 @@ httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 
 ntp::interfaces:
   - em1
   - lo
+
+subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
+subversion_server::board_reminders::packages:
+  - libdate-manip-perl
+  - libfindbin-libs-perl
+  - libfile-slurp-perl
+  - libfile-spec-perl 
+
 
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
