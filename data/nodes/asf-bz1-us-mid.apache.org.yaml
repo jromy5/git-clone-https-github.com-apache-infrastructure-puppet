@@ -6,8 +6,43 @@ classes:
   - apache::mod::headers
   - bugzilla
   - bugzilla::custom_project
+  - vhosts_asf::vhosts
+
+apache::service_ensure: 'stopped'
+apache::default_vhost: false
 
 bugzilla::packages:
   - asf-bugzilla
 
-apache::service_ensure: 'stopped'
+vhosts_asf::vhosts::vhosts:
+  bz-test:
+    vhost_name: '*'
+    port: 80
+    ip: "%{ipaddress_eth1}"
+    ip_based: true
+    docroot: '/var/www/html'
+    manage_docroot: false
+    aliases:
+      -
+        alias: '/bugzilla'
+        path: '/var/www/bugzilla-asf'
+    directories:
+      -
+        path: '/var/www/html'
+      -
+        path: '/var/www/bugzilla-asf'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'cgi-script'
+            extensions:
+              - '.cgi'
+        directoryindex: 'index.cgi index.html'
+    access_log_file: 'weblog.log'
+    error_log_file:  'errorlog.log'
