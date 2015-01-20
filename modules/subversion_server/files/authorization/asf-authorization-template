@@ -772,12 +772,12 @@ ea = rw
 [/flex/whiteboard]
 @flex = r 
 
+[/flink]
+@flink = rw
+
 [/flume]
 @flume = r
 # flume is RO because the main repo has migrated to git
-
-[/flink]
-@flink = rw
 
 [/flume/site]
 @flume = rw
