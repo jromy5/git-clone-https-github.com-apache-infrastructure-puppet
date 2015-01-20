@@ -58,6 +58,11 @@ mod 'logrotate',
   :commit => '89ee645e2350045be48df7ac3ef86cbe4cd9b096'
 
 
+mod 'ldap',
+  :git    => 'https://github.com/pctony/puppet-ldap.git',
+  :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
+
+
 mod 'module_data',
   :git => 'https://github.com/ripienaar/puppet-module-data',
   :tag => '0.0.4'
