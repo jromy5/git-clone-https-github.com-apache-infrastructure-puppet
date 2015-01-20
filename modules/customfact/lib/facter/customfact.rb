@@ -66,3 +66,9 @@ Facter.add("oem") do
   end
 end
 
+Facter.add('asf_slapd_peers') do
+  setcode do
+    servers = hiera(asf_slapd_peers)
+    severs.select { |x| x != Facter.value(:hostname) }
+  end
+end
