@@ -130,6 +130,11 @@ ldapclient::authorizedkeysfile: 'asf-ldap-sshkeys.sh'
 ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
+ldapserver::asf_slapd_peers: 
+  - ldap1-us-west
+  - people.apache.org
+
+
 ntp::diable_monitor: true
 ntp::servers:
   - 0.freebsd.pool.ntp.org
