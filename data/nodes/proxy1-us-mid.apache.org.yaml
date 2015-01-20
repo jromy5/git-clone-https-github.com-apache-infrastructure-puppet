@@ -5,9 +5,14 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - vhosts_asf::modules
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
+
+vhosts_asf::modules::modules:
+  remoteip:
+    name: 'remoteip'
 
 vhosts_asf::vhosts::vhosts:
   proxy:
@@ -15,10 +20,15 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'issues.apache.org'
     docroot: '/var/www/html'
+    access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
+    access_log_env_var: 'combined_forwarded'
+    setenv: 'combined_forwarded'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
     ensure: 'present'
     custom_fragment: |
+      RemoteIPHeader X-Forwarded-For
+
       ProxyPreserveHost on
 
       # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
