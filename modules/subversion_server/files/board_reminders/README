@@ -1,0 +1,44 @@
+Board Reminders
+===============
+
+The 'reminders.pl' script reads the file committee-info.txt file that is maintained in
+the committers repository in the board directory. The file is parsed and
+email reminders are sent to those who are listed as being the committee
+chairs. There is actually the capability to have 2 reminders, 
+one an initial "heads up" and then a second "reminder". The date that 
+the script is run determines which reminder is sent. The date can be 
+controlled by setting the 'finalDate' variable (defaults to 14).
+
+Usage
+-----
+
+The files needed are located in the infrastructure repository, which is only accessible
+via https.
+
+To issue the reminders for the first time (checking the files out into a directory shown
+by <directory>) the following commands may be used.
+
+cd <directory>
+svn co https://svn.apache.org/repos/asf/infrastructure/trunk/tools/board_reminders board_reminders
+cd board_reminders
+./reminders.pl
+
+To issue the reminders subsequently, the following can then be used.
+
+cd <directory>/board_reminders
+svn update
+./reminders.pl
+
+Issues
+------
+
+The biggest issue is how we get the file from svn. Presently this script
+needs to be run in an interactive mode and username/password entered
+as it uses an https url. Ideally we'd use svnlook but there are concerns
+about using this against the repository until it is converted to use
+fsfs as it's backend. According to Sander using it against a repository
+using the bdb backend can lead to hanging of the repository.
+
+The exact licence that covers the committed CPAN module (File::Slurp) isn't obvious,
+nor has it been possible to determine through online searches. We should probably
+contact the author and ensure that it's not GPL'd.

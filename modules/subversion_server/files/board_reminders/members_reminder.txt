@@ -1,0 +1,42 @@
+Subject: Reminder: ASF Board Meeting, [meetingDate]
+
+Fellow ASF members,
+
+The monthly board meeting is held on the third Wednesday of each
+month. This month's meeting will be held on [meetingDate]:
+
+    [tdUrl]
+
+Detailed information about this meeting, including phone and IRC details,
+is in svn, in the directory:
+
+    https://svn.apache.org/repos/private/foundation/board
+
+along with minutes from previous meetings. If you plan to attend, add your
+name to the 'Guests' section of that file. All members are welcome to
+attend.
+
+Please leave your phone on mute, and speak only when invited to do so.
+
+You can follow along with the agenda at:
+
+    https://whimsy.apache.org/board/agenda/
+
+Board meetings are a great opportunity to get a broader view of what's
+happening at the foundation, outside of the projects you're directly
+involved in. Even if you can't attend the meeting, you are strongly
+encouraged to read the reports submitted by the various projects, which are
+also included in the document referenced above, and also at:
+
+    http://whimsy.apache.org/board/minutes/.
+
+A reminder: These reports sometimes contain confidential information,
+designated in the agenda file by <private>, which MUST NOT be shared
+outside of the foundation. A meeting summary is posted to the
+committers@apache.org mailing list shortly after the meeting, and the
+minutes are published to the ASF website, at:
+
+    http://www.apache.org/foundation/board/calendar.html
+
+once they're approved - which usually happens in the next month's board
+meeting.

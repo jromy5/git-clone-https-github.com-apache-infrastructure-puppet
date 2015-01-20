@@ -1,0 +1,9 @@
+Subject: Incubator report reminders sent for [month] [year]
+
+The next board meeting is scheduled for [meetingDate].
+
+I have just sent reminder emails to the below addresses, requesting them
+to supply board reports 2 weeks before the above date ([incDueDate]).
+
+Please recall that the Incubator report is due [dueDate].
+
