@@ -1,0 +1,13 @@
+---
+classes:
+  - apache
+  - apache::mod::cgid
+  - apache::mod::expires
+  - apache::mod::headers
+  - bugzilla
+  - bugzilla::custom_project
+
+bugzilla::packages:
+  - asf-bugzilla
+
+apache::service_ensure: 'stopped'
