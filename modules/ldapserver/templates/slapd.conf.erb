@@ -37,9 +37,9 @@ loglevel        <%= loglevel %>
 modulepath      <%= modulepath %>
 
 <%-
-modules.each do |module|
+modules.each do |mod|
 -%>
-moduleload      <%= module %>
+moduleload      <%= mod %>
 <%- end -%>
 
 # The maximum number of entries that is returned for a search operation
