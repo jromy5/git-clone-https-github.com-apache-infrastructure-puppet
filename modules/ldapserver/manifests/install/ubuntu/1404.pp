@@ -4,7 +4,7 @@ class ldapserver::install::ubuntu::1404 (
 
   $slapd_peers      = [],
   $schemas          = [],
-  $loglevel         = 'stats',
+  $ldaploglevel     = 'stats',
   $modulepath       = '/usr/lib/ldap',
   $modules          = [],
   $sizelimit        = 'unlimited',

@@ -4,7 +4,7 @@ class ldapserver (
   $packages         = [],
   $slapd_peers      = [],
   $schemas          = [],
-  $loglevel         = 'stats',
+  $ldaploglevel     = 'stats',
   $modulepath       = '/usr/lib/ldap',
   $modules          = [],
   $sizelimit        = 'unlimited',
@@ -29,7 +29,7 @@ class ldapserver (
   class { "ldapserver::install::${asfosname}::${asfosrelease}":
     slapd_peers      => $slapd_peers,
     schemas          => $schemas,
-    loglevel         => $loglevel,
+    ldaploglevel     => $ldaploglevel,
     modulepath       => $modulepath,
     modules          => $modules,
     sizelimit        => $sizelimit,
