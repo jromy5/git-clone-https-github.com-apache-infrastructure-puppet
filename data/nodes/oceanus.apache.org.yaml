@@ -1,6 +1,7 @@
 ---
 classes:
   - fail2ban_asf::config
+  - ssl::name::circonus-ca
   
 fail2ban::service_autorestart: true
 fail2ban::disable: false
