@@ -13,7 +13,7 @@ apache::default_vhost: false
 bugzilla::packages:
   - asf-bugzilla
   - sa-bugzilla
-    
+  - ooo-bugzilla
 
 vhosts_asf::vhosts::vhosts:
   bz-test:
