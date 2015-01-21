@@ -37,6 +37,7 @@ define bugzilla::project (
   $admin_email,
   $admin_password,
   $admin_realname,
+  $cookiepath       = '/',
   $create_htaccess  = true,
   $cvsbin           = '/usr/bin/cvs',
   $db_check         = true,
