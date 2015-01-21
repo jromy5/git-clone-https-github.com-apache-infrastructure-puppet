@@ -95,7 +95,7 @@ overlay syncprov
 # Replication Directives:
 
 <%-
-ldap_servers = slapd_peers.select { |x| x != Facter.value(:hostname) }
+ldap_servers = slapd_peers.select { |x| x != Facter.value(:fqdn) }
 ldap_servers.each do |server|
 -%>
 syncrepl rid=<%= server.split('-')[0].gsub('ldap', '') %>
@@ -257,7 +257,7 @@ access to dn.subtree="ou=services,dc=apache,dc=org"
 
 ## Allow 'self' to edit subset of own attrs, even in the sandbox.
 access to dn.subtree="ou=sandbox,dc=apache,dc=org"
-attrs=mail,sn,givenName,userPassword
+  attrs=mail,sn,givenName,userPassword
   by self write
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
@@ -280,17 +280,17 @@ access to dn.subtree="ou=sandbox,dc=apache,dc=org"
 
 ## Catch all, explicitly allow anything not covered above.
 access to *
-by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
-by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
-by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
-by * read
-by anonymous none
+  by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
+  by * read
+  by anonymous none
 
 # The root DIT should be accessible to all clients
 access to dn.exact=""
-        by * read
+  by * read
 
 # So should the schema
 access to dn.subtree="cn=Subschema"
-        by * read
+  by * read
 
