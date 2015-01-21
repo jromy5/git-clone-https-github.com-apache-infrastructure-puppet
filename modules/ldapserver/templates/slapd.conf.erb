@@ -71,7 +71,7 @@ maxsize        <%= maxsize %>
 
 # Indexing options for database #1
 <%-
-ldap_indexes.each do |idx|
+indexes.each do |idx|
 -%>
 index          <%= idx %> eq
 <%- end -%>
@@ -100,7 +100,7 @@ overlay syncprov
 # Replication Directives:
 
 <%-
-ldap_servers = ldap_servers.select { |x| x != Facter.value(:hostname) }
+ldap_servers = slapd_peers.select { |x| x != Facter.value(:hostname) }
 ldap_servers.each do |server|
 -%>
 syncrepl rid=<%= server.split('-')[1] %>
