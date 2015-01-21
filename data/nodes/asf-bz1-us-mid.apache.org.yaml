@@ -12,6 +12,8 @@ apache::default_vhost: false
 
 bugzilla::packages:
   - asf-bugzilla
+  - sa-bugzilla
+    
 
 vhosts_asf::vhosts::vhosts:
   bz-test:
@@ -25,11 +27,47 @@ vhosts_asf::vhosts::vhosts:
       -
         alias: '/bugzilla'
         path: '/var/www/bugzilla-asf'
+      -
+        alias: '/SpamAssassin'
+        path: '/var/www/bugzilla-sa'
+      -
+        alias: '/ooo'
+        path: '/var/www/bugzilla-ooo'
     directories:
       -
         path: '/var/www/html'
       -
         path: '/var/www/bugzilla-asf'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'cgi-script'
+            extensions:
+              - '.cgi'
+        directoryindex: 'index.cgi index.html'
+      -
+        path: '/var/www/bugzilla-sa'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'cgi-script'
+            extensions:
+              - '.cgi'
+        directoryindex: 'index.cgi index.html'
+      -
+        path: '/var/www/bugzilla-ooo'
         options:
           - 'Indexes'
           - 'FollowSymLinks'

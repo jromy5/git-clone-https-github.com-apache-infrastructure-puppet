@@ -46,5 +46,38 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.211\.105
       # RewriteRule ^/bugzilla/(.*) http://192.168.3.4:80/bugzilla/$1 [P]
       <Location /bugzilla>
-        Header edit Set-Cookie (^.*$) "$1; Secure"
+        ProxyPassReverseCookiePath http://192.168.3.4/bugzilla http://bztest.apache.org/bugzilla
+        #Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      # SA Bugzilla instance on eir.zones
+      ProxyPass /SpamAssassin                 http://192.168.3.4:80/SpamAssassin                 retry=0 timeout=60
+      ProxyPass /SpamAssassin/sanitycheck.cgi http://192.168.3.4:80/SpamAssassin/sanitycheck.cgi retry=0 timeout=300
+      SetEnvIf Request_URI "^/SpamAssassin" asf_proxy=eir.sabz
+      # To enable system maintenance, comment out the two lines above and uncomment the five lines below
+      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
+      # RewriteCond %{REQUEST_URI} !/SpamAssassin/maintenance.html
+      # RewriteCond %{REMOTE_ADDR} !2\.24\.211\.105
+      # RewriteRule ^/SpamAssassin/(.*) /SpamAssassin/maintenance.html
+      # RewriteCond %{REMOTE_ADDR} 2\.24\.211\.105
+      # RewriteRule ^/SpamAssassin/(.*) http://192.168.3.4:80/SpamAssassin/$1 [P]
+      <Location /SpamAssassin>
+        ProxyPassReverseCookiePath http://192.168.3.4/SpamAssassin http://bztest.apache.org/SpamAssassin
+        #Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      # OOO Bugzilla instance on sif.zones
+      ProxyPass /ooo                 http://192.168.3.4:80/ooo retry=0 timeout=60
+      ProxyPass /ooo/sanitycheck.cgi http://192.168.3.4:80/ooo/sanitycheck.cgi retry=0 timeout=300
+      SetEnvIf Request_URI "^/ooo" asf_proxy=sif
+      # To enable system maintenance, comment out the two lines above and uncomment the five lines below
+      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
+      # RewriteCond %{REQUEST_URI} !/ooo/maintenance.html
+      # RewriteCond %{REMOTE_ADDR} !2\.24\.200\.75
+      # RewriteRule ^/ooo/(.*) /ooo/maintenance.html
+      # RewriteCond %{REMOTE_ADDR} 2\.24\.200\.75
+      # RewriteRule ^/ooo/(.*) http://192.168.3.4:80/ooo/$1 [P]
+      <Location /ooo>
+       ProxyPassReverseCookiePath http://192.168.3.4/ooo http://bztest.apache.org/ooo
+       # Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
