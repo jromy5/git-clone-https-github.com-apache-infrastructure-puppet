@@ -66,9 +66,3 @@ Facter.add("oem") do
   end
 end
 
-Facter.add('asf_slapd_peers') do
-  setcode do
-    servers = %w(ldap1-us-west.apache.org people.apache.org)
-    servers.select { |x| x != Facter.value(:fqdn)}
-  end
-end

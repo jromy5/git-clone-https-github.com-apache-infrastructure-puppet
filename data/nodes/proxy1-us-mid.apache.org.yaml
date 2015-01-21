@@ -18,7 +18,7 @@ vhosts_asf::vhosts::vhosts:
   proxy:
     vhost_name: '*'
     port: 80
-    servername: 'issues.apache.org'
+    servername: 'bztest.apache.org'
     docroot: '/var/www/html'
     access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
     access_log_env_var: 'combined_forwarded'

@@ -8,7 +8,6 @@ classes:
   - bugzilla::custom_project
   - vhosts_asf::vhosts
 
-apache::service_ensure: 'stopped'
 apache::default_vhost: false
 
 bugzilla::packages:
