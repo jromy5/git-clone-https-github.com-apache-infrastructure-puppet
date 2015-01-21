@@ -23,10 +23,11 @@ class ssl::name::circonus-ca (
       owner    =>  "${sslrootdirowner}",
       mode     =>  "${sslrootdirumask}";
     "${sslrootdir}/${sslcertname}":
-      require  =>  File["${sslrootdir}"],
-      ensure   =>  present,
-      content  =>  $sslcertcontents,
-      owner    =>  "${sslrootdirowner}",
-      group    =>  "${sslrootdirgroup}";
+      require => File["${sslrootdir}"],
+      ensure  => present,
+      content => $sslcertcontents,
+      owner   => "${sslrootdirowner}",
+      group   => "${sslrootdirgroup}";
+      mode    => '0644',
   }
 }
