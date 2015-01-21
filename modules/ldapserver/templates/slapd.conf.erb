@@ -16,7 +16,7 @@ ldap_schemas = schemas.select
 ldap_schemas.each |schema|
 -%>
 include         /etc/ldap/schema/<%= schema %>.schema
-
+<%- end -%>
 
 # Where the pid file is put. The init.d script
 # will not stop the server if you change this.
@@ -39,6 +39,7 @@ ldap_modules = modules.select
 ldap_modules.each |module|
 -%>
 moduleload      <%= moduleload %>
+<%- end -%>
 
 # The maximum number of entries that is returned for a search operation
 sizelimit       <%= sizelimit %>
@@ -82,6 +83,8 @@ ldap_indexes = indexes.select
 ldap_indexes.each |index|
 -%>
 index           <%= index %> eq
+<%- end -%>
+
 
 # Save the time that the entry gets modified, for database #1
 lastmod         on
