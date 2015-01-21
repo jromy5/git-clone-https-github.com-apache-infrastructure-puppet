@@ -98,7 +98,7 @@ overlay syncprov
 ldap_servers = slapd_peers.select { |x| x != Facter.value(:hostname) }
 ldap_servers.each do |server|
 -%>
-syncrepl rid=<%= server.split('-')[1] %>
+syncrepl rid=<%= server.split('-')[0].gsub('ldap', '') %>
         provider=ldaps://<%= server %>:636
         binddn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org"
         bindmethod=simple
