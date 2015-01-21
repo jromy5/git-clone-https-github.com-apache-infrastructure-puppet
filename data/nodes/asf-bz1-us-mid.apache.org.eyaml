@@ -12,3 +12,7 @@ bugzilla::project:
     create_htaccess: true
     cvsbin: ''
     interdiffbin: ''
+    svn_url: ''https://svn.apache.org/viewvc?view=rev&rev='
+    maintainer: 'bugzilla-admin@apache.org'
+    urlbase: 'http://bztest.apache.org/bugzilla/'
+    cookiepath: '/bugzilla/'
