@@ -12,5 +12,6 @@ class ldapserver::install::ubuntu::1404 (
 
    service { 'slapd':
      hasrestart   =>  true
+     ensure       =>  running,
    }
 }
