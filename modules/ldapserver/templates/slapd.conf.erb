@@ -11,9 +11,7 @@
 # Schema and objectClass definitions
 <%-
 schemas = hiera(ldapserver::schemas)
-ldap_schemas = schemas.select
-
-ldap_schemas.each |schema|
+ldap_schemas.each do |schema|
 -%>
 include         /etc/ldap/schema/<%= schema %>.schema
 <%- end -%>
@@ -34,11 +32,9 @@ modulepath      <%= modulepath %>
 
 <%-
 modules = hiera(ldapserver::modules)
-ldap_modules = modules.select
-
-ldap_modules.each |module|
+ldap_modules.each do |module|
 -%>
-moduleload      <%= moduleload %>
+moduleload      <%= module %>
 <%- end -%>
 
 # The maximum number of entries that is returned for a search operation
