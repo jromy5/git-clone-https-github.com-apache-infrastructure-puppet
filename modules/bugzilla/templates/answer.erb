@@ -16,7 +16,9 @@
     "interdiffbin"         => '<%= @interdiffbin %>',
     "maintainer"           => '<%= @maintainer %>',
     "mail_delivery_method" => '<%= @mta %>',
+<% if @site_wide_secret %>
     "site_wide_secret"     => '<%= @site_wide_secret %>',
+<% end %>
     "svn_url"              => '<%= @svn_url %>',
     "urlbase"              => '<%= @urlbase %>',
     "webservergroup"       => '<%= @webservergroup %>',

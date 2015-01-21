@@ -55,7 +55,7 @@ define bugzilla::project (
   $interdiffbin     = '/usr/bin/interdiff',
   $maintainer       = '',
   $mta              = 'Sendmail',
-  $site_wide_secret = '',
+  $site_wide_secret = undef,
   $smtp_server      = 'localhost',
   $svn_url          = 'https://svn.apache.org/viewvc?view=rev&rev=',
   $urlbase          = '',
