@@ -14,7 +14,7 @@ bugzilla::project:
     interdiffbin: ''
     svn_url: 'https://svn.apache.org/viewvc?view=rev&rev='
     maintainer: 'bugzilla-admin@apache.org'
-    urlbase: 'http://bztest.apache.org/bugzilla/'
+    urlbase: 'https://bztest.apache.org/bugzilla/'
     cookiepath: '/bugzilla/'
   sa:
     admin_email: "root@localhost.localdomain"
@@ -31,7 +31,7 @@ bugzilla::project:
     interdiffbin: ''
     svn_url: 'https://svn.apache.org/viewvc?view=rev&rev='
     maintainer: 'bugzilla-admin@apache.org'
-    urlbase: 'http://bztest.apache.org/SpamAssassin/'
+    urlbase: 'https://bztest.apache.org/SpamAssassin/'
     cookiepath: '/SpamAssassin/'
   ooo:
     admin_email: "root@localhost.localdomain"
@@ -48,5 +48,5 @@ bugzilla::project:
     interdiffbin: ''
     svn_url: 'https://svn.apache.org/viewvc?view=rev&rev='
     maintainer: 'bugzilla-admin@apache.org'
-    urlbase: 'http://bztest.apache.org/ooo/'
+    urlbase: 'https://bztest.apache.org/ooo/'
     cookiepath: '/ooo/'
