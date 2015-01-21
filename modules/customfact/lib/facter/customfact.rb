@@ -68,7 +68,7 @@ end
 
 Facter.add('asf_slapd_peers') do
   setcode do
-    servers = hiera(ldapserver::asf_slapd_peers)
+    servers = hiera('ldapserver::asf_slapd_peers')
     severs.select { |x| x != Facter.value(:hostname) }
   end
 end
