@@ -27,7 +27,7 @@ class ssl::name::circonus-ca (
       ensure  => present,
       content => $sslcertcontents,
       owner   => "${sslrootdirowner}",
-      group   => "${sslrootdirgroup}";
-      mode    => '0644',
+      group   => "${sslrootdirgroup}",
+      mode    => '0644';
   }
 }
