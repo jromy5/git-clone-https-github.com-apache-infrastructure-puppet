@@ -38,6 +38,7 @@ class ldapserver (
     suffix           => $suffix,
     directory        => $directory,
     rootdn           => $rootdn,
+    rootpw           => $rootpw,
     maxsize          => $maxsize,
     indexes          => $indexes,
     cafile           => $cafile,
