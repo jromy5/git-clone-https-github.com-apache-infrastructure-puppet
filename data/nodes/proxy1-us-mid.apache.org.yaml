@@ -19,7 +19,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'bztest.apache.org'
-    docroot: '/var/www/html'
+    docroot: '/var/www/issues-data'
     access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
     access_log_env_var: 'combined_forwarded'
     setenv: 'combined_forwarded'
