@@ -134,7 +134,7 @@ ldapclient::nssbindpasswd: 'b1t3me'
 
 ldapserver::slapd_peers:
   - ldap1-us-west.apache.org
-  - people.apache.org
+  - ldap1-us.apache.org  #This is really minotaur
 ldapserver::schemas: 
   - core
   - cosine
