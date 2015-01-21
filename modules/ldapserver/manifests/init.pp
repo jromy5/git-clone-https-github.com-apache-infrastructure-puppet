@@ -13,6 +13,7 @@ class ldapserver (
   $suffix           = 'dc=apache,dc=org',
   $directory        = '/var/lib/ldap',
   $rootdn           = 'cn=root,dc=apache,dc=org',
+  $rootpw           = '',
   $maxsize          = '1024000000',
   $indexes          = [],
   $cafile           = '/etc/ldap/cacerts/cacert.pem',
@@ -26,6 +27,22 @@ class ldapserver (
   }
 
   class { "ldapserver::install::${asfosname}::${asfosrelease}":
+    slapd_peers      => slapd_peers,
+    schemas          => $schemas,
+    loglevel         => $loglevel,
+    modulepath       => $modulepath,
+    modules          => $modules,
+    sizelimit        => $sizelimit,
+    backend          => $backend,
+    database         => $database,
+    suffix           => $suffix,
+    directory        => $directory,
+    rootdn           => $rootdn,
+    maxsize          => $maxsize,
+    indexes          => $indexes,
+    cafile           => $cafile,
+    certfile         => $certfile,
+    keyfile          => $keyfile
 
   }
 
