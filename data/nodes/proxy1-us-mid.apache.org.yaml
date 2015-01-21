@@ -47,7 +47,7 @@ vhosts_asf::vhosts::vhosts:
       # RewriteRule ^/bugzilla/(.*) http://192.168.3.4:80/bugzilla/$1 [P]
       <Location /bugzilla>
         ProxyPassReverseCookiePath http://192.168.3.4/bugzilla http://bztest.apache.org/bugzilla
-        #Header edit Set-Cookie (^.*$) "$1; Secure"
+        Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
       # SA Bugzilla instance on eir.zones
@@ -63,7 +63,7 @@ vhosts_asf::vhosts::vhosts:
       # RewriteRule ^/SpamAssassin/(.*) http://192.168.3.4:80/SpamAssassin/$1 [P]
       <Location /SpamAssassin>
         ProxyPassReverseCookiePath http://192.168.3.4/SpamAssassin http://bztest.apache.org/SpamAssassin
-        #Header edit Set-Cookie (^.*$) "$1; Secure"
+        Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
       # OOO Bugzilla instance on sif.zones
@@ -78,6 +78,6 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %{REMOTE_ADDR} 2\.24\.200\.75
       # RewriteRule ^/ooo/(.*) http://192.168.3.4:80/ooo/$1 [P]
       <Location /ooo>
-       ProxyPassReverseCookiePath http://192.168.3.4/ooo http://bztest.apache.org/ooo
-       # Header edit Set-Cookie (^.*$) "$1; Secure"
+        ProxyPassReverseCookiePath http://192.168.3.4/ooo http://bztest.apache.org/ooo
+        Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
