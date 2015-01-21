@@ -57,15 +57,10 @@ backend        <%= backend %>
 database        <%= database %>
 
 # The base of your directory in database #1
-#suffix        "dc=apache,dc=org"
 suffix          <%= suffix %>
-#directory      "/var/lib/ldap"
 directory      <%= directory %>
-#rootdn        "cn=root,dc=apache,dc=org"
 rootdn          <%= rootdn %>
-#rootpw        PASSWD HERE
 rootpw          <%= rootpw %>
-#maxsize        1024000000
 maxsize        <%= maxsize %>
 
 
@@ -86,7 +81,7 @@ security tls=1
 # Define SSL Certs for LDAPS
 TLSCACertificateFile    <%= cafile %>
 TLSCertificateFile      <%= certfile %>
-TLSCertificateKeyFile  <%= keyfile %>
+TLSCertificateKeyFile   <%= keyfile %>
 
 ### Define replication and mirroring
 # Enable mirroring
