@@ -16,6 +16,8 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bztest.apache.org/bugzilla/'
     cookiepath: '/bugzilla/'
+    bz_package: 'asf-bugzilla'
+    package_ensure: '0.0.1-1'
   sa:
     admin_email: "root@localhost.localdomain"
     admin_realname: "Foo Bar"
@@ -33,6 +35,8 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bztest.apache.org/SpamAssassin/'
     cookiepath: '/SpamAssassin/'
+    bz_package: 'sa-bugzilla'
+    package_ensure: '0.0.1-1'
   ooo:
     admin_email: "root@localhost.localdomain"
     admin_realname: "Foo Bar"
@@ -50,3 +54,5 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bztest.apache.org/ooo/'
     cookiepath: '/ooo/'
+    bz_package: 'ooo-bugzilla'
+    package_ensure: '0.0.1-1'
