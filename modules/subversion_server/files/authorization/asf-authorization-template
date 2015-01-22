@@ -313,7 +313,7 @@ openoffice={ldap:cn=openoffice,ou=groups,dc=apache,dc=org}
 openoffice-pmc={reuse:pit-authorization:openoffice-pmc}
 openwebbeans={ldap:cn=openwebbeans,ou=groups,dc=apache,dc=org}
 openwebbeans-pmc={reuse:pit-authorization:openwebbeans-pmc}
-parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue,marcel,mlacour,rpecqueur
+parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue,marcel,mlacour,rpecqueur,alexlevenson,dweeks
 pdfbox={ldap:cn=pdfbox,ou=groups,dc=apache,dc=org}
 pdfbox-pmc={reuse:pit-authorization:pdfbox-pmc}
 pig={ldap:cn=pig,ou=groups,dc=apache,dc=org}
