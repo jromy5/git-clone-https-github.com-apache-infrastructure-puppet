@@ -60,11 +60,18 @@ define bugzilla::project (
   $svn_url          = 'https://svn.apache.org/viewvc?view=rev&rev=',
   $urlbase          = '',
   $webservergroup   = 'www-data',
+  $bz_package,
+  $package_ensure   = 'latest',
 ) {
 
   require bugzilla
 
   $bz_confdir = "/etc/bugzilla"
+
+  package { "${bz_package}":
+    ensure => "${package_ensure}",
+    notify => Exec["bugzilla_checksetup_${name}"],
+  }
 
   case $name {
     "main": {
