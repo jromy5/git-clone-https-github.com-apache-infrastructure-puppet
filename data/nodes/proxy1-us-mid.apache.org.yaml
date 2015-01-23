@@ -81,3 +81,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyPassReverseCookiePath http://192.168.3.4/ooo http://bztest.apache.org/ooo
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
+
+ntp::interfaces:
+  - eth1
+  - lo

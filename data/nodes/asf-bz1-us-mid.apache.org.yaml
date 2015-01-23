@@ -78,3 +78,7 @@ vhosts_asf::vhosts::vhosts:
         directoryindex: 'index.cgi index.html'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
+
+ntp::interfaces:
+  - eth1
+  - lo
