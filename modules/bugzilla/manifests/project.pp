@@ -55,6 +55,7 @@ define bugzilla::project (
   $interdiffbin     = '/usr/bin/interdiff',
   $maintainer       = '',
   $mta              = 'Sendmail',
+  $mybugstemplate   = 'buglist.cgi?resolution=---&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailtype1=exact&amp;email1=%userid%',
   $site_wide_secret = undef,
   $smtp_server      = 'localhost',
   $svn_url          = 'https://svn.apache.org/viewvc?view=rev&rev=',
