@@ -349,7 +349,8 @@ roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
 s4=acmurthy,omalley,phunt,fpj,mmorel,leoneu,robbins,kishoreg,dferro
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
-samza=acmurthy,cdouglas,cpsoman,garryturk,jghoman,jkreps,martinkl,rvs,criccomini,sriramsub,yanfang,zjshen
+samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
+samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani
@@ -1010,9 +1011,6 @@ ea = rw
 [/incubator/samoa]
 @samoa = rw
 
-[/incubator/samza]
-@samza = rw
-
 [/incubator/sentry]
 @sentry = rw
 
@@ -1452,6 +1450,9 @@ ea = rw
 
 [/roller]
 @roller = rw
+
+[/samza]
+@samza = rw
 
 [/santuario]
 @santuario = rw

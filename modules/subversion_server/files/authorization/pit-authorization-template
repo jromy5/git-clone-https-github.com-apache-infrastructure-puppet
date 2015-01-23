@@ -255,6 +255,8 @@ river-pmc={ldap:cn=river,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 roller={reuse:asf-authorization:roller}
 roller-pmc={ldap:cn=roller,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 s4={reuse:asf-authorization:s4}
+samza={reuse:asf-authorization:samza}
+samza-pmc={ldap:cn=samza,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 santuario={reuse:asf-authorization:santuario}
 santuario-pmc={ldap:cn=santuario,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 sentry={reuse:asf-authorization:sentry}
