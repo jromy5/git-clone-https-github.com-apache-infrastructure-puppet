@@ -95,7 +95,7 @@ overlay syncprov
 # Replication Directives:
 
 <%-
-ldap_servers = slapd_peers.select { |x| x != Facter.value(:fqdn) }
+ldap_servers = slapd_peers.reject { |x| x == Facter.value(:fqdn) }
 ldap_servers.each do |server|
 -%>
 syncrepl rid=<%= server.split('-')[0].gsub('ldap', '') %>
