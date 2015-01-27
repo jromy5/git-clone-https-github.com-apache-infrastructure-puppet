@@ -586,5 +586,5 @@ vcsrepo:
   /tmp/authtest:
     ensure: 'latest'
     provider: 'svn'
-    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
+    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization/templates'
     revision: 'head'
