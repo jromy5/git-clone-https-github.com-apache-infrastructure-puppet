@@ -88,16 +88,18 @@ TLSCertificateKeyFile   <%= keyfile %>
 # Replication Directives:
 
 <%-
-  server_hash = slapd_peers.select { |id, s| server == @fqdn }
+  server_hash = slapd_peers.select { |id, s| s == @fqdn }
   server_id = server_hash.keys.first
 %>
 serverID <%= server_id %>
+
+<%- end -%>
 
 <%-
   ldap_servers = slapd_peers.reject { |id, server| server == @fqdn }
   ldap_servers.each do |id, server|
 -%>
-syncrepl rid=<%= n %>
+syncrepl rid=<%= id %>
         provider=ldaps://<%= server %>:636
         binddn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org"
         bindmethod=simple
