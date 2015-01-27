@@ -95,6 +95,13 @@ overlay syncprov
 # Replication Directives:
 
 <%-
+serverid = slapd_peers.select { |x| x == @fqdn }
+serverid.each_with_index do |notinuseserver, r|
+-%>
+
+serverID <%=r%>
+
+<%-
 ldap_servers = slapd_peers.reject { |x| x == @fqdn }
 ldap_servers.each_with_index do |server, n|
 -%>
