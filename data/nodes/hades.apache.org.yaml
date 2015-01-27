@@ -583,8 +583,8 @@ vhosts_asf::vhosts::vhosts:
 
 
 vcsrepo:
-  /tmp/authtest:
+  /tmp/authtest2:
     ensure: 'latest'
     provider: 'svn'
-    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization/templates'
+    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
     revision: 'head'
