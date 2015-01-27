@@ -83,13 +83,6 @@ TLSCACertificateFile    <%= cafile %>
 TLSCertificateFile      <%= certfile %>
 TLSCertificateKeyFile   <%= keyfile %>
 
-### Define replication and mirroring
-# Enable mirroring
-mirrormode      true
-
-# Enable replication synchronisation
-overlay syncprov
-
 
 #######################################################################
 # Replication Directives:
@@ -119,6 +112,13 @@ syncrepl rid=<%=n%>
         scope=sub
 
 <%- end -%>
+
+### Define replication and mirroring
+# Enable mirroring
+mirrormode      true
+
+# Enable replication synchronisation
+overlay syncprov
 
 #######################################################################
 # ACL Directives:
