@@ -93,8 +93,6 @@ TLSCertificateKeyFile   <%= keyfile %>
 %>
 serverID <%= server_id %>
 
-<%- end -%>
-
 <%-
   ldap_servers = slapd_peers.reject { |id, server| server == @fqdn }
   ldap_servers.each do |id, server|
