@@ -132,10 +132,11 @@ ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 ldapclient::nssbindpasswd: 'b1t3me'
 
 
-ldapserver::slapd_peers:$
-  1: ldap1-us-west.apache.org$
-  2: ldap1-us.apache.org$
-ldapserver::schemas: 
+ldapserver::slapd_peers:
+  1: ldap1-us-west.apache.org
+  2: ldap1-us.apache.org
+
+ldapserver::schemas:
   - core
   - cosine
   - nis
