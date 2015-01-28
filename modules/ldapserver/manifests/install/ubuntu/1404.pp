@@ -61,11 +61,6 @@ class ldapserver::install::ubuntu::1404 (
       ensure    => present,
       require   => Package['slapd'],
       notify    => Service['slapd'];
-    '/etc/ldap/cacerts':
-      ensure    => directory,
-      require   => Package['slapd'],
-      owner     => root,
-      mode      => '0755';
     "$cafile":
       content   => $cafilecontents,
       require   => File['/etc/ldap/cacerts'],
