@@ -46,10 +46,10 @@ class ldapserver (
     indexes          => $indexes,
     cafile           => $cafile,
     certfile         => $certfile,
-    keyfile          => $keyfile
-    cafilecontents   => $cafilecontents
-    certfilecontents => $certfilecontents
-    keyfilecontents  => $keyfilecontents
+    keyfile          => $keyfile,
+    cafilecontents   => $cafilecontents,
+    certfilecontents => $certfilecontents,
+    keyfilecontents  => $keyfilecontents,
 
   }
 
