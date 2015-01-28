@@ -86,7 +86,7 @@ ldapclient::ldapclient_packages:
 ldapclient::ldapclient_remove_packages: 
     - nscd
 
-ldapserver::packages:
+ldapserver::install::ubuntu::1404::packages:
   - slapd
   - slpad-dbg
   - slapo-syncprov
