@@ -37,7 +37,7 @@ class ldapserver::install::ubuntu::1404 (
       owner     => 'root',
       mode      => '0644',
       ensure    => present,
-      require   => Package["$packages"],
+      require   => Package['slapd'],
       notify    => Service['slapd'];
    }
 
