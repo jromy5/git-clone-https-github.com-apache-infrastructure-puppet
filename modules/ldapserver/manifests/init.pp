@@ -27,6 +27,7 @@ class ldapserver (
   }
 
   class { "ldapserver::install::${asfosname}::${asfosrelease}":
+    packages         => $packages,
     slapd_peers      => $slapd_peers,
     schemas          => $schemas,
     ldaploglevel     => $ldaploglevel,

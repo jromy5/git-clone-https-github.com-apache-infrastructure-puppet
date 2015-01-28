@@ -86,6 +86,11 @@ ldapclient::ldapclient_packages:
 ldapclient::ldapclient_remove_packages: 
     - nscd
 
+ldapserver::packages:
+  - slapd
+  - slpad-dbg
+  - slapo-syncprov
+
 ntp::interfaces:
     - eth0
     - lo

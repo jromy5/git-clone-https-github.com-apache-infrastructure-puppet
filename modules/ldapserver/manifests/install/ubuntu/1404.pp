@@ -2,6 +2,7 @@
 
 class ldapserver::install::ubuntu::1404 (
 
+  $packages         = [],
   $slapd_peers      = [],
   $schemas          = [],
   $ldaploglevel     = 'stats',
@@ -21,6 +22,10 @@ class ldapserver::install::ubuntu::1404 (
   $keyfile          = '/etc/ldap/cacerts/ldap-wildcard-cert.key',
 
 ) { 
+  package { $packages:
+    ensure   =>  installed,
+  }
+
 
   file { '/etc/ldap/slapd.conf': 
     content   => template('ldapserver/slapd.conf.erb'), 
