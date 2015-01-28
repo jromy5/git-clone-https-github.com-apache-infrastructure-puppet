@@ -30,18 +30,21 @@ class ldapserver::install::ubuntu::1404 (
   file { 
     '/etc/ldap/slapd.conf': 
       content   => template('ldapserver/slapd.conf.erb'), 
+      require   => Package["$packages"],
       notify    => Service["slapd"];
     '/etc/default/slapd':
       source    => "puppet:///modules/ldapserver/default-slapd",
       owner     => 'root',
       mode      => '0644',
       ensure    => present,
+      require   => Package["$packages"],
       notify    => Service['slapd'];
    }
 
 
    service { 'slapd':
      hasrestart   =>  true,
+     hasstatus    =>  true,
      ensure       =>  running,
    }
 }
