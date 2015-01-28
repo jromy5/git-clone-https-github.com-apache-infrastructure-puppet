@@ -1,0 +1,167 @@
+# http://www.iana.org/assignments/enterprise-numbers
+# 1.3.6.1.4.1.18060 is the ASF's OID prefix
+
+# asf-sascore
+attributetype ( 1.3.6.1.4.1.18060.2.0.1
+        NAME 'asf-sascore'
+        DESC 'To be used by users to set their personal SA score threshold.'
+        EQUALITY caseExactMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+# asf-pgpKeyFingerprint
+attributetype ( 1.3.6.1.4.1.18060.2.0.2
+        NAME 'asf-pgpKeyFingerprint'
+        DESC 'To be used by users to store their OpenPGP Public Key fingerprint'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+# asf-icla-legalname
+attributetype ( 1.3.6.1.4.1.18060.2.0.3
+        NAME 'asf-icla-legalname'
+        DESC 'Field to store the committers real name '
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+# asf-icla-publicname
+attributetype ( 1.3.6.1.4.1.18060.2.0.4
+        NAME 'asf-icla-publicname'
+        DESC 'Field to enter the public facing name of our committers.  Some people do not want their full legal name used, so this is the field we used when displaying committers names for public consumption.'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+# asf-icla-email
+attributetype ( 1.3.6.1.4.1.18060.2.0.5
+        NAME 'asf-icla-email'
+        DESC 'This is the email from which the ICLA was received, and the official contact email address.'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+# asf-icla-file
+attributetype ( 1.3.6.1.4.1.18060.2.0.6
+        NAME 'asf-icla-file'
+        DESC 'This is the path to the file that was added to subversion, a copy of the committers signed CLA file. '
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+# asf-banned
+attributetype ( 1.3.6.1.4.1.18060.2.0.7
+        NAME 'asf-banned'
+        DESC 'This entity is banned.  It may not use SVN, SSH or any other services '
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+# asf-altEmail
+attributetype ( 1.3.6.1.4.1.18060.2.0.8
+        NAME 'asf-altEmail'
+        DESC 'Alternative email addresses, set by the owner, nee MailAlias.txt'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+# asf-personalURL
+attributetype ( 1.3.6.1.4.1.18060.2.0.9
+        NAME 'asf-personalURL'
+        DESC 'personal homepage, nee committers/urls.txt'
+        EQUALITY caseExactMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+# asf-noforwardfile
+attributetype ( 1.3.6.1.4.1.18060.2.0.10
+        NAME 'asf-noforwardfile'
+        DESC 'If this value exists a .forward file will not be created. In theory this is a transitional key/value pair'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+
+
+# asf-committer
+objectclass ( 1.3.6.1.4.1.18060.2.0
+        NAME 'asf-committer'
+        DESC 'An OC that will allow us to add specific ASF attributes to users'
+        AUXILIARY
+        MAY ( asf-sascore $ asf-icla-legalname $ asf-icla-publicname $ asf-icla-email $ asf-icla-file $ asf-pgpKeyFingerprint $ asf-banned $ asf-altEmail $ asf-personalURL $ asf-noforwardfile )
+ )
+
+
+
+## These attributes are applicable to ASF members only
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.101
+        NAME 'asf-member-status'
+        DESC 'This should show the current status of the member: Active, Emeritus, Deceased, or Resigned'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.102
+        NAME 'asf-member-personalurl'
+        EQUALITY caseExactMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.103
+        NAME 'asf-member-affiliation'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.104
+        NAME 'asf-member-affiliationurl'
+        EQUALITY caseExactMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.105
+        NAME 'asf-member-activeprojects'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+objectclass ( 1.3.6.1.4.1.18060.2.0.100
+        NAME 'asf-member'
+        DESC 'Object class for ASF members'
+        AUXILIARY
+        MUST asf-member-status
+        MAY ( asf-member-activeprojects $ asf-member-affiliation $ asf-member-personalurl $ asf-member-affiliationurl )
+ )
+
+## ----------------------------------------
+
+## NONE ASF CUSTOM - IMPORTED ObjectClasses
+
+## Below here is the schema needed to allow us to specify host attributes
+## Meaning we can control ssh access via LDAP
+
+attributetype ( 1.3.6.1.4.1.5322.17.2.1 NAME 'authorizedService'
+        DESC 'IANA GSS-API authorized service name'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+
+objectclass ( 1.3.6.1.4.1.5322.17.1.1 NAME 'authorizedServiceObject'
+        DESC 'Auxiliary object class for adding authorizedService attribute'
+        SUP top
+        AUXILIARY
+        MAY authorizedService )
+
+objectclass ( 1.3.6.1.4.1.5322.17.1.2 NAME 'hostObject'
+        DESC 'Auxiliary object class for adding host attribute'
+        SUP top
+        AUXILIARY
+        MAY host )
+
+
