@@ -36,6 +36,20 @@ class ldapserver::install::ubuntu::1404 (
     '/etc/ldap/slapd.d':
       ensure    => absent,
       force     => true; # this isn't needed by our install
+    '/etc/ldap/schema/asf-custom.schema':
+      source    => 'puppet:///modules/ldapserver/asf-custom.schema',
+      owner     => 'root',
+      mode      => '0644',
+      ensure    => present,
+      require   => Package['slapd'],
+      notify    => Service['slapd'];
+    '/etc/ldap/schema/openssh-lpk.schema':
+      source    => 'puppet:///modules/ldapserver/openssh-lpk.schema',
+      owner     => 'root',
+      mode      => '0644',
+      ensure    => present,
+      require   => Package['slapd'],
+      notify    => Service['slapd'];
     '/etc/default/slapd':
       source    => "puppet:///modules/ldapserver/default-slapd",
       owner     => 'root',
