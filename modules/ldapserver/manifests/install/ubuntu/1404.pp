@@ -30,7 +30,7 @@ class ldapserver::install::ubuntu::1404 (
   file { 
     '/etc/ldap/slapd.conf': 
       content   => template('ldapserver/slapd.conf.erb'), 
-      require   => Package["$packages"],
+      require   => Package['slapd'],
       notify    => Service["slapd"];
     '/etc/default/slapd':
       source    => "puppet:///modules/ldapserver/default-slapd",
