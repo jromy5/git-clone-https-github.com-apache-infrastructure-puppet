@@ -27,9 +27,16 @@ class ldapserver::install::ubuntu::1404 (
   }
 
 
-  file { '/etc/ldap/slapd.conf': 
-    content   => template('ldapserver/slapd.conf.erb'), 
-    notify    => Service["slapd"],
+  file { 
+    '/etc/ldap/slapd.conf': 
+      content   => template('ldapserver/slapd.conf.erb'), 
+      notify    => Service["slapd"];
+    '/etc/default/slapd':
+      source    => "puppet:///modules/ldapserver/default-slapd",
+      owner     => 'root',
+      mode      => '0755',
+      ensure    => present,
+      notify    => Service['slapd'];
    }
 
 
