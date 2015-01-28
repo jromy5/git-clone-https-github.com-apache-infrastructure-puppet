@@ -88,7 +88,7 @@ ldapclient::ldapclient_remove_packages:
 
 ldapserver::install::ubuntu::1404::packages:
   - slapd
-  - slpad-dbg
+  - slapd-dbg
   - slapo-syncprov
 
 ntp::interfaces:
