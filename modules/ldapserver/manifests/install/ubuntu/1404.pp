@@ -30,8 +30,12 @@ class ldapserver::install::ubuntu::1404 (
   file { 
     '/etc/ldap/slapd.conf': 
       content   => template('ldapserver/slapd.conf.erb'), 
+      force     => true, # this is needed as new installs make slapd.conf a directory
       require   => Package['slapd'],
       notify    => Service["slapd"];
+    '/etc/ldap/slapd.d':
+      ensure    => absent,
+      force     => true; # this isn't needed by our install
     '/etc/default/slapd':
       source    => "puppet:///modules/ldapserver/default-slapd",
       owner     => 'root',
