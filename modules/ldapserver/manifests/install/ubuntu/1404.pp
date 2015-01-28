@@ -20,6 +20,10 @@ class ldapserver::install::ubuntu::1404 (
   $cafile           = '/etc/ldap/cacerts/cacert.pem',
   $certfile         = '/etc/ldap/cacerts/ldap-wildcard-cert.pem',
   $keyfile          = '/etc/ldap/cacerts/ldap-wildcard-cert.key',
+  $cafilecontents   = '',
+  $certfilecontents = '',
+  $keyfilecontents  = '',
+
 
 ) { 
   package { $packages:
@@ -56,6 +60,29 @@ class ldapserver::install::ubuntu::1404 (
       mode      => '0644',
       ensure    => present,
       require   => Package['slapd'],
+      notify    => Service['slapd'];
+    '/etc/ldap/cacerts':
+      ensure    => directory,
+      require   => Package['slapd'],
+      owner     => root,
+      mode      => '0755';
+    "$cafile":
+      content   => $cafilecontents,
+      require   => File['/etc/ldap/cacerts'],
+      owner     => root,
+      mode      => 0644,
+      notify    => Service['slapd'];
+    "$certfile":
+      content   => $certfilecontents,
+      require   => File['/etc/ldap/cacerts'],
+      owner     => openldap,
+      mode      => 0600,
+      notify    => Service['slapd'];
+    "$keyfile":
+      content   => $keyfilecontents,
+      require   => File['/etc/ldap/cacerts'],
+      owner     => openldap,
+      mode      => 0600,
       notify    => Service['slapd'];
    }
 

@@ -19,6 +19,9 @@ class ldapserver (
   $cafile           = '/etc/ldap/cacerts/cacert.pem',
   $certfile         = '/etc/ldap/cacerts/ldap-wildcard-cert.pem',
   $keyfile          = '/etc/ldap/cacerts/ldap-wildcard-cert.key',
+  $cafilecontents   = '',
+  $certfilecontents = '',
+  $keyfilecontents  = '',
 
 ) {
 
@@ -44,6 +47,9 @@ class ldapserver (
     cafile           => $cafile,
     certfile         => $certfile,
     keyfile          => $keyfile
+    cafilecontents   => $cafilecontents
+    certfilecontents => $certfilecontents
+    keyfilecontents  => $keyfilecontents
 
   }
 
