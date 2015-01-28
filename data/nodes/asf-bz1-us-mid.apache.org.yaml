@@ -14,7 +14,7 @@ vhosts_asf::vhosts::vhosts:
   bz-test:
     vhost_name: '*'
     port: 80
-    ip: "%{ipaddress_eth1}"
+    ip: "%{::ipaddress_eth1}"
     ip_based: true
     docroot: '/var/www/html'
     manage_docroot: false
