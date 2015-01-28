@@ -34,7 +34,7 @@ class ldapserver::install::ubuntu::1404 (
     '/etc/default/slapd':
       source    => "puppet:///modules/ldapserver/default-slapd",
       owner     => 'root',
-      mode      => '0755',
+      mode      => '0644',
       ensure    => present,
       notify    => Service['slapd'];
    }
