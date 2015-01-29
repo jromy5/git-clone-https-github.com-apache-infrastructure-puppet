@@ -11,6 +11,5 @@ class mail_relay (
       content => template('mail_relay/ldap-mail-forward-lookup.cf.erb'),
       mode    => '0644',
       notify  => Service['postfix'],
-      require => Class['postfix::server'];
   }
 }
