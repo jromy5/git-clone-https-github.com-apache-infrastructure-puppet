@@ -3,3 +3,5 @@
 dnsclient::nameservers:
   - '10.3.0.2'
 
+ldapclient::ldapservers: 'ldaps://ldap1-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+
