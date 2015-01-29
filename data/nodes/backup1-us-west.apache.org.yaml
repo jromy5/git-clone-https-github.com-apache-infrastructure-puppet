@@ -1,0 +1,24 @@
+---
+classes:
+  - apt::unattended_updates
+  - fail2ban_asf::config
+
+apt::unattended_upgrades::update: 1
+apt::unattended_upgrades::download: 1
+apt::unattended_upgrades::upgrade: 1
+apt::unattended_upgrades::autoclean: 7
+  
+fail2ban::service_autorestart: true
+fail2ban::disable: false
+fail2ban::service_status: true
+
+fail2ban_asf::config::jails:
+  ssh:
+    filter: sshd
+    action:
+      - iptables-allports
+    logpath: /var/log/auth.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
