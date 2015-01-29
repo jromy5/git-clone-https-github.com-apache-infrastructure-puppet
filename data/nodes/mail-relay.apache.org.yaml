@@ -1,6 +1,7 @@
 ---
 classes: 
   - dovecot
+  - mail_relay
   - ssl::name::wildcard_apache_org
 
 dovecot::dovecot_packages:
