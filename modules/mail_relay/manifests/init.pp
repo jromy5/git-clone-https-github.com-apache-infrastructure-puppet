@@ -8,7 +8,7 @@ class mail_relay (
 
   file {
     '/etc/postfix/ldap-mail-forward-lookup.cf':
-      source  => template('mail_relay/ldap-mail-forward-lookup.cf.erb'),
+      content => template('mail_relay/ldap-mail-forward-lookup.cf.erb'),
       mode    => '0644',
       notify  => Service['postfix'],
       require => Class['postfix::server'];
