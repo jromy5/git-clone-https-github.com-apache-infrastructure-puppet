@@ -1,0 +1,41 @@
+# ASF - Postfix-LDAP
+
+
+
+server_host = <%= mail_ldap_servers %>
+
+server_port = 636
+scope = sub
+timeout = 5
+search_base = ou=people,dc=apache,dc=org
+version = 3
+
+# I don't think we need to bind to grab these attributes.  However should we
+# need too, this is where we define the credentials.
+#bind = no
+#bind_dn =
+#bind_pw =
+
+#domain = apache.org
+
+# This is what postfix will look for to determine if the user is a valid
+# local account.  i.e. when a mail comes in for pctony@apache.org we only
+# want to verify that the local part is valid.
+# %u - local part
+# %d - domain part
+# %s - entire mail address
+
+query_filter = uid=%u
+
+# This defines the format that postfix will use when it actually *has* the
+# resulting forwarding attribute of the local account.
+# %u - local part
+# %d - domain part
+# %s - entire mail address
+
+result_format = %s
+
+# Define the LDAP attribute name to look for when determining mail forwarding.
+
+result_attribute = mail
+
