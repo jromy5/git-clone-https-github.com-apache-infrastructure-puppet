@@ -154,7 +154,7 @@ vhosts_asf::vhosts::vhosts:
         SetOutputFilter DEFLATE
         SetEnvIfNoCase Request_URI \.(?:t?gz|zip|bz2|Z)$ no-gzip dont-vary
 
-        AuthLDAPurl "ldaps://ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType basic
@@ -378,7 +378,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap file
           
-        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         #AuthzLDAPAuthoritative off
           
@@ -449,7 +449,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap file
           
-        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         #AuthzLDAPAuthoritative off
          
@@ -475,7 +475,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap file
          
-        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         #AuthzLDAPAuthoritative off
           
@@ -498,7 +498,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap file
           
-        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         #AuthzLDAPAuthoritative off
           
@@ -543,7 +543,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
           
-        AuthLDAPurl "ldaps://ldap2-us.apache.org:636 ldap1-us.apache.org ldap1-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         #AuthzLDAPAuthoritative off
           
