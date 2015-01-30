@@ -67,4 +67,13 @@ class puppet_asf::master {
     mode    => '0755',
   }
 
+  tidy { 'puppet-reports':
+    path    => '/var/lib/puppet/reports',
+    age     => '7d',
+    backup  => false,
+    recurse => true,
+    rmdirs  => true,
+    type    => 'ctime',
+  }
+
 }
