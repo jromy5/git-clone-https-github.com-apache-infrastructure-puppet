@@ -55,7 +55,7 @@ gitserver_asf::custom_fragment_443: |
                 AuthType Basic
                 AuthName "ASF Committers"
                 AuthBasicProvider ldap
-                AuthLDAPUrl "ldaps://ldap1-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
                 Require ldap-attribute gidNumber=5000
@@ -126,7 +126,7 @@ gitserver_asf::custom_fragment_443: |
           AuthType Basic
           AuthName "Git Infrastructure"
           AuthBasicProvider ldap
-          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
           Order allow,deny
