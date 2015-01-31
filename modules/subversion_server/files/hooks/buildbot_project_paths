@@ -114,6 +114,7 @@
 ^(creadur/site)/(.*)
 ^(creadur/rat/trunk)/(.*)
 ^(creadur/whisker/trunk)/(.*)
+^(creadur/tentacles/trunk)/(.*)
 ^(logging/site/cms)/(.*)
 ^(shindig/site/trunk/cms)/(.*)
 ^(vcl/site)/(.*)
