@@ -97,7 +97,7 @@ ntp::interfaces:
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
-postfix::server::inet_interfaces:        'all'
+postfix::server::inet_interfaces:        'localhost'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
 postfix::server::alias_maps:              'hash:/etc/aliases'
