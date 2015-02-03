@@ -7,6 +7,9 @@ apt::unattended_upgrades::update: 1
 apt::unattended_upgrades::download: 1
 apt::unattended_upgrades::upgrade: 1
 apt::unattended_upgrades::autoclean: 7
+apt::unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'
   
 fail2ban::service_autorestart: true
 fail2ban::disable: false
