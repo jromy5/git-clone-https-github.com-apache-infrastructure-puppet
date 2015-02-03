@@ -197,12 +197,12 @@ class subversion_server (
       group   => 'svnadmins';
     '/x1/svn/repos/dist/hooks/post-lock':
       ensure  => link,
-      target  => '/x1/svn/hooks/post-lock',
+      target  => '/x1/svn/hooks/post-lock-dist',
       owner   => 'www-data',
       group   => 'svnadmins';
     '/x1/svn/repos/dist/hooks/post-revprop-change':
       ensure  => link,
-      target  => '/x1/svn/hooks/post-revprop-change',
+      target  => '/x1/svn/hooks/post-revprop-change-dist',
       owner   => 'www-data',
       group   => 'svnadmins';
     '/x1/svn/repos/dist/hooks/pre-revprop-change':
@@ -217,7 +217,7 @@ class subversion_server (
       group   => 'svnadmins';
     '/x1/svn/repos/dist/hooks/post-unlock':
       ensure  => link,
-      target  => '/x1/svn/hooks/post-unlock',
+      target  => '/x1/svn/hooks/post-unlock-dist',
       owner   => 'www-data',
       group   => 'svnadmins';
     }
