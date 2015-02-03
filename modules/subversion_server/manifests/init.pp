@@ -89,6 +89,12 @@ class subversion_server (
       owner   => 'www-data',
       group   => 'svnadmins',
       require => File['/x1/svn/authorization'];
+    '/x1/svn/asf-mailer-dist.conf':
+      ensure  => link,
+      target  => '/x1/svn/authorization/templates/asf-mailer-dist.conf',
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      require => File['/x1/svn/authorization'];
     '/x1/svn/asf-authorization':
       ensure  => link,
       target  => '/x1/svn/authorization/asf-authorization',
