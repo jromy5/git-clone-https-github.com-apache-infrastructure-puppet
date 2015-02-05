@@ -20,12 +20,13 @@ mysql::server::override_options:
     max_allowed_packet: '100M'
     ft_min_word_len: 2
     bind-address: "%{::ipaddress_eth1}"
-    server-id: 1
+    server-id: 2
     binlog-format: 'mixed'
     log_bin: '/var/log/mysql/mysql-bin.log'
-    innodb_flush_log_at_trx_commit: '1'
-    sync_binlog: '1'
-    binlog-do-db:
+    relay-log: '/var/log/mysql/mysql-relay-bin.log'
+    read-only: 1
+    log-slave-updates: 1
+    replicate-do-db:
       - 'bugs'
       - 'ooobugs'
       - 'sabugs'
