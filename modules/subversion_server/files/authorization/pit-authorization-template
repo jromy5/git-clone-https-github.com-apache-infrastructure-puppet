@@ -508,6 +508,7 @@ ea = rw
 
 [/financials/Invoices]
 @fundraising = rw
+cpluchino = r
 # inherit from ^/financials
 
 [/financials/Statements]
