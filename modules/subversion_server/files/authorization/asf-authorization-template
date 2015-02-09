@@ -1269,6 +1269,9 @@ ea = rw
 [/maven]
 @maven = rw
 
+[/maven/archetype]
+* = r
+
 [/maven/core-integration-testing]
 @maven = r
 
