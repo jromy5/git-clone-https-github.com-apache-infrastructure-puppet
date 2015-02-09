@@ -433,7 +433,7 @@ class subversion_server (
     'generate-asf-auth':
       minute  => '*/3',
       hour    => '*',
-      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl ldap_change';
+      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl ldap_change > /dev/null';
     'zfs-snapshot':
       minute  => '30',
       hour    => '21',
