@@ -5,6 +5,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - rootbin_asf
   - vhosts_asf::modules
   - vhosts_asf::vhosts
 
