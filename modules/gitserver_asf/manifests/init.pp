@@ -22,7 +22,7 @@ file {
     target  => '/x1/git/repos';
   '/etc/gitweb':
     ensure   => directory,
-    require  => Package["$packages"],
+    require  => Package[$packages],
     owner    => 'root',
     group    => 'www-data',
     mode     => '0750';
