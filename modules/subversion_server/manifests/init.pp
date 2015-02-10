@@ -427,6 +427,7 @@ class subversion_server (
       user    => 'www-data',
       command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
     'generate-dist-auth':
+      ensure  => 'absent',
       minute  => '15',
       hour    => '*',
       user    => 'www-data',
