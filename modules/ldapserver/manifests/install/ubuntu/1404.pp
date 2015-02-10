@@ -69,13 +69,13 @@ class ldapserver::install::ubuntu::1404 (
       notify    => Service['slapd'];
     "$certfile":
       content   => $certfilecontents,
-      require   => File['/etc/ldap/cacerts'],
+      require   => [File['/etc/ldap/cacerts'],Package['slapd']],
       owner     => openldap,
       mode      => 0600,
       notify    => Service['slapd'];
     "$keyfile":
       content   => $keyfilecontents,
-      require   => File['/etc/ldap/cacerts'],
+      require   => [File['/etc/ldap/cacerts'],Package['slapd']],
       owner     => openldap,
       mode      => 0600,
       notify    => Service['slapd'];
