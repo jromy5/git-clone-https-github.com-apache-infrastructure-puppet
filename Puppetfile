@@ -160,10 +160,13 @@ mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
   :tag => '1.2.0'
 
+mod 's3fs',
+  :git => 'https://github.com/clambertus/puppet-s3fs',
+  :commit => '63212379c4f92fc06b7da0e2d7fe7c3a919f72c0'
+
 mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
   :tag => '1.0.2'
-
 
 mod 'sysctl',
   :git => 'https://github.com/thias/puppet-sysctl.git',
