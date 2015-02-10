@@ -137,6 +137,7 @@ ldapserver::slapd_peers:
   2: ldap2-us-west.apache.org
   3: ldap1-us-east.apache.org
   4: ldap1-us.apache.org
+  5: harmonia.apache.org
 
 ldapserver::schemas:
   - core
