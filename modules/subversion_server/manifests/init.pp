@@ -429,6 +429,7 @@ class subversion_server (
     'generate-dist-auth':
       minute  => '15',
       hour    => '*',
+      user    => 'www-data',
       command => '/x1/svn/authorization/templates/generate-dist-authorization > /x1/svn/authorization/asf-dist-authorization.new; mv -f /x1/svn/authorization/asf-dist-authorization /x1/svn/authorization/asf-dist-authorization.old; mv -f /x1/svn/authorization/asf-dist-authorization.new /x1/svn/authorization/asf-dist-authorization';
     'generate-asf-auth':
       minute  => '*/3',
