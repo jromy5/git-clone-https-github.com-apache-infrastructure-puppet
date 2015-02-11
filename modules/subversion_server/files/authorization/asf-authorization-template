@@ -1270,6 +1270,7 @@ ea = rw
 @maven = rw
 
 [/maven/archetype]
+bimargulies = rw
 * = r
 
 [/maven/core-integration-testing]
