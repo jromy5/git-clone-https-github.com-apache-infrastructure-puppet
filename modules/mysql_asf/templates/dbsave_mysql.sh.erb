@@ -59,6 +59,10 @@ rsync_offsite() {
   OLD_LOG=/root/rsynclogs/abi/backups-<%= @hostname %>-$FIVE_DAYS.log
   RM_BIN=/bin/rm
 
+  if [ ! -d /root/rsynclogs/abi ]; then
+      mkdir -p /root/rsynclogs/abi;
+  fi
+
   /etc/init.d/stunnel4 start
   sleep 1
   echo "rsyncing file ${DUMPFILE} offsite to abi ..."
@@ -67,7 +71,7 @@ rsync_offsite() {
   /usr/bin/rsync -rlRptz \
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
-  ${DUMPFILE} rsync://apb-titan@localhost:1873/titan/
+  ${DUMPFILE} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/
   /etc/init.d/stunnel4 stop
 
   $RM_BIN -f $OLD_LOG
