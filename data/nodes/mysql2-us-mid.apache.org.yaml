@@ -1,7 +1,9 @@
 ---
 classes:
   - mysql::server
-  - rootbin_asf
+  - mysql_asf::backup
+  - ssl::name::abi-stunnel
+  - stunnel_asf::abi
 
 mysql::server::databases:
   bugs:
