@@ -1,0 +1,7 @@
+### MANAGED BY PUPPET ###
+
+ENABLED=<%= @stunnel_enable ? 1 : 0 %>
+FILES="/etc/stunnel/*.conf"
+OPTIONS=<%= @stunnel_options %>
+
+PPP_RESTART=0
