@@ -1,6 +1,7 @@
 ---
 classes:
   - mysql::server
+  - rootbin_asf
 
 mysql::server::databases:
   bugs:
