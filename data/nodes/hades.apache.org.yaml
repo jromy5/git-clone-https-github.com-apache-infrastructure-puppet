@@ -14,6 +14,7 @@ classes:
   - perl
   - rootbin_asf
   - ssl::name::wildcard_apache_org
+  - stunnel_asf
   - svnpubsub
   - svnwcsub
   - subversion_server
