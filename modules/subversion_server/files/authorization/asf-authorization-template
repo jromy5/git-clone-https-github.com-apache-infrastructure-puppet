@@ -198,7 +198,7 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog=gates,khorgath,toffer,daijy,avandana,travis,mithun
-htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims
+htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
 httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=groups,dc=apache,dc=org}
