@@ -30,6 +30,8 @@ vhosts_asf::vhosts::vhosts:
     error_log_file:  'errorlog.log'
     ensure: 'present'
     custom_fragment: |
+      Redirect permanent /jir https://issues.apache.org/jira
+
       RemoteIPHeader X-Forwarded-For
 
       ProxyPreserveHost on
