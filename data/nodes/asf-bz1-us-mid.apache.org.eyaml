@@ -18,7 +18,7 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bz.apache.org/bugzilla/'
     cookiepath: '/bugzilla/'
-    bz_package: 'bugzilla-asf
+    bz_package: 'bugzilla-asf'
     package_ensure: '4.4.6-20150213'
 
   sa:
