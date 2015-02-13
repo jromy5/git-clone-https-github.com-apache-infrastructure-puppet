@@ -20,6 +20,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'bz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
     ip: "%{::ipaddress_eth0}"
     docroot: '/var/www/issues-data'
     access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
