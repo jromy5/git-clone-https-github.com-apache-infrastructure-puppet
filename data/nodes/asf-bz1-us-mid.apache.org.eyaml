@@ -18,8 +18,8 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bz.apache.org/bugzilla/'
     cookiepath: '/bugzilla/'
-    bz_package: 'asf-bugzilla'
-    package_ensure: '0.0.2-1'
+    bz_package: 'bugzilla-asf
+    package_ensure: '4.4.6-20150213'
 
   sa:
     admin_email: "root@localhost.localdomain"
@@ -40,8 +40,8 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bz.apache.org/SpamAssassin/'
     cookiepath: '/SpamAssassin/'
-    bz_package: 'sa-bugzilla'
-    package_ensure: '0.0.2-1'
+    bz_package: 'bugzilla-sa'
+    package_ensure: '4.4.6-20150213'
 
   ooo:
     admin_email: "root@localhost.localdomain"
@@ -61,5 +61,5 @@ bugzilla::project:
     maintainer: 'bugzilla-admin@apache.org'
     urlbase: 'https://bz.apache.org/ooo/'
     cookiepath: '/ooo/'
-    bz_package: 'ooo-bugzilla'
-    package_ensure: '0.0.2-1'
+    bz_package: 'bugzilla-ooo'
+    package_ensure: '4.4.6-20150213'
