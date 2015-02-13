@@ -20,7 +20,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'bz.apache.org'
-    ip: "{::ipaddress_eth0}"
+    ip: "%{::ipaddress_eth0}"
     docroot: '/var/www/issues-data'
     access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
     access_log_env_var: 'combined_forwarded'
