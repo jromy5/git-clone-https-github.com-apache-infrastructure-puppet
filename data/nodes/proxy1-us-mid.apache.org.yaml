@@ -78,7 +78,7 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %%{}{REQUEST_URI} !/ooo/maintenance.html
       # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.200\.75
       # RewriteRule ^/ooo/(.*) /ooo/maintenance.html
-      # RewriteCond %{REMOTE_ADDR} 2\.24\.200\.75
+      # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.200\.75
       # RewriteRule ^/ooo/(.*) http://192.168.3.5:80/ooo/$1 [P]
       <Location /ooo>
         ProxyPassReverseCookiePath http://192.168.3.5/ooo http://bz.apache.org/ooo
