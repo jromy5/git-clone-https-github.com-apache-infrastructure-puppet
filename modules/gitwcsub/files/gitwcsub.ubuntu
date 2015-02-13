@@ -17,15 +17,15 @@ gitwcsub_group=${gitwcsub_group-"svnwc"}
 gitwcsub_pidfile=${gitwcsub_pidfile-"/var/run/gitwcsub/gitwcsub.pid"}
 gitwcsub_config=${gitwcsub_config-"/usr/local/etc/gitwcsub/gitwcsub.conf"}
 gitwcsub_logfile=${gitwcsub_logfile-"/var/log/gitwcsub/gitwcsub.log"}
+gitwcsub_appdir=${gitwcsub_appdir-"/usr/local/etc/gitwcsub"}
 pidfile="${gitwcsub_pidfile}"
-
-GITWCSUB_CMD="cd /usr/local/etc/gitwcsub && nohup lua gitwcsub.lua &"
 
 RETVAL=0
  
 start() {
     echo "Starting GitWcSub Server: "
-    $SVNWCSUB_CMD
+    cd $gitwcsub_appdir
+    nohup lua gitwcsub.lua &
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
