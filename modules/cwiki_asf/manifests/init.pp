@@ -1,5 +1,5 @@
 
- class confluence (
+ class cwiki_asf (
    $uid = 8999,
    $gid = 8999,
    $group_present = 'present',
