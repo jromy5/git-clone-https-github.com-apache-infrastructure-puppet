@@ -2,6 +2,7 @@
 classes:
   - apt::unattended_upgrades
   - fail2ban_asf::config
+  - ssl::name::wildcard_apache_org
 
 apt::unattended_upgrades::update: 1
 apt::unattended_upgrades::download: 1
