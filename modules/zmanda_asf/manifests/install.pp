@@ -81,13 +81,14 @@ class zmanda_asf::install {
     require => Exec['mount s3fs'],
     require => Exec['install vmware'],
     require => Package[$zmandapkgs],
-  } -> File['/etc/zmanda/zmanda_license']
+  } 
   
   file { "/etc/zmanda/zmanda_license":
     mode    => 440,
     owner   => root,
     group   => root,
     source  => "/mnt/asf-private/licenses/zmanda_license",
+    require => Exec['install zmanda'],
   } -> Exec["unmount s3fs"]
 
   exec { "unmount s3fs":
