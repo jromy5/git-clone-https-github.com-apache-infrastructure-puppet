@@ -31,6 +31,19 @@
           gid => "${gid}",
     }
 
+ file {
+  '/x1/cwiki':
+    ensure => directory,
+    owner => 'root',
+    group => 'root',
+    mode => '0755';
+  '/x1/cwiki/confluence-data':
+    ensure => directory,
+    owner => 'confluence',
+    group => 'confluence',
+    mode => '0755';
+}
+
   apache::mod { 'rewrite': }
   apache::mod { 'proxy': }
   apache::mod { 'proxy_http': }
