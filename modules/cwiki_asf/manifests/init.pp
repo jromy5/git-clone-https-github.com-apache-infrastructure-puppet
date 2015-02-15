@@ -30,4 +30,19 @@
           ensure => "${group_present}",
           gid => "${gid}",
     }
+
+  apache::mod { 'rewrite': }
+  apache::mod { 'proxy': }
+  apache::mod { 'proxy_http': }
+
+  apache::vhost { 'cwiki-vm2-80':
+      priority => '99',
+      vhost_name => '*',
+      servername => 'cwiki-vm2.apache.org',
+      port => '80',
+      docroot => '/var/www/html',
+      serveraliases => ['cwiki-test.apache.org'],
+      error_log_file => 'cwiki-test_error.log',
+  }
+
 }
