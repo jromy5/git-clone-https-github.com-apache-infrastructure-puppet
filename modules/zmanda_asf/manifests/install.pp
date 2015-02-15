@@ -96,7 +96,7 @@ class zmanda_asf::install {
   }
 
   file { "/opt/zmanda/amanda/apache2/conf/ssl.conf":
-    mode    => 440,
+    mode    => 660,
     owner   => root,
     group   => root,
     source  => "puppet:///modules/zmanda_asf/ssl.conf",
