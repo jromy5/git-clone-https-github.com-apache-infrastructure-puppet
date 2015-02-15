@@ -100,6 +100,6 @@ class zmanda_asf::install {
     owner   => root,
     group   => root,
     source  => "puppet:///modules/zmanda_asf/ssl.conf",
-    require => Exec['install zmanda'],
+    require => File['/etc/zmanda/zmanda_license']
   }
 }
