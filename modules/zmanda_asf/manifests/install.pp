@@ -32,15 +32,9 @@ class zmanda_asf::install {
   ]
 
   if $::lsbdistcodename == 'trusty' {
-    exec { "apt-get update":
-      command => "/usr/bin/apt-get update",
-      before  => Exec['/usr/bin/dpkg --add-architecture i386'],
-      unless  => "/usr/bin/[[ $(( $(date +%s) - $(stat -c %Z /var/cache/apt/pkgcache.bin) )) -gt $(( 24 * 60 * 60 )) ]]",
-    }
     exec { '/usr/bin/dpkg --add-architecture i386':
       unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
       before  => Package[$zmandapkgs],
-      require => Exec['apt-get update'],
     }
     package { $zmandapkgs:
       ensure  => 'installed',

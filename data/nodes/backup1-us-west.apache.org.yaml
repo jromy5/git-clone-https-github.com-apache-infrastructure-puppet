@@ -1,6 +1,7 @@
 ---
 classes:
   - apt::unattended_upgrades
+  - apt::update
   - fail2ban_asf::config
   - s3fs
   - ssl::name::wildcard_apache_org
