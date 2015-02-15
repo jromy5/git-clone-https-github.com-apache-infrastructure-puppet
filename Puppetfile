@@ -179,3 +179,5 @@ mod 'sysctl',
 mod 'vcsrepo',
   :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
 
+mod 'xinetd',
+  :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
