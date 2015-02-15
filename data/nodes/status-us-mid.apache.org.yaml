@@ -7,9 +7,6 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
 
-amanda::client::remote_user: 'amandabackup'
-amanda::client::server: 'ec2-54-191-28-247.us-west-2.compute.amazonaws.com'
-  
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000

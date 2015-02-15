@@ -21,9 +21,11 @@ classes:
   - base::snmp::createv3users
   - ntp
 
-
-
 ## MODULES
+## AMANDA
+amanda::client::remote_user: 'amandabackup'
+amanda::client::server: 'ec2-54-191-28-247.us-west-2.compute.amazonaws.com'
+
 ## ASF999
 asf999::create_user::keycontent: |
   # pctony
