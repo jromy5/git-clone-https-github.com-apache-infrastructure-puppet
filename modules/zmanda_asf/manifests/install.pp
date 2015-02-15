@@ -49,7 +49,7 @@ class zmanda_asf::install {
 
   exec { "mount s3fs":
     command => "/bin/mount /mnt/asf-private",
-    onlyif => "/bin/grep -qs asf-private",
+    onlyif  => "/bin/grep -qs asf-private",
   } -> Exec["untar vmware"]
 
   exec { "untar vmware":
@@ -58,18 +58,26 @@ class zmanda_asf::install {
   } -> Exec["install vmware"]
 
   exec { "install vmware":
-    cwd => "/tmp/vmware-vsphere-cli-distrib",
-    command => "/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d",
+    cwd         => "/tmp/vmware-vsphere-cli-distrib",
+    command     => "/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d",
     environment => ["PAGER=/bin/cat"],
-    logoutput => false,
-    require => Exec["untar vmware"],
-    returns => 1,
+    logoutput   => false,
+    require     => Exec["untar vmware"],
+    returns     => 1,
   } -> Exec["install zmanda"]
 
   exec { "install zmanda":
     command => "/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run --mode unattended",
-    unless => "/usr/bin/test -f /opt/zmanda/amanda/uninstall",
+    unless  => "/usr/bin/test -f /opt/zmanda/amanda/uninstall",
     require => Exec["install vmware"],
+  } -> File["/etc/zmanda/zmanda_license"]
+  
+  file { "/etc/zmanda/zmanda_license":
+    mode    => 440,
+    owner   => root,
+    group   => root,
+    source  => "/mnt/asf-private/licenses/zmanda_license",
+    require => Exec["install amanda"],
   } -> Exec["unmount s3fs"]
 
   exec { "unmount s3fs":
@@ -77,9 +85,9 @@ class zmanda_asf::install {
   }
 
   file { "/opt/zmanda/amanda/apache2/conf/ssl.conf":
-    mode => 440,
-    owner => root,
-    group => root,
+    mode   => 440,
+    owner  => root,
+    group  => root,
     source => "puppet:///modules/zmanda_asf/ssl.conf"
   }
 }
