@@ -35,7 +35,7 @@
   apache::mod { 'proxy': }
   apache::mod { 'proxy_http': }
 
-  apache::vhost { 'cwiki-vm2-80':
+  apache::vhost { 'cwiki-vm2':
       priority => '99',
       vhost_name => '*',
       servername => 'cwiki-vm2.apache.org',
