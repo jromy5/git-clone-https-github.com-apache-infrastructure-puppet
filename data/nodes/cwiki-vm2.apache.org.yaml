@@ -2,3 +2,5 @@
 classes:
 - cwiki_asf
 - apache
+- vhosts_asf::modules
+- vhosts_asf::vhosts
