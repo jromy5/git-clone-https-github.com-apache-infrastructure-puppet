@@ -74,7 +74,7 @@ class zmanda_asf::install {
   } 
 
   exec { "install zmanda":
-    command => "/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run --mode unattended",
+    command => "cp /mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run /tmp && /tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
     unless  => "/usr/bin/test -f /opt/zmanda/amanda/uninstall",
     require => Exec['install vmware'],
   } 
