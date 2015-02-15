@@ -83,7 +83,7 @@ class zmanda_asf::install {
 
   exec { "install zmanda":
     command => "/bin/cp /mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run /tmp && /tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
-    unless  => "/usr/bin/test -f /opt/zmanda/amanda/uninstall",
+    unless  => "/usr/bin/test -f /var/lib/amanda/amanda-release",
     require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
   } 
   
