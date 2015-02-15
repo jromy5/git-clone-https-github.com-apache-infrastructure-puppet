@@ -35,7 +35,7 @@ class zmanda_asf::install {
     exec { "apt-get update":
       command => "/usr/bin/apt-get update",
       before  => Exec['/usr/bin/dpkg --add-architecture i386'],
-      unless  => "[[ $(( $(date +%s) - $(stat -c %Z /var/cache/apt/pkgcache.bin) )) -gt $(( 24 * 60 * 60 )) ]]",
+      unless  => "/usr/bin/[[ $(( $(date +%s) - $(stat -c %Z /var/cache/apt/pkgcache.bin) )) -gt $(( 24 * 60 * 60 )) ]]",
     }
     exec { '/usr/bin/dpkg --add-architecture i386':
       unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
