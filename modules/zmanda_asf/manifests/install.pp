@@ -88,7 +88,6 @@ class zmanda_asf::install {
     owner   => root,
     group   => root,
     source  => "/mnt/asf-private/licenses/zmanda_license",
-    require => Exec["install zmanda"],
   } -> Exec["unmount s3fs"]
 
   exec { "unmount s3fs":
