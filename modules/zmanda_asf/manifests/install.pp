@@ -71,12 +71,20 @@ class zmanda_asf::install {
     logoutput   => false,
     require     => Exec['untar vmware'],
     returns     => 1,
-  } 
+  } -> File['/tmp/amanda-enterprise-3.3.6-linux.run']
+
+  file { "/tmp/amanda-enterprise-3.3.6-linux.run":
+    mode   => 755,
+    owner  => root,
+    group  => root,
+    source => "/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run",
+    before => Exec['install zmanda'],
+  }
 
   exec { "install zmanda":
     command => "/bin/cp /mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run /tmp && /tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
     unless  => "/usr/bin/test -f /opt/zmanda/amanda/uninstall",
-    require => Exec['install vmware'],
+    require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
   } 
   
   file { "/etc/zmanda/zmanda_license":
