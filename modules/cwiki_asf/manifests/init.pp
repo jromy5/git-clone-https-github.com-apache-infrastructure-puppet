@@ -46,7 +46,7 @@
 
   apache::mod { 'rewrite': }
   # apache::mod { 'proxy': }
-  apache::mod { 'proxy_http': }
+  # apache::mod { 'proxy_http': }
 
   apache::vhost { 'cwiki-vm2':
       vhost_name => '*',
