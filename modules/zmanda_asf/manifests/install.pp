@@ -58,11 +58,13 @@ class zmanda_asf::install {
     command => "/bin/mount /mnt/asf-private",
     onlyif  => "/bin/grep -qs asf-private",
     require => S3fs::Mount['asf-private'],
-  } -> Exec["untar vmware"]
+    before  => Exec['untar vmware'],
+  } 
 
   exec { "untar vmware":
     creates => "/tmp/vmware-vsphere-cli-distrib/vmware-install.pl",
     command => "/bin/tar -C /tmp -xzf /mnt/asf-private/packages/VMware-vSphere-Perl-SDK-5.1.0-780721.x86_64.tar.gz",
+    require => Exec['mount s3fs'],
     before  => Exec['install vmware'],
   } -> Exec["install vmware"]
 
