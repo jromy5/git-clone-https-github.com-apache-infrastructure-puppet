@@ -1,10 +1,13 @@
 ---
 classes:
+  - amanda::client
   - apache
   - apache::mod::status
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+
+amanda::amandahosts::content: 'ec2-54-191-28-247.us-west-2.compute.amazonaws.com amandabackup amdump'
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
