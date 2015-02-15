@@ -56,7 +56,7 @@ class zmanda_asf::install {
 
   exec { "mount s3fs":
     command => "/bin/mount /mnt/asf-private",
-    onlyif  => "/bin/grep -qs asf-private",
+    onlyif  => "/bin/grep -qs asf-private /etc/mtab",
     require => S3fs::Mount['asf-private'],
     before  => Exec['untar vmware'],
   } 
