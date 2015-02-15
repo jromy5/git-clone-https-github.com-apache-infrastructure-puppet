@@ -1,5 +1,5 @@
 mod 'amanda',
-  :git => 'https://github.com/puppet-community/puppet-module-amanda',
+  :git => 'https://github.com/puppet-community/puppet-module-amanda'
 
 
 mod 'apache',
