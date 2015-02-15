@@ -111,7 +111,7 @@ define bugzilla::project (
   }
 
   cron { "daily_update_of_${name}_graphs":
-    command    => "${docroot}/collectstats.pl 2>&1 | grep -v Use\ of\ uninitialized.*line\ 31",
+    command    => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v Use\ of\ uninitialized.*line\ 31",
     minute     => 5,
     hour       => 0,
    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
