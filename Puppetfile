@@ -1,3 +1,7 @@
+mod 'amanda',
+  :git => 'https://github.com/puppet-community/puppet-module-amanda',
+
+
 mod 'apache',
   :git => 'https://github.com/stumped2/puppetlabs-apache',
   :branch => 'mpm_event_fix'
