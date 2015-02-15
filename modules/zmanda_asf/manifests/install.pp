@@ -71,7 +71,7 @@ class zmanda_asf::install {
 
   exec { "install vmware":
     cwd         => "/tmp/vmware-vsphere-cli-distrib",
-    unless      => "test -f /usr/bin/vmware-toolbox-cmd",
+    unless      => "/usr/bin/test -f /usr/bin/vmware-toolbox-cmd",
     command     => "/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d",
     environment => ["PAGER=/bin/cat"],
     logoutput   => false,
