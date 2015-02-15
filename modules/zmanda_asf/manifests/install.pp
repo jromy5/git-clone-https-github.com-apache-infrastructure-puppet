@@ -33,8 +33,9 @@ class zmanda_asf::install {
 
   if $::lsbdistcodename == 'trusty' {
     exec { '/usr/bin/dpkg --add-architecture i386':
-      unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
-      before  => Package[$zmandapkgs],
+      unless => '/bin/grep -q i386 /var/lib/dpkg/arch',
+      before => Package[$zmandapkgs],
+      notify => Exec['apt_update'],
     }
     package { $zmandapkgs:
       ensure  => 'installed',
@@ -82,13 +83,13 @@ class zmanda_asf::install {
   }
 
   exec { "install zmanda":
-    command => "/bin/cp /mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run /tmp && /tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
+    command => "/tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
     unless  => "/usr/bin/test -f /var/lib/amanda/amanda-release",
     require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
   } 
   
   file { "/etc/zmanda/zmanda_license":
-    mode    => 440,
+    mode    => 664,
     owner   => root,
     group   => root,
     source  => "/mnt/asf-private/licenses/zmanda_license",
