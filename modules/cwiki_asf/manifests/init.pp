@@ -14,16 +14,16 @@
 
 # confluence specific
 
-   $confluence_version = '5.0.3',
-   $connector_version = '5.1.11',
-   $mysql_connector = "mysql-connector-java-${connector_version}.jar",
-   $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib',
-   $confluence_build = "atlassian-confluence-${confluence_version}",
-   $tarball = "${confluence_build}.tar.gz",
-   $download_dir = '/tmp',
-   $downloaded_tarball = "${download_dir}/${tarball}",
-   #$download_url = "https://www.atlassian.com/software/confluence/download-archives/${tarball}",
-   $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}",
+   $confluence_version = '5.0.3'
+   $connector_version = '5.1.11'
+   $mysql_connector = "mysql-connector-java-${connector_version}.jar"
+   $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
+   $confluence_build = "atlassian-confluence-${confluence_version}"
+   $tarball = "${confluence_build}.tar.gz"
+   $download_dir = '/tmp'
+   $downloaded_tarball = "${download_dir}/${tarball}"
+   #$download_url = "https://www.atlassian.com/software/confluence/download-archives/${tarball}"
+   $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
 
     user { "${username}":
          name => "${username}",
