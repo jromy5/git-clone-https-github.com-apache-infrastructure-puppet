@@ -47,7 +47,7 @@
 
     exec { "download-confluence":
            command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
-           creates => "${downloaded_tarball}",
+           creates => $downloaded_tarball,
            timeout => 1200,
     }
  
