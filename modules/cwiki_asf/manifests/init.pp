@@ -10,10 +10,18 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
+
+# confluence variables
+
    $confluence_version = '5.0.3',
    $connector_version = '5.1.11',
    $mysql_connector = 'mysql-connector-java-${connector_version}.jar',
    $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib',
+   $confluence_build = 'atlassian-confluence-${confluence_version}',
+   $tarball = '${confluence_build}.tar.gz',
+   $download_dir = '/tmp'
+   $downloaded_tarball = '${download_dir}/${tarball}',
+   $download_url = 'https://www.atlassian.com/software/confluence/download-archives',
 
 ){
 
@@ -33,6 +41,19 @@
           name => "${groupname}",
           ensure => "${group_present}",
           gid => "${gid}",
+    }
+
+# download standalone Confluence
+
+    exec { "download-confluence":
+           command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+           creates => $downloaded_tarball,
+           timeout => 1200,
+    }
+ 
+    file { $downloaded_tarball :
+           require => Exec["download-confluence"],
+           ensure => file,
     }
 
  file {
