@@ -51,6 +51,12 @@
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
 }
 
+# do not create a 15-default.conf
+
+  class { 'apache':
+    default_vhost => false,
+  }
+
   apache::mod { 'rewrite': }
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
