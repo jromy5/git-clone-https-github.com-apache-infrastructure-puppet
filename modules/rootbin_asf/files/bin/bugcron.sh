@@ -31,10 +31,11 @@ _doit() {
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Taglibs"
 #   "Tomcat 3" - Project Attic
 #   "Tomcat 4" - Project Attic
-  /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat 5"
+#   "Tomcat 5" - Project Attic
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat 6"
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat 7"
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat 8"
+  /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat 9"
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat Connectors"
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat Modules"
   /bin/bash ${lgscr} ${bzfrom} "dev@tomcat.apache.org" "Tomcat Native"
