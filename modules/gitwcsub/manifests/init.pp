@@ -61,26 +61,11 @@ class gitwcsub (
         path => '/usr/local/etc/gitwcsub',
     }
 
-    file { "/user/local/etc/gitwcsub/gitwcsub.lua":
+    file { "/user/local/etc/gitwcsub/gitwcsub.py":
         mode   => 0755,
         owner  => "${username}",
         group  => "${groupname}",
-        source => 'puppet:///modules/gitwcsub/app/gitwcsub.lua',
-    }
-    
-    file { "/user/local/etc/gitwcsub/config.lua":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/gitwcsub/app/config.lua',
-    }
-
-
-    file { "/user/local/etc/gitwcsub/JSON.lua":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/gitwcsub/app/JSON.lua',
+        source => 'puppet:///modules/gitwcsub/app/gitwcsub.py',
     }
 
 
