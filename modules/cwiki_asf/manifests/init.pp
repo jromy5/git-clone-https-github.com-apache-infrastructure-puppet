@@ -10,6 +10,10 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
+){
+
+# confluence specific
+
    $confluence_version = '5.0.3',
    $connector_version = '5.1.11',
    $mysql_connector = "mysql-connector-java-${connector_version}.jar",
@@ -20,7 +24,6 @@
    $downloaded_tarball = "${download_dir}/${tarball}",
    #$download_url = "https://www.atlassian.com/software/confluence/download-archives/${tarball}",
    $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}",
-){
 
     user { "${username}":
          name => "${username}",
