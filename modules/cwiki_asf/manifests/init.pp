@@ -19,7 +19,7 @@
    $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib',
    $confluence_build = 'atlassian-confluence-${confluence_version}',
    $tarball = '${confluence_build}.tar.gz',
-   $download_dir = '/tmp'
+   $download_dir = '/tmp',
    $downloaded_tarball = '${download_dir}/${tarball}',
    $download_url = 'https://www.atlassian.com/software/confluence/download-archives',
 
