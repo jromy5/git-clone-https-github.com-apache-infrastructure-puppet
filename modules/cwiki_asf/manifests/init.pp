@@ -52,7 +52,7 @@
            timeout => 1200,
     }
  
-    file { $downloaded_tarball:
+    file { '/tmp/atlassian-confluence-5.0.3.tar.gz':
            require => Exec["download-confluence"],
            ensure => file,
     }
