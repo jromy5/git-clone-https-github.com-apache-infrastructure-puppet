@@ -1,0 +1,5 @@
+---
+base::basepackages:
+  - awscli
+  - s3fs
+  
