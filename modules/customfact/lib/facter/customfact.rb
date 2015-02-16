@@ -41,7 +41,7 @@ Facter.add("asfcolo") do
       "rackspace"
     when /^67.195.81..([0-9]+)$/
       "yahoo"
-    when /^172.31.33.([0-9]+)$/ # Need to expand this, the subnet is actually a /20
+    when /^172\.31\.3[2-9]|4[0-7]\.\d+$/
       "amz-vpc-virginia-1b"
     when /^10.0.([0-9]+).([0-9]+)$/
       "amz-vpc-virginia-1d"
