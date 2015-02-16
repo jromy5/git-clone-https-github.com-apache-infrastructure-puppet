@@ -48,7 +48,7 @@
     exec { "download-confluence":
            # command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
            command => "/usr/bin/wget -O /tmp/atlassian-confluence-5.0.3.tar.gz http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.0.3.tar.gz",
-           creates => $downloaded_tarball,
+           creates => '/tmp/atlassian-confluence-5.0.3.tar.gz',
            timeout => 1200,
     }
  
