@@ -1,5 +1,5 @@
 from threading import Thread
-import json, urllib.request, urllib.parse, configparser, re, base64, sys, os, time, atexit, signal, logging, subprocess, collections, argparse, grp, pwd
+import json, urllib.request, urllib.parse, configparser, re, base64, sys, os, time, atexit, signal, logging, subprocess, collections, argparse, grp, pwd, shutil
 from threading import Lock
 import threading;
 from collections import namedtuple
@@ -139,7 +139,18 @@ class Daemonize:
 		start() or restart()."""
 
 
+# Func for cloning a new repo
+def buildRepo(path, URL):
+    logging.info("%s does not exist, trying to clone into it as a new dir" % path)
+    rv = "No output"
+    try:
+        rv = subprocess.check_output(("git", "clone", "-b", config.get("Misc", "branch"), "--single-branch", URL, path))
+    except Exception as err:
+        rv = "Error while cloning: %s" % err
+    logging.info(rv)
    
+   
+# Func for updating whatever is in the queue
 def updatePending():
     global pending
     xpending = pending;
@@ -147,20 +158,33 @@ def updatePending():
     for entry in xpending:
         repo = entry
         path = xpending[entry]
-        # Check if we need to pull or clone
+        newURL = "%s%s.git" % (config.get("Servers", "gitroot"), repo)
+        
+        # Check if we need to pull or clone:
+        
+        # Existing repo?
         if os.path.isdir(path):
-            logging.info("Pulling changes into %s" % path)
             os.chdir(path)
-            rv = subprocess.check_output(("git", "pull"))
-            logging.info(rv)
-        else:
-            logging.info("%s does not exist, trying to clone into it as a new dir" % path)
-            rv = "No output"
+            
+            # Check if the repo has moved, and if so, tear down and rebuild
             try:
-                rv = subprocess.check_output(("git", "clone", "-b", config.get("Misc", "branch"), "--single-branch", "%s%s.git" % (config.get("Servers","gitroot"), repo), path))
+                oldURL = str( subprocess.check_output(("git", "config", "remote.origin.url")), encoding='ascii' ).rstrip('\r\n')
+                if newURL != oldURL:
+                    logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
+                    os.chdir("/")
+                    shutil.rmtree(path)
+                    buildRepo(path, newURL)
+            # Otherwise, just pull in changes
+                else:
+                    logging.info("Pulling changes into %s" % path)
+                    rv = subprocess.check_output(("git", "pull"))
+                    logging.info(rv)
             except Exception as err:
-                rv = "Error while cloning: %s" % err
-            logging.info(rv)
+                logging.error("Git update error: %s" % err)
+                
+        # New repo?
+        else:
+            buildRepo(path, newURL)
             
 def read_chunk(req):
     while True:
