@@ -22,7 +22,7 @@
    $download_dir = '/tmp',
    $downloaded_tarball = '${download_dir}/${tarball}',
    #$download_url = 'https://www.atlassian.com/software/confluence/download-archives/${tarball}',
-   download_url = 'http://www.atlassian.com/software/confluence/downloads/binary/${tarball}',
+   $download_url = 'http://www.atlassian.com/software/confluence/downloads/binary/${tarball}',
 ){
 
     user { "${username}":
