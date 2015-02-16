@@ -21,7 +21,7 @@
    $tarball = '${confluence_build}.tar.gz',
    $download_dir = '/tmp',
    $downloaded_tarball = '${download_dir}/${tarball}',
-   $download_url = 'https://www.atlassian.com/software/confluence/download-archives',
+   $download_url = 'https://www.atlassian.com/software/confluence/download-archives/${tarball}',
 
 ){
 
