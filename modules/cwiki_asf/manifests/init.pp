@@ -51,7 +51,7 @@
            timeout => 1200,
     }
  
-    file { $downloaded_tarball :
+    file { $downloaded_tarball:
            require => Exec["download-confluence"],
            ensure => file,
     }
