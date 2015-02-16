@@ -82,7 +82,7 @@ MAIL_TO="$2"
 PRODUCT="$3"
 FILE="/tmp/buglog.$$"
 # Username and password from /root/.my.cnf
-cat << EOF | mysql --host=192.168.0.64 bugs > $FILE
+cat << EOF | mysql bugs > $FILE
 SELECT bugs.bug_id,bugs.bug_status,bugs.bug_severity,bugs.creation_ts,bugs.short_desc
   FROM bugs, products
   WHERE bugs.product_id=products.id and products.name='$PRODUCT'
@@ -92,8 +92,8 @@ SELECT bugs.bug_id,bugs.bug_status,bugs.bug_severity,bugs.creation_ts,bugs.short
 EOF
 
 # Use tail to strip the first (header) line off the file
-LINES=`tail +2 $FILE | wc -l`
+LINES=`tail --lines=+2 $FILE | wc -l`
 if [ "$LINES" -gt "0" ] ; then
-  tail +2 $FILE | _format $LINES | /usr/sbin/sendmail -f "$MAIL_FROM" "$MAIL_TO"
+  tail --lines=+2 $FILE | _format $LINES | /usr/sbin/sendmail -f "$MAIL_FROM" "$MAIL_TO"
 fi
 rm -f $FILE
