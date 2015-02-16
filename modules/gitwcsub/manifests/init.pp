@@ -85,6 +85,7 @@ class gitwcsub (
 
 
     file { "/user/local/etc/gitwcsub/gitwcsub.cfg":
+        notify => Service["${service_name}"],
         mode   => 0644,
         owner  => 'root',
         group  => 'root',
