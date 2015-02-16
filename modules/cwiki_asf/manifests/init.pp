@@ -57,6 +57,7 @@
 
   apache::vhost { 'cwiki-vm2':
       vhost_name => '*',
+      default_vhost => 'true',
       servername => 'cwiki-vm2.apache.org',
       port => '80',
       docroot => '/var/www/html',
