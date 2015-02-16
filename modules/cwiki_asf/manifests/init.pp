@@ -10,9 +10,6 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
-
-# confluence variables
-
    $confluence_version = '5.0.3',
    $connector_version = '5.1.11',
    $mysql_connector = "mysql-connector-java-${connector_version}.jar",
