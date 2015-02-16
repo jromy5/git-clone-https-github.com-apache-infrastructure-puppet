@@ -10,6 +10,10 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
+   $confluence_version = '5.0.3',
+   $connector_version = '5.1.11',
+   $mysql_connector = 'mysql-connector-java-${connector_version}.jar',
+   $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib',
 
 ){
 
@@ -42,6 +46,9 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0755';
+   # '${connector_dest_dir}/${mysql_connector}':
+   #   ensure => present,
+   #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
 }
 
   apache::mod { 'rewrite': }
