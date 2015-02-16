@@ -1,5 +1,5 @@
 ---
-base::basepackages:
+classes:
   - awscli
   - s3fs
   
