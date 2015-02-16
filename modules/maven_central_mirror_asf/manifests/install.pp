@@ -24,8 +24,4 @@ class maven_central_mirror_asf::install {
     require => S3fs::Mount['asf-maven-central-mirror']
   } 
 
-  exec { "unmount s3fs":
-    command => "/bin/umount /mnt/asf-maven-central-mirror",
-  }
-
 }
