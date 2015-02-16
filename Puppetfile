@@ -165,8 +165,7 @@ mod 'tomcat',
   :tag => '1.2.0'
 
 mod 's3fs',
-  :git => 'https://github.com/clambertus/puppet-s3fs',
-  :commit => '63212379c4f92fc06b7da0e2d7fe7c3a919f72c0'
+  :git => 'https://github.com/clambertus/puppet-s3fs'
 
 mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
