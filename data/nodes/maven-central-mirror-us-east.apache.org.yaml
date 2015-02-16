@@ -1,5 +1,6 @@
 ---
 classes:
-  - awscli
   - s3fs
-  
+
+base::basepackages:
+  - awscli
