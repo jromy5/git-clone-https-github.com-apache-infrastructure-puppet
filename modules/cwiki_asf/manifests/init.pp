@@ -71,8 +71,7 @@
     exec { "chown-confluence-dirs":
            command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
            timeout => 1200,
-           require => User["${username}"],
-           require => Group["${username}"],
+           require => [User["${username}"],Group["${username}"]],
 }
 
  file { 
