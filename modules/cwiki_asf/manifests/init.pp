@@ -68,6 +68,13 @@
            require => [File[$downloaded_tarball],File[$parent_dir]],
 }
 
+    exec { "chown-confluence-dirs":
+           command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
+           timeout => 1200,
+           require => User["${username}"],
+           require => Group["${username}"],
+}
+
  file { 
   $parent_dir:
     ensure => directory,
@@ -81,8 +88,8 @@
     mode => '0755';
   $install_dir:
     ensure => directory,
-    owner => $username,
-    group => $username,
+    owner => 'root',
+    group => 'root',
     require => Exec["extract-confluence"],
    # '${connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
