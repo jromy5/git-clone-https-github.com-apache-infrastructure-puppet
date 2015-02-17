@@ -45,22 +45,24 @@
 
 # download standalone Confluence
 
-    notify { 'wget-debug':
-      name => "WGET COMMAND: /usr/bin/wget -O ${downloaded_tarball} ${download_url}",
-    }
-
-    notify { 'downloaded-tarball-debug':
-      name => " TARBALL: ${downloaded_tarball}",
-    }
+#    notify { 'wget-debug':
+#      name => "WGET COMMAND: /usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+#    }
+#
+#    notify { 'downloaded-tarball-debug':
+#      name => " TARBALL: ${downloaded_tarball}",
+#    }
 
     exec { "download-confluence":
-           # command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
-           command => "/usr/bin/wget -O /tmp/atlassian-confluence-5.0.3.tar.gz http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.0.3.tar.gz",
-           creates => '/tmp/atlassian-confluence-5.0.3.tar.gz',
+           command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+           # command => "/usr/bin/wget -O /tmp/atlassian-confluence-5.0.3.tar.gz http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.0.3.tar.gz",
+           # creates => '/tmp/atlassian-confluence-5.0.3.tar.gz',
+           creates => $downloaded_tarball,
            timeout => 1200,
     }
  
-    file { '/tmp/atlassian-confluence-5.0.3.tar.gz':
+    # file { '/tmp/atlassian-confluence-5.0.3.tar.gz':
+      file { $downloaded_tarball:
            require => Exec["download-confluence"],
            ensure => file,
     }
