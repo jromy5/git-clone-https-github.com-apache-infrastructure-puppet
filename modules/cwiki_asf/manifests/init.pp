@@ -23,6 +23,8 @@
    $download_dir = '/tmp'
    $downloaded_tarball = "${download_dir}/${tarball}"
    $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
+   $parent_dir = "/x1/cwiki"
+   $install_dir = "${parent_dir}/${confluence_build}"
 
     user { "${username}":
          name => "${username}",
@@ -55,8 +57,19 @@
            ensure => file,
     }
 
- file {
-  '/x1/cwiki':
+# extract the download and move it
+
+    exec { "extract-confluence":
+           command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}",
+           cwd => $download_dir,
+           user => 'root',
+           creates => "${install_dir}/NOTICE",
+           timeout => 1200,
+           require => [File[$downloaded_tarball],File[$parent_dir]],
+}
+
+ file { 
+  $parent_dir:
     ensure => directory,
     owner => 'root',
     group => 'root',
@@ -66,6 +79,11 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0755';
+  $install_dir:
+    ensure => directory,
+    owner => $username,
+    group => $username,
+    require => Exec["extract-confluence"],
    # '${connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
