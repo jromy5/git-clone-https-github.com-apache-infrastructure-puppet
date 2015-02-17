@@ -90,7 +90,7 @@
     owner => 'root',
     group => 'root',
     require => Exec["extract-confluence"];
-  'current':
+  "$install_dir/current":
     ensure => link,
     target => "${install_dir}",
     owner => 'root',
