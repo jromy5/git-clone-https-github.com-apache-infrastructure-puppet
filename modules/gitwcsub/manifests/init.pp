@@ -5,14 +5,14 @@ class gitwcsub (
   $conf_path      = '/usr/local/etc/gitwcsub',
   $conf_file      = 'gitwcsub.cfg',
   $group_present  = 'present',
-  $groupname      = 'svnwc',
+  $groupname      = 'gitwc',
   $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'gitwcsub',
   $shell          = '/bin/bash',
   $source         = 'gitwcsub.cfg',
   $user_present   = 'present',
-  $username       = 'svnwc',
+  $username       = 'gitwc',
 
 ){
 
