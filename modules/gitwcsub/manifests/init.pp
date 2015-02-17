@@ -81,7 +81,6 @@ class gitwcsub (
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => false,
-        require   => Package['lua'],
     }
 
 }
