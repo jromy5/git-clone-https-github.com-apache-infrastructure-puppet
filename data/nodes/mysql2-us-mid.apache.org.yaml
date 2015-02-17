@@ -31,3 +31,5 @@ mysql::server::override_options:
 ntp::interfaces:
   - eth1
   - lo
+
+postfix::server::relayhost: '[mail-relay.apache.org]:587'

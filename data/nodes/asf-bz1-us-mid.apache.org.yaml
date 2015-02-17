@@ -10,6 +10,8 @@ classes:
 
 apache::default_vhost: false
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+
 vhosts_asf::vhosts::vhosts:
   bz-test:
     vhost_name: '*'
