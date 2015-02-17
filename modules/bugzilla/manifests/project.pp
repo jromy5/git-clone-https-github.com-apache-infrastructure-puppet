@@ -37,35 +37,46 @@ define bugzilla::project (
   $admin_email,
   $admin_password,
   $admin_realname,
-  $cookiepath       = '/',
-  $create_htaccess  = true,
-  $cvsbin           = '/usr/bin/cvs',
-  $db_check         = true,
-  $db_driver        = 'mysql',
-  $db_host          = 'localhost',
-  $db_name          = 'bugzilla',
-  $db_pass          = '',
-  $db_port          = 0,
-  $db_sock          = '',
-  $db_user          = 'bugzilla',
-  $defaultquery     = 'resolution=---&emailassigned_to1=1&emailassigned_to2=1&emailreporter2=1&emailcc2=1&emailqa_contact2=1&emaillongdesc3=1&order=Importance&long_desc_type=substring',
-  $diffpath         = '/usr/bin',
-  $index_html       = false,
-  $install_root     = '/var/www',
-  $interdiffbin     = '/usr/bin/interdiff',
-  $maintainer       = '',
-  $mta              = 'Sendmail',
-  $mybugstemplate   = 'buglist.cgi?resolution=---&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailtype1=exact&amp;email1=%userid%',
-  $site_wide_secret = undef,
-  $smtp_server      = 'localhost',
-  $svn_url          = 'https://svn.apache.org/viewvc?view=rev&rev=',
-  $urlbase          = '',
-  $webservergroup   = 'www-data',
+  $cookiepath        = '/',
+  $create_htaccess   = true,
+  $cvsbin            = '/usr/bin/cvs',
+  $db_check          = true,
+  $db_driver         = 'mysql',
+  $db_host           = 'localhost',
+  $db_name           = 'bugzilla',
+  $db_pass           = '',
+  $db_port           = 0,
+  $db_sock           = '',
+  $db_user           = 'bugzilla',
+  $defaultquery      = 'resolution=---&emailassigned_to1=1&emailassigned_to2=1&emailreporter2=1&emailcc2=1&emailqa_contact2=1&emaillongdesc3=1&order=Importance&long_desc_type=substring',
+  $diffpath          = '/usr/bin',
+  $index_html        = false,
+  $install_root      = '/var/www',
+  $interdiffbin      = '/usr/bin/interdiff',
+  $maintainer        = '',
+  $mta               = 'Sendmail',
+  $mybugstemplate    = 'buglist.cgi?resolution=---&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailtype1=exact&amp;email1=%userid%',
+  $site_wide_secret  = undef,
+  $smtp_server       = 'localhost',
+  $svn_url           = 'https://svn.apache.org/viewvc?view=rev&rev=',
+  $urlbase           = '',
+  $webservergroup    = 'www-data',
   $bz_package,
-  $package_ensure   = 'latest',
+  $package_ensure    = 'latest',
+  $required_packages = [], # Put required pacages for various CPAN libs, otherwise the puppet run with fail
+  $cpan_modules      = [],
 ) {
 
   require bugzilla
+
+  package { $required_packages:
+    ensure => 'latest',
+  }
+
+  perl::cpan::module { $cpan_modules:
+    ensure  => 'present',
+    require => Package[$required_packages],
+  }
 
   $bz_confdir = "/etc/bugzilla"
 
