@@ -33,3 +33,5 @@ ntp::interfaces:
   - lo
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
