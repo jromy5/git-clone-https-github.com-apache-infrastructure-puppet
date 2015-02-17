@@ -1,7 +1,7 @@
 
 class gitwcsub (
-  $uid            = 9997,
-  $gid            = 9997,
+  $uid            = 9996,
+  $gid            = 9996,
   $conf_path      = '/usr/local/etc/gitwcsub',
   $conf_file      = 'gitwcsub.cfg',
   $group_present  = 'present',
