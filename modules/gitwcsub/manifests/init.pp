@@ -74,7 +74,7 @@ class gitwcsub (
         mode   => 0644,
         owner  => 'root',
         group  => 'root',
-        source => "puppet:///modules/gitwcsub/config/gitwcsub.cfg",
+        source => 'puppet:///modules/gitwcsub/config/gitwcsub.cfg',
     }
 
     service { "${service_name}":
