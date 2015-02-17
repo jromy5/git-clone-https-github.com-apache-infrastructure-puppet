@@ -90,6 +90,12 @@
     owner => 'root',
     group => 'root',
     require => Exec["extract-confluence"],
+  'current':
+    ensure => link,
+    target => ${install_dir},
+    owner => 'root',
+    group => 'root',
+    require => File["${install_dir}"];
    # '${connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
