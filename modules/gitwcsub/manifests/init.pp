@@ -61,7 +61,7 @@ class gitwcsub (
         path => '/usr/local/etc/gitwcsub',
     }
 
-    file { "/user/local/etc/gitwcsub/gitwcsub.py":
+    file { "/usr/local/etc/gitwcsub/gitwcsub.py":
         mode   => 0755,
         owner  => "${username}",
         group  => "${groupname}",
@@ -69,7 +69,7 @@ class gitwcsub (
     }
 
 
-    file { "/user/local/etc/gitwcsub/gitwcsub.cfg":
+    file { "/usr/local/etc/gitwcsub/gitwcsub.cfg":
         notify => Service["${service_name}"],
         mode   => 0644,
         owner  => 'root',
