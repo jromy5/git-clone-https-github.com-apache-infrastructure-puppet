@@ -11,7 +11,6 @@ dovecot::dovecot_packages:
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
-postfix::server::mynetworks:             '23.253.172.122, 127.0.0.0/8'
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
