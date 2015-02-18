@@ -7,6 +7,7 @@ classes:
   - collectd::plugin::df
   - collectd::plugin::disk
   - collectd::plugin::load
+  - collectd::plugin::logfile
   - collectd::plugin::memory
   - collectd::plugin::interface
   - collectd::plugin::write_http
