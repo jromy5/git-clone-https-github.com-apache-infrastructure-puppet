@@ -63,20 +63,9 @@ define bugzilla::project (
   $webservergroup    = 'www-data',
   $bz_package,
   $package_ensure    = 'latest',
-  $required_packages = [], # Put required pacages for various CPAN libs, otherwise the puppet run with fail
-  $cpan_modules      = [],
 ) {
 
   require bugzilla
-
-  package { $required_packages:
-    ensure => 'latest',
-  }
-
-  perl::cpan::module { $cpan_modules:
-    ensure  => 'present',
-    require => Package[$required_packages],
-  }
 
   $bz_confdir = "/etc/bugzilla"
 
