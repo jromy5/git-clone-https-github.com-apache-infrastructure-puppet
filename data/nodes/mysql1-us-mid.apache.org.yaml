@@ -27,6 +27,7 @@ mysql::server::override_options:
     innodb_flush_log_at_trx_commit: '1'
     sync_binlog: '1'
     binlog-ignore-db: 'mysql'
+    expire-logs-days: '5'
 
 ntp::interfaces:
   - eth1
