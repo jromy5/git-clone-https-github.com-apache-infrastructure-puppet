@@ -1,6 +1,7 @@
 ---
 classes:
   - mysql::server
+  - collectd::plugin_asf
 
 mysql::server::databases:
   bugs:
