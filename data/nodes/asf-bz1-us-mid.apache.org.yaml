@@ -6,6 +6,7 @@ classes:
   - apache::mod::headers
   - bugzilla
   - bugzilla::custom_project
+  - perl
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
