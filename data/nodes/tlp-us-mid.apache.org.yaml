@@ -15,6 +15,7 @@ classes:
   - apache::mod::status
   - apache::mod::vhost_alias
   - apbackup
+  - apbackup::backup
   - apmirror
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_incubator_apache_org
