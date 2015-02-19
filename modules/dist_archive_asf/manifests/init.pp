@@ -73,7 +73,6 @@ class dist_archive_asf (
       ensure => installed
     }
     
-    class { 'rsync': package_ensure => 'latest' }
     
     rsync::get { "${archiveroot}/dist":
       source  => "rsync://${rsync_server}/apache-dist-for-archive/",
