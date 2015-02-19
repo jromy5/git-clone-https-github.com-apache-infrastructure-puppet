@@ -1833,6 +1833,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
+      IndexOptions FoldersFirst
       Use CatchAll
       Use BlockSvn
       <Directory /var/www/trafficserver.apache.org>
