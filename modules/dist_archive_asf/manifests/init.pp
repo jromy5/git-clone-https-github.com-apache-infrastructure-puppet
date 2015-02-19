@@ -69,11 +69,6 @@ class dist_archive_asf (
     }
        
     
-    package { 'rsync':
-      ensure => installed
-    }
-    
-    
     rsync::get { "${archiveroot}/dist":
       source  => "rsync://${rsync_server}/apache-dist-for-archive/",
       require => File["${archiveroot}/dist"],
