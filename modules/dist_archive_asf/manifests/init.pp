@@ -1,6 +1,6 @@
 #/etc/puppet/modules/dist_archive_asf/manifests/init.pp
 
-class archive (
+class dist_archive_asf (
   $uid           = 1025,
   $gid           = 1025,
   $group_present = 'present',
