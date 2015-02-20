@@ -29,6 +29,12 @@ class zmanda_asf::install {
     'libssl-dev',
     'libxml-libxml-perl',
     'perl-doc',
+    'libuuid-perl',
+    'libarchive-zip-perl',
+    'libcrypt-ssleay-perl',
+    'libclass-methodmaker-perl',
+    'libdata-dump-perl',
+    'libsoap-lite-perl',
   ]
 
   if $::lsbdistcodename == 'trusty' {
