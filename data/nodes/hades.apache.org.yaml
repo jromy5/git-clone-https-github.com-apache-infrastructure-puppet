@@ -1,5 +1,6 @@
 ---
 classes:
+  - amanda::client
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::dav_svn
