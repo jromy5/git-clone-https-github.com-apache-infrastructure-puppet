@@ -12,6 +12,7 @@ DUMPDATE=`${DATE} +%Y%m%d%H%M`
 OLDDUMPDATE=`${DATE} +%Y%m%d%H%M --date='last month'`
 DUMPOPTS='--lock-tables --master-data=1'
 DUMPROOT='/x1/db_dump/mysql'
+DUMPROOT=<%= @dumproot %>
 LOCKFILE='/tmp/mysql.dump.lock'
 MYSQL=$(which mysql)
 PASS=$(cd /root/ ; cat .my.cnf | grep -i pa | sed 's/password=//g' | sed "s/'//g")
