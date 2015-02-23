@@ -25,6 +25,7 @@
    $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
    $parent_dir = "/x1/cwiki"
    $install_dir = "${parent_dir}/${confluence_build}"
+   $confluence_home = "${parent_dir}/confluence-data"
 
     user { "${username}":
          name => "${username}",
@@ -80,11 +81,12 @@
     owner => 'root',
     group => 'root',
     mode => '0755';
-  '/x1/cwiki/confluence-data':
+  $confluence_home:
     ensure => directory,
     owner => 'confluence',
     group => 'confluence',
-    mode => '0755';
+    mode => '0755',
+    require => File["${install_dir}"];
   $install_dir:
     ensure => directory,
     owner => 'root',
