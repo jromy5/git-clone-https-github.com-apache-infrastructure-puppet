@@ -18,7 +18,7 @@ class mysql_asf::backup (
     content => template('mysql_asf/dbsave_mysql.sh.erb'),
   }
 
-  tidy { 'mysq-dumps':
+  tidy { 'mysql-dumps':
     path    => $dumproot,
     age     => $age,
     recurse => true,
