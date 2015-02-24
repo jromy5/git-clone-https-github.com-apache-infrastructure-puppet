@@ -10,6 +10,13 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
+   # below are contained in eyaml
+   $confluence_license_hash = '',
+   $confluence_license_message = '',
+   $confluence_setup_server_id = '',
+   $hibernate_connection_password = '',
+   $hibernate_connection_username = '',
+   $hibernate_connection_url = '',
 ){
 
 # confluence specific
