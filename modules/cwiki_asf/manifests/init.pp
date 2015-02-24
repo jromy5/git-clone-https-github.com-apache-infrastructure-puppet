@@ -114,6 +114,9 @@
   "$install_dir/conf/server.xml":
     content => template('cwiki_asf/server.xml.erb'),
     mode => '0644';
+  "$confluence_home/confluence.cfg.xml":
+    content => template('cwiki_asf/confluence.xfg.xml'),
+    mode => '0644';
    # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
