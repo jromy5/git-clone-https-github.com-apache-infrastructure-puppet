@@ -104,6 +104,9 @@
   "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
+  "$install_dir/conf/server.xml":
+    content => template('cwiki_asf/server.xml.erb'),
+    mode => '0644';
    # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
