@@ -85,6 +85,11 @@
            require => [User["${username}"],Group["${username}"]],
 }
 
+   exec { "check_cfg_exists":
+          command => '/bin/true',
+          onlyIf => '/usr/bin/test -e ${confluence_home}/confluence.cfg.xml',
+}
+
  file { 
   $parent_dir:
     ensure => directory,
@@ -118,7 +123,8 @@
     content => template('cwiki_asf/confluence.cfg.xml.erb'),
     owner => 'confluence',
     group => 'confluence',
-    mode => '0644';
+    mode => '0644',
+    require => Exec["check_cfg_exists"];
    # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
