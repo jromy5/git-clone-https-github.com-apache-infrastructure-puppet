@@ -1468,6 +1468,9 @@ ea = rw
 [/servicemix/sandbox]
 @committers  = rw
 
+[/servicemix/smx4/bundles]
+* = r
+
 [/servicemix/smx4/specs]
 * = r
 
