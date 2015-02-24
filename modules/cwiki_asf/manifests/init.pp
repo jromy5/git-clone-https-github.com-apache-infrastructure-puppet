@@ -26,6 +26,9 @@
    $parent_dir = "/x1/cwiki"
    $install_dir = "${parent_dir}/${confluence_build}"
    $confluence_home = "${parent_dir}/confluence-data"
+   $server_port = '8008'
+   $connector_port = '8888'
+   $context_path = ''
 
     user { "${username}":
          name => "${username}",
