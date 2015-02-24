@@ -436,8 +436,6 @@ staff=
 [/committers]
 @committers  = rw
 @svnadmins = rw
-# apsite needs access to urls.txt
-apsiteread = r
 whimsysvn = r
 * =
 
