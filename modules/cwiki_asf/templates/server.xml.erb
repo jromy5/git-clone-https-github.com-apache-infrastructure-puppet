@@ -1,3 +1,9 @@
+### This file is puppet managed, any changes will be lost. ###
+
+
+## This file is dervied from a puppet template,
+## modules/cwiki_asf/templates/server.xml.erb
+
 <Server port="<%= @server_port %>" shutdown="SHUTDOWN" debug="0">
     <Service name="Tomcat-Standalone">
         <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="<%= @connector_port %>" minProcessors="5"
