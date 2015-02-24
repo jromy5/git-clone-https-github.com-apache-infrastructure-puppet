@@ -115,7 +115,9 @@
     content => template('cwiki_asf/server.xml.erb'),
     mode => '0644';
   "$confluence_home/confluence.cfg.xml":
-    content => template('cwiki_asf/confluence.cfg.xml'),
+    content => template('cwiki_asf/confluence.cfg.xml.erb'),
+    owner => 'confluence',
+    group => 'confluence',
     mode => '0644';
    # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
