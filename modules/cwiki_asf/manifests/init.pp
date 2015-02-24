@@ -87,7 +87,7 @@
 
    exec { "check_cfg_exists":
           command => '/bin/true',
-          onlyIf => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
+          onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
 }
 
  file { 
