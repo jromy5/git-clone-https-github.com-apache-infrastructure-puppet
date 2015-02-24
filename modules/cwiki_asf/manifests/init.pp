@@ -15,9 +15,9 @@
 # confluence specific
 
    $confluence_version = '5.0.3'
-   $connector_version = '5.1.11'
-   $mysql_connector = "mysql-connector-java-${connector_version}.jar"
-   $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
+   $mysql_connector_version = '5.1.11'
+   $mysql_connector = "mysql-connector-java-${mysql_connector_version}.jar"
+   $mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
    $confluence_build = "atlassian-confluence-${confluence_version}"
    $tarball = "${confluence_build}.tar.gz"
    $download_dir = '/tmp'
@@ -104,7 +104,7 @@
   "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
-   # '${connector_dest_dir}/${mysql_connector}':
+   # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
 }
