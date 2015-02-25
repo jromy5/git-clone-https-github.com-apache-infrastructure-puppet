@@ -48,6 +48,6 @@ class gitmirrorupdater (
         refreshonly => true,
         path    => "/usr/bin/:/bin/",
         cwd => "/usr/local/etc/svn2gitupdate",
-        command => 'python /usr/local/etc/svn2gitupdate.py restart',
+        command => 'python /usr/local/etc/svn2gitupdate/svn2gitupdate.py restart',
     }
 }
