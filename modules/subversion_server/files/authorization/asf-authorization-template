@@ -965,6 +965,9 @@ ea = rw
 [/incubator/nmaven]
 * = r
 
+[/incubator/npanday]
+* = r
+
 [/incubator/nuvem]
 @nuvem = rw
 
