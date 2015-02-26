@@ -1,5 +1,6 @@
 ---
 classes:
+  - amanda::client
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::dav_svn
@@ -230,6 +231,9 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       AddType  text/plain; charset=UTF-8  .rdf
       RewriteEngine On
+
+      Redirect temp /viewcvs.cgi http://svn.apache.org/viewvc
+      Redirect temp /viewcvs    http://svn.apache.org/viewvc
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # The main repository

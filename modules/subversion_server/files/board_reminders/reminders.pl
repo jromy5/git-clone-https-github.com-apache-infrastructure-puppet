@@ -125,12 +125,14 @@ my @prezReports = (
 );
 
 # Arguments?
-my $looking4Cron = 0;
+my $ = 0;
 for my $i (0 .. $#ARGV) {
     my $a = $ARGV[$i];
-    next if ($a !~ /^-/ && !$looking4Cron);
-    $looking4Cron = 0;
-    $cronDay = $a % 7 if $a =~ /^[\d]+$/;
+    next if ($a !~ /^-/);
+    if ($a =~ /^--([\d]+)$/) {
+        $cronDay = $1 % 7;
+        $isCron = 1;
+    }
     $DEBUG = 1 if $a =~ /debug/;
     $getFunc = \&getLocalFiles if $a =~ /local/;
     $getFunc = \&getRemoteFiles if $a =~ /remote/;
@@ -141,14 +143,12 @@ for my $i (0 .. $#ARGV) {
     $keepFiles = 1 if $a =~ /save-file/;
     usage() if $a =~ /help/;
     $justMembers = 1 if $a =~ /just-mems/;
-    if ($a =~ /cron/) {
-        $isCron = 1;
-        $looking4Cron = 1;
-    }
+    $isCron = 1; if $a =~ /cron/;
 }
 
 # Script start
 getNowDateInformation();
+sendMail($testAddr, $fromAddr, "Marvin run on $runDate");
 
 # If we are in cron-mode and we're not the 1st or last cronday,
 # skip sending the PMC and Inc reports
@@ -163,6 +163,7 @@ findMeetingDate();
 
 if ($DEBUG + $sendEmail + $makeCal == 0) {
     print "Nothing to do! Exiting\n";
+    sendMail($testAddr, $fromAddr, "Marvin has NULL");
     exit;
 }
 
@@ -176,6 +177,7 @@ showActions();
 if ($sendEmail || $DEBUG) {
     # If in cron-mode, send out members reminder the week before the meeting only
     sendMembersReminder() unless ($isCron && (($runDay > $mtgDay) || ($mtgDay - $runDay > 7)));
+    sendMail($testAddr, $fromAddr, "Marvin reminded members");
     if (!$justMembers && $doReports) {
         sendReports($templates{'initial'}) if $runDay < $finalDate;
         sendReports($templates{'final'}) if $runDay >= $finalDate;
@@ -183,6 +185,8 @@ if ($sendEmail || $DEBUG) {
         sendMail($chairAddr, $fromAddr,
                  "[REMINDER] Create Board Agenda",
                  "If you haven't already, create the board agenda!");
+        sendMail($testAddr, $fromAddr, "Marvin sent reminders");
+
     }
 }
 
@@ -193,7 +197,7 @@ if ($makeCal) {
 
 ##createAgenda() if $runDay < $finalDate;
 cleanFiles() unless $keepFiles;
-
+sendMail($testAddr, $fromAddr, "Marvin run completed");
 ## End!
 
 
@@ -211,7 +215,8 @@ $0: usage
     --no-email   don't send emails
     --no-fetch   don't fetch SVN files
     --save-files preserve files retrieved from SVN
-    --cron <#>   only run if the 1st or last day # of the month (default: 3 ($daysOWeek[3]))
+    --cron       only run if the 1st or last day Monday of the month
+    --#          Enable cron-mode for day # (0 = Sunday, etc...)
     --just-mems  just send members reminder email
     --help       print this message
 
@@ -254,6 +259,7 @@ sub fixupConfig
     # Start by finding any applications we'll need. If we fail at this point
     # we can't report it, so just print an error to stdout and exit.
     # Once this is complete we can use reportError().
+    my $seen_error = 0;
     foreach my $arrp (@appList) {
         my $app = findApp($arrp->[0]);
         if ($app eq '') {
@@ -262,7 +268,7 @@ sub fixupConfig
                 $app = $arrp->[1];
             } else {
                 print "Failed to find '$arrp->[0]' which is required!\n";
-                exit(1);
+                $seen_error = 1;
             }
         }
         $apps{$arrp->[0]} = $app;
@@ -274,7 +280,7 @@ sub fixupConfig
         if (! -f $tfn) {
             reportError("Template '$templates{$t}' used for $t ".
                         "reports doesn't exist!");
-            exit(1);
+            $seen_error = 1;
         }
         $templates{$t} = $tfn;
     }
@@ -284,10 +290,11 @@ sub fixupConfig
         if (! -f $tfn) {
             reportError("Template '$inctemplates{$t}' used for $t ".
                         "reports doesn't exist!");
-            exit(1);
+            $seen_error = 1;
         }
         $inctemplates{$t} = $tfn;
     }
+    exit(1) if $seen_error;
 }
 
 sub findApp
@@ -336,6 +343,8 @@ sub reportError
     if ($admin && ! $DEBUG) {
         sendMail($admin, $fromAddr, "Error while executing reminders.pl",
                  $msg);
+        sendMail($testAddr, $fromAddr, "Error while executing reminders.pl",
+                 $msg);
     }
 }
 
@@ -350,7 +359,10 @@ sub getRemoteFiles
         }
         my $cmd = "$apps{svn} cat $svnRepoURL/$svnFiles[$i]";
         `$cmd > $outputFN`;
-        die "Failed to get $svnFiles[$i] from SVN\n$!" if $? && !$DEBUG;
+        if ($? && !$DEBUG) {
+            sendMail($testAddr, $fromAddr, "Failed to get $svnFiles[$i] from SVN");
+            die "Failed to get $svnFiles[$i] from SVN\n$!";
+        }
     }
     print "\tOK\n";
 }
@@ -367,7 +379,10 @@ sub getLocalFiles
         my $cmd = "$apps{sudo} -u nobody $apps{svnlook} ".
                   "cat $svnRepoPath $svnFiles[$i]";
         `$cmd > $outputFN`;
-        die "Failed to get $svnFiles[$i] from SVN\n$!" if $? && !$DEBUG;
+        if ($? && !$DEBUG) {
+            sendMail($testAddr, $fromAddr, "Failed to get $svnFiles[$i] from SVN");
+            die "Failed to get $svnFiles[$i] from SVN\n$!";
+        }
     }
     print "\tOK\n";
 }

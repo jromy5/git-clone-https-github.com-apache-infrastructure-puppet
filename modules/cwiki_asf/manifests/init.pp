@@ -10,14 +10,21 @@
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
+   # below are contained in eyaml
+   $confluence_license_hash = '',
+   $confluence_license_message = '',
+   $confluence_setup_server_id = '',
+   $hibernate_connection_password = '',
+   $hibernate_connection_username = '',
+   $hibernate_connection_url = '',
 ){
 
 # confluence specific
 
    $confluence_version = '5.0.3'
-   $connector_version = '5.1.11'
-   $mysql_connector = "mysql-connector-java-${connector_version}.jar"
-   $connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
+   $mysql_connector_version = '5.1.11'
+   $mysql_connector = "mysql-connector-java-${mysql_connector_version}.jar"
+   $mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
    $confluence_build = "atlassian-confluence-${confluence_version}"
    $tarball = "${confluence_build}.tar.gz"
    $download_dir = '/tmp'
@@ -25,6 +32,10 @@
    $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
    $parent_dir = "/x1/cwiki"
    $install_dir = "${parent_dir}/${confluence_build}"
+   $confluence_home = "${parent_dir}/confluence-data"
+   $server_port = '8008'
+   $connector_port = '8888'
+   $context_path = ''
 
     user { "${username}":
          name => "${username}",
@@ -74,17 +85,23 @@
            require => [User["${username}"],Group["${username}"]],
 }
 
+   exec { "check_cfg_exists":
+          command => '/bin/true',
+          onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
+}
+
  file { 
   $parent_dir:
     ensure => directory,
     owner => 'root',
     group => 'root',
     mode => '0755';
-  '/x1/cwiki/confluence-data':
+  $confluence_home:
     ensure => directory,
     owner => 'confluence',
     group => 'confluence',
-    mode => '0755';
+    mode => '0755',
+    require => File["${install_dir}"];
   $install_dir:
     ensure => directory,
     owner => 'root',
@@ -96,7 +113,19 @@
     owner => 'root',
     group => 'root',
     require => File["${install_dir}"];
-   # '${connector_dest_dir}/${mysql_connector}':
+  "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
+    content => template('cwiki_asf/confluence-init.properties.erb'),
+    mode => '0644';
+  "$install_dir/conf/server.xml":
+    content => template('cwiki_asf/server.xml.erb'),
+    mode => '0644';
+  "$confluence_home/confluence.cfg.xml":
+    content => template('cwiki_asf/confluence.cfg.xml.erb'),
+    owner => 'confluence',
+    group => 'confluence',
+    mode => '0644',
+    require => Exec["check_cfg_exists"];
+   # '${mysql_connector_dest_dir}/${mysql_connector}':
    #   ensure => present,
    #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
 }

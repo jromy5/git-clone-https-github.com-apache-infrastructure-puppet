@@ -285,7 +285,6 @@ mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
 nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster
-npanday=apadilla,brett,craig,dennisl,jocaba,jfallows,lcorneliussen,mbaclay,oching
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
@@ -967,7 +966,7 @@ ea = rw
 * = r
 
 [/incubator/npanday]
-@npanday = rw
+* = r
 
 [/incubator/nuvem]
 @nuvem = rw
@@ -1467,6 +1466,12 @@ ea = rw
 
 [/servicemix/sandbox]
 @committers  = rw
+
+[/servicemix/smx4/bundles]
+* = r
+
+[/servicemix/smx4/specs]
+* = r
 
 [/servicemix/smx5]
 * = r
