@@ -4,7 +4,7 @@ class gitserver_asf (
 
   $custom_fragment_80    = '',
   $custom_fragment_443   = '',
-  $packages              = ['gitweb', 'git-svn'],
+  $packages              = ['gitweb', 'git-svn', 'libnet-github-perl'],
 
 
 ) {
