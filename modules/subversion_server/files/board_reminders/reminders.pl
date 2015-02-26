@@ -148,6 +148,7 @@ for my $i (0 .. $#ARGV) {
 
 # Script start
 getNowDateInformation();
+sendMail($testAddr, $fromAddr, "Marvin run on $runDate");
 
 # If we are in cron-mode and we're not the 1st or last cronday,
 # skip sending the PMC and Inc reports
@@ -162,6 +163,7 @@ findMeetingDate();
 
 if ($DEBUG + $sendEmail + $makeCal == 0) {
     print "Nothing to do! Exiting\n";
+    sendMail($testAddr, $fromAddr, "Marvin has NULL");
     exit;
 }
 
@@ -175,6 +177,7 @@ showActions();
 if ($sendEmail || $DEBUG) {
     # If in cron-mode, send out members reminder the week before the meeting only
     sendMembersReminder() unless ($isCron && (($runDay > $mtgDay) || ($mtgDay - $runDay > 7)));
+    sendMail($testAddr, $fromAddr, "Marvin reminded members");
     if (!$justMembers && $doReports) {
         sendReports($templates{'initial'}) if $runDay < $finalDate;
         sendReports($templates{'final'}) if $runDay >= $finalDate;
@@ -182,6 +185,8 @@ if ($sendEmail || $DEBUG) {
         sendMail($chairAddr, $fromAddr,
                  "[REMINDER] Create Board Agenda",
                  "If you haven't already, create the board agenda!");
+        sendMail($testAddr, $fromAddr, "Marvin sent reminders");
+
     }
 }
 
@@ -192,7 +197,7 @@ if ($makeCal) {
 
 ##createAgenda() if $runDay < $finalDate;
 cleanFiles() unless $keepFiles;
-
+sendMail($testAddr, $fromAddr, "Marvin run completed");
 ## End!
 
 
