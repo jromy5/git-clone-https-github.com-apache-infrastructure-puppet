@@ -125,12 +125,14 @@ my @prezReports = (
 );
 
 # Arguments?
-my $looking4Cron = 0;
+my $ = 0;
 for my $i (0 .. $#ARGV) {
     my $a = $ARGV[$i];
-    next if ($a !~ /^-/ && !$looking4Cron);
-    $looking4Cron = 0;
-    $cronDay = $a % 7 if $a =~ /^[\d]+$/;
+    next if ($a !~ /^-/);
+    if ($a =~ /^--([\d]+)$/) {
+        $cronDay = $1 % 7;
+        $isCron = 1;
+    }
     $DEBUG = 1 if $a =~ /debug/;
     $getFunc = \&getLocalFiles if $a =~ /local/;
     $getFunc = \&getRemoteFiles if $a =~ /remote/;
@@ -141,10 +143,7 @@ for my $i (0 .. $#ARGV) {
     $keepFiles = 1 if $a =~ /save-file/;
     usage() if $a =~ /help/;
     $justMembers = 1 if $a =~ /just-mems/;
-    if ($a =~ /cron/) {
-        $isCron = 1;
-        $looking4Cron = 1;
-    }
+    $isCron = 1; if $a =~ /cron/;
 }
 
 # Script start
@@ -211,7 +210,8 @@ $0: usage
     --no-email   don't send emails
     --no-fetch   don't fetch SVN files
     --save-files preserve files retrieved from SVN
-    --cron <#>   only run if the 1st or last day # of the month (default: 3 ($daysOWeek[3]))
+    --cron       only run if the 1st or last day Monday of the month
+    --#          Enable cron-mode for day # (0 = Sunday, etc...)
     --just-mems  just send members reminder email
     --help       print this message
 
