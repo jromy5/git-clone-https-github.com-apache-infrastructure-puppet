@@ -341,6 +341,8 @@ sub reportError
     if ($admin && ! $DEBUG) {
         sendMail($admin, $fromAddr, "Error while executing reminders.pl",
                  $msg);
+        sendMail($testAddr, $fromAddr, "Error while executing reminders.pl",
+                 $msg);
     }
 }
 
@@ -355,7 +357,10 @@ sub getRemoteFiles
         }
         my $cmd = "$apps{svn} cat $svnRepoURL/$svnFiles[$i]";
         `$cmd > $outputFN`;
-        die "Failed to get $svnFiles[$i] from SVN\n$!" if $? && !$DEBUG;
+        if ($? && !$DEBUG) {
+            sendMail($testAddr, $fromAddr, "Failed to get $svnFiles[$i] from SVN");
+            die "Failed to get $svnFiles[$i] from SVN\n$!";
+        }
     }
     print "\tOK\n";
 }
@@ -372,7 +377,10 @@ sub getLocalFiles
         my $cmd = "$apps{sudo} -u nobody $apps{svnlook} ".
                   "cat $svnRepoPath $svnFiles[$i]";
         `$cmd > $outputFN`;
-        die "Failed to get $svnFiles[$i] from SVN\n$!" if $? && !$DEBUG;
+        if ($? && !$DEBUG) {
+            sendMail($testAddr, $fromAddr, "Failed to get $svnFiles[$i] from SVN");
+            die "Failed to get $svnFiles[$i] from SVN\n$!";
+        }
     }
     print "\tOK\n";
 }
