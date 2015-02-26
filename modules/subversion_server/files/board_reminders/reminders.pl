@@ -259,6 +259,7 @@ sub fixupConfig
     # Start by finding any applications we'll need. If we fail at this point
     # we can't report it, so just print an error to stdout and exit.
     # Once this is complete we can use reportError().
+    my $seen_error = 0;
     foreach my $arrp (@appList) {
         my $app = findApp($arrp->[0]);
         if ($app eq '') {
@@ -267,7 +268,7 @@ sub fixupConfig
                 $app = $arrp->[1];
             } else {
                 print "Failed to find '$arrp->[0]' which is required!\n";
-                exit(1);
+                $seen_error = 1;
             }
         }
         $apps{$arrp->[0]} = $app;
@@ -279,7 +280,7 @@ sub fixupConfig
         if (! -f $tfn) {
             reportError("Template '$templates{$t}' used for $t ".
                         "reports doesn't exist!");
-            exit(1);
+            $seen_error = 1;
         }
         $templates{$t} = $tfn;
     }
@@ -289,10 +290,11 @@ sub fixupConfig
         if (! -f $tfn) {
             reportError("Template '$inctemplates{$t}' used for $t ".
                         "reports doesn't exist!");
-            exit(1);
+            $seen_error = 1;
         }
         $inctemplates{$t} = $tfn;
     }
+    exit(1) if $seen_error;
 }
 
 sub findApp
