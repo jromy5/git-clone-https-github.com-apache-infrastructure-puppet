@@ -168,12 +168,30 @@ def updatePending():
             
             # Check if the repo has moved, and if so, tear down and rebuild
             try:
-                oldURL = str( subprocess.check_output(("git", "config", "remote.origin.url")), encoding='ascii' ).rstrip('\r\n')
+                oldURL = ""
+                try:
+                    oldURL = str( subprocess.check_output(("git", "config", "remote.origin.url")), encoding='ascii' ).rstrip('\r\n')
+                except Exception as err:
+                    logging.warn("Git config exited badly, not a Git repo??")
+                    oldURL = ""
                 if newURL != oldURL:
-                    logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
-                    os.chdir("/")
-                    shutil.rmtree(path)
-                    buildRepo(path, newURL)
+                    canClobber = True
+                    if oldURL == "":
+                        logging.warn("No previous git remote detected, checking for SVN info..")
+                        canClobber = False
+                        try:
+                            rv =subprocess.check_output(("svn", "info"))
+                            if re.search(r"URL: ", rv, re.MULTILINE):
+                                canClobber = True
+                                logging.warn("This is/was a subversion repo, okay to clobber")
+                        except Exception as err:
+                            logging.warn("Not a repo, not going to clobber it")
+                            canClobber = False
+                    if canClobber:
+                        logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
+                        os.chdir("/")
+                        shutil.rmtree(path)
+                        buildRepo(path, newURL)
             # Otherwise, just pull in changes
                 else:
                     logging.info("Pulling changes into %s" % path)
