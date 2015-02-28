@@ -53,4 +53,21 @@ vhosts_asf::vhosts::vhosts:
         Require ip 140.211.11.75
       </Location>
       
+  reporter:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/reporter.apache.org/site'
+    servername: 'reporter.apache.org'
+    directoryindex: 'index.py index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler cgi-script .py
+      <Location />
+        Require ip 140.211.11.75
+      </Location>
+      
 
