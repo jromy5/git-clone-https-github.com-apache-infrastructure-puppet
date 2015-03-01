@@ -5,8 +5,8 @@
    $group_present = 'present',
    $groupname = 'confluence',
    $groups = [],
-   # $service_ensure = 'running',
-   # $service_name = 'confluence',
+   $service_ensure = 'running',
+   $service_name = 'confluence',
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
@@ -129,6 +129,11 @@
   '${mysql_connector_dest_dir}/${mysql_connector}':
     ensure => present,
     source => "puppet:///modules/cwiki_asf/${mysql_connector}",
+  "/etc/init.d/${service_name}":
+    mode => 0755,
+    owner => 'root',
+    group => 'root',
+    source => "puppet:///modules/cwiki_asf/confluence-init-script.erb",
 }
 
   apache::mod { 'rewrite': }
