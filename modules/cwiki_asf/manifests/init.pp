@@ -128,12 +128,12 @@
     require => Exec["check_cfg_exists"];
   '${mysql_connector_dest_dir}/${mysql_connector}':
     ensure => present,
-    source => "puppet:///modules/cwiki_asf/${mysql_connector}",
+    source => "puppet:///modules/cwiki_asf/${mysql_connector}";
   "/etc/init.d/${service_name}":
     mode => 0755,
     owner => 'root',
     group => 'root',
-    source => "puppet:///modules/cwiki_asf/confluence-init-script.erb",
+    source => "puppet:///modules/cwiki_asf/confluence-init-script.erb";
 }
 
   apache::mod { 'rewrite': }
