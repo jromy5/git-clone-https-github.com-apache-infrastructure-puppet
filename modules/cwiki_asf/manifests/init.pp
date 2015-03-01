@@ -133,7 +133,7 @@
     mode => 0755,
     owner => 'root',
     group => 'root',
-    source => "puppet:///modules/cwiki_asf/confluence-init-script.erb";
+    content => template('cwiki_asf/confluence-init-script.erb');
 }
 
   apache::mod { 'rewrite': }
