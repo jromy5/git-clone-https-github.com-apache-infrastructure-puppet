@@ -36,6 +36,7 @@
    $server_port = '8008'
    $connector_port = '8888'
    $context_path = ''
+   $current_dir = "${parent_dir}/current"
 
     user { "${username}":
          name => "${username}",
@@ -107,7 +108,7 @@
     owner => 'root',
     group => 'root',
     require => Exec["extract-confluence"];
-  "$parent_dir/current":
+  $current_dir:
     ensure => link,
     target => "${install_dir}",
     owner => 'root',

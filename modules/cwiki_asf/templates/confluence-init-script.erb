@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RUN_AS_USER=confluence
-CONFLUENCE_INSTALL=/x1/cwiki/current
+RUN_AS_USER=<%= @username %>
+CONFLUENCE_INSTALL=<%= @current_dir %>
 
 start() {
         echo "Starting Confluence: "
