@@ -125,7 +125,8 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0644',
-    require => Exec["check_cfg_exists"];
+    require => Exec["check_cfg_exists"],
+    notify => Service["${service_name}"];
   "${mysql_connector_dest_dir}/${mysql_connector}":
     ensure => present,
     source => "puppet:///modules/cwiki_asf/${mysql_connector}";
