@@ -126,7 +126,7 @@
     group => 'confluence',
     mode => '0644',
     require => Exec["check_cfg_exists"];
-  '${mysql_connector_dest_dir}/${mysql_connector}':
+  "${mysql_connector_dest_dir}/${mysql_connector}":
     ensure => present,
     source => "puppet:///modules/cwiki_asf/${mysql_connector}";
   "/etc/init.d/${service_name}":
