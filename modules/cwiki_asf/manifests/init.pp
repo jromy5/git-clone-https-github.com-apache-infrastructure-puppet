@@ -154,4 +154,12 @@
       ],
   }
 
+  service { "${service_name}":
+      ensure => $service_ensure,
+      enable => true,
+      hasstatus => false,
+      hasrestart => true,
+      require => Class['apache'],
+  }
+
 }
