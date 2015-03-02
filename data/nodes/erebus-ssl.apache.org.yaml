@@ -1,0 +1,1013 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - vhosts_asf::vhosts
+
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+vhosts_asf::vhosts::vhosts:
+  analysis:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'analysis.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'analysis.apache.org.http_access.log'
+    error_log_file:  'analysis.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://analysis.apache.org/
+
+  analysis-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'analysis.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'analysis.apache.org.ssl_access.log'
+    error_log_file:  'analysis.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://analysis-vm.apache.org/
+      ProxypassReverse / http://analysis-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=503
+
+  blogs:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'blogs.apache.org.http_access.log'
+    error_log_file:  'blogs.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://blogs-test.apache.org/
+
+  blogs-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs-test.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'blogs.apache.org.ssl_access.log'
+    error_log_file:  'blogs.apache.org.error.log'
+    custom_fragment: |
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+      Proxypass / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org:8443/
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=503
+
+  bloodhound1:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'bh-demo1.apache.org'
+    serveraliases:
+      - 'www.bh-demo1.apache.org'
+    serveradmin: 'bloodhound-dev@incubator.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'bh-demo1.apache.org.http_access.log'
+    error_log_file:  'bh-demo1.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://bh-demo1.apache.org/$1
+
+  bloodhound1-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'bh-demo1.apache.org'
+    serveraliases:
+      - 'www.bh-demo1.apache.org'
+    serveradmin: 'bloodhound-dev@incubator.apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'bh-demo1.apache.org.ssl_access.log'
+    error_log_file:  'bh-demo1.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://bh-demo1.apache.org/
+
+      Proxypass / http://bloodhound-vm2.apache.org/
+      ProxypassReverse / http://bloodhound-vm2.apache.org/
+      ProxyPreserveHost On
+
+  bloodhound2:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'bh-demo2.apache.org'
+    serveraliases:
+      - 'www.bh-demo2.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'bh-demo2.apache.org.http_access.log'
+    error_log_file:  'bh-demo2.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://bh-demo2.apache.org/$1
+
+  bloodhound2-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'bh-demo2.apache.org'
+    serveraliases:
+      - 'www.bh-demo2.apache.org'
+    serveradmin: 'bloodhound-dev@incubator.apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'bh-demo2.apache.org.ssl_access.log'
+    error_log_file:  'bh-demo2.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://bh-demo2.apache.org/
+
+      Proxypass / http://bloodhound-vm2.apache.org/
+      ProxypassReverse / http://bloodhound-vm2.apache.org/
+      ProxyPreserveHost On
+
+  continuum-ci:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'continuum-ci.apache.org'
+    serveraliases:
+      - 'www.continuum-ci.apache.org'
+    serveradmin: 'continuum@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'continuum-ci.apache.org.http_access.log'
+    error_log_file:  'continuum-ci.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://continuum-ci.apache.org/$1
+
+  continuum-ci-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'continuum-ci.apache.org'
+    serveraliases:
+      - 'www.continuum-ci.apache.org'
+    serveradmin: 'continuum@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'continuum-ci.apache.org.ssl_access.log'
+    error_log_file:  'continuum-ci.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://continuum-ci.apache.org/
+
+      Proxypass / http://continuum-vm.apache.org/
+      ProxypassReverse / http://continuum-vm.apache.org/
+      ProxyPreserveHost On
+
+  demo-ctakes:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-ctakes.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'demo-ctakes.apache.org.http_access.log'
+    error_log_file:  'demo-ctakes.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://demo-ctakes.apache.org/$1
+
+  demo-ctakes-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-ctakes.apache.org'
+    serveraliases:
+      - 'www.demo-ctakes.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'demo-ctakes.apache.org.ssl_access.log'
+    error_log_file:  'demo-ctakes.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://demo-ctakes.apache.org/
+      
+      Proxypass / http://ctakes-vm.apache.org/
+      ProxypassReverse / http://ctakes-vm.apache.org/
+      ProxyPreserveHost On
+
+  demo-openmeetings:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-openmeetings.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'demo-openmeetings.apache.org.http_access.log'
+    error_log_file:  'demo-openmeetings.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://demo-openmeetings.apache.org/$1
+
+  demo-openmeetings-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-openmeetings.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'demo-openmeetings.apache.org.ssl_access.log'
+    error_log_file:  'demo-openmeetings.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://demo-openmeetings.apache.org/
+      
+      Proxypass / http://openmeetings-vm.apache.org/
+      ProxypassReverse / http://openmeetings-vm.apache.org/
+      ProxyPreserveHost On
+
+  foreman:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'foreman.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    serveraliases:
+      - 'www.foreman.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'foreman.apache.org.http_access.log'
+    error_log_file:  'foreman.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://foreman.apache.org/
+
+  foreman-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'foreman.apache.org'
+    serveraliases:
+      - 'www.foreman.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'foreman.apache.org.ssl_access.log'
+    error_log_file:  'foreman.apache.org.error.log'
+    custom_fragment: |
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+      Proxypass / http://foreman-vm.apache.org/
+      ProxypassReverse / http://foreman-vm.apache.org/
+
+  jspwiki-doc:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'jspwiki-doc.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    serveraliases:
+      - 'doc.jspwiki.org'
+      - 'jspwiki-doc.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'jspwiki-doc.apache.org.http_access.log'
+    error_log_file:  'jspwiki-doc.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://jspwiki-doc.apache.org/$1
+
+  jspwiki-doc-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'jspwiki-doc.apache.org'
+    serveraliases:
+      - 'www.jspwiki-doc.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'jspwiki-doc.apache.org.ssl_access.log'
+    error_log_file:  'jspwiki-doc.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      ProxyPass /doc http://jspwiki-vm.apache.org/doc/
+      ProxypassReverse /doc http://jspwiki-vm.apache.org/doc/
+
+      ProxyPass / http://jspwiki-vm.apache.org/doc/
+      ProxypassReverse / http://jspwiki-vm.apache.org/doc/
+
+      ProxyPreserveHost On
+
+  jspwiki-wiki:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'jspwiki-wiki.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    serveraliases:
+      - 'doc.jspwiki.org'
+      - 'jspwiki-wiki.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'jspwiki-wiki.apache.org.http_access.log'
+    error_log_file:  'jspwiki-wiki.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://jspwiki-wiki.apache.org/$1
+
+  jspwiki-wiki-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'jspwiki-wiki.apache.org'
+    serveraliases:
+      - 'www.jspwiki-wiki.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'jspwiki-wiki.apache.org.ssl_access.log'
+    error_log_file:  'jspwiki-wiki.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      ProxyPass /wiki http://jspwiki-vm.apache.org/wiki/
+      ProxypassReverse /wiki http://jspwiki-vm.apache.org/wiki/
+      
+      ProxyPass / http://jspwiki-vm.apache.org/doc/
+      ProxypassReverse / http://jspwiki-vm.apache.org/doc/
+
+      ProxyPreserveHost On
+
+  logsearch:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'logsearch.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'logsearch.apache.org.http_access.log'
+    error_log_file:  'logsearch.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://logsearch.apache.org/
+
+  logsearch-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'logsearch.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'logsearch.apache.org.ssl_access.log'
+    error_log_file:  'logsearch.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://logsearch-vm.apache.org:8080/
+      ProxypassReverse / http://logsearch-vm.apache.org:8080/
+
+  ooo-forum:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'forum.openoffice.org'
+    serveraliases:
+      - 'user.services.openoffice.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'ooo-forum.apache.org.http_access.log'
+    error_log_file:  'ooo-forum.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://forum.openoffice.org/
+
+  ooo-forums-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+    servername: 'forum.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'ooo-forums.apache.org.ssl_access.log'
+    error_log_file:  'ooo-forums.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      Proxypass / http://ooo-forums.apache.org/
+      ProxypassReverse / http://ooo-forums.apache.org/
+
+      Header edit Set-Cookie (^.*$) "$1; Secure"
+      RequestHeader set X-Forwarded-Proto "https"
+
+      ProxyPreserveHost On
+
+  ooo-user-services:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+    servername: 'user.services.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'ooo-forum.apache.org.http_access.log'
+    error_log_file:  'ooo-forum.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://forum.openoffice.org/
+
+  ooo-wiki:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'ooo-wiki2.apache.org'
+    serveraliases:
+      - 'wiki.openoffice.org'
+      - 'wiki.services.openoffice.org'
+      - 'doc.services.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'ooo-wiki2.apache.org.http_access.log'
+    error_log_file:  'ooo-wiki2.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://wiki.openoffice.org/
+
+  ooo-wiki-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+    servername: 'wiki.openoffice.org'
+    serveraliases:
+      - 'wiki.openoffice.org'
+      - 'wiki.services.openoffice.org'
+      - 'doc.services.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'ooo-wiki2.apache.org.ssl_access.log'
+    error_log_file:  'ooo-wiki2.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      Header edit Set-Cookie (^.*$) "$1; Secure"
+      RequestHeader set X-Forwarded-Proto "https"
+
+      Proxypass / http://ooo-wiki2-vm.apache.org/
+      ProxypassReverse / http://ooo-wiki2-vm.apache.org/
+
+      ProxyPreserveHost On
+
+  ooo-wiki-services:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'wiki.services.openoffice.org'
+    serveraliases:
+      - 'doc.services.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'ooo-wiki2.apache.org.http_access.log'
+    error_log_file:  'ooo-wiki2.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://wiki.openoffice.org/
+
+  ooo-wiki-services-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+    servername: 'wiki.services.openoffice.org'
+    serveraliases:
+      - 'doc.services.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'ooo-wiki2.apache.org.http_access.log'
+    error_log_file:  'ooo-wiki2.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://wiki.openoffice.org/
+
+  ooo-wikitest:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'ooo-wikitest.apache.org'
+    serveraliases:
+      - 'wikitest.openoffice.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'wikitest.openoffice.org.http_access.log'
+    error_log_file:  'wikitest.openoffice.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      Proxypass / http://ooo-wiki2-vm.apache.org/
+      ProxypassReverse / http://ooo-wiki2-vm.apache.org/
+      ProxyPreserveHost On
+
+  panopticon:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'panopticon.apache.org'
+    serveraliases:
+      - 'www.panopticon.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'panopticon.apache.org.http_access.log'
+    error_log_file:  'panopticon.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://panopticon.apache.org/
+
+  panopticon-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'panopticon.apache.org'
+    serveraliases:
+      - 'www.panopticon.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'panopticon.apache.org.ssl_access.log'
+    error_log_file:  'panopticon.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://panopticon.apache.org/
+      ProxypassReverse / http://panopticon.apache.org/
+
+  rave-live:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'rave-live.apache.org'
+    serveraliases:
+      - 'www.rave-live.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'rave-live.apache.org.http_access.log'
+    error_log_file:  'rave-live.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://rave-live.apache.org/$1
+
+  rave-live-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'rave-live.apache.org'
+    serveraliases:
+      - 'www.rave-live.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'rave-live.apache.org.ssl_access.log'
+    error_log_file:  'rave-live.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://rave-live.apache.org/
+
+      Proxypass / http://rave-vm.apache.org/
+      ProxypassReverse / http://rave-vm.apache.org/
+
+      ProxyPreserveHost On
+
+  repository:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_format: '%h %l %u %t \"%r\" %>s %b \"%%{}{User-agent}i\" %%{}{SSL_PROTOCOL}x %%{}{SSL_CIPHER}x %D'
+    access_log_env_var: 'combinednoreferer'
+    access_log_file: 'repository-vm.apache.org.http_access.log'
+    error_log_file:  'repository-vm.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      # Brian Fox says to leave this, so...
+      Timeout 900
+      ProxyTimeout 900
+
+      RewriteEngine On
+      ProxyRequests Off
+
+      # Temporarily serve local server-status
+      RewriteRule ^/server-status - [L]
+
+      # <Disable Service - root@ - 20120814>
+      #  RewriteCond %%{}{REQUEST_URI} !/maintenance.html
+      #  RewriteRule ^(.*)$ /maintenance.html [L,R=503]
+      #  ErrorDocument 503 /maintenance.html
+      # </Disable Service - root@ - 20120814
+
+      #INFRA-2492
+      RewriteRule ^/snapshots$ /snapshots/ [R,L]
+      RewriteRule ^/snapshots/(.*) http://repository-vm.apache.org:8081/content/groups/snapshots/$1 [P]
+
+      #only allow gets on the snapshot group url to be http, everything else is https
+      RewriteCond %%{}{THE_REQUEST} !^(GET|HEAD)\ /content/groups/snapshots.*$
+      RewriteCond %%{}{REQUEST_URI} !^/ssl.*$
+      RewriteRule ^(.*)$ https://repository.apache.org$1 [R,L]
+
+      RewriteRule ^/content/groups/snapshots$ /content/groups/snapshots/ [R,L]
+      RewriteCond %%{}{REQUEST_URI} !^/ssl.*$
+      RewriteRule ^(.*)$ http://repository-vm.apache.org:8081$1 [P,L]
+      SetEnv force-proxy-request-1.0 1
+      SetEnv proxy-nokeepalive 1
+
+      AddType application/x-java-jnlp-file .jnlp
+
+      <Location /ssl>
+            Options Indexes
+            Order allow,deny
+            Allow from all
+      </Location>
+
+  repository-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_format: '%h %l %u %t \"%r\" %>s %b \"%%{}{User-agent}i\" %%{}{SSL_PROTOCOL}x %%{}{SSL_CIPHER}x %D'
+    access_log_env_var: 'combinednoreferer'
+    access_log_file: 'repository-vm.apache.org.http_access.log'
+    error_log_file:  'repository-vm.apache.org.error.log'
+    custom_fragment: |
+      # Brian Fox says to leave this, so...
+      Timeout 900
+      ProxyTimeout 900
+
+      ProxyPreserveHost On
+
+      RewriteEngine On
+      # <Disable Service - root@ - 20120814>
+      # RewriteCond %{REQUEST_URI} !/maintenance.html
+      # RewriteRule ^(.*)$ /maintenance.html [L,R=503]
+      # ErrorDocument 503 /maintenance.html
+      # </Disable Service - root@ - 20120814>
+
+      <Proxy "!/ssl.cert.+">
+            Order allow,deny
+            Allow from all
+      </Proxy>
+      ProxyPass /snapshots http://repository-vm.apache.org:8081/content/groups/snapshots
+
+      ProxyPass / http://repository-vm.apache.org:8081/
+      ProxyPassReverse / http://repository-vm.apache.org:8081/
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=503
+
+  reviews:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'reviews.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'reviews.apache.org.http_access.log'
+    error_log_file:  'reviews.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch ^/$ https://reviews.apache.org/dashboard/
+      RedirectMatch permanent ^/(.*)$ https://reviews.apache.org/$1
+
+  reviews-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'reviews-test.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'reviews.apache.org.ssl_access.log'
+    error_log_file:  'reviews.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+        Require ip 120.146.242.193
+        ErrorDocument 403 "Maintenance"
+      </Directory>
+
+      #<IfDefine !FLIP_THIS_FOR_DOWNTIME>
+        RedirectMatch ^/$ https://reviews.apache.org/dashboard/
+
+        ProxyPass / http://reviews-vm.apache.org/
+        ProxyPassReverse / http://reviews-vm.apache.org/
+        ProxyPreserveHost On
+      #</IfDefine>
+      #<IfDefine FLIP_THIS_FOR_DOWNTIME>
+      #  AddHandler send-as-is asis
+      #  AliasMatch /(.*) /var/www/maintenance.html.asis
+      #</IfDefine>
+
+  secsubmit:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'secsubmit.apache.org'
+    serveraliases:
+      - 'www.secsubmit.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'secsubmit.apache.org.http_access.log'
+    error_log_file:  'secsubmit.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://secsubmit.apache.org/
+
+  secsubmit-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'secsubmit.apache.org'
+    serveraliases:
+      - 'www.secsubmit.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'secsubmit.apache.org.ssl_access.log'
+    error_log_file:  'secsubmit.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://secsubmit-vm.apache.org/
+      ProxypassReverse / http://secsubmit-vm.apache.org/
+
+  tac-apply:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'tac-apply.apache.org'
+    serveraliases:
+      - 'www.tac-apply.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'tac-apply.apache.org.http_access.log'
+    error_log_file:  'tac-apply.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://tac-apply.apache.org/$1
+
+  tac-apply-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'tac-apply.apache.org'
+    serveraliases:
+      - 'www.tac-apply.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_file: 'tac-apply.apache.org.ssl_access.log'
+    error_log_file:  'tac-apply.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      RedirectMatch ^/$ https://tac-apply.apache.org/
+
+      Proxypass / http://tac-apply-vm.apache.org/
+      ProxypassReverse / http://tac-apply-vm.apache.org/
+      ProxyPreserveHost On
+
