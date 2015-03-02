@@ -5,10 +5,13 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
 
-apache::default_ssl_cert: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-apache::default_ssl_key: '/etc/ssl/private/ssl-cert-snakeoil.key'
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
 
 vhosts_asf::vhosts::vhosts:
   analysis:
@@ -523,6 +526,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
     servername: 'forum.openoffice.org'
     serveradmin: 'infrastructure@apache.org'
     docroot: '/var/www'
@@ -558,6 +564,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
     servername: 'user.services.openoffice.org'
     serveradmin: 'infrastructure@apache.org'
     docroot: '/var/www'
@@ -589,6 +598,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
     servername: 'wiki.openoffice.org'
     serveraliases:
       - 'wiki.openoffice.org'
@@ -643,6 +655,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
     servername: 'wiki.services.openoffice.org'
     serveraliases:
       - 'doc.services.openoffice.org'
