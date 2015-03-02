@@ -42,7 +42,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://analysis-vm.apache.org/
       ProxypassReverse / http://analysis-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
       ProxyErrorOverride On
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=500
@@ -85,7 +84,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://roller-vm.apache.org/
       ProxypassReverse / https://roller-vm.apache.org/
       ProxypassReverse / https://roller-vm.apache.org:8443/
-      ProxyVia On
 
       ProxyErrorOverride On
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=500
@@ -140,7 +138,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://bloodhound-vm2.apache.org/
       ProxypassReverse / http://bloodhound-vm2.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   bloodhound2:
     vhost_name: '*'
@@ -190,7 +187,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://bloodhound-vm2.apache.org/
       ProxypassReverse / http://bloodhound-vm2.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   continuum-ci:
     vhost_name: '*'
@@ -240,7 +236,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://continuum-vm.apache.org/
       ProxypassReverse / http://continuum-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   demo-ctakes:
     vhost_name: '*'
@@ -288,7 +283,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://ctakes-vm.apache.org/
       ProxypassReverse / http://ctakes-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   demo-openmeetings:
     vhost_name: '*'
@@ -334,7 +328,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://openmeetings-vm.apache.org/
       ProxypassReverse / http://openmeetings-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   foreman:
     vhost_name: '*'
@@ -369,7 +362,6 @@ vhosts_asf::vhosts::vhosts:
     
       Proxypass / http://foreman-vm.apache.org/
       ProxypassReverse / http://foreman-vm.apache.org/
-      ProxyVia On
 
   jspwiki-doc:
     vhost_name: '*'
@@ -422,7 +414,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://jspwiki-vm.apache.org/doc/
 
       ProxyPreserveHost On
-      ProxyVia On
 
   jspwiki-wiki:
     vhost_name: '*'
@@ -475,7 +466,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://jspwiki-vm.apache.org/doc/
 
       ProxyPreserveHost On
-      ProxyVia On
 
   logsearch:
     vhost_name: '*'
@@ -504,7 +494,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Proxypass / http://logsearch-vm.apache.org:8080/
       ProxypassReverse / http://logsearch-vm.apache.org:8080/
-      ProxyVia On
 
   ooo-forum:
     vhost_name: '*'
@@ -557,7 +546,6 @@ vhosts_asf::vhosts::vhosts:
       RequestHeader set X-Forwarded-Proto "https"
 
       ProxyPreserveHost On
-      ProxyVia On
 
   ooo-user-services:
     vhost_name: '*'
@@ -633,7 +621,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://ooo-wiki2-vm.apache.org/
 
       ProxyPreserveHost On
-      ProxyVia On
 
   ooo-wiki-services:
     vhost_name: '*'
@@ -699,7 +686,6 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://ooo-wiki2-vm.apache.org/
       ProxypassReverse / http://ooo-wiki2-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
   panopticon:
     vhost_name: '*'
@@ -732,7 +718,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Proxypass / http://panopticon.apache.org/
       ProxypassReverse / http://panopticon.apache.org/
-      ProxyVia On
 
   rave-live:
     vhost_name: '*'
@@ -783,7 +768,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://rave-vm.apache.org/
 
       ProxyPreserveHost On
-      ProxyVia On
 
   repository:
     vhost_name: '*'
@@ -977,7 +961,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Proxypass / http://secsubmit-vm.apache.org/
       ProxypassReverse / http://secsubmit-vm.apache.org/
-      ProxyVia On
 
   tac-apply:
     vhost_name: '*'
@@ -1027,5 +1010,4 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://tac-apply-vm.apache.org/
       ProxypassReverse / http://tac-apply-vm.apache.org/
       ProxyPreserveHost On
-      ProxyVia On
 
