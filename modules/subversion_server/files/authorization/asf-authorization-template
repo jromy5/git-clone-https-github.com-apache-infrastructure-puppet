@@ -382,7 +382,7 @@ storm-pmc={reuse:pit-authorization:storm-pmc}
 stratos={ldap:cn=stratos,ou=groups,dc=apache,dc=org}
 stratos-pmc={reuse:pit-authorization:stratos-pmc}
 #stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
-streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks
+streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks,rdouglas
 struts={ldap:cn=struts,ou=groups,dc=apache,dc=org}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
