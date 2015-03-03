@@ -210,7 +210,7 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
-ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov
+ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -342,7 +342,7 @@ ranger=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rman
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
 reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,jerryjung,johnyangk,joshrosen,jrlee,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
-ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,jukka,raymondcamden
+ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,jukka,raymondcamden,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
