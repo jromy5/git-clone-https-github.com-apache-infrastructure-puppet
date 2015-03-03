@@ -676,6 +676,7 @@ vhosts_asf::vhosts::vhosts:
       RedirectMatch permanent ^/mod_aspdotnet.* http://httpd.apache.org/modules/#mod_aspdotnet
 
       AddLanguage da .da
+      RemoveType es
       AddDefaultCharset off
 
       RewriteEngine On
@@ -833,6 +834,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
 
       AddLanguage da .da
+      RemoveType es
       AddDefaultCharset off
 
       <Directory /var/www/httpd.apache.org/content/docs/1.3>
