@@ -69,5 +69,6 @@ vhosts_asf::vhosts::vhosts:
       <Location />
         Require ip 140.211.11.75
       </Location>
+      Alias /releases/ /var/www/reporter.apache.org/data/releases/
       
 
