@@ -5,13 +5,13 @@ class puppet_asf (
   case $asfosname { 
     ubuntu: {
       package { 'puppet':
-        ensure  => '3.6.2-1puppetlabs1',
+        ensure  => '3.7.4-1puppetlabs1',
         require => Apt::Source['puppetlabs', 'puppetdeps'],
       }
     }
     centos: {
       package { 'puppet':
-        ensure  => '3.6.2-1.el6',
+        ensure  => '3.7.4-1.el6',
         require => Yumrepo['puppetlabs-products', 'puppetlabs-deps'],
       }
     }
