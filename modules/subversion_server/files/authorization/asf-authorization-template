@@ -556,7 +556,6 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/avalon]
 * = r
-@svnadmins = rw
 
 [/avro]
 @avro = rw
@@ -745,7 +744,6 @@ ea = rw
 
 [/excalibur]
 * = r
-@svnadmins = rw
 
 [/falcon]
 @falcon = rw
