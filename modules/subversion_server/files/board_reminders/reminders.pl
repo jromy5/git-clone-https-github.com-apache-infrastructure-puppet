@@ -125,7 +125,6 @@ my @prezReports = (
 );
 
 # Arguments?
-my $ = 0;
 for my $i (0 .. $#ARGV) {
     my $a = $ARGV[$i];
     next if ($a !~ /^-/);
@@ -143,7 +142,7 @@ for my $i (0 .. $#ARGV) {
     $keepFiles = 1 if $a =~ /save-file/;
     usage() if $a =~ /help/;
     $justMembers = 1 if $a =~ /just-mems/;
-    $isCron = 1; if $a =~ /cron/;
+    $isCron = 1 if $a =~ /cron/;
 }
 
 # Script start
