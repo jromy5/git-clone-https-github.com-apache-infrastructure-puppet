@@ -9,6 +9,7 @@ class puppet_asf (
       package { 'puppet':
         ensure  => '3.7.4-1puppetlabs1',
         require => Apt::Source['puppetlabs', 'puppetdeps'],
+        notify  => Service['puppet'],
       }
 
       file { 'puppet_daemon_conf':
