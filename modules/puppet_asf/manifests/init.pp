@@ -1,5 +1,7 @@
 class puppet_asf (
-  $puppetconf  = '/etc/puppet/puppet.conf'
+  $puppetconf    = '/etc/puppet/puppet.conf',
+  $enable_daemon = true,
+  $daemon_opts   = '',
 ){
 
   case $asfosname { 
@@ -39,6 +41,24 @@ class puppet_asf (
      "puppet:///modules/puppet_asf/$asfosname.puppet.conf",
      "puppet:///modules/puppet_asf/puppet.conf",
      ]
+  }
+
+  case $asfosname {
+    ubuntu: {
+      file { 'puppet_daemon_conf':
+        path    => '/etc/default/puppet',
+        ensure  => present,
+        require => Package['puppet'],
+        notify  => Service["puppet"],
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template("puppet_asf/puppet_daemon.${asfosname}.erb"),
+      }
+    
+    }
+    default: {
+    }
   }
 
 }
