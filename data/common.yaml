@@ -191,6 +191,8 @@ ntp::restrict:
   - '-4 default kod notrap nomodify nopeer noquery'
   - '-6 default kod notrap nomodify nopeer noquery'
 
+puppet_asf::enable_daemon: true
+
 ## SNMP
 snmp::agentaddress: 'udp:*:161'
 snmp::com2sec:
