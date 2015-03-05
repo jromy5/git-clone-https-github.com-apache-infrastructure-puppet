@@ -1540,6 +1540,9 @@ spamassassin_role = rw
 [/struts]
 @struts = rw
 
+[/struts/struts-annotations]
+* = r
+
 [/struts/archive]
 * = r
 
