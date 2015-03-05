@@ -10,6 +10,18 @@ class puppet_asf (
         ensure  => '3.7.4-1puppetlabs1',
         require => Apt::Source['puppetlabs', 'puppetdeps'],
       }
+
+      file { 'puppet_daemon_conf':
+        path    => '/etc/default/puppet',
+        ensure  => present,
+        require => Package['puppet'],
+        notify  => Service["puppet"],
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template("puppet_asf/puppet_daemon.${asfosname}.erb"),
+      }
+
     }
     centos: {
       package { 'puppet':
@@ -41,24 +53,6 @@ class puppet_asf (
      "puppet:///modules/puppet_asf/$asfosname.puppet.conf",
      "puppet:///modules/puppet_asf/puppet.conf",
      ]
-  }
-
-  case $asfosname {
-    ubuntu: {
-      file { 'puppet_daemon_conf':
-        path    => '/etc/default/puppet',
-        ensure  => present,
-        require => Package['puppet'],
-        notify  => Service["puppet"],
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => template("puppet_asf/puppet_daemon.${asfosname}.erb"),
-      }
-    
-    }
-    default: {
-    }
   }
 
 }
