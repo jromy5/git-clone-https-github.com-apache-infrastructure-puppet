@@ -53,6 +53,8 @@ Facter.add("asfcolo") do
       "amz-vpc-eu-central"
     when /^162.209.6.([0-9]+)$/
       "rax-vpc-us-mid"
+    when /^10.41.([0-9]+).([0-9]+)$/
+      "phoenixnap"
     else
       "yahoo"
     end
