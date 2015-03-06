@@ -1,0 +1,17 @@
+---
+classes:
+  - mysql::server
+
+mysql::server::override_options:
+  mysqld:
+    ft_min_word_len: 2
+    bind-address: "%{::ipaddress_eth1}"
+    server-id: 1
+    binlog-format: 'mixed'
+    log_bin: '/var/log/mysql/mysql-bin.log'
+    innodb_flush_log_at_trx_commit: '1'
+    sync_binlog: '1'
+    binlog-ignore-db: 'mysql'
+    expire-logs-days: '5'
+
+
