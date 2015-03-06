@@ -1,0 +1,12 @@
+---
+classes:
+  - mysql::server
+
+mysql::server::override_options:
+  mysqld:
+    ft_min_word_len: 2
+    bind-address: "%{::ipaddress_eth1}"
+    server-id: 2
+    binlog-format: 'mixed'
+    relay-log: '/var/log/mysql/mysql-relay-bin.log'
+    read-only: 1
