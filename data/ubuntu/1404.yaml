@@ -1,6 +1,8 @@
 ---
 classes: 
   - apt
+  - apt::unattended_upgrades
+  - apt::update
   - base
   - dnsclient
   - fail2ban_asf::config
@@ -57,6 +59,13 @@ apt::force:
   'orthrus':
     release: 'main'
   require: Apt::Source['asf_internal']
+
+apt::unattended_upgrades::update: 1
+apt::unattended_upgrades::download: 1
+apt::unattended_upgrades::upgrade: 1
+apt::unattended_upgrades::autoclean: 7
+apt::unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
 
 fail2ban::service_status: true
 
