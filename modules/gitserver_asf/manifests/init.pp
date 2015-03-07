@@ -34,6 +34,9 @@ file {
   '/usr/local/sbin/sendmail':
     ensure   => link,
     target   => '/usr/sbin/sendmail';
+  '/etc/gitconfig':
+    ensure   => present,
+    source   => "puppet:///modules/gitserver_asf/gitconfig";
   }
 
 ## Unless declared otherwise the default behaviour is to enable these modules
