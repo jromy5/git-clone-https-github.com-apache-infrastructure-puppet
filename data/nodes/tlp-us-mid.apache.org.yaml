@@ -17,14 +17,15 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
-  - ssl::name::wildcard_apache_org
-  - ssl::name::wildcard_incubator_apache_org
-  - ssl::name::wildcard_openoffice_org
-  - svnwcsub
+  - httpd_modules::mod_asf_mirrorcgi
   - rootbin_asf
   - rsync
   - rsync::server
   - rsync_mirror
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_incubator_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - svnwcsub
   - tlp_vhosts::compat
   - vhosts_asf::custom_config
   - vhosts_asf::modules
