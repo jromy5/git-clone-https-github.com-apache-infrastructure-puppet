@@ -2377,3 +2377,9 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xml-$1 [R=301,L]
+
+
+httpd_modules::dev_package:
+  - apache2-dev
+
+
