@@ -14,9 +14,9 @@ class httpd_modules::mod_asf_mirrorcgi (
       source  => 'puppet:///modules/httpd_modules/asf_mirrorcgi_module',
     }
 
-    package { $required_packages:
-      ensure => latest,
-    }
+    #package { $required_packages:
+    #  ensure => latest,
+    #}
 
     exec { 'compile_ asf_mirrorcgi_module':
       command => "${command}",
