@@ -8,7 +8,7 @@ class httpd_modules::mod_asf_mirrorcgi (
 
     require httpd_modules
 
-    file { 'mod_svn_check_path':
+    file { 'mod_asf_mirrorcgi':
       path    => "${mod_path}",
       recurse => true,
       source  => 'puppet:///modules/httpd_modules/asf_mirrorcgi_module',
@@ -18,7 +18,7 @@ class httpd_modules::mod_asf_mirrorcgi (
       ensure => latest,
     }
 
-    exec { 'compile asf_mirrorcgi_module':
+    exec { 'compile_ asf_mirrorcgi_module':
       command => "${command}",
       cwd     => "${mod_path}",
       path    => $shell_path,
