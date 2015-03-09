@@ -141,10 +141,10 @@
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
 
-  apache::vhost { 'cwiki-vm2':
+  apache::vhost { 'cwiki-vm3':
       vhost_name => '*',
       default_vhost => true,
-      servername => 'cwiki-vm2.apache.org',
+      servername => 'cwiki-vm3.apache.org',
       port => '80',
       docroot => '/var/www/html',
       serveraliases => ['cwiki-test.apache.org'],
