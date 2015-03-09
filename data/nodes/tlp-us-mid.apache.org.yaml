@@ -236,6 +236,8 @@ vhosts_asf::modules::modules:
     name: 'macro'
   unique_id:
     name: 'unique_id'
+  asf_mirrorcgi:
+    name: 'asf_mirrorcgi'
 
 vhosts_asf::vhosts::vhosts:
   any23: 
