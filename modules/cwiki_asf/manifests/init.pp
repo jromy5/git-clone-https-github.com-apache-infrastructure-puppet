@@ -5,7 +5,7 @@
    $group_present = 'present',
    $groupname = 'confluence',
    $groups = [],
-   $service_ensure = 'running',
+   $service_ensure = 'stopped',
    $service_name = 'confluence',
    $shell = '/bin/bash',
    $user_present = 'present',
