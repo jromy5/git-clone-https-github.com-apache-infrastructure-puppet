@@ -16,18 +16,27 @@ class gitpubsub (
 
 ){
 
-
-   user { "${username}":
-        name       => "${username}",
-        ensure     => "${user_present}",
-        home       => "/home/${username}",
-        shell      => "${shell}",
-        uid        => "${uid}",
-        gid        => "${groupname}",
-        groups     => $groups,
-        managehome => true,
-        require    => Group["${groupname}"],
+    package { 'lua':
+      ensure => installed
     }
+    package { 'lua-filesystem':
+      ensure => installed
+    }
+    package { 'lua-socket':
+      ensure => installed
+    }
+  
+    user { "${username}":
+         name       => "${username}",
+         ensure     => "${user_present}",
+         home       => "/home/${username}",
+         shell      => "${shell}",
+         uid        => "${uid}",
+         gid        => "${groupname}",
+         groups     => $groups,
+         managehome => true,
+         require    => Group["${groupname}"],
+     }
 
     group { "${groupname}":
         name   => "${groupname}",
