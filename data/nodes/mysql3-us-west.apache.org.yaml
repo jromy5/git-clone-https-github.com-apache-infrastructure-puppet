@@ -14,4 +14,9 @@ mysql::server::override_options:
     binlog-ignore-db: 'mysql'
     expire-logs-days: '5'
 
+mysql::server::databases:
+  cwiki_test:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
 
