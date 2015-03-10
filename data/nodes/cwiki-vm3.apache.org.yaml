@@ -2,3 +2,10 @@
 classes:
 - cwiki_asf
 - apache
+- mysql::server
+
+mysql::server::databases:
+  cwiki_test:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
