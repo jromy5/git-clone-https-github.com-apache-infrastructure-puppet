@@ -6,6 +6,7 @@ classes:
   - vhosts_asf::modules
   - gitpubsub
   - svnwcsub
+  - svngit2jira
   
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
