@@ -13,6 +13,7 @@ mysql::server::override_options:
     sync_binlog: '1'
     binlog-ignore-db: 'mysql'
     expire-logs-days: '5'
+    character-set-server: 'utf8'
 
 mysql::server::databases:
   cwiki_test:
