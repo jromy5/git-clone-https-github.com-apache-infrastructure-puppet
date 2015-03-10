@@ -1,0 +1,69 @@
+---
+classes:
+  - apache
+  - apache::mod::status
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
+  - gitpubsub
+  - svnwcsub
+  
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.asfbot'
+svnwcsub::username:         'svnwc'
+
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::max_keepalive_requests: 1000
+apache::timeout: 600
+apache::default_vhost:      false
+apache::docroot:            '/var/www/htdocs'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '150'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '250'
+apache::mod::event::threadsperchild: '50'
+
+apache::mod::status::allow_from:
+  - all
+apache::mod::status::apache_version: '2.3'
+
+apache::mpm_module:         'event'
+apache::serveradmin:        'infrastructure@apache.org'
+
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
+vhosts_asf::vhosts::vhosts:
+  wilderness:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/wilderness'
+    servername: 'wilderness.apache.org'
+    directoryindex: 'index.lua index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler lua-script .lua
+      
+
