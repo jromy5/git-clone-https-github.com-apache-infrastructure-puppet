@@ -510,8 +510,8 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www'
     log_level: 'warn'
-    access_log_file: 'ooo-forum.apache.org.http_access.log'
-    error_log_file:  'ooo-forum.apache.org.error.log'
+    access_log_file: 'ooo-forums.apache.org.http_access.log'
+    error_log_file:  'ooo-forums.apache.org.error.log'
     custom_fragment: |
       Redirect permanent / https://forum.openoffice.org/
 
@@ -1012,7 +1012,7 @@ vhosts_asf::vhosts::vhosts:
 
       RedirectMatch ^/$ https://tac-apply.apache.org/
 
-      Proxypass / http://tac-apply-vm.apache.org/
-      ProxypassReverse / http://tac-apply-vm.apache.org/
+      Proxypass / http://tac-vm.apache.org/
+      ProxypassReverse / http://tac-vm.apache.org/
       ProxyPreserveHost On
 
