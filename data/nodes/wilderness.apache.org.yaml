@@ -28,7 +28,7 @@ apache::max_keepalive_requests: 1000
 apache::timeout: 600
 apache::default_vhost:      false
 apache::docroot:            '/var/www/htdocs'
-apache::mod:                'lua'
+
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
@@ -50,8 +50,8 @@ apache::serveradmin:        'infrastructure@apache.org'
 
 
 vhosts_asf::modules::modules:
-  cgi:
-    name: 'cgi'
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   wilderness:
