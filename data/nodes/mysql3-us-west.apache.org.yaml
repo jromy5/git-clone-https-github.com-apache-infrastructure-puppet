@@ -14,6 +14,9 @@ mysql::server::override_options:
     binlog-ignore-db: 'mysql'
     expire-logs-days: '5'
     character-set-server: 'utf8'
+    max_allowed_packet: '64M'
+  mysqldump:
+    max_allowed_packet: '64M'
 
 mysql::server::databases:
   cwiki_test:
