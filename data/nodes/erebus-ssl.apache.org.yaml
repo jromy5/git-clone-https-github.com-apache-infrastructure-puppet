@@ -12,7 +12,7 @@ classes:
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
-apache::logrot: '/x1/log'
+apache::logroot: '/x1/log'
 
 vhosts_asf::vhosts::vhosts:
   analysis:
