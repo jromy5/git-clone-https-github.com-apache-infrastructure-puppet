@@ -13,6 +13,10 @@ apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
 apache::logroot: '/x1/log'
+apache::logrotate_path: '/x1/log/*.log'
+apache::logrotate_delaycompress: true
+apache::logrotate_ifempty: false
+apache::logrotate_rotate: 52
 
 vhosts_asf::vhosts::vhosts:
   analysis:
