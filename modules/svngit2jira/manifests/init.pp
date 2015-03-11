@@ -56,7 +56,7 @@ class svngit2jira (
         source => "puppet:///modules/svngit2jira/svngit2jira.${asfosname}",
     }
     
-    file { 'app dir':
+    file { 'svngit2jira app dir':
         ensure => directory,
         path => '/usr/local/etc/svngit2jira',
     }

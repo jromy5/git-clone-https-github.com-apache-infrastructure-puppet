@@ -65,7 +65,7 @@ class gitpubsub (
         source => "puppet:///modules/gitpubsub/gitpubsub.${asfosname}",
     }
     
-    file { 'app dir':
+    file { 'gitpubsub app dir':
         ensure => directory,
         path => '/usr/local/etc/gitpubsub',
     }
