@@ -2,7 +2,6 @@ class httpd_modules::mod_asf_mirrorcgi (
   $command           = 'apxs2 -i -a -c mod_asf_mirrorcgi.c',
   $creates           = '/usr/lib/apache2/modules/mod_asf_mirrorcgi.so',
   $mod_path          = '/tmp/asf_mirrorcgi_module',
-  $required_packages = '',
   $shell_path        = ['/usr/bin', '/bin', '/usr/sbin'],
 ) {
 
@@ -13,10 +12,6 @@ class httpd_modules::mod_asf_mirrorcgi (
       recurse => true,
       source  => 'puppet:///modules/httpd_modules/asf_mirrorcgi_module',
     }
-
-    #package { $required_packages:
-    #  ensure => latest,
-    #}
 
     exec { 'compile_ asf_mirrorcgi_module':
       command => "${command}",
