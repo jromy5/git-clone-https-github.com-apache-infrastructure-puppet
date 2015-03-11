@@ -5,14 +5,14 @@ class svngit2jira (
   $conf_path      = '/usr/local/etc/svngit2jira',
   $conf_file      = 'svngit2jira.cfg',
   $group_present  = 'present',
-  $groupname      = 'gitwc',
+  $groupname      = 'svngit2jira',
   $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'svngit2jira',
   $shell          = '/bin/bash',
   $source         = 'svngit2jira.cfg',
   $user_present   = 'present',
-  $username       = 'gitwc',
+  $username       = 'svngit2jira',
 
 ){
 

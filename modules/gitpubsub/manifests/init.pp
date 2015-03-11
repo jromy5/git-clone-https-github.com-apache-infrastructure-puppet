@@ -5,7 +5,7 @@ class gitpubsub (
   $conf_path      = '/usr/local/etc/gitpubsub',
   $conf_file      = 'gitpubsub.cfg',
   $group_present  = 'present',
-  $groupname      = 'gitwc',
+  $groupname      = 'gitpubsub',
   $groups         = [],
   $service_ensure = 'running',
   $service_name   = 'gitpubsub',
