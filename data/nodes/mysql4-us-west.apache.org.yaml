@@ -2,6 +2,7 @@
 classes:
   - amanda::client
   - mysql::server
+  - mysql_asf::backup
 
 mysql::server::override_options:
   mysqld:
