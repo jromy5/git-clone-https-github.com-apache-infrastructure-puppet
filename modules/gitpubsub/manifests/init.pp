@@ -16,7 +16,7 @@ class gitpubsub (
 
 ){
 
-    package { 'lua':
+    package { 'lua5.2':
       ensure => installed
     }
     package { 'lua-filesystem':
