@@ -13,6 +13,9 @@ mysql::server::override_options:
     relay-log: '/var/log/mysql/mysql-relay-bin.log'
     read-only: 1
     character-set-server: 'utf8'
+    max_allowed_packet: '64M'
+  mysqldump:
+    max_allowed_packet: '64M'
 
 mysql::server::databases:
   cwiki_test:
