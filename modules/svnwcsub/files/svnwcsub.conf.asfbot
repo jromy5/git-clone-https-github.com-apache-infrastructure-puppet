@@ -18,3 +18,4 @@ LANG: en_US.UTF-8
 
 [track]
 /usr/local/etc/asfbot: %(INFRA)s/infrastructure/trunk/projects/asfbot/
+/var/www/wilderness: %(INFRA)s/infrastructure/trunk/projects/wilderness/
