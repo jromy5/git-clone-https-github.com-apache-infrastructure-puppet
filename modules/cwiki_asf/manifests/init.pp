@@ -209,7 +209,7 @@
 
   cron { 'create-intermediates-index':
     user => "${username}",
-    minute => 15,
+    minute => '*/30',
     command => "/home/${username}/create-intermediates-index.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
@@ -217,7 +217,7 @@
 }
   cron { 'copy-intermediate-html':
     user => "${username}",
-    minute => 10,
+    minute => '*/10',
     command => "/home/${username}/copy-intermediate-html.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
