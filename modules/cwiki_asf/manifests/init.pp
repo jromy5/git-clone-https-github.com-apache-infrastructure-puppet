@@ -150,7 +150,7 @@
       serveraliases => ['cwiki-test.apache.org'],
       error_log_file => 'cwiki-test_error.log',
       proxy_pass => [
-        { 'path' => '/', 'url' => 'http://127.0.0.1:8888/confluence',
+        { 'path' => '/confluence', 'url' => 'http://127.0.0.1:8888/confluence',
           'reverse_urls' => ['http://127.0.0.1:8888/confluence'] },
       ],
   }
