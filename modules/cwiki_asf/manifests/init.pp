@@ -137,7 +137,7 @@
     content => template('cwiki_asf/confluence-init-script.erb');
 }
 
-  apache::mod { 'rewrite': }
+  # apache::mod { 'rewrite': }
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
 
