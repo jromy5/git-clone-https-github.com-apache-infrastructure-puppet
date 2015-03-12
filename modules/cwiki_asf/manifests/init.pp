@@ -120,7 +120,7 @@
     ensure => directory,
     owner => 'www-data',
     group => 'confluence',
-    require => Class['apache'],
+    require => Class['apache'];
   "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
