@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /var/www/intermediates
+cd <%= @intermediates_dir %>
 cat header.inc > index.html
 find . -type d -name 'htmlexport*' -exec echo '<a href={}>{} </a><br />' \; | sort | sed -e s/\\.\\///g >> index.html
 cat footer.inc >> index.html

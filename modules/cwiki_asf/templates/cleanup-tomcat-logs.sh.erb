@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CATALINA_LOG_DIR=/x1/cwiki/current/logs
+CATALINA_LOG_DIR=<%= @current_dir %>/logs
 X1_SPACE=`df -H | grep x1 | awk '{print $5}' | cut -d'%' -f1`
 
 cd $CATALINA_LOG_DIR

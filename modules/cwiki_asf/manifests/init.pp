@@ -37,6 +37,8 @@
    $connector_port = '8888'
    $context_path = '/confluence'
    $current_dir = "${parent_dir}/current"
+   $docroot = '/var/www'
+   $intermediates_dir = "${docroot}/intermediates"
 
     user { "${username}":
          name => "${username}",
@@ -146,7 +148,7 @@
       default_vhost => true,
       servername => 'cwiki-vm3.apache.org',
       port => '80',
-      docroot => '/var/www/html',
+      docroot => "${docroot}",
       serveraliases => ['cwiki-test.apache.org'],
       error_log_file => 'cwiki-test_error.log',
       rewrites => [
