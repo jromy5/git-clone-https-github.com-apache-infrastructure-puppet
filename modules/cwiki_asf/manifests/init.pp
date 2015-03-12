@@ -148,6 +148,26 @@
   "${intermediates_dir}/footer.inc":
     ensure => present,
     source => "puppet:///modules/cwiki_asf/footer.inc";
+  "/home/${username}/create-intermediates-index.sh":
+    owner => "${username},
+    group => "${groupname},
+    content => template('cwiki_asf/create-intermediates-index.sh.erb'),
+    mode => '0755';
+  "/home/${username}/copy-intermediate-html.sh":
+    owner => "${username},
+    group => "${groupname},
+    content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
+    mode => '0755';
+  "/home/${username}/remove-intermediates-daily.sh":
+    owner => "${username},
+    group => "${groupname},
+    content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
+    mode => '0755';
+  "/home/${username}/cleanup-tomcat-logs.sh":
+    owner => "${username},
+    group => "${groupname},
+    content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
+    mode => '0755';
 }
 
   # apache::mod { 'rewrite': }
@@ -189,10 +209,36 @@
 
   cron { 'create-intermediates-index':
     user => "${username}",
-    minute => 55,
+    minute => 15,
     command => "/home/${username}/create-intermediates-index.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-      SHELL=/bin/sh',
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'copy-intermediate-html':
+    user => "${username}",
+    minute => 10,
+    command => "/home/${username}/copy-intermediate-html.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'remove-intermediates-daily':
+    user => "${username}",
+    minute => 05,
+    hour -> 07,
+    command => "/home/${username}/remove-intermediates-daily.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'cleanup-tomcat-logs':
+    user => "${username}",
+    minute => 20,
+    hour => 07,
+    command => "/home/${username}/cleanup-tomcat-logs.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
     require => User["${username}"],
 }
 
