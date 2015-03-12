@@ -149,6 +149,13 @@
       docroot => '/var/www/html',
       serveraliases => ['cwiki-test.apache.org'],
       error_log_file => 'cwiki-test_error.log',
+      rewrites => [
+        {
+          comment      => 'redirect from / to /confluence for most.',
+          rewrite_cond => ['$1 !(confluence|intermediates)'],
+          rewrite_rule => ['^/(.*) http://cwiki-test.apache.org/confluence/display/$1 [R=301,L]'],
+        },
+      ],
       proxy_pass => [
         { 'path' => '/confluence', 'url' => 'http://127.0.0.1:8888/confluence',
           'reverse_urls' => ['http://127.0.0.1:8888/confluence'] },
