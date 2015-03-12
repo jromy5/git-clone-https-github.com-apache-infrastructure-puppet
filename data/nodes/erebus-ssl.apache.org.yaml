@@ -464,11 +464,11 @@ vhosts_asf::vhosts::vhosts:
         AllowOverride None
       </Directory>
 
-      ProxyPass /wiki http://jspwiki-vm.apache.org/wiki/
+      Proxypass /wiki http://jspwiki-vm.apache.org/wiki/
       ProxypassReverse /wiki http://jspwiki-vm.apache.org/wiki/
-      
-      ProxyPass / http://jspwiki-vm.apache.org/doc/
-      ProxypassReverse / http://jspwiki-vm.apache.org/doc/
+
+      Proxypass / http://jspwiki-vm.apache.org/wiki/
+      ProxypassReverse / http://jspwiki-vm.apache.org/wiki/
 
       ProxyPreserveHost On
 
