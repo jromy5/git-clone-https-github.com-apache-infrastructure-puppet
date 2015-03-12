@@ -188,7 +188,7 @@
 # cron jobs
 
   cron { 'create-intermediates-index':
-    user => ${username},
+    user => "${username}",
     minute => 30,
     command => "/home/${username}/create-intermediates-index.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
