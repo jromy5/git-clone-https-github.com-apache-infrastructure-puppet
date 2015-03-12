@@ -226,7 +226,7 @@
   cron { 'remove-intermediates-daily':
     user => "${username}",
     minute => 05,
-    hour -> 07,
+    hour => 07,
     command => "/home/${username}/remove-intermediates-daily.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
