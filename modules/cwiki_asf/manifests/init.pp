@@ -35,7 +35,7 @@
    $confluence_home = "${parent_dir}/confluence-data"
    $server_port = '8008'
    $connector_port = '8888'
-   $context_path = ''
+   $context_path = '/confluence'
    $current_dir = "${parent_dir}/current"
 
     user { "${username}":
@@ -150,8 +150,8 @@
       serveraliases => ['cwiki-test.apache.org'],
       error_log_file => 'cwiki-test_error.log',
       proxy_pass => [
-        { 'path' => '/', 'url' => 'http://127.0.0.1:8888/',
-          'reverse_urls' => ['http://127.0.0.1:8888/'] },
+        { 'path' => '/confluence', 'url' => 'http://127.0.0.1:8888/confluence',
+          'reverse_urls' => ['http://127.0.0.1:8888/confluence'] },
       ],
   }
 
