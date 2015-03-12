@@ -142,6 +142,12 @@
     owner => 'root',
     group => 'root',
     content => template('cwiki_asf/confluence-init-script.erb');
+  "${intermediates_dir}/header.inc":
+    ensure => present,
+    source => "puppet:///modules/cwiki_asf/header.inc";
+  "{intermediates_dir}/footer.inc":
+    ensure => present,
+    content => "puppet:///modules/cwiki_asf/footer.inc";
 }
 
   # apache::mod { 'rewrite': }
