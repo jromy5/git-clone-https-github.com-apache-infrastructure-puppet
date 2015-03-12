@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /var/www/intermediates
+
+find . -type d -name 'htmlexport*' -mtime 1 -exec rm -rf {} \;
