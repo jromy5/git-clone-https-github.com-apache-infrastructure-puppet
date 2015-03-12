@@ -66,7 +66,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'blogs.apache.org.http_access.log'
     error_log_file:  'blogs.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://blogs-test.apache.org/
+      Redirect permanent / https://blogs.apache.org/
 
   blogs-ssl:
     vhost_name: '*'
@@ -75,7 +75,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'blogs.apache.org'
     serveraliases:
-      - 'www.blogs-test.apache.org'
+      - 'www.blogs.apache.org'
     serveradmin: 'infrastructure@apache.org'
     docroot: '/var/www'
     log_level: 'warn'
