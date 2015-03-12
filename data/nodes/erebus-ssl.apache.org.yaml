@@ -900,7 +900,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'reviews-test.apache.org'
+    servername: 'reviews.apache.org'
     serveradmin: 'infrastructure@apache.org'
     docroot: '/var/www'
     directories:
