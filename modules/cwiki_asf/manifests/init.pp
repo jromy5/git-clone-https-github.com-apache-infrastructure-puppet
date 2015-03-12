@@ -159,8 +159,6 @@
       proxy_pass => [
         { 'path' => '/confluence', 'url' => 'http://127.0.0.1:8888/confluence',
           'reverse_urls' => ['http://127.0.0.1:8888/confluence'] },
-      ],
-      proxy => [
           no_proxy_uris => ['/intermediates'],
       ],
   }
