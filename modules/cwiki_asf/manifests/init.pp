@@ -147,7 +147,7 @@
     source => "puppet:///modules/cwiki_asf/header.inc";
   "${intermediates_dir}/footer.inc":
     ensure => present,
-    content => "puppet:///modules/cwiki_asf/footer.inc";
+    source => "puppet:///modules/cwiki_asf/footer.inc";
 }
 
   # apache::mod { 'rewrite': }
