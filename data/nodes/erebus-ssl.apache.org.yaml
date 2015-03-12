@@ -851,7 +851,7 @@ vhosts_asf::vhosts::vhosts:
     log_level: 'warn'
     access_log_format: '%h %l %u %t \"%r\" %>s %b \"%%{}{User-agent}i\" %%{}{SSL_PROTOCOL}x %%{}{SSL_CIPHER}x %D'
     access_log_env_var: 'combinednoreferer'
-    access_log_file: 'repository-vm.apache.org.http_access.log'
+    access_log_file: 'repository-vm.apache.org.ssl_access.log'
     error_log_file:  'repository-vm.apache.org.error.log'
     custom_fragment: |
       # Brian Fox says to leave this, so...
