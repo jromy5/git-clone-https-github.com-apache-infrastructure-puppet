@@ -160,6 +160,7 @@
         { 'path' => '/confluence', 'url' => 'http://127.0.0.1:8888/confluence',
           'reverse_urls' => ['http://127.0.0.1:8888/confluence'] },
       ],
+      no_proxy_uris => ['/intermediates'],
   }
 
   service { "${service_name}":
