@@ -149,23 +149,23 @@
     ensure => present,
     source => "puppet:///modules/cwiki_asf/footer.inc";
   "/home/${username}/create-intermediates-index.sh":
-    owner => "${username},
-    group => "${groupname},
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/create-intermediates-index.sh.erb'),
     mode => '0755';
   "/home/${username}/copy-intermediate-html.sh":
-    owner => "${username},
-    group => "${groupname},
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
     mode => '0755';
   "/home/${username}/remove-intermediates-daily.sh":
-    owner => "${username},
-    group => "${groupname},
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
     mode => '0755';
   "/home/${username}/cleanup-tomcat-logs.sh":
-    owner => "${username},
-    group => "${groupname},
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
     mode => '0755';
 }
