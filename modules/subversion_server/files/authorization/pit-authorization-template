@@ -388,6 +388,11 @@ security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
+vp-brand=curcuru
+vp-comdev=uli
+vp-fundraising=hadrian,jim
+vp-marketing=sk
+vp-tac=gmcdonald
 
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
@@ -414,6 +419,15 @@ staff=
 # used by nagios
 [private:/emptydir]
 * = r
+
+# INFRA-9270 requested
+[private:/financials/Monthly]
+@vp-brand = r
+@vp-comdev = r
+@vp-fundraising = r
+@vp-marketing = r
+@vp-tac = r
+ea = r
 
 # svnwc needs access
 [/apachecon/archive.apachecon.com]
