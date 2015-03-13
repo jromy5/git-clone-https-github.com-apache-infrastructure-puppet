@@ -8,5 +8,7 @@ class fail2ban_asf::config (
   create_resources(fail2ban::jail, $jails)
   $filters = hiera_hash('fail2ban_asf::config::filters', {})
   create_resources(fail2ban::filter, $filters)
+  $actions = hiera_hash('fail2ban_asf::config::actions', {})
+  create_resources(fail2ban::action, $actions)
 }
 
