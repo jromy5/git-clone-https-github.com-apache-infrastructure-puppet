@@ -179,10 +179,15 @@
       vhost_name => '*',
       default_vhost => true,
       servername => 'cwiki-vm3.apache.org',
-      port => '80',
+      port => '443',
       docroot => "${docroot}",
       serveraliases => ['cwiki-test.apache.org'],
       error_log_file => 'cwiki-test_error.log',
+      ssl => true,
+      docroot => '/x1/git/htdocs',
+      ssl_cert => '/etc/ssl/certs/cwiki.apache.org.crt',
+      ssl_chain => '/etc/ssl/certs/cwiki.apache.org.chain',
+      ssl_key => '/etc/ssl/private/cwiki.apache.org.key',
       rewrites => [
         {
           comment      => 'redirect from / to /confluence for most.',
