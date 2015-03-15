@@ -2,3 +2,4 @@
 classes:
 - cwiki_asf
 - apache
+- ssl::name::cwiki_apache_org 
