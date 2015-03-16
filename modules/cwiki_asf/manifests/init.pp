@@ -184,9 +184,10 @@
       ssl => false,
       docroot => "${docroot}",
       error_log_file => 'cwiki-test_error.log',
-      redirect_source => ['/'],
-      redirect_dest => ['https://cwiki-test.apache.org/'],
-      redirect_status => ['permanent'],
+#      redirect_source => ['/'],
+#      redirect_dest => ['https://cwiki-test.apache.org/'],
+#      redirect_status => ['permanent'],
+      custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki-test.apache.org/$1'
 }
 
   apache::vhost { 'cwiki-vm3-443':
