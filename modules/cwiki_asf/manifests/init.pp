@@ -205,7 +205,7 @@
         {
           comment      => 'redirect from / to /confluence for most.',
           rewrite_cond => ['$1 !(confluence|intermediates)'],
-          rewrite_rule => ['^/(.*) http://cwiki-test.apache.org/confluence/display/$1 [R=301,L]'],
+          rewrite_rule => ['^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L]'],
         },
       ],
       proxy_pass => [
