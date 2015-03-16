@@ -175,7 +175,21 @@
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
 
-  apache::vhost { 'cwiki-vm3':
+  apache::vhost { 'cwiki-vm3-80':
+      vhost_name => '*',
+      priority => '12',
+      servername => 'cwiki-vm3.apache.org',
+      serveraliases => 'cwiki-test.apache.org',
+      port => '80',
+      ssl => false,
+      docroot => "${docroot}",
+      error_log_file => 'cwiki-test_error.log',
+      redirect_source => ['/'],
+      redirect_dest => ['https://cwiki-test.apache.org'],
+      redirect_status => ['permanent'],
+}
+
+  apache::vhost { 'cwiki-vm3-443':
       vhost_name => '*',
       default_vhost => true,
       servername => 'cwiki-vm3.apache.org',
