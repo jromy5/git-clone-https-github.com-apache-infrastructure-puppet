@@ -93,8 +93,9 @@ fail2ban_asf::config::actions:
 fail2ban_asf::config::jails:
   ssh:
     filter: sshd
+    port: ssh
     action:
-      - iptables-allports
+      - '%(action_)s'
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
