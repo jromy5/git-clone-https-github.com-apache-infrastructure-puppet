@@ -606,7 +606,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @chemistry = rw
 
 [/chukwa]
-@chukwa = rw
+* = r
 
 [/clerezza]
 @clerezza = r
