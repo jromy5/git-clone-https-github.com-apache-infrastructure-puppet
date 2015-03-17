@@ -3,7 +3,7 @@
 set -e
 set -x
 
-GIT=/usr/local/bin/git
+GIT=/usr/bin/git
 PODLING_DIR=$1 # location of incubating repo
 NAME=$2 # name of TLP
 TLP_REPO=$3 # name of specific TLP .git repo
