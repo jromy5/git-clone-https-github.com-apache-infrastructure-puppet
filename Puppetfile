@@ -33,8 +33,8 @@ mod 'epel',
 
 
 mod 'fail2ban',
-  :git => 'https://github.com/netmanagers/puppet-fail2ban',
-  :branch => 'master'
+  :git => 'https://github.com/stumped2/puppet-fail2ban',
+  :branch => 'fix_actionsource'
 
 
 mod 'firewall',

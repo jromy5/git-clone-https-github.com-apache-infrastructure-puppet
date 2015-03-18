@@ -69,6 +69,16 @@ apt::unattended_upgrades::origins:
 
 fail2ban::service_status: true
 
+fail2ban_asf::config::filters:
+  sshd-asf999:
+    filtername: 'sshd-asf999'
+    filtersource: 'puppet:///modules/fail2ban_asf/fail2ban/conf/filter.d/sshd-asf999.conf'
+
+fail2ban_asf::config::actions:
+  asf999-log:
+    actionname: 'asf999-log'
+    actionsource: 'puppet:///modules/fail2ban_asf/fail2ban/conf/action.d/asf999-log.conf'
+
 fail2ban_asf::config::jails:
   ssh:
     filter: sshd
