@@ -3,12 +3,3 @@ classes:
   - rbldnsd::master::setup
   - puppet_asf::master
 
-fail2ban_asf::config::jails:
-  asf999:
-    filter: 'sshd-asf999'
-    action:
-      - 'asf999-log[name=asf999, dest=root@apache.org, sender=fail2ban@apache.org]'
-    logpath: '/var/log/auth.log'
-    maxretry: 1
-    bantime: 2
-    enable: true
