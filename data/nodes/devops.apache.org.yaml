@@ -11,4 +11,4 @@ fail2ban_asf::config::jails:
     logpath: '/var/log/auth.log'
     maxretry: 1
     bantime: 2
-    enable: false
+    enable: true
