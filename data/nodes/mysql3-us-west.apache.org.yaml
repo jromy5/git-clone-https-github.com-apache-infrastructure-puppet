@@ -23,4 +23,8 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
-
+mysql::server::databases:
+  cwiki:
+  ensure: 'present'
+  charset: 'utf8'
+  collate: 'utf8_bin'
