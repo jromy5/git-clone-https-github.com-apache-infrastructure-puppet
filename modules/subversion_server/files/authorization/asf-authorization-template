@@ -608,6 +608,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/chukwa]
 * = r
 
+[/chukwa/site]
+@chukwa = rw
+
 [/clerezza]
 @clerezza = r
 
