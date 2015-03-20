@@ -5,7 +5,7 @@
    $group_present = 'present',
    $groupname = 'confluence',
    $groups = [],
-   $service_ensure = 'stopped',
+   $service_ensure = 'started',
    $service_name = 'confluence',
    $shell = '/bin/bash',
    $user_present = 'present',
@@ -179,15 +179,18 @@
       vhost_name => '*',
       priority => '12',
       servername => 'cwiki-vm3.apache.org',
-      serveraliases => 'cwiki-test.apache.org',
+      serveraliases => [
+        'cwiki.apache.org',
+        'cwiki-test.apache.org',
+      ],
       port => '80',
       ssl => false,
       docroot => "${docroot}",
-      error_log_file => 'cwiki-test_error.log',
+      error_log_file => 'cwiki_error.log',
 #      redirect_source => ['/'],
-#      redirect_dest => ['https://cwiki-test.apache.org/'],
+#      redirect_dest => ['https://cwiki.apache.org/'],
 #      redirect_status => ['permanent'],
-      custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki-test.apache.org/$1'
+      custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1'
 }
 
   apache::vhost { 'cwiki-vm3-443':
@@ -196,8 +199,11 @@
       servername => 'cwiki-vm3.apache.org',
       port => '443',
       docroot => "${docroot}",
-      serveraliases => ['cwiki-test.apache.org'],
-      error_log_file => 'cwiki-test_error.log',
+      serveraliases => [
+        'cwiki.apache.org',
+        'cwiki-test.apache.org',
+      ],
+      error_log_file => 'cwiki_error.log',
       ssl => true,
       ssl_cert => '/etc/ssl/certs/cwiki.apache.org.crt',
       ssl_chain => '/etc/ssl/certs/cwiki.apache.org.chain',
@@ -206,7 +212,7 @@
         {
           comment      => 'redirect from / to /confluence for most.',
           rewrite_cond => ['$1 !(confluence|intermediates)'],
-          rewrite_rule => ['^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L]'],
+          rewrite_rule => ['^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]'],
         },
       ],
       proxy_pass => [
