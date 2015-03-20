@@ -14,6 +14,7 @@ mysql::server::override_options:
     read-only: 1
     character-set-server: 'utf8'
     max_allowed_packet: '64M'
+    max_connections: '4096'
   mysqldump:
     max_allowed_packet: '64M'
 
