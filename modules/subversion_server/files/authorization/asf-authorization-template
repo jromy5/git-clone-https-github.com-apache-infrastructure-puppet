@@ -284,7 +284,7 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin
+nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
@@ -342,7 +342,7 @@ ranger=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rman
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
 reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,jerryjung,johnyangk,joshrosen,jrlee,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
-ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,jukka,raymondcamden,axemclion,rgardler
+ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,ibuziuk,jukka,raymondcamden,timb,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
