@@ -23,8 +23,8 @@ mod 'concat-native',
 
 
 mod 'dell',
-  :git => 'https://github.com/stumped2/puppet-dell.git',
-  :branch => 'openmanage_ubuntu'
+  :git => 'https://github.com/camptocamp/puppet-dell.git',
+  :tag => '0.2.0'
 
 
 mod 'epel',
