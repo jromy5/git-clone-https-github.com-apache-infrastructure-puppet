@@ -17,7 +17,13 @@
    $hibernate_connection_password = '',
    $hibernate_connection_username = '',
    $hibernate_connection_url = '',
+   $required_packages = ['graphviz' , 'graphviz-dev'], 
 ){
+
+# install required packages:
+   package { $required_packages:
+     ensure => 'present',
+   }
 
 # confluence specific
 
