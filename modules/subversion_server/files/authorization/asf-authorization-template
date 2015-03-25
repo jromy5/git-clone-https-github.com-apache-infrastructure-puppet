@@ -600,7 +600,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 * = r
 
 [/celix]
-@celix = rw
+* = r
 
 [/chemistry]
 @chemistry = rw
