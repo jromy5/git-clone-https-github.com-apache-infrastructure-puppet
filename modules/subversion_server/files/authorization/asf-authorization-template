@@ -602,6 +602,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/celix]
 * = r
 
+[/celix/site]
+@celix = rw
+
 [/chemistry]
 @chemistry = rw
 
