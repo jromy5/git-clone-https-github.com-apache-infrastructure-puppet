@@ -462,6 +462,8 @@ xmlgraphics={ldap:cn=xmlgraphics,ou=groups,dc=apache,dc=org}
 xmlgraphics-batik=cam,deweese,dvholten,helder,jeremias
 xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfurini,mehdi,phancock,pietsch,psancho,rmeyer,spepping,ssteiner,vhennebert
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
+zest={ldap:cn=zest,ou=groups,dc=apache,dc=org}
+zest-pmc={reuse:pit-authorization:zest-pmc}
 zookeeper={ldap:cn=zookeeper,ou=groups,dc=apache,dc=org}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
 
@@ -1747,6 +1749,9 @@ svn-role = rw
 [/xmlgraphics/site]
 @xmlgraphics-batik = rw
 @xmlgraphics-fop = rw
+
+[/zest]
+@zest = rw
 
 [/zookeeper]
 @zookeeper = rw
