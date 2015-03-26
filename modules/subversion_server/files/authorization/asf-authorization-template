@@ -78,9 +78,10 @@ archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
 archiva-pmc={reuse:pit-authorization:archiva-pmc}
 aries={ldap:cn=aries,ou=groups,dc=apache,dc=org}
 aries-pmc={reuse:pit-authorization:aries-pmc}
-aurora=jfarrell,benh,dlester,mattmann,hsaputra,jonboulle,wfarner,mansu,maxim,kevints,wickman,mchucarroll,zmanji,dmclaughlin,jcohen
 avro={ldap:cn=avro,ou=groups,dc=apache,dc=org}
 attic={ldap:cn=attic,ou=groups,dc=apache,dc=org}
+aurora={ldap:cn=aurora,ou=groups,dc=apache,dc=org}
+aurora-pmc={reuse:pit-authorization:aurora-pmc}
 avro-pmc={reuse:pit-authorization:avro-pmc}
 axis={ldap:cn=axis,ou=groups,dc=apache,dc=org}
 axis-pmc={reuse:pit-authorization:axis-pmc}
@@ -554,6 +555,12 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/attic]
 @attic-pmc = rw
 
+[/aurora/site]
+@aurora = rw
+
+[/aurora]
+@aurora = rw
+
 [/avalon]
 * = r
 
@@ -880,12 +887,6 @@ ea = rw
 
 [/incubator/alois]
 * = r
-
-[/incubator/aurora]
-@aurora = rw
-
-[/incubator/aurora/site]
-@incubator = rw
 
 [/incubator/awf]
 * = r

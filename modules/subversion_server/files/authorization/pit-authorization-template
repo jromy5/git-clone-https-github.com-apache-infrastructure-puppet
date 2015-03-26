@@ -28,6 +28,8 @@ archiva={reuse:asf-authorization:archiva}
 archiva-pmc={ldap:cn=archiva,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 aries={reuse:asf-authorization:aries}
 aries-pmc={ldap:cn=aries,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+aurora={reuse:asf-authorization:aurora}
+aurora-pmc={ldap:cn=aurora,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 avro={reuse:asf-authorization:avro}
 avro-pmc={ldap:cn=avro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 axis={reuse:asf-authorization:axis}
