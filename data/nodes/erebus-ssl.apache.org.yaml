@@ -801,9 +801,7 @@ vhosts_asf::vhosts::vhosts:
         AllowOverride None
       </Directory>
 
-      # Brian Fox says to leave this, so...
-      Timeout 900
-      ProxyTimeout 900
+      TimeOut 60
 
       RewriteEngine On
       ProxyRequests Off
@@ -855,8 +853,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file:  'repository-vm.apache.org.error.log'
     custom_fragment: |
       # Brian Fox says to leave this, so...
-      Timeout 900
-      ProxyTimeout 900
+      Timeout 60
 
       ProxyPreserveHost On
 
