@@ -865,18 +865,12 @@ vhosts_asf::vhosts::vhosts:
       # </Disable Service - root@ - 20120814>
 
       <Proxy "!/ssl.cert.+">
-            Order allow,deny
-            Allow from all
+        Require all granted
       </Proxy>
       ProxyPass /snapshots http://repository-vm.apache.org:8081/content/groups/snapshots
 
       ProxyPass / http://repository-vm.apache.org:8081/
       ProxyPassReverse / http://repository-vm.apache.org:8081/
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=repository.apache.org&code=503
 
   reviews:
     vhost_name: '*'
