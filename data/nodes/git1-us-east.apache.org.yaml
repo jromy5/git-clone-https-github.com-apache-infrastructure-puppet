@@ -26,3 +26,11 @@ apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
+
+ulimit::rule:
+  all-soft-nofile:
+    ulimit_domain: '*',
+    ulimit_type: 'soft'
+    ulimit_item: 'nofile',
+    ulimit_value: '1048576'
+
