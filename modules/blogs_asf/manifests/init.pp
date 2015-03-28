@@ -26,15 +26,15 @@
 # roller specific
    $roller_version = '5.1'
    $roller_revision_number = '1'
-   $roller_release = "${roller_version}.{roller_revision_number}"
+   $roller_release = "${roller_version}.${roller_revision_number}"
    $mysql_connector_version = '5.1.11'
    $mysql_connector = "mysql-connector-java-${mysql_connector_version}.jar"
    $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
    $roller_build = "roller-release-${roller_release}-standard"
-   $tarball = "${roller_build}.tar.gz"
+   $r_tarball = "${roller_build}.tar.gz"
    $download_dir = '/tmp'
-   $downloaded_tarball = "${download_dir}/${tarball}"
-   $download_url = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/${roller_release}/bin/${tarball}"
+   $downloaded_tarball = "${download_dir}/${r_tarball}"
+   $download_url = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/${roller_release}/bin/${r_tarball}"
    $parent_dir = "/x1/roller"
    $install_dir = "${parent_dir}/${roller_build}"
    $server_port = '8008'
@@ -42,6 +42,16 @@
    $context_path = '/'
    $current_dir = "${parent_dir}/current"
    $docroot = '/var/www'
+
+# tomcat specific
+   $tomcat_version = '8'
+   $tomcat_minor = '0'
+   $tomcat_revision_number = '21'
+   $tomcat_release = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}"
+   $tomcat_build = "apache-tomcat-${tomcat_release}"
+   $t_tarball = "${tomcat_build}.tar.gz"
+   $downloaded_t_tarball = "${download_dir}/${t_tarball}"
+   $download_t_url = "${https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
 
    user { "${r_username}":
         name => "${r_username}",
