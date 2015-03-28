@@ -29,7 +29,7 @@
    $roller_release = "${roller_version}.{roller_revision_number}"
    $mysql_connector_version = '5.1.11'
    $mysql_connector = "mysql-connector-java-${mysql_connector_version}.jar"
-   $mysql_connector_dest_dir = '/x1/cwiki/current/roller/WEB-INF/lib'
+   $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
    $roller_build = "roller-release-${roller_release}-standard"
    $tarball = "${roller_build}.tar.gz"
    $download_dir = '/tmp'
