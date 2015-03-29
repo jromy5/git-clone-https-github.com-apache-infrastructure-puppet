@@ -110,7 +110,7 @@ class apmirror (
         cwd     => "/home/${username}/mirrors/mirmon/",
         user    => "${username}",
         group   => "${groupname}",
-        creates => "/home/${username}/mirrors/mirmon/url-mods.new",
+        creates => "/home/${username}/mirrors/mirmon/url-mods",
         timeout => 600, # increase to this incase the host takes a while to execute the mirror list priming
         require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ],
     }
