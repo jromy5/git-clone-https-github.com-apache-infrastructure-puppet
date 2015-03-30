@@ -56,7 +56,7 @@ apt::sources:
     include_src: false
   'elasticsearch':
     location: 'http://packages.elasticsearch.org/elasticsearch/1.5/debian'
-    release: 'trusty'
+    release: 'stable'
     repos: 'main'
     key: 'D88E42B4'
     key_server: 'pgp.mit.edu'
