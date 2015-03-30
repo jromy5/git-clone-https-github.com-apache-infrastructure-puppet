@@ -48,6 +48,8 @@ apache::mod::status::allow_from:
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
 
 vhosts_asf::modules::modules:
   cgi:
