@@ -54,6 +54,15 @@ apt::sources:
     key_server: 'hkp://keyserver.ubuntu.com:80'
     include_deb: true
     include_src: false
+  'elasticsearch':
+    location: 'http://packages.elasticsearch.org/elasticsearch/1.5/debian'
+    release: 'trusty'
+    repos: 'main'
+    key: 'D88E42B4'
+    key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
+
 
 apt::force:
   'orthrus':
