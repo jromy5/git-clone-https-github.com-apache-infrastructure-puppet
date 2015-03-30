@@ -67,7 +67,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 443
     ssl: true
-    docroot: '/var/www/steve/www'
+    docroot: '/var/www/steve/www/htdocs'
     servername: 'vote-wip.apache.org'
     directoryindex: 'index.html'
     ssl_cert: '/etc/ssl/certs/vote.apache.org.crt'
@@ -80,8 +80,8 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       # REST API
-      ScriptAlias /steve/admin /var/www/steve/cgi-bin/rest_admin.py
-      ScriptAlias /steve/voter /var/www/steve/cgi-bin/rest_voter.py
+      ScriptAlias /steve/admin /var/www/steve/www/cgi-bin/rest_admin.py
+      ScriptAlias /steve/voter /var/www/steve/www/cgi-bin/rest_voter.py
       
       # Auth
       <Location /steve/admin>
