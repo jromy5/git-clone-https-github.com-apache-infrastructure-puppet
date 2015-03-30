@@ -182,3 +182,6 @@ mod 'vcsrepo',
 
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
+  
+mod 'elasticsearch',
+  :git => 'https://github.com/elastic/puppet-elasticsearch'
