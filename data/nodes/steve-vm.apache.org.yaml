@@ -67,7 +67,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 443
     ssl: true
-    docroot: '/var/www/steve'
+    docroot: '/var/www/steve/www'
     servername: 'vote-wip.apache.org'
     directoryindex: 'index.html'
     ssl_cert: '/etc/ssl/certs/vote.apache.org.crt'
