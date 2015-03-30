@@ -1,0 +1,93 @@
+---
+classes:
+  - apache
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
+  - svnwcsub
+  - elasticsearch
+  - ssl::name::vote_apache_org 
+  
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.steve'
+svnwcsub::username:         'svnwc'
+
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::max_keepalive_requests: 1000
+apache::timeout: 600
+apache::default_vhost:      false
+apache::docroot:            '/var/www/htdocs'
+
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '150'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '250'
+apache::mod::event::threadsperchild: '50'
+
+apache::mod::status::allow_from:
+  - all
+
+apache::mpm_module:         'event'
+apache::serveradmin:        'infrastructure@apache.org'
+
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
+vhosts_asf::vhosts::vhosts:
+  steve_http:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/steve'
+    servername: 'vote-wip.apache.org'
+    directoryindex: 'index.html'
+    custom_fragment: |
+      Redirect permanent / https://vote-wip.apache.org/
+      
+  steve_https:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    docroot: '/var/www/steve'
+    servername: 'vote-wip.apache.org'
+    directoryindex: 'index.html'
+    ssl_cert: '/etc/ssl/certs/vote.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/vote.apache.org.chain'
+    ssl_key: '/etc/ssl/private/vote.apache.org.key'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      # REST API
+      ScriptAlias /steve/admin /var/www/steve/cgi-bin/rest_admin.py
+      ScriptAlias /steve/voter /var/www/steve/cgi-bin/rest_voter.py
+      
+      # Auth
+      <Location /steve/admin>
+          AuthType Basic
+          AuthName "STeVe administration"
+          AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthBasicProvider ldap
+      </Location>
+      
+
