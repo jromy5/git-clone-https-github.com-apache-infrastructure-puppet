@@ -1,6 +1,8 @@
 ---
 classes:
   - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::ssl
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - svnwcsub
