@@ -90,6 +90,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
+          require valid-user
       </Location>
       
 
