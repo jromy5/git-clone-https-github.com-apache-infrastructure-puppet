@@ -210,6 +210,7 @@ snmp::snmpd_config:
   - 'disk / 10000'
   - 'disk /var 5%'
   - 'includeAllDisks 10%'
+  - 'perl do "/root/bin/zpool.pl"
 
 ## SpamAssassin
 spamassassin::required_hits: '10' #Scores over this value with tagged as spam.
