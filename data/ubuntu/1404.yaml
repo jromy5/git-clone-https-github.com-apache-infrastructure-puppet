@@ -17,6 +17,8 @@ base::basepackages:
   - ca-certificates
   - git
   - htop
+  - libnet-snmp-perl
+  - libsnmp-perl
   - sockstat
   - software-properties-common
   - zsh
