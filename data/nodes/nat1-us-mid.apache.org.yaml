@@ -27,6 +27,14 @@ firewall:
     action: 'accept'
     proto: 'all'
 
+  100-zmanda-forward:
+    chain: 'FORWARD'
+    inifcae: 'eth0'
+    action: 'accept'
+    proto: 'tcp'
+    port: '10080'
+    destination: '192.168.3.4'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
