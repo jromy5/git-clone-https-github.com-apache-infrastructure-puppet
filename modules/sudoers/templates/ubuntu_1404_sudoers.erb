@@ -46,6 +46,10 @@ Cmnd_Alias MYSQL = /usr/sbin/service mysql start, /usr/sbin/service mysql stop, 
 Cmnd_ALias TS = /usr/sbin/service trafficserver start, /usr/sbin/service trafficserver stop, /usr/sbin/service trafficserver restart
 Cmnd_Alias RESTART = /sbin/reboot, /sbin/shutdown -r now
 
+# allow snmp to run sudo /sbin/zpool for zpool monitoring checks
+
+snmp  ALL=NOPASSWD: /sbin/zpool status,/sbin/zpool list -H
+
 <% if fqdn == 'hades.apache.org' -%>
 apbackup  ALL=NOPASSWD: /sbin/zfs
 www-data  ALL=NOPASSWD: /sbin/zfs
