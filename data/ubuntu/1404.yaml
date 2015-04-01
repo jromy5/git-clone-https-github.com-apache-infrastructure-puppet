@@ -101,6 +101,14 @@ fail2ban_asf::config::jails:
     maxretry: 5
     enable: true
 
+  ssh-ddos:
+    filter: sshd-ddos
+    action:
+      - '%(action_)s'
+    logpath: '/var/log/auth.log'
+    maxretry: 6
+    enable: true
+
   asf999:
     filter: 'sshd-asf999'
     action:
