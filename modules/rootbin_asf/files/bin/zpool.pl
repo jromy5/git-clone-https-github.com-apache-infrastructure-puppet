@@ -44,8 +44,8 @@ sub zpool_handler {
 }
 
 sub zpool {
-    my $zstatus = qx(zpool status);
-    my $zlist = qx(zpool list -H);
+    my $zstatus = qx(sudo zpool status);
+    my $zlist = qx(sudo zpool list -H);
     my $zsbad= scalar grep (/[a-z0-9][a-z0-9]+\s{1,8}(DEGRADED|FAULTED|OFFLINE|UNAVAIL|REMOVED)/ ,split(/\n/, $zstatus));
     my $zsgood = scalar grep (/[a-z0-9][a-z0-9]+\s{1,5}(ONLINE|READY|AVAIL)/ ,split(/\n/, $zstatus));
     my $zlbad= scalar grep (/[a-z0-9][a-z0-9]+\s{1,8}(DEGRADED|FAULTED|OFFLINE|UNAVAIL|REMOVED)/ ,split(/\n/, $zlist));
