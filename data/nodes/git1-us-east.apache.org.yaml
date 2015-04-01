@@ -29,9 +29,13 @@ apache::serveradmin:        'infrastructure@apache.org'
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
 ulimit::rule:
+  all-hard-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'hard'
+    ulimit_item: 'nofile'
+    ulimit_value: '1048576'
   all-soft-nofile:
     ulimit_domain: '*'
     ulimit_type: 'soft'
     ulimit_item: 'nofile'
     ulimit_value: '1048576'
-
