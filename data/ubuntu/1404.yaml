@@ -19,7 +19,6 @@ base::basepackages:
   - htop
   - libnet-snmp-perl
   - libsnmp-perl
-  - snmp-mibs-downloader
   - sockstat
   - software-properties-common
   - zsh
