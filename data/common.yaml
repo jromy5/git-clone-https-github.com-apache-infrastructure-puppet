@@ -2,6 +2,7 @@
 classes: 
   - asf999::create_user
   - base
+  - base::snmp::createv3users
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::df
@@ -13,14 +14,14 @@ classes:
   - collectd::plugin::write_http
   - customfact
   - ldapclient
+  - ntp
   - pam
   - puppet_asf
   - ssh_asf # this pulls in both server and client by default
   - ssl::name::circonus-ca # required by collectd
   - sudoers
   - snmp
-  - base::snmp::createv3users
-  - ntp
+  - ulimit_asf
 
 ## MODULES
 ## AMANDA
@@ -263,4 +264,16 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
+
+ulimit::rule:
+  all-hard-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'hard'
+    ulimit_item: 'nofile'
+    ulimit_value: '1048576'
+  all-soft-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'soft'
+    ulimit_item: 'nofile'
+    ulimit_value: '1048576'
 
