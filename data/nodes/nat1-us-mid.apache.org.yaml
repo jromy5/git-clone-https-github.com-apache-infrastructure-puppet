@@ -29,7 +29,7 @@ firewall:
 
   100-zmanda-forward:
     chain: 'FORWARD'
-    inifcae: 'eth0'
+    iniface: 'eth0'
     action: 'accept'
     proto: 'tcp'
     port: '10080'
