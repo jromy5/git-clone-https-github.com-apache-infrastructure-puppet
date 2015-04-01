@@ -79,6 +79,9 @@ collectd::plugin::interface::interfaces:
 collectd::plugin::interface::ignoreselected: true
 
 fail2ban::disable: false
+fail2ban::ignoreip:
+  - '127.0.0.1'
+  - '140.211.11.0/24'
 fail2ban::jails_config: 'concat'
 fail2ban::puppi: 'false'
 fail2ban::monitor: 'false'
