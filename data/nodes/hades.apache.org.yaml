@@ -67,17 +67,8 @@ fail2ban_asf::config::jails:
   httpd-svn:
     filter: apache-auth
     action:
-      - iptables-allports
+      - '%(action_mwl)s'
     logpath: /var/log/apache2/svn_https_error_ssl.log
-    findtime: 1800
-    maxretry: 5
-    enable: true
-
-  ssh:
-    filter: sshd
-    action:
-      - iptables-allports
-    logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
     enable: true
