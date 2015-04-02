@@ -10,6 +10,9 @@ class base (
     ensure   =>  installed,
   }
 
+  $hosts = hiera_hash('base::hosts', {})
+  create_resources(host, $hosts)
+
 
   class { "base::install::${asfosname}::${asfosrelease}":
   }
