@@ -17,6 +17,18 @@ apache::logrotate_path: '/x1/log/*.log'
 apache::logrotate_delaycompress: true
 apache::logrotate_ifempty: false
 apache::logrotate_rotate: 52
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
 
 vhosts_asf::vhosts::vhosts:
   analysis:
