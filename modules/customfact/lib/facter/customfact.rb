@@ -58,7 +58,9 @@ Facter.add("asfcolo") do
       when /^162.209.6.([0-9]+)$/
         "rax-vpc-us-mid"
       when /^10.41.([0-9]+).([0-9]+)$/
-        "phoenixnap"
+        "phoenixnap-public"
+      when /^10.40.([0-9]+).([0-9]+)$/
+        "phoenixnap-private"
       else
         "yahoo"
       end
