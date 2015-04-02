@@ -4,7 +4,7 @@ dnsclient::nameservers:
   - '8.8.8.8'
   - '8.8.4.4'
 
-ldapclient::ldapservers: 'ldaps://ldap1-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap3-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
 
 base::hosts:
   host:
