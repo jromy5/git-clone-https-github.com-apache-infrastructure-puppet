@@ -40,7 +40,7 @@ file {
   }
 
 cron { 'asfgit-admin update svn authors':
-  command => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors',
+  command => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt',
   path    => '/usr/bin/:/bin/',
   user    => 'root',
   minute  => '5',
