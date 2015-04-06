@@ -39,6 +39,14 @@ file {
     source   => "puppet:///modules/gitserver_asf/gitconfig";
   }
 
+cron { 'asfgit-admin update svn authors':
+  command => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors',
+  path    => '/usr/bin/:/bin/',
+  user    => 'root',
+  minute  => '5',
+  hour    => '1',
+}
+
 ## Unless declared otherwise the default behaviour is to enable these modules
 apache::mod { 'authnz_ldap': }
 apache::mod { 'ldap': }
