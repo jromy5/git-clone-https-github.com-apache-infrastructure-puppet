@@ -68,6 +68,7 @@ cocoon={reuse:asf-authorization:cocoon}
 cocoon-pmc={ldap:cn=cocoon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 commons={reuse:asf-authorization:commons}
 commons-pmc={ldap:cn=commons,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+commonsrdf={reuse:asf-authorization:commonsrdf}
 continuum={reuse:asf-authorization:continuum}
 continuum-pmc={ldap:cn=continuum,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 cordova={reuse:asf-authorization:cordova}
@@ -1134,6 +1135,9 @@ buildbot = rw
 
 [/websites/production/commons]
 @commons = rw
+
+[/websites/production/commonsrdf]
+@incubator = rw
 
 [/websites/production/community]
 @comdev = rw
