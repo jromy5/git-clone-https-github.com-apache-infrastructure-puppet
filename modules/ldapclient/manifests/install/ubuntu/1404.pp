@@ -12,6 +12,9 @@ class ldapclient::install::ubuntu::1404 (
   file { 
     '/etc/ldap.conf':
       content => template('ldapclient/ldap.conf.erb');
+    '/etc/nslcd.conf':
+      content => template('ldapclient/nslcd.conf.erb'),
+      notify  => Service[nslcd];
     '/etc/ldap/ldap.conf':
       ensure  => link,
       target  => '/etc/ldap.conf',
@@ -34,5 +37,12 @@ class ldapclient::install::ubuntu::1404 (
       content  =>  $ldapcert,
       require =>  File['/etc/ldap/cacerts'];
   }
+
+    service { "nslcd":
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+    }
+
 
 }
