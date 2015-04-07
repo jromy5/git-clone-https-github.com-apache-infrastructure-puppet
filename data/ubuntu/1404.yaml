@@ -116,13 +116,14 @@ ldapclient::ldapclient_packages:
     - ldap-auth-client
     - ldap-utils
     - libldap-2.4-2
-    - libnss-ldap
     - libpam-ldap
+    - libnss-ldapd
     - libpam-modules
     - nslcd
 
 ldapclient::ldapclient_remove_packages: 
     - nscd
+    - libnss-ldap
 
 ldapserver::install::ubuntu::1404::packages:
   - slapd

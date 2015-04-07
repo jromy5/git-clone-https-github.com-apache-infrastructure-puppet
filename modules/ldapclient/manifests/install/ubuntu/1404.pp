@@ -16,6 +16,10 @@ class ldapclient::install::ubuntu::1404 (
       ensure  => link,
       target  => '/etc/ldap.conf',
       require => File['/etc/ldap.conf'];
+    '/etc/nss-ldapd.conf':
+      ensure  => link,
+      target  => '/etc/ldap.conf',
+      require => File['/etc/ldap.conf'];
     '/etc/nss_ldap.conf':
       ensure  => link,
       target  => '/etc/ldap.conf',
