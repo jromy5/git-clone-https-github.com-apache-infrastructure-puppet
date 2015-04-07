@@ -51,7 +51,7 @@
    $tomcat_build = "apache-tomcat-${tomcat_release}"
    $t_tarball = "${tomcat_build}.tar.gz"
    $downloaded_t_tarball = "${download_dir}/${t_tarball}"
-   $download_t_url = "${https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
+   $download_t_url = "https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
 
    user { "${r_username}":
         name => "${r_username}",
