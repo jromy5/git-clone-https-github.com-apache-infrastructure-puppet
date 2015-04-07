@@ -1,6 +1,7 @@
 ---
 classes: 
   - apache
+  - mx_asf
   - pflogsumm
   - ssl::name::wildcard_apache_org
 
@@ -9,5 +10,6 @@ postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,a
 
 ## It should be noted that this is a temporary value, that means we can
 ## place this MX before nike/athena to enable testing
-postfix::server::relayhost:              '[athena.apache.org]:25'
+postfix::server::relayhost:                '[athena.apache.org]:25'
+postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canonical_maps'
 
