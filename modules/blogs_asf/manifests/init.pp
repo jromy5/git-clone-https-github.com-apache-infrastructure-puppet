@@ -15,7 +15,7 @@
    $r_username = 'roller',
    $t_user_present = 'present',
    $t_username = 'tomcat',
-   $required_packages = [''],
+   $required_packages = [],
 ){
 
 # install required packages:
