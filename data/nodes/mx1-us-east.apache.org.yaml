@@ -7,3 +7,7 @@ classes:
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
 
+## It should be noted that this is a temporary value, that means we can
+## place this MX before nike/athena to enable testing
+postfix::server::relayhost:              '[athena.apache.org]:25'
+
