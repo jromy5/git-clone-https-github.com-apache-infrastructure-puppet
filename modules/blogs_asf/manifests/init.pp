@@ -13,7 +13,7 @@
    $shell = '/bin/bash',
    $r_user_present = 'present',
    $r_username = 'roller',
-   $t_user_present = 'present,
+   $t_user_present = 'present',
    $t_username = 'tomcat',
    $required_packages = [''],
 ){
