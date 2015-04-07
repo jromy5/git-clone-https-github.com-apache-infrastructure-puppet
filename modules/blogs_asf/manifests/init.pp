@@ -88,4 +88,25 @@
          ensure => "${t_group_present}",
          gid => "${t_gid}",
    }
+
+   apache::vhost { 'blogs-vm-80':
+       vhost_name => '*',
+       priority => '12',
+       servername => 'blogs-vm.apache.org',
+       serveraliases => [
+         'blogs-test.apache.org',
+       ],
+       port => '80',
+       ssl => false,
+       docroot => "${docroot}",
+       error_log_file => 'blogs_error.log',
+       # custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
+   }
+  file {
+    $parent_dir:
+      ensure => directory,
+      owner => 'root',
+      group => 'root',
+      mode => '0755';
+  }
 }
