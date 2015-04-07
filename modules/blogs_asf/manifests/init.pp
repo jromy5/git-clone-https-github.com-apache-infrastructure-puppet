@@ -37,6 +37,7 @@
    $download_url = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/${roller_release}/bin/${r_tarball}"
    $parent_dir = "/x1/roller"
    $install_dir = "${parent_dir}/${roller_build}"
+   $data_dir = '/x1/roller_data'
    $server_port = '8008'
    $connector_port = '8080'
    $context_path = '/'
@@ -108,5 +109,11 @@
       owner => 'root',
       group => 'root',
       mode => '0755';
+    $data_dir:
+      ensure => directory,
+      owner => 'tomcat',
+      group => 'roller',
+      mode => '0775';
+
   }
 }
