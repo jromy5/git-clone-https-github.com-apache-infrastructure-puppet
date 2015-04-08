@@ -6,7 +6,7 @@
    $t_uid = 8997,
    $t_gid = 8997,
    $t_group_present = 'present',
-   $t_groupname = 'tomcat',
+   $t_groupname = 'tcblogs',
    $groups = [],
    $service_ensure = 'stopped',
    $service_name = 'roller',
@@ -14,7 +14,7 @@
    $r_user_present = 'present',
    $r_username = 'roller',
    $t_user_present = 'present',
-   $t_username = 'tomcat',
+   $t_username = 'tcblogs',
    $required_packages = [],
 ){
 
