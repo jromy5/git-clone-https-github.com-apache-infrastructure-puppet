@@ -25,10 +25,10 @@ base::basepackages:
 
 apt::sources:
   'asf_internal':
-     location: 'https://pkgrepo.apache.org'
+     location: 'https://https://dl.bintray.com/apache/asf-internal-1404'
      release: 'trusty'
      repos: 'main'
-     key: 'E8640030'
+     key: '0EE62FB37A00258D'
      key_server: 'pgp.mit.edu'
      include_deb: true
      include_src: false
