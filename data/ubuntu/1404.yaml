@@ -33,7 +33,7 @@ apt::sources:
      include_deb: true
      include_src: false
   'puppetlabs':
-     location: 'http://apt.puppetlabs.com'
+     location: 'https://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'main'
      key: '4BD6EC30'
@@ -41,7 +41,7 @@ apt::sources:
      include_deb: true
      include_src: false
   'puppetdeps':
-     location: 'http://apt.puppetlabs.com'
+     location: 'https://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'dependencies'
      key: '4BD6EC30'
@@ -57,7 +57,7 @@ apt::sources:
     include_deb: true
     include_src: false
   'elasticsearch':
-    location: 'http://packages.elasticsearch.org/elasticsearch/1.5/debian'
+    location: 'https://packages.elasticsearch.org/elasticsearch/1.5/debian'
     release: 'stable'
     repos: 'main'
     key: 'D88E42B4'
