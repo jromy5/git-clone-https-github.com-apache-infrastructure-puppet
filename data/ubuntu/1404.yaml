@@ -25,7 +25,7 @@ base::basepackages:
 
 apt::sources:
   'asf_internal':
-     location: 'https://https://dl.bintray.com/apache/asf-internal-1404'
+     location: 'https://dl.bintray.com/apache/asf-internal-1404'
      release: 'trusty'
      repos: 'main'
      key: '0EE62FB37A00258D'
