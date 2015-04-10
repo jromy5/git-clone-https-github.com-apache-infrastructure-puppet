@@ -1558,7 +1558,7 @@ spamassassin_role = rw
 * = r
 
 [/struts/archive]
-* = rw
+@struts = rw
 
 [/struts/struts-master]
 * = r
