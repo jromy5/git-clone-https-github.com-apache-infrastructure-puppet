@@ -57,6 +57,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/x1/www/status'
+    manage_docroot: false
     servername: 'status.apache.org'
     directoryindex: 'index.html manage.cgi'
     options:
