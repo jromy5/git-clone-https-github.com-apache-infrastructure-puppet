@@ -2,4 +2,4 @@
 classes:
   - openjdk-7-jre
   - python3
-  - lucene-pvm_asf
+  - lucene1-pvm_asf

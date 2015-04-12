@@ -1,4 +1,4 @@
-class lucene-pvm_asf {
+class lucene1-pvm_asf {
 
   # manifest for lucene project vm
 
