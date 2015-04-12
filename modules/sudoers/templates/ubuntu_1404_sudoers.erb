@@ -75,6 +75,6 @@ Cmnd_Alias OOOWIKI = /usr/sbin/service ooo-wiki2 start, /usr/sbin/service ooo-wi
 
 <% if fqdn == 'lucene1-us-west.apache.org' -%>
 # allow lucene team access to jenkins account
-%lucene ALL=NOPASSWD: /bin/su - jenkins
+%lucene ALL=(jenkins) ALL
 <% end -%>
 
