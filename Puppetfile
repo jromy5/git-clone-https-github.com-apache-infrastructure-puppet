@@ -44,12 +44,12 @@ mod 'firewall',
 
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
-  :tag => '2.3.0'
+  :tag => '3.0.2'
 
 
 mod 'foreman_proxy',
   :git => 'https://github.com/theforeman/puppet-foreman_proxy.git',
-  :tag => '2.1.0'
+  :tag => '2.2.1'
 
 
 mod 'iptables',
@@ -181,6 +181,6 @@ mod 'vcsrepo',
 
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
-  
+
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch'
