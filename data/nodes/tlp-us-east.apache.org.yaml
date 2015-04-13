@@ -515,6 +515,20 @@ vhosts_asf::vhosts::vhosts:
 
       Use BlockSvn
 
+  apacheextras:
+    vhost_name: '*'
+    port: 80
+    servername: 'apacheextras.org'
+    docroot: '/var/www/html'
+    serveraliases:
+      - 'apache-extras.org'
+      - 'apachextras.org'
+      - 'www.apache-extras.org'
+      - 'www.apaceextras.org'
+      - 'www.apachextras.org'
+    custom_fragemnet: |
+      Redirect permanent / http://code.google.com/a/apache-extras.org
+
   cloudstack:
     vhost_name: '*'
     port: 80
