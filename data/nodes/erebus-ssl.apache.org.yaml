@@ -380,6 +380,32 @@ vhosts_asf::vhosts::vhosts:
       Proxypass / http://foreman-vm.apache.org/
       ProxypassReverse / http://foreman-vm.apache.org/
 
+  helpinfrahelpyou:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpinfrahelpyou.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  infrahelp:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'infrahelp.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'infrahelp.apache.org.http_access.log'
+    error_log_file:  'infrahelp.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
   jspwiki-doc:
     vhost_name: '*'
     ensure: 'present'
