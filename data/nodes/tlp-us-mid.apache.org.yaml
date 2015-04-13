@@ -530,6 +530,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.apache-extras.org'
       - 'www.apaceextras.org'
       - 'www.apachextras.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
     custom_fragemnet: |
       Redirect permanent / http://code.google.com/a/apache-extras.org 
 
