@@ -18,8 +18,8 @@ mod 'concat',
 
 
 mod 'concat-native',
-  :git => 'https://github.com/theforeman/puppet-concat.git',
-  :tag => '1.3.1'
+  :git => 'https://github.com/theforeman/puppet-concat_native.git',
+  :tag => '1.4.0'
 
 
 mod 'dell',
@@ -151,7 +151,7 @@ mod 'stdlib',
 
 mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
-  :tag => '1.4.3'
+  :tag => '1.5.1'
 
 
 mod 'ulimit',
