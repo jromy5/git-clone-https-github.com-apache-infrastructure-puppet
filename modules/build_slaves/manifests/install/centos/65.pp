@@ -1,6 +1,6 @@
 class build_slave::install::centos::65 (
-  $erlangrepo    => '',
-  $erlangrepokey => ''
+  $erlangrepo    = '',
+  $erlangrepokey = ''
 ) {
 
   yumrepo { 'erlang-solutions':
