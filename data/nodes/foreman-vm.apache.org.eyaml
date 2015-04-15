@@ -6,7 +6,6 @@ classes:
   - foreman::compute::vmware
   - foreman::compute::rackspace
   - foreman::compute::ec2
-  - tftp
 
 fail2ban_asf::config::jails:
   foreman:
