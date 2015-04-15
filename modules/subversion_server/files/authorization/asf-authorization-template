@@ -763,7 +763,7 @@ ea = rw
 @etch = rw
 
 [/excalibur]
-@attic-pmc = rw
+* = r
 
 [/falcon]
 @falcon = rw
@@ -1660,10 +1660,10 @@ svn-role = rw
 @ws = rw
 
 [/whirr]
-@whirr = r
+@attic-pmc = rw
 
 [/whirr/site]
-@whirr = rw
+@attic-pmc = rw
 
 [/wicket/common]
 @wicket = rw
