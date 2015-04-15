@@ -754,7 +754,7 @@ ea = rw
 @drill = rw
 
 [/empire-db]
-@empire-db = rw
+* = r
 
 [/esme]
 * = r
