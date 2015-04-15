@@ -25,6 +25,8 @@ fail2ban_asf::config::filters:
 # SSL is proxied through erebus-ssl
 foreman::ssl: false
 foreman_proxy::ssl: false
+# Needed because the installer doesn't do this by default.
+foreman::compute::ec2::package: 'foreman-compute'
 
 foreman::oauth_map_users: true
 foreman_proxy::puppet_url: 'https://foreman.apache.org'
