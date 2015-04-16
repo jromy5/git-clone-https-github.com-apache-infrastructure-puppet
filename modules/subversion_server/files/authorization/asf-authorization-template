@@ -756,6 +756,9 @@ ea = rw
 [/empire-db]
 * = r
 
+[/empire-db/site]
+@empire-db = rw
+
 [/esme]
 * = r
 
