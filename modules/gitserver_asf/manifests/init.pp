@@ -40,11 +40,11 @@ file {
   }
 
 cron { 'asfgit-admin update svn authors':
-  command => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt',
-  path    => '/usr/bin/:/bin/',
-  user    => 'root',
-  minute  => '5',
-  hour    => '1',
+  command     => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt',
+  environment => 'PATH=/usr/bin/:/bin/',
+  user        => 'root',
+  minute      => '5',
+  hour        => '1',
 }
 
 ## Unless declared otherwise the default behaviour is to enable these modules
