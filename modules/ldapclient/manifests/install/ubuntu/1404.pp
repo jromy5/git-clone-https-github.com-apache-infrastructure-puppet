@@ -43,6 +43,7 @@ class ldapclient::install::ubuntu::1404 (
 
     service { "nslcd":
         enable     => true,
+        ensure     => 'running',
         hasstatus  => true,
         hasrestart => true,
     }
