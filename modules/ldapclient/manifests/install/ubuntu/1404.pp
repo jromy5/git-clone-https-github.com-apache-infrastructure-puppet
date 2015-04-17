@@ -14,6 +14,9 @@ class ldapclient::install::ubuntu::1404 (
       content => template('ldapclient/ldap.conf.erb');
     '/etc/nslcd.conf':
       content => template('ldapclient/nslcd.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0640',
       notify  => Service[nslcd];
     '/etc/ldap/ldap.conf':
       ensure  => link,
