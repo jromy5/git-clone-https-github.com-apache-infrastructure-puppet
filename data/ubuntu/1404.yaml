@@ -165,8 +165,10 @@ puppet::puppetconf:                      '/etc/puppet/puppet.conf'
 
 snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 
-spamassassin::spamassassin_packages:
+spamassassin::package_list:
   - spamassassin
+
+spamassassin::sa_update: '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
 
 subversionclient::packages: 
   - subversion
