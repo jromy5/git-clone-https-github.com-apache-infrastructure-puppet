@@ -12,5 +12,8 @@ class base::install::ubuntu::1404 (
     '/usr/local/bin/bash':
       ensure => link,
       target => '/bin/bash';
+    '/etc/logrotate.d/rsyslog'
+      ensure => present,
+      source => "puppet:///modules/base/logrotate-rsyslog",
   }
 }
