@@ -27,6 +27,10 @@ mod 'dell',
   :tag => '0.2.0'
 
 
+mod 'elasticsearch',
+  :git => 'https://github.com/elastic/puppet-elasticsearch'
+
+
 mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
@@ -65,6 +69,11 @@ mod 'logrotate',
 mod 'ldap',
   :git    => 'https://github.com/pctony/puppet-ldap.git',
   :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
+
+
+mod 'java',
+  :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
+  :tag => '1.2.0'
 
 
 mod 'module_data',
@@ -129,6 +138,10 @@ mod 'rsyslog',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
 
+mod 's3fs',
+  :git => 'https://github.com/clambertus/puppet-s3fs'
+
+
 mod 'snmp',
   :git => 'https://github.com/Humbedooh/puppet-snmp.git',
   :branch => 'master'
@@ -137,6 +150,16 @@ mod 'snmp',
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
+
+
+mod 'spamassassin',
+  :git    => 'https://github.com/pctony/puppet-spamassassin.git',
+  :commit => 'fe01922b9a161e51fbde2a55adb8298224322552'
+
+
+mod 'staging',
+  :git => 'https://github.com/nanliu/puppet-staging.git',
+  :tag => '1.0.2'
 
 
 mod 'stahnma-epel',
@@ -149,38 +172,30 @@ mod 'stdlib',
   :tag => '4.3.2'
 
 
+mod 'sysctl',
+  :git => 'https://github.com/thias/puppet-sysctl.git',
+  :tag => '1.0.2'
+
+
 mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
   :tag => '1.5.1'
 
 
-mod 'ulimit',
-  :git => 'https://github.com/clambertus/puppet-ulimit.git'
-
-mod 'java',
-  :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
-  :tag => '1.2.0'
-
 mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
   :tag => '1.2.0'
 
-mod 's3fs',
-  :git => 'https://github.com/clambertus/puppet-s3fs'
 
-mod 'staging',
-  :git => 'https://github.com/nanliu/puppet-staging.git',
-  :tag => '1.0.2'
+mod 'ulimit',
+  :git => 'https://github.com/clambertus/puppet-ulimit.git'
 
-mod 'sysctl',
-  :git => 'https://github.com/thias/puppet-sysctl.git',
-  :tag => '1.0.2'
 
 mod 'vcsrepo',
   :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
 
+
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
 
-mod 'elasticsearch',
-  :git => 'https://github.com/elastic/puppet-elasticsearch'
+
