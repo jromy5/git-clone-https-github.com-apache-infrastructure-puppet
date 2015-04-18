@@ -1,0 +1,4 @@
+---
+classes:
+ - asf_spamassassin::spamd_node
+
