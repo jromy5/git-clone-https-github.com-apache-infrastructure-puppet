@@ -1,6 +1,7 @@
 ---
 classes: 
   - apache
+  - collectd::plugin::postfix
   - mx_asf
   - pflogsumm
   - ssl::name::wildcard_apache_org
