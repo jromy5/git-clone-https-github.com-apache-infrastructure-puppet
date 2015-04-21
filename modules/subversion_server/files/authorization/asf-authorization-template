@@ -867,8 +867,7 @@ ea = rw
 @committers = rw
 
 [/hive]
-@hive = rw
-@hive-hcatalog = rw
+* = r
 
 [/hivemind]
 * = r
