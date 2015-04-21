@@ -338,6 +338,11 @@ vhosts_asf::vhosts::vhosts:
           handler: 'cgi-script'
           extensions:
             - '.cgi'
+        custom_fragment: |
+          <RequireAll>
+            Require all granted
+            Require not ip 62.210.249.212
+          </RequireAll>
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -440,6 +445,11 @@ vhosts_asf::vhosts::vhosts:
           handler: 'cgi-script'
           extensions:
             - '.cgi'
+        custom_fragment: |
+          <RequireAll>
+            Require all granted
+            Require not ip 62.210.249.212
+          </RequireAll>
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
