@@ -873,6 +873,10 @@ ea = rw
 [/hive]
 * = r
 
+[/hive/cms]
+@hive = rw
+@hive-hcatalog = rw
+
 [/hivemind]
 * = r
 
