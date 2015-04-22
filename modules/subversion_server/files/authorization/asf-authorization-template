@@ -1457,13 +1457,13 @@ ea = rw
 [/qpid]
 @qpid = rw
 
+# moved to git:
 [/qpid/jms]
-@qpid = r
-robbie = rw
+* = r
 
+# moved to git:
 [/qpid/proton]
-@qpid = r
-robbie = rw
+* = r
 
 [/quetzalcoatl]
 * = r
