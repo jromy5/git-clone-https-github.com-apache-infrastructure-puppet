@@ -1459,9 +1459,11 @@ ea = rw
 
 [/qpid/jms]
 @qpid = r
+robbie = rw
 
 [/qpid/proton]
 @qpid = r
+robbie = rw
 
 [/quetzalcoatl]
 * = r
