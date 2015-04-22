@@ -234,6 +234,8 @@ openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 openoffice-security=robweir,orw,malte,hdu,wolfhalton,jsc,alg,af,arielch,maho,zhangjf
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+parquet={reuse:asf-authorization:parquet}
+parquet-pmc={ldap:cn=parquet,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 pdfbox={reuse:asf-authorization:pdfbox}
 pdfbox-pmc={ldap:cn=pdfbox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 pig={reuse:asf-authorization:pig}
