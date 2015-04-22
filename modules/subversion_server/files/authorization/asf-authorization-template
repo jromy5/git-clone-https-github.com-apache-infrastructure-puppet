@@ -660,6 +660,10 @@ ea = rw
 [/commons]
 @committers = rw
 
+# Now using git
+[/commons/proper/lang]
+* = r
+
 # Now using Git:
 [/commons/proper/math]
 * = r
