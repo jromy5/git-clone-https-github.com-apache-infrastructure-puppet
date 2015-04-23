@@ -2,6 +2,7 @@
 
 class subversionclient (
   $packages             = [],
+  $svn_conf_dir         = '/etc/subversion',
   $svn_conf_config      = '',
   $svn_conf_servers     = '',
 
@@ -12,6 +13,11 @@ class subversionclient (
   }
 
   file { 
+    "$svn_conf_dir":
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '755';
     "$svn_conf_config":
       source  => 'puppet:///modules/subversionclient/config',
       owner   => 'root',

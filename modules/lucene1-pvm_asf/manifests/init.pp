@@ -28,6 +28,8 @@ class lucene1-pvm_asf {
     ensure   => present,
     packages => 'subversion',
     codename => 'precise',
+    require  => Apt::Source['precise'],
+    before   => Package['subversion'],
   }
   
   apt::pin { 'precise-libsvn1': 
@@ -35,13 +37,8 @@ class lucene1-pvm_asf {
     ensure   => present,
     packages => 'libsvn1',
     codename => 'precise',
+    require  => Apt::Source['precise'],
   }
-
-  exec { 'upgrade-svn':
-    command => '/usr/bin/apt-get -y --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade subversion',
-    require => Apt::Pin['precise-subversion'],
-  }
-
 
 }
 
