@@ -70,6 +70,8 @@ apmirror::groups:
 apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
+ldapclient::ldapservers: 'ldaps://ldap1-eu-central.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
 svnwcsub::conf_file:                         'svnwcsub.conf'
