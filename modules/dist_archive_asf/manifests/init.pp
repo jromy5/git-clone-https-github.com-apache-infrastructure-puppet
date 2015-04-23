@@ -71,8 +71,9 @@ class dist_archive_asf (
     
     rsync::get { "${archiveroot}/dist":
       source  => "rsync://${rsync_server}/apache-dist-for-archive/",
+      links   => true,
       require => File["${archiveroot}/dist"],
-      chown => "${username}:${groupname}",
+      chown   => "${username}:${groupname}",
     }
     
     
