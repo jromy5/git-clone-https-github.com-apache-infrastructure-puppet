@@ -48,5 +48,8 @@ class ldapclient::install::ubuntu::1404 (
         hasrestart => true,
     }
 
-
+    user { 'ubuntu': 
+      ensure  => absent,
+      require => Class['asf999'],
+    }
 }
