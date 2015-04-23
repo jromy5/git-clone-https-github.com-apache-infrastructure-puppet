@@ -111,8 +111,8 @@
       mode => '0755';
     $data_dir:
       ensure => directory,
-      owner => 'tomcat',
-      group => 'roller',
+      owner => "${t_username}",
+      group => "${r_groupname}",
       mode => '0775';
 
   }
