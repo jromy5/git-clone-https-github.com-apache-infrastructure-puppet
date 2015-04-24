@@ -4,6 +4,7 @@ classes:
 
 
 spamassassin::allowedips: '10.40.0.8'
+spamassassin::listenip: '0.0.0.0'        
 spamassassin::spamassassin_packages: 
   - spamassassin
 spamassassin::required_hits: '10'
