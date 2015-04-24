@@ -1,0 +1,31 @@
+global
+        log /dev/log    local0
+        log /dev/log    local1 notice
+        chroot /var/lib/haproxy
+        user haproxy
+        group haproxy
+        daemon
+
+defaults
+        log     global
+	mode    <%= @haproxy_mode %>
+        option  tcplog
+        option  dontlognull
+        contimeout 5000
+        clitimeout 50000
+        srvtimeout 50000
+        retries    3
+        maxconn    <%= @haproxy_maxconns %>
+
+
+
+listen spamd_daemon
+  bind :<%= @haproxy_port %>
+  mode <%= @haproxy_mode %>
+  balance roundrobin
+  option tcplog
+
+<% @spamd_peers.each do |peer| -%>
+server <%= peer %>:783 check
+<% end -%>
+
