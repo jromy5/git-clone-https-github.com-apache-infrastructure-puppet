@@ -4,7 +4,7 @@ class puppet_asf (
   $daemon_opts   = '',
 ){
 
-  case $asfosname { 
+  case $asfosname {
     ubuntu: {
       package { 'puppet':
         ensure  => '3.7.5-1puppetlabs1',
@@ -13,10 +13,10 @@ class puppet_asf (
       }
 
       file { 'puppet_daemon_conf':
-        path    => '/etc/default/puppet',
         ensure  => present,
+        path    => '/etc/default/puppet',
         require => Package['puppet'],
-        notify  => Service["puppet"],
+        notify  => Service['puppet'],
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
@@ -32,28 +32,29 @@ class puppet_asf (
     }
     default: {
     }
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
   }
 
   service { 'puppet':
-    require => Package['puppet'],
-    hasstatus => true,
+    ensure     => running,
+    require    => Package['puppet'],
+    hasstatus  => true,
     hasrestart => true,
-    enable => true,
-    ensure => running,
+    enable     => true,
   }
 
- file { "${puppetconf}" :
-   ensure  => present,
-   require => Package["puppet"],
-   notify  => Service["puppet"],
-   owner   => 'root',
-   group   => 'puppet',
-   mode    => '0755',
-   source  => [ 
-     "puppet:///modules/puppet_asf/puppet.$hostname.conf",
-     "puppet:///modules/puppet_asf/$asfosname.puppet.conf",
-     "puppet:///modules/puppet_asf/puppet.conf",
-     ]
+  file { $puppetconf :
+    ensure  => present,
+    require => Package['puppet'],
+    notify  => Service['puppet'],
+    owner   => 'root',
+    group   => 'puppet',
+    mode    => '0755',
+    source  => [
+      "puppet:///modules/puppet_asf/puppet.${hostname}.conf",
+      "puppet:///modules/puppet_asf/${asfosname}.puppet.conf",
+      'puppet:///modules/puppet_asf/puppet.conf',
+    ]
   }
 
 }

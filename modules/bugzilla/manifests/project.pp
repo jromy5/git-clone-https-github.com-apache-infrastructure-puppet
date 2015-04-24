@@ -37,6 +37,7 @@ define bugzilla::project (
   $admin_email,
   $admin_password,
   $admin_realname,
+  $bz_package,
   $cookiepath        = '/',
   $create_htaccess   = true,
   $cvsbin            = '/usr/bin/cvs',
@@ -61,21 +62,20 @@ define bugzilla::project (
   $svn_url           = 'https://svn.apache.org/viewvc?view=rev&rev=',
   $urlbase           = '',
   $webservergroup    = 'www-data',
-  $bz_package,
   $package_ensure    = 'latest',
 ) {
 
   require bugzilla
 
-  $bz_confdir = "/etc/bugzilla"
+  $bz_confdir = '/etc/bugzilla'
 
-  package { "${bz_package}":
-    ensure => "${package_ensure}",
+  package { $bz_package:
+    ensure => $package_ensure,
     notify => Exec["bugzilla_checksetup_${name}"],
   }
 
-  case $name {
-    "main": {
+  case $name { # lint:ignore:case_without_default
+    'main': {
       $docroot          = "${install_root}/bugzilla"
       $localconfigfile  = "${docroot}/localconfig"
       $answerconfigfile = "${bz_confdir}/.puppet/answer"
@@ -100,23 +100,23 @@ define bugzilla::project (
     logoutput   => true,
     refreshonly => true,
     notify      => Exec["bugzilla_setup_${name}"],
-    require     => File["${answerconfigfile}"],
+    require     => File[$answerconfigfile],
   }
 
   exec { "bugzilla_setup_${name}":
     command     => "${docroot}/checksetup.pl ${answerconfigfile}",
     logoutput   => true,
     refreshonly => true,
-    require     => File["${answerconfigfile}"],
+    require     => File[$answerconfigfile],
   }
 
   cron { "daily_update_of_${name}_graphs":
-    command    => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v 'Use of uninitialized.*line 31'",
-    minute     => 5,
-    hour       => 0,
-   environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    command     => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v 'Use of uninitialized.*line 31'",
+    minute      => 5,
+    hour        => 0,
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 SHELL=/bin/sh',
-    require => Class['rootbin_asf'],
+    require     => Class['rootbin_asf'],
   }
 
 }
