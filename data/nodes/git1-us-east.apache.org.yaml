@@ -4,6 +4,7 @@ classes:
   - apache
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
+  - ulimit_asf
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
@@ -26,3 +27,4 @@ apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
+

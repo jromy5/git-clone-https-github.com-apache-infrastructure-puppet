@@ -78,9 +78,10 @@ archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
 archiva-pmc={reuse:pit-authorization:archiva-pmc}
 aries={ldap:cn=aries,ou=groups,dc=apache,dc=org}
 aries-pmc={reuse:pit-authorization:aries-pmc}
-aurora=jfarrell,benh,dlester,mattmann,hsaputra,jonboulle,wfarner,mansu,maxim,kevints,wickman,mchucarroll,zmanji,dmclaughlin,jcohen
 avro={ldap:cn=avro,ou=groups,dc=apache,dc=org}
 attic={ldap:cn=attic,ou=groups,dc=apache,dc=org}
+aurora={ldap:cn=aurora,ou=groups,dc=apache,dc=org}
+aurora-pmc={reuse:pit-authorization:aurora-pmc}
 avro-pmc={reuse:pit-authorization:avro-pmc}
 axis={ldap:cn=axis,ou=groups,dc=apache,dc=org}
 axis-pmc={reuse:pit-authorization:axis-pmc}
@@ -119,11 +120,12 @@ cocoon={ldap:cn=cocoon,ou=groups,dc=apache,dc=org}
 cocoon-pmc={reuse:pit-authorization:cocoon-pmc}
 commons={ldap:cn=commons,ou=groups,dc=apache,dc=org}
 commons-pmc={reuse:pit-authorization:commons-pmc}
+commonsrdf=
 continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-corinthia=dortef,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
+corinthia=dortef,franz,gbg,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
 creadur={ldap:cn=creadur,ou=groups,dc=apache,dc=org}
@@ -210,7 +212,7 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
-ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov
+ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -284,7 +286,7 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster
+nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
@@ -313,7 +315,8 @@ openoffice={ldap:cn=openoffice,ou=groups,dc=apache,dc=org}
 openoffice-pmc={reuse:pit-authorization:openoffice-pmc}
 openwebbeans={ldap:cn=openwebbeans,ou=groups,dc=apache,dc=org}
 openwebbeans-pmc={reuse:pit-authorization:openwebbeans-pmc}
-parquet=todd,jfarrell,mattmann,tomwhite,rvs,julien,brock,dvryaboy,jcoveney,aniket486,wesleypeck,caniszczyk,lukas,tianshuo,nong,blue,marcel,mlacour,rpecqueur,alexlevenson,dweeks
+parquet={ldap:cn=parquet,ou=groups,dc=apache,dc=org}
+parquet-pmc={reuse:pit-authorization:parquet-pmc}
 pdfbox={ldap:cn=pdfbox,ou=groups,dc=apache,dc=org}
 pdfbox-pmc={reuse:pit-authorization:pdfbox-pmc}
 pig={ldap:cn=pig,ou=groups,dc=apache,dc=org}
@@ -342,7 +345,7 @@ ranger=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rman
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
 reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,jerryjung,johnyangk,joshrosen,jrlee,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
-ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,jukka,raymondcamden
+ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,ibuziuk,jukka,raymondcamden,timb,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
@@ -382,7 +385,7 @@ storm-pmc={reuse:pit-authorization:storm-pmc}
 stratos={ldap:cn=stratos,ou=groups,dc=apache,dc=org}
 stratos-pmc={reuse:pit-authorization:stratos-pmc}
 #stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
-streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks
+streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks,rdouglas
 struts={ldap:cn=struts,ou=groups,dc=apache,dc=org}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
@@ -461,6 +464,8 @@ xmlgraphics={ldap:cn=xmlgraphics,ou=groups,dc=apache,dc=org}
 xmlgraphics-batik=cam,deweese,dvholten,helder,jeremias
 xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfurini,mehdi,phancock,pietsch,psancho,rmeyer,spepping,ssteiner,vhennebert
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
+zest={ldap:cn=zest,ou=groups,dc=apache,dc=org}
+zest-pmc={reuse:pit-authorization:zest-pmc}
 zookeeper={ldap:cn=zookeeper,ou=groups,dc=apache,dc=org}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
 
@@ -554,6 +559,12 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/attic]
 @attic-pmc = rw
 
+[/aurora/site]
+@aurora = rw
+
+[/aurora]
+@aurora = rw
+
 [/avalon]
 * = r
 
@@ -600,12 +611,18 @@ svnadmins={reuse:pit-authorization:svnadmins}
 * = r
 
 [/celix]
+* = r
+
+[/celix/site]
 @celix = rw
 
 [/chemistry]
 @chemistry = rw
 
 [/chukwa]
+* = r
+
+[/chukwa/site]
 @chukwa = rw
 
 [/clerezza]
@@ -632,6 +649,10 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/comdev]
 @comdev= rw
+@committers = rw
+
+[/comdev/projects.apache.org/site/json]
+projects_role = rw
 
 [/comdev/site]
 @committers = rw
@@ -639,6 +660,10 @@ ea = rw
 
 [/commons]
 @committers = rw
+
+# Now using git
+[/commons/proper/lang]
+* = r
 
 # Now using Git:
 [/commons/proper/math]
@@ -734,6 +759,9 @@ ea = rw
 @drill = rw
 
 [/empire-db]
+* = r
+
+[/empire-db/site]
 @empire-db = rw
 
 [/esme]
@@ -844,6 +872,9 @@ ea = rw
 @committers = rw
 
 [/hive]
+* = r
+
+[/hive/cms]
 @hive = rw
 @hive-hcatalog = rw
 
@@ -871,12 +902,6 @@ ea = rw
 
 [/incubator/alois]
 * = r
-
-[/incubator/aurora]
-@aurora = rw
-
-[/incubator/aurora/site]
-@incubator = rw
 
 [/incubator/awf]
 * = r
@@ -979,12 +1004,6 @@ ea = rw
 
 [/incubator/ooo]
 * = r
-
-[/incubator/parquet]
-@parquet = rw
-
-[/incubator/parquet/site]
-@incubator = rw
 
 [/incubator/photark]
 * = r
@@ -1380,6 +1399,12 @@ ea = rw
 [/openwebbeans]
 @openwebbeans = rw
 
+[/parquet/site]
+@parquet = rw
+
+[/parquet]
+@parquet = rw
+
 [/pdfbox]
 @pdfbox = rw
 
@@ -1437,11 +1462,13 @@ ea = rw
 [/qpid]
 @qpid = rw
 
+# moved to git:
 [/qpid/jms]
-@qpid = r
+* = r
 
+# moved to git:
 [/qpid/proton]
-@qpid = r
+* = r
 
 [/quetzalcoatl]
 * = r
@@ -1540,8 +1567,11 @@ spamassassin_role = rw
 [/struts]
 @struts = rw
 
-[/struts/archive]
+[/struts/struts-annotations]
 * = r
+
+[/struts/archive]
+@struts = rw
 
 [/struts/struts-master]
 * = r
@@ -1643,10 +1673,10 @@ svn-role = rw
 @ws = rw
 
 [/whirr]
-@whirr = r
+@attic-pmc = rw
 
 [/whirr/site]
-@whirr = rw
+@attic-pmc = rw
 
 [/wicket/common]
 @wicket = rw
@@ -1734,6 +1764,9 @@ svn-role = rw
 [/xmlgraphics/site]
 @xmlgraphics-batik = rw
 @xmlgraphics-fop = rw
+
+[/zest]
+@zest = rw
 
 [/zookeeper]
 @zookeeper = rw

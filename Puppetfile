@@ -18,13 +18,17 @@ mod 'concat',
 
 
 mod 'concat-native',
-  :git => 'https://github.com/theforeman/puppet-concat.git',
-  :tag => '1.3.1'
+  :git => 'https://github.com/theforeman/puppet-concat_native.git',
+  :tag => '1.4.0'
 
 
 mod 'dell',
-  :git => 'https://github.com/stumped2/puppet-dell.git',
-  :branch => 'openmanage_ubuntu'
+  :git => 'https://github.com/camptocamp/puppet-dell.git',
+  :tag => '0.2.0'
+
+
+mod 'elasticsearch',
+  :git => 'https://github.com/elastic/puppet-elasticsearch'
 
 
 mod 'epel',
@@ -33,8 +37,8 @@ mod 'epel',
 
 
 mod 'fail2ban',
-  :git => 'https://github.com/netmanagers/puppet-fail2ban',
-  :branch => 'master'
+  :git => 'https://github.com/stumped2/puppet-fail2ban',
+  :branch => 'fix_actionsource'
 
 
 mod 'firewall',
@@ -44,12 +48,12 @@ mod 'firewall',
 
 mod 'foreman',
   :git => 'https://github.com/theforeman/puppet-foreman.git',
-  :tag => '2.3.0'
+  :tag => '3.0.2'
 
 
 mod 'foreman_proxy',
   :git => 'https://github.com/theforeman/puppet-foreman_proxy.git',
-  :tag => '2.1.0'
+  :tag => '2.2.1'
 
 
 mod 'iptables',
@@ -58,13 +62,18 @@ mod 'iptables',
 
 
 mod 'logrotate',
-  :git    => 'https://github.com/pctony/puppet-logrotate.git',
-  :commit => '89ee645e2350045be48df7ac3ef86cbe4cd9b096'
+  :git    => 'https://github.com/stumped2/puppet-logrotate.git',
+  :branch => 'fix_conf_security'
 
 
 mod 'ldap',
   :git    => 'https://github.com/pctony/puppet-ldap.git',
   :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
+
+
+mod 'java',
+  :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
+  :tag => '1.2.0'
 
 
 mod 'module_data',
@@ -86,6 +95,8 @@ mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
   :tag => '3.2.0'
 
+# mod 'perl',
+#   :git => 'https://github.com/example42/puppet-perl'
 
 mod 'pkgng',
   :git => 'https://github.com/xaque208/puppet-pkgng',
@@ -94,7 +105,7 @@ mod 'pkgng',
 
 mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
-  :commit => '64ae62904846faf81067e2cd51cf24f97226506c'
+  :commit => '94a58451b81d47ff2d10ea5038643dcd1272dd1b'
 
 
 mod 'postgresql',
@@ -127,6 +138,10 @@ mod 'rsyslog',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
 
+mod 's3fs',
+  :git => 'https://github.com/clambertus/puppet-s3fs'
+
+
 mod 'snmp',
   :git => 'https://github.com/Humbedooh/puppet-snmp.git',
   :branch => 'master'
@@ -135,6 +150,16 @@ mod 'snmp',
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
+
+
+mod 'spamassassin',
+  :git    => 'https://github.com/pctony/puppet-spamassassin.git',
+  :commit => 'd0c8f5b949b879589b3eb039c607745459751d55'
+
+
+mod 'staging',
+  :git => 'https://github.com/nanliu/puppet-staging.git',
+  :tag => '1.0.2'
 
 
 mod 'stahnma-epel',
@@ -147,36 +172,30 @@ mod 'stdlib',
   :tag => '4.3.2'
 
 
+mod 'sysctl',
+  :git => 'https://github.com/thias/puppet-sysctl.git',
+  :tag => '1.0.2'
+
+
 mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
-  :tag => '1.4.3'
+  :tag => '1.5.1'
 
-
-mod 'ulimit',
-  :git => 'https://github.com/pctony/puppet-ulimit.git',
-  :commit => '4699a103da4e1336701804ea38297e6e9fb9e008'
-
-mod 'java',
-  :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
-  :tag => '1.2.0'
 
 mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
   :tag => '1.2.0'
 
-mod 's3fs',
-  :git => 'https://github.com/clambertus/puppet-s3fs'
 
-mod 'staging',
-  :git => 'https://github.com/nanliu/puppet-staging.git',
-  :tag => '1.0.2'
+mod 'ulimit',
+  :git => 'https://github.com/clambertus/puppet-ulimit.git'
 
-mod 'sysctl',
-  :git => 'https://github.com/thias/puppet-sysctl.git',
-  :tag => '1.0.2'
 
 mod 'vcsrepo',
   :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
 
+
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
+
+

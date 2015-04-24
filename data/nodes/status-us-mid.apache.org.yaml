@@ -7,6 +7,9 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000
@@ -54,6 +57,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/x1/www/status'
+    manage_docroot: false
     servername: 'status.apache.org'
     directoryindex: 'index.html manage.cgi'
     options:

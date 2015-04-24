@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Below is the copy whole diectories method, keeps whole space exports seperate
+
+cd <%= @confluence_home %>/temp
+find . -type d -name 'htmlexport*' -exec cp -rp {} <%= @intermediates_dir %> \;
+
+# Below is the single file method.
+#FILESTOCOPY="/x1/cwiki/confluence-data/temp/htmlexport-*/export-intermediate-*.html"
+#if [ -f $FILESTOCOPY ]; then
+#    cp -rp $FILESTOCOPY <%= @intermediates_dir %>
+#fi
+

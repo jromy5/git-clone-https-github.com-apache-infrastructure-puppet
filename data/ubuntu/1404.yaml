@@ -1,6 +1,8 @@
 ---
 classes: 
   - apt
+  - apt::unattended_upgrades
+  - apt::update
   - base
   - dnsclient
   - fail2ban_asf::config
@@ -15,21 +17,23 @@ base::basepackages:
   - ca-certificates
   - git
   - htop
+  - libnet-snmp-perl
+  - libsnmp-perl
   - sockstat
   - software-properties-common
   - zsh
 
 apt::sources:
   'asf_internal':
-     location: 'https://pkgrepo.apache.org'
+     location: 'https://dl.bintray.com/apache/asf_internal'
      release: 'trusty'
      repos: 'main'
-     key: 'E8640030'
+     key: '0EE62FB37A00258D'
      key_server: 'pgp.mit.edu'
      include_deb: true
      include_src: false
   'puppetlabs':
-     location: 'http://apt.puppetlabs.com'
+     location: 'https://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'main'
      key: '4BD6EC30'
@@ -37,7 +41,7 @@ apt::sources:
      include_deb: true
      include_src: false
   'puppetdeps':
-     location: 'http://apt.puppetlabs.com'
+     location: 'https://apt.puppetlabs.com'
      release: 'trusty'
      repos: 'dependencies'
      key: '4BD6EC30'
@@ -52,22 +56,66 @@ apt::sources:
     key_server: 'hkp://keyserver.ubuntu.com:80'
     include_deb: true
     include_src: false
+  'elasticsearch':
+    location: 'https://packages.elasticsearch.org/elasticsearch/1.5/debian'
+    release: 'stable'
+    repos: 'main'
+    key: 'D88E42B4'
+    key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
+
 
 apt::force:
   'orthrus':
     release: 'main'
   require: Apt::Source['asf_internal']
 
+apt::unattended_upgrades::update: 1
+apt::unattended_upgrades::download: 1
+apt::unattended_upgrades::upgrade: 1
+apt::unattended_upgrades::autoclean: 7
+apt::unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
+
 fail2ban::service_status: true
+
+fail2ban_asf::config::filters:
+  sshd-asf999:
+    filtername: 'sshd-asf999'
+    filtersource: 'puppet:///modules/fail2ban_asf/fail2ban/conf/filter.d/sshd-asf999.conf'
+
+fail2ban_asf::config::actions:
+  asf999-log:
+    actionname: 'asf999-log'
+    actionsource: 'puppet:///modules/fail2ban_asf/fail2ban/conf/action.d/asf999-log.conf'
 
 fail2ban_asf::config::jails:
   ssh:
     filter: sshd
+    port: ssh
     action:
-      - iptables-allports
+      - iptables-allports 
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
+    enable: true
+
+  ssh-ddos:
+    filter: sshd-ddos
+    action:
+      - iptables-allports
+    logpath: '/var/log/auth.log'
+    maxretry: 6
+    enable: true
+
+  asf999:
+    filter: 'sshd-asf999'
+    action:
+      - 'asf999-log[name=asf999, dest=root@apache.org, sender=fail2ban@apache.org]'
+    logpath: '/var/log/auth.log'
+    maxretry: 1
+    bantime: 2
     enable: true
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
@@ -77,13 +125,14 @@ ldapclient::ldapclient_packages:
     - ldap-auth-client
     - ldap-utils
     - libldap-2.4-2
-    - libnss-ldap
     - libpam-ldap
+    - libnss-ldapd
     - libpam-modules
     - nslcd
 
 ldapclient::ldapclient_remove_packages: 
     - nscd
+    - libnss-ldap
 
 ldapserver::install::ubuntu::1404::packages:
   - slapd
@@ -116,8 +165,10 @@ puppet::puppetconf:                      '/etc/puppet/puppet.conf'
 
 snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 
-spamassassin::spamassassin_packages:
+spamassassin::package_list:
   - spamassassin
+
+spamassassin::sa_update: '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
 
 subversionclient::packages: 
   - subversion

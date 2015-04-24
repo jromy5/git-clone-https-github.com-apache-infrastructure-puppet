@@ -1,0 +1,59 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          svngit2jira
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: svngit2jira
+# Description:       start svngit2jira daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+svngit2jira_user=${svngit2jira_user-"svngit2jira"}
+svngit2jira_group=${svngit2jira_group-"svngit2jira"}
+svngit2jira_pidfile=${svngit2jira_pidfile-"/var/run/svngit2jira/svngit2jira.pid"}
+svngit2jira_config=${svngit2jira_config-"/usr/local/etc/svngit2jira/svngit2jira.cfg"}
+svngit2jira_logfile=${svngit2jira_logfile-"/var/log/svngit2jira/svngit2jira.log"}
+svngit2jira_appdir=${svngit2jira_appdir-"/usr/local/etc/svngit2jira"}
+pidfile="${svngit2jira_pidfile}"
+
+RETVAL=0
+ 
+start() {
+    echo "Starting svngit2jira: "
+    cd $svngit2jira_appdir
+    python svngit2jira.py start
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+ 
+stop() {
+    echo "Stopping svngit2jira: "
+    cd $svngit2jira_appdir
+    python svngit2jira.py stop
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $RETVAL

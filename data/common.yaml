@@ -2,6 +2,7 @@
 classes: 
   - asf999::create_user
   - base
+  - base::snmp::createv3users
   - collectd
   - collectd::plugin::cpu
   - collectd::plugin::df
@@ -13,14 +14,14 @@ classes:
   - collectd::plugin::write_http
   - customfact
   - ldapclient
+  - ntp
   - pam
   - puppet_asf
   - ssh_asf # this pulls in both server and client by default
   - ssl::name::circonus-ca # required by collectd
   - sudoers
   - snmp
-  - base::snmp::createv3users
-  - ntp
+  - ulimit_asf
 
 ## MODULES
 ## AMANDA
@@ -78,6 +79,9 @@ collectd::plugin::interface::interfaces:
 collectd::plugin::interface::ignoreselected: true
 
 fail2ban::disable: false
+fail2ban::ignoreip:
+  - '127.0.0.1'
+  - '140.211.11.0/24'
 fail2ban::jails_config: 'concat'
 fail2ban::puppi: 'false'
 fail2ban::monitor: 'false'
@@ -138,8 +142,8 @@ ldapclient::nssbindpasswd: 'b1t3me'
 ldapserver::slapd_peers:
   1: ldap1-us-west.apache.org
   2: ldap2-us-west.apache.org
-  3: ldap1-us-east.apache.org
-  4: ldap1-us.apache.org
+  3: ldap3-us-west.apache.org
+  4: ldap1-us-east.apache.org
   5: ldap1-eu-central.apache.org
 
 ldapserver::schemas:
@@ -152,7 +156,7 @@ ldapserver::schemas:
   - openssh-lpk
   - ppolicy
   - asf-custom
-ldapserver::ldaploglevel: 'stats sync'
+ldapserver::ldaploglevel: 'sync'
 ldapserver::modulepath: '/usr/lib/ldap'
 ldapserver::modules:
   - back_mdb
@@ -191,6 +195,8 @@ ntp::restrict:
   - '-4 default kod notrap nomodify nopeer noquery'
   - '-6 default kod notrap nomodify nopeer noquery'
 
+puppet_asf::enable_daemon: true
+
 ## SNMP
 snmp::agentaddress: 'udp:*:161'
 snmp::com2sec:
@@ -208,6 +214,7 @@ snmp::snmpd_config:
   - 'disk / 10000'
   - 'disk /var 5%'
   - 'includeAllDisks 10%'
+  - 'perl do "/root/bin/zpool.pl"'
 
 ## SpamAssassin
 spamassassin::required_hits: '10' #Scores over this value with tagged as spam.
@@ -260,4 +267,16 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
+
+ulimit::rule:
+  all-hard-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'hard'
+    ulimit_item: 'nofile'
+    ulimit_value: '1048576'
+  all-soft-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'soft'
+    ulimit_item: 'nofile'
+    ulimit_value: '1048576'
 

@@ -1,0 +1,58 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          gitpubsub
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: GitPubSub
+# Description:       start GitPubSub daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+gitpubsub_user=${gitpubsub_user-"gitpubsub"}
+gitpubsub_group=${gitpubsub_group-"gitpubsub"}
+gitpubsub_pidfile=${gitpubsub_pidfile-"/var/run/gitpubsub/gitpubsub.pid"}
+gitpubsub_config=${gitpubsub_config-"/usr/local/etc/gitpubsub/gitpubsub.conf"}
+gitpubsub_logfile=${gitpubsub_logfile-"/var/log/gitpubsub/gitpubsub.log"}
+gitpubsub_appdir=${gitpubsub_appdir-"/usr/local/etc/gitpubsub"}
+pidfile="${gitpubsub_pidfile}"
+
+RETVAL=0
+ 
+start() {
+    echo "Starting GitPubSub Server: "
+    cd $gitpubsub_appdir
+    nohup lua gitpubsub.lua &
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+ 
+stop() {
+    echo "Stopping GitPubSub Server: "
+    pkill -f gitpubsub.lua
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $RETVAL

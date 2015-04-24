@@ -1,15 +1,16 @@
 class puppet_asf::master {
 
   cron { 'updatepuppet':
-    command     => 'cd /etc/puppet; ./bin/pull > /dev/null 2>&1',
+    command     => 'cd /etc/puppet; ./bin/pull deployment > /dev/null 2>&1',
     environment => 'PATH=/bin:/usr/bin:/usr/sbin:/usr/local/bin/',
     user        => 'root',
     minute      => '*/5',
   }
 
   package { 'puppetmaster':
-    ensure  => '3.6.2-1puppetlabs1',
+    ensure  => '3.7.5-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
+    notify  => Service['puppetmaster'],
   }
 
   service { 'puppetmaster':

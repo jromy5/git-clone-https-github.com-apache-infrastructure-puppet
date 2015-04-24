@@ -1,0 +1,30 @@
+# /etc/nslcd.conf
+# nslcd configuration file. See nslcd.conf(5)
+# for details.
+
+# The user and group nslcd should run as.
+uid nslcd
+gid nslcd
+
+# The location at which the LDAP server(s) should be reachable.
+uri   <%= ldapservers %>
+
+# The search base that will be used for all queries.
+base dc=apache,dc=org
+
+# The LDAP protocol version to use.
+#ldap_version 3
+
+# The DN to bind with for normal lookups.
+binddn cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org
+bindpw b1t3me
+
+# The DN used for password modifications by root.
+#rootpwmoddn cn=admin,dc=example,dc=com
+
+# SSL options
+#ssl off
+tls_reqcert never
+
+# The search scope.
+scope sub

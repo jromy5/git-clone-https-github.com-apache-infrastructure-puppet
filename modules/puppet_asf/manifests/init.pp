@@ -1,17 +1,32 @@
 class puppet_asf (
-  $puppetconf  = '/etc/puppet/puppet.conf'
+  $puppetconf    = '/etc/puppet/puppet.conf',
+  $enable_daemon = true,
+  $daemon_opts   = '',
 ){
 
   case $asfosname { 
     ubuntu: {
       package { 'puppet':
-        ensure  => '3.6.2-1puppetlabs1',
+        ensure  => '3.7.5-1puppetlabs1',
         require => Apt::Source['puppetlabs', 'puppetdeps'],
+        notify  => Service['puppet'],
       }
+
+      file { 'puppet_daemon_conf':
+        path    => '/etc/default/puppet',
+        ensure  => present,
+        require => Package['puppet'],
+        notify  => Service["puppet"],
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template("puppet_asf/puppet_daemon.${asfosname}.erb"),
+      }
+
     }
     centos: {
       package { 'puppet':
-        ensure  => '3.6.2-1.el6',
+        ensure  => '3.7.4-1.el6',
         require => Yumrepo['puppetlabs-products', 'puppetlabs-deps'],
       }
     }

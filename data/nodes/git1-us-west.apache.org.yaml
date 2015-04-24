@@ -3,6 +3,7 @@ classes:
   - amanda::client
   - apache
   - gitserver_asf
+  - rootbin_asf
   - ssl::name::wildcard_apache_org
 
   

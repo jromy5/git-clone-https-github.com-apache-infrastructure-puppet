@@ -26,6 +26,9 @@ with a Subject line that follows the below format:
 Cutting and pasting directly from a Wiki is not acceptable due to formatting
 issues. Line lengths should be limited to 77 characters.
 
+Chairs may use the Apache Reporter Service [3] to help them compile and
+submit a board report.
+
 As always, PMC chairs are welcome to attend the board meeting.
 
 Thanks,
@@ -33,6 +36,7 @@ The ASF Board
 
 [1] - https://svn.apache.org/repos/private/committers/board/committee-info.txt
 [2] - https://svn.apache.org/repos/private/committers/board/templates
+[3] - https://reporter.apache.org/
 
 
 Resolutions

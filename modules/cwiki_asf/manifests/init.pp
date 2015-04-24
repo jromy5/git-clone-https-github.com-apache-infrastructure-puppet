@@ -5,8 +5,8 @@
    $group_present = 'present',
    $groupname = 'confluence',
    $groups = [],
-   # $service_ensure = 'running',
-   # $service_name = 'confluence',
+   $service_ensure = 'running',
+   $service_name = 'confluence',
    $shell = '/bin/bash',
    $user_present = 'present',
    $username = 'confluence',
@@ -17,7 +17,13 @@
    $hibernate_connection_password = '',
    $hibernate_connection_username = '',
    $hibernate_connection_url = '',
+   $required_packages = ['graphviz' , 'graphviz-dev'], 
 ){
+
+# install required packages:
+   package { $required_packages:
+     ensure => 'present',
+   }
 
 # confluence specific
 
@@ -35,7 +41,10 @@
    $confluence_home = "${parent_dir}/confluence-data"
    $server_port = '8008'
    $connector_port = '8888'
-   $context_path = ''
+   $context_path = '/confluence'
+   $current_dir = "${parent_dir}/current"
+   $docroot = '/var/www'
+   $intermediates_dir = "${docroot}/intermediates"
 
     user { "${username}":
          name => "${username}",
@@ -107,12 +116,18 @@
     owner => 'root',
     group => 'root',
     require => Exec["extract-confluence"];
-  "$parent_dir/current":
+  $current_dir:
     ensure => link,
     target => "${install_dir}",
     owner => 'root',
     group => 'root',
     require => File["${install_dir}"];
+  $intermediates_dir:
+    ensure => directory,
+    owner => 'www-data',
+    group => 'confluence',
+    mode => '0775',
+    require => Class['apache'];
   "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
@@ -124,28 +139,139 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0644',
-    require => Exec["check_cfg_exists"];
-   # '${mysql_connector_dest_dir}/${mysql_connector}':
-   #   ensure => present,
-   #   source => "puppet:///modules/cwiki_asf/${mysql_connector}",
+    require => Exec["check_cfg_exists"],
+    notify => Service["${service_name}"];
+  "${mysql_connector_dest_dir}/${mysql_connector}":
+    ensure => present,
+    source => "puppet:///modules/cwiki_asf/${mysql_connector}";
+  "/etc/init.d/${service_name}":
+    mode => 0755,
+    owner => 'root',
+    group => 'root',
+    content => template('cwiki_asf/confluence-init-script.erb');
+  "${intermediates_dir}/header.inc":
+    ensure => present,
+    source => "puppet:///modules/cwiki_asf/header.inc";
+  "${intermediates_dir}/footer.inc":
+    ensure => present,
+    source => "puppet:///modules/cwiki_asf/footer.inc";
+  "/home/${username}/create-intermediates-index.sh":
+    owner => "${username}",
+    group => "${groupname}",
+    content => template('cwiki_asf/create-intermediates-index.sh.erb'),
+    mode => '0755';
+  "/home/${username}/copy-intermediate-html.sh":
+    owner => "${username}",
+    group => "${groupname}",
+    content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
+    mode => '0755';
+  "/home/${username}/remove-intermediates-daily.sh":
+    owner => "${username}",
+    group => "${groupname}",
+    content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
+    mode => '0755';
+  "/home/${username}/cleanup-tomcat-logs.sh":
+    owner => "${username}",
+    group => "${groupname}",
+    content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
+    mode => '0755';
 }
 
-  apache::mod { 'rewrite': }
+  # apache::mod { 'rewrite': }
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
 
-  apache::vhost { 'cwiki-vm2':
+  apache::vhost { 'cwiki-vm3-80':
+      vhost_name => '*',
+      priority => '12',
+      servername => 'cwiki-vm3.apache.org',
+      serveraliases => [
+        'cwiki.apache.org',
+        'cwiki-test.apache.org',
+      ],
+      port => '80',
+      ssl => false,
+      docroot => "${docroot}",
+      error_log_file => 'cwiki_error.log',
+#      redirect_source => ['/'],
+#      redirect_dest => ['https://cwiki.apache.org/'],
+#      redirect_status => ['permanent'],
+      custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1'
+}
+
+  apache::vhost { 'cwiki-vm3-443':
       vhost_name => '*',
       default_vhost => true,
-      servername => 'cwiki-vm2.apache.org',
-      port => '80',
-      docroot => '/var/www/html',
-      serveraliases => ['cwiki-test.apache.org'],
-      error_log_file => 'cwiki-test_error.log',
-      proxy_pass => [
-        { 'path' => '/', 'url' => 'http://127.0.0.1:8888/',
-          'reverse_urls' => ['http://127.0.0.1:8888/'] },
+      servername => 'cwiki-vm3.apache.org',
+      port => '443',
+      docroot => "${docroot}",
+      serveraliases => [
+        'cwiki.apache.org',
+        'cwiki-test.apache.org',
       ],
+      error_log_file => 'cwiki_error.log',
+      ssl => true,
+      ssl_cert => '/etc/ssl/certs/cwiki.apache.org.crt',
+      ssl_chain => '/etc/ssl/certs/cwiki.apache.org.chain',
+      ssl_key => '/etc/ssl/private/cwiki.apache.org.key',
+      rewrites => [
+        {
+          comment      => 'redirect from / to /confluence for most.',
+          rewrite_cond => ['$1 !(confluence|intermediates)'],
+          rewrite_rule => ['^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]'],
+        },
+      ],
+      proxy_pass => [
+        { 'path' => '/confluence/', 'url' => 'http://127.0.0.1:8888/confluence/',
+          'reverse_urls' => ['http://127.0.0.1:8888/confluence/'] },
+      ],
+      #    no_proxy_uris => ['/intermediates'],
+      custom_fragment => 'ProxyPass /intermediates !'
   }
+
+  service { "${service_name}":
+      ensure => $service_ensure,
+      enable => true,
+      hasstatus => false,
+      hasrestart => true,
+      require => Class['apache'],
+  }
+
+# cron jobs
+
+  cron { 'create-intermediates-index':
+    user => "${username}",
+    minute => '*/30',
+    command => "/home/${username}/create-intermediates-index.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'copy-intermediate-html':
+    user => "${username}",
+    minute => '*/10',
+    command => "/home/${username}/copy-intermediate-html.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'remove-intermediates-daily':
+    user => "${username}",
+    minute => 05,
+    hour => 07,
+    command => "/home/${username}/remove-intermediates-daily.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
+  cron { 'cleanup-tomcat-logs':
+    user => "${username}",
+    minute => 20,
+    hour => 07,
+    command => "/home/${username}/cleanup-tomcat-logs.sh",
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+    SHELL=/bin/sh',
+    require => User["${username}"],
+}
 
 }

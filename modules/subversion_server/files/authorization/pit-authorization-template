@@ -28,6 +28,8 @@ archiva={reuse:asf-authorization:archiva}
 archiva-pmc={ldap:cn=archiva,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 aries={reuse:asf-authorization:aries}
 aries-pmc={ldap:cn=aries,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+aurora={reuse:asf-authorization:aurora}
+aurora-pmc={ldap:cn=aurora,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 avro={reuse:asf-authorization:avro}
 avro-pmc={ldap:cn=avro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 axis={reuse:asf-authorization:axis}
@@ -66,6 +68,7 @@ cocoon={reuse:asf-authorization:cocoon}
 cocoon-pmc={ldap:cn=cocoon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 commons={reuse:asf-authorization:commons}
 commons-pmc={ldap:cn=commons,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+commonsrdf={reuse:asf-authorization:commonsrdf}
 continuum={reuse:asf-authorization:continuum}
 continuum-pmc={ldap:cn=continuum,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 cordova={reuse:asf-authorization:cordova}
@@ -231,6 +234,8 @@ openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 openoffice-security=robweir,orw,malte,hdu,wolfhalton,jsc,alg,af,arielch,maho,zhangjf
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+parquet={reuse:asf-authorization:parquet}
+parquet-pmc={ldap:cn=parquet,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 pdfbox={reuse:asf-authorization:pdfbox}
 pdfbox-pmc={ldap:cn=pdfbox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 pig={reuse:asf-authorization:pig}
@@ -346,6 +351,8 @@ xerces-pmc={ldap:cn=xerces,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 xmlgraphics={reuse:asf-authorization:xmlgraphics}
 xmlgraphics-pmc={ldap:cn=xmlgraphics,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # yoko={reuse:asf-authorization:# yoko}
+zest={reuse:asf-authorization:zest}
+zest-pmc={ldap:cn=zest,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 zookeeper={reuse:asf-authorization:zookeeper}
 zookeeper-pmc={ldap:cn=zookeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 
@@ -388,6 +395,8 @@ security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
+# vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
+pres-commitee-vps=curcuru,uli,hadrian,jim,sk,gmcdonald,ea
 
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
@@ -414,6 +423,10 @@ staff=
 # used by nagios
 [private:/emptydir]
 * = r
+
+# INFRA-9270 requested
+[private:/financials/Monthly]
+@pres-commitee-vps = r
 
 # svnwc needs access
 [/apachecon/archive.apachecon.com]
@@ -1124,6 +1137,9 @@ buildbot = rw
 
 [/websites/production/commons]
 @commons = rw
+
+[/websites/production/commonsrdf]
+@incubator = rw
 
 [/websites/production/community]
 @comdev = rw

@@ -1,17 +1,16 @@
 ---
 classes: 
   - apache
-  - clamav
+  - collectd::plugin::postfix
+  - mx_asf
   - pflogsumm
-  - rbldnsd
-  - spamassassin
   - ssl::name::wildcard_apache_org
 
-postfix::server::clamav_enabled: 'true'
-postfix::server::check_policy_service: 'unix:private/policy-spf'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
-postfix::server::spamassassin_enabled: 'true'
-postfix::server::smtp_content_filter: 
-  - spamassassin
+
+## It should be noted that this is a temporary value, that means we can
+## place this MX before nike/athena to enable testing
+postfix::server::relayhost:                '[nike.apache.org]:25'
+postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canonical_maps'
 

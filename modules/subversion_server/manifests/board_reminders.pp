@@ -16,7 +16,7 @@ class subversion_server::board_reminders (
   file {
    "$install_path":
      ensure   => present,
-     owner    => 'svn',
+     owner    => 'www-data',
      group    => 'svnadmins',
      mode     => '0775',
      recurse  => true,
@@ -28,7 +28,7 @@ class subversion_server::board_reminders (
       minute  => '15',
       hour    => '14',
       weekday => '1',
-      user    => 'svn',
+      user    => 'www-data',
       command => "$install_path/reminders.pl --cron";
   }
 }

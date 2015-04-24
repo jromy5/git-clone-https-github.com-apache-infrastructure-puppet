@@ -70,6 +70,8 @@ apmirror::groups:
 apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
+ldapclient::ldapservers: 'ldaps://ldap1-eu-central.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
 svnwcsub::conf_file:                         'svnwcsub.conf'
@@ -518,6 +520,22 @@ vhosts_asf::vhosts::vhosts:
 
       Use BlockSvn
 
+  apacheextras:
+    vhost_name: '*'
+    port: 80
+    servername: 'apacheextras.org'
+    docroot: '/var/www/html'
+    serveraliases:
+      - 'apache-extras.org'
+      - 'apachextras.org'
+      - 'www.apache-extras.org'
+      - 'www.apaceextras.org'
+      - 'www.apachextras.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://code.google.com/a/apache-extras.org
+
   cloudstack:
     vhost_name: '*'
     port: 80
@@ -676,6 +694,7 @@ vhosts_asf::vhosts::vhosts:
       RedirectMatch permanent ^/mod_aspdotnet.* http://httpd.apache.org/modules/#mod_aspdotnet
 
       AddLanguage da .da
+      RemoveType es
       AddDefaultCharset off
 
       RewriteEngine On
@@ -833,6 +852,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
 
       AddLanguage da .da
+      RemoveType es
       AddDefaultCharset off
 
       <Directory /var/www/httpd.apache.org/content/docs/1.3>
