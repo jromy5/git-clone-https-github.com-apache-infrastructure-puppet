@@ -4,7 +4,7 @@ classes:
   - collectd::plugin_asf
   - mysql::server
   - mysql_asf::backup
-  - ssl::name::abi-stunnel
+  - ssl::name::abi_stunnel
   - stunnel_asf::abi
 
 mysql::server::databases:
