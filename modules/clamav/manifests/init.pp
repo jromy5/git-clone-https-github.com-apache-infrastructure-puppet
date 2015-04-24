@@ -1,16 +1,16 @@
 #/etc/puppet/modules/clamav/manifests/init.pp
 
 class clamav (
-  $packages   = ['clamav', 'clamsmtp'],
+  $packages = ['clamav', 'clamsmtp'],
 
 ){
 
-  package { $packages: 
-    ensure   =>  installed,
+  package { $packages:
+    ensure => installed,
   }
 
   service {
-    'clamav-daemon': 
+    'clamav-daemon':
       ensure  => running,
       require => Service['clamav-freshclam'];
     'clamav-freshclam':
@@ -21,7 +21,7 @@ class clamav (
       require => Package[ ['clamav'], ['clamsmtp'] ];
   }
 
-  file { 
+  file {
     '/etc/clamsmtpd.conf':
       content => template('clamav/clamsmtpd.conf.erb'),
       notify  => Service[ ['clamav-daemon'], ['clamav-freshclam'], ['clamsmtp'] ],
