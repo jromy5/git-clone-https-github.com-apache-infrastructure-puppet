@@ -78,6 +78,9 @@ apt::unattended_upgrades::autoclean: 7
 apt::unattended_upgrades::origins:
   - '${distro_id} ${distro_codename}-security'
 
+base::remove_os_install_user::osinstalluser:  'ubuntu'
+base::remove_os_install_user::osinstallgroup: 'ubuntu'
+
 fail2ban::service_status: true
 
 fail2ban_asf::config::filters:
