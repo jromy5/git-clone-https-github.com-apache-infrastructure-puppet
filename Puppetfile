@@ -57,7 +57,7 @@ mod 'foreman_proxy',
 
 
 mod 'haproxy',
-  :git    => 'https://github.com/pctony/puppet-haproxy.git',
+  :git    => 'https://github.com/pctony/puppetlabs-haproxy.git',
   :commit => 'ed4afef1a5f13c4ae026ef2dd548fdce75affe82'
 
 
