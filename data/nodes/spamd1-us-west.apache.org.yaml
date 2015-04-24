@@ -1,12 +1,7 @@
 ---
 classes:
- - spamassassin::spamd
+ - spamassassin
 
-
-haproxy::exported_balancermember::listening_service: 'spamd_daemon'
-haproxy::exported_balancermember::servername: 'spamd1-us-west'
-haproxy::exported_balancermember::ports: '783'
-haproxy::exported_balancermember::options: 'check'
 
 spamassassin::allowedips: '10.40.0.8'
 spamassassin::spamassassin_packages: 
