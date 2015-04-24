@@ -8,33 +8,33 @@ class base (
   $packages = hiera_array('base::basepackages', [])
 
   package { $packages:
-    ensure   =>  installed,
+    ensure =>  installed,
   }
 
   $hosts = hiera_hash('base::hosts', {})
   create_resources(host, $hosts)
 
-  class { "base::remove_os_install_user": 
+  class { 'base::remove_os_install_user':
   }
 
   class { "base::install::${asfosname}::${asfosrelease}":
   }
 }
 
- class base::remove_os_install_user (
-   $osinstalluser  = undef,
-   $osinstallgroup = undef,
+class base::remove_os_install_user (
+  $osinstalluser  = undef,
+  $osinstallgroup = undef,
 
 ) {
 
-    user { "$osinstalluser": 
+    user { $osinstalluser:
       ensure  => absent,
       require => Class['asf999::create_user'],
     }
 
-    group { "$osinstallgroup":
+    group { $osinstallgroup:
       ensure  => absent,
-      require => [User["$osinstalluser"], Class['asf999::create_user']],
+      require => [User[$osinstalluser], Class['asf999::create_user']],
     }
 
 
