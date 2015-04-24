@@ -27,12 +27,12 @@ class base (
 
 ) {
 
-    user { "$osinstalluser: 
+    user { "$osinstalluser": 
       ensure  => absent,
       require => Class['asf999::create_user'],
     }
 
-    group { "$osinstallgroup:
+    group { "$osinstallgroup":
       ensure  => absent,
       require => [User["$osinstalluser"], Class['asf999::create_user']],
     }
