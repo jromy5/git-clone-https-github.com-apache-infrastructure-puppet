@@ -8,9 +8,9 @@ class spamassassin::spamc (
 ) { 
 
   class { "spamassassin::spamc::install::${asfosname}::${asfosrelease}":
-    spamd_peers        => $spamd_peers
-     haproxy_maxconns  => '',
-     haproxy_port      => '',
-     haproxy_mode      => 'tcp',
+    spamd_peers       => $spamd_peers,
+    haproxy_maxconns  => $haproxy_maxconns,
+    haproxy_port      => $haproxy_port,
+    haproxy_mode      => $haproxy_mode,
   }
 }
