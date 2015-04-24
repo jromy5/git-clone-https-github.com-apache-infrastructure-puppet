@@ -47,15 +47,4 @@ class ldapclient::install::ubuntu::1404 (
         hasstatus  => true,
         hasrestart => true,
     }
-
-    user { 'ubuntu': 
-      ensure  => absent,
-      require => Class['asf999::create_user'],
-    }
-
-    group { 'ubuntu':
-      ensure  => absent,
-      require => [User['ubuntu'], Class['asf999::create_user']],
-    }
-
 }
