@@ -26,5 +26,4 @@ class asf999::create_user (
     mode    => '0640',
     require => User['asf999'],
   }
-
 }

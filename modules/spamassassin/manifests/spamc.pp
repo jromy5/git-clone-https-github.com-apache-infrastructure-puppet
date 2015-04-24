@@ -1,4 +1,8 @@
 class spamassassin::spamc (
+) { 
+
+class { 'haproxy': }
+
 
   $spamd_peers       = '',
   $haproxy_maxconns  = '',

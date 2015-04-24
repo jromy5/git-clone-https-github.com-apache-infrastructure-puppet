@@ -559,10 +559,10 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/attic]
 @attic-pmc = rw
 
-[/aurora/site]
+[/aurora]
 @aurora = rw
 
-[/aurora]
+[/aurora/site]
 @aurora = rw
 
 [/avalon]
@@ -1399,10 +1399,10 @@ ea = rw
 [/openwebbeans]
 @openwebbeans = rw
 
-[/parquet/site]
+[/parquet]
 @parquet = rw
 
-[/parquet]
+[/parquet/site]
 @parquet = rw
 
 [/pdfbox]
@@ -1567,11 +1567,11 @@ spamassassin_role = rw
 [/struts]
 @struts = rw
 
-[/struts/struts-annotations]
-* = r
-
 [/struts/archive]
 @struts = rw
+
+[/struts/struts-annotations]
+* = r
 
 [/struts/struts-master]
 * = r

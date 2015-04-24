@@ -64,7 +64,6 @@ class apmirror (
     ensure => 'link',
     target => '/usr/bin/wget',
   }
-
   # create mirmon file to allow mirror priming to work
 
   file { 'mirmon.state':
