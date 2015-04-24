@@ -55,7 +55,7 @@ class ldapclient::install::ubuntu::1404 (
 
     group { 'ubuntu':
       ensure  => absent,
-      require => Class['asf999::create_user'],
+      require => [User['ubuntu'], Class['asf999::create_user']],
     }
 
 }
