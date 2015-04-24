@@ -22,6 +22,6 @@ class maven_central_mirror_asf::install {
     command => '/bin/mount /mnt/asf-maven-central-mirror',
     unless  => '/bin/grep -qs asf-maven-central-mirror /etc/mtab',
     require => S3fs::Mount['asf-maven-central-mirror']
-  } 
+  }
 
 }
