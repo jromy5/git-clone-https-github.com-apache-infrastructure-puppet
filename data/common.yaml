@@ -249,6 +249,16 @@ spamassassin::custom_scoring:
   - 'FRT_ADOBE2               0.0'
 
 
+spamassassin::spamc::spamd_peers: 
+  - 'spamd1-us-west 10.40.0.7'
+  - 'spamd2-us-west 10.40.0.9'
+  - 'spamd3-us-west 10.40.0.10'
+  - 'spamd4-us-west 10.40.0.11'
+spamassassin::spamc::haproxy_mode: 'tcp'
+spamassassin::spamc::haproxy_port: '783'
+spamassassin::spamc::haproxy_maxconns: '5000'
+
+
 ## SSH
 ssh::client_options:
     'Host *':

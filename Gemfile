@@ -11,9 +11,9 @@ gem 'puppetlabs_spec_helper'
 gem 'serverspec'
 
 
-gem 'vagrant', :github => 'mitchellh/vagrant', :ref => 'v1.7.1'
+#gem 'vagrant', :github => 'mitchellh/vagrant', :ref => 'v1.7.1'
 
-group :plugins do
-  gem 'vagrant-aws', :github => 'mitchellh/vagrant-aws'
-  gem 'vagrant-serverspec', :github => 'jvoorhis/vagrant-serverspec'
-end
+#group :plugins do
+#  gem 'vagrant-aws', :github => 'mitchellh/vagrant-aws'
+#  gem 'vagrant-serverspec', :github => 'jvoorhis/vagrant-serverspec'
+#end

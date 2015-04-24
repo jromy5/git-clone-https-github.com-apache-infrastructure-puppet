@@ -27,12 +27,20 @@ class base (
 
 ) {
 
+<<<<<<< HEAD
     user { "$osinstalluser: 
+=======
+    user { "$osinstalluser": 
+>>>>>>> deployment
       ensure  => absent,
       require => Class['asf999::create_user'],
     }
 
+<<<<<<< HEAD
     group { "$osinstallgroup:
+=======
+    group { "$osinstallgroup":
+>>>>>>> deployment
       ensure  => absent,
       require => [User["$osinstalluser"], Class['asf999::create_user']],
     }
