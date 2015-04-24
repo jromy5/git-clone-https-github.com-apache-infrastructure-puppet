@@ -2,3 +2,9 @@
 classes:
  - spamassassin::spamd
 
+
+haproxy::exported_balancermember::listening_service: 'spamd_daemon'
+haproxy::exported_balancermember::servername: 'spamd1-us-west'
+haproxy::exported_balancermember::ports: '783'
+haproxy::exported_balancermember::options: 'check'
+
