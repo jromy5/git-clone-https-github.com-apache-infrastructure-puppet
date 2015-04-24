@@ -58,7 +58,7 @@ mod 'foreman_proxy',
 
 mod 'haproxy',
   :git    => 'https://github.com/pctony/puppetlabs-haproxy.git',
-  :commit => 'ed4afef1a5f13c4ae026ef2dd548fdce75affe82'
+  :commit => 'cf06f4f5a333f7f65f1f7e3d8895b537a1f1221c'
 
 
 mod 'iptables',
