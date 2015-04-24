@@ -8,7 +8,7 @@ class base (
   $packages = hiera_array('base::basepackages', [])
 
   package { $packages:
-    ensure   =>  installed,
+    ensure =>  installed,
   }
 
   $hosts = hiera_hash('base::hosts', {})
@@ -22,6 +22,7 @@ class base (
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  class base::remove_os_install_user (
    $osinstalluser  = undef,
@@ -30,13 +31,26 @@ class base (
 ) {
 
     user { "$osinstalluser: 
+=======
+class base::remove_os_install_user (
+  $osinstalluser  = undef,
+  $osinstallgroup = undef,
+
+) {
+
+    user { $osinstalluser:
+>>>>>>> more linting
       ensure  => absent,
       require => Class['asf999::create_user'],
     }
 
+<<<<<<< HEAD
     group { "$osinstallgroup:
+=======
+    group { $osinstallgroup:
+>>>>>>> more linting
       ensure  => absent,
-      require => [User["$osinstalluser"], Class['asf999::create_user']],
+      require => [User[$osinstalluser], Class['asf999::create_user']],
     }
 
 

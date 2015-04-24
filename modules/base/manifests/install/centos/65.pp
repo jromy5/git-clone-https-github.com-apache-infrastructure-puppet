@@ -1,15 +1,15 @@
 class base::install::centos::65 (
-  $asfinternalrepo    = ""
+  $asfinternalrepo    = '',
   ) {
   
   yumrepo { 'asf_internal':
     baseurl  => $asfinternalrepo,
     enabled  => 1,
     gpgcheck => 0,
-    descr    => "ASF Internal Yum Repo for CentOS 6"
+    descr    => 'ASF Internal Yum Repo for CentOS 6',
   }
 
-  file { 
+  file {
     '/usr/local/bin/zsh':
       ensure => link,
       target => '/usr/bin/zsh';
