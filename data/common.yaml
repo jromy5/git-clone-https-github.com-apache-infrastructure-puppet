@@ -249,6 +249,12 @@ spamassassin::custom_scoring:
   - 'FRT_ADOBE2               0.0'
 
 
+spamassassin::spamc::spamd_peers: 
+  - 'spamd1-us-west 10.40.0.7'
+  - 'spamd2-us-west 10.40.0.9'
+  - 'spamd3-us-west 10.40.0.10'
+  - 'spamd4-us-west 10.40.0.11'
+
 ## SSH
 ssh::client_options:
     'Host *':
