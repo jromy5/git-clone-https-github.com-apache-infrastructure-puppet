@@ -40,16 +40,16 @@ class puppet_asf::master {
   }
 
   file { 'puppetmaster':
+    ensure  => directory,
     require => Package['puppetmaster'],
     path    => '/usr/share/puppet/rack/puppetmasterd',
-    ensure  => directory,
     owner   => 'puppet',
     group   => 'puppet',
   }
 
   file { '/usr/share/puppet/rack/puppetmasterd/config.ru':
-    require => File['puppetmaster'],
     ensure  => present,
+    require => File['puppetmaster'],
     owner   => 'puppet',
     group   => 'puppet',
     mode    => '0644',
@@ -61,8 +61,8 @@ class puppet_asf::master {
   ]
 
   file  { $puppet_dirs:
-    require => File['puppetmaster'],
     ensure  => directory,
+    require => File['puppetmaster'],
     owner   => 'puppet',
     group   => 'puppet',
     mode    => '0755',

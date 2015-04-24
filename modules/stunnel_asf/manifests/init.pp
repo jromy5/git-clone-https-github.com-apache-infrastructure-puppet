@@ -7,7 +7,7 @@ class stunnel_asf (
 ) {
 
   package { $packages:
-    ensure => "${package_ensure}",
+    ensure => $package_ensure,
   }
 
   file { 'stunnel_conf':

@@ -6,23 +6,23 @@ class httpd_modules::mod_svn_check_path (
   $shell_path        = ['/usr/bin', '/bin', '/usr/sbin'],
 ) {
 
-    require httpd_modules
+  require httpd_modules
 
-    file { 'mod_svn_check_path':
-      path    => "${mod_path}",
-      recurse => true,
-      source  => 'puppet:///modules/httpd_modules/mod_svn_check_path',
-    }
+  file { 'mod_svn_check_path':
+    path    => $mod_path,
+    recurse => true,
+    source  => 'puppet:///modules/httpd_modules/mod_svn_check_path',
+  }
 
-    package { $required_packages:
-      ensure => latest,
-    }
+  package { $required_packages:
+    ensure => latest,
+  }
 
-    exec { 'compile mod_svn_check_path':
-      command => "${command}",
-      cwd     => "${mod_path}",
-      path    => $shell_path,
-      creates => "${creates}",
-    }
+  exec { 'compile mod_svn_check_path':
+    command => $command,
+    cwd     => $mod_path,
+    path    => $shell_path,
+    creates => $creates,
+  }
 
 }
