@@ -1,6 +1,6 @@
 class spamassassin::spamc (
 ) { 
 
-class { 'haproxy': }
-
+  class { "spamassassin::spamc::install::${asfosname}::${asfosrelease}":
+  }
 }
