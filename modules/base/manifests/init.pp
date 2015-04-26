@@ -14,8 +14,8 @@ class base (
   $hosts = hiera_hash('base::hosts', {})
   create_resources(host, $hosts)
 
-  class { "base::remove_os_install_user": 
-  }
+  #class { "base::remove_os_install_user": 
+  #}
 
   class { "base::install::${asfosname}::${asfosrelease}":
   }
