@@ -37,7 +37,6 @@ class ldapclient (
     ldapservers   =>  $ldapservers,
     nssbinddn     =>  $nssbinddn,
     nssbindpasswd =>  $nssbindpasswd,
-    require       =>  Class['base::remove_os_install_user'],
   }
 
 }
