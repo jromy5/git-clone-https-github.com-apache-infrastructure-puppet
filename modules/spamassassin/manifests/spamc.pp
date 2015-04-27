@@ -4,7 +4,7 @@ class spamassassin::spamc (
   $haproxy_maxconns      = '',
   $haproxy_port          = '',
   $haproxy_mode          = 'tcp',
-  $haproxy_statuser      = '',
+  $haproxy_statsuser     = '',
   $haproxy_statspassword = '',
 
 ) { 
