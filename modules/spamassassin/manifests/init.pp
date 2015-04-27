@@ -21,7 +21,6 @@ class spamassassin (
   $trusted_networks      = '', # e.g. '192.168.'
   $whitelist_from        = [],
   $blacklist_from        = [],
-
   $custom_scoring        = [],
   $custom_rules          = [],
 
