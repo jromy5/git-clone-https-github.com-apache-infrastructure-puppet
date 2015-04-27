@@ -12,21 +12,21 @@ class subversionclient (
     ensure   =>  installed,
   }
 
-  file { 
-    "$svn_conf_dir":
+  file {
+    $svn_conf_dir:
       ensure => directory,
       owner  => 'root',
       group  => 'root',
-      mode   => '755';
-    "$svn_conf_config":
+      mode   => '0755';
+    $svn_conf_config:
       source  => 'puppet:///modules/subversionclient/config',
       owner   => 'root',
       group   => 'root',
-      mode    => '644';
-    "$svn_conf_servers":
+      mode    => '0644';
+    $svn_conf_servers:
       source  => 'puppet:///modules/subversionclient/servers',
       owner   => 'root',
       group   => 'root',
-      mode    => '644';
+      mode    => '0644';
   }
 }
