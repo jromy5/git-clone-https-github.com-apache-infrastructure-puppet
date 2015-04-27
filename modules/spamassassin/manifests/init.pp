@@ -29,7 +29,7 @@ class spamassassin (
 
   file { 'spamfilter.sh':
     ensure => present,
-    path => "/usr/bin/spamfilter.sh",
+    path => '/usr/bin/spamfilter.sh',
     owner => 'root',
     group => 'root',
     mode => '0755',
@@ -39,7 +39,7 @@ class spamassassin (
     ensure   =>  installed,
   }
 
-  cron { 'sa-update':
+  cron { "sa-update":
     command => $sa_update,
     user    => 'root',
     hour    => 2,
