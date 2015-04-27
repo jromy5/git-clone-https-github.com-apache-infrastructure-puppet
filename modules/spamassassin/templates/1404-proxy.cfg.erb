@@ -37,4 +37,4 @@ listen stats
   stats hide-version
   stats realm Haproxy\ Statistics
   stats uri /
-  stats auth asfstats:teh@asf!!
+  stats auth <%= @haproxy_statsuser %>:<%= @haproxy_statspassword %>
