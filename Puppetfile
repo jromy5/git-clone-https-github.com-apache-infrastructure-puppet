@@ -100,8 +100,9 @@ mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
   :tag => '3.2.0'
 
-# mod 'perl',
-#   :git => 'https://github.com/example42/puppet-perl'
+mod 'perl',
+  :git => 'https://github.com/example42/puppet-perl'
+  :tag => 'v2.0.18'
 
 mod 'pkgng',
   :git => 'https://github.com/xaque208/puppet-pkgng',

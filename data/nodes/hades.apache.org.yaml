@@ -84,6 +84,11 @@ ntp::interfaces:
   - em1
   - lo
 
+perl::module:
+  net_ldap:
+    name: 'Net::LDAP'
+    use_package : true
+
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
 subversion_server::board_reminders::packages:
   - libdate-manip-perl
