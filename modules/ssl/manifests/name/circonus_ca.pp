@@ -1,6 +1,6 @@
-#/etc/puppet/modules/manifests/ssl/name/circonus-ca.pp
+#/etc/puppet/modules/manifests/ssl/name/circonus_ca.pp
 
-class ssl::name::circonus-ca (
+class ssl::name::circonus_ca (
 
   $sslcertcontents             = '',
   $sslcertname                 = 'circonus-ca.crt',
@@ -16,18 +16,18 @@ class ssl::name::circonus-ca (
   $sslrootdirumask             = '0755',
 ) {
 
-  file { 
-    "${sslrootdir}":
-      ensure   =>  directory,
-      group    =>  "${sslrootdirgroup}",
-      owner    =>  "${sslrootdirowner}",
-      mode     =>  "${sslrootdirumask}";
+  file {
+    $sslrootdir:
+      ensure => directory,
+      group  => $sslrootdirgroup,
+      owner  => $sslrootdirowner,
+      mode   => $sslrootdirumask;
     "${sslrootdir}/${sslcertname}":
-      require => File["${sslrootdir}"],
       ensure  => present,
+      require => File[$sslrootdir],
       content => $sslcertcontents,
-      owner   => "${sslrootdirowner}",
-      group   => "${sslrootdirgroup}",
+      owner   => $sslrootdirowner,
+      group   => $sslrootdirgroup,
       mode    => '0644';
   }
 }

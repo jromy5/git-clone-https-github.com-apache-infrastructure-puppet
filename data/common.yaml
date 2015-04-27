@@ -18,7 +18,7 @@ classes:
   - pam
   - puppet_asf
   - ssh_asf # this pulls in both server and client by default
-  - ssl::name::circonus-ca # required by collectd
+  - ssl::name::circonus_ca # required by collectd
   - sudoers
   - snmp
   - ulimit_asf
