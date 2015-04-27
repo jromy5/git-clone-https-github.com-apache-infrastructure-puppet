@@ -27,7 +27,7 @@ class spamassassin (
 
 ) {
 
-  file { 'spamfilter.sh':
+  file { "spamfilter.sh":
     ensure => present,
     path => '/usr/bin/spamfilter.sh',
     owner => 'root',
