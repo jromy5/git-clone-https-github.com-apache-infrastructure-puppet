@@ -2,18 +2,20 @@
 
 class rootbin_asf {
 
+  $group = $::asfosname ? {
+    /^ubuntu$/  => 'root',
+    /^centos$/  => 'root',
+    /^freebsd$/ => 'wheel',
+    default     => 'root',
+  }
+
   file {
     '/root/bin':
-      ensure   => present,
-      recurse  => true, 
-      source   => "puppet:///modules/rootbin_asf/bin",
-      owner    => 'root',
-      group    => $::asfosname ? {
-        /^ubuntu$/    => 'root',
-        /^centos$/    => 'root',
-        /^freebsd$/   => 'wheel',
-        default       => 'root',
-      },
-      mode     => '0775',
+      ensure  => present,
+      recurse => true,
+      source  => 'puppet:///modules/rootbin_asf/bin',
+      owner   => 'root',
+      group   => $group
+      mode    => '0775',
   }
 }
