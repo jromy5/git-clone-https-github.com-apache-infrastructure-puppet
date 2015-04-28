@@ -19,15 +19,25 @@ To issue the reminders for the first time (checking the files out into a directo
 by <directory>) the following commands may be used.
 
 cd <directory>
-svn co https://svn.apache.org/repos/asf/infrastructure/trunk/tools/board_reminders board_reminders
-cd board_reminders
+git clone https://git-wip-us.apache.org/repos/asf/infrastructure-puppet.git
+cd infrastructure-puppet/modules/subversion_server/files/board_reminders
 ./reminders.pl
 
 To issue the reminders subsequently, the following can then be used.
 
 cd <directory>/board_reminders
-svn update
+git pull
 ./reminders.pl
+
+Testing
+-------
+
+To run the script without sending any email:
+
+./reminders.pl --no-email
+
+A number of other options exist - check the script help or source code for
+more information.
 
 Issues
 ------
