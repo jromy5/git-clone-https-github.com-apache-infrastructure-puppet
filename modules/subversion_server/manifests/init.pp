@@ -154,7 +154,6 @@ class subversion_server (
       group  => 'svnadmins';
     '/x1/svn/repos/asf/hooks/pre-unlock':
       ensure => link,
-      test   =>
       target => '/x1/svn/hooks/pre-unlock',
       owner  => 'www-data',
       group  => 'svnadmins';
