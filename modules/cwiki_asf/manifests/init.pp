@@ -46,22 +46,22 @@
    $docroot = '/var/www'
    $intermediates_dir = "${docroot}/intermediates"
 
-    user { "${username}":
-         name => "${username}",
-         ensure => "${user_present}",
+    user { $username:
+         name => $username,
+         ensure => $user_present,
          home => "/home/${username}",
-         shell => "${shell}",
-         uid => "${uid}",
-         gid => "${groupname}",
+         shell => $shell,
+         uid => $uid,
+         gid => $groupname,
          groups => $groups,
          managehome => true,
-         require => Group["${groupname}"],
+         require => Group[$groupname],
     }
 
-    group { "${groupname}":
-          name => "${groupname}",
-          ensure => "${group_present}",
-          gid => "${gid}",
+    group { $groupname:
+          name => $groupname,
+          ensure => $group_present,
+          gid => $gid,
     }
 
 # download standalone Confluence
