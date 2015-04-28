@@ -16,83 +16,69 @@ class gitpubsub (
 
 ){
 
-    package { 'lua5.2':
-      ensure => installed
-    }
-    package { 'lua-filesystem':
-      ensure => installed
-    }
-    package { 'lua-socket':
-      ensure => installed
-    }
+  package { [ 'lua5.2' ], ['lua-filesystem'], ['lua-socket'] :
+    ensure => installed
+  }
   
-    user { "${username}":
-         name       => "${username}",
-         ensure     => "${user_present}",
-         home       => "/home/${username}",
-         shell      => "${shell}",
-         uid        => "${uid}",
-         gid        => "${groupname}",
-         groups     => $groups,
-         managehome => true,
-         require    => Group["${groupname}"],
-     }
+  user {
+    $username:
+     ensure     => $user_present,
+     name       => $username,
+     home       => "/home/${username}",
+     shell      => $shell,
+     uid        => $uid,
+     gid        => $groupname,
+     groups     => $groups,
+     managehome => true,
+     require    => Group[$groupname],
+  }
 
-    group { "${groupname}":
-        name   => "${groupname}",
-        ensure => "${group_present}",
-        gid    => "${gid}",
-    }
+  group {
+    $groupname:
+      ensure => $group_present,
+      name   => $groupname,
+      gid    => $gid,
+  }
 
-    file { "/var/log/${service_name}":
-        ensure => directory,
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-    }
-
-    file { "/var/run/${service_name}":
-        ensure => directory,
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-    }
-
-    file { "/etc/init.d/${service_name}":
-        mode   => 0755,
-        owner  => 'root',
-        group  => 'root',
-        source => "puppet:///modules/gitpubsub/gitpubsub.${asfosname}",
-    }
-    
-    file { 'gitpubsub app dir':
-        ensure => directory,
-        path => '/usr/local/etc/gitpubsub',
-    }
-
-    file { "/usr/local/etc/gitpubsub/gitpubsub.lua":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/gitpubsub/app/gitpubsub.lua',
-    }
-    
-    file { "/usr/local/etc/gitpubsub/config.lua":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/gitpubsub/app/config.lua',
-    }
-    
-    file { "/usr/local/etc/gitpubsub/JSON.lua":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/gitpubsub/app/JSON.lua',
-    }
+  file {
+    "/var/log/${service_name}":
+      ensure => directory,
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname;
+    "/var/run/${service_name}":
+      ensure => directory,
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname;
+    "/etc/init.d/${service_name}":
+      mode   => '0755',
+      owner  => 'root',
+      group  => 'root',
+      source => "puppet:///modules/gitpubsub/gitpubsub.${asfosname}";
+    'gitpubsub app dir':
+      ensure => directory,
+      path   => '/usr/local/etc/gitpubsub';
+    '/usr/local/etc/gitpubsub/gitpubsub.lua':
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/gitpubsub/app/gitpubsub.lua';
+    '/usr/local/etc/gitpubsub/config.lua':
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/gitpubsub/app/config.lua';
+    '/usr/local/etc/gitpubsub/JSON.lua':
+      mode   => 0755,
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/gitpubsub/app/JSON.lua',
+  
+  }
 
 
-    file { "/usr/local/etc/gitpubsub/gitpubsub.cfg":
+    file { '/usr/local/etc/gitpubsub/gitpubsub.cfg':
         notify => Service["${service_name}"],
         mode   => 0644,
         owner  => 'root',
