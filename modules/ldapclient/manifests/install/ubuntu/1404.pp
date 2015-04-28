@@ -9,7 +9,7 @@ class ldapclient::install::ubuntu::1404 (
 
 ) {
 
-  file { 
+  file {
     '/etc/ldap.conf':
       content => template('ldapclient/ldap.conf.erb');
     '/etc/nslcd.conf':
@@ -35,15 +35,15 @@ class ldapclient::install::ubuntu::1404 (
       require => File['/etc/ldap.conf'];
     '/etc/ldap/cacerts':
       ensure  => directory,
-      mode    => 755;
+      mode    => '0755';
     '/etc/ldap/cacerts/ldap-client.pem':
       content  =>  $ldapcert,
       require =>  File['/etc/ldap/cacerts'];
   }
 
-    service { "nslcd":
-        enable     => true,
+    service { 'nslcd':
         ensure     => 'running',
+        enable     => true,
         hasstatus  => true,
         hasrestart => true,
     }

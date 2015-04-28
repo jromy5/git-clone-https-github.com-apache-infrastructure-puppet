@@ -18,7 +18,7 @@ class ldapclient (
       ensure   =>  installed,
   }
 
-  package { 
+  package {
     $ldapclient_remove_packages:
       ensure   =>  purged,
   }
