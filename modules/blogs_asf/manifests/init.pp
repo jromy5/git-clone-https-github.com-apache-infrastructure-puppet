@@ -1,21 +1,21 @@
  class blogs_asf (
-   $r_uid = 8998,
-   $r_gid = 8998,
-   $r_group_present = 'present',
-   $r_groupname = 'roblogs',
-   $t_uid = 8997,
-   $t_gid = 8997,
-   $t_group_present = 'present',
-   $t_groupname = 'tcblogs',
-   $groups = [],
-   $service_ensure = 'stopped',
-   $service_name = 'roller',
-   $shell = '/bin/bash',
-   $r_user_present = 'present',
-   $r_username = 'roblogs',
-   $t_user_present = 'present',
-   $t_username = 'tcblogs',
-   $required_packages = [],
+  $r_uid = 8998,
+  $r_gid = 8998,
+  $r_group_present = 'present',
+  $r_groupname = 'roblogs',
+  $t_uid = 8997,
+  $t_gid = 8997,
+  $t_group_present = 'present',
+  $t_groupname = 'tcblogs',
+  $groups = [],
+  $service_ensure = 'stopped',
+  $service_name = 'roller',
+  $shell = '/bin/bash',
+  $r_user_present = 'present',
+  $r_username = 'roblogs',
+  $t_user_present = 'present',
+  $t_username = 'tcblogs',
+  $required_packages = [],
 ){
 
 # install required packages:
@@ -54,34 +54,34 @@
    $downloaded_t_tarball = "${download_dir}/${t_tarball}"
    $download_t_url = "https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
 
-   user { "${r_username}":
-        name => "${r_username}",
-        ensure => "${r_user_present}",
+   user { $r_username:
+        ensure => $r_user_present,
+        name => $r_username,
         home => "/home/${r_username}",
-        shell => "${shell}",
-        uid => "${r_uid}",
-        gid => "${r_groupname}",
+        shell => $shell,
+        uid => $r_uid,
+        gid => $r_groupname,
         groups => $groups,
         managehome => true,
-        require => Group["${r_groupname}"],
+        require => Group[$r_groupname],
    }
 
-   group { "${r_groupname}":
-         name => "${r_groupname}",
-         ensure => "${r_group_present}",
-         gid => "${r_gid}",
+   group { $r_groupname:
+         name => $r_groupname,
+         ensure => $r_group_present,
+         gid => $r_gid,
    }
 
-   user { "${t_username}":
-        name => "${t_username}",
-        ensure => "${t_user_present}",
+   user { $t_username:
+        name => $t_username,
+        ensure => $t_user_present,
         home => "/home/${t_username}",
-        shell => "${shell}",
-        uid => "${t_uid}",
-        gid => "${t_groupname}",
+        shell => $shell,
+        uid => $t_uid,
+        gid => $t_groupname,
         groups => $groups,
         managehome => true,
-        require => Group["${t_groupname}"],
+        require => Group[$t_groupname],
    }
 
    group { "${t_groupname}":
