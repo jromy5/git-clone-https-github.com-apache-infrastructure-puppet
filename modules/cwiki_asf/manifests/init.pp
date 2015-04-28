@@ -17,7 +17,7 @@
    $hibernate_connection_password = '',
    $hibernate_connection_username = '',
    $hibernate_connection_url = '',
-   $required_packages = ['graphviz' , 'graphviz-dev'], 
+   $required_packages = ['graphviz' , 'graphviz-dev'],
 ){
 
 # install required packages:
@@ -99,7 +99,7 @@
           onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
 }
 
- file { 
+ file {
   $parent_dir:
     ensure => directory,
     owner => 'root',
@@ -128,13 +128,13 @@
     group => 'confluence',
     mode => '0775',
     require => Class['apache'];
-  "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
+  "${install_dir}/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
-  "$install_dir/conf/server.xml":
+  "${install_dir}/conf/server.xml":
     content => template('cwiki_asf/server.xml.erb'),
     mode => '0644';
-  "$confluence_home/confluence.cfg.xml":
+  "${confluence_home}/confluence.cfg.xml":
     content => template('cwiki_asf/confluence.cfg.xml.erb'),
     owner => 'confluence',
     group => 'confluence',
