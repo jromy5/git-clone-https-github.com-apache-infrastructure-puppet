@@ -22,15 +22,15 @@ class gitpubsub (
   
   user {
     $username:
-     ensure     => $user_present,
-     name       => $username,
-     home       => "/home/${username}",
-     shell      => $shell,
-     uid        => $uid,
-     gid        => $groupname,
-     groups     => $groups,
-     managehome => true,
-     require    => Group[$groupname],
+      ensure     => $user_present,
+      name       => $username,
+      home       => "/home/${username}",
+      shell      => $shell,
+      uid        => $uid,
+      gid        => $groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$groupname],
   }
 
   group {
@@ -70,26 +70,22 @@ class gitpubsub (
       group  => $groupname,
       source => 'puppet:///modules/gitpubsub/app/config.lua';
     '/usr/local/etc/gitpubsub/JSON.lua':
-      mode   => 0755,
+      mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => 'puppet:///modules/gitpubsub/app/JSON.lua',
-  
+      source => 'puppet:///modules/gitpubsub/app/JSON.lua';
+    '/usr/local/etc/gitpubsub/gitpubsub.cfg':
+      notify => Service[$service_name],
+      mode   => '0644',
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/gitpubsub/config/gitpubsub.cfg';
   }
-
-
-    file { '/usr/local/etc/gitpubsub/gitpubsub.cfg':
-        notify => Service["${service_name}"],
-        mode   => 0644,
-        owner  => 'root',
-        group  => 'root',
-        source => 'puppet:///modules/gitpubsub/config/gitpubsub.cfg',
-    }
-
-    service { "${service_name}":
-        ensure    => $service_ensure,
-        enable    => true,
-        hasstatus => false,
-    }
-
+  
+  service {
+    $service_name:
+      ensure    => $service_ensure,
+      enable    => true,
+      hasstatus => false,
+  }
 }
