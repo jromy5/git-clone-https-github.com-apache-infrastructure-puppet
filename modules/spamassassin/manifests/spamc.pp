@@ -1,5 +1,5 @@
 class spamassassin::spamc (
-) { 
+) {
 
 class { 'haproxy': }
 
@@ -11,7 +11,7 @@ class { 'haproxy': }
   $haproxy_statsuser     = '',
   $haproxy_statspassword = '',
 
-) { 
+) {
 
   class { "spamassassin::spamc::install::${asfosname}::${asfosrelease}":
     spamd_peers           => $spamd_peers,
