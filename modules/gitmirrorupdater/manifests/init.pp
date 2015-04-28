@@ -14,7 +14,7 @@ class gitmirrorupdater (
       mode   => '0755',
   }
 
-  download_file {
+  gitmirrorupdater::download_file {
     [
       'svn2gitupdate.py',
       'svn2gitupdate.cfg'

@@ -1,4 +1,4 @@
-define download_file (
+define gitmirrorupdater::download_file (
   $site=             '',
   $cwd=              '',
   $creates=          '',
