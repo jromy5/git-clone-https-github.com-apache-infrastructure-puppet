@@ -36,7 +36,7 @@
    $download_dir = '/tmp'
    $downloaded_tarball = "${download_dir}/${tarball}"
    $download_url = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
-   $parent_dir = "/x1/cwiki"
+   $parent_dir = '/x1/cwiki'
    $install_dir = "${parent_dir}/${confluence_build}"
    $confluence_home = "${parent_dir}/confluence-data"
    $server_port = '8008'
@@ -66,20 +66,20 @@
 
 # download standalone Confluence
 
-    exec { "download-confluence":
+    exec { 'download-confluence':
            command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
            creates => $downloaded_tarball,
            timeout => 1200,
     }
  
       file { $downloaded_tarball:
-           require => Exec["download-confluence"],
+           require => Exec['download-confluence'],
            ensure => file,
     }
 
 # extract the download and move it
 
-    exec { "extract-confluence":
+    exec { 'extract-confluence':
            command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}",
            cwd => $download_dir,
            user => 'root',
@@ -88,13 +88,13 @@
            require => [File[$downloaded_tarball],File[$parent_dir]],
 }
 
-    exec { "chown-confluence-dirs":
+    exec { 'chown-confluence-dirs':
            command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
            timeout => 1200,
            require => [User["${username}"],Group["${username}"]],
 }
 
-   exec { "check_cfg_exists":
+   exec { 'check_cfg_exists':
           command => '/bin/true',
           onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
 }
@@ -115,7 +115,7 @@
     ensure => directory,
     owner => 'root',
     group => 'root',
-    require => Exec["extract-confluence"];
+    require => Exec['extract-confluence'];
   $current_dir:
     ensure => link,
     target => "${install_dir}",
@@ -139,7 +139,7 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0644',
-    require => Exec["check_cfg_exists"],
+    require => Exec['check_cfg_exists'],
     notify => Service["${service_name}"];
   "${mysql_connector_dest_dir}/${mysql_connector}":
     ensure => present,
@@ -151,10 +151,10 @@
     content => template('cwiki_asf/confluence-init-script.erb');
   "${intermediates_dir}/header.inc":
     ensure => present,
-    source => "puppet:///modules/cwiki_asf/header.inc";
+    source => 'puppet:///modules/cwiki_asf/header.inc';
   "${intermediates_dir}/footer.inc":
     ensure => present,
-    source => "puppet:///modules/cwiki_asf/footer.inc";
+    source => 'puppet:///modules/cwiki_asf/footer.inc';
   "/home/${username}/create-intermediates-index.sh":
     owner => "${username}",
     group => "${groupname}",
