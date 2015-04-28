@@ -46,22 +46,22 @@
    $docroot = '/var/www'
    $intermediates_dir = "${docroot}/intermediates"
 
-    user { "${username}":
-         name => "${username}",
-         ensure => "${user_present}",
+    user { $username:
+         name => $username,
+         ensure => $user_present,
          home => "/home/${username}",
-         shell => "${shell}",
-         uid => "${uid}",
-         gid => "${groupname}",
+         shell => $shell,
+         uid => $uid,
+         gid => $groupname,
          groups => $groups,
          managehome => true,
-         require => Group["${groupname}"],
+         require => Group[$groupname],
     }
 
-    group { "${groupname}":
-          name => "${groupname}",
-          ensure => "${group_present}",
-          gid => "${gid}",
+    group { $groupname:
+          name => $groupname,
+          ensure => $group_present,
+          gid => $gid,
     }
 
 # download standalone Confluence
@@ -91,7 +91,7 @@
     exec { 'chown-confluence-dirs':
            command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
            timeout => 1200,
-           require => [User["${username}"],Group["${username}"]],
+           require => [User[$username],Group[$username]],
 }
 
    exec { 'check_cfg_exists':
@@ -110,7 +110,7 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0755',
-    require => File["${install_dir}"];
+    require => File[$install_dir];
   $install_dir:
     ensure => directory,
     owner => 'root',
@@ -118,7 +118,7 @@
     require => Exec['extract-confluence'];
   $current_dir:
     ensure => link,
-    target => "${install_dir}",
+    target => $install_dir,
     owner => 'root',
     group => 'root',
     require => File["${install_dir}"];
