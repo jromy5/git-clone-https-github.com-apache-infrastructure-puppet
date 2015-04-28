@@ -50,67 +50,67 @@ class zmanda_asf::install {
   }
 
   s3fs::mount { 'asf-private':
+    ensure      => defined,
     bucket      => 'asf-private',
     mount_point => '/mnt/asf-private',
-    ensure      => defined,
     before      => Exec['mount s3fs'],
   }
 
-  exec { "mount s3fs":
-    command => "/bin/mount /mnt/asf-private",
-    unless  => "/bin/grep -qs asf-private /etc/mtab",
+  exec { 'mount s3fs':
+    command => '/bin/mount /mnt/asf-private',
+    unless  => '/bin/grep -qs asf-private /etc/mtab',
     require => S3fs::Mount['asf-private'],
     before  => Exec['untar vmware'],
-  } 
+  }
 
-  exec { "untar vmware":
-    creates => "/tmp/vmware-vsphere-cli-distrib/vmware-install.pl",
-    command => "/bin/tar -C /tmp -xzf /mnt/asf-private/packages/VMware-vSphere-CLI-5.1.0-780721.x86_64.tar.gz",
+  exec { 'untar vmware':
+    creates => '/tmp/vmware-vsphere-cli-distrib/vmware-install.pl',
+    command => '/bin/tar -C /tmp -xzf /mnt/asf-private/packages/VMware-vSphere-CLI-5.1.0-780721.x86_64.tar.gz',
     require => Exec['mount s3fs'],
     before  => Exec['install vmware'],
-  } -> Exec["install vmware"]
+  } -> Exec['install vmware']
 
-  exec { "install vmware":
-    cwd         => "/tmp/vmware-vsphere-cli-distrib",
-    unless      => "/usr/bin/test -f /usr/bin/vmware-toolbox-cmd",
-    command     => "/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d",
-    environment => ["PAGER=/bin/cat"],
+  exec { 'install vmware':
+    cwd         => '/tmp/vmware-vsphere-cli-distrib',
+    unless      => '/usr/bin/test -f /usr/bin/vmware-toolbox-cmd',
+    command     => '/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d',
+    environment => ['PAGER=/bin/cat'],
     logoutput   => false,
     require     => Exec['untar vmware'],
     returns     => 1,
   } -> File['/tmp/amanda-enterprise-3.3.6-linux.run']
 
-  file { "/tmp/amanda-enterprise-3.3.6-linux.run":
-    mode   => 755,
-    owner  => root,
-    group  => root,
-    source => "/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run",
+  file { '/tmp/amanda-enterprise-3.3.6-linux.run':
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
+    source => '/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run',
     before => Exec['install zmanda'],
   }
 
-  exec { "install zmanda":
-    command => "/tmp/amanda-enterprise-3.3.6-linux.run --mode unattended",
-    unless  => "/usr/bin/test -f /var/lib/amanda/amanda-release",
+  exec { 'install zmanda':
+    command => '/tmp/amanda-enterprise-3.3.6-linux.run --mode unattended',
+    unless  => '/usr/bin/test -f /var/lib/amanda/amanda-release',
     require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
-  } 
+  }
   
-  file { "/etc/zmanda/zmanda_license":
-    mode    => 664,
-    owner   => root,
-    group   => root,
-    source  => "/mnt/asf-private/licenses/zmanda_license",
+  file { '/etc/zmanda/zmanda_license':
+    mode    => '0664',
+    owner   => 'root',
+    group   => 'root',
+    source  => '/mnt/asf-private/licenses/zmanda_license',
     require => Exec['install zmanda'],
-  } -> Exec["unmount s3fs"]
+  } -> Exec['unmount s3fs']
 
-  exec { "unmount s3fs":
-    command => "/bin/umount /mnt/asf-private",
+  exec { 'unmount s3fs':
+    command => '/bin/umount /mnt/asf-private',
   }
 
-  file { "/opt/zmanda/amanda/apache2/conf/ssl.conf":
-    mode    => 644,
-    owner   => root,
-    group   => root,
-    source  => "puppet:///modules/zmanda_asf/ssl.conf",
+  file { '/opt/zmanda/amanda/apache2/conf/ssl.conf':
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    source  => 'puppet:///modules/zmanda_asf/ssl.conf',
     require => File['/etc/zmanda/zmanda_license']
   }
 }
