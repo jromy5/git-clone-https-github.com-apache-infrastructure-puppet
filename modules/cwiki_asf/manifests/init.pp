@@ -45,7 +45,7 @@ class cwiki_asf (
   $docroot                  = '/var/www'
   $intermediates_dir        = "${docroot}/intermediates"
 
-  user { 
+  user {
     $username:
       ensure     => $user_present,
       name       => $username,
@@ -72,7 +72,7 @@ class cwiki_asf (
       creates => $downloaded_tarball,
       timeout => 1200,
   }
- 
+
   file { $downloaded_tarball:
     ensure  => file,
     require => Exec['download-confluence'],
@@ -99,7 +99,7 @@ class cwiki_asf (
   exec {
     'check_cfg_exists':
       command => '/bin/true',
-      onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
+      onlyif  => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
   }
 
   file {
@@ -184,40 +184,44 @@ class cwiki_asf (
   # apache::mod { 'proxy': }
   # apache::mod { 'proxy_http': }
 
-  apache::vhost { 'cwiki-vm3-80':
-      vhost_name => '*',
-      priority => '12',
-      servername => 'cwiki-vm3.apache.org',
-      serveraliases => [
+  apache::vhost {
+    'cwiki-vm3-80':
+      vhost_name      => '*',
+      priority        => '12',
+      servername      => 'cwiki-vm3.apache.org',
+      serveraliases   => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
       ],
-      port => '80',
-      ssl => false,
-      docroot => $docroot,
-      error_log_file => 'cwiki_error.log',
+      port            => '80',
+      ssl             => false,
+      docroot         => $docroot,
+      error_log_file  => 'cwiki_error.log',
 #      redirect_source => ['/'],
-#      redirect_dest => ['https://cwiki.apache.org/'],
+#      redirect_dest   => ['https://cwiki.apache.org/'],
 #      redirect_status => ['permanent'],
       custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1'
 }
 
-  apache::vhost { 'cwiki-vm3-443':
-      vhost_name => '*',
-      default_vhost => true,
-      servername => 'cwiki-vm3.apache.org',
-      port => '443',
-      docroot => $docroot,
+  apache::vhost {
+    'cwiki-vm3-443':
+      vhost_name         => '*',
+      default_vhost      => true,
+      servername         => 'cwiki-vm3.apache.org',
+      port               => '443',
+      docroot            => $docroot,
+
       serveraliases => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
       ],
+      
       error_log_file => 'cwiki_error.log',
-      ssl => true,
-      ssl_cert => '/etc/ssl/certs/cwiki.apache.org.crt',
-      ssl_chain => '/etc/ssl/certs/cwiki.apache.org.chain',
-      ssl_key => '/etc/ssl/private/cwiki.apache.org.key',
-      rewrites => [
+      ssl            => true,
+      ssl_cert       => '/etc/ssl/certs/cwiki.apache.org.crt',
+      ssl_chain      => '/etc/ssl/certs/cwiki.apache.org.chain',
+      ssl_key        => '/etc/ssl/private/cwiki.apache.org.key',
+      rewrites       => [
         {
           comment      => 'redirect from / to /confluence for most.',
           rewrite_cond => ['$1 !(confluence|intermediates)'],
@@ -225,56 +229,53 @@ class cwiki_asf (
         },
       ],
       proxy_pass => [
-        { 'path' => '/confluence/', 'url' => 'http://127.0.0.1:8888/confluence/',
-          'reverse_urls' => ['http://127.0.0.1:8888/confluence/'] },
+        { 'path'         => '/confluence/',
+          'url'          => 'http://127.0.0.1:8888/confluence/',
+          'reverse_urls' => ['http://127.0.0.1:8888/confluence/']
+        },
       ],
       #    no_proxy_uris => ['/intermediates'],
-      custom_fragment => 'ProxyPass /intermediates !'
+      custom_fragment    => 'ProxyPass /intermediates !'
   }
 
-  service { $service_name:
-      ensure => $service_ensure,
-      enable => true,
-      hasstatus => false,
+  service {
+    $service_name:
+      ensure     => $service_ensure,
+      enable     => true,
+      hasstatus  => false,
       hasrestart => true,
-      require => Class['apache'],
+      require    => Class['apache'],
   }
 
 # cron jobs
 
-  cron { 'create-intermediates-index':
-    user => $username,
-    minute => '*/30',
-    command => "/home/${username}/create-intermediates-index.sh",
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-    SHELL=/bin/sh',
-    require => User[$username],
-}
-  cron { 'copy-intermediate-html':
-    user => $username,
-    minute => '*/10',
-    command => "/home/${username}/copy-intermediate-html.sh",
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-    SHELL=/bin/sh',
-    require => User[$username],
-}
-  cron { 'remove-intermediates-daily':
-    user => $username,
-    minute => 05,
-    hour => 07,
-    command => "/home/${username}/remove-intermediates-daily.sh",
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-    SHELL=/bin/sh',
-    require => User[$username],
-}
-  cron { 'cleanup-tomcat-logs':
-    user => $username,
-    minute => 20,
-    hour => 07,
-    command => "/home/${username}/cleanup-tomcat-logs.sh",
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-    SHELL=/bin/sh',
-    require => User[$username],
+  cron {
+    'create-intermediates-index':
+      user        => $username,
+      minute      => '*/30',
+      command     => "/home/${username}/create-intermediates-index.sh",
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      require     => User[$username];
+    'copy-intermediate-html':
+      user        => $username,
+      minute      => '*/10',
+      command     => "/home/${username}/copy-intermediate-html.sh",
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      require     => User[$username];
+    'remove-intermediates-daily':
+      user        => $username,
+      minute      => 05,
+      hour        => 07,
+      command     => "/home/${username}/remove-intermediates-daily.sh",
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      require     => User[$username];
+    'cleanup-tomcat-logs':
+      user        => $username,
+      minute      => 20,
+      hour        => 07,
+      command     => "/home/${username}/cleanup-tomcat-logs.sh",
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      require     => User[$username],
 }
 
 }
