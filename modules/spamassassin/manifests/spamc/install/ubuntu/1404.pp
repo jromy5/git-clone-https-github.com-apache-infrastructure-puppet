@@ -1,9 +1,11 @@
 class spamassassin::spamc::install::ubuntu::1404 (
 
-  $spamd_peers       = '',
-  $haproxy_maxconns  = '',
-  $haproxy_port      = '',
-  $haproxy_mode      = 'tcp',
+  $spamd_peers           = '',
+  $haproxy_maxconns      = '',
+  $haproxy_port          = '',
+  $haproxy_mode          = 'tcp',
+  $haproxy_statsuser     = '',
+  $haproxy_statspassword = '',
 
 ) {
     package { 'haproxy':

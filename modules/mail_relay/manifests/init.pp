@@ -2,7 +2,7 @@
 
 class mail_relay (
 
-  $mail_ldap_servers     = '',  
+  $mail_ldap_servers = '',
 
 ) {
 

@@ -29,3 +29,12 @@ listen spamd_daemon
 server <%= peer %>:783 check
 <% end -%>
 
+
+listen stats
+  bind :80
+  mode http
+  stats enable
+  stats hide-version
+  stats realm Haproxy\ Statistics
+  stats uri /
+  stats auth <%= @haproxy_statsuser %>:<%= @haproxy_statspassword %>

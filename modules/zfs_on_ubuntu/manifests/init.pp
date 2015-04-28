@@ -8,7 +8,7 @@ class zfs_on_ubuntu {
   }
 
   package { $packages:
-    ensure   => installed,
-    require  => Apt::Ppa['ppa:zfs-native/stable'],
+    ensure  => installed,
+    require => Apt::Ppa['ppa:zfs-native/stable'],
   }
 }

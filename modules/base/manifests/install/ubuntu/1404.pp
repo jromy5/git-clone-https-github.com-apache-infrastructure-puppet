@@ -1,7 +1,7 @@
 class base::install::ubuntu::1404 (
 ) {
 
-  file { 
+  file {
     '/root':
       owner  => 'root',
       group  => 'root',
@@ -14,6 +14,6 @@ class base::install::ubuntu::1404 (
       target => '/bin/bash';
     '/etc/logrotate.d/rsyslog':
       ensure => present,
-      source => "puppet:///modules/base/logrotate-rsyslog";
+      source => 'puppet:///modules/base/logrotate-rsyslog';
   }
 }

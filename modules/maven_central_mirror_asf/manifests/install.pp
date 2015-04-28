@@ -12,16 +12,16 @@ class maven_central_mirror_asf::install {
   }
 
   s3fs::mount { 'asf-maven-central-mirror':
+    ensure      => defined,
     bucket      => 'asf-maven-central-mirror',
     mount_point => '/mnt/asf-maven-central-mirror',
-    ensure      => defined,
     before      => Exec['mount s3fs'],
   }
 
-  exec { "mount s3fs":
-    command => "/bin/mount /mnt/asf-maven-central-mirror",
-    unless  => "/bin/grep -qs asf-maven-central-mirror /etc/mtab",
+  exec { 'mount s3fs':
+    command => '/bin/mount /mnt/asf-maven-central-mirror',
+    unless  => '/bin/grep -qs asf-maven-central-mirror /etc/mtab',
     require => S3fs::Mount['asf-maven-central-mirror']
-  } 
+  }
 
 }
