@@ -36,7 +36,7 @@
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${r_tarball}"
   $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/${roller_release}/bin/${r_tarball}"
-  $parent_dir               = "/x1/roller"
+  $parent_dir               = '/x1/roller'
   $install_dir              = "${parent_dir}/${roller_build}"
   $data_dir                 = '/x1/roller_data'
   $server_port              = '8008'
@@ -73,7 +73,7 @@
       ensure => $r_group_present,
       name   => $r_groupname,
       gid    => $r_gid,
-   }
+  }
 
   user {
     $t_username:
@@ -86,29 +86,30 @@
       groups     => $groups,
       managehome => true,
       require    => Group[$t_groupname],
-   }
+  }
 
-   group {
-     $t_groupname:
-       ensure => $t_group_present,
-       name   => $t_groupname,
-       gid    => $t_gid,
-   }
+  group {
+    $t_groupname:
+      ensure => $t_group_present,
+      name   => $t_groupname,
+      gid    => $t_gid,
+  }
 
-   apache::vhost {
-     'blogs-vm-80':
-       vhost_name       => '*',
-       priority         => '12',
-       servername       => 'blogs-vm.apache.org',
-       serveraliases    => [
-         'blogs-test.apache.org',
-       ],
-       port             => '80',
-       ssl              => false,
-       docroot          => $docroot,
-       error_log_file   => 'blogs_error.log',
-       # custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
-   }
+  apache::vhost {
+    'blogs-vm-80':
+      vhost_name       => '*',
+      priority         => '12',
+      servername       => 'blogs-vm.apache.org',
+      serveraliases    => [
+        'blogs-test.apache.org',
+      ],
+      port             => '80',
+      ssl              => false,
+      docroot          => $docroot,
+      error_log_file   => 'blogs_error.log',
+      #custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
+  }
+
   file {
     $parent_dir:
       ensure => directory,
