@@ -101,7 +101,7 @@ mod 'ntp',
   :tag => '3.2.0'
 
 mod 'perl',
-  :git => 'https://github.com/example42/puppet-perl'
+  :git => 'https://github.com/example42/puppet-perl',
   :tag => 'v2.0.18'
 
 mod 'pkgng',
