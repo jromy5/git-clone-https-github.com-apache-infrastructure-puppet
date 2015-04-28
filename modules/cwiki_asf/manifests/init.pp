@@ -121,7 +121,7 @@
     target => $install_dir,
     owner => 'root',
     group => 'root',
-    require => File["${install_dir}"];
+    require => File[$install_dir];
   $intermediates_dir:
     ensure => directory,
     owner => 'www-data',
@@ -140,7 +140,7 @@
     group => 'confluence',
     mode => '0644',
     require => Exec['check_cfg_exists'],
-    notify => Service["${service_name}"];
+    notify => Service[$service_name];
   "${mysql_connector_dest_dir}/${mysql_connector}":
     ensure => present,
     source => "puppet:///modules/cwiki_asf/${mysql_connector}";
@@ -156,23 +156,23 @@
     ensure => present,
     source => 'puppet:///modules/cwiki_asf/footer.inc';
   "/home/${username}/create-intermediates-index.sh":
-    owner => "${username}",
-    group => "${groupname}",
+    owner => $username",
+    group => ${groupname",
     content => template('cwiki_asf/create-intermediates-index.sh.erb'),
     mode => '0755';
   "/home/${username}/copy-intermediate-html.sh":
-    owner => "${username}",
-    group => "${groupname}",
+    owner => $username,
+    group => $groupname,
     content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
     mode => '0755';
   "/home/${username}/remove-intermediates-daily.sh":
-    owner => "${username}",
-    group => "${groupname}",
+    owner => $username,
+    group => $groupname,
     content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
     mode => '0755';
   "/home/${username}/cleanup-tomcat-logs.sh":
-    owner => "${username}",
-    group => "${groupname}",
+    owner => $username,
+    group => $groupname,
     content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
     mode => '0755';
 }
@@ -191,7 +191,7 @@
       ],
       port => '80',
       ssl => false,
-      docroot => "${docroot}",
+      docroot => $docroot,
       error_log_file => 'cwiki_error.log',
 #      redirect_source => ['/'],
 #      redirect_dest => ['https://cwiki.apache.org/'],
@@ -204,7 +204,7 @@
       default_vhost => true,
       servername => 'cwiki-vm3.apache.org',
       port => '443',
-      docroot => "${docroot}",
+      docroot => $docroot,
       serveraliases => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
@@ -229,7 +229,7 @@
       custom_fragment => 'ProxyPass /intermediates !'
   }
 
-  service { "${service_name}":
+  service { $service_name:
       ensure => $service_ensure,
       enable => true,
       hasstatus => false,
@@ -240,38 +240,38 @@
 # cron jobs
 
   cron { 'create-intermediates-index':
-    user => "${username}",
+    user => $username,
     minute => '*/30',
     command => "/home/${username}/create-intermediates-index.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User["${username}"],
+    require => User[$username],
 }
   cron { 'copy-intermediate-html':
-    user => "${username}",
+    user => $username,
     minute => '*/10',
     command => "/home/${username}/copy-intermediate-html.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User["${username}"],
+    require => User[$username],
 }
   cron { 'remove-intermediates-daily':
-    user => "${username}",
+    user => $username,
     minute => 05,
     hour => 07,
     command => "/home/${username}/remove-intermediates-daily.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User["${username}"],
+    require => User[$username],
 }
   cron { 'cleanup-tomcat-logs':
-    user => "${username}",
+    user => $username,
     minute => 20,
     hour => 07,
     command => "/home/${username}/cleanup-tomcat-logs.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User["${username}"],
+    require => User[$username],
 }
 
 }
