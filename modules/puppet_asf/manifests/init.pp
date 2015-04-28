@@ -33,7 +33,6 @@ class puppet_asf (
     default: {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
-      fail("Module ${module_name} is not supported on ${::operatingsystem}")
   }
 
   service { 'puppet':
