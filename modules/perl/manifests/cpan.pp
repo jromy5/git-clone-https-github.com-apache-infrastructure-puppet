@@ -11,6 +11,12 @@ class perl::cpan inherits perl {
   }
 
   exec{ 'configure_cpan':
+    creates     => '/root/.cpan/CPAN/MyConfig.pm',
+    require     => [ Package[$perl::cpan_package] ],
+    user        => root,
+    path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+    timeout     => 600,
+    environment => [ 'HOME=/root' ],
     command => "cpan <<EOF
 yes
 yes
@@ -21,12 +27,6 @@ ${perl::cpan_mirror}
 yes
 quit
 EOF",
-    creates => '/root/.cpan/CPAN/MyConfig.pm',
-    require => [ Package[$perl::cpan_package] ],
-    user    => root,
-    path    => '/bin:/sbin:/usr/bin:/usr/sbin',
-    timeout => 600,
-    environment => [ 'HOME=/root' ],
   }
 
 }
