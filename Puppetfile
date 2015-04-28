@@ -1,4 +1,5 @@
 mod 'amanda',
+
   :git => 'https://github.com/puppet-community/puppet-module-amanda'
 
 
