@@ -84,10 +84,10 @@
         require => Group[$t_groupname],
    }
 
-   group { "${t_groupname}":
-         name => "${t_groupname}",
-         ensure => "${t_group_present}",
-         gid => "${t_gid}",
+   group { $t_groupname:
+         name => $t_groupname,
+         ensure => $t_group_present,
+         gid => $t_gid,
    }
 
    apache::vhost { 'blogs-vm-80':
@@ -99,7 +99,7 @@
        ],
        port => '80',
        ssl => false,
-       docroot => "${docroot}",
+       docroot => $docroot,
        error_log_file => 'blogs_error.log',
        # custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
    }
@@ -111,8 +111,8 @@
       mode => '0755';
     $data_dir:
       ensure => directory,
-      owner => "${t_username}",
-      group => "${r_groupname}",
+      owner => $t_username,
+      group => $r_groupname,
       mode => '0775';
 
   }
