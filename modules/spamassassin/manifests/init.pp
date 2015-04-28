@@ -29,17 +29,17 @@ class spamassassin (
 
   file { 'spamfilter.sh':
     ensure => present,
-    path   => '/usr/bin/spamfilter.sh',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+    path => '/usr/bin/spamfilter.sh',
+    owner => 'root',
+    group => 'root',
+    mode => '0755',
     source => 'puppet:///modules/spamassassin/spamfilter.sh',
   }
-  package { $spamassassin_packages:
+  package { $spamassassin_packages: 
     ensure   =>  installed,
   }
 
-  cron { 'sa-update':
+  cron { "sa-update":
     command => $sa_update,
     user    => 'root',
     hour    => 2,
@@ -53,16 +53,16 @@ class spamassassin (
     pattern => 'spamd',
   }
 
-  file {
-        '/etc/mail/spamassassin/local.cf':
-          content => template('spamassassin/local.cf.erb'),
-          require => Package[ $spamassassin_packages ],
-          notify  => Service['spamassassin'];
-        '/etc/mail/spamassassin/init.pre':
-          content => template('spamassassin/init.pre.erb'),
-          require => Package[ $spamassassin_packages ],
-          notify  => Service['spamassassin'];
-       }
+  file { 
+         '/etc/mail/spamassassin/local.cf':
+           content => template('spamassassin/local.cf.erb'),
+           require => Package[ $spamassassin_packages ],
+           notify  => Service['spamassassin'];
+         '/etc/mail/spamassassin/init.pre':
+           content => template('spamassassin/init.pre.erb'),
+           require => Package[ $spamassassin_packages ],
+           notify  => Service['spamassassin'];
+        }
 
   if $::osfamily == 'Debian' {
     file { '/etc/default/spamassassin':
