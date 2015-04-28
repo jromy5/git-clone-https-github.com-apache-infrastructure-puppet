@@ -1,7 +1,7 @@
 class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_passwrd    = '',
-  $jenkins_pub_key  = '', 
+  $jenkins_pub_key  = '',
   $jenkins_packages = []
   ) {
   
@@ -20,21 +20,21 @@ class build_slaves::jenkins (
   }
 
   file { '/usr/local/jenkins':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
   }
 
   file { '/home/jenkins/tools':
+    ensure  => 'link',
     require => File['/usr/local/jenkins'],
-    ensure => 'link',
-    target => '/usr/local/jenkins',
+    target  => '/usr/local/jenkins',
   }
 
   file { '/home/jenkins/.ssh':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0700'
@@ -42,7 +42,7 @@ class build_slaves::jenkins (
 
   file { '/home/jenkins/env.sh':
     ensure => present,
-    mode   => 0755,
+    mode   => '0755',
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
     owner  => 'jenkins',
     group  => 'jenkins',
@@ -57,24 +57,24 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.m2':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0755'
   }
 
   file { '/home/jenkins/.buildr':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0755'
   }
 
   file { '/home/jenkins/.m2/settings.xml':
-    require => File['/home/jenkins/.m2'],
     ensure  => $ensure,
+    require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/settings.xml',
     owner   => 'jenkins',
     group   => 'jenkins',
@@ -83,8 +83,8 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.buildr/settings.yaml':
-    require => File['/home/jenkins/.buildr'],
     ensure  => $ensure,
+    require => File['/home/jenkins/.buildr'],
     path    => '/home/jenkins/.buildr/settings.yaml',
     owner   => 'jenkins',
     group   => 'jenkins',
@@ -93,8 +93,8 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.npmrc':
-    require => File['/home/jenkins'],
     ensure  => $ensure,
+    require => File['/home/jenkins'],
     path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
     group   => 'jenkins',
@@ -106,7 +106,7 @@ class build_slaves::jenkins (
     ensure  => file,
     owner   => root,
     group   => root,
-    mode    => 0644,
+    mode    => '0644',
     source  => 'puppet:///modules/build_slaves/jenkins_limits.conf',
     require => File['/etc/security/limits.d'],
   }
