@@ -148,7 +148,7 @@ class cwiki_asf (
       ensure => present,
       source => "puppet:///modules/cwiki_asf/${mysql_connector}";
     "/etc/init.d/${service_name}":
-      mode    => 0755,
+      mode    => '0755',
       owner   => 'root',
       group   => 'root',
       content => template('cwiki_asf/confluence-init-script.erb');
@@ -205,37 +205,35 @@ class cwiki_asf (
 
   apache::vhost {
     'cwiki-vm3-443':
-      vhost_name         => '*',
-      default_vhost      => true,
-      servername         => 'cwiki-vm3.apache.org',
-      port               => '443',
-      docroot            => $docroot,
-
-      serveraliases => [
+      vhost_name      => '*',
+      default_vhost   => true,
+      servername      => 'cwiki-vm3.apache.org',
+      port            => '443',
+      docroot         => $docroot,
+      error_log_file  => 'cwiki_error.log',
+      ssl             => true,
+      ssl_cert        => '/etc/ssl/certs/cwiki.apache.org.crt',
+      ssl_chain       => '/etc/ssl/certs/cwiki.apache.org.chain',
+      ssl_key         => '/etc/ssl/private/cwiki.apache.org.key',
+      custom_fragment => 'ProxyPass /intermediates !'
+      serveraliases   => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
       ],
-      
-      error_log_file => 'cwiki_error.log',
-      ssl            => true,
-      ssl_cert       => '/etc/ssl/certs/cwiki.apache.org.crt',
-      ssl_chain      => '/etc/ssl/certs/cwiki.apache.org.chain',
-      ssl_key        => '/etc/ssl/private/cwiki.apache.org.key',
-      rewrites       => [
+      rewrites        => [
         {
           comment      => 'redirect from / to /confluence for most.',
           rewrite_cond => ['$1 !(confluence|intermediates)'],
           rewrite_rule => ['^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]'],
         },
       ],
-      proxy_pass => [
+      proxy_pass      => [
         { 'path'         => '/confluence/',
           'url'          => 'http://127.0.0.1:8888/confluence/',
           'reverse_urls' => ['http://127.0.0.1:8888/confluence/']
         },
       ],
       #    no_proxy_uris => ['/intermediates'],
-      custom_fragment    => 'ProxyPass /intermediates !'
   }
 
   service {
