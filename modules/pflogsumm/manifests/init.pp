@@ -7,7 +7,7 @@ class pflogsumm (
 
   package {
     $packages:
-      ensure =>  installed,
+      ensure => installed,
   }
 
   cron {
