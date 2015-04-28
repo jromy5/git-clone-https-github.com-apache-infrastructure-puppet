@@ -21,42 +21,6 @@ class base (
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
- class base::remove_os_install_user (
-   $osinstalluser  = undef,
-   $osinstallgroup = undef,
-
-) {
-
-    user { "$osinstalluser: 
-=======
-class base::remove_os_install_user (
-  $osinstalluser  = undef,
-  $osinstallgroup = undef,
-
-) {
-
-    user { $osinstalluser:
->>>>>>> more linting
-      ensure  => absent,
-      require => Class['asf999::create_user'],
-    }
-
-<<<<<<< HEAD
-    group { "$osinstallgroup:
-=======
-    group { $osinstallgroup:
->>>>>>> more linting
-      ensure  => absent,
-      require => [User[$osinstalluser], Class['asf999::create_user']],
-    }
-
-
-}
-
->>>>>>> move the logic to pre-ldap instantiation becuase the default userid for ubuntu is 1000, which conflicts with a valid committers in ldap
 # to instantiate defined types (like snmpv3_user) via hiera we need to use
 # create_resources to iterate across the hash
 
