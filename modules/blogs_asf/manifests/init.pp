@@ -97,16 +97,16 @@
 
   apache::vhost {
     'blogs-vm-80':
-      vhost_name       => '*',
-      priority         => '12',
-      servername       => 'blogs-vm.apache.org',
-      serveraliases    => [
+      vhost_name     => '*',
+      priority       => '12',
+      servername     => 'blogs-vm.apache.org',
+      port           => '80',
+      ssl            => false,
+      docroot        => $docroot,
+      error_log_file => 'blogs_error.log',
+      serveraliases  => [
         'blogs-test.apache.org',
       ],
-      port             => '80',
-      ssl              => false,
-      docroot          => $docroot,
-      error_log_file   => 'blogs_error.log',
       #custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
   }
 
