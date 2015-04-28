@@ -17,7 +17,7 @@ class perl::cpan inherits perl {
     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     timeout     => 600,
     environment => [ 'HOME=/root' ],
-    command => "cpan <<EOF
+    command     => "cpan <<EOF
 yes
 yes
 no
