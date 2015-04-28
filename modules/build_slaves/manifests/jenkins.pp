@@ -72,46 +72,46 @@ class build_slaves::jenkins (
     mode    => '0755'
   }
 
-  file { "/home/jenkins/.m2/settings.xml":
+  file { '/home/jenkins/.m2/settings.xml':
     require => File['/home/jenkins/.m2'],
     ensure  => $ensure,
-    path    => "/home/jenkins/.m2/settings.xml",
+    path    => '/home/jenkins/.m2/settings.xml',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/m2_settings.erb')
   }
 
-  file { "/home/jenkins/.buildr/settings.yaml":
+  file { '/home/jenkins/.buildr/settings.yaml':
     require => File['/home/jenkins/.buildr'],
     ensure  => $ensure,
-    path    => "/home/jenkins/.buildr/settings.yaml",
+    path    => '/home/jenkins/.buildr/settings.yaml',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
   }
 
-  file { "/home/jenkins/.npmrc":
+  file { '/home/jenkins/.npmrc':
     require => File['/home/jenkins'],
     ensure  => $ensure,
-    path    => "/home/jenkins/.npmrc",
+    path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/npmrc.erb')
   }
 
-  file { "/etc/security/limits.d/jenkins.conf":
+  file { '/etc/security/limits.d/jenkins.conf':
     ensure  => file,
     owner   => root,
     group   => root,
     mode    => 0644,
-    source  => "puppet:///modules/build_slaves/jenkins_limits.conf",
-    require => File["/etc/security/limits.d"],
+    source  => 'puppet:///modules/build_slaves/jenkins_limits.conf',
+    require => File['/etc/security/limits.d'],
   }
 
-  file_line { "USERGROUPS_ENAB":
+  file_line { 'USERGROUPS_ENAB':
     path  => '/etc/login.defs',
     line  => 'USERGROUPS_ENAB no',
     match => '^USERGROUPS_ENAB.*'
