@@ -14,58 +14,58 @@ class dist_archive_asf (
 ) {
 
   
-   user { "${username}":
-        name       => "${username}",
-        ensure     => "${user_present}",
+   user { $username:
+        ensure     => $user_present,
+        name       => $username,
         home       => "/home/${username}",
-        shell      => "${shell}",
-        uid        => "${uid}",
-        gid        => "${groupname}",
+        shell      => $shell,
+        uid        => $uid,
+        gid        => $groupname,
         groups     => $groups,
         managehome => true,
-        require    => Group["${groupname}"],
+        require    => Group[$groupname],
     }
 
-    group { "${groupname}":
-        name   => "${groupname}",
-        ensure => "${group_present}",
-        gid    => "${gid}",
+    group { $groupname:
+        name   => $groupname,
+        ensure => $group_present,
+        gid    => $gid,
     }
 
     file { 'archive profile': 
-        path    => "/home/${username}/.profile",
         ensure  => 'present',
+        path    => "/home/${username}/.profile",
         mode    => '0644',
-        owner   => "${username}",
-        group   => "${groupname}",
+        owner   => $username,
+        group   => $groupname,
         source  => 'puppet:///modules/dist_archive_asf/home/profile',
-        require => User["${username}"],
+        require => User[$username],
     }
     
      file { 'archive root':
         ensure => directory,
-        path => "${archiveroot}",
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
+        path   => $archiveroot,
+        mode   => '0755',
+        owner  => $username,
+        group  => $groupname,
     }
     
     file { 'archive dist dir':
         ensure => directory,
-        path => "${archiveroot}/dist",
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
+        path   => "${archiveroot}/dist",
+        mode   => '0755',
+        owner  => $username,
+        group  => $groupname,
     }
     
     file { 'archive front page': 
-        path    => "${archiveroot}/index.html",
         ensure  => 'present',
+        path    => "${archiveroot}/index.html",
         mode    => '0644',
-        owner   => "${username}",
-        group   => "${groupname}",
+        owner   => $username,
+        group   => $groupname,
         source  => 'puppet:///modules/dist_archive_asf/index.html',
-        require => User["${username}"],
+        require => User[$username],
     }
        
     
