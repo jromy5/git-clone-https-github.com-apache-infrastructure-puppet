@@ -6,7 +6,7 @@ class pflogsumm (
 ){
 
   package {
-    $packages: 
+    $packages:
       ensure =>  installed,
   }
 
@@ -19,9 +19,9 @@ class pflogsumm (
 
   file {
     '/root/create-pflogsumm.output.sh':
-      owner    => 'root',
-      mode     => '0750',
-      source   => 'puppet:///modules/pflogsumm/create-pflogsumm.output.sh',
+      owner  => 'root',
+      mode   => '0750',
+      source => 'puppet:///modules/pflogsumm/create-pflogsumm.output.sh',
   }
 
 }
