@@ -54,66 +54,71 @@
   $downloaded_t_tarball = "${download_dir}/${t_tarball}"
   $download_t_url = "https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
 
-  user { $r_username:
-        ensure     => $r_user_present,
-        name       => $r_username,
-        home       => "/home/${r_username}",
-        shell      => $shell,
-        uid        => $r_uid,
-        gid        => $r_groupname,
-        groups     => $groups,
-        managehome => true,
-        require    => Group[$r_groupname],
+  user {
+    $r_username:
+      ensure     => $r_user_present,
+      name       => $r_username,
+      home       => "/home/${r_username}",
+      shell      => $shell,
+      uid        => $r_uid,
+      gid        => $r_groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$r_groupname],
   }
 
-  group { $r_groupname:
-          ensure => $r_group_present,
-          name   => $r_groupname,
-          gid    => $r_gid,
+  group {
+    $r_groupname:
+      ensure => $r_group_present,
+      name   => $r_groupname,
+      gid    => $r_gid,
    }
 
-  user { $t_username:
-        ensure => $t_user_present,
-        name => $t_username,
-        home => "/home/${t_username}",
-        shell => $shell,
-        uid => $t_uid,
-        gid => $t_groupname,
-        groups => $groups,
-        managehome => true,
-        require => Group[$t_groupname],
+  user {
+    $t_username:
+      ensure     => $t_user_present,
+      name       => $t_username,
+      home       => "/home/${t_username}",
+      shell      => $shell,
+      uid        => $t_uid,
+      gid        => $t_groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$t_groupname],
    }
 
-   group { $t_groupname:
-         name => $t_groupname,
-         ensure => $t_group_present,
-         gid => $t_gid,
+   group {
+     $t_groupname:
+       ensure => $t_group_present,
+       name   => $t_groupname,
+       gid    => $t_gid,
    }
 
-   apache::vhost { 'blogs-vm-80':
-       vhost_name => '*',
-       priority => '12',
-       servername => 'blogs-vm.apache.org',
-       serveraliases => [
+   apache::vhost {
+     'blogs-vm-80':
+       vhost_name       => '*',
+       priority         => '12',
+       servername       => 'blogs-vm.apache.org',
+       serveraliases    => [
          'blogs-test.apache.org',
        ],
-       port => '80',
-       ssl => false,
-       docroot => $docroot,
-       error_log_file => 'blogs_error.log',
+       port             => '80',
+       ssl              => false,
+       docroot          => $docroot,
+       error_log_file   => 'blogs_error.log',
        # custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
    }
   file {
     $parent_dir:
       ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0755';
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
     $data_dir:
       ensure => directory,
-      owner => $t_username,
-      group => $r_groupname,
-      mode => '0775';
+      owner  => $t_username,
+      group  => $r_groupname,
+      mode   => '0775';
 
   }
 }
