@@ -5,8 +5,9 @@ class build_slaves (
   class { "build_slaves::install::${asfosname}::${asfosrelease}":
   }
 
-  package { $distro_packages: 
-    ensure   =>  installed,
+  package {
+    $distro_packages:
+      ensure   =>  installed,
   }
 
 }

@@ -1,4 +1,4 @@
-class build_slave::install::ubuntu::1404 (
+class build_slaves::install::ubuntu::1404 (
 ) {
 
 }

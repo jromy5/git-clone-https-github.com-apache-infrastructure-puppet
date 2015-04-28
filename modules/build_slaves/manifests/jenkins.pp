@@ -1,7 +1,7 @@
 class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_passwrd    = '',
-  $jenkins_pub_key  = '', 
+  $jenkins_pub_key  = '',
   $jenkins_packages = []
   ) {
   
@@ -20,21 +20,21 @@ class build_slaves::jenkins (
   }
 
   file { '/usr/local/jenkins':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
   }
 
   file { '/home/jenkins/tools':
+    ensure  => 'link',
     require => File['/usr/local/jenkins'],
-    ensure => 'link',
-    target => '/usr/local/jenkins',
+    target  => '/usr/local/jenkins',
   }
 
   file { '/home/jenkins/.ssh':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0700'
@@ -42,7 +42,7 @@ class build_slaves::jenkins (
 
   file { '/home/jenkins/env.sh':
     ensure => present,
-    mode   => 0755,
+    mode   => '0755',
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
     owner  => 'jenkins',
     group  => 'jenkins',
@@ -57,61 +57,61 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.m2':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0755'
   }
 
   file { '/home/jenkins/.buildr':
-    require => User['jenkins'],
     ensure  => directory,
+    require => User['jenkins'],
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0755'
   }
 
-  file { "/home/jenkins/.m2/settings.xml":
-    require => File['/home/jenkins/.m2'],
+  file { '/home/jenkins/.m2/settings.xml':
     ensure  => $ensure,
-    path    => "/home/jenkins/.m2/settings.xml",
+    require => File['/home/jenkins/.m2'],
+    path    => '/home/jenkins/.m2/settings.xml',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/m2_settings.erb')
   }
 
-  file { "/home/jenkins/.buildr/settings.yaml":
-    require => File['/home/jenkins/.buildr'],
+  file { '/home/jenkins/.buildr/settings.yaml':
     ensure  => $ensure,
-    path    => "/home/jenkins/.buildr/settings.yaml",
+    require => File['/home/jenkins/.buildr'],
+    path    => '/home/jenkins/.buildr/settings.yaml',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
   }
 
-  file { "/home/jenkins/.npmrc":
-    require => File['/home/jenkins'],
+  file { '/home/jenkins/.npmrc':
     ensure  => $ensure,
-    path    => "/home/jenkins/.npmrc",
+    require => File['/home/jenkins'],
+    path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/npmrc.erb')
   }
 
-  file { "/etc/security/limits.d/jenkins.conf":
+  file { '/etc/security/limits.d/jenkins.conf':
     ensure  => file,
     owner   => root,
     group   => root,
-    mode    => 0644,
-    source  => "puppet:///modules/build_slaves/jenkins_limits.conf",
-    require => File["/etc/security/limits.d"],
+    mode    => '0644',
+    source  => 'puppet:///modules/build_slaves/jenkins_limits.conf',
+    require => File['/etc/security/limits.d'],
   }
 
-  file_line { "USERGROUPS_ENAB":
+  file_line { 'USERGROUPS_ENAB':
     path  => '/etc/login.defs',
     line  => 'USERGROUPS_ENAB no',
     match => '^USERGROUPS_ENAB.*'

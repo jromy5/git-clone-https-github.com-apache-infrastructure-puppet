@@ -13,7 +13,6 @@ gem 'puppet-lint'
 gem 'rake'
 
 
-
 #gem 'vagrant', :github => 'mitchellh/vagrant', :ref => 'v1.7.1'
 
 #group :plugins do

@@ -8,16 +8,17 @@ class { 'collectd::plugin::perl':
   order => 42
 }
 
-collectd::plugin::perl::plugin { 'foo':
-  include_dir => '/tmp',
-  module      => 'Collectd::Plugins::Foo',
-  provider    => 'file',
-  source      => 'puppet:///modules/collectd/tests/Foo.pm',
-  destination => '/tmp',
-  order       => 99,
-  config      => {
-    'foo'     => 'bar',
-    'key'     => [ 'val1', 'val2' ],
+collectd::plugin::perl::plugin {
+  'foo':
+    include_dir => '/tmp',
+    module      => 'Collectd::Plugins::Foo',
+    provider    => 'file',
+    source      => 'puppet:///modules/collectd/tests/Foo.pm',
+    destination => '/tmp',
+    order       => 99,
+    config      => {
+      'foo' => 'bar',
+      'key' => [ 'val1', 'val2' ],
   }
 }
 
@@ -37,17 +38,17 @@ collectd::plugin::perl::plugin { 'bar':
 
 collectd::plugin::perl::plugin {
   'baar':
-    module        => 'Collectd::Plugins::Bar',
-    provider      => 'package',
-    source        => 'perl-Collectd-Plugins-Bar',
-    config        => {
-      'foo'       => 'bar',
-      'more'      => {
+    module   => 'Collectd::Plugins::Bar',
+    provider => 'package',
+    source   => 'perl-Collectd-Plugins-Bar',
+    config   => {
+      'foo'  => 'bar',
+      'more' => {
         'complex' => 'structure',
         'no'      => [ 'a', 'b' ],
         'yes'     => {
-          'last'  => 'level',
-          'and'   => [ 'array' , 'thing' ]
+          'last' => 'level',
+          'and'  => [ 'array' , 'thing' ]
         },
       },
     },
