@@ -1,10 +1,10 @@
-class lucene1-pvm_asf {
+class lucene1_pvm_asf {
 
   # manifest for lucene project vm
 
   user { 'jenkins':
-    name       => 'jenkins',
     ensure     => present,
+    name       => 'jenkins',
     comment    => 'lucene project VM jenkins slave',
     home       => '/home/jenkins',
     managehome => true,
@@ -23,18 +23,18 @@ class lucene1-pvm_asf {
     repos    => 'main',
   }
 
-  apt::pin { 'precise-subversion': 
-    priority => 1800,
+  apt::pin { 'precise-subversion':
     ensure   => present,
+    priority => 1800,
     packages => 'subversion',
     codename => 'precise',
     require  => Apt::Source['precise'],
     before   => Package['subversion'],
   }
   
-  apt::pin { 'precise-libsvn1': 
-    priority => 1800,
+  apt::pin { 'precise-libsvn1':
     ensure   => present,
+    priority => 1800,
     packages => 'libsvn1',
     codename => 'precise',
     require  => Apt::Source['precise'],
