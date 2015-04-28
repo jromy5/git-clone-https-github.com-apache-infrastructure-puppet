@@ -17,7 +17,7 @@
    $hibernate_connection_password = '',
    $hibernate_connection_username = '',
    $hibernate_connection_url = '',
-   $required_packages = ['graphviz' , 'graphviz-dev'],
+   $required_packages = ['graphviz' , 'graphviz-dev'], 
 ){
 
 # install required packages:
@@ -46,22 +46,22 @@
    $docroot = '/var/www'
    $intermediates_dir = "${docroot}/intermediates"
 
-    user { $username:
-         name => $username,
-         ensure => $user_present,
+    user { "${username}":
+         name => "${username}",
+         ensure => "${user_present}",
          home => "/home/${username}",
-         shell => $shell,
-         uid => $uid,
-         gid => $groupname,
+         shell => "${shell}",
+         uid => "${uid}",
+         gid => "${groupname}",
          groups => $groups,
          managehome => true,
-         require => Group[$groupname],
+         require => Group["${groupname}"],
     }
 
-    group { $groupname:
-          name => $groupname,
-          ensure => $group_present,
-          gid => $gid,
+    group { "${groupname}":
+          name => "${groupname}",
+          ensure => "${group_present}",
+          gid => "${gid}",
     }
 
 # download standalone Confluence
@@ -91,7 +91,7 @@
     exec { 'chown-confluence-dirs':
            command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
            timeout => 1200,
-           require => [User[$username],Group[$username]],
+           require => [User["${username}"],Group["${username}"]],
 }
 
    exec { 'check_cfg_exists':
@@ -99,7 +99,7 @@
           onlyif => "/usr/bin/test -e ${confluence_home}/confluence.cfg.xml",
 }
 
- file {
+ file { 
   $parent_dir:
     ensure => directory,
     owner => 'root',
@@ -110,7 +110,7 @@
     owner => 'confluence',
     group => 'confluence',
     mode => '0755',
-    require => File[$install_dir];
+    require => File["${install_dir}"];
   $install_dir:
     ensure => directory,
     owner => 'root',
@@ -118,29 +118,29 @@
     require => Exec['extract-confluence'];
   $current_dir:
     ensure => link,
-    target => $install_dir,
+    target => "${install_dir}",
     owner => 'root',
     group => 'root',
-    require => File[$install_dir];
+    require => File["${install_dir}"];
   $intermediates_dir:
     ensure => directory,
     owner => 'www-data',
     group => 'confluence',
     mode => '0775',
     require => Class['apache'];
-  "${install_dir}/confluence/WEB-INF/classes/confluence-init.properties":
+  "$install_dir/confluence/WEB-INF/classes/confluence-init.properties":
     content => template('cwiki_asf/confluence-init.properties.erb'),
     mode => '0644';
-  "${install_dir}/conf/server.xml":
+  "$install_dir/conf/server.xml":
     content => template('cwiki_asf/server.xml.erb'),
     mode => '0644';
-  "${confluence_home}/confluence.cfg.xml":
+  "$confluence_home/confluence.cfg.xml":
     content => template('cwiki_asf/confluence.cfg.xml.erb'),
     owner => 'confluence',
     group => 'confluence',
     mode => '0644',
     require => Exec['check_cfg_exists'],
-    notify => Service[$service_name];
+    notify => Service["${service_name}"];
   "${mysql_connector_dest_dir}/${mysql_connector}":
     ensure => present,
     source => "puppet:///modules/cwiki_asf/${mysql_connector}";
@@ -156,23 +156,23 @@
     ensure => present,
     source => 'puppet:///modules/cwiki_asf/footer.inc';
   "/home/${username}/create-intermediates-index.sh":
-    owner => $username",
-    group => ${groupname",
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/create-intermediates-index.sh.erb'),
     mode => '0755';
   "/home/${username}/copy-intermediate-html.sh":
-    owner => $username,
-    group => $groupname,
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
     mode => '0755';
   "/home/${username}/remove-intermediates-daily.sh":
-    owner => $username,
-    group => $groupname,
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
     mode => '0755';
   "/home/${username}/cleanup-tomcat-logs.sh":
-    owner => $username,
-    group => $groupname,
+    owner => "${username}",
+    group => "${groupname}",
     content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
     mode => '0755';
 }
@@ -191,7 +191,7 @@
       ],
       port => '80',
       ssl => false,
-      docroot => $docroot,
+      docroot => "${docroot}",
       error_log_file => 'cwiki_error.log',
 #      redirect_source => ['/'],
 #      redirect_dest => ['https://cwiki.apache.org/'],
@@ -204,7 +204,7 @@
       default_vhost => true,
       servername => 'cwiki-vm3.apache.org',
       port => '443',
-      docroot => $docroot,
+      docroot => "${docroot}",
       serveraliases => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
@@ -229,7 +229,7 @@
       custom_fragment => 'ProxyPass /intermediates !'
   }
 
-  service { $service_name:
+  service { "${service_name}":
       ensure => $service_ensure,
       enable => true,
       hasstatus => false,
@@ -240,38 +240,38 @@
 # cron jobs
 
   cron { 'create-intermediates-index':
-    user => $username,
+    user => "${username}",
     minute => '*/30',
     command => "/home/${username}/create-intermediates-index.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User[$username],
+    require => User["${username}"],
 }
   cron { 'copy-intermediate-html':
-    user => $username,
+    user => "${username}",
     minute => '*/10',
     command => "/home/${username}/copy-intermediate-html.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User[$username],
+    require => User["${username}"],
 }
   cron { 'remove-intermediates-daily':
-    user => $username,
+    user => "${username}",
     minute => 05,
     hour => 07,
     command => "/home/${username}/remove-intermediates-daily.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User[$username],
+    require => User["${username}"],
 }
   cron { 'cleanup-tomcat-logs':
-    user => $username,
+    user => "${username}",
     minute => 20,
     hour => 07,
     command => "/home/${username}/cleanup-tomcat-logs.sh",
     environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
     SHELL=/bin/sh',
-    require => User[$username],
+    require => User["${username}"],
 }
 
 }
