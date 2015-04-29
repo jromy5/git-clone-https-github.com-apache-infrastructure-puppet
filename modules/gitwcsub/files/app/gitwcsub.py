@@ -4,6 +4,10 @@ from threading import Lock
 import threading;
 from collections import namedtuple
 import random, atexit, signal, inspect
+import time
+import logging
+import logging.handlers
+
 
 path = os.path.dirname(os.path.abspath(sys.argv[0]))
 if len(path) == 0:
@@ -14,7 +18,17 @@ config = configparser.RawConfigParser()
 
 config.read(path + '/gitwcsub.cfg')
 
-logging.basicConfig(filename=config.get("Logging", "logFile"), format='[%(asctime)s]: %(message)s', level=logging.INFO)
+
+
+log_handler = logging.handlers.WatchedFileHandler(config.get("Logging", "logFile"))
+formatter = logging.Formatter(
+	'%(asctime)s gitwcsub [%(process)d]: %(message)s',
+	'%b %d %H:%M:%S')
+formatter.converter = time.gmtime
+log_handler.setFormatter(formatter)
+logger = logging.getLogger()
+logger.addHandler(log_handler)
+logger.setLevel(logging.INFO)
 
 pending = {}
 
