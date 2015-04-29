@@ -89,6 +89,15 @@ perl::module:
     name: 'Net::LDAP'
     use_package : true
 
+snmp::snmpd_config:
+  - 'disk /x1 10%'
+  - 'disk /x1/svn 10%'
+  - 'disk /x1/svn/repos/asf 10%'
+  - 'disk /x1/svn/repos/dist 10%'
+  - 'disk /x1/svn/repos/infra 10%'
+  - 'disk /x1/svn/repos/private 10%'
+  - 'disk /x1/svn/repos/tck 10%'
+
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
 subversion_server::board_reminders::packages:
   - libdate-manip-perl
