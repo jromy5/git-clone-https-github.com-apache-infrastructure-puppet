@@ -257,7 +257,7 @@ class PubSubClient(Thread):
                 try:
                     obj = json.loads(line)
                     if "commit" in obj and "repository" in obj['commit']:
-                        print("[%s] Got a commit in '%s'" % (self.ident, obj['commit']['repository']))
+                        logging.info("[%s] Got a commit in '%s'" % (self.ident, obj['commit']['repository']))
                         if obj['commit']['repository'] == "git":
                             parseGitCommit(obj['commit'])
                             
