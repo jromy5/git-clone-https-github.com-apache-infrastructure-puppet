@@ -76,7 +76,7 @@ class gitwcsub (
     }
 
     logrotate::rule { 'gitwcsub':
-      path         => '/var/log/gitwcsub/gitwcsub-currentl.log',
+      path         => '/var/log/gitwcsub/gitwcsub-current.log',
       rotate       => 7,
       rotate_every => 'day',
       compress     => true,
