@@ -1,3 +1,5 @@
+#/etc/puppet/modules/gitmirrorupdater/manifests/init.pp
+
 class gitmirrorupdater (
 ) {
 
@@ -19,7 +21,7 @@ class gitmirrorupdater (
       'svn2gitupdate.py',
       'svn2gitupdate.cfg'
     ]:
-    site             => 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate',
+    site             => 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate', # lint:ignore:80chars
     cwd              => '/usr/local/etc/svn2gitupdate',
     require_resource => File['/usr/local/etc/svn2gitupdate'],
     user             => 'root',
@@ -32,12 +34,12 @@ class gitmirrorupdater (
       audit  => 'content',
       notify => Exec['restart_svn2gitupdate']
   }
-  
+
   exec {
     'restart_svn2gitupdate':
       refreshonly => true,
       path        => '/usr/bin/:/bin/',
       cwd         => '/usr/local/etc/svn2gitupdate',
-      command     => 'python /usr/local/etc/svn2gitupdate/svn2gitupdate.py restart',
+      command     => 'python /usr/local/etc/svn2gitupdate/svn2gitupdate.py restart', # lint:ignore:80chars
   }
 }

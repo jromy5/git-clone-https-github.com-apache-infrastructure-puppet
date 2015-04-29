@@ -34,7 +34,8 @@ class ldapserver::install::ubuntu::1404 (
   file {
     '/etc/ldap/slapd.conf':
       content => template('ldapserver/slapd.conf.erb'),
-      force   => true, # this is needed as new installs make slapd.conf a directory
+      # this is needed as new installs make slapd.conf a directory
+      force   => true,
       require => Package['slapd'],
       notify  => Service['slapd'];
     '/etc/ldap/slapd.d':

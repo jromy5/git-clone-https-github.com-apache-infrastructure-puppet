@@ -1,3 +1,4 @@
+#/etc/puppet/modules/svnpubsub/manifes/common.pp
 
 class svnpubsub::common {
 

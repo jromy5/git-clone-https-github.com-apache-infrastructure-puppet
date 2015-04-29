@@ -1,3 +1,4 @@
+#/etc/puppet/modules/gitwcsub/manifests/init.pp
 
 class gitwcsub (
   $uid            = 9994,
@@ -52,7 +53,7 @@ class gitwcsub (
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/gitwcsub/gitwcsub.${asfosname}";
+      source => "puppet:///modules/gitwcsub/gitwcsub.${::asfosname}";
     'app dir':
       ensure => directory,
       path   => '/usr/local/etc/gitwcsub';

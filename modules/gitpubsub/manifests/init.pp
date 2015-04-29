@@ -1,3 +1,4 @@
+#/etc/puppet/gitpubsub/manifests/init.pp
 
 class gitpubsub (
   $uid            = 9993,
@@ -16,10 +17,10 @@ class gitpubsub (
 
 ){
 
-  package { [ 'lua5.2' ], ['lua-filesystem'], ['lua-socket'] :
+  package { [ 'lua5.2', 'lua-filesystem', 'lua-socket'] :
     ensure => installed
   }
-  
+
   user {
     $username:
       ensure     => $user_present,
@@ -55,7 +56,7 @@ class gitpubsub (
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/gitpubsub/gitpubsub.${asfosname}";
+      source => "puppet:///modules/gitpubsub/gitpubsub.${::asfosname}";
     'gitpubsub app dir':
       ensure => directory,
       path   => '/usr/local/etc/gitpubsub';
@@ -81,7 +82,7 @@ class gitpubsub (
       group  => 'root',
       source => 'puppet:///modules/gitpubsub/config/gitpubsub.cfg';
   }
-  
+
   service {
     $service_name:
       ensure    => $service_ensure,

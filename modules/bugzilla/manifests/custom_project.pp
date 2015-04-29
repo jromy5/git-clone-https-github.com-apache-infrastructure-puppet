@@ -1,3 +1,5 @@
+#/etc/puppet/modules/bugzilla/manifests/custom_project.pp
+
 class bugzilla::custom_project (
 
 ) {

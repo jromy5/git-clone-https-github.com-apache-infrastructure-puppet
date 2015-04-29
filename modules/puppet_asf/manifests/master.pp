@@ -1,3 +1,5 @@
+#/etc/puppet/modules/puppet_asf/manifests/master.pp
+
 class puppet_asf::master {
 
   cron { 'updatepuppet':

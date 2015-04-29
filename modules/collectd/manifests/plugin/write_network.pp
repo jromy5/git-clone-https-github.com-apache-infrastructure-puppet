@@ -4,7 +4,7 @@ class collectd::plugin::write_network (
   $servers = { 'localhost'  =>  { 'serverport' => '25826' } },
 ) {
 
-  warning('Deprecated. This class may be removed in the future. Use collectd::plugin::network instead.')
+  warning('Deprecated. This class may be removed in the future. Use collectd::plugin::network instead.') # lint:ignore:80chars
 
   validate_hash($servers)
 

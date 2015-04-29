@@ -1,3 +1,4 @@
+#/etc/puppet/modules/stunnel_asf/manifests/abi.pp
 
 class stunnel_asf::abi (
   $cert_path = '/etc/ssl/certs',

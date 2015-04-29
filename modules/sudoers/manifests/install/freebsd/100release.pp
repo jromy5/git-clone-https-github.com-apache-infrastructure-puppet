@@ -1,3 +1,5 @@
+#/etc/puppet/modules/sudoers/manifests/install/freebsd/100release.pp
+
 class sudoers::install::freebsd::100release (
 ) {
   file {'/etc/sudoers':

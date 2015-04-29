@@ -1,13 +1,15 @@
+#/etc/puppet/modules/build_slaves/manifests/jenkins.pp
+
 class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_passwrd    = '',
   $jenkins_pub_key  = '',
   $jenkins_packages = []
   ) {
-  
+
   require stdlib
   require build_slaves
-  
+
   group { 'jenkins':
     ensure => present,
   }
@@ -53,7 +55,7 @@ class build_slaves::jenkins (
     require => User['jenkins'],
     user    => 'jenkins',
     type    => 'ssh-rsa',
-    key     => 'AAAAB3NzaC1yc2EAAAABIwAAAIEAtxkcKDiPh1OaVzaVdc80daKq2sRy8aAgt8u2uEcLClzMrnv/g19db7XVggfT4+HPCqcbFbO3mtVnUnWWtuSEpDjqriWnEcSj2G1P53zsdKEu9qCGLmEFMgwcq8b5plv78PRdAQn09WCBI1QrNMypjxgCKhNNn45WqV4AD8Jp7/8='
+    key     => 'AAAAB3NzaC1yc2EAAAABIwAAAIEAtxkcKDiPh1OaVzaVdc80daKq2sRy8aAgt8u2uEcLClzMrnv/g19db7XVggfT4+HPCqcbFbO3mtVnUnWWtuSEpDjqriWnEcSj2G1P53zsdKEu9qCGLmEFMgwcq8b5plv78PRdAQn09WCBI1QrNMypjxgCKhNNn45WqV4AD8Jp7/8=' # lint:ignore:80chars
   }
 
   file { '/home/jenkins/.m2':
@@ -73,7 +75,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.m2/settings.xml':
-    ensure  => $ensure,
+    ensure  => $::ensure,
     require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/settings.xml',
     owner   => 'jenkins',
@@ -83,7 +85,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.buildr/settings.yaml':
-    ensure  => $ensure,
+    ensure  => $::ensure,
     require => File['/home/jenkins/.buildr'],
     path    => '/home/jenkins/.buildr/settings.yaml',
     owner   => 'jenkins',
@@ -93,7 +95,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.npmrc':
-    ensure  => $ensure,
+    ensure  => $::ensure,
     require => File['/home/jenkins'],
     path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
