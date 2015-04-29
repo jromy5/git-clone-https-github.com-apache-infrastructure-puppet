@@ -15,7 +15,7 @@ class rootbin_asf {
       recurse => true,
       source  => 'puppet:///modules/rootbin_asf/bin',
       owner   => 'root',
-      group   => $group
+      group   => $group,
       mode    => '0775',
   }
 }
