@@ -102,9 +102,10 @@ my @appList = (
 );
 
 my (%apps, %pmcs, %reports);
-my ($infoFn, $runDay, $wday, $monnum, $monabbr, $monname, $year, $mtgDate, $mtgDay, $dueDate, $incDueDate, $runDate, $tdURL);
+my ($infoFn, $runDay, $wday, $monnum, $monabbr, $monname, $year, $mtgDate, $mtgDay, $dueDate, $incDueDate, $runDate, $tdURL, $agendaFile);
 my $basedir = realpath(dirname($0));
 my $getFunc = \&getRemoteFiles;
+my $existFunc = \&existRemoteFile;
 my $sendEmail = 1;
 my $makeCal = 0;
 my $noFetch = 0;
@@ -135,6 +136,8 @@ for my $i (0 .. $#ARGV) {
     $DEBUG = 1 if $a =~ /debug/;
     $getFunc = \&getLocalFiles if $a =~ /local/;
     $getFunc = \&getRemoteFiles if $a =~ /remote/;
+    $existFunc = \&existLocalFile if $a =~ /local/;
+    $existFunc = \&existRemoteFile if $a =~ /remote/;
 #    $makeCal = 1 if $a =~ /calend/;
     $sendEmail = 0 if $a =~ /no-email/;
     $noFetch = 1 if $a =~ /no-fetch/;
@@ -170,6 +173,18 @@ if (meetingDatePassed()) {
     getNextMonthInformation();
     findMeetingDate();
 }
+
+if (&$existFunc($agendaFile) == 0) {
+    if ($sendEmail || $DEBUG) {
+        sendMail($chairAddr, $fromAddr,
+                 "[REMINDER] Create Board Agenda",
+                 "If you haven't already, create the board agenda!");
+    }
+
+    print "Bailing, agenda isn't ready so roster may not be";
+    exit;
+}
+
 readPMCList($infoFn);
 readReports($infoFn);
 showActions();
@@ -181,9 +196,6 @@ if ($sendEmail || $DEBUG) {
         sendReports($templates{'initial'}) if $runDay < $finalDate;
         sendReports($templates{'final'}) if $runDay >= $finalDate;
         sendIncReports();
-        sendMail($chairAddr, $fromAddr,
-                 "[REMINDER] Create Board Agenda",
-                 "If you haven't already, create the board agenda!");
         sendMail($testAddr, $fromAddr, "Marvin sent reminders");
 
     }
@@ -345,6 +357,31 @@ sub reportError
         sendMail($testAddr, $fromAddr, "Error while executing reminders.pl",
                  $msg);
     }
+}
+
+sub existRemoteFile
+{
+    my ($file) = @_;
+
+    my $cmd = "$apps{svn} ls $svnRepoURL/$file";
+    `$cmd`;
+    if ($?) {
+      return 0;
+    }
+    else {
+      return 1;
+    }
+}
+
+sub existLocalFile
+{
+    my ($file) = @_;
+
+    my $outputFN = catfile($basedir, basename($file));
+
+    print "Checking $outputFN\n";
+
+    return (-e $outputFN);
 }
 
 sub getRemoteFiles
@@ -518,6 +555,8 @@ sub findMeetingDate
         $shorten =~ m/id=selectable>([^<]*)</;
         $tdURL = $1 if $1;
     }
+    $agendaFile = sprintf("foundation/board/board_agenda_%d_%02d_%02d.txt", $ll[5]+1900, $ll[4]+1, $ll[3]-1);
+    print "Agenda file: $agendaFile\n";
 }
 
 sub meetingDatePassed
@@ -792,123 +831,3 @@ EOT
     close($rdfFh);
 }
 
-############
-# DEPRECATED
-############
-sub createAgenda
-{
-    my $attList = "";
-    my $strDt = substr($mtgDate, 0, 16);
-    my $fn = "board_agenda_".UnixDate(ParseDate($mtgDate), "%G_%m_%d").'.txt';
-    open(my $agFh, ">$fn") || die;
-    print $agFh <<EOT;
-                    The Apache Software Foundation
-
-                  Board of Directors Meeting Agenda
-
-                          $strDt
-
-
- 1. Call to order
-
-    The meeting is scheduled for 10:00 (Pacific) and will begin as
-    soon thereafter that a sufficient attendance to constitute a
-    quorum is recognized by the chairman.  The meeting will be held
-    teleconference, hosted by Jim Jagielski and Covalent:
-
-            US Number       : 800-531-3250
-            International   : 303-928-2693
-            Passcode/ConfID : 2345502
-
-    IRC #asfboard on irc.freenode.net will be used for backup
-    purposes.
-
- 2. Roll Call
-
-    Directors (expected to be) Present:
-
-    Directors (expected to be) Absent:
-
-        none
-
-    Guests:
-
- 3. Minutes from previous meetings
-
-    Minutes (in Subversion) are found under the URL:
-
-        https://svn.apache.org/repos/private/foundation/board/
-
- 4. Officer Reports
-
-    A. Chairman []
-
-    B. President []
-
-    C. Treasurer []
-
-    D. Exec. V.P. and Secretary []
-
-    E. VP of Legal Affairs []
-
-    F. VP of JCP []
-
- 5. Committee Reports
-
-EOT
-    my %reports = %{$pmcReports{$monabbr}};
-    my $letter = 'A';
-    foreach my $k (sort(keys(%reports))) {
-        my $pmclist .= "\t - $k\n";
-        if ($pmcs{lc $k}) {
-            my @emails = @{$pmcs{lc $k}{emails}};
-            $emails[0] =~ /(.*) \</;
-            print $agFh <<EOT;
-  $letter. $k [$1]
-
-    See attachment $letter
-
-    [
-      approved:
-      comments:
-    ]
-
-EOT
-            $attList .= <<EOT;
------------------------------------------
-Attachment $letter: Status report for the $k
-
-  [ Insert report here ]
-
-EOT
-        }
-        $letter++;
-    }
-
-    print $agFh <<EOT;
-
- 6. Special Orders
-
- 7. Discussion Items
-
- 8. Unfinished Business
-
- 9. New Business
-
-10. Review of Current Action Items
-
-11. Announcements
-
-12. Adjournment
-
-    Scheduled to adjourn by 12:00 (Pacific)
-
-
-============
-ATTACHMENTS:
-============
-
-EOT
-    print $agFh $attList;
-    close($agFh);
-}
