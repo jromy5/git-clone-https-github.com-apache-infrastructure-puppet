@@ -185,7 +185,7 @@ def updatePending():
                                 canClobber = True
                                 logging.warn("This is/was a subversion repo, okay to clobber")
                         except Exception as err:
-                            logging.warn("Not a repo, not going to clobber it")
+                            logging.warn("Not a repo, not going to clobber it: %s" % err)
                             canClobber = False
                     if canClobber:
                         logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
