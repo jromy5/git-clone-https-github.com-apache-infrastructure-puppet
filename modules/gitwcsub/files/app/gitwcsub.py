@@ -181,7 +181,7 @@ def updatePending():
                         canClobber = False
                         try:
                             rv =subprocess.check_output(("svn", "info"))
-                            if re.search(r"URL: ", rv, re.MULTILINE):
+                            if re.search(r"URL: ", rv.decode("utf-8"), re.MULTILINE):
                                 canClobber = True
                                 logging.warn("This is/was a subversion repo, okay to clobber")
                         except Exception as err:
