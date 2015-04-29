@@ -24,7 +24,7 @@ class clamav (
   file {
     '/etc/clamsmtpd.conf':
       content => template('clamav/clamsmtpd.conf.erb'),
-      notify  => Service[ ['clamav-daemon'], ['clamav-freshclam'], ['clamsmtp'] ],
+      notify  => Service[ ['clamav-daemon'], ['clamav-freshclam'], ['clamsmtp'] ], # lint:ignore:80chars
       require => Package[ ['clamav'], ['clamsmtp'] ];
   }
 }

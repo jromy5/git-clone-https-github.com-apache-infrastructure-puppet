@@ -1,3 +1,4 @@
+#/etc/puppet/modules/svngit2jira/manifest/init.pp
 
 class svngit2jira (
   $uid            = 9992,
@@ -52,9 +53,9 @@ class svngit2jira (
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/svngit2jira/svngit2jira.${asfosname}",
+      source => "puppet:///modules/svngit2jira/svngit2jira.${::asfosname}",
     }
-    
+
     file { 'svngit2jira app dir':
       ensure => directory,
       path   => '/usr/local/etc/svngit2jira',

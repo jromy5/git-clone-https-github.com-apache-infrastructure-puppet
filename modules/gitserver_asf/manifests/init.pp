@@ -2,9 +2,10 @@
 
 class gitserver_asf (
 
-  $custom_fragment_80    = '',
-  $custom_fragment_443   = '',
-  $packages              = ['gitweb', 'git-svn', 'libnet-github-perl', 'libnet-ldap-perl'],
+  $custom_fragment_80  = '',
+  $custom_fragment_443 = '',
+  $packages            = ['gitweb', 'git-svn', 'libnet-github-perl',
+                          'libnet-ldap-perl'],
 
 
 ) {
@@ -42,7 +43,7 @@ file {
 
 cron {
   'asfgit-admin update svn authors':
-    command     => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt',
+    command     => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt', # lint:ignore:80chars
     environment => 'PATH=/usr/bin/:/bin/',
     user        => 'root',
     minute      => '5',
@@ -68,7 +69,7 @@ apache::vhost {
     directories     => [
       {
         path           => '/x1/git/htdocs',
-        options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+        options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
         allow_override => ['All'],
         addhandlers    => [
           {
@@ -97,7 +98,7 @@ apache::vhost {
     directories     => [
         {
           path           => '/x1/git/htdocs',
-          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
+          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
           allow_override => ['All'],
           addhandlers    => [
             {

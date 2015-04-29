@@ -13,7 +13,6 @@ class dist_archive_asf (
   $rsync_server  = 'rsync.apache.org',
 ) {
 
-  
   user {
     $username:
       ensure     => $user_present,
@@ -44,7 +43,7 @@ class dist_archive_asf (
       source  => 'puppet:///modules/dist_archive_asf/home/profile',
       require => User[$username],
   }
-    
+
   file {
     'archive root':
       ensure => directory,
@@ -53,7 +52,7 @@ class dist_archive_asf (
       owner  => $username,
       group  => $groupname,
   }
-    
+
   file {
     'archive dist dir':
       ensure => directory,
@@ -62,7 +61,7 @@ class dist_archive_asf (
       owner  => $username,
       group  => $groupname,
   }
-    
+
   file {
     'archive front page':
       ensure  => 'present',

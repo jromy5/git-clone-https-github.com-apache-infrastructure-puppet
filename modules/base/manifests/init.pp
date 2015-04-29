@@ -17,6 +17,6 @@ class base (
   $perl_module = hiera_hash('perl::module', {})
   create_resources(perl::module, $perl_module)
 
-  class { "base::install::${asfosname}::${asfosrelease}":
+  class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }

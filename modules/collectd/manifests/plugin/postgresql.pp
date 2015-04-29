@@ -33,7 +33,7 @@ class collectd::plugin::postgresql (
   $defaults = {
     'ensure' => $ensure
   }
-  create_resources(collectd::plugin::postgresql::database, $databases, $defaults)
+  create_resources(collectd::plugin::postgresql::database, $databases, $defaults) # lint:ignore:80chars
   create_resources(collectd::plugin::postgresql::query, $queries, $defaults)
   create_resources(collectd::plugin::postgresql::writer, $writers, $defaults)
 }

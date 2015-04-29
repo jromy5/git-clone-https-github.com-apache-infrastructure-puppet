@@ -1,3 +1,4 @@
+#/etc/puppet/modules/stunnel_asf/manifests/init.pp
 
 class stunnel_asf (
   $packages = ['stunnel4'],

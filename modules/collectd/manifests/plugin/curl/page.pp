@@ -11,7 +11,8 @@ define collectd::plugin::curl::page (
   $post                = undef,
   $measureresponsetime = undef,
   $matches             = [{ }],
-  $plugininstance      = $name, # You can have multiple <Page> with the same name.
+  # You can have multiple <Page> with the same name.
+  $plugininstance      = $name,
 ) {
   include collectd::params
   include collectd::plugin::curl

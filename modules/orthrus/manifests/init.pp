@@ -2,7 +2,7 @@
 
 class orthrus {
 
-  case $asfosname {
+  case $::asfosname {
     ubuntu: {
       $repo_resource = Apt::Source['asf_internal']
       $ortpasswd_path = '/usr/local/bin/ortpasswd'

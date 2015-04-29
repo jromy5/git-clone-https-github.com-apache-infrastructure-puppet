@@ -1,4 +1,5 @@
-#
+#/etc/puppet/modules/collectd/manifests/init.pp
+
 class collectd(
   $fqdnlookup         = true,
   $collectd_hostname  = $::hostname,
@@ -12,7 +13,7 @@ class collectd(
   $typesdb            = [],
   $package_name       = $collectd::params::package,
   $version            = installed,
-) inherits collectd::params {
+) inherits collectd::params { # lint:ignore:class_inherits_from_params_class
 
   $plugin_conf_dir = $collectd::params::plugin_conf_dir
   validate_bool($purge_config, $fqdnlookup)

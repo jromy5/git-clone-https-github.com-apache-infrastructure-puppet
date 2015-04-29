@@ -34,7 +34,7 @@ class ldapclient (
       owner   => 'root';
   }
 
-  class { "ldapclient::install::${asfosname}::${asfosrelease}":
+  class { "ldapclient::install::${::asfosname}::${::asfosrelease}":
     ldapcert      =>  $ldapcert,
     ldapservers   =>  $ldapservers,
     nssbinddn     =>  $nssbinddn,

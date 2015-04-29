@@ -1,6 +1,9 @@
+#/etc/puppet/modules/bugzilla/manifests/init.pp
 
 class bugzilla (
-  $required_packages = [], # Put required pacages for various CPAN libs, otherwise the puppet run with fail
+  # Put required pacages for various CPAN libs, otherwise
+  # the puppet run with fail
+  $required_packages = [],
   $cpan_modules      = [],
 ) {
 
@@ -29,8 +32,7 @@ class bugzilla (
     minute      => 15,
     hour        => 7,
     weekday     => 0,
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-SHELL=/bin/sh',
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
     require     => Class['rootbin_asf'],
   }
 

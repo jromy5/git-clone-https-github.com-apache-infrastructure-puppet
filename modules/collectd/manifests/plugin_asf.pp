@@ -1,3 +1,4 @@
+#/etc/puppet/modules/collectd/manifests/plugin_asf.pp
 
 class collectd::plugin_asf (
 ) {

@@ -1,3 +1,5 @@
+#/etc/puppet/modules/zmanda/manifests/install.pp
+
 class zmanda_asf::install {
 
   $zmandapkgs = [
@@ -65,7 +67,7 @@ class zmanda_asf::install {
 
   exec { 'untar vmware':
     creates => '/tmp/vmware-vsphere-cli-distrib/vmware-install.pl',
-    command => '/bin/tar -C /tmp -xzf /mnt/asf-private/packages/VMware-vSphere-CLI-5.1.0-780721.x86_64.tar.gz',
+    command => '/bin/tar -C /tmp -xzf /mnt/asf-private/packages/VMware-vSphere-CLI-5.1.0-780721.x86_64.tar.gz', # lint:ignore:80chars
     require => Exec['mount s3fs'],
     before  => Exec['install vmware'],
   } -> Exec['install vmware']
@@ -73,7 +75,7 @@ class zmanda_asf::install {
   exec { 'install vmware':
     cwd         => '/tmp/vmware-vsphere-cli-distrib',
     unless      => '/usr/bin/test -f /usr/bin/vmware-toolbox-cmd',
-    command     => '/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d',
+    command     => '/usr/bin/yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d', # lint:ignore:80chars
     environment => ['PAGER=/bin/cat'],
     logoutput   => false,
     require     => Exec['untar vmware'],
@@ -93,7 +95,7 @@ class zmanda_asf::install {
     unless  => '/usr/bin/test -f /var/lib/amanda/amanda-release',
     require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
   }
-  
+
   file { '/etc/zmanda/zmanda_license':
     mode    => '0664',
     owner   => 'root',

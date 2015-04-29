@@ -1,3 +1,5 @@
+#/etc/puppet/modules/build_slaves/manifests/install/centos/65.pp
+
 class build_slaves::install::centos::65 (
   $erlangrepo    = '',
   $erlangrepokey = ''

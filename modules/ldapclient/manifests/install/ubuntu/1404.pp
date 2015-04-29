@@ -1,3 +1,5 @@
+#/etc/puppet/modules/ldapclient/manifests/install/ubuntu/1404.pp
+
 class ldapclient::install::ubuntu::1404 (
 
   $ldapcert      = '',
@@ -37,8 +39,8 @@ class ldapclient::install::ubuntu::1404 (
       ensure  => directory,
       mode    => '0755';
     '/etc/ldap/cacerts/ldap-client.pem':
-      content  =>  $ldapcert,
-      require =>  File['/etc/ldap/cacerts'];
+      content => $ldapcert,
+      require => File['/etc/ldap/cacerts'];
   }
 
     service { 'nslcd':

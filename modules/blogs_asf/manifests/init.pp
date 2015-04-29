@@ -1,4 +1,6 @@
- class blogs_asf (
+#/etc/puppet/modules/blogs_asf/manifests/init.pp
+
+class blogs_asf (
   $r_uid             = 8998,
   $r_gid             = 8998,
   $r_group_present   = 'present',
@@ -29,7 +31,7 @@
   $roller_revision_number   = '1'
   $roller_release           = "${roller_version}.${roller_revision_number}"
   $mysql_connector_version  = '5.1.11'
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
   $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
   $roller_build             = "roller-release-${roller_release}-standard"
   $r_tarball                = "${roller_build}.tar.gz"
@@ -49,7 +51,7 @@
   $tomcat_version           = '8'
   $tomcat_minor             = '0'
   $tomcat_revision_number   = '21'
-  $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}"
+  $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}" # lint:ignore:80chars
   $tomcat_build             = "apache-tomcat-${tomcat_release}"
   $t_tarball                = "${tomcat_build}.tar.gz"
   $downloaded_t_tarball     = "${download_dir}/${t_tarball}"

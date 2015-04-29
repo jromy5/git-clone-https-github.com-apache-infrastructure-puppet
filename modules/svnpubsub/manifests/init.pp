@@ -1,3 +1,5 @@
+#/etc/puppet/modules/svnpubsub/manifests/init.pp
+
 class svnpubsub (
   
   $packages       = ['python-twisted'],
@@ -26,7 +28,7 @@ class svnpubsub (
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
-    source => "puppet:///modules/svnpubsub/svnpubsub.${asfosname}",
+    source => "puppet:///modules/svnpubsub/svnpubsub.${::asfosname}",
   }
 
   service { $service_name:

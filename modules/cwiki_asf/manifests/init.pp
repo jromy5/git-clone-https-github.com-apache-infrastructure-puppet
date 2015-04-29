@@ -1,3 +1,5 @@
+#/etc/puppet/modules/cwiki_asf/manifests/init.pp
+
 class cwiki_asf (
   $uid                           = 8999,
   $gid                           = 8999,
@@ -28,7 +30,7 @@ class cwiki_asf (
 # confluence specific
   $confluence_version       = '5.0.3'
   $mysql_connector_version  = '5.1.11'
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
   $mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
   $confluence_build         = "atlassian-confluence-${confluence_version}"
   $tarball                  = "${confluence_build}.tar.gz"
@@ -81,7 +83,7 @@ class cwiki_asf (
 # extract the download and move it
   exec {
     'extract-confluence':
-      command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}",
+      command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}", # lint:ignore:80chars
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
@@ -91,7 +93,7 @@ class cwiki_asf (
 
   exec {
     'chown-confluence-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
+      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
       timeout => 1200,
       require => [User[$username],Group[$username]],
   }
@@ -215,7 +217,7 @@ class cwiki_asf (
       ssl_cert        => '/etc/ssl/certs/cwiki.apache.org.crt',
       ssl_chain       => '/etc/ssl/certs/cwiki.apache.org.chain',
       ssl_key         => '/etc/ssl/private/cwiki.apache.org.key',
-      custom_fragment => 'ProxyPass /intermediates !'
+      custom_fragment => 'ProxyPass /intermediates !',
       serveraliases   => [
         'cwiki.apache.org',
         'cwiki-test.apache.org',
@@ -252,27 +254,27 @@ class cwiki_asf (
       user        => $username,
       minute      => '*/30',
       command     => "/home/${username}/create-intermediates-index.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
       require     => User[$username];
     'copy-intermediate-html':
       user        => $username,
       minute      => '*/10',
       command     => "/home/${username}/copy-intermediate-html.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
       require     => User[$username];
     'remove-intermediates-daily':
       user        => $username,
       minute      => 05,
       hour        => 07,
       command     => "/home/${username}/remove-intermediates-daily.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
       require     => User[$username];
     'cleanup-tomcat-logs':
       user        => $username,
       minute      => 20,
       hour        => 07,
       command     => "/home/${username}/cleanup-tomcat-logs.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
       require     => User[$username],
 }
 

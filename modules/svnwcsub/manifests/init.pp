@@ -1,3 +1,4 @@
+# /etc/puppet/modules/svnwcsub/manifests/init.pp
 
 class svnwcsub (
   $uid            = 9997,
@@ -65,7 +66,7 @@ class svnwcsub (
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
-    source => "puppet:///modules/svnwcsub/svnwcsub.${asfosname}",
+    source => "puppet:///modules/svnwcsub/svnwcsub.${::asfosname}",
   }
 
   file { "/home/${username}/${service_name}-hook":
