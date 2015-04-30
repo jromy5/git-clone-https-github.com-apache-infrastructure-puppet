@@ -243,8 +243,11 @@ spamassassin::spamd::custom_scoring:
   RCVD_IN_RP_RNBL:
     name:             'RCVD_IN_PBL'
     score:            '0.0'
-  RDNS_NONE:
+  RCVD_IN_RP_RNBL:
     name:             'RCVD_IN_RP_RNBL'
+    score:            '0.0'
+  RDNS_NONE:
+    name:             'RDNS_NONE'
     score:            '3.0'
   HTML_MESSAGE:
     name:             'RDNS_NONE'
