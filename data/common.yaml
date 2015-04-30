@@ -266,7 +266,7 @@ spamassassin::spamd::custom_scoring:
     score:            '4.0'
   DCC_CHECK:
     name:             'DCC_CHECK'
-    score:            '0.0'
+    score:            '0.25'
   HELO_DYNAMIC_SPLIT_IP:
     name:             'HELO_DYNAMIC_SPLIT_IP'
     score:            '0.0'
