@@ -9,7 +9,7 @@ class spamassassin::spamd (
   $createprefs           = false,
   $cron_ensure           = present,
   $custom_rules          = [],
-  $custom_scoring        = [],
+  $custom_scoring        = {},
   $dns_available         = 'yes',
   $helperhomedir         = '',
   $install_folder        = '/etc/spamassassin',
