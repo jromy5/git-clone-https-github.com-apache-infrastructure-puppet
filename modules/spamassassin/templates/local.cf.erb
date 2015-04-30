@@ -32,7 +32,7 @@ blacklist_from <%= val %>
 
 <% if @custom_scoring %>
 # Custom Scoring
-<% custom_scoring.names.sort.each do |name, score| -%>
+<% custom_scoring.keys.sort.each do |name, score| -%>
 score <%= name %> 		<%= score %>
 <% end -%>
 <% end %>
