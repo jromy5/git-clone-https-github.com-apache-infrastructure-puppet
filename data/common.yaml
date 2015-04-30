@@ -261,13 +261,13 @@ spamassassin::spamd::custom_scoring:
   DCC_CHECK:
     name:             'URIBL_BLACK'
     score:            '4.0'
-    DCC_CHECK:
+  DCC_CHECK:
     name:             'DCC_CHECK'
     score:            '0.0'
   HELO_DYNAMIC_SPLIT_IP:
     name:             'HELO_DYNAMIC_SPLIT_IP'
     score:            '0.0'
-    FM_FAKE_HELO_VERIZON:
+  FM_FAKE_HELO_VERIZON:
     name:             'FM_FAKE_HELO_VERIZON'
     score:            '0.0'
   FORGED_MUA_OIMO:
@@ -276,13 +276,13 @@ spamassassin::spamd::custom_scoring:
   TVD_SPACED_SUBJECT_WORD3:
     name:             'TVD_SPACED_SUBJECT_WORD3'
     score:            '0.0'
-    TVD_SPACE_RATIO:
+  TVD_SPACE_RATIO:
     name:             'TVD_SPACE_RATIO'
     score:            '0.0'
-    FORGED_MUA_OUTLOOK:
+  FORGED_MUA_OUTLOOK:
     name:             'FORGED_MUA_OUTLOOK'
     score:            '0.0'
-    WHOIS_CONTACTPRIV:
+  WHOIS_CONTACTPRIV:
     name:             'WHOIS_CONTACTPRIV'
     score:            '0.0'
   FREEMAIL_FROM:
