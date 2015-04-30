@@ -31,7 +31,7 @@ class spamassassin::spamd (
   $service_ensure        = running,
   $skip_rbl_checks       = '0',
   $syslog                = 'mail',
-  $trusted_networks      = '', # e.g. '192.168.'
+  $trusted_networks      = '127.0.0.1', # e.g. '192.168.'
   $use_bayes             = '0',
   $use_pyzor             = '0',
   $use_razor2            = '0',
