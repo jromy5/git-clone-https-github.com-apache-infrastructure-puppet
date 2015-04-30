@@ -13,6 +13,7 @@ class spamassassin::spamd (
   $dns_available         = 'yes',
   $helperhomedir         = '',
   $install_folder        = '/etc/spamassassin',
+  $kam_update            = '/usr/bin/wget http://www.pccc.com/downloads/SpamAssassin/contrib/KAM.cf -o /etc/spamassassin/KAM.cf && /usr/bin/spamassassin --lint && /usr/sbin/service spamassassin restart',
   $listenip              = '127.0.0.1',
   $local                 = false,
   $maxchildren           = 40,
@@ -89,12 +90,19 @@ class spamassassin::spamd (
     }
   }
 
-  cron { 'sa-update':
-    ensure  => $cron_ensure,
-    command => $sa_update,
-    user    => 'root',
-    hour    => 2,
-    minute  => 10,
+  cron {
+    'sa-update':
+      ensure  => $cron_ensure,
+      command => $sa_update,
+      user    => 'root',
+      hour    => 2,
+      minute  => 10;
+    'fetch-pccc_KAM.cf':
+      ensure  => $cron_ensure,
+      command => $kam_update,
+      user    => 'root',
+      hour    => '1',
+      minute  => '30';
   }
 
   service { 'spamassassin':
