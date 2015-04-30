@@ -30,10 +30,15 @@ blacklist_from <%= val %>
 <% end -%>
 
 
+<% 
+  custom_scoring = scope.lookupvar('spamassassin::spamd::custom_scoring') 
+-%> 
+
+
 <% if @custom_scoring %>
 # Custom Scoring
-<% custom_scoring.keys.sort.each do |key, val| -%>
-score <%= key %> 		<%= custom_scoring[val] %>
+<% custom_scoring.each_pair do |key, hash| -%>
+score <%= hash['name'] %> 		<%= hash['score'] %>
 <% end -%>
 <% end %>
 
