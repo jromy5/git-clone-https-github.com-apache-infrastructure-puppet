@@ -363,6 +363,7 @@ shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
 shindig-pmc={reuse:pit-authorization:shindig-pmc}
 shiro={ldap:cn=shiro,ou=groups,dc=apache,dc=org}
 shiro-pmc={reuse:pit-authorization:shiro-pmc}
+singa=daijy,dinhtta,gates,jinyang,kaiping,tankianlee,tdunning,thejas,wangsh,wangwei,zhaojing
 sis={ldap:cn=sis,ou=groups,dc=apache,dc=org}
 sis-pmc={reuse:pit-authorization:sis-pmc}
 slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron,gourksaha
@@ -1033,6 +1034,9 @@ ea = rw
 
 [/incubator/sentry]
 @sentry = rw
+
+[/incubator/singa]
+@singa = rw
 
 [/incubator/sirona]
 @committers= rw
