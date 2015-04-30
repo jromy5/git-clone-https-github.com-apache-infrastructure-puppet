@@ -257,7 +257,7 @@ spamassassin::spamd::mincheldren: '5'
 spamassassin::spamd::maxspare: '10'
 spamassassin::spamd::maxconnsperchild: '1000'
 spamassassin::spamd::maxchildren: '40'
-spamassassin::spamd::package_list: '40'
+spamassassin::spamd::package_list: 'spamassassin'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
