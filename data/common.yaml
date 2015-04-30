@@ -222,35 +222,90 @@ spamassassin::spamd::custom_scoring:
   ALL_SORTED:
     name:             'ALL_SORTED'
     score:            '-2000.0'
-
-            #- 'ALL_TRUSTED          -2000.0'
-            #- 'DRUGS_MUSCLE             4.0'
-            #- 'URIBL_SBL                4.0'
-            #- 'URIBL_WS_SURBL           4.0'
-            #- 'RCVD_IN_BL_SPAMCOP_NET   2.0'
-            #- 'RCVD_IN_XBL              4.0'
-            #- 'RCVD_IN_PBL              0.0'
-            #- 'RCVD_IN_RP_RNBL          0.0'
-            #- 'RDNS_NONE                0.0'
-            #- 'HTML_MESSAGE             2.2'
-            #- 'EXTRA_MPART_TYPE         3.0'
-            #- 'MIME_HTML_ONLY           3.5'
-            #- 'URIBL_BLACK              3.5'
-            #- 'DCC_CHECK                4.0'
-            #- 'HELO_DYNAMIC_SPLIT_IP    0.0'
-            #- 'FM_FAKE_HELO_VERIZON     0.0'
-            #- 'FORGED_MUA_OIMO          0.0'
-            #- 'TVD_SPACED_SUBJECT_WORD3 0.0'
-            #- 'TVD_SPACE_RATIO          0.0'
-            #- 'FORGED_MUA_OUTLOOK       0.0'
-            #- 'WHOIS_CONTACTPRIV        0.0'
-            #- 'FREEMAIL_FROM            0.0'
-            #- 'FREEMAIL_REPLYTO         0.0'
-            #- 'FREEMAIL_FORGED_REPLYTO  0.0'
-            #- 'FSL_FREEMAIL_1           0.0'
-            #- 'FSL_FREEMAIL_2           0.0'
-            #- 'FH_DATE_PAST_20XX        0.0'
-            #- 'FRT_ADOBE2               0.0'
+  DRUGS_MUSCLE:
+    name:             'DRUGS_MUSCLE'
+    score:            '4.0'
+  URIBL_SBL:
+    name:             'URIBL_SBL'
+    score:            '4.0'
+  URIBL_SBL_SURBL:
+    name:             'URIBL_WS_SURBL'
+    score:            '4.0'
+  RCVD_IN_BL_SPAMCOP_NET:
+    name:             'RCVD_IN_BL_SPAMCOP_NET'
+    score:            '2.0'
+  RCVD_IN_XBL:
+    name:             'RCVD_IN_XBL'
+    score:            '4.0'
+  RCVD_IN_PBL:
+    name:             'RCVD_IN_XBL'
+    score:            '0.0'
+  RCVD_IN_RP_RNBL:
+    name:             'RCVD_IN_PBL'
+    score:            '0.0'
+  RDNS_NONE:
+    name:             'RCVD_IN_RP_RNBL'
+    score:            '0.0'
+  HTML_MESSAGE:
+    name:             'RDNS_NONE'
+    score:            '2.5'
+  EXTRA_MPART_TYPE:
+    name:             'HTML_MESSAGE'
+    score:            '3.0'
+  MIME_HTML_ONLY:
+    name:             'EXTRA_MPART_TYPE'
+    score:            '3.5'
+  URIBL_BLACK:
+    name:             'MIME_HTML_ONLY'
+    score:            '3.5'
+  DCC_CHECK:
+    name:             'URIBL_BLACK'
+    score:            '4.0'
+    DCC_CHECK:
+    name:             'DCC_CHECK'
+    score:            '0.0'
+  HELO_DYNAMIC_SPLIT_IP:
+    name:             'HELO_DYNAMIC_SPLIT_IP'
+    score:            '0.0'
+    FM_FAKE_HELO_VERIZON:
+    name:             'FM_FAKE_HELO_VERIZON'
+    score:            '0.0'
+  FORGED_MUA_OIMO:
+    name:             'FORGED_MUA_OIMO'
+    score:            '0.0'
+  TVD_SPACED_SUBJECT_WORD3:
+    name:             'TVD_SPACED_SUBJECT_WORD3'
+    score:            '0.0'
+    TVD_SPACE_RATIO:
+    name:             'TVD_SPACE_RATIO'
+    score:            '0.0'
+    FORGED_MUA_OUTLOOK:
+    name:             'FORGED_MUA_OUTLOOK'
+    score:            '0.0'
+    WHOIS_CONTACTPRIV:
+    name:             'WHOIS_CONTACTPRIV'
+    score:            '0.0'
+  FREEMAIL_FROM:
+    name:             'FREEMAIL_FROM'
+    score:            '0.0'
+  FREEMAIL_REPLYTO:
+    name:             'FREEMAIL_REPLYTO'
+    score:            '0.0'
+  FREEMAIL_FORGED_REPLYTO:
+    name:             'FREEMAIL_FORGED_REPLYTO'
+    score:            '0.0'
+  FSL_FREEMAIL_1:
+    name:             'FSL_FREEMAIL_1'
+    score:            '0.0'
+  FSL_FREEMAIL_2:
+    name:             'FSL_FREEMAIL_2'
+    score:            '0.0'
+  FH_DATE_PAST_20XX:
+    name:             ''
+    score:            '0.0'
+  FRT_ADOBE2:
+    name:             'FRT_ADOBE2'
+    score:            '0.0'
 
 spamassassin::spamd::minspare: '1'
 spamassassin::spamd::mincheldren: '5'
