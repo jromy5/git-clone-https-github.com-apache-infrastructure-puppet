@@ -301,7 +301,7 @@ spamassassin::spamd::custom_scoring:
     name:             'FSL_FREEMAIL_2'
     score:            '0.0'
   FH_DATE_PAST_20XX:
-    name:             ''
+    name:             'FH_DATE_PAST_20XX'
     score:            '0.0'
   FRT_ADOBE2:
     name:             'FRT_ADOBE2'
