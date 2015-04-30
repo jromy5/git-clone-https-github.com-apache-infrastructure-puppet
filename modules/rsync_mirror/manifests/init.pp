@@ -27,6 +27,8 @@ class rsync_mirror (
     ensure      => present,
     command     => 'to_kill=$(./rsync_hang | tail -1) && if [[ ! -z $to_kill ]] ; then kill -15 $to_kill ; fi', # lint:ignore:80chars
     environment => 'PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+    hour        => '0',
+    minute      => '15',
     require     => File['rsync_hang.pl'],
   }
 
