@@ -217,8 +217,8 @@ snmp::snmpd_config:
   - 'perl do "/root/bin/zpool.pl"'
 
 ## SpamAssassin
-spamassassin::required_hits: '10' #Scores over this value with tagged as spam.
-spamassassin::custom_scoring:
+spamassassin::spamd::required_hits: '10' #Scores over this value with tagged as spam.
+spamassassin::spamd::custom_scoring:
   ALL_SORTED:
     name:             'ALL_SORTED'
     score:            '-2000.0'
@@ -257,6 +257,7 @@ spamassassin::spamd::mincheldren: '5'
 spamassassin::spamd::maxspare: '10'
 spamassassin::spamd::maxconnsperchild: '1000'
 spamassassin::spamd::maxchildren: '40'
+spamassassin::spamd::package_list: 'spamassassin'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
