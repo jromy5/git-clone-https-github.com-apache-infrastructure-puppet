@@ -252,6 +252,11 @@ spamassassin::custom_scoring:
             #- 'FH_DATE_PAST_20XX        0.0'
             #- 'FRT_ADOBE2               0.0'
 
+spamassassin::spamd::minspare: '1'
+spamassassin::spamd::mincheldren: '5'
+spamassassin::spamd::maxspare: '10'
+spamassassin::spamd::maxconnsperchild: '1000'
+spamassassin::spamd::maxchildren: '40'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
