@@ -14,6 +14,23 @@ class rsync_mirror (
     postrotate   => ['if /etc/init.d/rsync status > /dev/null ; then /etc/init.d/rsync reload > /dev/null; fi;'], # lint:ignore:80chars
   }
 
+  file { 'rsync_hang.pl':
+    ensure  => present,
+    path    => '/root/rsync_hang.pl',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0775',
+    content => 'puppet:///modules/rsync_mirror/rsync_hang.pl',
+  }
+
+  cron { 'kill stale rsync':
+    ensure      => present,
+    command     => 'to_kill=$(./rsync_hang | tail -1) && if [[ ! -z $to_kill ]] ; then kill -15 $to_kill ; fi', # lint:ignore:80chars
+    environment => 'PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+    require     => File['rsync_hang.pl'],
+  }
+
+
   $deny = [
             '150.164.76.110', '202.189.39.33', '209.115.248.62', '220.80.108.131', '131.151.1.23', # lint:ignore:80chars
             '202.172.248.46', '207.45.221.24', '195.219.14.24', '140.109.13.44', '66.79.190.190', # lint:ignore:80chars
