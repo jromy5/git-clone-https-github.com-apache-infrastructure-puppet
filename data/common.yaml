@@ -219,12 +219,8 @@ snmp::snmpd_config:
 ## SpamAssassin
 spamassassin::spamd::required_hits: '10' #Scores over this value with tagged as spam.
 spamassassin::spamd::custom_scoring:
-  ALL_SORTED:
-    name:             'ALL_SORTED'
-    score:            '-2000.0'
-
-            #- 'ALL_TRUSTED          -2000.0'
-            #- 'DRUGS_MUSCLE             4.0'
+  ALL_TRUSTED:     '-2000.0'
+  DRUGS_MUSCLE:    '4.0'
             #- 'URIBL_SBL                4.0'
             #- 'URIBL_WS_SURBL           4.0'
             #- 'RCVD_IN_BL_SPAMCOP_NET   2.0'
