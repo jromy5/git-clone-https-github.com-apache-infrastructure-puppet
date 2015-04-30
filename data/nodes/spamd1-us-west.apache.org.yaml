@@ -5,6 +5,6 @@ classes:
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
 # This manages the daemon options
-spamassassin::allowedips: '10.40.0.8'
-spamassassin::listenip: '0.0.0.0'
-spamassassin::required_hits: '10'
+spamassassin::spamd::allowedips: '10.40.0.8'
+spamassassin::spamd::listenip: '0.0.0.0'
+spamassassin::spamd::required_hits: '10'
