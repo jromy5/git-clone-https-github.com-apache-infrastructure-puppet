@@ -1,96 +1,41 @@
-# This file is being maintained by Puppet.
-# DO NOT EDIT
+# This file is being managed by Puppet.
+# /etc/puppet/modules/spamassassin/templates/local.cf.erb
+#
+# Data is sourced from hiera, predominantly data/common.yaml
 #
 ###########################################################################
 
 
+use_bayes 		0
+#use_auto_whitelist 	0
+required_hits 		10
+lock_method 		flock
+skip_rbl_checks 	0
+#check_mx_attempts 	0
+report_safe 		1
+use_pyzor 		0
+use_razor2 		0
+dns_available 		yes
+remove_header 		all Report
 
-# Save spam messages as a message/rfc822 MIME attachment instead of
-# modifying the original message (0: off, 2: use text/plain instead)
-#
-report_safe <%= @report_safe %>
-
-
-# Set which networks or hosts are considered 'trusted' by your mail
-# server (i.e. not spammers)
-<% if @trusted_networks != "" %>
-<% @trusted_networks.each do |val| -%>
-trusted_networks <%= val %>
-<% end -%>
+<% if @trusted_networks %>
+trusted_networks <%= @trusted_networks %>
 <% end %>
 
-
-use_bayes <%= @use_bayes %>
-#use_auto_whitelist 0
-required_hits <%= @required_hits %>
-lock_method flock
-skip_rbl_checks <%= skip_rbl_checks %>
-#check_mx_attempts 0
-report_safe <%= report_safe %>
-use_pyzor <%= use_pyzor %>
-use_razor2 <%= use_razor2 %>
-dns_available <%= dns_available %>
-remove_header all Report
-
-
-## Custom Scoring
-<% if @custom_scoring != "" %>
-<% @custom_scoring.each do |val| -%>
-score <%= val %>
+<% @whitelist_from.each do |val| -%>
+whitelist_from <%= val %>
 <% end -%>
-<% end %>
-
-
-## Custom Rules
-<% if @custom_rules != "" %>
-<% @custom_rules.each do |val| -%>
-<%= val %>
+<% @blacklist_from.each do |val| -%>
+blacklist_from <%= val %>
 <% end -%>
-<% end %>
 
-# Rule from jm on 8/27/2004
-header MISSING_FROM From =~ /^UNSET$/ [if-unset: UNSET]
-describe MISSING_FROM Missing From: header
-score MISSING_FROM5.0
-#
-header ASF_SUB_ENC Subject:raw =~ /=\?(KOI|windows-1251|windows-874)/i
-describe ASF_SUB_ENCBad Subject: encoding
-score ASF_SUB_ENC10
-#
-# 2007-09-04 allow list ops with empty message
-header ASF_LIST_OPSTo =~ /(subscribe|-help|-list|-log|-edit)\@/i
-meta ASF_EMPTY_LIST_OPS(ASF_LIST_OPS && (EMPTY_MESSAGE || MISSING_SUBJECT))
-score ASF_EMPTY_LIST_OPS -5.0
-score ASF_LIST_OPS -2.0
-#
-# 2009-11-16 Be extra lenient for unsubscribe
-header ASF_LIST_UNSUB_A To =~ /(-unsubscribe)\@/i
-score ASF_LIST_UNSUB_A -10
-header ASF_LIST_UNSUB_B To =~ /(-unsubscribe-.*?)\@/i
-score ASF_LIST_UNSUB_B -10
-#
-#
-# 2007-06-13 deal with server-dev@james moderation spam
-header ASF_LIST_SERVER_DEV_A From =~ /\@bellsouth.net/i
-body ASF_LIST_SERVER_DEV_B /\bLottery\b/i
-meta ASF_LIST_SERVER_DEV (ASF_LIST_SERVER_DEV_A && ASF_LIST_SERVER_DEV_B)
-score ASF_LIST_SERVER_DEV10
-score ASF_LIST_SERVER_DEV_A0.1
-score ASF_LIST_SERVER_DEV_B0.1
-#
-# 2008-01-22 deal with hc and jmeter moderation spam
-header ASF_LIST_HC_JMETER_A From =~ /kohls\@e.kohls.com/
-header ASF_LIST_HC_JMETER_B From =~ /xuhl\@cnbearing.com/
-score ASF_LIST_HC_JMETER_A 10
-score ASF_LIST_HC_JMETER_B 10
-#
-header ASF_ADMINTo =~ /(postmaster|abuse)\@/i
-scoreASF_ADMIN-100
-#
-header ASF_MELTWATERFrom =~ /meltwaternews.com/
-scoreASF_MELTWATER-100
-#
-meta __PILL_PRICE_1(0)
-meta __PILL_PRICE_2(0)
-meta __PILL_PRICE_3(0)
+
+# Custom Scoring
+
+<% custom_score.names.sort.each do |name, score| -%>
+score <%= name %> 		<%= score %>
+<% end -%>
+
+
+
 
