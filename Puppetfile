@@ -158,11 +158,6 @@ mod 'ssh',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
 
 
-mod 'spamassassin',
-  :git    => 'https://github.com/pctony/puppet-spamassassin.git',
-  :commit => 'd0c8f5b949b879589b3eb039c607745459751d55'
-
-
 mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
   :tag => '1.0.2'
