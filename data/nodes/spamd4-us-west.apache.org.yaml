@@ -1,6 +1,7 @@
 ---
 classes:
-        - spamassassin::spamd
+  - spamassassin::spamd
+  - rbldnsd::client::setup
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
