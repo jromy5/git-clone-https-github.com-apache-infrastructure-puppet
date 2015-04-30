@@ -372,7 +372,7 @@ osgi-rw=rickhall,fmeschbe,davidb
 osgi-ro=bob
 
 # Not TLPs or podlings.  
-accounting=gmorris,mball,jjimenez
+accounting=gmorris,mball,tpappas
 apachecon=coar,ben,lars,jerenkrantz,rbowen,farra,mvdb,danese,wrowe,curcuru,cliff,noel,nick,zoe,svanderwaal
 apsite={ldap:cn=apsite,ou=groups,dc=apache,dc=org}
 attic-pmc={ldap:cn=attic,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
