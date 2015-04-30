@@ -2,9 +2,17 @@
 classes:
  - spamassassin
 
-
+# As used by the spamassassin/templates/spamassasssin-default.erb
+# template - which creates /etc/default/spamassassin
+# This manages the daemon options
 spamassassin::allowedips: '10.40.0.8'
 spamassassin::listenip: '0.0.0.0'
-spamassassin::spamassassin_packages: 
+spamassassin::min-spare: '1'
+spamassassin::min-children: '5'
+spamassassin::max-spare: '10'
+spamassassin::max-conn-per-child: '1000'
+spamassassin::max-children: '40'
+
+spamassassin::spamassassin_packages:
   - spamassassin
 spamassassin::required_hits: '10'
