@@ -266,7 +266,7 @@ class PubSubClient(Thread):
                     continue
                 
             for line in read_chunk(self.req):
-                line = str( line, encoding='ascii' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
+                line = str( line, encoding='ascii', errors='ignore' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 
                 try:
                     obj = json.loads(line)
