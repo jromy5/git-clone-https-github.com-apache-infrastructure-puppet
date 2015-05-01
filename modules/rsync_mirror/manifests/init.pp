@@ -29,6 +29,7 @@ class rsync_mirror (
     environment => 'PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     hour        => '0',
     minute      => '15',
+    user        => 'root',
     require     => File['rsync_hang.pl'],
   }
 
