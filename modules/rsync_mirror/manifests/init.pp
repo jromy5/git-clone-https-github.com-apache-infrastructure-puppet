@@ -16,7 +16,7 @@ class rsync_mirror (
 
   file { 'rsync_hang.pl':
     ensure  => present,
-    path    => '/root/rsync_hang.pl',
+    path    => '/usr/local/bin/rsync_hang.pl',
     owner   => 'root',
     group   => 'root',
     mode    => '0775',
