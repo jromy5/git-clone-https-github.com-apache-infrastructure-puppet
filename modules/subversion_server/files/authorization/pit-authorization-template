@@ -545,6 +545,7 @@ ea = rw
 @pmc-chairs = rw
 @exec-officers = rw
 whimsysvn = rw
+@accounting = rw
 
 [/foundation/officers]
 @pmc-chairs = rw
