@@ -28,7 +28,7 @@ class blogs_asf (
 
 # roller specific
   $roller_version           = '5.1'
-  $roller_revision_number   = '1'
+  $roller_revision_number   = '2'
   $roller_release           = "${roller_version}.${roller_revision_number}"
   $mysql_connector_version  = '5.1.11'
   $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
@@ -95,6 +95,37 @@ class blogs_asf (
       ensure => $t_group_present,
       name   => $t_groupname,
       gid    => $t_gid,
+  }
+
+# download roller
+  exec {
+    'download-roller':
+      command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+      creates => $downloaded_tarball,
+      timeout => 1200,
+  }
+
+  file { $downloaded_tarball:
+    ensure  => file,
+    require => Exec['download-roller'],
+  }
+
+# extract the download and move it
+  exec {
+    'extract-roller':
+      command => "/bin/tar -xvzf ${tarball} && mv ${roller_build} ${parent_dir}", # lint:ignore:80chars
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${install_dir}/NOTICE.txt",
+      timeout => 1200,
+      require => [File[$downloaded_tarball],File[$parent_dir]],
+  }
+
+  exec {
+    'chown-roller-dirs':
+      command => "/bin/chown -R ${r_username}:${r_username} ${install_dir}",
+      timeout => 1200,
+      require => [User[$r_username],Group[$r_username]],
   }
 
   apache::vhost {
