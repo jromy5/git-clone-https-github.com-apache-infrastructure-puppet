@@ -37,7 +37,7 @@ class blogs_asf (
   $r_tarball                = "${roller_build}.tar.gz"
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${r_tarball}"
-  $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/${roller_release}/${r_tarball}"
+  $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/v${roller_release}/${r_tarball}"
   $parent_dir               = '/x1/roller'
   $install_dir              = "${parent_dir}/${roller_build}"
   $data_dir                 = '/x1/roller_data'
