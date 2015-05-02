@@ -6,6 +6,7 @@ classes:
   - pflogsumm
   - ssl::name::wildcard_apache_org
 
+postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
 
