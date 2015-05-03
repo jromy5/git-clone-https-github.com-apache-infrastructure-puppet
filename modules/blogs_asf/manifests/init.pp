@@ -33,8 +33,8 @@ class blogs_asf (
   $mysql_connector_version  = '5.1.11'
   $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
   $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
-  $roller_build             = "roller-release-${roller_release}-standard"
-  $r_tarball                = "${roller_build}.tar.gz"
+  $roller_build             = "roller-release-${roller_release}"
+  $r_tarball                = "${roller_build}-standard.tar.gz"
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${r_tarball}"
   $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/v${roller_release}/${r_tarball}"
