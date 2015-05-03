@@ -113,7 +113,7 @@ class blogs_asf (
 # extract the download and move it
   exec {
     'extract-roller':
-      command => "/bin/tar -xvzf ${tarball} && mv ${roller_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${r_tarball} && mv ${roller_build} ${parent_dir}", # lint:ignore:80chars
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE.txt",
