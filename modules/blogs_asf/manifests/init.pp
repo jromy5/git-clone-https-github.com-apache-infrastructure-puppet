@@ -128,6 +128,38 @@ class blogs_asf (
       require => [User[$r_username],Group[$r_username]],
   }
 
+# download tomcat
+
+  exec {
+    'download-tomcat':
+      command => "/usr/bin/wget -O ${downloaded_t_tarball} ${download_t_url}",
+      creates => $downloaded_t_tarball,
+      timeout => 1200,
+  }
+
+  file { $downloaded_t_tarball:
+    ensure  => file,
+    require => Exec['download-tomcat'],
+  }
+
+# extract the download and move it
+  exec {
+    'extract-tomcat':
+      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${parent_dir}", # lint:ignore:80chars
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${install_dir}/NOTICE",
+      timeout => 1200,
+      require => [File[$downloaded_t_tarball],File[$parent_dir]],
+  }
+
+  exec {
+    'chown-tomcat-dirs':
+      command => "/bin/chown -R ${t_username}:${t_username} ${install_dir}",
+      timeout => 1200,
+      require => [User[$t_username],Group[$t_username]],
+  }
+
   apache::vhost {
     'blogs-vm-80':
       vhost_name     => '*',
