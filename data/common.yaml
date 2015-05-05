@@ -324,7 +324,6 @@ spamassassin::spamd::package_list:
   - 'arj'
   - 'cabextract'
   - 'cpio'
-  - 'lha'
   - 'nomarch'
   - 'pax'
   - 'rar'
