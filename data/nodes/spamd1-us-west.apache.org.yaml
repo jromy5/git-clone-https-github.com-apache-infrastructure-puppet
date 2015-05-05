@@ -6,7 +6,6 @@ classes:
   - spamassassin::spamd
   - ssl::name::wildcard_apache_org
 
-postfix::server::clamav: 'true'
 postfix::server::clamav_enabled: 'true'
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'false'
