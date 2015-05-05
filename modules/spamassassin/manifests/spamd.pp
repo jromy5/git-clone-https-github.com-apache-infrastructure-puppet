@@ -111,4 +111,14 @@ class spamassassin::spamd (
     require => Package['spamassassin'],
     pattern => 'spamd',
   }
+
+
+  group { 
+    'amavis':
+      members => 'clamav',
+      require => Package['amavisd-new'];
+    'clamav':
+      members => 'amavis',
+      require => Package['clamav-daemon'],
+  }
 }
