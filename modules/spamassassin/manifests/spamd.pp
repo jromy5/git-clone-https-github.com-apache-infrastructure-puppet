@@ -90,6 +90,7 @@ class spamassassin::spamd (
       group   => 'root',
       mode    => '0755',
       notify  => Service['amavis'];
+  }
 
   if $::osfamily == 'Debian' {
     file { '/etc/default/spamassassin':
