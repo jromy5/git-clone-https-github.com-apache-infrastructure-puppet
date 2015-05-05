@@ -10,6 +10,7 @@ use strict;
 
 $myhostname = '<%= @fqdn %>';
 @local_domains_acl = qw(.);
+@inet_acl = qw( <%= @ipaddress %> )
 
 
 #------------ Do not modify anything below this line -------------
