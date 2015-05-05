@@ -105,15 +105,30 @@ class spamassassin::spamd (
       minute  => '30';
   }
 
-  service { 'spamassassin':
-    ensure  => $service_ensure,
-    enable  => $service_enable,
-    require => Package['spamassassin'],
-    pattern => 'spamd',
+  service {
+    'spamassassin':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['spamassassin'],
+      pattern    => 'spamd';
+      hasstatus  => true,
+      hasrestart => true;
+    'amavis':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['amavisd-new'],
+      hasstatus  => true,
+      hasrestart => true;
+    'clamav-daemon':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['clamav-daemon'],
+      hasstatus  => true,
+      hasrestart => true;
   }
 
 
-  group { 
+  group {
     'amavis':
       members => 'clamav',
       require => Package['amavisd-new'];
