@@ -46,41 +46,50 @@ class spamassassin::spamd (
     ensure => $package_ensure,
   }
 
-  file { "${install_folder}/init.pre":
-    source  => 'puppet:///modules/spamassassin/init.pre',
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
+  ## SpamAssassin Files
+  file {
+    "${install_folder}/init.pre":
+      source  => 'puppet:///modules/spamassassin/init.pre',
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
+    "${install_folder}/local.cf":
+      content => template('spamassassin/local.cf.erb'),
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
+    "${install_folder}/v310.pre":
+      source  => 'puppet:///modules/spamassassin/v310.pre',
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
+    "${install_folder}/v312.pre":
+      source  => 'puppet:///modules/spamassassin/v312.pre',
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
+    "${install_folder}/v320.pre":
+      source  => 'puppet:///modules/spamassassin/v320.pre',
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
+    "${install_folder}/v330.pre":
+      source  => 'puppet:///modules/spamassassin/v330.pre',
+      require => Package[ $package_list ],
+      notify  => Service['spamassassin'];
   }
-
-  file { "${install_folder}/local.cf":
-    content => template('spamassassin/local.cf.erb'),
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
-  }
-
-  file { "${install_folder}/v310.pre":
-    source  => 'puppet:///modules/spamassassin/v310.pre',
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
-  }
-
-  file { "${install_folder}/v312.pre":
-    source  => 'puppet:///modules/spamassassin/v312.pre',
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
-  }
-
-  file { "${install_folder}/v320.pre":
-    source  => 'puppet:///modules/spamassassin/v320.pre',
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
-  }
-
-  file { "${install_folder}/v330.pre":
-    source  => 'puppet:///modules/spamassassin/v330.pre',
-    require => Package[ $package_list ],
-    notify  => Service['spamassassin']
-  }
+  
+  ## Amavis Files
+  file {
+    '/etc/amavis/conf.d':
+      ensure  => present,
+      source  => 'puppet:///modules/spamassassin/amavis/',
+      recurse => true,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      notify  => Service['amavis'];
+    '/etc/amavis/conf.d/50-user':
+      content => template('spamassassin/amavis/50-user.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      notify  => Service['amavis'];
 
   if $::osfamily == 'Debian' {
     file { '/etc/default/spamassassin':
@@ -105,10 +114,35 @@ class spamassassin::spamd (
       minute  => '30';
   }
 
-  service { 'spamassassin':
-    ensure  => $service_ensure,
-    enable  => $service_enable,
-    require => Package['spamassassin'],
-    pattern => 'spamd',
+  service {
+    'spamassassin':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['spamassassin'],
+      pattern    => 'spamd';
+      hasstatus  => true,
+      hasrestart => true;
+    'amavis':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['amavisd-new'],
+      hasstatus  => true,
+      hasrestart => true;
+    'clamav-daemon':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['clamav-daemon'],
+      hasstatus  => true,
+      hasrestart => true;
+  }
+
+
+  group {
+    'amavis':
+      members => 'clamav',
+      require => Package['amavisd-new'];
+    'clamav':
+      members => 'amavis',
+      require => Package['clamav-daemon'],
   }
 }
