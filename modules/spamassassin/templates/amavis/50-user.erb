@@ -11,6 +11,11 @@ use strict;
 $myhostname = '<%= @fqdn %>';
 @local_domains_acl = qw(.);
 $inet_socket_bind = '<%= @ipaddress %>';
+@inet_acl = qw(10.40.0.8); # IP Address of the haproxy node.
+
+#$log_level = 5;
+
+$sa_tag_level_deflt = -999; # add spam info headers if at, or above that level
 
 
 #------------ Do not modify anything below this line -------------
