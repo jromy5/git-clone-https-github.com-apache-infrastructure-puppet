@@ -316,8 +316,21 @@ spamassassin::spamd::maxspare: '10'
 spamassassin::spamd::maxconnsperchild: '1000'
 spamassassin::spamd::maxchildren: '40'
 spamassassin::spamd::package_list:
-  - 'spamassassin'
   - 'amavisd-new'
+  - 'clamav-daemon'
+  - 'opendkim'
+  - 'spamassassin'
+  ## Below is a list of packages used by clamav and friends to scan contents
+  - 'arj'
+  - 'cabextract'
+  - 'cpio'
+  - 'lha'
+  - 'nomarch'
+  - 'pax'
+  - 'rar'
+  - 'unrar'
+  - 'unzip'
+  - 'zip'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
