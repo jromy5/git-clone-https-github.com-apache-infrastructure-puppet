@@ -2,7 +2,6 @@
 classes:
   - collectd::plugin::postfix
   - pflogsumm
-  - rbldnsd::client::setup
   - spamassassin::spamd
   - ssl::name::wildcard_apache_org
 
