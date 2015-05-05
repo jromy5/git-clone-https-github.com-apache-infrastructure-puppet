@@ -6,6 +6,8 @@ classes:
   - spamassassin::spamd
   - ssl::name::wildcard_apache_org
 
+postfix::server::clamav: 'true'
+postfix::server::clamav_enabled: 'true'
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'false'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
