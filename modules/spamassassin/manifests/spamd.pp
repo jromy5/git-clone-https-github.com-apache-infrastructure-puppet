@@ -120,7 +120,7 @@ class spamassassin::spamd (
       ensure     => $service_ensure,
       enable     => $service_enable,
       require    => Package['spamassassin'],
-      pattern    => 'spamd';
+      pattern    => 'spamd',
       hasstatus  => true,
       hasrestart => true;
     'amavis':
