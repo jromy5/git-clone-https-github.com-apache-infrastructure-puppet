@@ -1,7 +1,15 @@
 ---
 classes:
+  - collectd::plugin::postfix
+  - pflogsumm
   - spamassassin::spamd
-  - rbldnsd::client::setup
+  - ssl::name::wildcard_apache_org
+
+postfix::server::clamav_enabled: 'true'
+postfix::server::inet_interfaces: 'all'
+postfix::server::postscreen: 'false'
+postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
+postfix::server::relayhost: '[hermes.apache.org]:2025'
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
