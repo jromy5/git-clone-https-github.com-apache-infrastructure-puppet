@@ -171,6 +171,9 @@ snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 spamassassin::package_list:
   - spamassassin
 
+spamassassin::spamc::haproxy_packagelist:
+  - haproxy
+
 spamassassin::sa_update: '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
 
 subversionclient::packages: 

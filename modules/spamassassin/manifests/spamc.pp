@@ -8,10 +8,9 @@ class spamassassin::spamc (
   $haproxy_mode          = 'tcp',
   $haproxy_statsuser     = '',
   $haproxy_statspassword = '',
+  $haproxy_packagelist   = [],
 
 ) {
-
-  include haproxy
 
   class { "spamassassin::spamc::install::${::asfosname}::${::asfosrelease}":
     spamd_peers           => $spamd_peers,
@@ -20,5 +19,6 @@ class spamassassin::spamc (
     haproxy_mode          => $haproxy_mode,
     haproxy_statsuser     => $haproxy_statsuser,
     haproxy_statspassword => $haproxy_statspassword,
+    haproxy_packagelist   => $haproxy_packagelist,
   }
 }
