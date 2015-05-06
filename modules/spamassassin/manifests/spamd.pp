@@ -135,6 +135,12 @@ class spamassassin::spamd (
       require    => Package['clamav-daemon'],
       hasstatus  => true,
       hasrestart => true;
+    'clamsmtp':
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      require    => Package['clamsmtp'],
+      hasstatus  => false,
+      hasrestart => true;
   }
 
 

@@ -318,6 +318,7 @@ spamassassin::spamd::maxchildren: '40'
 spamassassin::spamd::package_list:
   - 'amavisd-new'
   - 'clamav-daemon'
+  - 'clamsmtp'
   - 'opendkim'
   - 'spamassassin'
   ## Below is a list of packages used by clamav and friends to scan contents
