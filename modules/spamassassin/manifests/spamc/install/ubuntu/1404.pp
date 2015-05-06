@@ -10,9 +10,6 @@ class spamassassin::spamc::install::ubuntu::1404 (
   $haproxy_statspassword = '',
 
 ) {
-    package { 'haproxy':
-      ensure  => installed,
-    }
 
   file {
     '/etc/default/haproxy':
