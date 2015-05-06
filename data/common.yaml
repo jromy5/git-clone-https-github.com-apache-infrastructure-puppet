@@ -195,6 +195,11 @@ ntp::restrict:
   - '-4 default kod notrap nomodify nopeer noquery'
   - '-6 default kod notrap nomodify nopeer noquery'
 
+
+## POSTFIX
+postfix::params::service_restart: '/etc/init.d/postfix check && /etc/init.d/postfix restart'
+
+
 puppet_asf::enable_daemon: true
 
 ## SNMP
