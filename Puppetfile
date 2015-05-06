@@ -106,7 +106,7 @@ mod 'pkgng',
 
 mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
-  :commit => 'b79cafd33379740ddb4cf3c041db30243e43e66b'
+  :commit => '611314c2acb2818acc78554caac4770e5185bdcd'
 
 
 mod 'postgresql',

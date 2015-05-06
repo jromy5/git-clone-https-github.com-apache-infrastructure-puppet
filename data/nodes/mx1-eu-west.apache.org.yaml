@@ -17,3 +17,4 @@ postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canoni
 
 postfix::server::asf_mx_enabled: 'true'
 postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
+postfix::server::max_postfix_amavis_procs: '25'
