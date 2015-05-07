@@ -270,6 +270,7 @@ shindig={reuse:asf-authorization:shindig}
 shindig-pmc={ldap:cn=shindig,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 shiro={reuse:asf-authorization:shiro}
 shiro-pmc={ldap:cn=shiro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+singa={reuse:asf-authorization:singa}
 sis={reuse:asf-authorization:sis}
 sis-pmc={ldap:cn=sis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 slider={reuse:asf-authorization:slider}
@@ -1345,6 +1346,9 @@ buildbot = rw
 
 [/websites/production/shiro]
 @shiro = rw
+
+[/websites/production/singa]
+@incubator = rw
 
 [/websites/production/sis]
 @sis = rw
