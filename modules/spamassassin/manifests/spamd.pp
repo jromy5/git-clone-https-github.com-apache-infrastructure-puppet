@@ -17,6 +17,8 @@ class spamassassin::spamd (
   $listenip              = '127.0.0.1',
   $local                 = false,
   $max_amavis_procs      = '25',
+  $clamav_max_threads    = '25',
+  $clamav_max_queue      = '25',
   $maxchildren           = 20,
   $maxconnsperchild      = 1000,
   $maxspare              = 10,
@@ -91,6 +93,25 @@ class spamassassin::spamd (
       group   => 'root',
       mode    => '0755',
       notify  => Service['amavis'];
+  }
+
+
+  ## ClamAV Files
+  file {
+    '/etc/clamav/clamd.conf':
+      ensure  => present,
+      content => template('spamassassin/clamav/clamd.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      notify  => Service['clamav-daemon'];
+    '/etc/clamsmtpd.conf':
+      ensure  => present,
+      content => template('spamassassin/clamav/clamdsmtpd.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      notify  => Service['clamsmtp'];
   }
 
   if $::osfamily == 'Debian' {
