@@ -17,7 +17,7 @@ class spamassassin::spamd (
   $listenip              = '127.0.0.1',
   $local                 = false,
   $max_amavis_procs      = '25',
-  $clamav_max_threads    = '25'
+  $clamav_max_threads    = '25',
   $clamav_max_queue      = '25',
   $maxchildren           = 20,
   $maxconnsperchild      = 1000,
