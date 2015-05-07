@@ -17,4 +17,4 @@ postfix::server::relayhost: '[hermes.apache.org]:2025'
 spamassassin::spamd::allowedips: '10.40.0.8'
 spamassassin::spamd::listenip: '0.0.0.0'
 spamassassin::spamd::required_hits: '10'
-
+spamassassin::spamd::max_amavis_procs: '50'
