@@ -107,7 +107,7 @@ class spamassassin::spamd (
       notify  => Service['clamav-daemon'];
     '/etc/clamsmtpd.conf':
       ensure  => present,
-      content => template('spamassassin/clamav/clamdsmtpd.conf.erb'),
+      content => template('spamassassin/clamav/clamsmtpd.conf.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
