@@ -1,5 +1,14 @@
 # *** DO *NOT* CHANGE THE LIVE FILE.  Change it in SVN, and update.
 
+# THEN: in the infrastructure-puppet repo, create a new branch from the deployment branch, make changes, push new branch
+# and then ask someone in Infrastructure to review + merge changes.
+# INFRA have a workflow document:
+
+# https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
+
+
+
+
 # LDAP groups have two forms:
 # ==========================
 # Unix/Posix groups and Committee groups.
@@ -577,6 +586,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/beehive]
 * = r
+
+[/beehive/site]
+@attic-pmc = rw
 
 [/bigtop/site]
 @bigtop = rw
