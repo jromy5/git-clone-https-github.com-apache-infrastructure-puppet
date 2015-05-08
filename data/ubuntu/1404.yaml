@@ -333,6 +333,7 @@ build_slaves::distro_packages:
   - ruby-dev
   - screen
   - sharutils
+  - shellcheck
   - sloccount
   - tmux
   - unzip
