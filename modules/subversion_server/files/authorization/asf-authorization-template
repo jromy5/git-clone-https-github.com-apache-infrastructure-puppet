@@ -656,6 +656,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/cloudstack]
 @cloudstack = rw
 
+[/cloudstack/site/middleman]
+* = r
+
 [/cocoon]
 @cocoon = rw
 @lenya = rw
