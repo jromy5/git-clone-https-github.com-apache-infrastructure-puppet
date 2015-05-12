@@ -6,7 +6,7 @@
 
 # https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
 
-
+# Note that it can take up to 40 minutes or so for the live file to be updated after Infra have merged the change
 
 
 # LDAP groups have two forms:
