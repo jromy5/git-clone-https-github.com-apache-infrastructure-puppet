@@ -2,7 +2,7 @@
 #
 # This module manages spamassassin
 #
-class spamassassin::spamd (
+class spamassassin::spamd ( # lint:ignore:autoloader_layout
   $allowedips            = '127.0.0.1',
   $allowtell             = false,
   $blacklist_from        = [],
@@ -13,7 +13,7 @@ class spamassassin::spamd (
   $dns_available         = 'yes',
   $helperhomedir         = '',
   $install_folder        = '/etc/spamassassin',
-  $kam_update            = '/usr/bin/curl http://www.pccc.com/downloads/SpamAssassin/contrib/KAM.cf -o /etc/spamassassin/KAM.cf && /usr/bin/spamassassin --lint && /usr/sbin/service spamassassin restart',
+  $kam_update            = '/usr/bin/curl http://www.pccc.com/downloads/SpamAssassin/contrib/KAM.cf -o /eitc/spamassassin/KAM.cf && /usr/bin/spamassassin --lint && /usr/sbin/service spamassassin restart', # lint:ignore:80chars
   $listenip              = '127.0.0.1',
   $local                 = false,
   $max_amavis_procs      = '25',
@@ -30,7 +30,7 @@ class spamassassin::spamd (
   $report_safe           = 1,
   $required_hits         = '10.0',
   $roundrobin            = false,
-  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload',
+  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload', # lint:ignore:80chars
   $service_enable        = true,
   $service_ensure        = running,
   $skip_rbl_checks       = '0',
