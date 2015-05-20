@@ -1146,7 +1146,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.incubator\.apache\.org$
       RewriteCond /var/www/%1.apache.org/content -d
       RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-      RewriteRule ^(\w+)(?:\.\w+)?\.incubator\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
+      RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
       
 
   jackrabbit:
