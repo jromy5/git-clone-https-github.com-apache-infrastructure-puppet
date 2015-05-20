@@ -1064,6 +1064,14 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+      
+      # change the DocumentRoot to ${DocumentRoot}/content if it exists
+      RewriteCond %%{}{REQUEST_URI}              !^/cgi-bin/
+      RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
+      RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.incubator\.apache\.org$
+      RewriteCond /var/www/%1.apache.org/content -d
+      RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
+      RewriteRule ^(\w+)(?:\.\w+)?\.incubator\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
 
 
   incubator-ssl:
@@ -1131,6 +1139,15 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+      
+      # change the DocumentRoot to ${DocumentRoot}/content if it exists
+      RewriteCond %%{}{REQUEST_URI}              !^/cgi-bin/
+      RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
+      RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.incubator\.apache\.org$
+      RewriteCond /var/www/%1.apache.org/content -d
+      RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
+      RewriteRule ^(\w+)(?:\.\w+)?\.incubator\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
+      
 
   jackrabbit:
     vhost_name: '*'
