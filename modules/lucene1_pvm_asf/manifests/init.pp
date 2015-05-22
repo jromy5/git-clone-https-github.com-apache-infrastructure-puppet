@@ -1,10 +1,12 @@
 # /etc/puppet/modules//lucene1_pvm_asf/manifests/init.pp
 
-class lucene1_pvm_asf {
-
-  # manifest for lucene project vm
+class lucene1_pvm_asf (
 
   $jenkins_ssh
+
+){
+
+  # manifest for lucene project vm
 
   user { 'jenkins':
     ensure     => present,
