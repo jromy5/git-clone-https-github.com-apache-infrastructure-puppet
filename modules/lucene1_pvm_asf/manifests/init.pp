@@ -13,6 +13,14 @@ class lucene1_pvm_asf {
     uid        => '800',
   }
 
+  file { '/etc/ssh/ssh_keys/jenkins.pub':
+    content    => template('lucene_pvm_asf/jenkins.pub.erb'),
+    ensure     => 'present',
+    owner      => 'root',
+    group      => 'jenkins',
+    require    => User['jenkins'],
+  }
+
   apt::source { 'precise':
     location => 'http://us.archive.ubuntu.com/ubuntu/',
     release  => 'precise',
