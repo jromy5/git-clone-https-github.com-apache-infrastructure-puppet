@@ -4,6 +4,8 @@ class lucene1_pvm_asf {
 
   # manifest for lucene project vm
 
+  $jenkins_ssh
+
   user { 'jenkins':
     ensure     => present,
     name       => 'jenkins',
