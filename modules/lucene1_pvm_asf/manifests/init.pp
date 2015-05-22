@@ -14,7 +14,7 @@ class lucene1_pvm_asf {
   }
 
   file { '/etc/ssh/ssh_keys/jenkins.pub':
-    content    => template('lucene_pvm_asf/jenkins.pub.erb'),
+    source     => 'puppet:///modules/lucene_pvm_asf/jenkins.pub',
     ensure     => 'present',
     owner      => 'root',
     group      => 'jenkins',
