@@ -24,6 +24,12 @@ class lucene1_pvm_asf (
     uid        => '800',
   }
 
+  file { '/home/jenkins':
+    ensure  => 'link',
+    target  => '/x1/jenkins',
+    require => User['jenkins'],
+  }
+
   file { '/etc/ssh/ssh_keys/jenkins.pub':
     ensure  => 'present',
     content => $jenkins_ssh,
