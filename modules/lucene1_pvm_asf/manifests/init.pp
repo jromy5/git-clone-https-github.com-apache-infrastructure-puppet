@@ -2,7 +2,7 @@
 
 class lucene1_pvm_asf (
 
-  $jenkins_ssh
+  $jenkins_ssh,
   $required_packages = ['joe' , 'ant' , 'unzip'],
 
 ){
@@ -19,17 +19,17 @@ class lucene1_pvm_asf (
     ensure     => present,
     name       => 'jenkins',
     comment    => 'lucene project VM jenkins slave',
-    home       => '/home/jenkins',
+    home       => '/x1/jenkins',
     managehome => true,
     uid        => '800',
   }
 
   file { '/etc/ssh/ssh_keys/jenkins.pub':
-    content    => $jenkins_ssh,
-    ensure     => 'present',
-    owner      => 'root',
-    group      => 'jenkins',
-    require    => User['jenkins'],
+    ensure  => 'present',
+    content => $jenkins_ssh,
+    owner   => 'root',
+    group   => 'jenkins',
+    require => User['jenkins'],
   }
 
   apt::source { 'precise':
