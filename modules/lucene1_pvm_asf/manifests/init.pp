@@ -3,7 +3,7 @@
 class lucene1_pvm_asf (
 
   $jenkins_ssh
-  $required_packages = ['joe' , 'ant'],
+  $required_packages = ['joe' , 'ant' , 'unzip'],
 
 ){
 
