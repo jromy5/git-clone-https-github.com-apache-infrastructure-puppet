@@ -3,8 +3,15 @@
 class lucene1_pvm_asf (
 
   $jenkins_ssh
+  $required_packages = ['joe' , 'ant'],
 
 ){
+
+# install required packages:
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
 
   # manifest for lucene project vm
 
