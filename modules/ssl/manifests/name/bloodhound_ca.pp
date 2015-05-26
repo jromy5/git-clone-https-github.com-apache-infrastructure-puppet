@@ -17,16 +17,6 @@ class ssl::name::bloodhound_ca (
 ) {
 
   file {
-    $sslrootdir:
-      ensure   =>  directory,
-      group    =>  $sslrootdirgroup,
-      owner    =>  $sslrootdirowner,
-      mode     =>  $sslrootdirumask;
-    "${sslrootdir}/certs":
-      ensure   =>  directory,
-      group    =>  $sslrootdirgroup,
-      owner    =>  $sslrootdirowner,
-      mode     =>  '0755';
     "${sslrootdir}/certs/${sslcertname}":
       ensure  => present,
       require => File[$sslrootdir],
