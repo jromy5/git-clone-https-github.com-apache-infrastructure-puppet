@@ -319,8 +319,8 @@ vhosts_asf::vhosts::vhosts:
 
         # Pass on X-Authenticated-User to backend server
         RewriteEngine On
-        RewriteRule .* - [E=PROXY_USER:%{LA-U:REMOTE_USER}]
-        RequestHeader set X-Authenticated-User %{PROXY_USER}e
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
 
         # Remove Authorization header to prevent passwords from being transmitted
         RequestHeader unset Authorization
