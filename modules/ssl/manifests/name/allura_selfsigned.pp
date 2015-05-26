@@ -3,7 +3,7 @@
 class ssl::name::allura_selfsigned (
 
   $sslcertcontents             = '',
-  $sslcertname                 = 'allura-seflsigned.crt',
+  $sslcertname                 = 'allura-selfsigned.crt',
   $sslchaincontent             = '',
   $sslchainname                = '',
   $sslkeycontents              = '',
