@@ -1,4 +1,4 @@
-#/etc/puppet/modules/manifests/ssl/name/allura_seflsigned.pp
+#/etc/puppet/modules/manifests/ssl/name/allura_selfsigned.pp
 
 class ssl::name::allura_selfsigned (
 
