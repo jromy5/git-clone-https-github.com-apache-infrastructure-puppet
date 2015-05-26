@@ -61,6 +61,10 @@ vhosts_asf::vhosts::vhosts:
       # Setup SSL Proxy Support (needed to allow SSL proxying)
       SSLProxyEngine On
       SSLProxyCACertificateFile /etc/ssl/certs/allura-selfsigned.crt
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
 
       ProxyPreserveHost on
 
