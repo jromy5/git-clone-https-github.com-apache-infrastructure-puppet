@@ -7,7 +7,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - ssl::name::wildcard_apache_org
-  - ssl::name::allura_seflsigned
+  - ssl::name::allura_selfsigned
   - ssl::name::bloodhound_ca
   - vhosts_asf::modules
   - vhosts_asf::vhosts
