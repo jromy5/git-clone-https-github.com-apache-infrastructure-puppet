@@ -189,6 +189,8 @@ vhosts_asf::vhosts::vhosts:
       Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
       Redirect permanent /ooo https://bz.apache.org/ooo    
 
+      ProxyPreserveHost on
+
       # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
       SSLProxyEngine On
       SSLProxyCACertificateFile /etc/ssl/certs/bloodhound-ca.crt
