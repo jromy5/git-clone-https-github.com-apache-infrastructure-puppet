@@ -377,7 +377,7 @@ vhosts_asf::vhosts::vhosts:
 
         # Remove Authorization header to prevent passwords from being transmitted
         RequestHeader unset Authorization
-        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
+        ProxyPass http://192.168.0.55:8080/infra retry=0 timeout=60
 
       </Location>
 
