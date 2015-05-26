@@ -1,6 +1,6 @@
 #/etc/puppet/modules/manifests/ssl/name/allura_seflsigned.pp
 
-class ssl::name::allura_seflsigned (
+class ssl::name::allura_selfsigned (
 
   $sslcertcontents             = '',
   $sslcertname                 = 'allura-seflsigned.crt',
