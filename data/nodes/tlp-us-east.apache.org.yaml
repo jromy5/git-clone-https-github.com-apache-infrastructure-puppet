@@ -81,7 +81,7 @@ svnwcsub::username:                          'svnwc'
 
 rsync::package_ensure:                       'latest'
 rsync::server::use_xinetd:                   false
-rsync::server::gid: 			     'nogroup' # group 'nobody' doesn't exist in ubuntu
+rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
 
 apache::custom_config:
   svn:
@@ -420,6 +420,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'www.apache.org'
     docroot: '/var/www/www.apache.org/content'
     manage_docroot: false
+    default_vhost: true
     serveraliases:
       - 'apache.org'
       - 'apachegroup.org'
@@ -541,6 +542,20 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     custom_fragment: |
       Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
+
+  apachecon_na:
+    vhost_name: '*'
+    port: 80
+    servername: 'na14.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'us.apachecon.com'
+      - 'na.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect / http://events.linuxfoundation.org/events/apachecon-north-america/
 
   apacheextras:
     vhost_name: '*'
