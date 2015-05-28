@@ -1,5 +1,42 @@
 ---
 classes:
   - apache
+  - apache::mod::wsgi
   - mailman3::core
   - mailman3::postorius
+  - python
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::mod::wsgi::wsgi_python_home: '/var/www/postorius/venv2'
+
+python::version: system
+python::pip: true
+python::dev: true
+python::virtualenv: true
+python::gunicorn: false
+python::manage_gunicorn: true
+
+vhosts_asf::vhosts::vhosts:
+  postorius:
+    vhost_name: '*'
+    port: 80
+    servername: 'postorius.apache.org'
+    default_vhost: true
+    docroot: '/var/www/postorius/postorius_standalone'
+    manage_docroot: false
+    access_log_file: 'postorius_access.log'
+    error_log_file: 'postorius_error.log'
+    custom_fragment: |
+      Alias /static /var/www/postorius/postorius_standalone/static
+
+      <Directory "/var/www/postorius/postorius_standalone/static">
+        Order deny,allow
+        Allow from all
+      </Directory>
+
+      WSGIScriptAlias / /var/www/postorius/postorius_standalone/srv/postorius.wsgi
+      <Directory "/var/www/postorius/postorius_standalone/srv">
+        Order deny,allow
+        Allow from all
+      </Directory>
