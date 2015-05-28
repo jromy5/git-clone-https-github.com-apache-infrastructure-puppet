@@ -2,6 +2,7 @@
 classes:
 - cwiki_asf
 - apache
+- vhosts_asf::vhosts
 - ssl::name::cwiki_apache_org 
 
 apache::keepalive:          'On'
@@ -22,3 +23,39 @@ apache::mod::event::threadsperchild: '50'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
+
+vhosts_asf::vhosts::vhosts:
+  cwiki-vm3-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'cwiki-vm3.apache.org'
+    serveraliases:
+      - 'cwiki.apache.org'
+      - 'cwiki-test.apache.org'
+    port: 80
+    ssl: false
+    docroot: $docroot
+    error_log_file: 'cwiki_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
+
+  cwiki-vm3-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'cwiki-vm3.apache.org'
+      serveraliases:  
+        - 'cwiki.apache.org'
+        - 'cwiki-test.apache.org'
+      port: 443
+      docroot: $docroot
+      error_log_file: 'cwiki_error.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/cwiki.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/cwiki.apache.org.chain'
+      ssl_key: '/etc/ssl/private/cwiki.apache.org.key'
+      custom_fragment: |
+        ProxyPass /intermediates !
+        ProxyPass /confluence/ http://127.0.0.1/confluence/
+        ProxyPassReverse /confluence/ http://127.0.0.1/confluence/
+        RewriteCond $1 !(confluence|intermediates)
+        RewriteRule ^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]

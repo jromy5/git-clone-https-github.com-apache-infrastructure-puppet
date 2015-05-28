@@ -182,62 +182,6 @@ class cwiki_asf (
       mode    => '0755';
   }
 
-  # apache::mod { 'rewrite': }
-  # apache::mod { 'proxy': }
-  # apache::mod { 'proxy_http': }
-
-  apache::vhost {
-    'cwiki-vm3-80':
-      vhost_name      => '*',
-      priority        => '12',
-      servername      => 'cwiki-vm3.apache.org',
-      serveraliases   => [
-        'cwiki.apache.org',
-        'cwiki-test.apache.org',
-      ],
-      port            => '80',
-      ssl             => false,
-      docroot         => $docroot,
-      error_log_file  => 'cwiki_error.log',
-#      redirect_source => ['/'],
-#      redirect_dest   => ['https://cwiki.apache.org/'],
-#      redirect_status => ['permanent'],
-      custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1'
-}
-
-  apache::vhost {
-    'cwiki-vm3-443':
-      vhost_name      => '*',
-      default_vhost   => true,
-      servername      => 'cwiki-vm3.apache.org',
-      port            => '443',
-      docroot         => $docroot,
-      error_log_file  => 'cwiki_error.log',
-      ssl             => true,
-      ssl_cert        => '/etc/ssl/certs/cwiki.apache.org.crt',
-      ssl_chain       => '/etc/ssl/certs/cwiki.apache.org.chain',
-      ssl_key         => '/etc/ssl/private/cwiki.apache.org.key',
-      custom_fragment => 'ProxyPass /intermediates !',
-      serveraliases   => [
-        'cwiki.apache.org',
-        'cwiki-test.apache.org',
-      ],
-      rewrites        => [
-        {
-          comment      => 'redirect from / to /confluence for most.',
-          rewrite_cond => ['$1 !(confluence|intermediates)'],
-          rewrite_rule => ['^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]'],
-        },
-      ],
-      proxy_pass      => [
-        { 'path'         => '/confluence/',
-          'url'          => 'http://127.0.0.1:8888/confluence/',
-          'reverse_urls' => ['http://127.0.0.1:8888/confluence/']
-        },
-      ],
-      #    no_proxy_uris => ['/intermediates'],
-  }
-
   service {
     $service_name:
       ensure     => $service_ensure,
