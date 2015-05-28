@@ -11,6 +11,16 @@ class cwiki_asf (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'confluence',
+
+  # override below in yaml
+  $confluence_version            = ''
+  $mysql_connector_version       = ''
+  $parent_dir
+  $server_port                   = ''
+  $connector_port                = ''
+  $context_path                  = ''
+  $docroot                       = ''
+
   # below are contained in eyaml
   $confluence_license_hash       = '',
   $confluence_license_message    = '',
@@ -18,6 +28,7 @@ class cwiki_asf (
   $hibernate_connection_password = '',
   $hibernate_connection_username = '',
   $hibernate_connection_url      = '',
+
   $required_packages             = ['graphviz' , 'graphviz-dev'],
 ){
 
@@ -28,8 +39,6 @@ class cwiki_asf (
   }
 
 # confluence specific
-  $confluence_version       = '5.0.3'
-  $mysql_connector_version  = '5.1.11'
   $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
   $mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
   $confluence_build         = "atlassian-confluence-${confluence_version}"
@@ -37,14 +46,9 @@ class cwiki_asf (
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${tarball}"
   $download_url             = "http://www.atlassian.com/software/confluence/downloads/binary/${tarball}"
-  $parent_dir               = '/x1/cwiki'
   $install_dir              = "${parent_dir}/${confluence_build}"
   $confluence_home          = "${parent_dir}/confluence-data"
-  $server_port              = '8008'
-  $connector_port           = '8888'
-  $context_path             = '/confluence'
   $current_dir              = "${parent_dir}/current"
-  $docroot                  = '/var/www'
   $intermediates_dir        = "${docroot}/intermediates"
 
   user {
