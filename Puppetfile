@@ -129,9 +129,15 @@ mod 'puppet',
   :git => 'https://github.com/theforeman/puppet-puppet.git',
   :tag => '2.3.1'
 
+
 mod 'puppetlabs_yum',
   :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
   :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+
+
+mod 'python',
+  :git => 'https://github.com/stankevich/puppet-python.git',
+  :tag => '1.9.4'
 
 
 mod 'rsync',
