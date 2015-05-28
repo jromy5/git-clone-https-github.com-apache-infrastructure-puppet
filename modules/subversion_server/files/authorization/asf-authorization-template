@@ -101,7 +101,7 @@ bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
 blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
-bookkeeper=breed,dhruba,fpj,utkarsh,ivank,umamahesh,jiannan
+bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 buildr={ldap:cn=buildr,ou=groups,dc=apache,dc=org}
 buildr-pmc={reuse:pit-authorization:buildr-pmc}
 bval={ldap:cn=bval,ou=groups,dc=apache,dc=org}
@@ -295,7 +295,7 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee
+nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee,danbress
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
