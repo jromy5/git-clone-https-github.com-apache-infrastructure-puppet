@@ -1,3 +1,50 @@
 ---
 classes:
   - apache
+  - apache::mod::wsgi
+  - python
+  - mailman3::hyperkitty
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::mod::wsgi::wsgi_python_home: '/var/www/hyperkitty/venv2'
+
+python::version: system
+python::pip: true
+python::dev: true
+python::virtualenv: true
+python::gunicorn: false
+python::manage_gunicorn: true
+
+vhosts_asf::vhosts::vhosts:
+  hyperkitty:
+    vhost_name: '*'
+    port: 80
+    servername: 'hyperkitty.apache.org'
+    default_vhost: true
+    docroot: '/var/www/hyperkitty/hyperkitty_standalone'
+    manage_docroot: false
+    access_log_file: 'hyperkitty_access.log'
+    error_log_file: 'hyperkitty_error.log'
+    custom_fragment: |
+      Alias /robots.txt  /var/www/hyperkitty/hyperkitty_standalone/static/hyperkitty/robots.txt
+      Alias /favicon.ico /var/www/hyperkitty/hyperkitty_standalone/static/hyperkitty/favicon.ico
+      Alias /static      /var/www/hyperkitty/hyperkitty_standalone/static
+
+      WSGIScriptAlias /hyperkitty /var/www/hyperkitty/hyperkitty_standalone/wsgi.py
+      WSGIDaemonProcess hyperkitty threads=25 python-path=/var/www//hyperkitty_standalone:/var/www/hyperkitty/venv2/lib/python2.7/site-packages
+
+      <Directory "/var/www/hyperkitty/hyperkitty_standalone">
+        <Files wsgi.py>
+          Order deny,allow
+          Allow from all
+        </Files>
+
+        WSGIProcessGroup hyperkitty
+      </Directory>
+
+      <Directory "/var/www/hyperkitty/hyperkitty_standalone/static">
+        Order deny,allow
+        Allow from all
+      </Directory>
+
