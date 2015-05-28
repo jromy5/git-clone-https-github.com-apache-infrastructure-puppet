@@ -76,6 +76,11 @@ mod 'java',
   :tag => '1.2.0'
 
 
+mod 'mailman3',
+  :git => 'https://github.com/pctony/puppet-mailman3.git',
+  :branch => 'asf_development'
+
+
 mod 'module_data',
   :git => 'https://github.com/ripienaar/puppet-module-data',
   :tag => '0.0.4'
