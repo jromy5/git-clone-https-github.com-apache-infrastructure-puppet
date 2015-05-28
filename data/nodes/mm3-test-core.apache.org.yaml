@@ -1,4 +1,5 @@
 ---
 classes:
   - apache
-
+  - mailman3::core
+  - mailman3::postorius
