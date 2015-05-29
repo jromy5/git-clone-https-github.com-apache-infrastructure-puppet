@@ -336,6 +336,11 @@ spamassassin::spamd::package_list:
   - 'unrar'
   - 'unzip'
   - 'zip'
+spamassassin::spamd::whitelist_to:
+  - '*-reject-*@apache.org'
+  - '*-accept-*@apache.org'
+  - '*-reject-*@*.apache.org'
+  - '*-accept-*@*.apache.org'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
