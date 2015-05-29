@@ -30,6 +30,9 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+base::packages:
+  - issues-data
+
 vhosts_asf::modules::modules:
   substitute:
     name: 'substitute'
@@ -170,7 +173,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 80
-    docroot: '/var/www/html'
+    docroot: '/var/www/issues-data'
     servername: 'issues.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.http_access.log'
@@ -183,7 +186,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    docroot: '/var/www/html'
+    docroot: '/var/www/issues-data'
     servername: 'issues.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.ssl_access.log'
