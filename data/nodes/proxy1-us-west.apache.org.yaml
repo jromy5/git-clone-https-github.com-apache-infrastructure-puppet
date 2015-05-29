@@ -231,6 +231,10 @@ vhosts_asf::vhosts::vhosts:
       SetEnvIf Request_URI "^/jira-test2" asf_proxy=hel.jira-test2
 
       # Bloodhound instance on bloodhound-vm.a.o
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
       ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
       SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
 
