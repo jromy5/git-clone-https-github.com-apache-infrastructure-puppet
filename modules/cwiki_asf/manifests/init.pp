@@ -13,13 +13,13 @@ class cwiki_asf (
   $username                      = 'confluence',
 
   # override below in yaml
-  $confluence_version            = ''
-  $mysql_connector_version       = ''
-  $parent_dir
-  $server_port                   = ''
-  $connector_port                = ''
-  $context_path                  = ''
-  $docroot                       = ''
+  $confluence_version            = '',
+  $mysql_connector_version       = '',
+  $parent_dir,
+  $server_port                   = '',
+  $connector_port                = '',
+  $context_path                  = '',
+  $docroot                       = '',
 
   # below are contained in eyaml
   $confluence_license_hash       = '',

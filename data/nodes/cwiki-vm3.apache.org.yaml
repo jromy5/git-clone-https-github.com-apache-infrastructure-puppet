@@ -1,18 +1,12 @@
 ---
 classes:
-- cwiki_asf
-- apache
-- vhosts_asf::vhosts
-- ssl::name::cwiki_apache_org 
-
-# cwiki_asf class variables.
-cwiki_asf::confluence_version: '5.0.3'
-cwiki_asf::mysql_connector_version: '5.1.11'
-cwiki_asf::parent_dir: '/x1/cwiki'
-cwiki_asf::server_port: '8008'
-cwiki_asf::connector_port: '8888'
-cwiki_asf::context_path: '/confluence'
-cwiki_asf::docroot: '/var/www'
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - cwiki_asf
+  - ssl::name::cwiki_apache_org 
+  - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -30,6 +24,15 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+# cwiki_asf class variables.
+cwiki_asf::confluence_version: '5.0.3'
+cwiki_asf::mysql_connector_version: '5.1.11'
+cwiki_asf::parent_dir: '/x1/cwiki'
+cwiki_asf::server_port: '8008'
+cwiki_asf::connector_port: '8888'
+cwiki_asf::context_path: '/confluence'
+cwiki_asf::docroot: '/var/www'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
@@ -43,7 +46,7 @@ vhosts_asf::vhosts::vhosts:
       - 'cwiki-test.apache.org'
     port: 80
     ssl: false
-    docroot: $docroot
+    docroot: '/var/www'
     error_log_file: 'cwiki_error.log'
     custom_fragment: |
       RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
@@ -56,7 +59,7 @@ vhosts_asf::vhosts::vhosts:
         - 'cwiki.apache.org'
         - 'cwiki-test.apache.org'
       port: 443
-      docroot: $docroot
+      docroot: '/var/www'
       error_log_file: 'cwiki_error.log'
       ssl: true
       ssl_cert: '/etc/ssl/certs/cwiki.apache.org.crt'
