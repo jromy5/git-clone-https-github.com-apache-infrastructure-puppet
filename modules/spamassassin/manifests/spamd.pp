@@ -55,27 +55,27 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
     "${install_folder}/init.pre":
       source  => 'puppet:///modules/spamassassin/init.pre',
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
     "${install_folder}/local.cf":
       content => template('spamassassin/local.cf.erb'),
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
     "${install_folder}/v310.pre":
       source  => 'puppet:///modules/spamassassin/v310.pre',
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
     "${install_folder}/v312.pre":
       source  => 'puppet:///modules/spamassassin/v312.pre',
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
     "${install_folder}/v320.pre":
       source  => 'puppet:///modules/spamassassin/v320.pre',
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
     "${install_folder}/v330.pre":
       source  => 'puppet:///modules/spamassassin/v330.pre',
       require => Package[ $package_list ],
-      notify  => Service['spamassassin'];
+      notify  => [Service['spamassassin'], [Service['amavis']];
   }
   
   ## Amavis Files
