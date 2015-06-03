@@ -716,7 +716,7 @@ ea = rw
 @crunch = rw
 
 [/ctakes]
-@ctakes = rw
+* = r
 
 [/curator]
 @curator = rw
