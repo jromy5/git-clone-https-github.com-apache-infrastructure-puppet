@@ -202,6 +202,9 @@ vhosts_asf::vhosts::vhosts:
       SSLProxyEngine On
       SSLProxyCACertificateFile /etc/ssl/certs/bloodhound-ca.crt
 
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
       # Jira live instance
       # Redirects for some of the migrated Jira instances
       RewriteRule ^/activemq/(.*) /jira/$1 [R=permanent,L]
