@@ -60,7 +60,7 @@ PROPNAME="$4"
 ACTION="$5"
 MAINTENANCE="/etc/nocommit"
 REVPROP_MAINTENANCE="/etc/norevprops"
-MASTER_HOSTNAME=svn01-us-west
+MASTER_HOSTNAME=hades.apache.org
 HOSTNAME=`/bin/hostname`
 SYNC_USER="asf-sync-process"
 
