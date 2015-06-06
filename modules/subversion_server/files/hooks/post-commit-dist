@@ -35,7 +35,7 @@ SVNLOOK=/usr/bin/svnlook
 SVNADMIN=/usr/bin/svnadmin
 MAILER=/usr/bin/svn-mailer
 PUBSUB=/opt/svnpubsub/commit-hook.py
-MASTER_HOSTNAME=hades.apache.org
+MASTER_HOSTNAME=svn01-us-west
 HOSTNAME=`/bin/hostname`
 
 REPOS="$1"
