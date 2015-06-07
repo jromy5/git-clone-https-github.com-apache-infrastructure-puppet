@@ -1,7 +1,7 @@
 #/etc/puppet/modules/httpd_modules/manifests/mod_svn_check_path.pp
 
 class httpd_modules::mod_svn_check_path (
-  $command           = 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c', # lint:ignore:80chars
+  $command           = 'apxs2 -DFILTERING -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c', # lint:ignore:80chars
   $creates           = '/usr/lib/apache2/modules/mod_svn_check_path.so',
   $mod_path          = '/opt/mod_svn_check_path',
   $required_packages = ['libsvn-dev', 'libapreq2-dev'],
