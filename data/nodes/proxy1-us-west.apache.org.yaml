@@ -6,7 +6,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
-  - postgreslq::client
+  - postgresql::client
   - ssl::name::wildcard_apache_org
   - ssl::name::allura_selfsigned
   - ssl::name::bloodhound_ca
