@@ -102,10 +102,9 @@ my @appList = (
 );
 
 my (%apps, %pmcs, %reports);
-my ($infoFn, $runDay, $wday, $monnum, $monabbr, $monname, $year, $mtgDate, $mtgDay, $dueDate, $incDueDate, $runDate, $tdURL, $agendaFile);
+my ($infoFn, $runDay, $wday, $monnum, $monabbr, $monname, $year, $mtgDate, $mtgDay, $dueDate, $incDueDate, $runDate, $tdURL);
 my $basedir = realpath(dirname($0));
 my $getFunc = \&getRemoteFiles;
-my $existFunc = \&existRemoteFile;
 my $sendEmail = 1;
 my $makeCal = 0;
 my $noFetch = 0;
@@ -136,8 +135,6 @@ for my $i (0 .. $#ARGV) {
     $DEBUG = 1 if $a =~ /debug/;
     $getFunc = \&getLocalFiles if $a =~ /local/;
     $getFunc = \&getRemoteFiles if $a =~ /remote/;
-    $existFunc = \&existLocalFile if $a =~ /local/;
-    $existFunc = \&existRemoteFile if $a =~ /remote/;
 #    $makeCal = 1 if $a =~ /calend/;
     $sendEmail = 0 if $a =~ /no-email/;
     $noFetch = 1 if $a =~ /no-fetch/;
@@ -173,18 +170,6 @@ if (meetingDatePassed()) {
     getNextMonthInformation();
     findMeetingDate();
 }
-
-if (&$existFunc($agendaFile) == 0) {
-    if ($sendEmail || $DEBUG) {
-        sendMail($chairAddr, $fromAddr,
-                 "[REMINDER] Create Board Agenda",
-                 "If you haven't already, create the board agenda!");
-    }
-
-    print "Bailing, agenda isn't ready so roster may not be";
-    exit;
-}
-
 readPMCList($infoFn);
 readReports($infoFn);
 showActions();
@@ -196,6 +181,9 @@ if ($sendEmail || $DEBUG) {
         sendReports($templates{'initial'}) if $runDay < $finalDate;
         sendReports($templates{'final'}) if $runDay >= $finalDate;
         sendIncReports();
+        sendMail($chairAddr, $fromAddr,
+                 "[REMINDER] Create Board Agenda",
+                 "If you haven't already, create the board agenda!");
         sendMail($testAddr, $fromAddr, "Marvin sent reminders");
 
     }
@@ -357,31 +345,6 @@ sub reportError
         sendMail($testAddr, $fromAddr, "Error while executing reminders.pl",
                  $msg);
     }
-}
-
-sub existRemoteFile
-{
-    my ($file) = @_;
-
-    my $cmd = "$apps{svn} ls $svnRepoURL/$file";
-    `$cmd`;
-    if ($?) {
-      return 0;
-    }
-    else {
-      return 1;
-    }
-}
-
-sub existLocalFile
-{
-    my ($file) = @_;
-
-    my $outputFN = catfile($basedir, basename($file));
-
-    print "Checking $outputFN\n";
-
-    return (-e $outputFN);
 }
 
 sub getRemoteFiles
@@ -555,8 +518,6 @@ sub findMeetingDate
         $shorten =~ m/id=selectable>([^<]*)</;
         $tdURL = $1 if $1;
     }
-    $agendaFile = sprintf("foundation/board/board_agenda_%d_%02d_%02d.txt", $ll[5]+1900, $ll[4]+1, $ll[3]-1);
-    print "Agenda file: $agendaFile\n";
 }
 
 sub meetingDatePassed
