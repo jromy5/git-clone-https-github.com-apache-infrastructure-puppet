@@ -336,6 +336,10 @@ spamassassin::spamd::package_list:
   - 'unrar'
   - 'unzip'
   - 'zip'
+
+spamassassin::spamd::whitelist_from:
+  - 'report@meltwater.com'
+
 spamassassin::spamd::whitelist_to:
   - '*-reject-*@apache.org'
   - '*-accept-*@apache.org'
