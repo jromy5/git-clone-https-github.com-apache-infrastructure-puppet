@@ -31,7 +31,7 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
-base::packages:
+base::basepackages:
   - issues-data
 
 vhosts_asf::modules::modules:
