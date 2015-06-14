@@ -73,7 +73,16 @@ mod 'ldap',
 
 mod 'java',
   :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
-  :tag => '1.2.0'
+  :tag => '1.3.0'
+
+
+mod 'java8',
+  :git => 'https://github.com/Spantree/puppet-java8'
+
+
+mod 'jdk_oracle',
+  :git => 'https://github.com/tylerwalts/puppet-jdk_oracle',
+  :tag => '1.2.1'
 
 
 mod 'mailman3',
