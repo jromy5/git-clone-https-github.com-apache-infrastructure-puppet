@@ -43,7 +43,6 @@ vhosts_asf::vhosts::vhosts:
     servername: 'cwiki-vm3.apache.org'
     serveraliases:
       - 'cwiki.apache.org'
-      - 'cwiki-test.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
@@ -57,7 +56,6 @@ vhosts_asf::vhosts::vhosts:
       servername: 'cwiki-vm3.apache.org'
       serveraliases:  
         - 'cwiki.apache.org'
-        - 'cwiki-test.apache.org'
       port: 443
       docroot: '/var/www'
       error_log_file: 'cwiki_error.log'
