@@ -5,7 +5,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - cwiki_asf
-  - ssl::name::cwiki-test_apache_org 
+  - ssl::name::cwiki_apache_org 
   - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
