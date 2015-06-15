@@ -5,6 +5,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - apache::mod::ssl
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
