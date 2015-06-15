@@ -30,6 +30,8 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!EDH'
+
 vhosts_asf::vhosts::vhosts:
   analysis:
     vhost_name: '*'
