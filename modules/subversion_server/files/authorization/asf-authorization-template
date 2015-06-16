@@ -1146,7 +1146,7 @@ ea = rw
 @isis = r
 
 [/isis/site]
-@isis = rw
+@isis = r
 
 [/jackrabbit]
 @jackrabbit = rw
