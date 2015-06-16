@@ -76,15 +76,6 @@ mod 'java',
   :tag => '1.3.0'
 
 
-mod 'java8',
-  :git => 'https://github.com/Spantree/puppet-java8'
-
-
-mod 'jdk_oracle',
-  :git => 'https://github.com/tylerwalts/puppet-jdk_oracle',
-  :tag => '1.2.1'
-
-
 mod 'mailman3',
   :git => 'https://github.com/pctony/puppet-mailman3.git',
   :branch => 'asf_development'

@@ -12,7 +12,10 @@ class default_pvm_asf (
       ensure => 'present',
   }
 
-  include java8
+  class { 'java':
+    distribution  => 'oracle-jdk',
+    version       => 'latest',
+  }
 
 }
 
