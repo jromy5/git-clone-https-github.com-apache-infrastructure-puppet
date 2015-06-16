@@ -36,12 +36,12 @@ apache::mod::event::threadsperchild: '50'
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!EDH'
 
 vhosts_asf::vhosts::vhosts:
-  1111-ssl:
-    vhost+name: '*'
+  monitor-ssl:
+    vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    priority: 20
+    default_vhost: true
     docroot: '/var/www/1111'
     manage_docroot: false
     servername: 'doesntreallyexist.apache.org'
