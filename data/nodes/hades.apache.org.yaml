@@ -83,7 +83,7 @@ httpd_modules::mod_svn_check_path::required_packages:
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
 
 nfs::server::export:
-  /x1/svn/asf:
+  /x1/svn/repos/asf:
     options:   'ro'
     clients:   '192.168.0.63(ro)'
 
