@@ -25,13 +25,14 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
 # cwiki_asf class variables.
-cwiki_asf::confluence_version: '5.0.3'
+cwiki_asf::confluence_version: '5.8.4'
 cwiki_asf::mysql_connector_version: '5.1.11'
 cwiki_asf::parent_dir: '/x1/cwiki'
 cwiki_asf::server_port: '8008'
 cwiki_asf::connector_port: '8888'
 cwiki_asf::context_path: '/confluence'
 cwiki_asf::docroot: '/var/www'
+cwiki_asf::service_ensure: 'stopped'
 
 # postfix::server::relayhost: '[mail-relay.apache.org]:587'
 # postfix::server::smtp_use_tls: true
