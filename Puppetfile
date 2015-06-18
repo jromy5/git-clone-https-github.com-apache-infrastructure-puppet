@@ -92,17 +92,19 @@ mod 'mysql',
 
 
 mod 'nfs',
-  :git    => 'https://github.com/pctony/puppet-nfs.git',
-  :commit => '79efbe7da85fb921467f102656df3d99ddd027aa'
+  :git => 'https://github.com/echocat/puppet-nfs',
+  :tag => 'v1.4.1'
 
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
   :tag => '3.2.0'
 
+
 mod 'perl',
   :git => 'https://github.com/example42/puppet-perl',
   :tag => 'v2.0.18'
+
 
 mod 'pkgng',
   :git => 'https://github.com/xaque208/puppet-pkgng',
