@@ -20,6 +20,7 @@ class cwiki_asf (
   $connector_port                = '',
   $context_path                  = '',
   $docroot                       = '',
+  $server_alias                  = '',
 
   # below are contained in eyaml
   $confluence_license_hash       = '',
