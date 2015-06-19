@@ -21,6 +21,9 @@ class cwiki_asf (
   $context_path                  = '',
   $docroot                       = '',
   $server_alias                  = '',
+  $min_size                      = '',
+  $max_size                      = '',
+  $mmspace_size                  = '',
 
   # below are contained in eyaml
   $confluence_license_hash       = '',
@@ -143,6 +146,9 @@ class cwiki_asf (
       mode    => '0644';
     "${install_dir}/conf/server.xml":
       content => template('cwiki_asf/server.xml.erb'),
+      mode    => '0644';
+    "${install_dir}/bin/setenv.sh":
+      content => template('cwiki_asf/setenv.sh.erb'),
       mode    => '0644';
     "${confluence_home}/confluence.cfg.xml":
       content => template('cwiki_asf/confluence.cfg.xml.erb'),
