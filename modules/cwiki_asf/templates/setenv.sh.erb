@@ -46,6 +46,6 @@ echo "Server startup logs are located in $LOGBASEABS/logs/catalina.out"
 CATALINA_OPTS="-XX:-PrintGCDetails -XX:+PrintGCTimeStamps -XX:-PrintTenuringDistribution ${CATALINA_OPTS}"
 CATALINA_OPTS="-Xloggc:$LOGBASEABS/logs/gc-`date +%F_%H-%M-%S`.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=2M ${CATALINA_OPTS}"
 CATALINA_OPTS="-Djava.awt.headless=true ${CATALINA_OPTS}"
-CATALINA_OPTS="-Xms<%= @min_size %>m -Xmx<%= @max_size %>m -XX:MaxMetaspaceSize=<%= @mmspace_size %>m -XX:+UseG1GC ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMetaspaceSize=<%= @maxmetaspacesize %>m -XX:+UseG1GC ${CATALINA_OPTS}"
 export CATALINA_OPTS
 
