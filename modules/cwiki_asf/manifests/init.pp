@@ -21,9 +21,11 @@ class cwiki_asf (
   $context_path                  = '',
   $docroot                       = '',
   $server_alias                  = '',
-  $min_size                      = '',
-  $max_size                      = '',
-  $mmspace_size                  = '',
+  $heap_min_size                 = '',
+  $heap_max_size                 = '',
+  # Below setting replaces PermGen, uses native memory for class metadata.
+  # If not set resizes according to available native memory.
+  $maxmetaspacesize              = '',
 
   # below are contained in eyaml
   $confluence_license_hash       = '',

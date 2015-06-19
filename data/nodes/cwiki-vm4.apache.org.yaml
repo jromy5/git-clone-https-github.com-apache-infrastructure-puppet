@@ -34,9 +34,9 @@ cwiki_asf::context_path: '/confluence'
 cwiki_asf::docroot: '/var/www'
 cwiki_asf::service_ensure: 'stopped'
 cwiki_asf::server_alias: 'cwiki-test.apache.org'
-cwiki_asf::min_size: '1512'
-cwiki_asf::max_size: '1512'
-cwiki_asf::mmspace_size: '256'
+cwiki_asf::heap_min_size: '1512'
+cwiki_asf::heap_max_size: '1512'
+cwiki_asf::maxmetaspacesize: '256'
 
 # postfix::server::relayhost: '[mail-relay.apache.org]:587'
 # postfix::server::smtp_use_tls: true
