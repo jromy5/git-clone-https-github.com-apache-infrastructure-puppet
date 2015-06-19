@@ -12,7 +12,9 @@
                    maxProcessors="75"
                    enableLookups="false" redirectPort="8443" acceptCount="250" debug="0" connectionTimeout="20000"
                    maxThreads="500" minSpareThreads="25" maxSpareThreads="150"
-                   useURIValidationHack="false" URIEncoding="UTF-8"/>
+                   useURIValidationHack="false" URIEncoding="UTF-8"
+                   scheme="https" proxyName="<%= @server_alias %>"
+                   proxyPort="443" secure="true"/>
 
         <Engine name="Standalone" defaultHost="localhost" debug="0">
 
