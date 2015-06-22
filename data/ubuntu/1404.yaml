@@ -9,7 +9,6 @@ classes:
   - orthrus
   - postfix::server
   - subversionclient
-  - ulimit
 
 base::basepackages:
   - apt-file

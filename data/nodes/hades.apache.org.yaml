@@ -12,6 +12,8 @@ classes:
   - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
+  - nfs::server
+  - nfs_asf::server
   - perl
   - rootbin_asf
   - ssl::name::wildcard_apache_org
@@ -79,6 +81,11 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
+
+nfs::server::export:
+  /x1/svn/repos/asf:
+    options:   'ro'
+    clients:   '192.168.0.63(ro)'
 
 ntp::interfaces:
   - em1
@@ -600,10 +607,3 @@ vhosts_asf::vhosts::vhosts:
         Require local
       </Location>
 
-
-vcsrepo:
-  /tmp/authtest2:
-    ensure: 'latest'
-    provider: 'svn'
-    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
-    revision: 'head'

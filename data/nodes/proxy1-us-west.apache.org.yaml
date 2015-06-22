@@ -131,6 +131,39 @@ vhosts_asf::vhosts::vhosts:
         </Location>
       </IfDefine>
 
+  helpinfrahelpyou:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  helpinfrahelpyou-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
   inventory:
     vhost_name: '*'
     ensure: 'present'

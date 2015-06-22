@@ -4,7 +4,6 @@ Facter.add("asfosrelease") do
   end
 end
 
-
 Facter.add("asfosname") do
   setcode do
     Facter::Util::Resolution.exec("facter operatingsystem | sed -e 's/[[:punct:]]//g' | awk '{print tolower($0)}'")
@@ -32,6 +31,8 @@ Facter.add("asfcolo") do
     hostname = Facter.value('hostname')
     if hostname.include? "us-mid"
       "rax-vpc-us-mid"
+    elsif hostname.include? "ubuntu1464"
+      "yahoo"
     else
       ipadd = Facter.value('ipaddress_primary')
       case ipadd
@@ -43,7 +44,7 @@ Facter.add("asfcolo") do
         "fub"
       when /^9.9.9.([0-9]+)$/
         "rackspace"
-      when /^67.195.81..([0-9]+)$/
+      when /^67.195.81.([0-9]+)$/
         "yahoo"
       when /^172\.31\.3[2-9]|4[0-7]\.\d+$/
         "amz-vpc-virginia-1b"
