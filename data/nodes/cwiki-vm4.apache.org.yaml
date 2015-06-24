@@ -36,7 +36,7 @@ cwiki_asf::service_ensure: 'stopped'
 cwiki_asf::server_alias: 'cwiki-test.apache.org'
 cwiki_asf::heap_min_size: '1512'
 cwiki_asf::heap_max_size: '1512'
-cwiki_asf::maxmetaspacesize: '256'
+cwiki_asf::maxmetaspacesize: '512'
 
 # postfix::server::relayhost: '[mail-relay.apache.org]:587'
 # postfix::server::smtp_use_tls: true
