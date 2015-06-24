@@ -1,0 +1,427 @@
+---
+classes:
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - postgresql::client
+  - ssl::name::wildcard_apache_org
+  - ssl::name::allura_selfsigned
+  - ssl::name::bloodhound_ca
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+base::basepackages:
+  - issues-data
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+
+vhosts_asf::vhosts::vhosts:
+  allura:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'forge-allura.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'forge-allura.apache.org.http_access.log'
+    error_log_file: 'forge-allura.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://forge-allura.apache.org/
+
+  allura-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'forge-allura.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'forge-allura.apache.org.ssl_access.log'
+    error_log_file: 'forge-allura.apache.org.error.log'
+    custom_fragment: |
+      # Setup SSL Proxy Support (needed to allow SSL proxying)
+      SSLProxyEngine On
+      SSLProxyCACertificateFile /etc/ssl/certs/allura-selfsigned.crt
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # All content served by httpd instance on allura-vm
+      ProxyPassMatch ^/(.*)$ https://allura-vm.apache.org:443/$1 retry=0 timeout=60
+
+  comments:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'comments.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'comments.apache.org.http_access.log'
+    error_log_file: 'comments.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://comments.apache.org/
+
+  comments-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'comments.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'comments.apache.org.ssl_access.log'
+    error_log_file: 'comments.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      ProxyPassMatch ^/(?!committers\.lua)(.*)$ http://192.168.0.62:8080/$1 retry=0 timeout=60
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      <IfDefine commentsao>
+        <Location /committers.lua>
+          # Require LDAP authentication for /committers.lua
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthName "ASF Committers"
+          AuthType Basic
+          AuthBasicProvider ldap
+          Require valid-user
+
+          # Pass on X-Authenticated-User to backend server
+          RewriteEngine On
+          RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+          RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+          # Remove Authorization header to prevent passwords from being transmitted
+          RequestHeader unset Authorization
+          ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
+        </Location>
+      </IfDefine>
+
+  helpinfrahelpyou:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  helpinfrahelpyou-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  inventory:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'inventory.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'inventory.apache.org.http_access.log'
+    error_log_file: 'inventory.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://inventory.apache.org/
+
+  inventory-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'inventory.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'inventory.apache.org.ssl_access.log'
+    error_log_file: 'inventory.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      <Location />
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthName "Root members only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
+      </Location>
+
+  issues:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/issues-data'
+    servername: 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.http_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://issues.apache.org/
+
+  issues-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/issues-data'
+    servername: 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.ssl_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent /bugzilla https://bz.apache.org/bugzilla
+      Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
+      Redirect permanent /ooo https://bz.apache.org/ooo    
+
+      ProxyPreserveHost on
+
+      # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
+      SSLProxyEngine On
+      SSLProxyCACertificateFile /etc/ssl/certs/bloodhound-ca.crt
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # Jira live instance
+      # Redirects for some of the migrated Jira instances
+      RewriteRule ^/activemq/(.*) /jira/$1 [R=permanent,L]
+      # Proxy requests
+      ProxyPass /jira http://192.168.0.39:10343/jira   retry=0 timeout=1800 max=400
+      SetEnvIf Request_URI "^/activemq" asf_proxy=issues-vm.jira-main
+      SetEnvIf Request_URI "^/jira" asf_proxy=issues-vm.jira-main
+
+      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
+      RewriteCond /etc/tomcat-jira-main.maint -f
+      RewriteCond %%{}{REQUEST_URI} !/jira/maintenance.html
+      RewriteCond %%{}{REMOTE_ADDR} !^(86\.164\.153\.81)$
+      RewriteRule ^/jira/(.*) /jira/maintenance.html
+      RewriteCond %%{}{REMOTE_ADDR} ^(86\.164\.153\.81)$
+      RewriteRule ^/jira/(.*) http://192.168.0.39:10343/jira/$1 [P]
+
+      # Fix URLs in SOAP requests
+      <Location /jira/rpc/soap>
+        AddOutputFilterByType SUBSTITUTE text/xml
+        Substitute s!http://issues.apache.org/!https://issues.apache.org/!
+      </Location>
+
+      ProxyPass /jira-test     http://192.168.0.39:10143/jira-test timeout=1000 ttl=270
+      SetEnvIf Request_URI "^/jira-test" asf_proxy=hel.jira-test
+      #RewriteCond %%{}{REQUEST_URI} !/jira-test/maintenance.html
+      #RewriteRule ^/jira-test/(.*) /jira-test/maintenance.html
+
+      # Jira 4.2.1 Second test instance
+      ProxyPass /jira-test2    http://192.168.0.53:10243/jira-test2 timeout=100 ttl=270
+      SetEnvIf Request_URI "^/jira-test2" asf_proxy=hel.jira-test2
+
+      # Bloodhound instance on bloodhound-vm.a.o
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
+      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
+
+  modules:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'modules.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'modules.apache.org.http_access.log'
+    error_log_file: 'modules.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://modules.apache.org/
+
+  modules-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'modules.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'modules.apache.org.ssl_access.log'
+    error_log_file: 'modules.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite for doing maintenance
+      RewriteEngine on
+
+      ProxyPass / http://192.168.0.55:10180/ retry=0 timeout=60
+      # To enable system maintenance, comment out the line above and uncomment the five lines below
+      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
+      # RewriteCond %%{}{REQUEST_URI} !/maintenance.html
+      # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.222\.166
+      # RewriteRule ^/(.*) /maintenance.html
+      # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.222\.166
+      # RewriteRule ^/(.*) http://192.168.0.55:10180/$1 [P]     
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+  paste:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'paste.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'paste.apache.org.http_access.log'
+    error_log_file: 'paste.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://paste.apache.org/
+
+  paste-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'paste.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'paste.apache.org.ssl_access.log'
+    error_log_file: 'paste.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      ProxyPassMatch ^/(?!p|token)(.*)$ http://192.168.0.55:8080/$1 retry=0 timeout=60
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      <Location /p>
+        # Require LDAP authentication for /p[id], /post or /token
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
+      </Location>
+
+  reference:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'reference.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'reference.apache.org.http_access.log'
+    error_log_file: 'reference.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://reference.apache.org/
+
+  reference-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'reference.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'reference.apache.org.ssl_access.log'
+    error_log_file: 'reference.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite for doing maintenance
+      RewriteEngine on
+
+      ProxyPass / http://192.168.0.55:8080/ retry=0 timeout=60
+
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      <Location /infra>
+        AuthType Basic
+        AuthName "Infrastructure members only"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/infra retry=0 timeout=60
+
+      </Location>
+
