@@ -1625,6 +1625,20 @@ vhosts_asf::vhosts::vhosts:
       RewriteOptions inherit
       Use BlockSvn
 
+qi4j:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.qi4j.org'
+    docroot: '/var/www/zest.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'qi4j.org'
+    serveradmin: 'infrastructure@apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://zest.apache.org/
+
   quetz:
     vhost_name: '*'
     port: 80
