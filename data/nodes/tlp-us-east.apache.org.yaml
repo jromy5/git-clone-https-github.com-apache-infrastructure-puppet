@@ -1618,7 +1618,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteOptions inherit
       Use BlockSvn
 
-qi4j:
+  qi4j:
     vhost_name: '*'
     port: 80
     servername: 'www.qi4j.org'
