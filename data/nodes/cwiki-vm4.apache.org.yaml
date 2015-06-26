@@ -32,14 +32,13 @@ cwiki_asf::server_port: '8008'
 cwiki_asf::connector_port: '8888'
 cwiki_asf::context_path: '/confluence'
 cwiki_asf::docroot: '/var/www'
-cwiki_asf::service_ensure: 'stopped'
-cwiki_asf::server_alias: 'cwiki-test.apache.org'
+cwiki_asf::server_alias: 'cwiki.apache.org'
 cwiki_asf::heap_min_size: '1512'
 cwiki_asf::heap_max_size: '1512'
 cwiki_asf::maxmetaspacesize: '512'
 
-# postfix::server::relayhost: '[mail-relay.apache.org]:587'
-# postfix::server::smtp_use_tls: true
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
 
 vhosts_asf::vhosts::vhosts:
   cwiki-vm4-80:
@@ -47,20 +46,20 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'cwiki-vm4.apache.org'
     serveraliases:
-      - 'cwiki-test.apache.org'
+      - 'cwiki.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
     error_log_file: 'cwiki_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://cwiki-test.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
 
   cwiki-vm4-443:
       vhost_name: '*'
       default_vhost: true
       servername: 'cwiki-vm4.apache.org'
       serveraliases:  
-        - 'cwiki-test.apache.org'
+        - 'cwiki.apache.org'
       port: 443
       docroot: '/var/www'
       error_log_file: 'cwiki_error.log'
@@ -74,4 +73,4 @@ vhosts_asf::vhosts::vhosts:
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
         RewriteCond $1 !(confluence|intermediates)
-        RewriteRule ^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L]
+        RewriteRule ^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]
