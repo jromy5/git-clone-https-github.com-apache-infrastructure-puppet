@@ -10,4 +10,9 @@ base::hosts:
   host:
     name: 'ldap3-us-west.apache.org'
     ip: '10.41.0.12'
+  host:
+    name: 'mailrelay1-us-west.apache.org'
+    ip: '10.41.0.14'
 
+postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:587'
+postfix::server::smtp_use_tls: true
