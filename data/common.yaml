@@ -198,6 +198,7 @@ ntp::restrict:
 
 ## POSTFIX
 postfix::params::service_restart: '/etc/init.d/postfix check && /etc/init.d/postfix restart'
+postfix::server::relayhost: '[mail.apache.org]:2025'
 
 
 puppet_asf::enable_daemon: true
