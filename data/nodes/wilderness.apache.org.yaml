@@ -48,6 +48,7 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:25'
 
 vhosts_asf::modules::modules:
   lua:

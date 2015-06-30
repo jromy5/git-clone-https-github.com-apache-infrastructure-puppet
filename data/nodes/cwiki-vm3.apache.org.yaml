@@ -33,6 +33,8 @@ cwiki_asf::connector_port: '8888'
 cwiki_asf::context_path: '/confluence'
 cwiki_asf::docroot: '/var/www'
 
+postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:25'
+
 vhosts_asf::vhosts::vhosts:
   cwiki-vm3-80:
     vhost_name: '*'

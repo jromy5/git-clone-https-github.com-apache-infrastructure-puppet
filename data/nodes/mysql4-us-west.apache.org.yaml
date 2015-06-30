@@ -4,6 +4,8 @@ classes:
   - mysql::server
   - mysql_asf::backup
 
+postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:25'
+
 mysql::server::override_options:
   mysqld:
     ft_min_word_len: 2

@@ -2,3 +2,4 @@
 classes: 
   - ldapserver
 
+postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:25'
