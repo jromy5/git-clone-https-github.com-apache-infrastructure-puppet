@@ -89,8 +89,6 @@ perl::module:
     name: 'Net::LDAP'
     use_package : true
 
-postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:25'
-
 snmp::snmpd_config:
   - 'disk /x1 10%'
   - 'disk /x1/svn 10%'
