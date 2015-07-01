@@ -102,8 +102,7 @@ mod 'ntp',
 
 
 mod 'oraclejava',
-  :git => 'https://github.com/clambertus/puppet-oraclejava',
-  :tag => '0.2.0'
+  :git => 'https://github.com/clambertus/puppet-oraclejava'
 
 
 mod 'perl',
