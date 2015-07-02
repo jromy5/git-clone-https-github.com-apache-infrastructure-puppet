@@ -1,0 +1,5 @@
+---
+classes:
+  - apache
+  - apache::mod::rewrite
+  - ssl::name::wildcard_apache_org
