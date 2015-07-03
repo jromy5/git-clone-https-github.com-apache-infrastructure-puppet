@@ -1,3 +1,5 @@
+#/etc/puppet/modules/ldapclient/manfiests/install/centos/65.pp
+
 class ldapclient::install::centos::65 (
 
   $ldapcert      = '',
@@ -9,7 +11,7 @@ class ldapclient::install::centos::65 (
 
 ) {
 
-  file { 
+  file {
     '/etc/ldap.conf':
       content => template('ldapclient/ldap.conf.erb');
     '/etc/openldap/ldap.conf':
@@ -25,14 +27,14 @@ class ldapclient::install::centos::65 (
       require => File['/etc/ldap.conf'];
     '/etc/openldap/cacerts':
       ensure  => directory,
-      mode    => 755;
+      mode    => '0755';
     $tlscertpath:
-      content  =>  $ldapcert,
-      require =>  File['/etc/openldap/cacerts'];
+      content => $ldapcert,
+      require => File['/etc/openldap/cacerts'];
   }
 
-  exec { "/usr/sbin/authconfig --enableldap --enableldapauth --enabletls --ldapbasedn='$nssbasedn' --ldapserver='$ldapservers' --ldaploadcacert=file:///$tlscertpath --update":
-        unless  => "/bin/grep -qr ldap /etc/pam.d",
+  exec { "/usr/sbin/authconfig --enableldap --enableldapauth --enabletls --ldapbasedn='${::nssbasedn}' --ldapserver='${ldapservers}' --ldaploadcacert=file:///${tlscertpath} --update":
+        unless  => '/bin/grep -qr ldap /etc/pam.d',
         require => File[$tlscertpath],
       }
 

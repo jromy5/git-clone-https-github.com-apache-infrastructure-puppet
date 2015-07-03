@@ -12,6 +12,8 @@ classes:
   - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
+  - nfs::server
+  - nfs_asf::server
   - perl
   - rootbin_asf
   - ssl::name::wildcard_apache_org
@@ -80,6 +82,11 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
 
+nfs::server::export:
+  /x1/svn/repos/asf:
+    options:   'ro'
+    clients:   '192.168.0.63(ro)'
+
 ntp::interfaces:
   - em1
   - lo
@@ -88,6 +95,21 @@ perl::module:
   net_ldap:
     name: 'Net::LDAP'
     use_package : true
+
+snmp::snmpd_config:
+  - 'disk /x1 10%'
+  - 'disk /x1/svn 10%'
+  - 'disk /x1/svn/repos/asf 10%'
+  - 'disk /x1/svn/repos/dist 10%'
+  - 'disk /x1/svn/repos/infra 10%'
+  - 'disk /x1/svn/repos/private 10%'
+  - 'disk /x1/svn/repos/tck 10%'
+  - 'rouser monitor authNoPriv'
+  - 'smuxpeer .1.3.6.1.4.1.674.10892.1'
+  - 'disk / 10000'
+  - 'disk /var 5%'
+  - 'includeAllDisks 10%'
+  - 'perl do "/root/bin/zpool.pl"'
 
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
 subversion_server::board_reminders::packages:
@@ -585,10 +607,3 @@ vhosts_asf::vhosts::vhosts:
         Require local
       </Location>
 
-
-vcsrepo:
-  /tmp/authtest2:
-    ensure: 'latest'
-    provider: 'svn'
-    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
-    revision: 'head'

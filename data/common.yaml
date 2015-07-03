@@ -94,7 +94,7 @@ fail2ban::source_dir: 'puppet:///modules/fail2ban_asf/fail2ban/conf'
 fail2ban::source_dir_purge: true
 
 # GITSERVER_ASF
-giserver_asf::packages: 
+gitserver_asf::packages: 
   - 'gitweb'
   - 'libjson-perl'
   - 'libdigest-hmac-perl'
@@ -195,6 +195,12 @@ ntp::restrict:
   - '-4 default kod notrap nomodify nopeer noquery'
   - '-6 default kod notrap nomodify nopeer noquery'
 
+
+## POSTFIX
+postfix::params::service_restart: '/etc/init.d/postfix check && /etc/init.d/postfix restart'
+postfix::server::relayhost: '[mail.apache.org]:2025'
+
+
 puppet_asf::enable_daemon: true
 
 ## SNMP
@@ -217,37 +223,129 @@ snmp::snmpd_config:
   - 'perl do "/root/bin/zpool.pl"'
 
 ## SpamAssassin
-spamassassin::required_hits: '10' #Scores over this value with tagged as spam.
-spamassassin::custom_scoring:
-  - 'ALL_TRUSTED          -2000.0'
-  - 'DRUGS_MUSCLE             4.0'
-  - 'URIBL_SBL                4.0'
-  - 'URIBL_WS_SURBL           4.0'
-  - 'RCVD_IN_BL_SPAMCOP_NET   2.0'
-  - 'RCVD_IN_XBL              4.0'
-  - 'RCVD_IN_PBL              0.0'
-  - 'RCVD_IN_RP_RNBL          0.0'
-  - 'RDNS_NONE                0.0'
-  - 'HTML_MESSAGE             2.2'
-  - 'EXTRA_MPART_TYPE         3.0'
-  - 'MIME_HTML_ONLY           3.5'
-  - 'URIBL_BLACK              3.5'
-  - 'DCC_CHECK                4.0'
-  - 'HELO_DYNAMIC_SPLIT_IP    0.0'
-  - 'FM_FAKE_HELO_VERIZON     0.0'
-  - 'FORGED_MUA_OIMO          0.0'
-  - 'TVD_SPACED_SUBJECT_WORD3 0.0'
-  - 'TVD_SPACE_RATIO          0.0'
-  - 'FORGED_MUA_OUTLOOK       0.0'
-  - 'WHOIS_CONTACTPRIV        0.0'
-  - 'FREEMAIL_FROM            0.0'
-  - 'FREEMAIL_REPLYTO         0.0'
-  - 'FREEMAIL_FORGED_REPLYTO  0.0'
-  - 'FSL_FREEMAIL_1           0.0'
-  - 'FSL_FREEMAIL_2           0.0'
-  - 'FH_DATE_PAST_20XX        0.0'
-  - 'FRT_ADOBE2               0.0'
+spamassassin::spamd::required_hits: '10' #Scores over this value with tagged as spam.
+spamassassin::spamd::custom_scoring:
+  ALL_SORTED:
+    name:             'ALL_SORTED'
+    score:            '-2000.0'
+  DRUGS_MUSCLE:
+    name:             'DRUGS_MUSCLE'
+    score:            '4.0'
+  URIBL_SBL:
+    name:             'URIBL_SBL'
+    score:            '4.0'
+  URIBL_SBL_SURBL:
+    name:             'URIBL_WS_SURBL'
+    score:            '4.0'
+  RCVD_IN_BL_SPAMCOP_NET:
+    name:             'RCVD_IN_BL_SPAMCOP_NET'
+    score:            '2.0'
+  RCVD_IN_XBL:
+    name:             'RCVD_IN_XBL'
+    score:            '4.0'
+  RCVD_IN_PBL:
+    name:             'RCVD_IN_XBL'
+    score:            '0.0'
+  RCVD_IN_RP_RNBL:
+    name:             'RCVD_IN_PBL'
+    score:            '0.0'
+  RCVD_IN_RP_RNBL:
+    name:             'RCVD_IN_RP_RNBL'
+    score:            '0.0'
+  RDNS_NONE:
+    name:             'RDNS_NONE'
+    score:            '3.0'
+  HTML_MESSAGE:
+    name:             'RDNS_NONE'
+    score:            '2.5'
+  EXTRA_MPART_TYPE:
+    name:             'HTML_MESSAGE'
+    score:            '3.0'
+  MIME_HTML_ONLY:
+    name:             'EXTRA_MPART_TYPE'
+    score:            '3.5'
+  URIBL_BLACK:
+    name:             'MIME_HTML_ONLY'
+    score:            '3.5'
+  DCC_CHECK:
+    name:             'URIBL_BLACK'
+    score:            '4.0'
+  DCC_CHECK:
+    name:             'DCC_CHECK'
+    score:            '0.25'
+  HELO_DYNAMIC_SPLIT_IP:
+    name:             'HELO_DYNAMIC_SPLIT_IP'
+    score:            '0.0'
+  FM_FAKE_HELO_VERIZON:
+    name:             'FM_FAKE_HELO_VERIZON'
+    score:            '0.0'
+  FORGED_MUA_OIMO:
+    name:             'FORGED_MUA_OIMO'
+    score:            '0.0'
+  TVD_SPACED_SUBJECT_WORD3:
+    name:             'TVD_SPACED_SUBJECT_WORD3'
+    score:            '0.0'
+  TVD_SPACE_RATIO:
+    name:             'TVD_SPACE_RATIO'
+    score:            '0.0'
+  FORGED_MUA_OUTLOOK:
+    name:             'FORGED_MUA_OUTLOOK'
+    score:            '0.0'
+  WHOIS_CONTACTPRIV:
+    name:             'WHOIS_CONTACTPRIV'
+    score:            '0.0'
+  FREEMAIL_FROM:
+    name:             'FREEMAIL_FROM'
+    score:            '0.0'
+  FREEMAIL_REPLYTO:
+    name:             'FREEMAIL_REPLYTO'
+    score:            '0.0'
+  FREEMAIL_FORGED_REPLYTO:
+    name:             'FREEMAIL_FORGED_REPLYTO'
+    score:            '0.0'
+  FSL_FREEMAIL_1:
+    name:             'FSL_FREEMAIL_1'
+    score:            '0.0'
+  FSL_FREEMAIL_2:
+    name:             'FSL_FREEMAIL_2'
+    score:            '0.0'
+  FH_DATE_PAST_20XX:
+    name:             'FH_DATE_PAST_20XX'
+    score:            '0.0'
+  FRT_ADOBE2:
+    name:             'FRT_ADOBE2'
+    score:            '0.0'
 
+spamassassin::spamd::minspare: '1'
+spamassassin::spamd::mincheldren: '5'
+spamassassin::spamd::maxspare: '10'
+spamassassin::spamd::maxconnsperchild: '1000'
+spamassassin::spamd::maxchildren: '40'
+spamassassin::spamd::package_list:
+  - 'amavisd-new'
+  - 'clamav-daemon'
+  - 'clamsmtp'
+  - 'opendkim'
+  - 'spamassassin'
+  ## Below is a list of packages used by clamav and friends to scan contents
+  - 'arj'
+  - 'cabextract'
+  - 'cpio'
+  - 'nomarch'
+  - 'pax'
+  - 'rar'
+  - 'unrar'
+  - 'unzip'
+  - 'zip'
+
+spamassassin::spamd::whitelist_from:
+  - 'report@meltwater.com'
+
+spamassassin::spamd::whitelist_to:
+  - '*-reject-*@apache.org'
+  - '*-accept-*@apache.org'
+  - '*-reject-*@*.apache.org'
+  - '*-accept-*@*.apache.org'
 
 spamassassin::spamc::spamd_peers: 
   - 'spamd1-us-west 10.40.0.7'
@@ -255,7 +353,7 @@ spamassassin::spamc::spamd_peers:
   - 'spamd3-us-west 10.40.0.10'
   - 'spamd4-us-west 10.40.0.11'
 spamassassin::spamc::haproxy_mode: 'tcp'
-spamassassin::spamc::haproxy_port: '783'
+spamassassin::spamc::haproxy_port: '10024'
 spamassassin::spamc::haproxy_maxconns: '5000'
 
 

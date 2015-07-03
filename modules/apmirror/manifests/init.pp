@@ -1,3 +1,4 @@
+# /etc/puppet/modules/apmirror/manifests/init.pp
 
 class apmirror (
   $uid            = 508,
@@ -92,7 +93,7 @@ class apmirror (
     user    => $svnwc_user,
     group   => $svnwc_group,
     creates => '/var/www/www.apache.org/content',
-    require => [ Package['subversion'], User[$svnwc_user], Group[$groupname], Class['apache'] ],
+    require => [ Package['subversion'], User[$svnwc_user], Group[$groupname], Class['apache'] ], # lint:ignore:80chars
   }
 
   file { 'writable_mirrors':
@@ -111,7 +112,9 @@ class apmirror (
     user    => $username,
     group   => $groupname,
     creates => "/home/${username}/mirrors/mirmon/url-mods",
-    timeout => 600, # increase to this incase the host takes a while to execute the mirror list priming
-    require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ],
+    # increase to this incase the host takes a while to execute the
+    # mirror list priming
+    timeout => 600,
+    require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ], # lint:ignore:80chars
   }
 }

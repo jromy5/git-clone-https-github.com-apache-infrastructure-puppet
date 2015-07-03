@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 branch = ARGV.shift
-branch ||= 'master'
+branch ||= 'deployment'
 puts `git pull origin #{branch}`
 
 cwd = File.absolute_path(File.dirname(File.dirname(__FILE__)))

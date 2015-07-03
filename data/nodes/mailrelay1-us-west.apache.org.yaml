@@ -14,6 +14,7 @@ postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, loca
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::use_tls:                true
 postfix::server::alias_maps:              'hash:/etc/aliases ldap:/etc/postfix/ldap-mail-forward-lookup.cf'
 postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
 postfix::server::virtual_transport:      'dovecot'

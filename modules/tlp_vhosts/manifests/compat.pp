@@ -1,3 +1,4 @@
+#/etc/puppet/modules/tlp_vhosts/manifests.compat.pp
 
 class tlp_vhosts::compat {
 
@@ -36,7 +37,9 @@ class tlp_vhosts::compat {
     target => '/usr/bin/python2.7',
   }
 
-  $apache_org_dirs = ['/var/www', '/var/www/www.apache.org', '/var/www/www.apache.org/dist']
+  $apache_org_dirs = ['/var/www',
+                      '/var/www/www.apache.org',
+                      '/var/www/www.apache.org/dist']
 
   file { $apache_org_dirs:
     ensure => 'directory',

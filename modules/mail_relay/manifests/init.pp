@@ -3,8 +3,13 @@
 class mail_relay (
 
   $mail_ldap_servers = '',
+  $packages          = ['postfix-ldap'],
 
 ) {
+
+  package { $packages:
+    ensure => present,
+  }
 
   file {
     '/etc/postfix/ldap-mail-forward-lookup.cf':

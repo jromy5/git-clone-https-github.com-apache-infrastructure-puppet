@@ -1,3 +1,5 @@
+#/etc/puppet/modules/dovecot/manifests/install/centos/65.pp
+
 class dovecot::install::centos::65 (
   $ldapservers = hiera('ldapclient::ldapservers'),
 )

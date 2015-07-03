@@ -50,16 +50,16 @@ Cmnd_Alias RESTART = /sbin/reboot, /sbin/shutdown -r now
 
 snmp  ALL=NOPASSWD: /sbin/zpool status,/sbin/zpool list -H
 
-<% if fqdn == 'hades.apache.org' -%>
+<% if @fqdn == 'hades.apache.org' -%>
 apbackup  ALL=NOPASSWD: /sbin/zfs
 www-data  ALL=NOPASSWD: /sbin/zfs
 <% end -%>
 
-<% if fqdn == 'bloodhound-vm2.apache.org' -%>
+<% if @fqdn == 'bloodhound-vm2.apache.org' -%>
 buildslave30 ALL=NOPASSWD: APACHE2
 <% end -%>
 
-<% if fqdn == 'ooo-wiki2-vm.apache.org' -%>
+<% if @fqdn == 'ooo-wiki2-vm.apache.org' -%>
 
 Cmnd_Alias OOOWIKI = /usr/sbin/service ooo-wiki2 start, /usr/sbin/service ooo-wiki2 stop, /usr/sbin/service ooo-wiki2 restart, /usr/sbin/service ooo-wiki2 reload, /usr/sbin/service ooo-wiki2 graceful, /usr/sbin/service ooo-wiki2 status
 
@@ -67,13 +67,13 @@ Cmnd_Alias OOOWIKI = /usr/sbin/service ooo-wiki2 start, /usr/sbin/service ooo-wi
 %ooo-wiki2-vm.apache.org-devops ALL = (root) OOOWIKI, MYSQL, TS, RESTART
 <% end -%>
 
-<% if fqdn == 'ooo-forums.apache.org' -%>
+<% if @fqdn == 'ooo-forums.apache.org' -%>
 
 # Allow devops team some start/stop/restart abilities
 %ooo-forums.apache.org-devops ALL = (root) APACHE2, MYSQL, RESTART
 <% end -%>
 
-<% if fqdn == 'lucene1-us-west.apache.org' -%>
+<% if @fqdn == 'lucene1-us-west.apache.org' -%>
 # allow lucene team access to jenkins account
 %lucene ALL=(jenkins) ALL
 <% end -%>

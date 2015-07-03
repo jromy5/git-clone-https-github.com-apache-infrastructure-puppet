@@ -3,11 +3,10 @@
 <confluence-configuration>
   <setupStep>complete</setupStep>
   <setupType>custom</setupType>
-  <buildNumber>4109</buildNumber>
+  <buildNumber>5982</buildNumber>
   <properties>
-    <property name="attachments.dir">${confluenceHome}/attachments</property>
-    <property name="confluence.license.hash"><%= @confluence_license_hash %></property>
     <property name="confluence.license.message"><%= @confluence_license_message %></property>
+    <property name="attachments.dir">${confluenceHome}/attachments</property>
     <property name="confluence.plugin.state.global.com.atlassian.confluence.extra.gallery">false</property>
     <property name="confluence.plugin.state.global.confluence.ext.code:code">false</property>
     <property name="confluence.plugin.state.global.confluence.extra.userlister:userlistener">true</property>
@@ -32,8 +31,8 @@
     <property name="hibernate.database.lower_non_ascii_supported">true</property>
     <property name="hibernate.dialect">com.atlassian.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.setup">true</property>
-    <property name="lucene.index.dir">${confluenceHome}/index</property>
-    <property name="webwork.multipart.saveDir">${confluenceHome}/temp</property>
+    <property name="lucene.index.dir">${localHome}/index</property>
+    <property name="webwork.multipart.saveDir">${localHome}/temp</property>
   </properties>
 </confluence-configuration>
 

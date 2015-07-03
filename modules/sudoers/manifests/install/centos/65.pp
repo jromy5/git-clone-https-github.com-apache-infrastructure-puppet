@@ -1,3 +1,5 @@
+#/etc/puppet/modules/sudoers/install/centos/65.pp
+
 class sudoers::install::centos::65 (
 ) {
 

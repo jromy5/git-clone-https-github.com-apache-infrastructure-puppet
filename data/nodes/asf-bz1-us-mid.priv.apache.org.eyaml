@@ -41,7 +41,7 @@ bugzilla::project:
     urlbase: 'https://bz.apache.org/SpamAssassin/'
     cookiepath: '/SpamAssassin/'
     bz_package: 'bugzilla-sa'
-    package_ensure: '4.4.6-20150213'
+    package_ensure: '4.4.7-20150506'
 
   ooo:
     admin_email: "root@localhost.localdomain"

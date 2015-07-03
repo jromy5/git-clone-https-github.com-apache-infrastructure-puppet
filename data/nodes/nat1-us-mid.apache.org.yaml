@@ -35,6 +35,15 @@ firewall:
     port: '10080'
     destination: '192.168.3.4'
 
+  100-zmanda-dnat:
+    chain: 'PREROUTING'
+    jump: 'DNAT'
+    table: 'nat'
+    proto: 'tcp'
+    todest: '192.168.3.4:10080'
+    iniface: 'eth0'
+    dport: '10080'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 

@@ -13,7 +13,7 @@ base dc=apache,dc=org
 # Unix Domain Sockets to connect to a local LDAP Server.
 ## This URI path is derived from hiera data on a per colo basis
 
-uri   <%= ldapservers %>
+uri   <%= @ldapservers %>
 
 # The LDAP version to use (defaults to 3
 # if supported by client library)
@@ -21,16 +21,16 @@ ldap_version 3
 
 
 # Path to ASF wide LDAP certificate
-TLS_CACERT      <%= tlscertpath %>
+TLS_CACERT      <%= @tlscertpath %>
 
 
 # The distinguished name to bind to the server with.
 # Optional: default is to bind anonymously.
-binddn <%= nssbinddn %>
+binddn <%= @nssbinddn %>
 
 # The credentials to bind with.
 # Optional: default is no credential.
-bindpw <%= nssbindpasswd %>
+bindpw <%= @nssbindpasswd %>
 
 # The distinguished name to bind to the server with
 # if the effective user ID is root. Password is
@@ -78,7 +78,7 @@ pam_login_attribute uid
 # then the user will not be allowed to login.
 
 <% if @pamhostcheck %>
-pam_check_host_attr <%= pamhostcheck %>
+pam_check_host_attr <%= @pamhostcheck %>
 <% else %>
 #pam_check_host_attr
 <% end %>

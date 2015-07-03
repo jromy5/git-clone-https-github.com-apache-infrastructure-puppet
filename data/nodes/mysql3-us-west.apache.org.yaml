@@ -32,3 +32,7 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  asfbuildbot:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'

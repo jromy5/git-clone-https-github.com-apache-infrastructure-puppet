@@ -48,7 +48,6 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
-
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'

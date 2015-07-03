@@ -1,3 +1,5 @@
+#/etc/puppet/modules/collectd/manifests/plugin/sensors.pp
+
 class collectd::plugin::sensors (
   $sensorconfigfile = undef,
   $sensor           = undef,

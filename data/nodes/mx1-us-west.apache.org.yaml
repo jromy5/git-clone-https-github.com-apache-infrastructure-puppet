@@ -6,6 +6,7 @@ classes:
   - pflogsumm
   - ssl::name::wildcard_apache_org
 
+postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
 
@@ -14,3 +15,7 @@ postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,a
 postfix::server::relayhost:                '[athena.apache.org]:25'
 postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canonical_maps'
 
+postfix::server::asf_mx_enabled: 'true'
+postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
+postfix::server::max_postfix_amavis_procs: '25'
+postfix::server::max_use_postfix_amavis: '25'

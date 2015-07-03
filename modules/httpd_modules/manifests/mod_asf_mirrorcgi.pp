@@ -1,3 +1,5 @@
+#/etc/puppet/modules/httpd_modules/manifests/mod_asf_mirrorcgi.pp
+
 class httpd_modules::mod_asf_mirrorcgi (
   $command    = 'apxs2 -i -a -c mod_asf_mirrorcgi.c',
   $creates    = '/usr/lib/apache2/modules/mod_asf_mirrorcgi.so',

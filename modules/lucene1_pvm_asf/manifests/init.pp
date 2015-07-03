@@ -1,14 +1,41 @@
-class lucene1-pvm_asf {
+# /etc/puppet/modules//lucene1_pvm_asf/manifests/init.pp
+
+class lucene1_pvm_asf (
+
+  $jenkins_ssh,
+  $required_packages = ['joe' , 'ant' , 'unzip'],
+
+){
+
+# install required packages:
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
 
   # manifest for lucene project vm
 
   user { 'jenkins':
-    name       => 'jenkins',
     ensure     => present,
+    name       => 'jenkins',
     comment    => 'lucene project VM jenkins slave',
-    home       => '/home/jenkins',
+    home       => '/x1/jenkins',
     managehome => true,
     uid        => '800',
+  }
+
+  file { '/home/jenkins':
+    ensure  => 'link',
+    target  => '/x1/jenkins',
+    require => User['jenkins'],
+  }
+
+  file { '/etc/ssh/ssh_keys/jenkins.pub':
+    ensure  => 'present',
+    content => $jenkins_ssh,
+    owner   => 'root',
+    group   => 'jenkins',
+    require => User['jenkins'],
   }
 
   apt::source { 'precise':
@@ -23,18 +50,18 @@ class lucene1-pvm_asf {
     repos    => 'main',
   }
 
-  apt::pin { 'precise-subversion': 
-    priority => 1800,
+  apt::pin { 'precise-subversion':
     ensure   => present,
+    priority => 1800,
     packages => 'subversion',
     codename => 'precise',
     require  => Apt::Source['precise'],
     before   => Package['subversion'],
   }
   
-  apt::pin { 'precise-libsvn1': 
-    priority => 1800,
+  apt::pin { 'precise-libsvn1':
     ensure   => present,
+    priority => 1800,
     packages => 'libsvn1',
     codename => 'precise',
     require  => Apt::Source['precise'],

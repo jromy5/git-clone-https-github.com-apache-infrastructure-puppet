@@ -1,3 +1,5 @@
+#/etc/puppet/modules/vhosts_asf/manifests/custom_config.pp
+
 class vhosts_asf::custom_config (
 
 ) {

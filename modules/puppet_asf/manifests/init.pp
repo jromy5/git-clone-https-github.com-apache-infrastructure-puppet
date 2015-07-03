@@ -1,10 +1,12 @@
+#/etc/puppet/modules/puppet_asf/manifests.init.pp
+
 class puppet_asf (
   $puppetconf    = '/etc/puppet/puppet.conf',
   $enable_daemon = true,
   $daemon_opts   = '',
 ){
 
-  case $asfosname {
+  case $::asfosname {
     ubuntu: {
       package { 'puppet':
         ensure  => '3.7.5-1puppetlabs1',
@@ -20,7 +22,7 @@ class puppet_asf (
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        content => template("puppet_asf/puppet_daemon.${asfosname}.erb"),
+        content => template("puppet_asf/puppet_daemon.${::asfosname}.erb"),
       }
 
     }
@@ -51,8 +53,8 @@ class puppet_asf (
     group   => 'puppet',
     mode    => '0755',
     source  => [
-      "puppet:///modules/puppet_asf/puppet.${hostname}.conf",
-      "puppet:///modules/puppet_asf/${asfosname}.puppet.conf",
+      "puppet:///modules/puppet_asf/puppet.${::hostname}.conf",
+      "puppet:///modules/puppet_asf/${::asfosname}.puppet.conf",
       'puppet:///modules/puppet_asf/puppet.conf',
     ]
   }

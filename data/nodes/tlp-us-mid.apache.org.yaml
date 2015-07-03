@@ -30,6 +30,7 @@ classes:
   - vhosts_asf::custom_config
   - vhosts_asf::modules
   - vhosts_asf::vhosts
+  - gitwcsub
 
 apache::keepalive:                           'On'
 apache::keepalive_timeout:                   '30'
@@ -83,7 +84,7 @@ svnwcsub::username:                          'svnwc'
 
 rsync::package_ensure:                       'latest'
 rsync::server::use_xinetd:                   false
-rsync::server::gid: 			     'nogroup' # group 'nobody' doesn't exist in ubuntu
+rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
 
 apache::custom_config:
   svn:
@@ -322,6 +323,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'www.apache.org'
     docroot: '/var/www/www.apache.org/content'
     manage_docroot: false
+    default_vhost: true
     serveraliases:
       - 'apache.org'
       - 'apachegroup.org'
@@ -545,6 +547,20 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     custom_fragment: |
       Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
+
+  apachecon_na:
+    vhost_name: '*'
+    port: 80
+    servername: 'na14.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'us.apachecon.com'
+      - 'na.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect / http://events.linuxfoundation.org/events/apachecon-north-america/
 
   apacheextras:
     vhost_name: '*'
@@ -1063,7 +1079,7 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
-
+      
 
   incubator-ssl:
     priority: 98
@@ -1608,6 +1624,20 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine On
       RewriteOptions inherit
       Use BlockSvn
+
+  qi4j:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.qi4j.org'
+    docroot: '/var/www/zest.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'qi4j.org'
+    serveradmin: 'infrastructure@apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://zest.apache.org/
 
   quetz:
     vhost_name: '*'

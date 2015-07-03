@@ -1,5 +1,14 @@
 # *** DO *NOT* CHANGE THE LIVE FILE.  Change it in SVN, and update.
 
+# THEN: in the infrastructure-puppet repo, create a new branch from the deployment branch, make changes, push new branch
+# and then ask someone in Infrastructure to review + merge changes.
+# INFRA have a workflow document:
+
+# https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
+
+# Note that it can take up to 40 minutes or so for the live file to be updated after Infra have merged the change
+
+
 # LDAP groups have two forms:
 # ==========================
 # Unix/Posix groups and Committee groups.
@@ -92,12 +101,12 @@ bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
 blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
-bookkeeper=breed,dhruba,fpj,utkarsh,ivank,umamahesh,jiannan
+bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 buildr={ldap:cn=buildr,ou=groups,dc=apache,dc=org}
 buildr-pmc={reuse:pit-authorization:buildr-pmc}
 bval={ldap:cn=bval,ou=groups,dc=apache,dc=org}
 bval-pmc={reuse:pit-authorization:bval-pmc}
-calcite=jhyde,jacques,jamestaylor,cwensel,vladimirsitnikov
+calcite=amansinha,cwensel,jacques,jamestaylor,jcamacho,jhyde,jni,jpullokk,ndimiduk,vladimirsitnikov
 camel={ldap:cn=camel,ou=groups,dc=apache,dc=org}
 camel-pmc={reuse:pit-authorization:camel-pmc}
 cassandra={ldap:cn=cassandra,ou=groups,dc=apache,dc=org}
@@ -125,7 +134,7 @@ continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-corinthia=dortef,franz,gbg,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
+corinthia=dortef,franz,gbg,ianc,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
 creadur={ldap:cn=creadur,ou=groups,dc=apache,dc=org}
@@ -212,7 +221,7 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
-ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov
+ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov,evansye,av,ivasilinets,ntikhonov,murador,maketo
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -243,7 +252,7 @@ kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
 labs-pmc={reuse:pit-authorization:labs-pmc}
-lens=amareshwari,cdouglas,gunther,jbonofre,jdhok,jghoman,prongs,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
+lens=amareshwari,arshadmatin,cdouglas,gunther,himanshugahlaut,jbonofre,jdhok,jghoman,prongs,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
 lenya={ldap:cn=lenya,ou=groups,dc=apache,dc=org}
 lenya-pmc={reuse:pit-authorization:lenya-pmc}
 #Lenya summer of code group
@@ -286,7 +295,8 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee
+mysos=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
+nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee,danbress,bbende
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
@@ -315,6 +325,8 @@ openoffice={ldap:cn=openoffice,ou=groups,dc=apache,dc=org}
 openoffice-pmc={reuse:pit-authorization:openoffice-pmc}
 openwebbeans={ldap:cn=openwebbeans,ou=groups,dc=apache,dc=org}
 openwebbeans-pmc={reuse:pit-authorization:openwebbeans-pmc}
+orc={ldap:cn=orc,ou=groups,dc=apache,dc=org}
+orc-pmc={reuse:pit-authorization:orc-pmc}
 parquet={ldap:cn=parquet,ou=groups,dc=apache,dc=org}
 parquet-pmc={reuse:pit-authorization:parquet-pmc}
 pdfbox={ldap:cn=pdfbox,ou=groups,dc=apache,dc=org}
@@ -344,7 +356,7 @@ qpid-pmc={reuse:pit-authorization:qpid-pmc}
 ranger=bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rmani,sneethir,sradia
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
-reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,jerryjung,johnyangk,joshrosen,jrlee,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
+reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,gwlee,jerryjung,johnyangk,joshrosen,jrlee,jsjason,juliaw,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
 ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,ibuziuk,jukka,raymondcamden,timb,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
@@ -356,13 +368,14 @@ samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
-sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani
+sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp
 servicemix={ldap:cn=servicemix,ou=groups,dc=apache,dc=org}
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
 shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
 shindig-pmc={reuse:pit-authorization:shindig-pmc}
 shiro={ldap:cn=shiro,ou=groups,dc=apache,dc=org}
 shiro-pmc={reuse:pit-authorization:shiro-pmc}
+singa=daijy,dinhtta,gates,jinyang,kaiping,tankianlee,tdunning,thejas,wangsh,wangwei,zhaojing
 sis={ldap:cn=sis,ou=groups,dc=apache,dc=org}
 sis-pmc={reuse:pit-authorization:sis-pmc}
 slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron,gourksaha
@@ -462,7 +475,7 @@ xml-commons=twl,dirkx,ndw
 xmlgraphics-pmc={reuse:pit-authorization:xmlgraphics-pmc}
 xmlgraphics={ldap:cn=xmlgraphics,ou=groups,dc=apache,dc=org}
 xmlgraphics-batik=cam,deweese,dvholten,helder,jeremias
-xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfurini,mehdi,phancock,pietsch,psancho,rmeyer,spepping,ssteiner,vhennebert
+xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfurini,matthias,mehdi,phancock,pietsch,psancho,rmeyer,spepping,ssteiner,vhennebert
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 zest={ldap:cn=zest,ou=groups,dc=apache,dc=org}
 zest-pmc={reuse:pit-authorization:zest-pmc}
@@ -577,6 +590,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/beehive]
 * = r
 
+[/beehive/site]
+@attic-pmc = rw
+
 [/bigtop/site]
 @bigtop = rw
 
@@ -643,6 +659,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/cloudstack]
 @cloudstack = rw
 
+[/cloudstack/site/middleman]
+* = r
+
 [/cocoon]
 @cocoon = rw
 @lenya = rw
@@ -661,13 +680,13 @@ ea = rw
 [/commons]
 @committers = rw
 
-# Now using git
-[/commons/proper/lang]
+# archive area for components that have been moved to Git
+# must remain read-only except as needed to move components
+[/commons/_moved_to_git]
 * = r
 
-# Now using Git:
-[/commons/proper/math]
-* = r
+# Note: since commons/proper/[lang|math] have now been moved under _moved_to_git and
+# only a README remains, there is now no need to make those directory trees read-only.
 
 [/concom]
 @concom = rw
@@ -984,6 +1003,9 @@ ea = rw
 [/incubator/mrql]
 @mrql= rw
 
+[/incubator/mysos]
+@mysos = rw
+
 [/incubator/nifi/site]
 @nifi = rw
 
@@ -1033,6 +1055,9 @@ ea = rw
 
 [/incubator/sentry]
 @sentry = rw
+
+[/incubator/singa]
+@singa = rw
 
 [/incubator/sirona]
 @committers= rw
@@ -1123,7 +1148,7 @@ ea = rw
 @isis = r
 
 [/isis/site]
-@isis = rw
+@isis = r
 
 [/jackrabbit]
 @jackrabbit = rw

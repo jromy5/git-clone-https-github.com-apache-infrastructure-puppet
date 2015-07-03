@@ -1,4 +1,6 @@
-class build_slave::install::centos::65 (
+#/etc/puppet/modules/build_slaves/manifests/install/centos/65.pp
+
+class build_slaves::install::centos::65 (
   $erlangrepo    = '',
   $erlangrepokey = ''
 ) {
@@ -7,7 +9,7 @@ class build_slave::install::centos::65 (
     baseurl  => $erlangrepo,
     enabled  => 1,
     gpgcheck => 1,
-    descr    => "Erlang Solutions erlang repo",
+    descr    => 'Erlang Solutions erlang repo',
     gpgkey   => $erlangrepokey
   }
 

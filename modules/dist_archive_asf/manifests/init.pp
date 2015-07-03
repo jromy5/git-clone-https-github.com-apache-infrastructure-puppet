@@ -13,68 +13,71 @@ class dist_archive_asf (
   $rsync_server  = 'rsync.apache.org',
 ) {
 
-  
-   user { "${username}":
-        name       => "${username}",
-        ensure     => "${user_present}",
-        home       => "/home/${username}",
-        shell      => "${shell}",
-        uid        => "${uid}",
-        gid        => "${groupname}",
-        groups     => $groups,
-        managehome => true,
-        require    => Group["${groupname}"],
-    }
+  user {
+    $username:
+      ensure     => $user_present,
+      name       => $username,
+      home       => "/home/${username}",
+      shell      => $shell,
+      uid        => $uid,
+      gid        => $groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$groupname],
+  }
 
-    group { "${groupname}":
-        name   => "${groupname}",
-        ensure => "${group_present}",
-        gid    => "${gid}",
-    }
+  group {
+    $groupname:
+      ensure => $group_present,
+      name   => $groupname,
+      gid    => $gid,
+  }
 
-    file { 'archive profile': 
-        path    => "/home/${username}/.profile",
-        ensure  => 'present',
-        mode    => '0644',
-        owner   => "${username}",
-        group   => "${groupname}",
-        source  => 'puppet:///modules/dist_archive_asf/home/profile',
-        require => User["${username}"],
-    }
-    
-     file { 'archive root':
-        ensure => directory,
-        path => "${archiveroot}",
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-    }
-    
-    file { 'archive dist dir':
-        ensure => directory,
-        path => "${archiveroot}/dist",
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-    }
-    
-    file { 'archive front page': 
-        path    => "${archiveroot}/index.html",
-        ensure  => 'present',
-        mode    => '0644',
-        owner   => "${username}",
-        group   => "${groupname}",
-        source  => 'puppet:///modules/dist_archive_asf/index.html',
-        require => User["${username}"],
-    }
-       
-    
-    rsync::get { "${archiveroot}/dist":
+  file {
+    'archive profile':
+      ensure  => 'present',
+      path    => "/home/${username}/.profile",
+      mode    => '0644',
+      owner   => $username,
+      group   => $groupname,
+      source  => 'puppet:///modules/dist_archive_asf/home/profile',
+      require => User[$username],
+  }
+
+  file {
+    'archive root':
+      ensure => directory,
+      path   => $archiveroot,
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+  }
+
+  file {
+    'archive dist dir':
+      ensure => directory,
+      path   => "${archiveroot}/dist",
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+  }
+
+  file {
+    'archive front page':
+      ensure  => 'present',
+      path    => "${archiveroot}/index.html",
+      mode    => '0644',
+      owner   => $username,
+      group   => $groupname,
+      source  => 'puppet:///modules/dist_archive_asf/index.html',
+      require => User[$username],
+  }
+
+  rsync::get {
+    "${archiveroot}/dist":
       source  => "rsync://${rsync_server}/apache-dist-for-archive/",
       links   => true,
       require => File["${archiveroot}/dist"],
       chown   => "${username}:${groupname}",
-    }
-    
-    
+  }
 }

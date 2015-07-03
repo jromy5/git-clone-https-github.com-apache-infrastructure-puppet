@@ -17,12 +17,6 @@ class base (
   $perl_module = hiera_hash('perl::module', {})
   create_resources(perl::module, $perl_module)
 
-  class { "base::install::${asfosname}::${asfosrelease}":
+  class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
-
-class base::snmp::createv3users {
-  $v3userhash = hiera_hash('snmp::snmpv3_user',{})
-  create_resources(snmp::snmpv3_user, $v3userhash)
-}
-

@@ -3,7 +3,12 @@
 
 ENABLED=1
 OPTIONS="--create-prefs \
-         --max-children 5 \
+	 --ipv4only \
+	 --min-spare=<%= @minspare %> \
+	 --min-children=<%= @minchildren %>  \
+	 --max-spare=<%= @maxspare %> \
+	 --max-conn-per-child=<%= @maxconnsperchild %> \
+	 --max-children=<%= @maxchildren %> \
          --helper-home-dir=<%= @helperhomedir %> \
          --listen-ip=<%= @listenip %> \
          --allowed-ips=<%= @allowedips %> \

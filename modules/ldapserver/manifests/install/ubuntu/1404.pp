@@ -25,66 +25,66 @@ class ldapserver::install::ubuntu::1404 (
   $keyfilecontents  = '',
 
 
-) { 
+) {
   package { $packages:
     ensure   =>  installed,
   }
 
 
-  file { 
-    '/etc/ldap/slapd.conf': 
-      content   => template('ldapserver/slapd.conf.erb'), 
-      force     => true, # this is needed as new installs make slapd.conf a directory
-      require   => Package['slapd'],
-      notify    => Service["slapd"];
+  file {
+    '/etc/ldap/slapd.conf':
+      content => template('ldapserver/slapd.conf.erb'),
+      # this is needed as new installs make slapd.conf a directory
+      force   => true,
+      require => Package['slapd'],
+      notify  => Service['slapd'];
     '/etc/ldap/slapd.d':
-      ensure    => absent,
-      force     => true; # this isn't needed by our install
+      ensure => absent,
+      force  => true; # this isn't needed by our install
     '/etc/ldap/schema/asf-custom.schema':
-      source    => 'puppet:///modules/ldapserver/asf-custom.schema',
-      owner     => 'root',
-      mode      => '0644',
-      ensure    => present,
-      require   => Package['slapd'],
-      notify    => Service['slapd'];
+      ensure  => present,
+      source  => 'puppet:///modules/ldapserver/asf-custom.schema',
+      owner   => 'root',
+      mode    => '0644',
+      require => Package['slapd'],
+      notify  => Service['slapd'];
     '/etc/ldap/schema/openssh-lpk.schema':
-      source    => 'puppet:///modules/ldapserver/openssh-lpk.schema',
-      owner     => 'root',
-      mode      => '0644',
-      ensure    => present,
-      require   => Package['slapd'],
-      notify    => Service['slapd'];
+      ensure  => present,
+      source  => 'puppet:///modules/ldapserver/openssh-lpk.schema',
+      owner   => 'root',
+      mode    => '0644',
+      require => Package['slapd'],
+      notify  => Service['slapd'];
     '/etc/default/slapd':
-      source    => "puppet:///modules/ldapserver/default-slapd",
-      owner     => 'root',
-      mode      => '0644',
-      ensure    => present,
-      require   => Package['slapd'],
-      notify    => Service['slapd'];
-    "$cafile":
-      content   => $cafilecontents,
-      require   => File['/etc/ldap/cacerts'],
-      owner     => root,
-      mode      => 0644,
-      notify    => Service['slapd'];
-    "$certfile":
-      content   => $certfilecontents,
-      require   => [File['/etc/ldap/cacerts'],Package['slapd']],
-      owner     => openldap,
-      mode      => 0600,
-      notify    => Service['slapd'];
-    "$keyfile":
-      content   => $keyfilecontents,
-      require   => [File['/etc/ldap/cacerts'],Package['slapd']],
-      owner     => openldap,
-      mode      => 0600,
-      notify    => Service['slapd'];
-   }
+      ensure  => present,
+      source  => 'puppet:///modules/ldapserver/default-slapd',
+      owner   => 'root',
+      mode    => '0644',
+      require => Package['slapd'],
+      notify  => Service['slapd'];
+    $cafile:
+      content => $cafilecontents,
+      require => File['/etc/ldap/cacerts'],
+      owner   => root,
+      mode    => '0644',
+      notify  => Service['slapd'];
+    $certfile:
+      content => $certfilecontents,
+      require => [File['/etc/ldap/cacerts'],Package['slapd']],
+      owner   => openldap,
+      mode    => '0600',
+      notify  => Service['slapd'];
+    $keyfile:
+      content => $keyfilecontents,
+      require => [File['/etc/ldap/cacerts'],Package['slapd']],
+      owner   => openldap,
+      mode    => '0600',
+      notify  => Service['slapd'];
+  }
 
-
-   service { 'slapd':
-     hasrestart   =>  true,
-     hasstatus    =>  true,
-     ensure       =>  running,
-   }
+  service { 'slapd':
+    ensure     =>  running,
+    hasrestart =>  true,
+    hasstatus  =>  true,
+  }
 }

@@ -5,12 +5,14 @@ classes:
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
   - ulimit_asf
+  - vhosts_asf::vhosts
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
-apache::default_vhost:      true
-apache::docroot:            '/x1/git/mirrors'
-apache::docroot_owner:      'git'
+apache::default_vhost:      false
+apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
@@ -24,7 +26,29 @@ apache::mod::event::threadlimit: '250'
 apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
-apache::serveradmin:        'infrastructure@apache.org'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
+vhosts_asf::vhosts::vhosts:
+  git:
+    vhost_name: '*'
+    port: 80
+    servername: 'git.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    default_vhost: true
+    docroot: '/x1/git/mirrors'
+    docroot_owner: 'git'
+    access_log_file: 'git.apache.org.http_access.log'
+    error_log_file: 'git.apache.org.error.log'
+
+  git-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'git.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    default_vhost: true
+    docroot: '/x1/git/mirrors'
+    docroot_owner: 'git'
+    access_log_file: 'git.apache.org.ssl_access.log'
+    error_log_file: 'git.apache.org.error.log'

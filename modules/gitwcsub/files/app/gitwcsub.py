@@ -4,6 +4,10 @@ from threading import Lock
 import threading;
 from collections import namedtuple
 import random, atexit, signal, inspect
+import time
+import logging
+import logging.handlers
+
 
 path = os.path.dirname(os.path.abspath(sys.argv[0]))
 if len(path) == 0:
@@ -14,7 +18,17 @@ config = configparser.RawConfigParser()
 
 config.read(path + '/gitwcsub.cfg')
 
-logging.basicConfig(filename=config.get("Logging", "logFile"), format='[%(asctime)s]: %(message)s', level=logging.INFO)
+
+
+log_handler = logging.handlers.WatchedFileHandler(config.get("Logging", "logFile"))
+formatter = logging.Formatter(
+	'%(asctime)s gitwcsub [%(process)d]: %(message)s',
+	'%b %d %H:%M:%S')
+formatter.converter = time.gmtime
+log_handler.setFormatter(formatter)
+logger = logging.getLogger()
+logger.addHandler(log_handler)
+logger.setLevel(logging.INFO)
 
 pending = {}
 
@@ -181,11 +195,11 @@ def updatePending():
                         canClobber = False
                         try:
                             rv =subprocess.check_output(("svn", "info"))
-                            if re.search(r"URL: ", rv, re.MULTILINE):
+                            if re.search(r"URL: ", rv.decode("utf-8"), re.MULTILINE):
                                 canClobber = True
                                 logging.warn("This is/was a subversion repo, okay to clobber")
                         except Exception as err:
-                            logging.warn("Not a repo, not going to clobber it")
+                            logging.warn("Not a repo, not going to clobber it: %s" % err)
                             canClobber = False
                     if canClobber:
                         logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
@@ -252,12 +266,12 @@ class PubSubClient(Thread):
                     continue
                 
             for line in read_chunk(self.req):
-                line = str( line, encoding='ascii' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
+                line = str( line, encoding='ascii', errors='ignore' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 
                 try:
                     obj = json.loads(line)
                     if "commit" in obj and "repository" in obj['commit']:
-                        print("[%s] Got a commit in '%s'" % (self.ident, obj['commit']['repository']))
+                        logging.info("[%s] Got a commit in '%s'" % (self.ident, obj['commit']['repository']))
                         if obj['commit']['repository'] == "git":
                             parseGitCommit(obj['commit'])
                             

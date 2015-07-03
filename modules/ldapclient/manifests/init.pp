@@ -13,16 +13,18 @@ class ldapclient (
   $nssbindpasswd               = '',
 ) {
 
-  package { $ldapclient_packages: 
-    ensure   =>  installed,
+  package {
+    $ldapclient_packages:
+      ensure   =>  installed,
   }
 
-  package { $ldapclient_remove_packages: 
-    ensure   =>  purged,
+  package {
+    $ldapclient_remove_packages:
+      ensure   =>  purged,
   }
 
-  file { 
-    "${authorizedkeysfolder}":
+  file {
+    $authorizedkeysfolder:
       ensure  => directory,
       owner   => 'root',
       mode    => '0750';
@@ -32,7 +34,7 @@ class ldapclient (
       owner   => 'root';
   }
 
-  class { "ldapclient::install::${asfosname}::${asfosrelease}":
+  class { "ldapclient::install::${::asfosname}::${::asfosrelease}":
     ldapcert      =>  $ldapcert,
     ldapservers   =>  $ldapservers,
     nssbinddn     =>  $nssbinddn,

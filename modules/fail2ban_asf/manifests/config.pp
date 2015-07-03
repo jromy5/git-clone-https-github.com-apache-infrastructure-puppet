@@ -1,3 +1,4 @@
+#/etc/puppet/modules/fail2ban_asf/manifests/config.pp
 
 class fail2ban_asf::config (
 ) {

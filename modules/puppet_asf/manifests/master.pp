@@ -1,3 +1,5 @@
+#/etc/puppet/modules/puppet_asf/manifests/master.pp
+
 class puppet_asf::master {
 
   cron { 'updatepuppet':
@@ -8,7 +10,7 @@ class puppet_asf::master {
   }
 
   package { 'puppetmaster':
-    ensure  => '3.7.5-1puppetlabs1',
+    ensure  => '3.8.1-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
     notify  => Service['puppetmaster'],
   }

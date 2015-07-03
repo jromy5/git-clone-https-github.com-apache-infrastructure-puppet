@@ -1,3 +1,4 @@
+#/etc/puppet/modules/svngit2jira/manifest/init.pp
 
 class svngit2jira (
   $uid            = 9992,
@@ -16,71 +17,70 @@ class svngit2jira (
 
 ){
 
-
-   user { "${username}":
-        name       => "${username}",
-        ensure     => "${user_present}",
-        home       => "/home/${username}",
-        shell      => "${shell}",
-        uid        => "${uid}",
-        gid        => "${groupname}",
-        groups     => $groups,
-        managehome => true,
-        require    => Group["${groupname}"],
+    user { $username:
+      ensure     => $user_present,
+      name       => $username,
+      home       => "/home/${username}",
+      shell      => $shell,
+      uid        => $uid,
+      gid        => $groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$groupname],
     }
 
-    group { "${groupname}":
-        name   => "${groupname}",
-        ensure => "${group_present}",
-        gid    => "${gid}",
+    group { $groupname:
+      ensure => $group_present,
+      name   => $groupname,
+      gid    => $gid,
     }
 
     file { "/var/log/${service_name}":
-        ensure => directory,
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
+      ensure => directory,
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
     }
 
     file { "/var/run/${service_name}":
-        ensure => directory,
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
+      ensure => directory,
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
     }
 
     file { "/etc/init.d/${service_name}":
-        mode   => 0755,
-        owner  => 'root',
-        group  => 'root',
-        source => "puppet:///modules/svngit2jira/svngit2jira.${asfosname}",
+      mode   => '0755',
+      owner  => 'root',
+      group  => 'root',
+      source => "puppet:///modules/svngit2jira/svngit2jira.${::asfosname}",
     }
-    
+
     file { 'svngit2jira app dir':
-        ensure => directory,
-        path => '/usr/local/etc/svngit2jira',
+      ensure => directory,
+      path   => '/usr/local/etc/svngit2jira',
     }
 
-    file { "/usr/local/etc/svngit2jira/svngit2jira.py":
-        mode   => 0755,
-        owner  => "${username}",
-        group  => "${groupname}",
-        source => 'puppet:///modules/svngit2jira/app/svngit2jira.py',
+    file { '/usr/local/etc/svngit2jira/svngit2jira.py':
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/svngit2jira/app/svngit2jira.py',
     }
 
 
-    file { "/usr/local/etc/svngit2jira/svngit2jira.cfg":
-        notify => Service["${service_name}"],
-        mode   => 0644,
-        owner  => 'root',
-        group  => 'root',
-        source => 'puppet:///modules/svngit2jira/config/svngit2jira.cfg',
+    file { '/usr/local/etc/svngit2jira/svngit2jira.cfg':
+      notify => Service[$service_name],
+      mode   => '0644',
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/svngit2jira/config/svngit2jira.cfg',
     }
 
-    service { "${service_name}":
-        ensure    => $service_ensure,
-        enable    => true,
-        hasstatus => false,
+    service { $service_name:
+      ensure    => $service_ensure,
+      enable    => true,
+      hasstatus => false,
     }
 
 }

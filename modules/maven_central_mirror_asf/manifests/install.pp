@@ -1,3 +1,5 @@
+#/etc/puppet/modules/maven_central_mirror_asf/manifests/install.pp
+
 class maven_central_mirror_asf::install {
 
   $maven_central_mirror_pkgs = [

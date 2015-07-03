@@ -27,6 +27,7 @@ postfix::server::smtpd_recipient_restrictions:
 postfix::server::submission_smtpd_client_restrictions: 'permit_mynetworks,permit_sasl_authenticated,reject'
 postfix::server::smtpd_tls_key_file:     '/etc/ssl/private/wildcard.apache.org.key'
 postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-combined.crt'
+postfix::server::smtpd_tls_CAfile:       '/etc/ssl/certs/wildcard.apache.org.chain'
 postfix::server::smtpd_sasl_auth:        'true'
 postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'

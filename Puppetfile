@@ -56,11 +56,6 @@ mod 'foreman_proxy',
   :tag => '2.2.1'
 
 
-mod 'haproxy',
-  :git    => 'https://github.com/pctony/puppetlabs-haproxy.git',
-  :commit => '94ccf3500cdacd01d775fff16eb1cceef82f4eba'
-
-
 mod 'iptables',
   :git    => 'https://github.com/pctony/puppet-iptables.git',
   :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
@@ -78,7 +73,12 @@ mod 'ldap',
 
 mod 'java',
   :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
-  :tag => '1.2.0'
+  :tag => '1.3.0'
+
+
+mod 'mailman3',
+  :git => 'https://github.com/pctony/puppet-mailman3.git',
+  :branch => 'asf_development'
 
 
 mod 'module_data',
@@ -92,17 +92,19 @@ mod 'mysql',
 
 
 mod 'nfs',
-  :git    => 'https://github.com/pctony/puppet-nfs.git',
-  :commit => '79efbe7da85fb921467f102656df3d99ddd027aa'
+  :git => 'https://github.com/echocat/puppet-nfs',
+  :tag => 'v1.4.1'
 
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
   :tag => '3.2.0'
 
+
 mod 'perl',
   :git => 'https://github.com/example42/puppet-perl',
   :tag => 'v2.0.18'
+
 
 mod 'pkgng',
   :git => 'https://github.com/xaque208/puppet-pkgng',
@@ -111,7 +113,7 @@ mod 'pkgng',
 
 mod 'postfix',
   :git => 'https://github.com/pctony/puppet-postfix',
-  :commit => '94a58451b81d47ff2d10ea5038643dcd1272dd1b'
+  :commit => '21093098de8f9fc428d81426fe03a2d6eb88a279'
 
 
 mod 'postgresql',
@@ -129,9 +131,15 @@ mod 'puppet',
   :git => 'https://github.com/theforeman/puppet-puppet.git',
   :tag => '2.3.1'
 
+
 mod 'puppetlabs_yum',
   :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
   :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+
+
+mod 'python',
+  :git => 'https://github.com/stankevich/puppet-python.git',
+  :tag => '1.9.4'
 
 
 mod 'rsync',
@@ -156,11 +164,6 @@ mod 'snmp',
 mod 'ssh',
   :git    => 'https://github.com/pctony/puppet-ssh.git',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
-
-
-mod 'spamassassin',
-  :git    => 'https://github.com/pctony/puppet-spamassassin.git',
-  :commit => 'd0c8f5b949b879589b3eb039c607745459751d55'
 
 
 mod 'staging',

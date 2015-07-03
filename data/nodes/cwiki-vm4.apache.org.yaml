@@ -1,0 +1,73 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - cwiki_asf
+  - ssl::name::cwiki_apache_org 
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+# cwiki_asf class variables.
+cwiki_asf::confluence_version: '5.8.4'
+cwiki_asf::mysql_connector_version: '5.1.11'
+cwiki_asf::parent_dir: '/x1/cwiki'
+cwiki_asf::server_port: '8008'
+cwiki_asf::connector_port: '8888'
+cwiki_asf::context_path: '/confluence'
+cwiki_asf::docroot: '/var/www'
+cwiki_asf::server_alias: 'cwiki.apache.org'
+cwiki_asf::heap_min_size: '1512'
+cwiki_asf::heap_max_size: '1512'
+cwiki_asf::maxmetaspacesize: '512'
+
+vhosts_asf::vhosts::vhosts:
+  cwiki-vm4-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'cwiki-vm4.apache.org'
+    serveraliases:
+      - 'cwiki.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'cwiki_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
+
+  cwiki-vm4-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'cwiki-vm4.apache.org'
+      serveraliases:  
+        - 'cwiki.apache.org'
+      port: 443
+      docroot: '/var/www'
+      error_log_file: 'cwiki_error.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/cwiki.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/cwiki.apache.org.chain'
+      ssl_key: '/etc/ssl/private/cwiki.apache.org.key'
+      custom_fragment: |
+        RewriteEngine On
+        ProxyPass /intermediates !
+        ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
+        ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
+        RewriteCond $1 !(confluence|intermediates)
+        RewriteRule ^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L]

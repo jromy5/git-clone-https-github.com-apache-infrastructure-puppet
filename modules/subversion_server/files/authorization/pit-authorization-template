@@ -234,6 +234,8 @@ openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 openoffice-security=robweir,orw,malte,hdu,wolfhalton,jsc,alg,af,arielch,maho,zhangjf
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+orc={reuse:asf-authorization:orc}
+orc-pmc={ldap:cn=orc,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 parquet={reuse:asf-authorization:parquet}
 parquet-pmc={ldap:cn=parquet,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 pdfbox={reuse:asf-authorization:pdfbox}
@@ -270,6 +272,7 @@ shindig={reuse:asf-authorization:shindig}
 shindig-pmc={ldap:cn=shindig,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 shiro={reuse:asf-authorization:shiro}
 shiro-pmc={ldap:cn=shiro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+singa={reuse:asf-authorization:singa}
 sis={reuse:asf-authorization:sis}
 sis-pmc={ldap:cn=sis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 slider={reuse:asf-authorization:slider}
@@ -361,7 +364,7 @@ jcp-axis-nda=dims,hemapani,venkat,gdaniels,tomj,ias,guillaume,azeez,dug,dblevins
 jcp-tomee-nda=adc,ammulder,dain,dblevins,djencks,gawor,gdamour,hogstrom,jgallimore,jgenender,jlaskowski,jlmonteiro,kevan,kmalhi,rickmcguire,xuhaihong,stephenc,tveronezi,simoneg,rmannibucau,mnour,andygumbrecht
 jcp-servicemix-nda=geirm,bsnyder,gnodet,ulhasbhole,gertv
 jcp-j2ee-nda=geirm,jboynes,dain,dblevins,gregw,djencks,adc,chirino,gdamour,dims,jstrachan,hemapani,jlaskowski,jgenender,ammulder,jsisson,bsnyder,hogstrom,kevan,rickmcguire,jdillon,jbohn,sppatel,ccardona,pmcmahan,gawor,matzew,prasad,akulshreshtha,hcunico,mcconne,jaydm,jawarner,dwoods,linsun,xuhaihong,genspring,delos,vamsic007,xiaming,rwonly,hanhongfang,violalu,michaelfang,johnxiao
-jcp-j2ee-nda-ro=dkulp,dandiep,dmiddlem,baranda,vmz,gtully,gerdogdu,kmalhi,jgallimore,jlmonteiro,stephenc,tveronezi,simoneg,rmannibucau,mnour,curtisr7,geronimotck,openejb-tck,andygumbrecht
+jcp-j2ee-nda-ro=dkulp,dandiep,dmiddlem,baranda,vmz,gtully,gerdogdu,kmalhi,jgallimore,jlmonteiro,stephenc,tveronezi,simoneg,rmannibucau,mnour,curtisr7,geronimotck,openejb-tck
 jcp-jaxrs-nda=dkulp,elman,jdillon,martins,sergeyb,ashakirin
 jcp-jaxws-nda=dkulp,dandiep,jliu,gawor,ema,jgenender,sandakith,gdaniels,isurues,sagara,asoldano,ashakirin
 # note jcp-nda is in the same order as foundation/Correspondence/JCP
@@ -372,7 +375,7 @@ osgi-rw=rickhall,fmeschbe,davidb
 osgi-ro=bob
 
 # Not TLPs or podlings.  
-accounting=gmorris,mball,jjimenez
+accounting=gmorris,mball,tpappas
 apachecon=coar,ben,lars,jerenkrantz,rbowen,farra,mvdb,danese,wrowe,curcuru,cliff,noel,nick,zoe,svanderwaal
 apsite={ldap:cn=apsite,ou=groups,dc=apache,dc=org}
 attic-pmc={ldap:cn=attic,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
@@ -381,7 +384,7 @@ board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
 comdev={ldap:cn=comdev,ou=groups,dc=apache,dc=org}
 comdev-pmc={ldap:cn=comdev,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 concom={ldap:cn=concom,ou=groups,dc=apache,dc=org}
-exec-officers=brett,gstein,rbowen,mattmann,rgardler,clr,rubys,jcarman
+exec-officers=brett,gstein,rbowen,mattmann,rgardler,clr,rubys,jcarman,jani,kmcgrail
 fundraising=serge,upayavira
 infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
@@ -545,6 +548,7 @@ ea = rw
 @pmc-chairs = rw
 @exec-officers = rw
 whimsysvn = rw
+@accounting = rw
 
 [/foundation/officers]
 @pmc-chairs = rw
@@ -1344,6 +1348,9 @@ buildbot = rw
 
 [/websites/production/shiro]
 @shiro = rw
+
+[/websites/production/singa]
+@incubator = rw
 
 [/websites/production/sis]
 @sis = rw

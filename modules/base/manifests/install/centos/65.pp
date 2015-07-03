@@ -1,3 +1,5 @@
+#/etc/puppet/modules/base/manifests/install/centos/65.pp
+
 class base::install::centos::65 (
   $asfinternalrepo    = '',
   ) {
