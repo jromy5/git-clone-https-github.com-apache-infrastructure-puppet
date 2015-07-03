@@ -1,0 +1,3 @@
+---
+classes:
+  - ssl::name::wildcard_apache_org
