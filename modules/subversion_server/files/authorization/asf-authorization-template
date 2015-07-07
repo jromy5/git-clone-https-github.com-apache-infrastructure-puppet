@@ -784,7 +784,7 @@ ea = rw
 @empire-db = rw
 
 [/esme]
-* = r
+@attic-pmc = rw
 
 [/etch]
 @etch = rw
