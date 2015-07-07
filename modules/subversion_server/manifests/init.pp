@@ -14,6 +14,16 @@ class subversion_server (
 
   # File block to deploy fodlers, scripts etc
   file {
+    '/x1':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
     '/etc/viewvc/viewvc.conf':
       ensure => present,
       owner  => 'www-data',
@@ -77,6 +87,16 @@ class subversion_server (
     '/usr/local/bin/svn_sync_to_aws_s3.sh':
       source => 'puppet:///modules/subversion_server/svn_sync_to_aws_s3.sh',
       mode   => '0775';
+    '/x1/www':
+      source => 'puppet:///modules/subversion_server/www/htdocs',
+      mode   => '0775',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/www/viewvc':
+      ensure => link,
+      target => '/usr/lib/viewvc/cgi-bin/viewvc.cgi',
+      owner  => 'www-data',
+      group  => 'svnadmins';
   }
 
   # File block to setup the plethora of symlinks needed
@@ -466,4 +486,10 @@ class subversion_server (
       require  => File['/usr/local/bin/svn_sync_to_aws_s3.sh'],
       command  => '/usr/local/bin/svn_sync_to_aws_s3.sh';
   }
+
+  host { 'svn-master.apache.org':
+    ip           => $ipaddress,
+    host_aliases => $fqdn,
+  }
+
 }
