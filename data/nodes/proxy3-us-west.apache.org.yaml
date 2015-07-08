@@ -78,6 +78,78 @@ vhosts_asf::vhosts::vhosts:
       # All content served by httpd instance on allura-vm
       ProxyPassMatch ^/(.*)$ https://allura-vm.apache.org:443/$1 retry=0 timeout=60
 
+  archiva-repository:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.http_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://archiva-repository.apache.org/$1
+
+  archiva-repository-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.ssl_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://archiva-vm.apache.org/
+      ProxyPassReverse / http://archiva-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=503
+
+  blogs:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'blogs.apache.org.http_access.log'
+    error_log_file: 'blogs.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://blogs.apache.org/
+
+  blogs-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'blogs.apache.org.ssl_access.log'
+    error_log_file: 'blogs.apache.org.error.log'
+    custom_fragment: |
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+      Proxypass / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org:8443/
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=503
+
   comments:
     vhost_name: '*'
     ensure: 'present'
@@ -130,6 +202,108 @@ vhosts_asf::vhosts::vhosts:
           ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
         </Location>
       </IfDefine>
+
+  demo-old-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-old-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:18080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+
+  demo-old-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-old-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:28443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:28443/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=503
+
+  demo-stable-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-stable-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:18080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+
+  demo-stable-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-stable-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:18443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:18443/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=503
+
+  demo-trunk-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-trunk-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:8080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:8080/
+
+  demo-trunk-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-trunk-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:8443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:8443/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=503
 
   helpinfrahelpyou:
     vhost_name: '*'
@@ -320,6 +494,47 @@ vhosts_asf::vhosts::vhosts:
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
+  pad:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'pad.apache.org.http_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://pad.apache.org/
+
+  pad-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'pad.apache.org.ssl_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      <Location />
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location>
+
+      ProxyPass / http://whimsy-vm.apache.org:9001/
+      ProxyPassReverse / http://whimsy-vm.apache.org:9001/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=503
+
   paste:
     vhost_name: '*'
     ensure: 'present'
@@ -370,6 +585,60 @@ vhosts_asf::vhosts::vhosts:
         RequestHeader unset Authorization
         ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
       </Location>
+
+  projects:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'projects.apache.org'
+    serveraliaises:
+      - 'projects-new.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'projects.apache.org.http_access.log'
+    error_log_file: 'projects.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  projects-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'projects.apache.org'
+    serveraliases:
+      - 'projects-new.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'projects.apache.org.ssl_access.log'
+    error_log_file: 'projects.apache.org.error.log'
+    custom_fragment: |
+      <Location /edit>
+        AuthType Basic
+        AuthName "ASF Committers"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+        RequestHeader unset Authorization
+      </Location>
+
+      ProxyPass / http://projects-vm.apache.org/
+      ProxyPassReverse / http://projects-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=503
 
   reference:
     vhost_name: '*'
@@ -425,3 +694,125 @@ vhosts_asf::vhosts::vhosts:
 
       </Location>
 
+  reporter:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'reporter.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'reporter.apache.org.http_access.log'
+    error_log_file: 'reporter.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://reporter.apache.org/
+
+  reporter-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'reporter.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'reporter.apache.org.ssl_access.log'
+    error_log_file: 'reporter.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://projects-vm.apache.org/
+      ProxyPassReverse / http://projects-vm.apache.org/
+      ProxyPreserveHost On
+
+      <Location />
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "PMC Members Only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %{PROXY_USER}e
+        RequestHeader unset Authorization
+      </Location>
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=503
+
+  translate:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'translate.apache.org'
+    serveraliases:
+      - 'translate-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'translate.apache.org.http_access.log'
+    error_log_file: 'translate.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://translate.apache.org/
+
+  translate-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'translate.apache.org'
+    serveraliases:
+      - 'translate-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'translate.apache.org.ssl_access.log'
+    error_log_file: 'translate.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://translate-vm2.apache.org/
+      ProxypassReverse / http://translate-vm2.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=503
+
+  whimsy:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy.apache.org.http_access.log'
+    error_log_file: 'whimsy.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  whimsy-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy.apache.org.ssl_access.log'
+    error_log_file: 'whimsy.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://whimsy-vm.apache.org/
+      ProxypassReverse / http://whimsy-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=503
