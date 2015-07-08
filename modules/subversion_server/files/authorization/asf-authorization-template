@@ -680,6 +680,9 @@ ea = rw
 [/commons]
 @committers = rw
 
+[/commons/proper/scxml]
+* = r # moving to git
+
 # archive area for components that have been moved to Git
 # must remain read-only except as needed to move components
 [/commons/_moved_to_git]
