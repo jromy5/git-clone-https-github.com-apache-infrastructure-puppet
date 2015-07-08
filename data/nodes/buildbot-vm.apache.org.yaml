@@ -5,7 +5,6 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
-  - cwiki_asf
   - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
