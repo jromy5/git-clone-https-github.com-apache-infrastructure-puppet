@@ -46,7 +46,7 @@ vhosts_asf::vhosts::vhosts:
      serveraliases:
        - 'ci.apache.org'
      port: 443
-     docroot: '/var/www'
+     docroot: '/var/www/html'
      access_log_file: 'ci.apache.org.access.log'
      error_log_file: 'ci.apache.org.error.log'
      ssl: true
