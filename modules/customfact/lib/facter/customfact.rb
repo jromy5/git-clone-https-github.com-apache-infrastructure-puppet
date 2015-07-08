@@ -32,7 +32,7 @@ Facter.add("asfcolo") do
     if hostname.include? "us-mid"
       "rax-vpc-us-mid"
     elsif hostname.include? "ubuntu1464"
-      "yahoo"
+      "vagrant"
     else
       ipadd = Facter.value('ipaddress_primary')
       case ipadd

@@ -7,7 +7,9 @@ class subversion_server (
 
 ) {
 
-#packages needed 
+  require ldapclient
+
+  # packages needed 
   package { $packages:
     ensure => installed,
   }
