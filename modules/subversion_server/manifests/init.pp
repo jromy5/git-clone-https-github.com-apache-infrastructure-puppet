@@ -11,9 +11,7 @@ class subversion_server (
 
 ) {
 
-  require customfact
   require ldapclient
-  require pam
 
   # packages needed 
   package { $packages:
