@@ -489,6 +489,16 @@ class subversion_server (
       command  => '/usr/local/bin/svn_sync_to_aws_s3.sh';
   }
 
+  # s3 backup
+  file {
+    '/root/.s3cfg':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700',
+      content => template('subversion_server/s3cfg.erb'),
+  }
+
   host { 'svn-master.apache.org':
     ip           => $ipaddress,
     host_aliases => $fqdn,
