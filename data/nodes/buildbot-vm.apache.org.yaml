@@ -1,3 +1,68 @@
 ---
 classes:
   - ssl::name::wildcard_apache_org
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - cwiki_asf
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+vhosts_asf::vhosts::vhosts:
+  buildbot-vm-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'buildbot-vm.apache.org'
+    serveraliases:
+      - 'ci.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www/html'
+    access_log_file: 'ci.apache.org.access.log'
+    error_log_file: 'ci.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://ci.apache.org/$1
+
+  buildbot-vm-443:
+     vhost_name: '*'
+     default_vhost: true
+     serveradmin: 'infrastructure@apache.org'
+     servername: 'buildbot-vm.apache.org'
+     serveraliases:
+       - 'ci.apache.org'
+     port: 443
+     docroot: '/var/www'
+     access_log_file: 'ci.apache.org.access.log'
+     error_log_file: 'ci.apache.org.error.log'
+     ssl: true
+     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+     custom_fragment: |
+       RewriteEngine On
+       ProxyRequests Off
+       ProxyPreserveHost On
+
+       <Proxy *>
+         Order deny,allow
+         Allow from all
+       </Proxy>
+
+       ProxyPass / http://127.0.0.1:8080/
+       ProxyPassReverse / http://127.0.0.1:8080/
