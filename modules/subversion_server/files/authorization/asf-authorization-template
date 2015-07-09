@@ -135,6 +135,7 @@ continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
 corinthia=dortef,franz,gbg,ianc,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
+cotton=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
 creadur={ldap:cn=creadur,ou=groups,dc=apache,dc=org}
@@ -295,7 +296,6 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-mysos=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
 nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee,danbress,bbende
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
@@ -946,6 +946,9 @@ ea = rw
 [/incubator/corinthia]
 @corinthia = rw
 
+[/incubator/cotton]
+@cotton = rw
+
 [/incubator/datafu]
 @datafu = rw
 
@@ -1005,9 +1008,6 @@ ea = rw
 
 [/incubator/mrql]
 @mrql= rw
-
-[/incubator/mysos]
-@mysos = rw
 
 [/incubator/nifi/site]
 @nifi = rw
