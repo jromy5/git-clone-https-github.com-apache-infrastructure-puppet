@@ -587,6 +587,11 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/axis]
 @axis = rw
 
+# Temporary. Remove when Attic PMC perms removed. 
+[/axis/site]
+@axis = rw
+@attic-pmc = rw
+
 [/beehive]
 * = r
 
