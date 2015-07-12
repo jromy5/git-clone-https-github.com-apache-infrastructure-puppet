@@ -1211,6 +1211,7 @@ ea = rw
 @lenya = rw
 @cocoon = rw
 @forrest = rw
+@attic-pmc = rw
 
 [/lenya/sandbox]
 @lenya = rw
