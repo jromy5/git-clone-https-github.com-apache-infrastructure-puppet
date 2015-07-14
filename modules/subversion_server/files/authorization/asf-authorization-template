@@ -254,10 +254,6 @@ kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
 labs-pmc={reuse:pit-authorization:labs-pmc}
 lens=amareshwari,arshadmatin,cdouglas,gunther,himanshugahlaut,jbonofre,jdhok,jghoman,prongs,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
-lenya={ldap:cn=lenya,ou=groups,dc=apache,dc=org}
-lenya-pmc={reuse:pit-authorization:lenya-pmc}
-#Lenya summer of code group
-lenya-soc=soc-xzw
 libcloud={ldap:cn=libcloud,ou=groups,dc=apache,dc=org}
 libcloud-pmc={reuse:pit-authorization:libcloud-pmc}
 logging-pmc={reuse:pit-authorization:logging-pmc}

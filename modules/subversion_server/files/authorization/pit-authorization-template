@@ -172,8 +172,6 @@ knox-pmc={ldap:cn=knox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 kafka={reuse:asf-authorization:kafka}
 kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 labs-pmc={ldap:cn=labs,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-lenya={reuse:asf-authorization:lenya}
-lenya-pmc={ldap:cn=lenya,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 libcloud={reuse:asf-authorization:libcloud}
 libcloud-pmc={ldap:cn=libcloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 logging={reuse:asf-authorization:logging}
@@ -948,9 +946,6 @@ openejb-tck = r
 
 [/pmc/juddi]
 @juddi-pmc = rw
-
-[/pmc/lenya]
-@lenya = rw
 
 [/pmc/libcloud]
 @libcloud-pmc = rw
