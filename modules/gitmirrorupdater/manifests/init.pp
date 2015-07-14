@@ -6,6 +6,8 @@ class gitmirrorupdater (
   file {
     [ '/usr/local/etc/svn2gitupdate' ]:
       ensure => 'directory',
+      owner  => 'git',
+      group  => 'git',
   }
 
   file {
@@ -24,7 +26,7 @@ class gitmirrorupdater (
     site             => 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate', # lint:ignore:80chars
     cwd              => '/usr/local/etc/svn2gitupdate',
     require_resource => File['/usr/local/etc/svn2gitupdate'],
-    user             => 'root',
+    user             => 'git',
   }
 
   # Restart daemon if settings change
@@ -41,5 +43,6 @@ class gitmirrorupdater (
       path        => '/usr/bin/:/bin/',
       cwd         => '/usr/local/etc/svn2gitupdate',
       command     => 'python /usr/local/etc/svn2gitupdate/svn2gitupdate.py restart', # lint:ignore:80chars
+      user        => 'git',
   }
 }
