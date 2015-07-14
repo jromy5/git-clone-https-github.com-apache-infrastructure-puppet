@@ -1625,6 +1625,20 @@ vhosts_asf::vhosts::vhosts:
       RewriteOptions inherit
       Use BlockSvn
 
+  projectgeode:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.projectgeode.org'
+    docroot: '/var/www/geode.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'projectgeode.org'
+    serveradmin: 'infrastructure@apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://geode.incubator.apache.org/
+
   qi4j:
     vhost_name: '*'
     port: 80
