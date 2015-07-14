@@ -669,7 +669,6 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/cocoon]
 @cocoon = rw
-@lenya = rw
 
 [/comdev]
 @comdev= rw
@@ -847,7 +846,6 @@ sebb = rw
 [/forrest]
 @forrest = rw
 @cocoon = rw
-@lenya = rw
 
 [/geronimo]
 @geronimo = rw
@@ -1212,17 +1210,7 @@ ea = rw
 @committers  = rw
 
 [/lenya]
-@lenya = rw
-@cocoon = rw
-@forrest = rw
 @attic-pmc = rw
-
-[/lenya/sandbox]
-@lenya = rw
-@cocoon = rw
-@forrest = rw
-@lenya-soc = rw
-
 
 [/libcloud]
 * = r 
@@ -1744,7 +1732,6 @@ svn-role = rw
 # @xml-pmc = rw
 @cocoon = rw
 @forrest = rw
-@lenya = rw
 @xalan = rw
 @xerces = rw
 @xerces-j = rw
@@ -1759,7 +1746,6 @@ svn-role = rw
 # @xml-pmc = rw
 @cocoon = rw
 @forrest = rw
-@lenya = rw
 @xalan = rw
 @xerces = rw
 @xerces-j = rw
