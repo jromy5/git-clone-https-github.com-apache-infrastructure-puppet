@@ -503,8 +503,8 @@ class subversion_server (
   }
 
   host { 'svn-master.apache.org':
-    ip           => $ipaddress,
-    host_aliases => $fqdn,
+    ip           => $::ipaddress,
+    host_aliases => $::fqdn,
   }
 
 }
