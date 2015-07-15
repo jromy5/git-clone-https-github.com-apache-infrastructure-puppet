@@ -20,12 +20,12 @@ class subversion_server (
   # File block to deploy fodlers, scripts etc
   file {
     '/x1':
-      ensure => present,
+      ensure => directory,
       owner  => 'www-data',
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn':
-      ensure => present,
+      ensure => directory,
       owner  => 'www-data',
       group  => 'svnadmins',
       mode   => '0775';
