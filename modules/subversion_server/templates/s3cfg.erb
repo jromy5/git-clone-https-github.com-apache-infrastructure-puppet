@@ -1,5 +1,5 @@
 [default]
-access_key = <%= scope['subversion_server::s3_access_key'] %>
+access_key = <%= @s3_access_key %>
 bucket_location = US
 cloudfront_host = cloudfront.amazonaws.com
 default_mime_type = binary/octet-stream
