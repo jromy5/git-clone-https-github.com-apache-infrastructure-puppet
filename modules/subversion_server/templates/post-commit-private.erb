@@ -26,10 +26,10 @@
 # On a Windows system, you should name the hook program
 # `post-commit.bat' or `post-commit.exe',
 # but the basic idea is the same.
-#
+# 
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
-#
+# 
 SVN=/usr/bin/svn
 SVNLOOK=/usr/bin/svnlook
 SVNADMIN=/usr/bin/svnadmin
@@ -37,11 +37,8 @@ SVNSYNC=/usr/bin/svnsync
 SUDO=/usr/local/bin/sudo
 MAILER=/usr/bin/svn-mailer
 SETLOCK=/root/bin/setlock.pl
-MASTER_HOSTNAME=hades.apache.org
+MASTER_HOSTNAME=<%= @svn_master_hostname %>
 HOSTNAME=`/bin/hostname`
-BUILDBOT=/x1/svn/hooks/svn_buildbot.py
-BUILDBOT_PROJECT_PATHS=/x1/svn/hooks/buildbot_project_paths
-PUBSUB=/opt/svnpubsub/commit-hook.py
 
 #
 REPOS="$1"
@@ -53,36 +50,14 @@ then
     # Deltify predecessors of things changed in this revision.
     #nice -2 $SVNADMIN deltify "$REPOS" -r "$REV" &
     #$SVNADMIN deltify "$REPOS" -r "$REV"
-    backup_dir=/x1/svn/infra-backups.d/infra.$shard
+    backup_dir=/x1/svn/private-backups.d/private.$shard
     [ -d $backup_dir ] || mkdir $backup_dir
-    $SVNADMIN dump --incremental -r "$REV" "$REPOS" | gzip > $backup_dir/infra.$REV.gz &
+    $SVNADMIN dump --incremental -r "$REV" "$REPOS" | gzip > $backup_dir/private.$REV.gz &
 
     # Send the commit mail
     $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
-        2>>/var/log/svnmailer/errors/infra-mailer-stderr &
+	2>>/var/log/svnmailer/errors/private-mailer-stderr &
 
     # Sync the mirrors!
-    $SETLOCK /var/tmp/infrasync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/infra-proxy-sync 2>>/var/log/svninfrasynclog &
+    $SETLOCK /var/tmp/privatesync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/private-proxy-sync 2>>/var/log/svnprivatesynclog &
 fi
-
-# Trigger the SVN authz file to be rebuilt if the template file is modified
-$SVNLOOK dirs-changed -r "$REV" "$REPOS" | grep -q "^infrastructure/trunk/subversion/authorization" \
- && $SVN up /x1/svn/config/authorization \
- && /x1/svn/scripts/authorization/gen_asf-authorization_on_template_commit.pl > /dev/null
-
-
-#
-if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ] 
-then
-    export PYTHON_EGG_CACHE="/var/tmp/nobody_egg_cache"
-    LC_ALL=en_US.UTF-8 $PUBSUB "$REPOS" "$REV" >>/var/log/svn_pubsub.log 2>&1 &
-fi
-
-# BuildBot Specific
-
-if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ] 
-then
-    $SVNLOOK dirs-changed -r "$REV" "$REPOS" | egrep -qf "$BUILDBOT_PROJECT_PATHS" && ( $BUILDBOT --repository "$REPOS" --revision "$REV" --bbserver ci.apache.org --bbport 9989 --project-paths "$BUILDBOT_PROJECT_PATHS" >>/var/log/svn_buildbot.log 2>&1 & )
-fi
-exit 0;
-

@@ -7,6 +7,7 @@ class subversion_server (
   $s3_access_key        = '',
   $s3_gpg_passphrase    = '',
   $s3_secret_key        = '',
+  $svn_master_hostname  = 'svn-master.apache.org',
 
 ) {
 
@@ -17,7 +18,7 @@ class subversion_server (
     ensure => installed,
   }
 
-  # File block to deploy fodlers, scripts etc
+  # File block to deploy folders, scripts etc
   file {
     '/x1':
       ensure => directory,
@@ -36,21 +37,21 @@ class subversion_server (
       mode   => '0775',
       source => 'puppet:///modules/subversion_server/viewvc/conf/viewvc.conf';
     '/etc/viewvc/templates':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
       mode    => '0775',
       source  => 'puppet:///modules/subversion_server/viewvc/templates';
     '/x1/svn/hooks':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
       mode    => '0775',
       source  => 'puppet:///modules/subversion_server/hooks';
     '/x1/svn/scripts':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
@@ -62,7 +63,7 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/authorization/templates':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
@@ -102,6 +103,58 @@ class subversion_server (
       target => '/usr/lib/viewvc/cgi-bin/viewvc.cgi',
       owner  => 'www-data',
       group  => 'svnadmins';
+  }
+
+  # file block for templated hooks
+  file {
+    '/x1/svn/hooks/post-commit-dist':
+      content => template('subversion_server/post-commit-dist.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-tck':
+      content => template('subversion_server/post-commit-tck.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-infra':
+      content => template('subversion_server/post-commit-infra.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-private':
+      content => template('subversion_server/post-commit-private.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit':
+      content => template('subversion_server/post-commit.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-revprop-change':
+      content => template('subversion_server/post-revprop-change.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/pre-revprop-change':
+      content => template('subversion_server/pre-revprop-change.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-revprop-change-dist':
+      content => template('subversion_server/post-revprop-change-dist.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'],
   }
 
   # File block to setup the plethora of symlinks needed
