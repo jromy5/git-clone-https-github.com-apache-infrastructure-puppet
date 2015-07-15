@@ -105,6 +105,7 @@ class subversion_server (
       group  => 'svnadmins';
   }
 
+<<<<<<< HEAD
   # file block for repo skeletons
   file {
     '/x1/svn/repos':
