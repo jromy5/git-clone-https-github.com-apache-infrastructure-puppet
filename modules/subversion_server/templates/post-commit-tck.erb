@@ -26,38 +26,28 @@
 # On a Windows system, you should name the hook program
 # `post-commit.bat' or `post-commit.exe',
 # but the basic idea is the same.
-#  
+# 
 # Here is an example hook script, for a Unix /bin/sh interpreter:
 
-# 
-SVN=/usr/bin/svn
-SVNLOOK=/usr/bin/svnlook
-SVNADMIN=/usr/bin/svnadmin
+SVNSYNC=/usr/bin/svnsync
+SUDO=/usr/local/bin/sudo
 MAILER=/usr/bin/svn-mailer
-PUBSUB=/opt/svnpubsub/commit-hook.py
-MASTER_HOSTNAME=hades.apache.org
+SETLOCK=/root/bin/setlock.pl
+MASTER_HOSTNAME=<%= @svn_master_hostname %>
 HOSTNAME=`/bin/hostname`
 
 REPOS="$1"
 REV="$2"
 
-# Deltify predecessors of things changed in this revision.
-#nice -2 $SVNADMIN deltify "$REPOS" -r "$REV" &
-#$SVNADMIN deltify "$REPOS" -r "$REV"
-$SVNADMIN dump --incremental -r "$REV" "$REPOS" > /x1/svn/hot-backups/dist.$REV 2>>/var/log/svndump
-
-# check if the hook is running on the master svn
-if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ] 
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
 then
-    # Send the commit mail
-    $MAILER --commit --config=/x1/svn/asf-mailer-dist.conf --repository=$REPOS --revision=$REV \
-        2>>/var/log/svnmailer/errors/mailer-stderr &
-fi
 
-#
-if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ] 
-then
-    export PYTHON_EGG_CACHE="/var/tmp/daemon_egg_cache"
-    $PUBSUB "$REPOS" "$REV" >>/var/log/svn_pubsub.log 2>&1 &
-fi
+    #/usr/local/svn/bin/svnadmin dump --incremental -r "$REV" "$REPOS" > /x1/svn/backups/tck/tck.$REV
 
+    # send the commit mail
+    $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
+        2>>/var/log/svnmailer/errors/tck-mailer-stderr &
+
+    # sync the mirrors!
+    $SETLOCK /var/tmp/tcksync.lock $SVNSYNC sync --disable-locking --source-username=asf-sync-process --sync-username=asf-sync-process https://harmonia-2012.apache.org/repos/tck-proxy-sync 2>>/var/log/svntcksynclog &
+fi

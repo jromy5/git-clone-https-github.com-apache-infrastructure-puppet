@@ -42,7 +42,7 @@ SETLOCK=/root/bin/setlock.pl
 BUILDBOT=/x1/svn/hooks/svn_buildbot.py
 PUBSUB=/opt/svnpubsub/commit-hook.py
 BUILDBOT_PROJECT_PATHS=/x1/svn/hooks/buildbot_project_paths
-MASTER_HOSTNAME=hades.apache.org
+MASTER_HOSTNAME=<%= @svn_master_hostname %>
 HOSTNAME=`/bin/hostname`
 
 #
