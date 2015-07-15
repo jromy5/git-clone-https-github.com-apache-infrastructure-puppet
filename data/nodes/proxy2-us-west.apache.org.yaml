@@ -599,7 +599,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'projects.apache.org.error.log'
     custom_fragment: |
       RewriteEngine On
-      RewriteCond %{HTTP_HOST} ^(.*)$
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
       RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
 
   projects-ssl:
