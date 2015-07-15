@@ -4,6 +4,9 @@ class subversion_server (
 
   $asf_committers_authz = '',
   $packages             = [],
+  $s3_access_key        = '',
+  $s3_gpg_passphrase    = '',
+  $s3_secret_key        = '',
 
 ) {
 
