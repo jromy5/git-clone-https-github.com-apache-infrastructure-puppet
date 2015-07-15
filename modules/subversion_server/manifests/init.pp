@@ -492,7 +492,7 @@ class subversion_server (
   # s3 backup
   file {
     '/root/.s3cfg':
-      ensure  => present,
+      ensure  => file,
       owner   => 'root',
       group   => 'root',
       mode    => '0700',
