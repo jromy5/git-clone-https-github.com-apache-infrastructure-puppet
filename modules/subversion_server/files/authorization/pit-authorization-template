@@ -334,8 +334,6 @@ velocity-pmc={ldap:cn=velocity,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 vxquery={reuse:asf-authorization:vxquery}
 vxquery-pmc={ldap:cn=vxquery,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wave={reuse:asf-authorization:wave}
-whirr={reuse:asf-authorization:whirr}
-whirr-pmc={ldap:cn=whirr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wicket={reuse:asf-authorization:wicket}
 wicket-pmc={ldap:cn=wicket,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wink={reuse:asf-authorization:wink}

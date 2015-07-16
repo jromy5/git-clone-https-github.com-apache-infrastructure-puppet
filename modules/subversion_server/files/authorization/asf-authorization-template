@@ -446,8 +446,6 @@ velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=groups,dc=apache,dc=org}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
 wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,yurize,zdwang,stenyak,jblossom
-whirr={ldap:cn=whirr,ou=groups,dc=apache,dc=org}
-whirr-pmc={reuse:pit-authorization:whirr-pmc}
 wicket={ldap:cn=wicket,ou=groups,dc=apache,dc=org}
 wicket-pmc={reuse:pit-authorization:wicket-pmc}
 wink={ldap:cn=wink,ou=groups,dc=apache,dc=org}
