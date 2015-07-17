@@ -292,7 +292,8 @@ mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
 mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-nifi=arvind,billie,bimargulies,wikier,drew,brock,apurtell,joewitt,tkurc,jcarey,devriesb,mcgilman,markap14,taftster,aldrin,jbarnabee,danbress,bbende
+nifi={ldap:cn=nifi,ou=groups,dc=apache,dc=org}
+nifi-pmc={reuse:pit-authorization:nifi-pmc}
 nutch={ldap:cn=nutch,ou=groups,dc=apache,dc=org}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
 nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
@@ -1013,9 +1014,6 @@ sebb = rw
 [/incubator/mrql]
 @mrql= rw
 
-[/incubator/nifi/site]
-@nifi = rw
-
 [/incubator/nmaven]
 * = r
 
@@ -1378,6 +1376,9 @@ ea = rw
 
 [/myfaces]
 @myfaces = rw
+
+[/nifi]
+@nifi = rw
 
 [/nutch]
 @nutch = rw

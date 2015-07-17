@@ -204,6 +204,7 @@ mrunit-pmc={ldap:cn=mrunit,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 myfaces={reuse:asf-authorization:myfaces}
 myfaces-pmc={ldap:cn=myfaces,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 nifi={reuse:asf-authorization:nifi}
+nifi-pmc={ldap:cn=nifi,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 nutch={reuse:asf-authorization:nutch}
 nutch-pmc={ldap:cn=nutch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 nuvem={reuse:asf-authorization:nuvem}
@@ -1274,7 +1275,7 @@ buildbot = rw
 @myfaces = rw
 
 [/websites/production/nifi]
-@incubator = rw
+@nifi = rw
 
 [/websites/production/nutch]
 @nutch = rw
