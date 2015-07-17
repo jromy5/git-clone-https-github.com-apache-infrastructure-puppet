@@ -524,6 +524,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/allura]
 @allura = rw
 
+[/allura/site]
+* = r
+
 [/ambari]
 @ambari = rw
 
