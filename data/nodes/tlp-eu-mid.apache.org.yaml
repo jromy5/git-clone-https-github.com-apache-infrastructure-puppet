@@ -17,6 +17,7 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
+  - datadog_agent::integrations::apache
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
@@ -69,6 +70,10 @@ apmirror::groups:
   - 'apbackup'
 apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
+
+
+datadog_agent::integrations::apache::url: 'https://tlp-eu-mid.apache.org/server-status'
+
 
 ldapclient::ldapservers: 'ldaps://ldap1-eu-central.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
 
