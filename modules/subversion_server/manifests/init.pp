@@ -11,7 +11,10 @@ class subversion_server (
 
 ) {
 
+  require customfact
   require ldapclient
+  require ldapclient::install::ubuntu::1404
+  require pam
 
   # packages needed 
   package { $packages:
@@ -104,6 +107,71 @@ class subversion_server (
       owner  => 'www-data',
       group  => 'svnadmins';
   }
+
+  # file block for repo skeletons
+  file {
+    '/x1/svn/repos':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn'];
+    '/x1/svn/repos/asf':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/asf/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/dist':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/dist/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/infra':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/infra/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/private':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/private/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/tck':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/tck/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+  }      
 
   # file block for templated hooks
   file {

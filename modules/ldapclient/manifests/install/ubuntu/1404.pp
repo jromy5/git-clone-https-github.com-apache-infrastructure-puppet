@@ -12,18 +12,23 @@ class ldapclient::install::ubuntu::1404 (
 ) {
 
   file {
-    '/etc/ldap.conf':
+    '/etc/ldap/ldap.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
       content => template('ldapclient/ldap.conf.erb');
     '/etc/nslcd.conf':
       content => template('ldapclient/nslcd.conf.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0640',
+      require => File['/etc/ldap.conf'],
       notify  => Service[nslcd];
-    '/etc/ldap/ldap.conf':
+    '/etc/ldap.conf':
       ensure  => link,
-      target  => '/etc/ldap.conf',
-      require => File['/etc/ldap.conf'];
+      target  => '/etc/ldap/ldap.conf',
+      require => File['/etc/ldap/ldap.conf'];
     '/etc/nss-ldapd.conf':
       ensure  => link,
       target  => '/etc/ldap.conf',
@@ -42,6 +47,10 @@ class ldapclient::install::ubuntu::1404 (
       content => $ldapcert,
       require => File['/etc/ldap/cacerts'];
   }
+  
+    service { 'nscd':
+      ensure => 'stopped',
+    }
 
     service { 'nslcd':
         ensure     => 'running',
