@@ -22,7 +22,7 @@ mod 'concat-native',
   :tag => '1.4.0'
 
 
-mod 'datadog',
+mod 'datadog_agent',
   :git => 'https://github.com/DataDog/puppet-datadog-agent'
 
 
