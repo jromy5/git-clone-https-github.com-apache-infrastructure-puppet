@@ -27,6 +27,8 @@ apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
 
+datadog_agent::integrations::http_check::url: 'https://git.apache.org'
+
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
 vhosts_asf::vhosts::vhosts:
