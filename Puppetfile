@@ -22,6 +22,10 @@ mod 'concat-native',
   :tag => '1.4.0'
 
 
+mod 'datadog',
+  :git => 'https://github.com/DataDog/puppet-datadog-agent'
+
+
 mod 'dell',
   :git => 'https://github.com/camptocamp/puppet-dell.git',
   :tag => '0.2.0'
