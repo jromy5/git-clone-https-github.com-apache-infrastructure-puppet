@@ -2,7 +2,6 @@
 classes:
   - amanda::client
   - apache
-  - datadog_agent
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
   - ulimit_asf
@@ -27,8 +26,6 @@ apache::mod::event::threadlimit: '250'
 apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
-
-datadog_agent::api_key: '266e72c3827601121d282c1c880ca5d6'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 

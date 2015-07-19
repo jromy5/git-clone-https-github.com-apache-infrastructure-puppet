@@ -4,6 +4,7 @@ classes:
   - apt::unattended_upgrades
   - apt::update
   - base
+  - datadog_agent
   - dnsclient
   - fail2ban_asf::config
   - orthrus
