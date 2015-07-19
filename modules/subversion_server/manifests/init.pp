@@ -11,7 +11,10 @@ class subversion_server (
 
 ) {
 
+  require customfact
   require ldapclient
+  require ldapclient::install::ubuntu::1404
+  require pam
 
   # packages needed 
   package { $packages:
@@ -105,7 +108,6 @@ class subversion_server (
       group  => 'svnadmins';
   }
 
-<<<<<<< HEAD
   # file block for repo skeletons
   file {
     '/x1/svn/repos':
