@@ -104,6 +104,8 @@ snmp::snmpd_config:
   - 'includeAllDisks 10%'
   - 'perl do "/root/bin/zpool.pl"'
 
+subversion_server::svn_master_hostname: 'svn01-us-west.apache.org'
+
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
 subversion_server::board_reminders::packages:
   - libdate-manip-perl
