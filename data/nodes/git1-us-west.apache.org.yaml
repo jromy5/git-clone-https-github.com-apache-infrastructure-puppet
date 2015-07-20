@@ -2,6 +2,7 @@
 classes:
   - amanda::client
   - apache
+  - datadog_agent::integrations::http_check
   - gitserver_asf
   - rootbin_asf
   - ssl::name::wildcard_apache_org
@@ -26,6 +27,9 @@ apache::docroot_owner:      'git'
 
 apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
+
+
+datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf"
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>

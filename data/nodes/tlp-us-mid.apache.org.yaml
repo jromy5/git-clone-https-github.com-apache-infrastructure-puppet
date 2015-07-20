@@ -17,6 +17,8 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
+  - datadog_agent::integrations::apache
+  - datadog_agent::integrations::http_check
   - httpd_modules::mod_asf_mirrorcgi
   - rootbin_asf
   - rsync
@@ -69,6 +71,10 @@ apmirror::groups:
   - 'apbackup'
 apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
+
+datadog_agent::integrations::http_check::url: 'https://tlp-mid-us.apache.org/server-status'
+datadog_agent::integrations::apache::url: 'https://tlp-mid-us.apache.org/server-status'
+datadog_agent::integrations::apache::url: 'https://eos.apache.org/server-status'
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
