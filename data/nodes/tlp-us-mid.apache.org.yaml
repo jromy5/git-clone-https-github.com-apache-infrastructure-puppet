@@ -74,7 +74,7 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
 datadog_agent::integrations::http_check::url: 'https://tlp-mid-us.apache.org/server-status'
 datadog_agent::integrations::apache::url: 'https://tlp-mid-us.apache.org/server-status'
-
+datadog_agent::integrations::apache::url: 'https://eos.apache.org/server-status'
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
