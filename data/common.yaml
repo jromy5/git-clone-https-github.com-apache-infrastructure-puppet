@@ -184,7 +184,7 @@ ldapserver::keyfile: '/etc/ldap/cacerts/ldap-wildcard-cert.key'
 
 mail_relay::mail_ldap_servers: 'ldaps://ldap1-us-west.apache.org ldaps://ldap2-us-west.apache.org'
 
-ntp::diable_monitor: true
+ntp::disable_monitor: true
 ntp::servers:
   - 0.freebsd.pool.ntp.org
   - 1.freebsd.pool.ntp.org
