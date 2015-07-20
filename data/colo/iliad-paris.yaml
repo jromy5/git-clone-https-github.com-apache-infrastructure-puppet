@@ -1,0 +1,8 @@
+---
+
+dnsclient::nameservers:
+  - '8.8.8.8'
+  - '8.8.4.4'
+
+ldapclient::ldapservers: 'ldaps://ldap1-eu-central.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+
