@@ -28,3 +28,8 @@ tls_reqcert never
 
 # The search scope.
 scope sub
+
+# search filter to effect host attr lookup
+pam_authz_search (&(!(asf-banned=yes))(objectClass=posixAccount)(uid=$username)(|(host=$hostname)(host=$fqdn)(host=\\*)))
+
+
