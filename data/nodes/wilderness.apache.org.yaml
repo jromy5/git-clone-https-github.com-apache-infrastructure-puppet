@@ -5,7 +5,6 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - gitpubsub
-  - ldapclient
   - svnwcsub
   - svngit2jira
   

@@ -12,7 +12,6 @@ classes:
   - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
-  - ldapclient
   - perl
   - rootbin_asf
   - ssl::name::wildcard_apache_org

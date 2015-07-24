@@ -13,6 +13,7 @@ classes:
   - collectd::plugin::interface
   - collectd::plugin::write_http
   - customfact
+  - ldapclient
   - ntp
   - pam
   - puppet_asf
