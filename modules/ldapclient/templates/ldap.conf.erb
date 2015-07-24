@@ -60,6 +60,8 @@ bind_policy soft
 
 ## Check if the account has been banned. If so the filter will prevent them
 ## from being listed as a valid POSIX account.
+
+# doesn't work with libpam-ldap* on ubuntu, use pam_authz_search in nslcd.conf
 pam_filter !(asf-banned=yes)
 
 
@@ -78,6 +80,7 @@ pam_login_attribute uid
 # then the user will not be allowed to login.
 
 <% if @pamhostcheck %>
+# doesn't work with libpam-ldap* on ubuntu, use pam_authz_search in nslcd.conf
 pam_check_host_attr <%= @pamhostcheck %>
 <% else %>
 #pam_check_host_attr
