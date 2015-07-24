@@ -138,7 +138,6 @@ ldapclient::ldapclient_packages:
 ldapclient::ldapclient_remove_packages: 
     - nscd
     - libnss-ldap
-    - libpam-ldap
 
 ldapserver::install::ubuntu::1404::packages:
   - slapd
