@@ -23,6 +23,22 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+# buildbot_asf class variables.
+buildbot_asf::buildbot_base_dir: '.'
+buildbot_asf::buildmaster_work_dir: 'master1'
+buildbot_asf::connector_port: '8080'
+buildbot_asf::slave_port_num: '9989'
+buildbot_asf::mail_from_addr: 'buildbot@apache.org'
+buildbot_asf::projectName: 'ASF Buildbot'
+buildbot_asf::project_url: 'https://ci.apache.org/'
+buildbot_asf::change_horizon: '200'
+buildbot_asf::build_horizon: '100'
+buildbot_asf::event_horizon: '50'
+buildbot_asf::log_horizon: '40'
+buildbot_asf::build_cache_size: '50'
+buildbot_asf::change_cache_size: '10000'
+buildbot_asf::projects_path: '/x1/buildmaster/master1/projects'
+
 vhosts_asf::vhosts::vhosts:
   buildbot-vm-80:
     vhost_name: '*'
