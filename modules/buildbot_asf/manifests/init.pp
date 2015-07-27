@@ -14,10 +14,28 @@ class buildbot_asf (
   $username                      = 'buildmaster',
 
   # override below in yaml
+$buildbot_base_dir               = ''
+$buildmaster_work_dir            = ''
+$connector_port                  = ''
+$slave_port_num                  = ''
+$mail_from_addr                  = ''
+$projectName                     = ''
+$project_url                     = ''
+$change_horizon                  = ''
+$build_horizon                   = ''
+$event_horizon                   = ''
+$log_horizon                     = ''
+$build_cache_size                = ''
+$change_cache_size               = ''
+$projects_path                   = ''    
 
   # below are contained in eyaml
 
- $required_packages             =[ 'python-mysqldb' 'buildbot' ],
+$db_url                          = ''
+$pbchangesource_user             = ''
+$pchangesource_pass              = ''
+
+ $required_packages              =[ 'python-mysqldb' 'buildbot' ],
 ){
 
 # install required packages:
