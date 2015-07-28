@@ -126,7 +126,7 @@ mod 'postfix',
 
 mod 'postgresql',
   :git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
-  :tag => '4.0.0'
+  :tag => '4.4.2'
 
 
 mod 'puppi',
