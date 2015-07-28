@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License. 
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="compressed.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="style.css" type="text/css" media="screen, projection"/>
+        <!--[if IE]><link rel="stylesheet" href="../style/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+    <title>Build Services - The Apache Software Foundation</title>
+  
+ </head>
+ <body id="sub">
+        <div class="navigation">
+                <ul>
+                        <li><a href="../" title="Build Services Home">Home</a></li>
+                        <li><a href="https://builds.apache.org/" title="Jenkins">Jenkins</a></li>
+                        <li><a href="http://continuum-ci.apache.org" title="Continuum">Continuum</a></li>
+                        <li><a href="../buildbot.html" title="Buildbot">Buildbot</a></li>
+                        <li><a href="http://vmgump.apache.org" title="Gump">Gump</a></li>
+                        <li><a href="https://blogs.apache.org/foundation/" title="Foundation Blog">ASF Blog</a></li>
+                        <li><a href="https://blogs.apache.org/" title="Project Blogs">Project Blogs</a></li>
+                </ul>
+        </div>
+        <div class="container">
+        <hr class="space col"/>
+        <div class="block">
+                <div class="column span-24">
+      <div id="header">
+                          <!-- Add 'default' header section here. -->
+                                <h1>Build Services</h1>
+                         </div>
+      </div>
+        </div>
+        <hr/>
+        <div class="block">
+                <div class="column span-8 prepend-16 search searchsub">
+                        <form action="https://www.google.com/search" method="get">
+                         <input value="*.apache.org" name="sitesearch" type="hidden"/>
+                         <input size="10" name="q" id="query" type="text"/>
+                         <input name="Search" value="Go" type="submit"/>
+               </form>
+                </div>
+        </div>
+        <div class="block content">
+                <div class="column span-15 colborder">
+
+<div class="section-content">
+<ul>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#buildbot">Buildbot</a></li>
+      <li><a href="#continuum">Continuum</a></li>
+      <li><a href="#gump">Gump</a></li>
+      <li><a href="#jenkins">Jenkins</a></li>
+      <li><a href="#more">More Information</a></li>
+    </ul>
+</div>
+
+<h4 id="intro">
+   Introduction
+</h4>
+<div class="section-content">
+<p>
+  This page contains information on the various build services that are
+  provided to all <acronym title="Apache Software Foundation">ASF</acronym>
+  projects for continuous integration, builds, testing, snapshots and
+  deployment.
+</p>
+<p>Projects therefore have a choice, you can choose to utilise any or all
+   of the services provided should that make sense. See the
+   <a href="#more">More Information</a> section for how to subscribe to
+   one list that all these services are subscribed to.
+</p>
+<hr />
+</div>
+
+<h4 id="buildbot">
+   Buildbot
+</h4>
+<div class="section-content">
+<p>
+  <a href="http://ci.apache.org/buildbot.html">ci.apache.org/buildbot.html</a>
+</p>
+<p>
+  Buildbot is a python based third party open source software chosen by the
+  infrastructure team to provide extra build services to any Apache project
+  that wants to utilise it.
+</p>
+<p>
+Currently Buildbot is housed on thirteen machines/VMs: <br /><br />
+<ul> <li>aegis: Ubuntu Master (running on a Dell r710 with 24GB RAM)</li>
+     <li>ceres: Ubuntu Slave 1 (Donated by Yahoo!)</li>
+     <li>isis: Ubuntu Slave 2 (Donated by Yahoo!)</li>
+     <li>bb-vm1: Ubuntu Slave 3 (VM run on a VMware Server)</li>
+     <li>hemera: Ubuntu Slave 4 (Running on a (Donated by) HP Server)</li>
+     <li>bb-2008: Windows 2008 (Standard) Server (VM run on Nyx VMware Server)</li>
+     <li>bb-solaris: Solaris Zone (Zone running on Gaea master server)</li>
+     <li>bb-fbsd: FreeBSD 8 (VM run on a VMware Server)</li>
+     <li>bb-fedora: Fedora Core (VM run on a VMware Server)</li>
+     <li>bb-win7: Windows 7 Ultimate (VM run on Nyx VMware Server)</li>
+     <li>bb-cms: FreeBSD 8 (Jail hosted on baldr) Dedicated to CMS builds only</li>
+     <li>bb-osx-slave: OSX Server Adam (Dedicated OSX XServe donated by Apple)</li>
+     <li>bb-openbsd: OpenBSD 4.9 (VM run on a VMWare Server)</li>
+ </ul>
+ with plans to expand to more platforms.
+ </p>
+ <p>For a detailed list of what Buildbot can do for your project, see the main
+ <a href="http://ci.apache.org/buildbot.html">Buildbot page</a> for more info.</p>
+<hr />
+</div>
+
+<h4 id="continuum">
+   Continuum
+</h4>
+<div class="section-content">
+<p>
+  <a href="http://continuum-ci.apache.org">continuum-ci.apache.org</a>
+</p>
+<p>
+  Apache Continuum is an in-house software project.
+  [more to follow...]
+</p>
+<hr />
+</div>
+
+<h4 id="gump">
+   Gump
+</h4>
+<div class="section-content">
+<p>
+  <a href="http://vmgump.apache.org/">vmgump.apache.org</a>
+</p>
+<p>
+<a href="http://gump.apache.org">Apache Gump</a> is a cross-project continuous integration server. It is different from
+"usual" CI servers in that it expects the individual project builds to succeed;
+its purpose is to check the integration of a project with the latest code rather
+than a fixed version of the project's dependencies. If you want a more traditional
+nightly build server Gump is not for you. Use Gump if you want to know when a
+change in your dependencies breaks your project or when your changes break other
+projects.
+</p>
+
+<p>
+Gump is written in Python and supports several build tools (shell scripts, GNU make,
+Ant, Maven 1.x and 2.x and NAnt) and version control systems (svn, CVS, git, bzr,
+hg, darcs and Perforce). The Apache installation of Gump builds many ASF projects
+and their dependencies. It started in the Java part of the foundation but also
+builds projects like APR, HTTPd and log4net.
+</p>
+<hr />
+</div>
+
+<h4 id="jenkins">
+   Jenkins
+</h4>
+<div class="section-content">
+<p>
+  <a href="https://builds.apache.org/">builds.apache.org</a>
+</p>
+<p>
+  The ASF runs a <a href="http://jenkins-ci.org/">Jenkins</a>
+  continuous-integration server at
+  <a href="https://builds.apache.org/">https://builds.apache.org/</a>.
+  The Jenkins setup consists of a master server running on an Ubuntu machine
+  (Aegis) and several build slave servers, including five Ubuntu slaves, FreeBSD
+  and Windows slaves, two Solaris slaves and an OSX Apple XServe. Thanks go to
+  Apple, Yahoo! and HP for donating some of these slaves!
+</p>
+<p>
+  Any ASF project can run build and test tasks for their projects in Jenkins.
+  See the <a href="http://wiki.apache.org/general/Hudson">wiki page</a>
+  for more information.
+</p>
+<hr />
+</div>
+
+<h4 id="more">
+   More Information
+</h4>
+<div class="section-content">
+<p>
+  There is a mailing list setup to handle everything build related for all
+  of the build service platforms mentioned above. Those involved with
+  projects are encouraged to sign up.
+</p>
+<ul>
+  <li><a href="mailto:builds-subscribe@apache.org">Subscribe</a> to the builds@apache.org mailing list.</li>
+  <li>Browse the <a href="http://mail-archives.apache.org/mod_mbox/www-builds/">Mail Archives</a></li>
+</ul>
+<p>There are admins from all above services signed up to the list and where applicable to
+   them - and in their own volunteer time, will help with your queries.
+</p>
+</div>
+         </div>
+    <div class="column span-8 last">
+      <div class="block">
+        <div class="nav column span-11">
+          <div>
+               <div class="menuheader"><a href="http://projects.apache.org/">Apache Projects</a></div>
+  <ul>
+          <li><a href="http://httpd.apache.org/" title="Apache Web Server (httpd)">HTTP Server</a></li>
+          <li><a href="http://abdera.apache.org/" title="Atom Publishing Protocol Implementation">Abdera</a></li>
+          <li><a href="http://activemq.apache.org/" title="Distributed Messaging System">ActiveMQ</a></li>
+          <li><a href="http://ant.apache.org/" title="Java-based build tool">Ant</a></li>
+          <li><a href="http://apr.apache.org/" title="Apache Portable Runtime libraries">APR</a></li>
+          <li><a href="http://archiva.apache.org/" title="Build Artifact Repository Manager">Archiva</a></li>
+          <li><a href="http://avro.apache.org/" title="A Serialization System">Avro</a></li>
+          <li><a href="http://buildr.apache.org/" title="Simple and intuitive build system for Java applications">Buildr</a></li>
+          <li><a href="http://camel.apache.org/" title="Spring based Integration Framework which implements the Enterprise Integration Patterns">Camel</a></li>
+          <li><a href="http://cassandra.apache.org/" title="Highly scalable second-generation distributed database">Cassandra</a></li>
+          <li><a href="http://cayenne.apache.org/" title="User-friendly Java ORM with Tools">Cayenne</a></li>
+          <li><a href="http://click.apache.org/" title="User-friendly page and component oriented web framework">Click</a></li>
+          <li><a href="http://cocoon.apache.org/" title="Web development framework: separation of concerns, component-based">Cocoon</a></li>
+          <li><a href="http://commons.apache.org/" title="Reusable Java components">Commons</a></li>
+          <li><a href="http://continuum.apache.org/" title="Continuous Integration and Build Server">Continuum</a></li>
+          <li><a href="http://couchdb.apache.org/" title="RESTful document database">CouchDB</a></li>
+          <li><a href="http://cxf.apache.org/" title="Service Framework">CXF</a></li>
+          <li><a href="http://db.apache.org/" title="Database access">DB</a></li>
+          <li><a href="http://directory.apache.org/" title="Apache Directory Server">Directory</a></li>
+          <li><a href="http://excalibur.apache.org/" title="Embeddable software libraries related to component and service management access">Excalibur</a></li>
+          <li><a href="http://felix.apache.org/" title="OSGi Framework and components.">Felix</a></li>
+          <li><a href="http://forrest.apache.org/" title="Aggregated multi-channel documentation, separation of concerns">Forrest</a></li>
+          <li><a href="http://geronimo.apache.org/" title="Java2, Enterprise Edition (J2EE) container">Geronimo</a></li>
+          <li><a href="http://gump.apache.org/" title="Continuous integration of open source projects">Gump</a></li>
+          <li><a href="http://hadoop.apache.org/" title="Distributed computing platform">Hadoop</a></li>
+          <li><a href="http://harmony.apache.org/" title="Open source implementation of Java SE">Harmony</a></li>
+          <li><a href="http://hc.apache.org/" title="Java toolset of low level HTTP components">HttpComponents</a></li>
+          <li><a href="http://ibatis.apache.org/" title="SQL Data Mapper for Java and .NET">iBATIS</a></li>
+          <li><a href="http://jackrabbit.apache.org/" title="Content Repository for Java">Jackrabbit</a></li>
+          <li><a href="http://jakarta.apache.org/" title="Server-side Java">Jakarta</a></li>
+          <li><a href="http://james.apache.org/" title="Java Apache Mail Enterprise Server">James</a></li>
+          <li><a href="http://lenya.apache.org/" title="Content Management System">Lenya</a></li>
+          <li><a href="http://logging.apache.org/" title="Cross-language logging services">Logging</a></li>
+          <li><a href="http://lucene.apache.org/" title="Search engine library">Lucene</a></li>
+          <li><a href="http://maven.apache.org/" title="Java project management and comprehension tools">Maven</a></li>
+          <li><a href="http://mina.apache.org/" title="Multipurpose Infrastructure for Network Application">Mina</a></li>
+          <li><a href="http://myfaces.apache.org/" title="JavaServer(tm) Faces implementation and components">MyFaces</a></li>
+          <li><a href="http://ode.apache.org/" title="Orchestration Director Engine: Business Process Management (BPM), Process Orchestration and Workflow through service compositioni.">ODE</a></li>
+          <li><a href="http://ofbiz.apache.org/" title="Open for Business: enterprise automation software">OFBiz</a></li>
+          <li><a href="http://openejb.apache.org/" title="OpenEJB: a modular, configurable, and extendable EJB Container System and Server">OpenEJB</a></li>
+          <li><a href="http://openjpa.apache.org/" title="OpenJPA: Object Relational Mapping for Java">OpenJPA</a></li>
+          <li><a href="http://openwebbeans.apache.org/" title="OpenWebBeans: JSR-299 Context and Dependency Injection for Java EE Platform Implementation">OpenWebBeans</a></li>
+          <li><a href="http://pdfbox.apache.org/" title="Java library for working with PDF documents">PDFBox</a></li>
+          <li><a href="http://perl.apache.org/" title="Dynamic websites using Perl">Perl</a></li>
+          <li><a href="http://pivot.apache.org/" title="Rich Internet applications in Java">Pivot</a></li>
+          <li><a href="http://poi.apache.org/" title="Java API for OLE 2 Compound Documents">POI</a></li>
+          <li><a href="http://portals.apache.org/" title="Portal technology">Portals</a></li>
+          <li><a href="http://qpid.apache.org/" title="Multiple language implementation of the latest Advanced Message Queuing Protocol (AMQP)">Qpid</a></li>
+          <li><a href="http://roller.apache.org/" title="Java blog server">Roller</a></li>
+          <li><a href="http://santuario.apache.org/" title="XML Security in Java and C++">Santuario</a></li>
+          <li><a href="http://servicemix.apache.org/" title="Enterprise Service Bus">ServiceMix</a></li>
+          <li><a href="http://shindig.apache.org/" title="Opensocial Reference Implementation">Shindig</a></li>
+          <li><a href="http://sling.apache.org/" title="Web Framework for JCR Content Repositories">Sling</a></li>
+          <li><a href="http://spamassassin.apache.org/" title="Mail filter to identify spam">SpamAssassin</a></li>
+          <li><a href="http://stdcxx.apache.org/" title="Apache C++ Standard Library">STDCXX</a></li>
+          <li><a href="http://struts.apache.org/" title="Model 2 framework for building Java web applications">Struts</a></li>
+          <li><a href="http://subversion.apache.org/" title="Version Control">Subversion</a></li>
+          <li><a href="http://synapse.apache.org/" title="Enterprise Service Bus and Mediation Framework">Synapse</a></li>
+          <li><a href="http://tapestry.apache.org/" title="Component-based Java Web Application Framework">Tapestry</a></li>
+          <li><a href="http://tika.apache.org" title="Content Analysis and Detection Toolkit">Tika</a></li>
+          <li><a href="http://tcl.apache.org/" title="Dynamic websites using TCL">TCL</a></li>
+          <li><a href="http://tiles.apache.org/" title="A templating framework for web application user interfaces">Tiles</a></li>
+          <li><a href="http://tomcat.apache.org/" title="A Java Servlet and JSP Container">Tomcat</a></li>
+          <li><a href="http://trafficserver.apache.org/" title="A fast, scalable and extensible HTTP/1.1 compliant caching proxy server">TrafficServer</a></li>
+          <li><a href="http://turbine.apache.org/" title="A Java Servlet Web Application Framework and associated component library">Turbine</a></li>
+          <li><a href="http://tuscany.apache.org/" title="An SCA based Service Composition Framework">Tuscany</a></li>
+          <li><a href="http://uima.apache.org/" title="Framework and annotators for unstructured information analysis">UIMA</a></li>
+          <li><a href="http://velocity.apache.org/" title="A Java Templating Engine">Velocity</a></li>
+          <li><a href="http://wicket.apache.org/" title="Component-based Java Web Application Framework.">Wicket</a></li>
+          <li><a href="http://ws.apache.org/">Web Services</a></li>
+          <li><a href="http://xalan.apache.org/" title="XSLT processors in Java and C++">Xalan</a></li>
+          <li><a href="http://xerces.apache.org/" title="XML parsers in Java, C++ and Perl">Xerces</a></li>
+          <li><a href="http://xml.apache.org/" title="XML solutions focused on the web">XML</a></li>
+          <li><a href="http://xmlbeans.apache.org/" title="XML-Java binding tool">XMLBeans</a></li>
+          <li><a href="http://xmlgraphics.apache.org/" title="Conversion from XML to graphical output">XML Graphics</a></li>
+      </ul>
+          </div>
+        </div>
+        <div class="nav column prepend-1 span-12 last">
+               <h6><a href="/foundation/">Foundation</a></h6>
+ <ul>
+          <li><a href="http://apache.org/foundation/faq.html">FAQ</a></li>
+          <li><a href="http://apache.org/licenses/">Licenses</a></li>
+          <li><a href="http://apache.org/foundation/news.html">News</a></li>
+          <li><a href="http://blogs.apache.org/foundation/">Blog</a></li>
+          <li><a href="http://apache.org/foundation/records/">Public Records</a></li>
+          <li><a href="http://apache.org/press/">Press Inquiries</a></li>
+          <li><a href="http://apache.org/foundation/contact.html">Contact</a></li>
+      </ul>
+      <h6><a href="http://apache.org/foundation/support-apache.html">Support Apache</a></h6>
+  <ul>
+          <li><a href="http://apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+          <li><a href="http://apache.org/foundation/contributing.html">Donations</a></li>
+          <li><a href="http://apache.org/foundation/buy_stuff.html">Buy Stuff</a></li>
+          <li><a href="http://apache.org/foundation/thanks.html">Thanks</a></li>
+      </ul>
+      <h6><a href="http://apache.org/foundation/foundation-projects.html">Foundation Projects</a></h6>
+  <ul>
+          <li><a href="http://attic.apache.org/" title="Inactive project repository">Attic</a></li>
+          <li><a href="http://apache.org/foundation/conferences.html" title="Meetings of developers and users">Conferences</a></li>
+          <li><a href="http://community.apache.org/" title="Helping newcomers to the ASF">Community Development</a></li>
+          <li><a href="http://incubator.apache.org/" title="Shepherd for new projects">Incubator</a></li>
+          <li><a href="http://apache.org/dev/" title="ASF Infrastructure: Operations and howto documents for PMCs and contributors">Infrastructure</a></li>
+          <li><a href="http://apache.org/jcp/" title="Apache and the Java Community Process">JCP</a></li>
+          <li><a href="http://labs.apache.org/" title="The Innovation Laboratories of the Apache Software Foundation">Labs</a></li>
+          <li><a href="http://apache.org/legal/" title="Legal Affairs">Legal Affairs</a></li>
+          <li><a href="http://apache.org/security/" title="Security">Security</a></li>
+          <li><a href="http://apache.org/travel/" title="Travel Assistance">Travel Assistance</a></li>
+      </ul>
+      <h6>How it works</h6>
+  <ul>
+          <li><a href="http://apache.org/foundation/how-it-works.html">Introduction</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#meritocracy">Meritocracy</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#structure">Structure</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#roles">Roles</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#management">Collaboration</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#infrastructure">Infrastructure</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#incubator">Incubator</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#other">Other entities</a></li>
+          <li><a href="http://apache.org/foundation/glossary.html">Glossary</a></li>
+          <li><a href="http://apache.org/foundation/voting.html">Voting</a></li>
+      </ul>
+      <h6><a href="http://apache.org/foundation/getinvolved.html">Get Involved</a></h6>
+  <ul>
+          <li><a href="http://apache.org/dyn/closer.cgi">Download</a></li>
+          <li><a href="http://apache.org/foundation/mailinglists.html">Mailing Lists</a></li>
+          <li><a href="http://apache.org/dev/version-control.html">Version Control</a></li>
+          <li><a href="http://apache.org/dev/">Developer Info</a></li>
+      </ul>
+      <h6>Community</h6>
+  <ul>
+          <li><a href="http://people.apache.org/">People</a></li>
+          <li><a href="http://apache.org/memorials/">Memorials</a></li>
+      </ul>
+      <h6>Related Sites</h6>
+  <ul>
+          <li><a href="http://apachecon.com/" title="Official Apache Conference">ApacheCon</a></li>
+          <li><a href="http://feathercast.org/" title="Apache Podcasts">Feathercast</a></li>
+          <li><a href="http://planet.apache.org/committers/" title="Apache Committers' Blogs">PlanetApache</a></li>
+      </ul>
+        </div>
+      </div>
+    </div>
+    <div class="column span-24 footer">
+      <hr/>
+        <p>Copyright &#169; 2010-2015 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
