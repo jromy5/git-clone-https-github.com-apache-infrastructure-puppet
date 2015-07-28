@@ -26,6 +26,6 @@ postgresql::server::pg_hba_rule:
     type: 'hostssl'
     database: 'replication'
     user: 'rep'
-    address: '192.168.33.3/32'
+    address: '10.40.0.14/32'
     auth_method: 'md5'
 
