@@ -1,0 +1,20 @@
+---
+classes:
+  - postgresql::server
+  - postgresql_asf
+
+postgresql::server::listen_addresses: '*'
+postgresql::server::encoding: 'UTF-8'
+postgresql::server::encoding: 'en_US.UTF-8'
+
+postgresql::server::config_entry:
+  wal_level:
+    value: 'hot_standby'
+  max_wal_senders:
+    value: 3
+  checkpoint_segments:
+    value: 8
+  wal_keep_segments:
+    value: 8
+  hot_standby:
+    value: 'on'
