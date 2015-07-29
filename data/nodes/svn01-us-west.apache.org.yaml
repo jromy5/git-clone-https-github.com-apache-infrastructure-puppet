@@ -36,7 +36,7 @@ apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000
 apache::timeout: 600
 apache::default_vhost:      false
-apache::docroot:            '/x1/www/htdocs'
+apache::docroot:            '/x1/www'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
