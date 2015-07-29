@@ -170,7 +170,7 @@ class subversion_server (
       owner  => 'www-data',
       group  => 'svnadmins',
       mode   => '0775';
-  }      
+  }
 
   # file block for templated hooks
   file {
