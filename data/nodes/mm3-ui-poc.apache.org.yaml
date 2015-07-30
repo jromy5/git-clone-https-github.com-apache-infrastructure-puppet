@@ -12,12 +12,12 @@ apache::default_vhost: false
 apache::mod::wsgi::wsgi_python_home: '/var/www/hyperkitty/venv2'
 
 mailman3::hyperkitty::config::app_name: 'ASF List Archives'
-mailman3::hyperkitty::config::mailman_api_url: 'http://192.168.33.2:8001'
+mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::db: 'postgresql'
-mailman3::hyperkitty::config::dbhost: '192.168.33.3'
+mailman3::hyperkitty::config::dbhost: '10.40.0.12'
 mailman3::hyperkitty::config::dbname: 'hyperkitty'
 mailman3::hyperkitty::config::dbuser: 'hyperkitty'
-mailman3::hyperkitty::config::mailman_api_url: 'http://192.168.33.2:8001'
+mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::allowed_hosts:
   - '*'
 

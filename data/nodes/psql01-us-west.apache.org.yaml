@@ -28,4 +28,24 @@ postgresql::server::pg_hba_rule:
     user: 'rep'
     address: '10.40.0.14/32'
     auth_method: 'md5'
-
+  mailman:
+    description: 'Mailman 3'
+    type: 'hostssl'
+    database: 'mailman'
+    user: 'mailman'
+    address: '10.40.0.15/32'
+    auth_method: 'md5'
+  postoius:
+    description: 'Postorius'
+    type: 'hostssl'
+    database: 'postorius'
+    user: 'postorious'
+    address: '10.40.0.15/32'
+    auth_method: 'md5'
+  hyperkitty:
+    description: 'Hyperkitty'
+    type: 'hostssl'
+    database: 'hyperkitty'
+    user: 'hyperkitty'
+    address: '10.40.0.16/32'
+    auth_method: 'md5'
