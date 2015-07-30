@@ -7,7 +7,7 @@ classes:
 
 postgresql::server::listen_addresses: "localhost,%{::ipaddress_eth1}"
 postgresql::server::encoding: 'UTF-8'
-postgresql::server::encoding: 'en_US.UTF-8'
+postgresql::server::locale: 'en_US.UTF-8'
 postgresql::server::datadir: '/x1/postgresql/9.3/main'
 
 postgresql::server::config_entry:
