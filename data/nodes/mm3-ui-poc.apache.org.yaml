@@ -44,7 +44,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'hyperkitty_access.log'
     error_log_file: 'hyperkitty_error.log'
     custom_fragment: |
-      Redirect premanent / https://mm3-ui-poc.apache.org/
+      Redirect permanent / https://mm3-ui-poc.apache.org/
 
   hyperkitty_ssl:
     vhost_name: '*'

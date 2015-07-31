@@ -19,12 +19,12 @@ apache::mod::wsgi::wsgi_python_home: '/var/www/postorius/venv2'
 mailman3::core::config::vardir: '/usr/local/mailman3-core/mailman'
 mailman3::core::config::pidfile: '/var/run/mailman/master.pid'
 mailman3::core::config::db: 'postgresql'
-mailman3::core::config::webservicehostname: "${%{::ipaddress_eth1}"
+mailman3::core::config::webservicehostname: "%{::ipaddress_eth1}"
 mailman3::postorius::config::db: 'postgresql'
 mailman3::postorius::config::dbhost: '10.40.0.12'
 mailman3::postorius::config::dbname: 'postorius'
 mailman3::postorius::config::dbuser: 'postorius'
-mailman3::postorius::config::mailman_api_url: "http://${::ipaddress_eth1}:8001"
+mailman3::postorius::config::mailman_api_url: "http://%{::ipaddress_eth1}:8001"
 mailman3::postorius::config::allowed_hosts:
   - '*'
 
