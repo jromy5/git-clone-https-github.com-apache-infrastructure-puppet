@@ -37,7 +37,8 @@ cwiki_asf::heap_min_size: '1512'
 cwiki_asf::heap_max_size: '2024'
 cwiki_asf::maxmetaspacesize: '512'
 
-postfix::server::relayhost: '[mailrelay1-us-west.apache.org]:587'
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
 
 vhosts_asf::vhosts::vhosts:
   cwiki-vm4-80:
