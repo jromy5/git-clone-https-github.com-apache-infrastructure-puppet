@@ -7,9 +7,13 @@ classes:
   - postgresql::client
   - postgresql::lib::devel
   - python
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
+apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 apache::mod::wsgi::wsgi_python_home: '/var/www/postorius/venv2'
 
 mailman3::core::config::vardir: '/usr/local/mailman3-core/mailman'
@@ -36,11 +40,23 @@ vhosts_asf::vhosts::vhosts:
   postorius:
     vhost_name: '*'
     port: 80
-    servername: 'postorius.apache.org'
+    servername: 'mm3-core-poc.apache.org'
     default_vhost: true
     docroot: '/var/www/postorius/postorius_standalone'
     manage_docroot: false
     access_log_file: 'postorius_access.log'
+    error_log_file: 'postorius_error.log'
+    custom_fragment: |
+        Redirect / https://mm3-core-poc.apache.org/
+
+  postorius_ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'mm3-core-poc.apache.org'
+    docroot: '/var/www/postorius/postorius_standalone'
+    manage_docroot: false
+    access_log_file: 'postorius_ssl_access.log'
     error_log_file: 'postorius_error.log'
     custom_fragment: |
       Alias /static /var/www/postorius/postorius_standalone/static
