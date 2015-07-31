@@ -11,4 +11,7 @@ class postgresql_asf (
   $role = hiera_hash('postgresql::server::role', {})
   create_resources(postgresql::server::role, $role)
 
+  $db = hiera_hash('postgresql::server::db', {})
+  create_resources(postgresql::server::db, $db)
+
 }
