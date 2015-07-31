@@ -6,9 +6,13 @@ classes:
   - postgresql::client
   - python
   - mailman3::hyperkitty
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
+apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 apache::mod::wsgi::wsgi_python_home: '/var/www/hyperkitty/venv2'
 
 mailman3::hyperkitty::config::app_name: 'ASF List Archives'
@@ -20,6 +24,7 @@ mailman3::hyperkitty::config::dbuser: 'hyperkitty'
 mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::allowed_hosts:
   - '*'
+mailman3::hyperkitty::config::use_ssl: true
 
 python::version: system
 python::pip: true
@@ -32,11 +37,23 @@ vhosts_asf::vhosts::vhosts:
   hyperkitty:
     vhost_name: '*'
     port: 80
-    servername: 'hyperkitty.apache.org'
+    servername: 'mm3-ui-poc.apache.org'
     default_vhost: true
     docroot: '/var/www/hyperkitty/hyperkitty_standalone'
     manage_docroot: false
     access_log_file: 'hyperkitty_access.log'
+    error_log_file: 'hyperkitty_error.log'
+    custom_fragment: |
+      Redirect premanent / https://mm3-ui-poc.apache.org/
+
+  hyperkitty_ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'mm3-ui-poc.apache.org'
+    docroot: '/var/www/hyperkitty/hyperkitty_standalone'
+    manage_docroot: false
+    access_log_file: 'hyperkitty_ssl_access.log'
     error_log_file: 'hyperkitty_error.log'
     custom_fragment: |
       Alias /robots.txt  /var/www/hyperkitty/hyperkitty_standalone/static/hyperkitty/robots.txt
