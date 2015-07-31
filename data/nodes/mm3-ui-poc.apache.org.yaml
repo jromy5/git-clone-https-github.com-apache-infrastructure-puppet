@@ -2,12 +2,24 @@
 classes:
   - apache
   - apache::mod::wsgi
+  - postgresql::lib::devel
+  - postgresql::client
   - python
   - mailman3::hyperkitty
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
 apache::mod::wsgi::wsgi_python_home: '/var/www/hyperkitty/venv2'
+
+mailman3::hyperkitty::config::app_name: 'ASF List Archives'
+mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
+mailman3::hyperkitty::config::db: 'postgresql'
+mailman3::hyperkitty::config::dbhost: '10.40.0.12'
+mailman3::hyperkitty::config::dbname: 'hyperkitty'
+mailman3::hyperkitty::config::dbuser: 'hyperkitty'
+mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
+mailman3::hyperkitty::config::allowed_hosts:
+  - '*'
 
 python::version: system
 python::pip: true
@@ -32,7 +44,7 @@ vhosts_asf::vhosts::vhosts:
       Alias /static      /var/www/hyperkitty/hyperkitty_standalone/static
 
       WSGIScriptAlias /hyperkitty /var/www/hyperkitty/hyperkitty_standalone/wsgi.py
-      WSGIDaemonProcess hyperkitty threads=25 python-path=/var/www//hyperkitty_standalone:/var/www/hyperkitty/venv2/lib/python2.7/site-packages
+      WSGIDaemonProcess hyperkitty threads=25 python-path=/var/www/hyperkitty/hyperkitty_standalone:/var/www/hyperkitty/venv2/lib/python2.7/site-packages
 
       <Directory "/var/www/hyperkitty/hyperkitty_standalone">
         <Files wsgi.py>
@@ -47,4 +59,5 @@ vhosts_asf::vhosts::vhosts:
         Order deny,allow
         Allow from all
       </Directory>
+
 
