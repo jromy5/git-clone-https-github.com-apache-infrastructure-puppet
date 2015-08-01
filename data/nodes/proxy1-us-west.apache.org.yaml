@@ -182,7 +182,6 @@ vhosts_asf::vhosts::vhosts:
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
-      <IfDefine commentsao>
         <Location /committers.lua>
           # Require LDAP authentication for /committers.lua
           AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
@@ -201,7 +200,6 @@ vhosts_asf::vhosts::vhosts:
           RequestHeader unset Authorization
           ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
         </Location>
-      </IfDefine>
 
   demo-old-ofbiz:
     vhost_name: '*'
