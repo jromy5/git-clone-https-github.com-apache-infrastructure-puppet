@@ -682,19 +682,12 @@ ea = rw
 [/commons]
 @committers = rw
 
-[/commons/proper/scxml]
-* = r
-# Temporary override: scxml moved to git
-sebb = rw
-
 # archive area for components that have been moved to Git
 # must remain read-only except as needed to move components
 [/commons/_moved_to_git]
 * = r
-# Temporary override: scxml moved to git
-sebb = rw
 
-# Note: since commons/proper/[lang|math] have now been moved under _moved_to_git and
+# Note: since commons/proper/[lang|math|scxml] have now been moved under _moved_to_git and
 # only a README remains, there is now no need to make those directory trees read-only.
 
 [/concom]
@@ -769,7 +762,7 @@ sebb = rw
 @db-torque = rw
 
 [/deltacloud]
-@deltacloud = rw
+@directmemory = rw
 
 [/deltaspike]
 @deltaspike = rw
@@ -778,7 +771,7 @@ sebb = rw
 @devicemap = rw
 
 [/directmemory]
-@directmemory = rw
+@attic-pmc = rw
 
 [/directory]
 @directory = rw
