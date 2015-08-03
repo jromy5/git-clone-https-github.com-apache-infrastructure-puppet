@@ -1,11 +1,16 @@
 ---
 classes:
   - amanda::client
+  - datadog_agent::integrations::mysql
   - collectd::plugin_asf
   - mysql::server
   - mysql_asf::backup
   - ssl::name::abi_stunnel
   - stunnel_asf::abi
+
+datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
+datadog_agent::integrations::mysql::user: 'datadog_slave'
+datadog_agent::integrations::mysql::replication: 1
 
 mysql::server::databases:
   bugs:
