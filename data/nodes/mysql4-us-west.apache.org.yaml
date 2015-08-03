@@ -1,8 +1,13 @@
 ---
 classes:
   - amanda::client
+  - datadog_agent::integrations::mysql
   - mysql::server
   - mysql_asf::backup
+
+datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
+datadog_agent::integrations::mysql::user: 'datadog_slave'
+datadog_agent::integrations::mysql::replication: 1
 
 mysql::server::override_options:
   mysqld:
