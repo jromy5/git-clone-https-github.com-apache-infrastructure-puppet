@@ -3,3 +3,4 @@ classes:
   - rbldnsd::master::setup
   - puppet_asf::master
 
+datadog_agent::puppet_run_reports: true
