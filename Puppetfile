@@ -163,6 +163,11 @@ mod 'rsyslog',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
 
+mod 'ruby',
+  :git => 'https://github.com/puppetlabs/puppetlabs-ruby.git',
+  :tag => '0.4.0'
+
+
 mod 's3fs',
   :git => 'https://github.com/clambertus/puppet-s3fs'
 
