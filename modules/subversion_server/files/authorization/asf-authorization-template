@@ -365,7 +365,7 @@ samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
-sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp
+sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp,asuresh,gqshen,tuongtruong,vamsee,xiaom
 servicemix={ldap:cn=servicemix,ou=groups,dc=apache,dc=org}
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
 shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
@@ -436,7 +436,7 @@ turbine={ldap:cn=turbine,ou=groups,dc=apache,dc=org}
 turbine-pmc={reuse:pit-authorization:turbine-pmc}
 tuscany={ldap:cn=tuscany,ou=groups,dc=apache,dc=org}
 tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
-twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh
+twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh,hsaputra,ashau,poorna
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
 uima-pmc={reuse:pit-authorization:uima-pmc}
 usergrid=snoopdave,jfarrell,jim,lewismc,lresende,timanglade,stliu,sfeldman,rockerston,sungju
