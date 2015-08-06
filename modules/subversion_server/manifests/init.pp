@@ -4,16 +4,34 @@ class subversion_server (
 
   $asf_committers_authz = '',
   $packages             = [],
+  $s3_access_key        = '',
+  $s3_gpg_passphrase    = '',
+  $s3_secret_key        = '',
+  $svn_master_hostname  = 'svn-master.apache.org',
 
 ) {
 
-#packages needed 
+  require customfact
+  require ldapclient
+  require pam
+
+  # packages needed 
   package { $packages:
     ensure => installed,
   }
 
-  # File block to deploy fodlers, scripts etc
+  # File block to deploy folders, scripts etc
   file {
+    '/x1':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
     '/etc/viewvc/viewvc.conf':
       ensure => present,
       owner  => 'www-data',
@@ -21,21 +39,21 @@ class subversion_server (
       mode   => '0775',
       source => 'puppet:///modules/subversion_server/viewvc/conf/viewvc.conf';
     '/etc/viewvc/templates':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
       mode    => '0775',
       source  => 'puppet:///modules/subversion_server/viewvc/templates';
     '/x1/svn/hooks':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
       mode    => '0775',
       source  => 'puppet:///modules/subversion_server/hooks';
     '/x1/svn/scripts':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
@@ -47,7 +65,7 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/authorization/templates':
-      ensure  => present,
+      ensure  => directory,
       recurse => true,
       owner   => 'www-data',
       group   => 'svnadmins',
@@ -77,6 +95,133 @@ class subversion_server (
     '/usr/local/bin/svn_sync_to_aws_s3.sh':
       source => 'puppet:///modules/subversion_server/svn_sync_to_aws_s3.sh',
       mode   => '0775';
+    '/x1/www':
+      source => 'puppet:///modules/subversion_server/www/htdocs',
+      mode   => '0775',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/www/viewvc':
+      ensure => link,
+      target => '/usr/lib/viewvc/cgi-bin/viewvc.cgi',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+  }
+
+  # file block for repo skeletons
+  file {
+    '/x1/svn/repos':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn'];
+    '/x1/svn/repos/asf':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/asf/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/dist':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/dist/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/infra':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/infra/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/private':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/private/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+    '/x1/svn/repos/tck':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/tck/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
+  }
+
+  # file block for templated hooks
+  file {
+    '/x1/svn/hooks/post-commit-dist':
+      content => template('subversion_server/post-commit-dist.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-tck':
+      content => template('subversion_server/post-commit-tck.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-infra':
+      content => template('subversion_server/post-commit-infra.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-private':
+      content => template('subversion_server/post-commit-private.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit':
+      content => template('subversion_server/post-commit.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-revprop-change':
+      content => template('subversion_server/post-revprop-change.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/pre-revprop-change':
+      content => template('subversion_server/pre-revprop-change.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-revprop-change-dist':
+      content => template('subversion_server/post-revprop-change-dist.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'],
   }
 
   # File block to setup the plethora of symlinks needed
@@ -466,4 +611,20 @@ class subversion_server (
       require  => File['/usr/local/bin/svn_sync_to_aws_s3.sh'],
       command  => '/usr/local/bin/svn_sync_to_aws_s3.sh';
   }
+
+  # s3 backup
+  file {
+    '/root/.s3cfg':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700',
+      content => template('subversion_server/s3cfg.erb'),
+  }
+
+  host { 'svn-master.apache.org':
+    ip           => $::ipaddress,
+    host_aliases => $::fqdn,
+  }
+
 }

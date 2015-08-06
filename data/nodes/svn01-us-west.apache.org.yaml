@@ -36,7 +36,7 @@ apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000
 apache::timeout: 600
 apache::default_vhost:      false
-apache::docroot:            '/x1/www/htdocs'
+apache::docroot:            '/x1/www'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
@@ -103,6 +103,8 @@ snmp::snmpd_config:
   - 'disk /var 5%'
   - 'includeAllDisks 10%'
   - 'perl do "/root/bin/zpool.pl"'
+
+subversion_server::svn_master_hostname: 'svn01-us-west.apache.org'
 
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
 subversion_server::board_reminders::packages:
@@ -601,9 +603,3 @@ vhosts_asf::vhosts::vhosts:
       </Location>
 
 
-vcsrepo:
-  /tmp/authtest2:
-    ensure: 'latest'
-    provider: 'svn'
-    source: 'file:///x1/svn/repos/infra/infrastructure/trunk/subversion/authorization'
-    revision: 'head'
