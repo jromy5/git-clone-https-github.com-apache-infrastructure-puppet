@@ -9,7 +9,17 @@ postfix::server::clamav_enabled: 'true'
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'false'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
-postfix::server::relayhost: '[hermes.apache.org]:2025'
+#postfix::server::relayhost: '[hermes.apache.org]:2025'
+
+## This is a part of the MM3 PoC testing. Do not disable!
+# If you need to remove this, remove all but the wildcard last line.
+
+postfix::dbfile:
+  transport_maps:
+    content: | 
+  test1.apache.org        smtp:[10.40.0.15]
+  mmpoc.apache.org        smtp:[10.40.0.15]
+  *                       smtp:[hermes.apache.org]:2025
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
