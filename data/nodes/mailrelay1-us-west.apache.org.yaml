@@ -12,8 +12,8 @@ dovecot::dovecot_packages:
 postfix::dbfile:
   transport_maps:
     content: |
-      test1.apache.org        smtp:[10.41.0.21]
-      mmpoc.apache.org        smtp:[10.41.0.21]
+      test1.apache.org        smtp:[10.41.0.20]
+      mmpoc.apache.org        smtp:[10.41.0.20]
       *                       smtp:[hermes.apache.org]:2025
     
 postfix::server::myhostname:             "%{::fqdn}"
