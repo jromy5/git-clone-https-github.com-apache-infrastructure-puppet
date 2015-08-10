@@ -2,6 +2,7 @@
 classes:
   - collectd::plugin::postfix
   - pflogsumm
+  - postfix_asf
   - spamassassin::spamd
   - ssl::name::wildcard_apache_org
 
@@ -19,6 +20,14 @@ spamassassin::spamd::postfix_transportmaps: |
       test1.apache.org        smtp:[10.40.0.15]
       mmpoc.apache.org        smtp:[10.40.0.15]
       *                       smtp:[hermes.apache.org]:2025
+
+postfix::dbfile:
+  transport_maps_test:
+    content: |
+      test1.apache.org        smtp:[10.40.0.15]
+      mmpoc.apache.org        smtp:[10.40.0.15]
+      *                       smtp:[hermes.apache.org]:2025
+
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
