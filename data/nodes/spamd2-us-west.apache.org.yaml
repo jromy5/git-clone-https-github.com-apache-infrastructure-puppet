@@ -10,6 +10,15 @@ postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'false'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
 postfix::server::relayhost: '[hermes.apache.org]:2025'
+postfix::server::transport_maps: '/etc/postfix/spamd_transport_maps'
+
+# This is a part of the MM3 PoC testing. Do not disable!
+# If you need to remove this, remove all but the wildcard last line.
+# This should cause /etc/postfix/spamd_transport_maps to be created.
+spamassassin::spamd::postfix_transportmaps: |
+      test1.apache.org        smtp:[10.40.0.15]
+      mmpoc.apache.org        smtp:[10.40.0.15]
+      *                       smtp:[hermes.apache.org]:2025
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
 # template - which creates /etc/default/spamassassin
@@ -18,4 +27,3 @@ spamassassin::spamd::allowedips: '10.40.0.8'
 spamassassin::spamd::listenip: '0.0.0.0'
 spamassassin::spamd::required_hits: '10'
 spamassassin::spamd::max_amavis_procs: '35'
-
