@@ -4,6 +4,7 @@ classes:
   - apache::mod::wsgi
   - mailman3::core
   - mailman3::postorius
+  - mailman3::core::hyperkitty_integration
   - postgresql::client
   - postgresql::lib::devel
   - python
@@ -19,7 +20,14 @@ apache::mod::wsgi::wsgi_python_home: '/var/www/postorius/venv2'
 mailman3::core::config::vardir: '/usr/local/mailman3-core/mailman'
 mailman3::core::config::pidfile: '/var/run/mailman/master.pid'
 mailman3::core::config::db: 'postgresql'
+mailmam3::core::config::site_owner: 'root@apache.org'
 mailman3::core::config::webservicehostname: "%{::ipaddress_eth1}"
+mailman3::core::config::custom_config: |
+  [archiver.hyperkitty]
+  class: mailman_hyperkitty.Archiver
+  enable: yes
+  configuration: %{mailman3::core::installroot}/mailman/mailman-hyperkitty.cfg
+
 mailman3::postorius::config::db: 'postgresql'
 mailman3::postorius::config::dbhost: '10.40.0.12'
 mailman3::postorius::config::dbname: 'postorius'
@@ -29,6 +37,8 @@ mailman3::postorius::config::timezone: 'UTC'
 mailman3::postorius::config::allowed_hosts:
   - '*'
 
+mailman3::core::hyperkitty_integration::base_url: 'https://mm3-ui-poc.apache.org/hyperkitty/'
+mailman3::core::hyperkitty_integration::public_url: 'https://mm3-ui-poc.apache.org/hyperkitty/'
 
 python::version: 'system'
 python::pip: true
