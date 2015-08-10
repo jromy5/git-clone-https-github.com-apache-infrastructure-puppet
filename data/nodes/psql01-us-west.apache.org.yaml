@@ -42,6 +42,13 @@ postgresql::server::pg_hba_rule:
     user: 'postorius'
     address: '10.40.0.15/32'
     auth_method: 'md5'
+ posthyp :
+    description: 'Postorius from hyperkitty'
+    type: 'hostssl'
+    database: 'postorius'
+    user: 'postorius'
+    address: '10.40.0.16/32'
+    auth_method: 'md5'
   hyperkitty:
     description: 'Hyperkitty'
     type: 'hostssl'
