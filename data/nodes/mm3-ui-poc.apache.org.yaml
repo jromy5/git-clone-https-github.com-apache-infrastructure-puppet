@@ -28,7 +28,8 @@ mailman3::hyperkitty::config::use_ssl: false
 mailman3::hyperkitty::config::browserid_audiences:
   - 'https://mm3-ui-poc.apache.org'
   - 'http://mm3-ui-poc.apache.org'
-mailman3::hyperkitty::config::mailman_archiver_from: '10.40.0.15'
+mailman3::hyperkitty::config::mailman_archiver_from:
+  - '10.40.0.15'
 mailman3::hyperkitty::config::use_internal_auth: true
 mailman3::hyperkitty::config::timezone: 'UTC'
 
