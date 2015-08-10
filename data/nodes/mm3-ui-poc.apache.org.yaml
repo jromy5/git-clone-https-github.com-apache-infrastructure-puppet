@@ -24,9 +24,14 @@ mailman3::hyperkitty::config::dbuser: 'hyperkitty'
 mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::allowed_hosts:
   - '*'
-mailman3::hyperkitty::config::use_ssl: true
+mailman3::hyperkitty::config::use_ssl: false
+mailman3::hyperkitty::config::browserid_audiences:
+  - 'https://mm3-ui-poc.apache.org'
+  - 'http://mm3-ui-poc.apache.org'
+mailman3::hyperkitty::config::mailman_archiver_from: '10.40.0.15'
+mailman3::hyperkitty::config::use_internal_auth: true
 
-python::version: system
+python::version: 'system'
 python::pip: true
 python::dev: true
 python::virtualenv: true
@@ -41,6 +46,9 @@ vhosts_asf::vhosts::vhosts:
     default_vhost: true
     docroot: '/var/www/hyperkitty/hyperkitty_standalone'
     manage_docroot: false
+    options:
+      - 'FollowSymLinks'
+      - 'MultiViews'
     access_log_file: 'hyperkitty_access.log'
     error_log_file: 'hyperkitty_error.log'
     custom_fragment: |
@@ -53,6 +61,9 @@ vhosts_asf::vhosts::vhosts:
     servername: 'mm3-ui-poc.apache.org'
     docroot: '/var/www/hyperkitty/hyperkitty_standalone'
     manage_docroot: false
+    options:
+      - 'FollowSymLinks'
+      - 'MultiViews'
     access_log_file: 'hyperkitty_ssl_access.log'
     error_log_file: 'hyperkitty_error.log'
     custom_fragment: |
