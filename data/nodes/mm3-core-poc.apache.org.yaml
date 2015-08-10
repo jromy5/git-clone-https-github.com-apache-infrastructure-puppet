@@ -26,6 +26,7 @@ mailman3::postorius::config::dbname: 'postorius'
 mailman3::postorius::config::dbuser: 'postorius'
 mailman3::postorius::config::mailman_api_url: "http://%{::ipaddress_eth1}:8001"
 mailman3::postorius::config::allowed_hosts:
+mailman3::postorius::config::timezone: 'UTC'
   - '*'
 
 
