@@ -125,12 +125,6 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   }
 
 
-  ## Inject a postfix transport_maps file
-   postfix::dbfile {
-     'spamd_transport_maps':
-       content => $postfix_transportmaps,
-   }
-
   cron {
     'sa-update':
       ensure  => $cron_ensure,
