@@ -15,7 +15,7 @@ postfix::server::transport_maps: '/etc/postfix/spamd_transport_maps'
 # This is a part of the MM3 PoC testing. Do not disable!
 # If you need to remove this, remove all but the wildcard last line.
 # This should cause /etc/postfix/spamd_transport_maps to be created.
-spamassassin::spamd::postfix_transportmaps:
+spamassassin::spamd::postfix_transportmaps: |
       test1.apache.org        smtp:[10.40.0.15]
       mmpoc.apache.org        smtp:[10.40.0.15]
       *                       smtp:[hermes.apache.org]:2025
