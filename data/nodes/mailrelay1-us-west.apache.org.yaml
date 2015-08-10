@@ -2,12 +2,20 @@
 classes: 
   - dovecot
   - mail_relay
+  - postfix_asf
   - ssl::name::wildcard_apache_org
 
 dovecot::dovecot_packages:
   - dovecot-core
   - dovecot-ldap
 
+postfix::dbfile:
+  transport_maps:
+    content: |
+      test1.apache.org        smtp:[10.41.0.21]
+      mmpoc.apache.org        smtp:[10.41.0.21]
+      *                       smtp:[hermes.apache.org]:2025
+    
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
