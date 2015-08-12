@@ -9,13 +9,20 @@ dovecot::dovecot_packages:
   - dovecot-core
   - dovecot-ldap
 
+
 postfix::dbfile:
   transport_maps:
     content: |
-      test1.apache.org        smtp:apache.org
-      mmpoc.apache.org        smtp:apache.org
+      test1.apache.org        smtp:[10.40.0.15]
+      mmpoc.apache.org        smtp:[10.40.0.15]
       apache.org              smtp:[hermes.apache.org]:2025
+      apachecon.com           smtp:[hermes.apache.org]:2025
+      apachecon.eu            smtp:[hermes.apache.org]:2025
+      subversion.com          smtp:[hermes.apache.org]:2025
+      subversion.net          smtp:[hermes.apache.org]:2025
+      subversion.org          smtp:[hermes.apache.org]:2025
       *                       smtp:apache.org
+
 
     
 postfix::server::myhostname:             "%{::fqdn}"
