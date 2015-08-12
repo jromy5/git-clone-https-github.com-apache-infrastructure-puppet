@@ -4,13 +4,15 @@ classes:
   - collectd::plugin::postfix
   - mx_asf
   - pflogsumm
+  - postfix_asf
   - ssl::name::wildcard_apache_org
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'
 postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canonical_maps'
-
+postfix::server::mynetworks: '127.0.0.0/8 [::1]/128 [fe80::]/64 209.188.14.139/32'
+        
 postfix::server::asf_mx_enabled: 'true'
 postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
 postfix::server::max_postfix_amavis_procs: '25'
