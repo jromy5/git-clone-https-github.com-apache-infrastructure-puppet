@@ -1,6 +1,6 @@
-# /etc/puppet/modules/datadog_asf/manifests/init.pp
+# /etc/puppet/modules/datadog_asf/manifests/integrations/snmp.pp
 
-class datadog_asf (
+class datadog_asf::integrations::snmp (
   $snmp_config = {},
 ) inherits datadog_agent::params {
 
@@ -21,7 +21,7 @@ class datadog_asf (
       owner   => $datadog_agent::params::dd_user,
       group   => $datadog_agent::params::dd_group,
       mode    => '0600',
-      content => template('datadog_asf/snmp.yaml.erb'),
+      content => template('datadog_asf/agent-conf.d/snmp.yaml.erb'),
       require => Package[$datadog_agent::params::package_name],
       notify  => Service[$datadog_agent::params::service_name],
     }
