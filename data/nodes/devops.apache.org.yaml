@@ -7,12 +7,9 @@ classes:
 datadog_agent::puppet_run_reports: true
 
 base::hosts:
-  host:
-    name: 'r1sw0.apache.org'
+  r1sw0.apache.org:
     ip: '192.168.0.247'
-  host:
-    name: 'r2sw0.apache.org'
+  r2sw0.apache.org:
     ip: '192.168.0.248'
-  host:
-    name: 'r3sw0.apache.org'
+  r3sw0.apache.org:
     ip: '192.168.0.249'
