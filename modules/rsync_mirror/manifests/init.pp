@@ -124,7 +124,7 @@ class rsync_mirror (
     exclude         => ['/www.apache.org/dist/.rsync.td/'],
     hosts_deny      => ['*'],
     hosts_allow     => ['192.87.106.229', '140.211.11.131', '140.211.11.9',
-                        '54.172.167.43', '104.130.219.184'],
+                        '209.188.14.150'],
   }
 
   rsync::server::module { 'rsync-logs':
