@@ -248,7 +248,7 @@ knox={ldap:cn=knox,ou=groups,dc=apache,dc=org}
 knox-pmc={reuse:pit-authorization:knox-pmc}
 kafka={ldap:cn=kafka,ou=groups,dc=apache,dc=org}
 kafka-pmc={reuse:pit-authorization:kafka-pmc}
-kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,hsaputra
+kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,hsaputra,shaofengshi
 # kato=antelder,geirm,rdonkin,sgoyal,riccole,ccristal,monteith,spoole,simuvid
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
@@ -447,6 +447,8 @@ velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=groups,dc=apache,dc=org}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
 wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,yurize,zdwang,stenyak,jblossom
+whimsy={ldap:cn=whimsy,ou=groups,dc=apache,dc=org}
+whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=groups,dc=apache,dc=org}
 wicket-pmc={reuse:pit-authorization:wicket-pmc}
 wink={ldap:cn=wink,ou=groups,dc=apache,dc=org}
