@@ -7,7 +7,7 @@ class apbackup::backup (
   cron { 'daily-www-push':
     minute  => 10,
     hour    => 1,
-    command => "/home/apbackup/bin/daily-www-push.sh 2&1 | perl -lne 'print if $. < 10'", # lint:ignore:80chars
+    command => "/home/apbackup/bin/daily-www-push.sh 2>&1 | perl -lne 'print if $. < 10'", # lint:ignore:80chars
     require => User[$apbackup::username],
   }
 
