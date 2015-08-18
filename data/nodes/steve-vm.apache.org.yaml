@@ -22,6 +22,10 @@ svnwcsub::shell:            '/bin/bash'
 svnwcsub::source:           'svnwcsub.conf.steve'
 svnwcsub::username:         'svnwc'
 
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::java_install: true
+
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
