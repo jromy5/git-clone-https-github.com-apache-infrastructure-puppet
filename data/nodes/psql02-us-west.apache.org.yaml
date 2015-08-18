@@ -2,6 +2,7 @@
 classes:
   - postgresql::server
   - postgresql_asf
+  - postgresql_asf::backup
 
 postgresql::server::listen_addresses: '*'
 postgresql::server::encoding: 'UTF-8'
