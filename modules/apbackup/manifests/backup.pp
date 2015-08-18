@@ -8,6 +8,7 @@ class apbackup::backup (
     minute  => 10,
     hour    => 1,
     command => "/home/apbackup/bin/daily-www-push.sh 2>&1 | perl -lne 'print if $. < 10'", # lint:ignore:80chars
+    user    => $apbackup::username,
     require => User[$apbackup::username],
   }
 
