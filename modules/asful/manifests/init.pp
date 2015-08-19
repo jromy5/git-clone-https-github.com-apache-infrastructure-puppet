@@ -6,7 +6,7 @@ class asful (
 
 ){
   include 'elasticsearch'
-  
+
   File<|title == '/etc/elasticsearch/elasticsearch.yml'|> {
       ensure => file,
       mode   => '0755',
