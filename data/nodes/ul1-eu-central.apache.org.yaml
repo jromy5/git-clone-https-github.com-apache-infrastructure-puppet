@@ -1,0 +1,13 @@
+---
+classes:
+  - elasticsearch
+  - asful
+  
+asful::nodename: 'ul1-eu-central'
+asful::nodeip: '10.91.64.150'
+
+elasticsearch::es_heap_size: '31G'
+elasticsearch::java_install: true
+elasticsearch::version: '1.7.0'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
