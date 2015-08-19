@@ -2,6 +2,7 @@
 classes:
   - elasticsearch
   - asful
+  - kibana_asf
   
 asful::nodename: 'ul1-eu-central'
 asful::nodeip: '10.91.64.150'
