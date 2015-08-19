@@ -25,4 +25,6 @@ postfix::server::smtpd_sender_restrictions:
 postfix::dbfile:
   sender_access:
     content: |
-      foo@example.com REJECT
+      foo@example.com     REJECT
+      lrosen@rosenlaw.com REJECT
+      lrosen@apahe.org    REJECT
