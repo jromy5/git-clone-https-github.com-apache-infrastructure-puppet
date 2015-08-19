@@ -8,9 +8,9 @@
 
 # Note that it can take up to 40 minutes or so for the live file to be updated after Infra have merged the change
 
-This file is in the Git infrastructure-puppet repo at:
+#This file is in the Git infrastructure-puppet repo at:
 
-modules/subversion_server/files/authorization/asf-authorization-template
+#modules/subversion_server/files/authorization/asf-authorization-template
 
 # LDAP groups have two forms:
 # ==========================
