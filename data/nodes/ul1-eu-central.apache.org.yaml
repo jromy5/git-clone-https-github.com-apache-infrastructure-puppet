@@ -11,3 +11,5 @@ elasticsearch::java_install: true
 elasticsearch::version: '1.7.0'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  - asful
