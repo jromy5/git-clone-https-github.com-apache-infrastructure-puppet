@@ -5,17 +5,9 @@ class asful (
   $nodeip         = '10.91.64.150'
 
 ){
-
-  file {
-    ["/etc/elasticsearch/config"]:
-      ensure => directory,
-      mode   => '0755',
-      owner  => 'root',
-      group  => 'root',    
-    }
-    
-  file {
-    "/etc/elasticsearch/config/elasticsearch.yml":
+  include 'elasticsearch'
+  
+  File<|title == '/etc/elasticsearch/elasticsearch.yml'> {
       ensure => file,
       mode   => '0755',
       owner  => 'root',
