@@ -7,7 +7,7 @@ class asful (
 ){
 
   file {
-    ["/etc/elasticsearch", "/etc/elasticsearch/config"]:
+    ["/etc/elasticsearch/config"]:
       ensure => directory,
       mode   => '0755',
       owner  => 'root',
