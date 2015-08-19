@@ -1,6 +1,8 @@
 #/etc/puppet/modules/kibana_asf/manifests/init.pp
 
-class kibana_asf ($packages = ['lua5.2']) {
+class kibana_asf (
+    $packages = ['lua5.2']
+  ) {
 
   package { $packages:
     ensure => present,
