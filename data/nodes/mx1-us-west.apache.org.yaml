@@ -17,5 +17,12 @@ postfix::server::asf_mx_enabled: 'true'
 postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
 postfix::server::max_postfix_amavis_procs: '25'
 postfix::server::max_use_postfix_amavis: '25'
+postfix::server::smtpd_sender_restrictions: |
+  permit_mynetworks
+  reject_unknown_sender_domain
+  check_sender_access hash:/etc/postfix/sender_access
 
-
+postfix::dbfile:
+  sender_access:
+    content: |
+      foo@example.com
