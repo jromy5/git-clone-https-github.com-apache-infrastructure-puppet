@@ -1,5 +1,5 @@
 #!/usr/bin/env lua
-package.path = package.path .. ";/usr/local/etc/logging/?.lua"
+package.path = package.path .. ";/usr/local/etc/logproxy/?.lua"
 
 local redded = 0 -- number of redacted entries
 
