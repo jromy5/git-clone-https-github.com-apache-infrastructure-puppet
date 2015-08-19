@@ -12,4 +12,6 @@ elasticsearch::version: '1.7.0'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::instances:
-  - asful
+  asful:
+    config:
+      node.name: 'ul1-eu-central'
