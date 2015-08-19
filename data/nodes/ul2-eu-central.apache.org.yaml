@@ -15,3 +15,5 @@ elasticsearch::instances:
   asful:
     config:
       node.name: 'ul2-eu-central'
+      init_defaults:
+        ES_HEAP_SIZE: '31g'
