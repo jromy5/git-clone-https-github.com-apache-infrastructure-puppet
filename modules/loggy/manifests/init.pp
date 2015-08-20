@@ -6,15 +6,20 @@ class loggy (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
-  $packages       = ['python-inotify==0.6-test']
-
 ){
-  package { $packages:
-    ensure   => installed,
+  
+  package { 'elasticsearch==1.6.0':
+    ensure   => present,
+    require  => Package['python-pip'],
     provider => 'pip',
-    }
+  }
 
-  elasticsearch::python { 'elasticsearch': }
+  package { 'python-inotify==0.6-test':
+    ensure   => present,
+    require  => Package['python-pip'],
+    provider => 'pip',
+  }
+
 
   file {
     '/usr/local/etc/loggy':
