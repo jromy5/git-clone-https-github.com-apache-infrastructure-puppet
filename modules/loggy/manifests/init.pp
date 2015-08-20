@@ -10,9 +10,9 @@ class loggy (
 
 ){
   package { $packages:
-    ensure  => installed,
+    ensure   => installed,
     provider => 'pip',
- }
+    }
 
   file {
     '/usr/local/etc/loggy':
