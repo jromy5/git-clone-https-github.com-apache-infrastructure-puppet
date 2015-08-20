@@ -6,21 +6,26 @@ class loggy (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root'
+  $packages       = ['elasticsearch', 'python-inotify==0.6-test']
 
-){{
+){
+  package { $packages:
+    ensure  => installed,
+    provider => 'pip',
+ }
 
   file {
-    "/usr/local/etc/loggy":
+    '/usr/local/etc/loggy':
       ensure => directory,
       mode   => '0755',
       owner  => $username,
       group  => $group;
-    "/var/run/loggy":
+    '/var/run/loggy':
       ensure => directory,
       mode   => '0755',
       owner  => $username,
       group  => $group;
-    "/etc/init.d/loggy":
+    '/etc/init.d/loggy':
       mode   => '0755',
       owner  => $username,
       group  => $group,
