@@ -75,7 +75,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.m2/settings.xml':
-    ensure  => $::ensure,
+    ensure  => present,
     require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/settings.xml',
     owner   => 'jenkins',
@@ -85,7 +85,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.m2/toolchains.xml':
-    ensure  => $::ensure,
+    ensure  => present,
     require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/toolchains.xml',
     owner   => 'jenkins',
@@ -95,7 +95,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.buildr/settings.yaml':
-    ensure  => $::ensure,
+    ensure  => present,
     require => File['/home/jenkins/.buildr'],
     path    => '/home/jenkins/.buildr/settings.yaml',
     owner   => 'jenkins',
@@ -105,7 +105,7 @@ class build_slaves::jenkins (
   }
 
   file { '/home/jenkins/.npmrc':
-    ensure  => $::ensure,
+    ensure  => present,
     require => File['/home/jenkins'],
     path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
