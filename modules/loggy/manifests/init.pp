@@ -5,7 +5,7 @@ class loggy (
   $shell          = '/bin/bash',
   $service_ensure = 'running',
   $username       = 'root',
-  $group          = 'root'
+  $group          = 'root',
   $packages       = ['elasticsearch', 'python-inotify==0.6-test']
 
 ){
