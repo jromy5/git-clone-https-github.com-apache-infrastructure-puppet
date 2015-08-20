@@ -38,7 +38,7 @@ class loggy (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/loggy/loggy.py';
-    }
+    } ->
 
     service { $service_name:
         ensure    => $service_ensure,
