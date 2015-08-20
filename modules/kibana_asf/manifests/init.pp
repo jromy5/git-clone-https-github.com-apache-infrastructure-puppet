@@ -42,7 +42,7 @@ class kibana_asf (
   } ->
 
   exec { 'sed kibana config':
-    command => '/bin/sed "s/:9200\"/\/_query\", withCredentials: true}/" < /usr/local/etc/logproxy/kibana/config.js | /bin/sed "s/http/https/g" > /usr/local/etc/logproxy/kibana/config.js2 && mv /usr/local/etc/logproxy/kibana/config.js2 /usr/local/etc/logproxy/kibana/config.js', # lint:ignore:80chars
+    command => '/bin/sed "s/:9200\"/\/_query\", withCredentials: true}/" < /usr/local/etc/logproxy/kibana/config.js | /bin/sed "s/http/https/g" > /usr/local/etc/logproxy/kibana/config.js2 && /bin/mv /usr/local/etc/logproxy/kibana/config.js2 /usr/local/etc/logproxy/kibana/config.js', # lint:ignore:80chars
   }
 
 }
