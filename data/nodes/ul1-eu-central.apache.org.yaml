@@ -15,7 +15,7 @@ classes:
 vhosts_asf::modules::modules:
   ext_filter:
     name: 'ext_filter'
-    
+
 asful::nodename: 'ul1-eu-central'
 asful::nodeip: '10.91.64.150'
 
@@ -70,6 +70,12 @@ vhosts_asf::vhosts::vhosts:
         intype=application/json outtype=application/json \
         cmd="/usr/bin/lua5.2 /usr/local/etc/logproxy/frombrowser.lua"
       <Location /_query>
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthName "ASF Committers"
+          AuthType Basic
+          AuthBasicProvider ldap
+          Require valid-user
         <LimitExcept GET POST>
           Require all denied
         </LimitExcept>
@@ -79,5 +85,8 @@ vhosts_asf::vhosts::vhosts:
       </Location>
       # To be locked down eventually
       <Location /logstash>
+          <LimitExcept GET PUT POST>
+            Require all denied
+          </LimitExcept>
           ProxyPass http://10.91.64.150:9200/
       </Location>
