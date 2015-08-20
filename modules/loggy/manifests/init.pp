@@ -13,8 +13,8 @@ class loggy (
     ensure        => '1.6.0'
   }
 
-  python::pip { 'python-inotify' :
-    ensure        => '0.6-test'
+  python::pip { 'python-inotify==0.6-test' :
+    ensure        => present
   }
 
   file {
