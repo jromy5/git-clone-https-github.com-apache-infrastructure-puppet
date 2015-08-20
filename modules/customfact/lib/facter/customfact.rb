@@ -1,3 +1,5 @@
+require 'ipaddr'
+
 Facter.add("asfosrelease") do
   setcode do
     Facter::Util::Resolution.exec("facter operatingsystemrelease | sed -e 's/[[:punct:]]//g' | awk '{print tolower($0)}'")
@@ -80,3 +82,9 @@ Facter.add("oem") do
   end
 end
 
+Facter.add("masklength") do
+  setcode do
+    netmask = Facter.value('netmask')
+    IPAddr.new(netmask).to_i.to_s(2).count("1")
+  end
+end
