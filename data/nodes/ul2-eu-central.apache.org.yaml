@@ -2,6 +2,7 @@
 classes:
   - elasticsearch
   - asful
+  - loggy
   
 asful::nodename: 'ul2-eu-central'
 asful::nodeip: '10.91.64.151'
