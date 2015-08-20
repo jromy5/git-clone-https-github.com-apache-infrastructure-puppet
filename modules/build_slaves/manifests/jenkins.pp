@@ -84,6 +84,16 @@ class build_slaves::jenkins (
     content => template('build_slaves/m2_settings.erb')
   }
 
+  file { '/home/jenkins/.m2/toolchains.xml':
+    ensure  => $::ensure,
+    require => File['/home/jenkins/.m2'],
+    path    => '/home/jenkins/.m2/toolchains.xml',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0640',
+    source => 'puppet:///modules/build_slaves/toolchains.xml',
+  }
+
   file { '/home/jenkins/.buildr/settings.yaml':
     ensure  => $::ensure,
     require => File['/home/jenkins/.buildr'],
