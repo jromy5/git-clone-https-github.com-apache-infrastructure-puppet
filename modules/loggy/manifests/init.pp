@@ -9,13 +9,12 @@ class loggy (
 ){
   require python
 
-  python::pip { 'elasticsearch' :
-    ensure        => '1.6.0'
-  }
-
-  python::pip { 'python-inotify==0.6-test' :
-    ensure        => present
-  }
+  python::pip {
+    'elasticsearch' :
+      ensure        => '1.6.0';
+    'python-inotify==0.6-test' :
+      ensure        => present
+  } ->
 
   file {
     '/usr/local/etc/loggy':
