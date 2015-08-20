@@ -33,9 +33,6 @@ class loggy (
       owner  => $username,
       group  => $group,
       source => "puppet:///modules/loggy/loggy.${::asfosname}";
-    'loggy app dir':
-      ensure => directory,
-      path   => '/usr/local/etc/loggy';
     '/usr/local/etc/loggy/loggy.py':
       mode   => '0755',
       owner  => $username,
