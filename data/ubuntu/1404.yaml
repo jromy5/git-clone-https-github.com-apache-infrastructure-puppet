@@ -9,6 +9,7 @@ classes:
   - fail2ban_asf::config
   - orthrus
   - postfix::server
+  - python
   - subversionclient
 
 base::basepackages:
@@ -166,6 +167,9 @@ postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
 
 puppet::puppetconf:                      '/etc/puppet/puppet.conf'
+
+python::dev: true
+python::pip: true
 
 snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 

@@ -7,19 +7,15 @@ class loggy (
   $username       = 'root',
   $group          = 'root',
 ){
-  
-  package { 'elasticsearch==1.6.0':
-    ensure   => present,
-    require  => Package['python-pip'],
-    provider => 'pip',
+  require python
+
+  python::pip { 'elasticsearch' :
+    ensure        => '1.6.0'
   }
 
-  package { 'python-inotify==0.6-test':
-    ensure   => present,
-    require  => Package['python-pip'],
-    provider => 'pip',
+  python::pip { 'python-inotify' :
+    ensure        => '0.6-test'
   }
-
 
   file {
     '/usr/local/etc/loggy':
