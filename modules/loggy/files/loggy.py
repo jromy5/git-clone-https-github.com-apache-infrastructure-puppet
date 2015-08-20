@@ -233,9 +233,10 @@ gotindex = {}
 
 
 class NodeThread(Thread):
-    def assign(self, json, logtype):
+    def assign(self, json, logtype, xes):
         self.json = json
         self.logtype = logtype
+        self.xes = xes
 
     def run(self):
         global gotindex
@@ -245,8 +246,8 @@ class NodeThread(Thread):
         sys.stderr.flush()
         if not iname in gotindex:
             gotindex[iname] = True
-            if not es.indices.exists(iname):
-                es.indices.create(index = iname, body = {
+            if not self.xes.indices.exists(iname):
+                self.xes.indices.create(index = iname, body = {
                         "mappings" : {
                             "apache_access" : {
                                 "_all" : {"enabled" : True},
@@ -274,7 +275,7 @@ class NodeThread(Thread):
             
         if len(js_arr) > 0:
             #es.bulk(index=iname, doc_type=self.logtype, body = js_arr )
-            helpers.bulk(es, js_arr)
+            helpers.bulk(self.xes, js_arr)
         #except Exception as err:
             #print(err)
             
@@ -315,7 +316,7 @@ def parseLine(path, data):
 class Loggy(Thread):
     def run(self):
         global timeout, w, tuples, regexes, json_pending, last_push
-        es = connect_es()
+        xes = connect_es()
         while True:
             events = poll.poll(timeout)
             nread = 0
@@ -399,7 +400,7 @@ class Loggy(Thread):
             for x in tuples:
                 if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20:
                     t = NodeThread()
-                    t.assign(json_pending[x], x)
+                    t.assign(json_pending[x], x, xes)
                     t.start()
                     json_pending[x] = []
                     last_push[x] = time.time()
