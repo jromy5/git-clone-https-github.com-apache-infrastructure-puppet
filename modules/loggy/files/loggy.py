@@ -266,7 +266,7 @@ class NodeThread(Thread):
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             if 'bytes' in js and js['bytes'].isdigit():
-                js['bytes'] = int(js['bytes'])
+                js['bytes_int'] = int(js['bytes'])
             js_arr.append({
                 '_op_type': 'index',
                 '_index': iname,
