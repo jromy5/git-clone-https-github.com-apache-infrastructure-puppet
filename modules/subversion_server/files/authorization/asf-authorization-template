@@ -218,6 +218,8 @@ httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=groups,dc=apache,dc=org}
 httpd-pmc={reuse:pit-authorization:httpd-pmc}
+ignite={ldap:cn=ignite,ou=groups,dc=apache,dc=org}
+ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
@@ -225,7 +227,6 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
-ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov,evansye,av,ivasilinets,ntikhonov,murador,maketo
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -922,6 +923,9 @@ ea = rw
 @incubator-pmc = rw
 @member = rw
 
+[/ignite]
+@ignite = rw
+
 [/incubator/agila]
 * = r
 
@@ -975,9 +979,6 @@ ea = rw
 
 [/incubator/htrace]
 @htrace = rw
-
-[/incubator/ignite]
-@ignite = rw
 
 [/incubator/johnzon/site]
 @incubator = rw
