@@ -90,3 +90,13 @@ vhosts_asf::vhosts::vhosts:
           </LimitExcept>
           ProxyPass http://10.91.64.150:9200/
       </Location>
+      <Location /k4>
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute member
+          AuthName "ASF Infrastructure-root Only"
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          ProxyPass http://127.0.0.1:5602/
+      </Location>
