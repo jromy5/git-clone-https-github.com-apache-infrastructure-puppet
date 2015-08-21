@@ -33,7 +33,7 @@ class kibana_asf (
 
 
   exec { 'download kibana 3':
-    command => '/usr/bin/curl -o /tmp/kibana.tgz https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz', # lint:ignore:80chars
+    command => '/usr/bin/curl -o /tmp/kibana.tgz https://download.elasticsearch.org/kibana/kibana/kibana-3.1.3.tar.gz', # lint:ignore:80chars
     unless  => '/bin/ls /tmp/ | /bin/grep -qs kibana.tgz',
   } ->
 
