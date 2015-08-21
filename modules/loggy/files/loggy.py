@@ -252,7 +252,8 @@ class NodeThread(Thread):
                             "apache_access" : {
                                 "_all" : {"enabled" : True},
                                 "properties" : {
-                                    "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"}
+                                    "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
+                                    "url" : { "store": True, "type" : "string", "index": "not_analyzed"},
                                 }
                             }
                         }
@@ -265,6 +266,10 @@ class NodeThread(Thread):
             js['@version'] = 1
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
+            if 'request' in js and not 'url' in js:
+                match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+")
+                if match:
+                    js['url'] = match.group(2)
             if 'bytes' in js and js['bytes'].isdigit():
                 js['bytes_int'] = int(js['bytes'])
             js_arr.append({
