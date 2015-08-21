@@ -371,6 +371,8 @@ samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp,asuresh,gqshen,tuongtruong,vamsee,xiaom,colin
+serf={ldap:cn=serf,ou=groups,dc=apache,dc=org}
+serf-pmc={reuse:pit-authorization:serf-pmc}
 servicemix={ldap:cn=servicemix,ou=groups,dc=apache,dc=org}
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
 shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
@@ -1519,6 +1521,9 @@ ea = rw
 
 [/santuario]
 @santuario = rw
+
+[/serf]
+@serf = rw
 
 [/servicemix]
 @servicemix=rw
