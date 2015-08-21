@@ -85,7 +85,7 @@ vhosts_asf::vhosts::vhosts:
       </Location>
       # To be locked down eventually
       <Location /logstash>
-          <LimitExcept GET PUT POST>
+          <LimitExcept HEAD PUT POST>
             Require all denied
           </LimitExcept>
           ProxyPass http://10.91.64.150:9200/
