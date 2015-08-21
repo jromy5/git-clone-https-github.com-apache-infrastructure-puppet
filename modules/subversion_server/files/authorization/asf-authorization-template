@@ -218,6 +218,8 @@ httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=groups,dc=apache,dc=org}
 httpd-pmc={reuse:pit-authorization:httpd-pmc}
+ignite={ldap:cn=ignite,ou=groups,dc=apache,dc=org}
+ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
@@ -225,7 +227,6 @@ httpd-pmc={reuse:pit-authorization:httpd-pmc}
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
-ignite=brane,cos,hsaputra,rvs,stack,agoncharuk,dsetrakyan,isterin,nivanov,sboikov,sergi,skhisamov,vkulichenko,vozerov,yzhdanov,anovikov,akuznetsov,sevdokimov,evansye,av,ivasilinets,ntikhonov,murador,maketo
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -256,7 +257,8 @@ kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
 labs-pmc={reuse:pit-authorization:labs-pmc}
-lens=amareshwari,arshadmatin,cdouglas,gunther,himanshugahlaut,jbonofre,jdhok,jghoman,prongs,raghavsingh,sharad,sreekanth,sriksun,sumasai,vikram,vinodkv
+lens={ldap:cn=lens,ou=groups,dc=apache,dc=org}
+lens-pmc={reuse:pit-authorization:lens-pmc}
 libcloud={ldap:cn=libcloud,ou=groups,dc=apache,dc=org}
 libcloud-pmc={reuse:pit-authorization:libcloud-pmc}
 logging-pmc={reuse:pit-authorization:logging-pmc}
@@ -369,6 +371,8 @@ samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp,asuresh,gqshen,tuongtruong,vamsee,xiaom,colin
+serf={ldap:cn=serf,ou=groups,dc=apache,dc=org}
+serf-pmc={reuse:pit-authorization:serf-pmc}
 servicemix={ldap:cn=servicemix,ou=groups,dc=apache,dc=org}
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
 shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
@@ -442,7 +446,8 @@ tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
 twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh,hsaputra,ashau,poorna
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
 uima-pmc={reuse:pit-authorization:uima-pmc}
-usergrid=snoopdave,jfarrell,jim,lewismc,lresende,timanglade,stliu,sfeldman,rockerston,sungju
+usergrid={ldap:cn=usergrid,ou=groups,dc=apache,dc=org}
+usergrid-pmc={reuse:pit-authorization:usergrid-pmc}
 vcl={ldap:cn=vcl,ou=groups,dc=apache,dc=org}
 vcl-pmc={reuse:pit-authorization:vcl-pmc}
 velocity={ldap:cn=velocity,ou=groups,dc=apache,dc=org}
@@ -922,6 +927,9 @@ ea = rw
 @incubator-pmc = rw
 @member = rw
 
+[/ignite]
+@ignite = rw
+
 [/incubator/agila]
 * = r
 
@@ -976,9 +984,6 @@ ea = rw
 [/incubator/htrace]
 @htrace = rw
 
-[/incubator/ignite]
-@ignite = rw
-
 [/incubator/johnzon/site]
 @incubator = rw
 
@@ -996,9 +1001,6 @@ ea = rw
 
 [/incubator/lcf]
 @lucene-connectors = rw
-
-[/incubator/lens]
-@lens = rw
 
 [/incubator/log4cxx]
 @log4cxx = rw
@@ -1097,9 +1099,6 @@ ea = rw
 
 [/incubator/twill]
 @twill = rw
-
-[/incubator/usergrid]
-@usergrid = rw
 
 [/incubator/wadi]
 * = r
@@ -1205,6 +1204,9 @@ ea = rw
 
 [/labs]
 @committers  = rw
+
+[/lens]
+@lens = rw
 
 [/lenya]
 @attic-pmc = rw
@@ -1518,6 +1520,9 @@ ea = rw
 [/santuario]
 @santuario = rw
 
+[/serf]
+@serf = rw
+
 [/servicemix]
 @servicemix=rw
 
@@ -1678,6 +1683,9 @@ svn-role = rw
 
 [/uima]
 @uima = rw
+
+[/usergrid]
+@usergrid = rw
 
 [/vcl]
 @vcl = rw

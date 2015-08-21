@@ -144,6 +144,8 @@ httpcomponents={reuse:asf-authorization:httpcomponents}
 httpcomponents-pmc={ldap:cn=httpcomponents,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 httpd={reuse:asf-authorization:httpd}
 httpd-pmc={ldap:cn=httpd,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ignite={reuse:asf-authorization:ignite}
+ignite-pmc={ldap:cn=ignite,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # imperius={reuse:asf-authorization:# imperius}
 incubator={reuse:asf-authorization:incubator}
 incubator-pmc={ldap:cn=incubator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
@@ -172,6 +174,8 @@ knox-pmc={ldap:cn=knox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 kafka={reuse:asf-authorization:kafka}
 kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 labs-pmc={ldap:cn=labs,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+lens={reuse:asf-authorization:lens}
+lens-pmc={ldap:cn=lens,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 libcloud={reuse:asf-authorization:libcloud}
 libcloud-pmc={ldap:cn=libcloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 logging={reuse:asf-authorization:logging}
@@ -265,6 +269,8 @@ samza-pmc={ldap:cn=samza,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 santuario={reuse:asf-authorization:santuario}
 santuario-pmc={ldap:cn=santuario,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 sentry={reuse:asf-authorization:sentry}
+serf={reuse:asf-authorization:serf}
+serf-pmc={ldap:cn=serf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 servicemix={reuse:asf-authorization:servicemix}
 servicemix-pmc={ldap:cn=servicemix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 shindig={reuse:asf-authorization:shindig}
@@ -328,6 +334,8 @@ tuscany={reuse:asf-authorization:tuscany}
 tuscany-pmc={ldap:cn=tuscany,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 uima={reuse:asf-authorization:uima}
 uima-pmc={ldap:cn=uima,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+usergrid={reuse:asf-authorization:usergrid}
+usergrid-pmc={ldap:cn=usergrid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 vcl={reuse:asf-authorization:vcl}
 vcl-pmc={ldap:cn=vcl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 velocity={reuse:asf-authorization:velocity}
