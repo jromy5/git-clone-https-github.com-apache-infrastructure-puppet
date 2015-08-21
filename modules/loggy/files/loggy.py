@@ -267,7 +267,7 @@ class NodeThread(Thread):
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             if 'request' in js and not 'url' in js:
-                match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+")
+                match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+", js['request'])
                 if match:
                     js['url'] = match.group(2)
             if 'bytes' in js and js['bytes'].isdigit():
