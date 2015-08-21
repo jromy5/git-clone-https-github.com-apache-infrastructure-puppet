@@ -446,7 +446,8 @@ tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
 twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh,hsaputra,ashau,poorna
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
 uima-pmc={reuse:pit-authorization:uima-pmc}
-usergrid=snoopdave,jfarrell,jim,lewismc,lresende,timanglade,stliu,sfeldman,rockerston,sungju
+usergrid={ldap:cn=usergrid,ou=groups,dc=apache,dc=org}
+usergrid-pmc={reuse:pit-authorization:usergrid-pmc}
 vcl={ldap:cn=vcl,ou=groups,dc=apache,dc=org}
 vcl-pmc={reuse:pit-authorization:vcl-pmc}
 velocity={ldap:cn=velocity,ou=groups,dc=apache,dc=org}
@@ -1099,9 +1100,6 @@ ea = rw
 [/incubator/twill]
 @twill = rw
 
-[/incubator/usergrid]
-@usergrid = rw
-
 [/incubator/wadi]
 * = r
 
@@ -1685,6 +1683,9 @@ svn-role = rw
 
 [/uima]
 @uima = rw
+
+[/usergrid]
+@usergrid = rw
 
 [/vcl]
 @vcl = rw

@@ -268,9 +268,9 @@ samza={reuse:asf-authorization:samza}
 samza-pmc={ldap:cn=samza,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 santuario={reuse:asf-authorization:santuario}
 santuario-pmc={ldap:cn=santuario,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+sentry={reuse:asf-authorization:sentry}
 serf={reuse:asf-authorization:serf}
 serf-pmc={ldap:cn=serf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-sentry={reuse:asf-authorization:sentry}
 servicemix={reuse:asf-authorization:servicemix}
 servicemix-pmc={ldap:cn=servicemix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 shindig={reuse:asf-authorization:shindig}
@@ -334,6 +334,8 @@ tuscany={reuse:asf-authorization:tuscany}
 tuscany-pmc={ldap:cn=tuscany,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 uima={reuse:asf-authorization:uima}
 uima-pmc={ldap:cn=uima,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+usergrid={reuse:asf-authorization:usergrid}
+usergrid-pmc={ldap:cn=usergrid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 vcl={reuse:asf-authorization:vcl}
 vcl-pmc={ldap:cn=vcl,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 velocity={reuse:asf-authorization:velocity}
