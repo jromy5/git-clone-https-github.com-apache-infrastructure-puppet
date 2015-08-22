@@ -204,7 +204,7 @@ class Daemonize:
 w = watcher.AutoWatcher()
 
 
-paths = ['/var/log/apache2/', '/var/log/', '/var/log/tomcat/']
+paths = ['/var/log/apache2/', '/var/log/', '/var/log/tomcat/', '/x1/log']
 filehandles = {}
 json_pending = {}
 last_push = {}
