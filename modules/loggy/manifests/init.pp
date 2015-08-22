@@ -42,6 +42,6 @@ class loggy (
     service { $service_name:
         ensure    => $service_ensure,
         enable    => true,
-        hasstatus => false,
+        hasstatus => true,
     }
 }
