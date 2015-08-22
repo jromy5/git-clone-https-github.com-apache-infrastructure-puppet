@@ -14,9 +14,9 @@
 
 loggy_user=${loggy_user-"root"}
 loggy_group=${loggy_group-"root"}
-loggy_pidfile=${loggy_pidfile-"/var/run/loggy/loggy.pid"}
+loggy_pidfile=${loggy_pidfile-"/var/run/loggy.pid"}
 loggy_config=${loggy_config-"/usr/local/etc/loggy/loggy.conf"}
-loggy_logfile=${loggy_logfile-"/var/log/loggy/loggy.log"}
+loggy_logfile=${loggy_logfile-"/var/log/loggy.log"}
 loggy_appdir=${loggy_appdir-"/usr/local/etc/loggy"}
 pidfile="${loggy_pidfile}"
 
