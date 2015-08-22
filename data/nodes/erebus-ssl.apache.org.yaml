@@ -9,6 +9,7 @@ classes:
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
+  - loggy
 
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
