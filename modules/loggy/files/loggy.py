@@ -282,7 +282,7 @@ class NodeThread(Thread):
                 match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+", js['request'])
                 if match:
                     js['url'] = match.group(2)
-            if 'bytes' in js and js['bytes'].isdigit():
+            if 'bytes' in js and isinstance(js['bytes'], basestring) and js['bytes'].isdigit():
                 js['bytes_int'] = int(js['bytes'])
             js_arr.append({
                 '_op_type': 'index',
@@ -350,7 +350,7 @@ def parseLine(path, data):
 class Loggy(Thread):
     def run(self):
         global timeout, w, tuples, regexes, json_pending, last_push, config
-        
+        fp = {}
         w = watcher.AutoWatcher()
         for path in config.get('Analyzer','paths').split(","):
             try:
@@ -450,7 +450,7 @@ class Loggy(Thread):
                           #      print(path + " was modified")
                                 rd = 0
                                 data = ""
-                                print("Change in " + path)
+                                #print("Change in " + path)
                                 try:
                                     while True:
                                         line = filehandles[path].readline()
@@ -460,7 +460,7 @@ class Loggy(Thread):
                                         else:
                                             rd += len(line)
                                             data += line
-                                    print("Read %u bytes from %s" % (rd, path))
+                                    #print("Read %u bytes from %s" % (rd, path))
                                     parseLine(path, data)
                                 except Exception as err:
                                     try:
@@ -493,8 +493,11 @@ class Loggy(Thread):
                         print(err)
                         
         
-            for x in tuples:
+            for x in json_pending:
                 if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20:
+                    if not x in fp:
+                        fp[x] = True
+                        print("First push for " + x + "!")
                     t = NodeThread()
                     t.assign(json_pending[x], x, xes)
                     t.start()
