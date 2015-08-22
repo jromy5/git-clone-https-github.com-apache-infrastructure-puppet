@@ -372,7 +372,7 @@ class Loggy(Thread):
 
         inodes = {}
         inodes_path = {}
-        xes = connect_es()
+        xes = connect_es(config)
         while True:
             events = poll.poll(timeout)
             nread = 0
