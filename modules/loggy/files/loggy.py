@@ -323,6 +323,8 @@ def parseLine(path, data):
 class Loggy(Thread):
     def run(self):
         global timeout, w, tuples, regexes, json_pending, last_push
+        inodes = {}
+        inodes_path = {}
         xes = connect_es()
         while True:
             events = poll.poll(timeout)
@@ -351,19 +353,37 @@ class Loggy(Thread):
                     try:
                         if not u'IN_ISDIR' in masks:
                             
-                            if (not u'IN_DELETE' in masks) and (not path in filehandles) and (path.find(".gz") == -1):
+                            if (u'IN_MOVED_FROM' in masks) and (path in filehandles):
+                                print("File moved, closing original handle")
+                                try:
+                                    filehandles[path].close()
+                                except Exception as err:
+                                    print(err)
+                                del filehandles[path]
+                                inode = inodes_path[path]
+                                del inodes[inode]
+                                
+                            elif (not u'IN_DELETE' in masks) and (not path in filehandles) and (path.find(".gz") == -1):
                                 try:
                                     print("Opening " + path)
-                                    filehandles[path] = open(path, "r")
-                                    print("Started watching " + path)
-                                    filehandles[path].seek(0,2)
+                                    idata = os.stat(path)
+                                    inode = idata.st_ino
+                                    if not inode in inodes:
+                                        filehandles[path] = open(path, "r")
+                                        print("Started watching " + path)
+                                        filehandles[path].seek(0,2)
+                                        inodes[inode] = path
+                                        inodes_path[path] = inode
+                                        
                                 except Exception as err:
                                     print(err)
                                     try:
                                         filehandles[path].close()
-                                    except:
-                                        pass
+                                    except Exception as err:
+                                        print(err)
                                     del filehandles[path]
+                                    inode = inodes_path[path]
+                                    del inodes[inode]
                                     
                             # First time we've discovered this file?
                             if u'IN_CLOSE_NOWRITE' in masks and not path in filehandles:
@@ -383,6 +403,7 @@ class Loggy(Thread):
                           #      print(path + " was modified")
                                 rd = 0
                                 data = ""
+                                print("Change in " + path)
                                 try:
                                     while True:
                                         line = filehandles[path].readline()
@@ -391,14 +412,17 @@ class Loggy(Thread):
                                             break
                                         rd += len(line)
                                         data += line
-                                  #  print("Read %u bytes.." % rd)
+                                    print("Read %u bytes from %s" % (rd, path))
                                     parseLine(path, data)
                                 except:
                                     try:
+                                        print("Could not utilize " + path + ", closing..")
                                         filehandles[path].close()
-                                    except:
-                                        pass
+                                    except Exception as err:
+                                        print(err)
                                     del filehandles[path]
+                                    inode = inodes_path[path]
+                                    del inodes[inode]
                             
                             
                             # File deleted? (close handle)
@@ -407,10 +431,12 @@ class Loggy(Thread):
                                     print("Closed " + path)
                                     try:
                                         filehandles[path].close()
-                                    except:
-                                        pass
+                                    except Exception as err:
+                                        print(err)
                                     del filehandles[path]
-                                   # print("Stopped watching " + path)
+                                    inode = inodes_path[path]
+                                    del inodes[inode]
+                                    print("Stopped watching " + path)
                             
                             else:
                                 pass
