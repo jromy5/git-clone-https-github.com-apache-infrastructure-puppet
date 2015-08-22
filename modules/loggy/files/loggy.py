@@ -25,7 +25,6 @@ if hostname.find(".apache.org") == -1:
     hostname = hostname + ".apache.org"
 
 
-
 regexes = {
     'apache_access': re.compile( 
             r"(?P<client_ip>[\d\.]+)\s" 
@@ -262,7 +261,7 @@ class NodeThread(Thread):
             
         js_arr = []
         for entry in self.json:
-            js = entry._asdict()
+            js = entry
             js['@version'] = 1
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
@@ -305,16 +304,31 @@ def connect_es():
 def parseLine(path, data):
     global json_pending
     for line in (l.rstrip() for l in data.split("\n")):
-        for r in regexes:
-            match = regexes[r].match(line)
-            if match:
-                if not r == 'apache_access':
-                    print("Found a " + r + " match")
-                js = tuples[r]( filepath=path, logtype=r, timestamp = time.time() , **match.groupdict())
-                json_pending[r].append(js)
-                if not r == 'apache_access':
-                    print("Appended a " + r + " match")
-                break
+        m = re.match(r"^<%JSON:([^>%]+)%>\s*(.+)", line)
+        if m:
+            try:
+                js = json.loads(m.group(2))
+                js['filepath'] = path
+                js['timestamp'] = time.time()
+                js['logtype'] = m.group(1)
+                if not js['logtype'] in json_pending:
+                    json_pending[js['logtype']] = []
+                    last_push[js['logtype']] = time.time()
+                    print("got our first valid json as " + js['logtype'] + "!")
+                json_pending[js['logtype']].append(js)
+            except:
+                pass
+        else:
+            for r in regexes:
+                match = regexes[r].match(line)
+                if match:
+                    if not r == 'apache_access':
+                        print("Found a " + r + " match")
+                    js = tuples[r]( filepath=path, logtype=r, timestamp = time.time() , **match.groupdict())
+                    json_pending[r].append(js._asdict())
+                    if not r == 'apache_access':
+                        print("Appended a " + r + " match")
+                    break
 
 
 
@@ -410,13 +424,14 @@ class Loggy(Thread):
                                         if not line:
                                             #filehandles[path].seek(0,2)
                                             break
-                                        rd += len(line)
-                                        data += line
+                                        else:
+                                            rd += len(line)
+                                            data += line
                                     print("Read %u bytes from %s" % (rd, path))
                                     parseLine(path, data)
-                                except:
+                                except Exception as err:
                                     try:
-                                        print("Could not utilize " + path + ", closing..")
+                                        print("Could not utilize " + path + ", closing.." + err)
                                         filehandles[path].close()
                                     except Exception as err:
                                         print(err)
