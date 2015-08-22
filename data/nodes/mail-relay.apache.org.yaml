@@ -3,6 +3,7 @@ classes:
   - dovecot
   - mail_relay
   - ssl::name::wildcard_apache_org
+  - loggy
 
 dovecot::dovecot_packages:
   - dovecot-core
