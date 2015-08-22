@@ -37,6 +37,11 @@ class loggy (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/loggy/loggy.py';
+    '/usr/local/etc/loggy/loggy.cfg':
+      mode   => '0755',
+      owner  => $username,
+      group  => $group,
+      source => 'puppet:///modules/loggy/loggy.cfg';
     } ->
 
     service { $service_name:

@@ -38,9 +38,12 @@ from threading import Thread
 import random, atexit, signal, inspect
 from threading import Lock
 import subprocess, collections, argparse, grp, pwd, shutil
+import ConfigParser
 
 # ElasticSearch
 from elasticsearch import Elasticsearch, helpers
+
+config = ConfigParser.ConfigParser()
 
 paths = ['/var/log/', '/x1/log']
 
@@ -225,10 +228,6 @@ class Daemonize:
 		start() or restart()."""
 
 
-w = watcher.AutoWatcher()
-
-
-
 filehandles = {}
 json_pending = {}
 last_push = {}
@@ -237,24 +236,7 @@ for t in tuples:
     json_pending[t] = []
     last_push[t] = time.time()
 
-for path in paths:
-    try:
-        w.add_all(path, inotify.IN_ALL_EVENTS)
-    except OSError as err:
-        pass
-    
-if not w.num_watches():
-    sys.exit(1)
-
-poll = select.poll()
-poll.register(w, select.POLLIN)
-
-timeout = None
-
-threshold = watcher.Threshold(w, 256)
-
 gotindex = {}
-
 
 class NodeThread(Thread):
     def assign(self, json, logtype, xes):
@@ -263,7 +245,7 @@ class NodeThread(Thread):
         self.xes = xes
 
     def run(self):
-        global gotindex
+        global gotindex, config
         random.seed(time.time())
         #print("Pushing %u json objects" % len(json_pending))
         iname = time.strftime("logstash-%Y.%m.%d")
@@ -271,16 +253,22 @@ class NodeThread(Thread):
         if not iname in gotindex:
             gotindex[iname] = True
             if not self.xes.indices.exists(iname):
-                self.xes.indices.create(index = iname, body = {
-                        "mappings" : {
-                            "apache_access" : {
-                                "_all" : {"enabled" : True},
-                                "properties" : {
-                                    "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
-                                    "url" : { "store": True, "type" : "string", "index": "not_analyzed"},
-                                }
-                            }
+                mappings = {}
+                for entry in config.items('RawFields'):
+                    js = {
+                        "_all" : {"enabled" : True},
+                        "properties": {
+                            "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"}
                         }
+                    }
+                    for field in config.get('RawFields', entry).split(","):
+                        x = field.strip()
+                        js['properties'][x] = {"store": True, "index": "not_analyzed"}
+                    
+                    mappings[entry] = js
+                    
+                self.xes.indices.create(index = iname, body = {
+                        "mappings" : mappings
                     }
                 )
             
@@ -311,10 +299,10 @@ class NodeThread(Thread):
             #print(err)
             
 
-def connect_es():
+def connect_es(config):
     esx = Elasticsearch([
         {
-            'host': 'ul1-eu-central.apache.org',
+            'host': config.get('ElasticSearch', 'host'),
             'port': 443,
             'url_prefix': 'logstash',
             'use_ssl': True
@@ -327,7 +315,7 @@ def connect_es():
 
 
 def parseLine(path, data):
-    global json_pending
+    global json_pending, config
     for line in (l.rstrip() for l in data.split("\n")):
         m = re.match(r"^<%JSON:([^>%]+)%>\s*(.+)", line)
         if m:
@@ -361,7 +349,27 @@ def parseLine(path, data):
 
 class Loggy(Thread):
     def run(self):
-        global timeout, w, tuples, regexes, json_pending, last_push
+        global timeout, w, tuples, regexes, json_pending, last_push, config
+        
+        w = watcher.AutoWatcher()
+        for path in config.get('Analyzer','paths').split(","):
+            try:
+                print("Recursively monitoring " + path.strip() + "...")
+                w.add_all(path.strip(), inotify.IN_ALL_EVENTS)
+            except OSError as err:
+                pass
+            
+        if not w.num_watches():
+            print("No paths to analyze, nothing to do!")
+            sys.exit(1)
+        
+        poll = select.poll()
+        poll.register(w, select.POLLIN)
+        
+        timeout = None
+        
+        threshold = watcher.Threshold(w, 256)
+
         inodes = {}
         inodes_path = {}
         xes = connect_es()
@@ -547,6 +555,8 @@ if args.kill:
     daemon = MyDaemon(pidfile)
     daemon.stop()
 else:
+    config.read("loggy.cfg")
+    
     if args.daemon:
         print("Daemonizing...")
         daemon = MyDaemon(pidfile)
