@@ -52,7 +52,7 @@ case "$1" in
         start
         ;;
     status)
-        PID=`cat /var/run/loggy.pid`
+        PID=`cat $loggy_pidfile`
         if ps -p $PID > /dev/null
         then
             echo "Loggy is running, yay!"
