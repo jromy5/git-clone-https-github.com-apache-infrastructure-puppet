@@ -358,7 +358,12 @@ class Loggy(Thread):
                                     print("Started watching " + path)
                                     filehandles[path].seek(0,2)
                                 except Exception as err:
-                                    print(err)         
+                                    print(err)
+                                    try:
+                                        filehandles[path].close()
+                                    except:
+                                        pass
+                                    del filehandles[path]
                                     
                             # First time we've discovered this file?
                             if u'IN_CLOSE_NOWRITE' in masks and not path in filehandles:
@@ -378,22 +383,32 @@ class Loggy(Thread):
                           #      print(path + " was modified")
                                 rd = 0
                                 data = ""
-                                while True:
-                                    line = filehandles[path].readline()
-                                    if not line:
-                                        #filehandles[path].seek(0,2)
-                                        break
-                                    rd += len(line)
-                                    data += line
-                              #  print("Read %u bytes.." % rd)
-                                parseLine(path, data)
+                                try:
+                                    while True:
+                                        line = filehandles[path].readline()
+                                        if not line:
+                                            #filehandles[path].seek(0,2)
+                                            break
+                                        rd += len(line)
+                                        data += line
+                                  #  print("Read %u bytes.." % rd)
+                                    parseLine(path, data)
+                                except:
+                                    try:
+                                        filehandles[path].close()
+                                    except:
+                                        pass
+                                    del filehandles[path]
                             
                             
                             # File deleted? (close handle)
                             elif u'IN_DELETE' in masks:
                                 if path in filehandles:
                                     print("Closed " + path)
-                                    filehandles[path].close()
+                                    try:
+                                        filehandles[path].close()
+                                    except:
+                                        pass
                                     del filehandles[path]
                                    # print("Stopped watching " + path)
                             
