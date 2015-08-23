@@ -40,7 +40,7 @@ if p then
     p:close()
     for host in data:gmatch("host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
-        table.insert(hosts, ([[host:"%s.apache.org"]]):format(host))
+        table.insert(hosts, ([[@node:"%s.apache.org"]]):format(host))
         if host == "*" then
             allHosts = true
         end

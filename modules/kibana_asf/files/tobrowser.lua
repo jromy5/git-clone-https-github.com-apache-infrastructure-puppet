@@ -19,7 +19,7 @@ end
 user = user:gsub("[^-a-zA-Z0-9_.]+", "")
 
 -- Construct a list of valid hosts to retain data for
-local p = io.popen("ldapsearch -x -LLL uid="..user .. " host log-access-host", "r")
+local p = io.popen("ldapsearch -x -LLL uid="..user .. " host log-access-host log-access-vhost", "r")
 if p then
     local data = p:read("*a")
     p:close()
@@ -28,6 +28,10 @@ if p then
         table.insert(hosts, host .. ".apache.org")
     end
     for host in data:gmatch("log-access-host: ([^\r\n]+)") do
+        host = host:gsub("%.apache%.org", "")
+        table.insert(hosts, host .. ".apache.org")
+    end
+    for host in data:gmatch("log-access-vhost: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
         table.insert(hosts, host .. ".apache.org")
     end
