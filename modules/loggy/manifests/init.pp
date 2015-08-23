@@ -48,5 +48,9 @@ class loggy (
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => true,
+        subscribe => [
+          File['/usr/local/etc/loggy/loggy.py'],
+          File['/usr/local/etc/loggy/loggy.cfg']
+        ]
     }
 }
