@@ -263,7 +263,7 @@ class NodeThread(Thread):
                     }
                     for field in config.get('RawFields', entry).split(","):
                         x = field.strip()
-                        js['properties'][x] = {"store": True, "index": "not_analyzed"}
+                        js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed"}
                     
                     mappings[entry] = js
                     
