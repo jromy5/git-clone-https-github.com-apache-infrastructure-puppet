@@ -16,11 +16,11 @@
 # limitations under the License.
 #
 
-# Loggy (Jr) - A log file gobbler
+# Loggy (Jr) - A log file gobbler for Python 2.7
 #
 # Example:
 #  loggy.py --daemonize
-#
+#  requires loggy.cfg (and elasticsearch + python-inotify)
 
 
 from inotify import watcher
