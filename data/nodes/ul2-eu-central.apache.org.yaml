@@ -7,6 +7,7 @@ classes:
   - apache::mod::proxy_http
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
+  - vhost_asf::modules
   - asful
   
 asful::nodename: 'ul2-eu-central'
@@ -45,6 +46,11 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+vhosts_asf::modules::modules:
+  allowmethods:
+    name: 'allowmethods'
+
+
 vhosts_asf::vhosts::vhosts:
   logsearch-ssl:
     vhost_name: '*'
@@ -60,8 +66,6 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'logsearch.apache.org.error.log'
     custom_fragment: |
       <Location /logstash>
-          <LimitExcept HEAD PUT POST>
-            Require all denied
-          </LimitExcept>
-          ProxyPass http://10.91.64.151:9200/
+        AllowMethods POST PUT HEAD
+        ProxyPass http://10.91.64.151:9200/
       </Location>
