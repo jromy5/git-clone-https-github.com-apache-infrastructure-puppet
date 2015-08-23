@@ -4,6 +4,7 @@ classes:
   - apache::mod::actions
   - apache::mod::autoindex
   - apache::mod::expires
+  - apache::mod::geoip
   - apache::mod::negotiation
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -57,6 +58,7 @@ apache::mod::event::serverlimit:             '25'
 apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
+apache::mod::geoip::enable:                  true
 apache::mod::status::allow_from: 
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
