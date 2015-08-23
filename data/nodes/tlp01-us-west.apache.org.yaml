@@ -20,6 +20,7 @@ classes:
   - datadog_agent::integrations::apache
   - datadog_agent::integrations::http_check
   - httpd_modules::mod_asf_mirrorcgi
+  - loggy
   - rootbin_asf
   - rsync
   - rsync::server

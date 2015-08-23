@@ -5,6 +5,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - cwiki_asf
+  - loggy
   - ssl::name::cwiki_apache_org 
   - vhosts_asf::vhosts
 
