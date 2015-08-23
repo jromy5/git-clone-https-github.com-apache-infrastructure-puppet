@@ -58,7 +58,10 @@ apache::mod::event::serverlimit:             '25'
 apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
+
 apache::mod::geoip::enable:                  true
+apache::mod::geoip::flag:                    'MemoryCache'
+
 apache::mod::status::allow_from: 
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
