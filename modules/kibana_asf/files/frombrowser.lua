@@ -34,7 +34,7 @@ user = user:gsub("[^-a-zA-Z0-9_.]+", "")
 -- Construct a list of valid hosts to retain data for
 local hosts = {}
 local allHosts = false
-local p = io.popen("ldapsearch -x -LLL uid="..user .. " host log-access-host", "r")
+local p = io.popen("ldapsearch -x -LLL uid="..user .. " host log-access-host log-access-vhost", "r")
 if p then
     local data = p:read("*a")
     p:close()
