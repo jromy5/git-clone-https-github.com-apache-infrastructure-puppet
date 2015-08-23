@@ -306,6 +306,12 @@ def connect_es(config):
             'port': 443,
             'url_prefix': 'logstash',
             'use_ssl': True
+            },
+        {
+            'host': config.get('ElasticSearch', 'backup'),
+            'port': 443,
+            'url_prefix': 'logstash',
+            'use_ssl': True
             }
     ],
         max_retries=5,
