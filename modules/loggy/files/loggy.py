@@ -302,20 +302,24 @@ class NodeThread(Thread):
             
 
 def connect_es(config):
-    esx = Elasticsearch([
-        {
-            'host': config.get('ElasticSearch', 'host'),
-            'port': 443,
-            'url_prefix': 'logstash',
-            'use_ssl': True
-            },
-        {
-            'host': config.get('ElasticSearch', 'backup'),
-            'port': 443,
-            'url_prefix': 'logstash',
-            'use_ssl': True
-            }
-    ],
+    esa = []
+    for w in ['Primary', 'Backup']:
+        if config.has_section("ElasticSearch:" + w):
+            h = config.get("ElasticSearch:" + w, "host")
+            p = int(config.get("ElasticSearch:" + w, "port")) if config.has_option("ElasticSearch:" + w, "port") else 9200
+            s = config.get("ElasticSearch:" + w, "ssl") if config.has_option("ElasticSearch:" + w, "ssl") else ""
+            s = True if s == 'true' else False
+            u = config.get("ElasticSearch:" + w, "prefix") if config.has_option("ElasticSearch:" + w, "prefix") else ""
+            esa.append({
+                'host': h,
+                'port': p,
+                'use_ssl': s,
+                'url_prefix': u
+            })
+            print("Using http%s://%s:%u/%s as %s" % ("s" if s else "", h, p, u, w))
+        
+    esx = Elasticsearch(
+        esa,
         max_retries=5,
         retry_on_timeout=True
     )
