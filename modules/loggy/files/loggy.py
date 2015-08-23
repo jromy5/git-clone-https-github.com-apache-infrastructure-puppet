@@ -258,7 +258,8 @@ class NodeThread(Thread):
                     js = {
                         "_all" : {"enabled" : True},
                         "properties": {
-                            "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"}
+                            "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
+                            "@node" : { "store": True, "type" : "string", "index": "not_analyzed"}
                         }
                     }
                     for field in config.get('RawFields', entry).split(","):
@@ -278,6 +279,7 @@ class NodeThread(Thread):
             js['@version'] = 1
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
+            js['@node'] = hostname
             if 'request' in js and not 'url' in js:
                 match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+", js['request'])
                 if match:
