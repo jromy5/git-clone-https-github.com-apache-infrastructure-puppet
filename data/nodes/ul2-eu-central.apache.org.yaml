@@ -67,5 +67,8 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       <Location /logstash>
         AllowMethods POST PUT HEAD
+        <If "%{REQUEST_METHOD} in { 'GET', 'DELETE' }">
+          Require all denied
+        </If>
         ProxyPass http://10.91.64.151:9200/
       </Location>
