@@ -26,6 +26,24 @@ base::basepackages:
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
 
+apache::log_formats:
+  combined: '<%%JSON:httpd_access%%> {
+    \"time\": \"%%{}{%Y-%m-%dT%H:%M:%S%z}t\",
+    \"clientip\": \"%a\",
+    \"duration\": %D,
+    \"status\": %>s,
+    \"request\": \"%U%q\",
+    \"uri\": \"%U\",
+    \"remote_user\": \"%u\",
+    \"query_string\": \"%q\",
+    \"document\": \"%f\",
+    \"bytes\": %B,
+    \"request_method\": \"%m\",
+    \"referer\": \"%%{}{Referer}i\",
+    \"useragent\": \"%%{}{User-agent}i\",
+    \"vhost\": \"%%{}{Host}i\"
+    }'
+
 apt::sources:
   'asf_internal':
      location: 'https://packages.apache.org/asf_internal'
