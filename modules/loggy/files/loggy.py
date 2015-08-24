@@ -253,7 +253,7 @@ class NodeThread(Thread):
             gotindex[iname] = True
             if not self.xes.indices.exists(iname):
                 mappings = {}
-                for entry in config.items('RawFields'):
+                for entry in config.options('RawFields'):
                     js = {
                         "_all" : {"enabled" : True},
                         "properties": {
@@ -284,7 +284,7 @@ class NodeThread(Thread):
         js_arr = []
         for entry in self.json:
             js = entry
-            js['@version'] = 1
+            js['@version'] = 2
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             js['@node'] = hostname
