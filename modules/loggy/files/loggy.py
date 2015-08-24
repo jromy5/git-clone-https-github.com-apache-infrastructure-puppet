@@ -22,7 +22,6 @@
 #  loggy.py --daemonize
 #  requires loggy.cfg (and elasticsearch + python-inotify)
 
-
 from inotify import watcher
 import inotify
 import os
@@ -245,7 +244,7 @@ class NodeThread(Thread):
         self.xes = xes
 
     def run(self):
-        global gotindex, config
+        global gotindex, config, json_pending
         random.seed(time.time())
         #print("Pushing %u json objects" % len(json_pending))
         iname = time.strftime("logstash-%Y.%m.%d")
@@ -268,10 +267,19 @@ class NodeThread(Thread):
                     
                     mappings[entry] = js
                     
-                self.xes.indices.create(index = iname, body = {
+                res = self.xes.indices.create(index = iname, body = {
                         "mappings" : mappings
                     }
                 )
+                json_pending['loggy-indices'] = []
+                json_pending['loggy-indices'].append({
+                    '@node': hostname,
+                    'index_created': iname,
+                    'logtype': 'loggy-indices',
+                    '@timestamp': time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime()),
+                    'res': res,
+                    'mappings': mappings
+                    })
             
         js_arr = []
         for entry in self.json:
