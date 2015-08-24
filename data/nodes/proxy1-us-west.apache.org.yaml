@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - blocky
   - loggy
   - postgresql::client
   - ssl::name::wildcard_apache_org
