@@ -17,6 +17,7 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
+  - blocky
   - datadog_agent::integrations::apache
   - datadog_agent::integrations::http_check
   - httpd_modules::mod_asf_mirrorcgi
