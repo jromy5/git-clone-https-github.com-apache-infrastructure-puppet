@@ -167,6 +167,7 @@ class Daemonize:
 class Blocky(Thread):
     def run(self):
 	baddies = {}
+	firstRun = True
 	while True:
 	    try:
 		js = json.loads(urllib.urlopen(config.get('aggregator','uri')).read())
@@ -179,16 +180,17 @@ class Blocky(Thread):
 			t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 			try:
 			    print("Found a culprit for us, banning " + i)
-			    subprocess.check_call([
-				"iptables",
-				"-A", "INPUT",
-				"-s", i,
-				"-j", "DROP",
-				"-m", "comment",
-				"--comment",
-				"Banned by Blocky"
-				])
-			    message = """From: Blocky <no-reply@apache.org>
+			    if not firstRun:
+				subprocess.check_call([
+				    "iptables",
+				    "-A", "INPUT",
+				    "-s", i,
+				    "-j", "DROP",
+				    "-m", "comment",
+				    "--comment",
+				    "Banned by Blocky"
+				    ])
+				message = """From: Blocky <no-reply@apache.org>
 To: Apache Infrastructure Root <root@apache.org>
 Reply-To: root@apache.org
 Subject: [Blocky] Banned %s on %s.
@@ -206,11 +208,11 @@ sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"
 With regards,
 Blocky.
     """ % (i, hostname, hostname, i, r, i)
-			    smtpObj = smtplib.SMTP('localhost')
-			    smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
-			    print("Email sent, ban in place!")
-			except Exception as err:
-			    print(err)
+				smtpObj = smtplib.SMTP('localhost')
+				smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
+				print("Email sent, ban in place!")
+			    except Exception as err:
+				print(err)
 			baddies[i] = True
 		    elif i in baddies and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 			r = baddie['reason']
@@ -244,6 +246,7 @@ Blocky.
 			    print(err)
 			del baddies[i]
 		time.sleep(180)
+		firstRun = False
 	    except:
 		pass
 
