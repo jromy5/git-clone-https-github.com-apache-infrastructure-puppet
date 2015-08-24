@@ -96,7 +96,7 @@ attributetype ( 1.3.6.1.4.1.18060.2.0.11
 
 # log-access-vhost
 attributetype ( 1.3.6.1.4.1.18060.2.0.12
-        NAME 'log-access-host'
+        NAME 'log-access-vhost'
         DESC 'Allows access to log files for vhosts you may not ordinarily have access too'
         EQUALITY caseIgnoreMatch
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
