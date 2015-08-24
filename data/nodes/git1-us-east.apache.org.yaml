@@ -3,6 +3,7 @@ classes:
   - amanda::client
   - apache
   - datadog_agent::integrations::http_check
+  - loggy
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
   - ulimit_asf
