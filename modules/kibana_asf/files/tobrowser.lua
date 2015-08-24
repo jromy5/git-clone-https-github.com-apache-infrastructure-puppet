@@ -28,11 +28,11 @@ if p then
         host = host:gsub("%.apache%.org", "")
         table.insert(hosts, host .. ".apache.org")
     end
-    for host in data:gmatch("log-access-host: ([^\r\n]+)") do
+    for host in data:gmatch("log%-access%-host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
         table.insert(hosts, host .. ".apache.org")
     end
-    for host in data:gmatch("log-access-vhost: ([^\r\n]+)") do
+    for host in data:gmatch("log%-access%-vhost: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
         table.insert(vhosts, host .. ".apache.org")
     end
