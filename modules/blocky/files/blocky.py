@@ -188,27 +188,27 @@ class Blocky(Thread):
 				"--comment",
 				"Banned by Blocky"
 				])
-			    message = """From: Blocky <blocky@%s>
-    To: Apache Infrastructure Root <root@apache.org>
-    Reply-To: root@apache.org
-    Subject: [Blocky] Banned %s on %s.
-    
-    Hi, this is %s.
-    I have just blocked %s from accessing this machine due to violations on
-    this or another server: "%s"
-    
-    This was done via the Blocky aggregator.
-    
-    To remove this ban, run the following command:
-    
-    sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"
-    
-    With regards,
-    Blocky.
-    """ % (hostname, i, hostname, hostname, i, r, i)
+			    message = """From: Blocky <no-reply@apache.org>
+To: Apache Infrastructure Root <root@apache.org>
+Reply-To: root@apache.org
+Subject: [Blocky] Banned %s on %s.
+
+Hi, this is %s.
+I have just blocked %s from accessing this machine due to violations on
+this or another server: "%s"
+
+This was done via the Blocky aggregator.
+
+To remove this ban, run the following command:
+
+sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"
+
+With regards,
+Blocky.
+    """ % (i, hostname, hostname, i, r, i)
 			    smtpObj = smtplib.SMTP('localhost')
 			    smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
-			    
+			    print("Email sent, ban in place!")
 			except Exception as err:
 			    print(err)
 			baddies[i] = True
@@ -225,18 +225,18 @@ class Blocky(Thread):
 				"-m", "comment",
 				"--comment", "Banned by Blocky"
 				])
-			    message = """From: Blocky <blocky@%s>
-    To: Apache Infrastructure Root <root@apache.org>
-    Reply-To: root@apache.org
-    Subject: [Blocky] Unbanned %s on %s.
-    
-    Hi, this is %s.
-    I have just unbanned %s on this machine due to leniency
-    from the Blocky master server.
-    
-    With regards,
-    Blocky.
-    """ % (hostname, i, hostname, hostname, i)
+			    message = """From: Blocky <blocky@no-reply@apache.org>
+To: Apache Infrastructure Root <root@apache.org>
+Reply-To: root@apache.org
+Subject: [Blocky] Unbanned %s on %s.
+
+Hi, this is %s.
+I have just unbanned %s on this machine due to leniency
+from the Blocky master server.
+
+With regards,
+Blocky.
+    """ % (i, hostname, hostname, i)
 			    smtpObj = smtplib.SMTP('localhost')
 			    smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
 			    
