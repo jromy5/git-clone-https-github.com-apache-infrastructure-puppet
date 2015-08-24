@@ -45,11 +45,18 @@ if p then
             allHosts = true
         end
     end
-    for host in data:gmatch("log-access-host: ([^\r\n]+)") do
+    for host in data:gmatch("log%-access%-host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
-        table.insert(hosts, ([[host:"%s.apache.org"]]):format(host))
+        table.insert(hosts, ([[@node:"%s.apache.org"]]):format(host))
         if host == "*" then
             allHosts = true
+        end
+    end
+    for host in data:gmatch("log%-access%-vhost: ([^\r\n]+)") do
+        host = host:gsub("%.apache%.org", "")
+        table.insert(hosts, ([[(vhost:"%s.apache.org" AND logtype:"httpd_access")]]):format(host))
+        if host == "*" then
+            table.insert(hosts, ([[logtype:"httpd_access"]]):format(host))
         end
     end
 end
