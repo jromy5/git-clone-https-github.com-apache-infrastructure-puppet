@@ -85,6 +85,13 @@ attributetype ( 1.3.6.1.4.1.18060.2.0.10
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
  )
 
+# log-access-host
+attributetype ( 1.3.6.1.4.1.18060.2.0.11
+        NAME 'log-access-host'
+        DESC 'Allows access to log files for hosts you may not ordinarily have access too'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
 
 
 # asf-committer
@@ -92,7 +99,7 @@ objectclass ( 1.3.6.1.4.1.18060.2.0
         NAME 'asf-committer'
         DESC 'An OC that will allow us to add specific ASF attributes to users'
         AUXILIARY
-        MAY ( asf-sascore $ asf-icla-legalname $ asf-icla-publicname $ asf-icla-email $ asf-icla-file $ asf-pgpKeyFingerprint $ asf-banned $ asf-altEmail $ asf-personalURL $ asf-noforwardfile )
+        MAY ( asf-sascore $ asf-icla-legalname $ asf-icla-publicname $ asf-icla-email $ asf-icla-file $ asf-pgpKeyFingerprint $ asf-banned $ asf-altEmail $ asf-personalURL $ asf-noforwardfile $ log-access-host )
  )
 
 
