@@ -211,8 +211,8 @@ Blocky.
 				smtpObj = smtplib.SMTP('localhost')
 				smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
 				print("Email sent, ban in place!")
-			    except Exception as err:
-				print(err)
+			except Exception as err:
+			    print(err)
 			baddies[i] = True
 		    elif i in baddies and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 			r = baddie['reason']
