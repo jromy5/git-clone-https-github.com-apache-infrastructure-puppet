@@ -284,7 +284,7 @@ class NodeThread(Thread):
         js_arr = []
         for entry in self.json:
             js = entry
-            js['@version'] = 2
+            js['@version'] = 1
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             js['@node'] = hostname
