@@ -8,6 +8,7 @@ local user = os.getenv('REMOTE_USER')
 
 -- Query LDAP for host records
 local hosts = {}
+local vhosts = {}
 
 -- If auth is broken/circumvented, return nothing
 if not user then
@@ -33,18 +34,18 @@ if p then
     end
     for host in data:gmatch("log-access-vhost: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
-        table.insert(hosts, host .. ".apache.org")
+        table.insert(vhosts, host .. ".apache.org")
     end
 end
 
 
 -- Function for redacting ElasticSearch JSON results
-function retain(parent, name, values)
+function retain(parent, hash)
     for k, v in pairs(parent) do
 
         -- Redact children
         if type(v) == "table" and k ~= "nodes" then
-            parent[k] = retain(v, name, values)
+            parent[k] = retain(v, hash)
             
             -- Kill off _source elements that contain redacted information
             if k == '_source' and parent[k] == nil then
@@ -52,12 +53,21 @@ function retain(parent, name, values)
             end
         else
             -- If 'key' is set and matches (or no key is present) and value is not found in value array, remove the element
-            if k == name or name == nil then
+            local found = false
+            for k, v in pairs(hash) do
+                if k == name then
+                    found = true
+                    break
+                end
+            end
+            if found then
                 local okay = false
-                for x,y in pairs(values) do
-                    if y == v or y == "*" then
-                        okay = true
-                        break
+                for k, values in pairs(hash) do
+                    for x,y in pairs(values) do
+                        if x == k and (y == v or y == "*") then
+                            okay = true
+                            break
+                        end
                     end
                 end
                 if not okay then
@@ -81,8 +91,10 @@ local data = io.stdin:read("*a")
 local json = JSON:decode(data)
 
 -- Only retain allowed hosts from result set
-json = retain(json, "host", hosts)
-json = retain(json, "node", hosts)
+json = retain(json, {
+        ["@node"]   = hosts,
+        vhost       = vhosts
+    })
 
 -- Change search result info
 if redded > 0 and json._shards then
