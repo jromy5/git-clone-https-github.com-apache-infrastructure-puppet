@@ -1191,7 +1191,7 @@ ea = rw
 @kafka = r
 
 [/kafka/site]
-@kafka = rw
+* = r
 
 [/karaf]
 @karaf = r
