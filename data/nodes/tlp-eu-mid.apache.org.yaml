@@ -4,7 +4,6 @@ classes:
   - apache::mod::actions
   - apache::mod::autoindex
   - apache::mod::expires
-  - apache::mod::geoip
   - apache::mod::negotiation
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -18,6 +17,7 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
+  - blocky
   - datadog_agent::integrations::apache
   - loggy
   - ssl::name::wildcard_apache_org
@@ -68,6 +68,7 @@ apache::mod::status::apache_version:         '2.3' # Force module to use Allow f
 
 apache::mpm_module:                          'event'
 apache::serveradmin:                         'infrastructure@apache.org'
+
 
 apmirror::uid:                               '508'
 apmirror::gid:                               '508'

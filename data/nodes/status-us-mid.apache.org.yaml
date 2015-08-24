@@ -3,6 +3,7 @@ classes:
   - amanda::client
   - apache
   - apache::mod::status
+  - loggy
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules

@@ -4,6 +4,7 @@ classes:
   - apache
   - datadog_agent::integrations::http_check
   - gitserver_asf
+  - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org
 

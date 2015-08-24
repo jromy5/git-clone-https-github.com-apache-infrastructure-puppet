@@ -1,0 +1,69 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          blocky
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: blocky
+# Description:       start blocky daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+blocky_user=${blocky_user-"root"}
+blocky_group=${blocky_group-"root"}
+blocky_pidfile=${blocky_pidfile-"/var/run/blocky.pid"}
+blocky_config=${blocky_config-"/usr/local/etc/blocky/blocky.conf"}
+blocky_logfile=${blocky_logfile-"/var/log/blocky.log"}
+blocky_appdir=${blocky_appdir-"/usr/local/etc/blocky"}
+pidfile="${blocky_pidfile}"
+
+RETVAL=0
+ 
+start() {
+    echo "Starting blocky daemon: "
+    cd $blocky_appdir
+    python2.7 blocky.py --daemonize --user=$blocky_user --group=$blocky_group
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+ 
+stop() {
+    echo "Stopping blocky daemon: "
+    cd $blocky_appdir
+    python2.7 blocky.py --stop
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        PID=`cat $blocky_pidfile`
+        if ps -p $PID > /dev/null
+        then
+            echo "blocky is running, yay!"
+            exit 0
+        else
+            echo "blocky ain't running :("
+            exit 3
+        fi;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+esac
+
+exit $RETVAL
