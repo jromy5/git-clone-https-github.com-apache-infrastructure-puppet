@@ -4,6 +4,7 @@ classes:
   - collectd::plugin::postfix
   - mx_asf
   - pflogsumm
+  - postfix_asf
   - ssl::name::wildcard_apache_org
 
 postfix::server::inet_interfaces: 'all'
