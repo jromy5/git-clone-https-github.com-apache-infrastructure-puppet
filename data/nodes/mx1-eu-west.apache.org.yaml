@@ -26,4 +26,4 @@ postfix::dbfile:
     content: |
       foo@example.com     REJECT
       lrosen@rosenlaw.com REJECT
-      lrosen@apahe.org    REJECT
+      lrosen@apache.org    REJECT
