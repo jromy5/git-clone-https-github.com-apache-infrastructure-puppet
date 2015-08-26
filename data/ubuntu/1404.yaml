@@ -26,6 +26,9 @@ base::basepackages:
 
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
+apache::mod::geoip::db_file:
+ - '/usr/share/GeoIP/GeoIP.dat'
+ - '/usr/share/GeoIP/GeoIPCity.dat'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
 
