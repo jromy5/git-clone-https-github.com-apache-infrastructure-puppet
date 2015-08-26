@@ -32,6 +32,10 @@ apache::mpm_module:         'event'
 
 datadog_agent::integrations::http_check::url: 'https://git.apache.org'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
 vhosts_asf::vhosts::vhosts:

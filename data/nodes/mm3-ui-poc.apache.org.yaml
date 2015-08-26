@@ -28,6 +28,10 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '600'
 apache::mod::event::threadsperchild: '50'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 mailman3::hyperkitty::config::app_name: 'ASF List Archives'
 mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::db: 'postgresql'

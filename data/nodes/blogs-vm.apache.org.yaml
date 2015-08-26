@@ -17,3 +17,7 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'

@@ -4,6 +4,7 @@ classes:
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::dav_svn
+  - apache::mod::geoip
   - apache::mod::rewrite
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -81,6 +82,10 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
 
 nfs::server::export:
   /x1/svn/repos/asf:

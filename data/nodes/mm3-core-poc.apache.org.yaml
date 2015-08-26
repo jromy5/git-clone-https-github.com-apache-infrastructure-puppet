@@ -17,6 +17,10 @@ apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 apache::mod::wsgi::wsgi_python_home: '/var/www/postorius/venv2'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 mailman3::core::config::vardir: '/usr/local/mailman3-core/mailman'
 mailman3::core::config::pidfile: '/var/run/mailman/master.pid'
 mailman3::core::config::db: 'postgresql'

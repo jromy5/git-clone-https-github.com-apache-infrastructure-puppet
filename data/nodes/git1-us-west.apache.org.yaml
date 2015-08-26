@@ -30,7 +30,11 @@ apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
 
 
-datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf"
+datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>

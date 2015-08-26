@@ -6,6 +6,10 @@ classes:
 
 datadog_agent::puppet_run_reports: true
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 base::hosts:
   r1sw0.apache.org:
     ip: '192.168.0.247'

@@ -4,6 +4,9 @@ classes:
   - apache::mod::actions
   - apache::mod::autoindex
   - apache::mod::expires
+  - apache::mod::geoip
+  - apache::mod::headers
+  - apache::mod::include
   - apache::mod::negotiation
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -44,10 +47,6 @@ apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
 
-apache::logrotate_compressoptions:           '-9'
-apache::logrotate_rotate:                    5
-apache::logrotate_owner:                     'root'
-apache::logrotate_group:                     'apbackup'
 
 apache::mod::event::listenbacklog:           '1023'
 apache::mod::event::maxclients:              '750'
@@ -77,6 +76,13 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 datadog_agent::integrations::http_check::url: 'https://tlp-mid-us.apache.org/server-status'
 datadog_agent::integrations::apache::url: 'https://tlp-mid-us.apache.org/server-status'
 datadog_agent::integrations::apache::url: 'https://eos.apache.org/server-status'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    create_owner: 'root'
+    create_group: 'apbackup'
+    rotate: 5
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
@@ -237,16 +243,10 @@ vhosts_asf::modules::modules:
     name: 'cgi'
   cgid:
     name: 'cgid'
-  headers:
-    name: 'headers'
-  include:
-    name: 'include'
   macro:
     name: 'macro'
   unique_id:
     name: 'unique_id'
-  asf_mirrorcgi:
-    name: 'asf_mirrorcgi'
 
 vhosts_asf::vhosts::vhosts:
   any23: 

@@ -3,8 +3,8 @@ mod 'amanda',
 
 
 mod 'apache',
-  :git => 'https://github.com/stumped2/puppetlabs-apache',
-  :branch => 'mpm_event_fix'
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache.git',
+  :tag => '1.6.0'
 
 
 mod 'apt',

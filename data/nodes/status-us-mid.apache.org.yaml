@@ -36,6 +36,10 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
 svnwcsub::conf_file:        'svnwcsub.conf'
