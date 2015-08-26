@@ -1,0 +1,63 @@
+---
+classes:
+  - apache
+  - apache::mod::ssl
+  - httpd_modules
+  - ssl::name::wildcard_apache_org
+  - svnwcsub
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+
+base::basepackages:
+  - 'lua5.2'
+
+httpd_modules::dev_package:
+  - 'apache2-dev'
+
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.oauth'
+svnwcsub::username:         'svnwc'
+
+vhosts_asf::modules::modules:
+  lua:
+    name: 'lua'
+  headers:
+    name: 'headers'
+
+vhosts_asf::vhosts::vhosts:
+  oauth-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    default_vhost: true
+    docroot: '/var/www/oauth/html'
+    servername: 'oauth.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    access_log_file: 'oauth.apache.org.ssl_access.log'
+    error_log_file: 'oauth.apache.org.ssl_error.log'
+    custom_config: |
+      AddHandler lua-script .lua
+      FallbackResource /index.lua
+
+      <Location /auth>
+        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid";
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location> 
