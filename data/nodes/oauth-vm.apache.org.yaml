@@ -14,6 +14,20 @@ apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '5000'
+apache::mod::event::maxrequestworkers: '300'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '50'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '3'
+apache::mod::event::threadlimit: '600'
+apache::mod::event::threadsperchild: '50'
+
+
 base::basepackages:
   - 'lua5.2'
   - 'liblua5.2-dev'
