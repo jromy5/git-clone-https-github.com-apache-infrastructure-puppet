@@ -27,6 +27,7 @@ svnwcsub:::conf_path:       '/etc/'
 svnwcsub::groupname:        'svnwc'
 svnwcsub::groups:
   - 'svnwc'
+  - 'www-data'
 svnwcsub::service_name:     'svnwcsub'
 svnwcsub::shell:            '/bin/bash'
 svnwcsub::source:           'svnwcsub.conf.oauth'
