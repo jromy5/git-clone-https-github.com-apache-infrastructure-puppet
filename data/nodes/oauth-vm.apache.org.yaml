@@ -42,8 +42,6 @@ svnwcsub::username:         'svnwc'
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'
-  headers:
-    name: 'headers'
 
 vhosts_asf::vhosts::vhosts:
   oauth-ssl:
