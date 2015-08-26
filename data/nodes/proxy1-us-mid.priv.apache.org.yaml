@@ -4,17 +4,17 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::remoteip
   - apache::mod::rewrite
   - mysql::client
   - rootbin_asf
-  - vhosts_asf::modules
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
 
-vhosts_asf::modules::modules:
-  remoteip:
-    name: 'remoteip'
+logrotate::rule:
+  apache2:
+    ensure: 'present'
 
 vhosts_asf::vhosts::vhosts:
   proxy:

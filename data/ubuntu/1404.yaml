@@ -24,6 +24,9 @@ base::basepackages:
   - software-properties-common
   - zsh
 
+apache::mod::geoip::enable: true
+apache::mod::geoip::flag: 'MemoryCache'
+
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
 
 apache::log_formats:
@@ -362,3 +365,26 @@ build_slaves::distro_packages:
   - tmux
   - unzip
   - xvfb
+
+logrotate::rule:
+  apache2:
+    name: 'apache2'
+    path: '/var/log/apache2/*.log'
+    ensure: 'absent'
+    compress: true
+    compressoptions: '-9'
+    rotate: 7
+    create_owner: 'root'
+    create_group: 'adm'
+    rotate_every: 'day'
+    create_mode: '0644'
+    missingok: true
+    dateext: true
+    delaycompress: false
+    ifempty: false
+    create: true
+    sharedscripts: true
+    postrotate:
+      - 'if /etc/init.d/apache2 status > /dev/null ; then /etc/init.d/apache2 reload > /dev/null; fi;'
+    prerotate:
+      - 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi;'

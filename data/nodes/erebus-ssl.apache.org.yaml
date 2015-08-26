@@ -14,12 +14,15 @@ classes:
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
-apache::logroot: '/x1/log'
-apache::logrotate_path: '/x1/log/*.log'
-apache::logrotate_delaycompress: true
-apache::logrotate_ifempty: false
-apache::logrotate_rotate: 52
 apache::mpm_module:         'event'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
 
 apache::default_vhost: false
 

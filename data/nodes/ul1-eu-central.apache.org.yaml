@@ -52,6 +52,10 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 vhosts_asf::vhosts::vhosts:
   logsearch-ssl:
     vhost_name: '*'

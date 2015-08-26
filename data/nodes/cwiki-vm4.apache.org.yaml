@@ -38,6 +38,10 @@ cwiki_asf::heap_min_size: '1512'
 cwiki_asf::heap_max_size: '2024'
 cwiki_asf::maxmetaspacesize: '512'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 

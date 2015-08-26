@@ -7,6 +7,10 @@ classes:
   - postfix_asf
   - ssl::name::wildcard_apache_org
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'
 postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,apachecon.eu,subversion.com,subversion.net,subversion.org'

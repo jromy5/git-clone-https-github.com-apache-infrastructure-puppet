@@ -17,6 +17,9 @@ class base (
   $perl_module = hiera_hash('perl::module', {})
   create_resources(perl::module, $perl_module)
 
+  $logrotate_rule = hiera_hash('logrotate::rule', {})
+  create_resources(logrotate::rule, $logrotate_rule)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }

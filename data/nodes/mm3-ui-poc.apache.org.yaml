@@ -15,6 +15,10 @@ apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 apache::mod::wsgi::wsgi_python_home: '/var/www/hyperkitty/venv2'
 
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
 mailman3::hyperkitty::config::app_name: 'ASF List Archives'
 mailman3::hyperkitty::config::mailman_api_url: 'http://10.40.0.15:8001'
 mailman3::hyperkitty::config::db: 'postgresql'
