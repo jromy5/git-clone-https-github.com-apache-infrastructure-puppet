@@ -45,6 +45,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     default_vhost: true
     docroot: '/var/www/oauth/html'
+    manage_docroot: false
     servername: 'oauth.apache.org'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'oauth.apache.org.ssl_access.log'
