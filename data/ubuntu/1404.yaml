@@ -45,7 +45,7 @@ apache::log_formats:
     \"referer\": \"%%{}{Referer}i\",
     \"useragent\": \"%%{}{User-agent}i\",
     \"vhost\": \"%%{}{Host}i\",
-    \"geoip_location\": \"%%{}{GEOIP_COUNTRY_NAME}e\"
+    \"geoip_location\": \"%%{}{GEOIP_COUNTRY_CODE}e\"
     }'
 
 apt::sources:
