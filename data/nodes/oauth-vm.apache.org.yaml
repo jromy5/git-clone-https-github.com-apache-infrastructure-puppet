@@ -65,6 +65,11 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     servername: 'oauth.apache.org'
     serveradmin: 'infrastructure@apache.org'
+    directoryindex: 'index.lua'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
     access_log_file: 'oauth.apache.org.ssl_access.log'
     error_log_file: 'oauth.apache.org.ssl_error.log'
     custom_fragment: |
