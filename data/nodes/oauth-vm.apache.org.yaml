@@ -51,7 +51,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'oauth.apache.org.ssl_access.log'
     error_log_file: 'oauth.apache.org.ssl_error.log'
-    custom_config: |
+    custom_fragment: |
       AddHandler lua-script .lua
       FallbackResource /index.lua
 
