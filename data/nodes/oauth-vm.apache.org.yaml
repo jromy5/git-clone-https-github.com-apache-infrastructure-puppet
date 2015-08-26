@@ -15,6 +15,7 @@ apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 
 base::basepackages:
   - 'lua5.2'
+  - 'liblua5.2-dev'
 
 httpd_modules::dev_package:
   - 'apache2-dev'
