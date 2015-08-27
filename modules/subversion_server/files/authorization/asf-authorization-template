@@ -693,7 +693,7 @@ ea = rw
 @committers = rw
 
 [/commons/proper/compress]
-* = r
+bodewig = rw
 
 # archive area for components that have been moved to Git
 # must remain read-only except as needed to move components
