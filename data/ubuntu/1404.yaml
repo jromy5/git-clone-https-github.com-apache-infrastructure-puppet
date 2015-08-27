@@ -51,6 +51,7 @@ apache::log_formats:
     \"geo_country\": \"%%{}{GEOIP_COUNTRY_CODE}e\",
     \"geo_long\": \"%%{}{GEOIP_LONGITUDE}e\",
     \"geo_lat\": \"%%{}{GEOIP_LATITUDE}e\",
+    \"geo_coords\": \"%%{}{GEOIP_LATITUDE}e,%%{}{GEOIP_LONGITUDE}e\",
     \"geo_city\": \"%%{}{GEOIP_CITY}e\",
     \"geo_combo\": \"%%{}{GEOIP_CITY}e, %%{}{GEOIP_COUNTRY_NAME}e\"
     }'
