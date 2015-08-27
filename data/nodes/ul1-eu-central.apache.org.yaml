@@ -70,6 +70,11 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'logsearch.apache.org.ssl_access.log'
     error_log_file: 'logsearch.apache.org.error.log'
     custom_fragment: |
+      Alias /json/ /var/www/html/json/
+      <Directory /var/www/html>
+        Require all granted
+        Options +Indexes
+      </Directory>
       ExtFilterDefine to-browser mode=output \
         intype=application/json outtype=application/json \
         cmd="/usr/bin/lua5.2 /usr/local/etc/logproxy/tobrowser.lua"
