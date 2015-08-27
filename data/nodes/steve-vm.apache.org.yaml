@@ -3,11 +3,12 @@ classes:
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::ssl
+  - elasticsearch
+  - loggy
+  - ssl::name::vote_apache_org 
+  - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
-  - svnwcsub
-  - elasticsearch
-  - ssl::name::vote_apache_org 
   
 svnwcsub::gid:              '9995'
 svnwcsub::uid:              '9995'
