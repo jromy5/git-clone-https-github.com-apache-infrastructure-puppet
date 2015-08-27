@@ -81,6 +81,11 @@ regexes = {
             r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" 
             r"(?P<type>[\S.]+):\s+" 
             r"(?P<message>.+)"
+        ),
+    'rsync': re.compile( 
+            r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" 
+            r"\[(?P<pid>[\S.]+)\]\s+" 
+            r"(?P<message>.+)"
         )
 }
 
@@ -102,6 +107,10 @@ tuples = {
         ),
     'fail2ban': namedtuple('fail2ban', [
         'date', 'type', 'message',
+        'filepath', 'logtype', 'timestamp']
+        ),
+    'rsync': namedtuple('rsync', [
+        'date', 'pid', 'message',
         'filepath', 'logtype', 'timestamp']
         )
 }
