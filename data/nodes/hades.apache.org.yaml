@@ -13,6 +13,7 @@ classes:
   - apbackup
   - httpd_modules
   - httpd_modules::mod_svn_check_path
+  - loggy
   - nfs::server
   - nfs_asf::server
   - perl
