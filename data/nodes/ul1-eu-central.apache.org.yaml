@@ -70,6 +70,10 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'logsearch.apache.org.ssl_access.log'
     error_log_file: 'logsearch.apache.org.error.log'
     custom_fragment: |
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
       Alias /json/ /var/www/html/json/
       <Directory /var/www/html>
         Require all granted
