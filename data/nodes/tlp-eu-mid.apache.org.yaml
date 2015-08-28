@@ -1881,7 +1881,6 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      </Directory>
       <Directory /var/www/serf.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
@@ -1965,7 +1964,6 @@ vhosts_asf::vhosts::vhosts:
       <Directory /var/www/subversion.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
-      </Directory>
       </Directory>
       <Directory /var/www/serf.apache.org>
         Options +Includes
