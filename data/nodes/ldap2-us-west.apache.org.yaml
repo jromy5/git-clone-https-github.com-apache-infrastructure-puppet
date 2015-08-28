@@ -1,4 +1,7 @@
 ---
 classes: 
   - ldapserver
+  - datadog_agent::integrations::apache
+
+datadog_agent::integrations::apache::url: 'https://eos.apache.org/server-status'
 
