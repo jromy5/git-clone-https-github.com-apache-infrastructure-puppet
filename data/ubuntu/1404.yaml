@@ -48,12 +48,12 @@ apache::log_formats:
     \"referer\": \"%%{}{Referer}i\",
     \"useragent\": \"%%{}{User-agent}i\",
     \"vhost\": \"%%{}{Host}i\",
-    \"geo_country\": \"%%{}{GEOIP_COUNTRY_CODE}e\",
-    \"geo_long\": \"%%{}{GEOIP_LONGITUDE}e\",
-    \"geo_lat\": \"%%{}{GEOIP_LATITUDE}e\",
-    \"geo_coords\": \"%%{}{GEOIP_LATITUDE}e,%%{}{GEOIP_LONGITUDE}e\",
-    \"geo_city\": \"%%{}{GEOIP_CITY}e\",
-    \"geo_combo\": \"%%{}{GEOIP_CITY}e, %%{}{GEOIP_COUNTRY_NAME}e\"
+    \"geo_country\": \"%%{}{GEOIP_COUNTRY_CODE}n\",
+    \"geo_long\": \"%%{}{GEOIP_LONGITUDE}n\",
+    \"geo_lat\": \"%%{}{GEOIP_LATITUDE}n\",
+    \"geo_coords\": \"%%{}{GEOIP_LATITUDE}n,%%{}{GEOIP_LONGITUDE}n\",
+    \"geo_city\": \"%%{}{GEOIP_CITY}n\",
+    \"geo_combo\": \"%%{}{GEOIP_CITY}n, %%{}{GEOIP_COUNTRY_NAME}n\"
     }'
 
 apt::sources:
