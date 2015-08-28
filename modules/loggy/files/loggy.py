@@ -349,7 +349,12 @@ def parseLine(path, data):
         m = re.match(r"^<%JSON:([^>%]+)%>\s*(.+)", line)
         if m:
             try:
-                js = json.loads(m.group(2))
+                # Try normally
+                try:
+                    js = json.loads(m.group(2))
+                # In case \x[..] has been used, try again!    
+                except:
+                    js = json.loads(re.sub(r"\\x..", "?", m.group(2)))
                 js['filepath'] = path
                 js['timestamp'] = time.time()
                 js['logtype'] = m.group(1)
