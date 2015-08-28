@@ -1,7 +1,7 @@
 # directive gone : DefaultType text/plain
 AddType application/x-gzip .gz
 AddType application/x-compress .Z
-AddType text/plain .asc .md5 .sha .sha1
+AddType text/plain .asc .md5 .sha .sha1 .sha256
 AddDescription "Portable Runtime project" apr/
 AddDescription "HTTP Server project" httpd/
 AddDescription "Jakarta project" jakarta/
