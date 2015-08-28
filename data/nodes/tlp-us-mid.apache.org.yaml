@@ -1879,6 +1879,12 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
+      </Directory>
+      <Directory /var/www/serf.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+
       AddType text/plain sha512
       RewriteEngine On
 
@@ -1957,6 +1963,12 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
+      </Directory>
+      <Directory /var/www/serf.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+
       AddType text/plain sha512
       RewriteEngine On
 
