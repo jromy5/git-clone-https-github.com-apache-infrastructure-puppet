@@ -75,6 +75,10 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'oauth.apache.org.ssl_access.log'
     error_log_file: 'oauth.apache.org.ssl_error.log'
     custom_fragment: |
+      Header set Access-Control-Allow-Origin "*.apache.org"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
       AddHandler lua-script .lua
       FallbackResource /index.lua
 
