@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::ssl
+  - apache::mod::headers
   - httpd_modules
   - ssl::name::wildcard_apache_org
   - svnwcsub
