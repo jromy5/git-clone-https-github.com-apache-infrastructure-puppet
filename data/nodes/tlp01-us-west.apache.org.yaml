@@ -881,6 +881,8 @@ vhosts_asf::vhosts::vhosts:
 
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
+      AddHandler lua-script .lua
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
       Use BlockSvn
 
 
@@ -1028,6 +1030,8 @@ vhosts_asf::vhosts::vhosts:
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
       Use BlockSvn
+      AddHandler lua-script .lua
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
       
   incubator:
     vhost_name: '*'
