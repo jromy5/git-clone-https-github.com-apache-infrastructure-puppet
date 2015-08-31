@@ -1074,6 +1074,8 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
+      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
@@ -1140,6 +1142,8 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+    
+      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1898,6 +1902,8 @@ vhosts_asf::vhosts::vhosts:
       AddType text/plain sha512
       RewriteEngine On
 
+      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
@@ -1980,6 +1986,8 @@ vhosts_asf::vhosts::vhosts:
 
       AddType text/plain sha512
       RewriteEngine On
+
+      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
