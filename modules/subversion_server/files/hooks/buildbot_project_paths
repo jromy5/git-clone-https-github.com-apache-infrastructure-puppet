@@ -165,3 +165,5 @@
 ^(incubator/tamaya\/site|tamaya\/site)/(.*)
 ^(incubator/taverna\/site|taverna\/site)/(.*)
 ^(incubator/singa\/site|singa\/site)/(.*)
+^(serf/trunk)/(.*)
+^(serf/branches/1.[3-9].x)/(.*)
