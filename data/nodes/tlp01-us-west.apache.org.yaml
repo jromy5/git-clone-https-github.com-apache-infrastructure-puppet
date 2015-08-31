@@ -144,6 +144,8 @@ apache::custom_config:
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
         RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
+        RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
+        AddHandler lua-script .lua
       </Macro> 
 
   aoo:
@@ -429,6 +431,7 @@ vhosts_asf::vhosts::vhosts:
       <Location ~ "closer\.lua">
         SetHandler lua-script
       </Location>
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
 
@@ -485,8 +488,10 @@ vhosts_asf::vhosts::vhosts:
       Redirect permanent /travel/application https://tac-apply.apache.org
       RedirectMatch permanent ^/LICENSE.* https://www.apache.org/licenses/
       RedirectMatch permanent /flyers(.*) https://www.apache.org/foundation/contributing.html
-
       RewriteEngine on
+      AddHandler lua-script .lua
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
+      
       RewriteOptions inherit
       RewriteRule /docs/mod_(.*)$ https://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
 
@@ -534,9 +539,6 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      <Location ~ "closer\.lua">
-        SetHandler lua-script
-      </Location>
 
       Use BlockSvn
 
