@@ -348,9 +348,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
         -
-          handler: 'cgi-script'
+          handler: 'lua-script'
           extensions:
-            - '.cgi'
+            - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -456,9 +456,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
         -
-          handler: 'cgi-script'
+          handler: 'lua-script'
           extensions:
-            - '.cgi'
+            - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -755,11 +755,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'cgi-script'
-            extensions:
-              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -906,11 +901,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'cgi-script'
-            extensions:
-              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1060,10 +1050,6 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
-            extensions:
-              - '.cgi'
-          -
             handler: 'lua-script'
             extensions:
               - '.lua'
@@ -1078,7 +1064,7 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%{DOCUMENT_ROOT}/%{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
