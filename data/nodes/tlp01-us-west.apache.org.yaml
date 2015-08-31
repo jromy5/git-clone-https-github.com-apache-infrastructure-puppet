@@ -240,6 +240,8 @@ vhosts_asf::modules::modules:
     name: 'cgi'
   cgid:
     name: 'cgid'
+  lua:
+    name: 'lua'
   macro:
     name: 'macro'
   unique_id:
@@ -422,6 +424,12 @@ vhosts_asf::vhosts::vhosts:
         SetHandler server-status
       </Location>
 
+      LuaScope thread
+      LuaCodeCache stat
+      <Location ~ "closer\.lua">
+        SetHandler lua-script
+      </Location>
+
       Use BlockSvn
 
   apache-ssl:
@@ -522,6 +530,12 @@ vhosts_asf::vhosts::vhosts:
 
       <Location "/server-status">
         SetHandler server-status
+      </Location>
+
+      LuaScope thread
+      LuaCodeCache stat
+      <Location ~ "closer\.lua">
+        SetHandler lua-script
       </Location>
 
       Use BlockSvn
