@@ -428,9 +428,8 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      <Location ~ "closer\.lua">
-        SetHandler lua-script
-      </Location>
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
