@@ -353,6 +353,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -459,6 +460,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -758,6 +760,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -914,6 +917,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1071,6 +1075,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1142,6 +1147,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1405,6 +1411,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1551,6 +1558,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1750,6 +1758,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1796,6 +1805,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1908,6 +1918,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1995,6 +2006,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2131,7 +2143,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
-
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2170,6 +2182,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2281,6 +2294,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2324,6 +2338,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2428,6 +2443,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2473,6 +2489,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2518,6 +2535,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2569,6 +2587,7 @@ vhosts_asf::vhosts::vhosts:
             handler: 'lua-script'
             extensions:
               - '.lua'
+              - '.cgi'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
