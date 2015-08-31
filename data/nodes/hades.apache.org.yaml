@@ -117,6 +117,9 @@ snmp::snmpd_config:
   - 'includeAllDisks 10%'
   - 'perl do "/root/bin/zpool.pl"'
 
+subversion_server::packages:
+  - 'viewvc'
+
 subversion_server::svn_master_hostname: 'hades.apache.org'
 
 subversion_server::board_reminders::install_path: '/usr/local/bin/board_reminders'
