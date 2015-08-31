@@ -349,10 +349,10 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
           - 'All'
         addhandlers:
-        -
-          handler: 'lua-script'
-          extensions:
-            - '.lua'
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -428,8 +428,6 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
@@ -457,10 +455,10 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
           - 'All'
         addhandlers:
-        -
-          handler: 'lua-script'
-          extensions:
-            - '.lua'
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -487,10 +485,8 @@ vhosts_asf::vhosts::vhosts:
       Redirect permanent /travel/application https://tac-apply.apache.org
       RedirectMatch permanent ^/LICENSE.* https://www.apache.org/licenses/
       RedirectMatch permanent /flyers(.*) https://www.apache.org/foundation/contributing.html
+
       RewriteEngine on
-      AddHandler lua-script .lua
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-      
       RewriteOptions inherit
       RewriteRule /docs/mod_(.*)$ https://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
 
@@ -538,6 +534,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
 
@@ -756,6 +753,11 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -880,8 +882,11 @@ vhosts_asf::vhosts::vhosts:
 
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
-      AddHandler lua-script .lua
+
+      LuaScope thread
+      LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       Use BlockSvn
 
 
@@ -904,6 +909,11 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1028,9 +1038,12 @@ vhosts_asf::vhosts::vhosts:
 
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
-      Use BlockSvn
-      AddHandler lua-script .lua
+
+      LuaScope thread
+      LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      Use BlockSvn
       
   incubator:
     vhost_name: '*'
@@ -1069,6 +1082,8 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
+      LuaScope thread
+      LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
@@ -1124,9 +1139,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1138,7 +1153,9 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
     
-      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1384,10 +1401,10 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
           - 'All'
         addhandlers:
-        -
-          handler: 'cgi-script'
-          extensions:
-            - '.cgi'
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1397,6 +1414,11 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost on
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
 
@@ -1525,10 +1547,10 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
           - 'All'
         addhandlers:
-        -
-          handler: 'cgi-script'
-          extensions:
-            - '.cgi'
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1538,6 +1560,11 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost on
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
 
@@ -1720,15 +1747,19 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
@@ -1762,15 +1793,19 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
@@ -1870,9 +1905,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1897,7 +1932,9 @@ vhosts_asf::vhosts::vhosts:
       AddType text/plain sha512
       RewriteEngine On
 
-      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -1955,9 +1992,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -1982,7 +2019,9 @@ vhosts_asf::vhosts::vhosts:
       AddType text/plain sha512
       RewriteEngine On
 
-      RewriteRule download.*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -2089,14 +2128,20 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
+
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
 
@@ -2122,14 +2167,19 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
 
@@ -2228,9 +2278,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2238,6 +2288,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
 
@@ -2266,9 +2321,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2276,6 +2331,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
 
@@ -2365,9 +2425,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2378,6 +2438,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
 
@@ -2405,9 +2470,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -2418,6 +2483,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
 
@@ -2445,9 +2515,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2463,6 +2533,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
 
@@ -2491,9 +2566,9 @@ vhosts_asf::vhosts::vhosts:
           - 'All'
         addhandlers:
           -
-            handler: 'cgi-script'
+            handler: 'lua-script'
             extensions:
-              - '.cgi'
+              - '.lua'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2509,6 +2584,11 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
 
