@@ -144,7 +144,7 @@ apache::custom_config:
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
         RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
-        RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+        RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
         AddHandler lua-script .lua
       </Macro> 
 
@@ -431,7 +431,7 @@ vhosts_asf::vhosts::vhosts:
       <Location ~ "closer\.lua">
         SetHandler lua-script
       </Location>
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
 
@@ -490,7 +490,7 @@ vhosts_asf::vhosts::vhosts:
       RedirectMatch permanent /flyers(.*) https://www.apache.org/foundation/contributing.html
       RewriteEngine on
       AddHandler lua-script .lua
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       
       RewriteOptions inherit
       RewriteRule /docs/mod_(.*)$ https://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
@@ -882,7 +882,7 @@ vhosts_asf::vhosts::vhosts:
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
       AddHandler lua-script .lua
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       Use BlockSvn
 
 
@@ -1031,7 +1031,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
       Use BlockSvn
       AddHandler lua-script .lua
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       
   incubator:
     vhost_name: '*'
@@ -1070,7 +1070,7 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{OCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
