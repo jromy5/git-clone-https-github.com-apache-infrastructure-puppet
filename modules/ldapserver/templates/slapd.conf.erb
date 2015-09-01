@@ -168,12 +168,24 @@ access to dn.subtree="ou=people,dc=apache,dc=org"
   by * read
   by anonymous auth
 
+## Allow secretary@ to edit listed attrs
+access to dn.subtree="ou=people,dc=apache,dc=org"
+  attrs=cn
+  by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
+  by dn="cn=idao-ro,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
+  by * read
+  by anonymous auth
+
 ## Allow users to edit a subset of their own personal attributes.
 ## NOTE that mail,userPassword have been moved out to allow further access by others
 access to dn.subtree="ou=people,dc=apache,dc=org"
   attrs=sn,givenName,loginShell,asf-sascore,asf-pgpKeyFingerprint,sshPublicKey,asf-member-activeprojects,asf-member-affiliationurl,asf-member-affiliation,asf-member-personalurl,asf-member-status,asf-altEmail,asf-personalURL
   by self write
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
   by dn="cn=idao-ro,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
