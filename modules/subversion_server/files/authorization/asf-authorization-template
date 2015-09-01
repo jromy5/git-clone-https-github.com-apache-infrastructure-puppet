@@ -137,7 +137,7 @@ continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-corinthia=dortef,franz,gbg,ianc,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
+corinthia=dortef,franz,gbg,gmcdonald,ianc,jani,louis,orcmid,pescetti,pmkelly,svanteschubert,wave
 cotton=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
