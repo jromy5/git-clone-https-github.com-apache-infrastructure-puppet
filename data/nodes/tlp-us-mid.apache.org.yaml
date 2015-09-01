@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::actions
   - apache::mod::autoindex
+  - apache::mod::dir
   - apache::mod::expires
   - apache::mod::geoip
   - apache::mod::headers
@@ -47,6 +48,12 @@ apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
 
+apache::mod::dir::indexes:
+  - 'index.html'
+  - 'index.html.var'
+  - 'index.pl'
+  - 'index.php'
+  - 'index.xhtml'
 
 apache::mod::event::listenbacklog:           '1023'
 apache::mod::event::maxclients:              '750'
