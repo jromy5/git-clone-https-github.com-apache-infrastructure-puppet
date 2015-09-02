@@ -26,7 +26,7 @@ class rsync_mirror (
   cron { 'kill stale rsync':
     ensure      => present,
     command     => 'to_kill=$(/usr/local/bin/rsync_hang.pl | tail -1) && if [[ ! -z $to_kill ]] ; then kill -15 $to_kill ; fi', # lint:ignore:80chars
-    environment => 'PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin SHELL=/bin/bash',
+    environment => "PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nSHELL=/bin/bash", # lint:ignore:double_quoted_strings
     hour        => '0',
     minute      => '15',
     user        => 'root',

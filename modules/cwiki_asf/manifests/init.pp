@@ -211,27 +211,27 @@ class cwiki_asf (
       user        => $username,
       minute      => '*/30',
       command     => "/home/${username}/create-intermediates-index.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'copy-intermediate-html':
       user        => $username,
       minute      => '*/10',
       command     => "/home/${username}/copy-intermediate-html.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'remove-intermediates-daily':
       user        => $username,
       minute      => 05,
       hour        => 07,
       command     => "/home/${username}/remove-intermediates-daily.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'cleanup-tomcat-logs':
       user        => $username,
       minute      => 20,
       hour        => 07,
       command     => "/home/${username}/cleanup-tomcat-logs.sh",
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
 }
 

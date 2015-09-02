@@ -32,7 +32,7 @@ class bugzilla (
     minute      => 15,
     hour        => 7,
     weekday     => 0,
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+    environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
     require     => Class['rootbin_asf'],
   }
 

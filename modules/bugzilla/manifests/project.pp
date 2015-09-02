@@ -114,7 +114,7 @@ define bugzilla::project (
     command     => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v 'Use of uninitialized.*line 31'", # lint:ignore:80chars
     minute      => 5,
     hour        => 0,
-    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh', # lint:ignore:80chars
+    environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
     require     => Class['rootbin_asf'],
   }
 
