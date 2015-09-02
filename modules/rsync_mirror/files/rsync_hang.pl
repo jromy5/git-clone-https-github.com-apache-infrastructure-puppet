@@ -33,7 +33,7 @@ Usage("Arg count\n") unless @ARGV >= 0 ;
 
 $opt{l} = 1 ;
 
-my $PS  = 'ps -ax' ;
+my $PS  = '/bin/ps -ax' ;
 my %PID ;
 my %tab ;
 my $dpid = 0 ;
@@ -44,7 +44,7 @@ if ( open PID, $PID_FILE )
 my @LOG = ( $LLL ) ;
 
 if ( $opt{l} )
-  { unshift @LOG, map { "bzcat $_|" ; } reverse sort <$LLL.*.bz2> ; }
+  { unshift @LOG, map { "/bin/bzcat $_|" ; } reverse sort <$LLL.*.bz2> ; }
 
 # printf "[%s]", join ',', @LOG ; exit ;
 
