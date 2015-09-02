@@ -739,6 +739,9 @@ puppetsvn = r
 [/infrastructure/trunk/machines/vms/svn-qavm2.apache.org]
 @subversion = rw
 
+[/infrastructure/trunk/machines/vms/whimsy-vm.apache.org]
+whimsysvn = r
+
 [/infrastructure/trunk/nagios]
 @infrastructure-interest = rw
 
