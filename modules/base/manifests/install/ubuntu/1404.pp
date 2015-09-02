@@ -8,6 +8,11 @@ class base::install::ubuntu::1404 (
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
+    '/root/purge_old_kernels':
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0754',
+      source => 'puppet:///modules/base/purge_old_kernels';
     '/usr/local/bin/zsh':
       ensure => link,
       target => '/usr/bin/zsh';
@@ -17,5 +22,15 @@ class base::install::ubuntu::1404 (
     '/etc/logrotate.d/rsyslog':
       ensure => present,
       source => 'puppet:///modules/base/logrotate-rsyslog';
+  }->
+
+  cron { 'purge_old_kernels':
+    ensure      => present,
+    command     => '/root/purge_old_kernels -y',
+    environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin SHELL=/bin/sh',
+    minute      => '10',
+    hour        => '0',
+    weekday     => '0',
+    require     => File['/root/purge_old_kernels'],
   }
 }
