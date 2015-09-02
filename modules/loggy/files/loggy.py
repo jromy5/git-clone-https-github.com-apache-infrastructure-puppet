@@ -22,8 +22,7 @@
 #  loggy.py --daemonize
 #  requires loggy.cfg (and elasticsearch + python-inotify)
 
-from inotify import watcher
-import inotify
+
 import os
 import select
 import sys
@@ -38,7 +37,16 @@ import random, atexit, signal, inspect
 from threading import Lock
 import subprocess, collections, argparse, grp, pwd, shutil
 import ConfigParser
+import platform
 
+osname = platform.system().lower()
+if osname == "linux":
+    from inotify import watcher
+    import inotify
+elif osname == "freebsd":
+    from watchdog.observers import Observer
+    from watchdog.events import PatternMatchingEventHandler
+    
 # ElasticSearch
 from elasticsearch import Elasticsearch, helpers
 
@@ -50,7 +58,10 @@ es = None
 hostname = socket.gethostname()
 if hostname.find(".apache.org") == -1:
     hostname = hostname + ".apache.org"
+print("Using %s as node name" % hostname)
 
+inodes = {}
+inodes_path = {}
 
 regexes = {
     'apache_access': re.compile( 
@@ -72,7 +83,7 @@ regexes = {
             r"(?P<message>.+)"
         ),
     'syslog': re.compile( 
-            r"(?P<date>\S+ \d+ \d+:\d+:\d+)\s+" 
+            r"(?P<date>\S+\s+\d+\s+\d+:\d+:\d+)\s+(<[0-9.]+>\s+)?" 
             r"(?P<host>\S+)\s+" 
             r"(?P<type>\S+):\s+"
             r"(?P<message>.+)"
@@ -255,6 +266,8 @@ for t in tuples:
 
 gotindex = {}
 
+
+
 class NodeThread(Thread):
     def assign(self, json, logtype, xes):
         self.json = json
@@ -386,176 +399,277 @@ def parseLine(path, data):
                         print("Appended a " + r + " match")
                     break
 
-
-
-
+if osname == "freebsd":
+    class BSDHandler(PatternMatchingEventHandler):
+        def process(self, event):
+            global filehandles, inodes, inodes_path
+            path = event.src_path
+            if (event.event_type == 'moved') and (path in filehandles):
+                print("File moved, closing original handle")
+                try:
+                    filehandles[path].close()
+                except Exception as err:
+                    print(err)
+                del filehandles[path]
+                inode = inodes_path[path]
+                del inodes[inode]
+    
+            elif (event.event_type == 'modified' or event.event_type == 'created') and (path.find(".gz") == -1) and not path in filehandles:
+                try:
+                    idata = os.stat(path)
+                    inode = idata.st_ino
+                    if not inode in inodes:
+                        print("Opening: " + path)
+                        filehandles[path] = open(path, "r")
+                        print("Started watching %s (%u)" % (path, inode))
+                        filehandles[path].seek(0,2)
+                        inodes[inode] = path
+                        inodes_path[path] = inode
+                        print(path, filehandles[path])
+                except Exception as err:
+                    print(err)
+            elif event.event_type == 'modified' and path in filehandles:
+                print(path + " was modified")
+                rd = 0
+                data = ""
+                #print("Change in " + path)
+                try:
+                    while True:
+                        line = filehandles[path].readline()
+                        if not line:
+                            #filehandles[path].seek(0,2)
+                            break
+                        else:
+                            rd += len(line)
+                            data += line
+                    #print("Read %u bytes from %s" % (rd, path))
+                    parseLine(path, data)
+                except Exception as err:
+                    try:
+                        print("Could not utilize " + path + ", closing.." + err)
+                        filehandles[path].close()
+                    except Exception as err:
+                        print(err)
+                    del filehandles[path]
+                    inode = inodes_path[path]
+                    del inodes[inode]
+          # File deleted? (close handle)
+            elif event.event_type == 'deleted':
+                if path in filehandles:
+                    print("Closed " + path)
+                    try:
+                        filehandles[path].close()
+                    except Exception as err:
+                        print(err)
+                    del filehandles[path]
+                    inode = inodes_path[path]
+                    del inodes[inode]
+                    print("Stopped watching " + path)
+                    
+            
+        def on_modified(self, event):
+            self.process(event)
+        def on_created(self, event):
+            self.process(event)
+        def on_deleted(self, event):
+            self.process(event)
+        def on_moved(self, event):
+            self.process(event)
 
 class Loggy(Thread):
     def run(self):
         global timeout, w, tuples, regexes, json_pending, last_push, config
         fp = {}
-        w = watcher.AutoWatcher()
-        for path in config.get('Analyzer','paths').split(","):
-            try:
-                print("Recursively monitoring " + path.strip() + "...")
-                w.add_all(path.strip(), inotify.IN_ALL_EVENTS)
-            except OSError as err:
-                pass
-            
-        if not w.num_watches():
-            print("No paths to analyze, nothing to do!")
-            sys.exit(1)
-        
-        poll = select.poll()
-        poll.register(w, select.POLLIN)
-        
-        timeout = None
-        
-        threshold = watcher.Threshold(w, 256)
-
-        inodes = {}
-        inodes_path = {}
-        xes = connect_es(config)
-        while True:
-            events = poll.poll(timeout)
-            nread = 0
-            if threshold() or not events:
-                #print('reading,', threshold.readable(), 'bytes available')
-                for evt in w.read(0):
-                    nread += 1
-        
-                    # The last thing to do to improve efficiency here would be
-                    # to coalesce similar events before passing them up to a
-                    # higher level.
-        
-                    # For example, it's overwhelmingly common to have a stream
-                    # of inotify events contain a creation, followed by
-                    # multiple modifications of the created file.
-        
-                    # Recognising this pattern (and others) and coalescing
-                    # these events into a single creation event would reduce
-                    # the number of trips into our app's presumably more
-                    # computationally expensive upper layers.
-                    masks = inotify.decode_mask(evt.mask)
-                    #print(masks)
-                    path = evt.fullpath
-                    #print(repr(evt.fullpath), ' | '.join(masks))
-                    try:
-                        if not u'IN_ISDIR' in masks:
-                            
-                            if (u'IN_MOVED_FROM' in masks) and (path in filehandles):
-                                print("File moved, closing original handle")
-                                try:
-                                    filehandles[path].close()
-                                except Exception as err:
-                                    print(err)
-                                del filehandles[path]
-                                inode = inodes_path[path]
-                                del inodes[inode]
-                                
-                            elif (not u'IN_DELETE' in masks) and (not path in filehandles) and (path.find(".gz") == -1):
-                                try:
-                                    print("Opening " + path)
-                                    idata = os.stat(path)
-                                    inode = idata.st_ino
-                                    if not inode in inodes:
-                                        filehandles[path] = open(path, "r")
-                                        print("Started watching " + path)
-                                        filehandles[path].seek(0,2)
-                                        inodes[inode] = path
-                                        inodes_path[path] = inode
-                                        
-                                except Exception as err:
-                                    print(err)
-                                    try:
-                                        filehandles[path].close()
-                                    except Exception as err:
-                                        print(err)
-                                    del filehandles[path]
-                                    inode = inodes_path[path]
-                                    del inodes[inode]
-                                    
-                            # First time we've discovered this file?
-                            if u'IN_CLOSE_NOWRITE' in masks and not path in filehandles:
-                                pass
-                                    
-                            # New file created in a folder we're watching??
-                            elif u'IN_CREATE' in masks:
-                                pass
-                            
-                            # File truncated?
-                            elif u'IN_CLOSE_WRITE' in masks and path in filehandles:
-                            #    print(path + " truncated!")
-                                filehandles[path].seek(0,2)
-                                
-                            # File contents modified?
-                            elif u'IN_MODIFY' in masks and path in filehandles:
-                          #      print(path + " was modified")
-                                rd = 0
-                                data = ""
-                                #print("Change in " + path)
-                                try:
-                                    while True:
-                                        line = filehandles[path].readline()
-                                        if not line:
-                                            #filehandles[path].seek(0,2)
-                                            break
-                                        else:
-                                            rd += len(line)
-                                            data += line
-                                    #print("Read %u bytes from %s" % (rd, path))
-                                    parseLine(path, data)
-                                except Exception as err:
-                                    try:
-                                        print("Could not utilize " + path + ", closing.." + err)
-                                        filehandles[path].close()
-                                    except Exception as err:
-                                        print(err)
-                                    del filehandles[path]
-                                    inode = inodes_path[path]
-                                    del inodes[inode]
-                            
-                            
-                            # File deleted? (close handle)
-                            elif u'IN_DELETE' in masks:
-                                if path in filehandles:
-                                    print("Closed " + path)
-                                    try:
-                                        filehandles[path].close()
-                                    except Exception as err:
-                                        print(err)
-                                    del filehandles[path]
-                                    inode = inodes_path[path]
-                                    del inodes[inode]
-                                    print("Stopped watching " + path)
-                            
-                            else:
-                                pass
-                            
-                    except Exception as err:
-                        print(err)
-                        
-        
-            for x in json_pending:
-                if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20:
-                    if not x in fp:
-                        fp[x] = True
-                        print("First push for " + x + "!")
-                    t = NodeThread()
-                    t.assign(json_pending[x], x, xes)
-                    t.start()
-                    json_pending[x] = []
-                    last_push[x] = time.time()
+        if osname == "linux":
+            w = watcher.AutoWatcher()
+            for path in config.get('Analyzer','paths').split(","):
+                try:
+                    print("Recursively monitoring " + path.strip() + "...")
+                    w.add_all(path.strip(), inotify.IN_ALL_EVENTS)
+                except OSError as err:
+                    pass
                 
-            if nread:
-                #print('plugging back in')
-                timeout = None
-                poll.register(w, select.POLLIN)
-            else:
-                #print('unplugging,', threshold.readable(), 'bytes available')
-                timeout = 1000
-                poll.unregister(w)
-
+            if not w.num_watches():
+                print("No paths to analyze, nothing to do!")
+                sys.exit(1)
+            
+            poll = select.poll()
+            poll.register(w, select.POLLIN)
+            
+            timeout = None
+            
+            threshold = watcher.Threshold(w, 256)
+    
+            inodes = {}
+            inodes_path = {}
+            xes = connect_es(config)
+            while True:
+                events = poll.poll(timeout)
+                nread = 0
+                if threshold() or not events:
+                    #print('reading,', threshold.readable(), 'bytes available')
+                    for evt in w.read(0):
+                        nread += 1
+            
+                        # The last thing to do to improve efficiency here would be
+                        # to coalesce similar events before passing them up to a
+                        # higher level.
+            
+                        # For example, it's overwhelmingly common to have a stream
+                        # of inotify events contain a creation, followed by
+                        # multiple modifications of the created file.
+            
+                        # Recognising this pattern (and others) and coalescing
+                        # these events into a single creation event would reduce
+                        # the number of trips into our app's presumably more
+                        # computationally expensive upper layers.
+                        masks = inotify.decode_mask(evt.mask)
+                        #print(masks)
+                        path = evt.fullpath
+                        #print(repr(evt.fullpath), ' | '.join(masks))
+                        try:
+                            if not u'IN_ISDIR' in masks:
+                                
+                                if (u'IN_MOVED_FROM' in masks) and (path in filehandles):
+                                    print("File moved, closing original handle")
+                                    try:
+                                        filehandles[path].close()
+                                    except Exception as err:
+                                        print(err)
+                                    del filehandles[path]
+                                    inode = inodes_path[path]
+                                    del inodes[inode]
+                                    
+                                elif (not u'IN_DELETE' in masks) and (not path in filehandles) and (path.find(".gz") == -1):
+                                    try:
+                                        print("Opening " + path)
+                                        idata = os.stat(path)
+                                        inode = idata.st_ino
+                                        if not inode in inodes:
+                                            filehandles[path] = open(path, "r")
+                                            print("Started watching " + path)
+                                            filehandles[path].seek(0,2)
+                                            inodes[inode] = path
+                                            inodes_path[path] = inode
+                                            
+                                    except Exception as err:
+                                        print(err)
+                                        try:
+                                            filehandles[path].close()
+                                        except Exception as err:
+                                            print(err)
+                                        del filehandles[path]
+                                        inode = inodes_path[path]
+                                        del inodes[inode]
+                                        
+                                # First time we've discovered this file?
+                                if u'IN_CLOSE_NOWRITE' in masks and not path in filehandles:
+                                    pass
+                                        
+                                # New file created in a folder we're watching??
+                                elif u'IN_CREATE' in masks:
+                                    pass
+                                
+                                # File truncated?
+                                elif u'IN_CLOSE_WRITE' in masks and path in filehandles:
+                                #    print(path + " truncated!")
+                                    filehandles[path].seek(0,2)
+                                    
+                                # File contents modified?
+                                elif u'IN_MODIFY' in masks and path in filehandles:
+                              #      print(path + " was modified")
+                                    rd = 0
+                                    data = ""
+                                    #print("Change in " + path)
+                                    try:
+                                        while True:
+                                            line = filehandles[path].readline()
+                                            if not line:
+                                                #filehandles[path].seek(0,2)
+                                                break
+                                            else:
+                                                rd += len(line)
+                                                data += line
+                                        #print("Read %u bytes from %s" % (rd, path))
+                                        parseLine(path, data)
+                                    except Exception as err:
+                                        try:
+                                            print("Could not utilize " + path + ", closing.." + err)
+                                            filehandles[path].close()
+                                        except Exception as err:
+                                            print(err)
+                                        del filehandles[path]
+                                        inode = inodes_path[path]
+                                        del inodes[inode]
+                                
+                                
+                                # File deleted? (close handle)
+                                elif u'IN_DELETE' in masks:
+                                    if path in filehandles:
+                                        print("Closed " + path)
+                                        try:
+                                            filehandles[path].close()
+                                        except Exception as err:
+                                            print(err)
+                                        del filehandles[path]
+                                        inode = inodes_path[path]
+                                        del inodes[inode]
+                                        print("Stopped watching " + path)
+                                
+                                else:
+                                    pass
+                                
+                        except Exception as err:
+                            print(err)
+                            
+            
+                for x in json_pending:
+                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20:
+                        if not x in fp:
+                            fp[x] = True
+                            print("First push for " + x + "!")
+                        t = NodeThread()
+                        t.assign(json_pending[x], x, xes)
+                        t.start()
+                        json_pending[x] = []
+                        last_push[x] = time.time()
+                    
+                if nread:
+                    #print('plugging back in')
+                    timeout = None
+                    poll.register(w, select.POLLIN)
+                else:
+                    #print('unplugging,', threshold.readable(), 'bytes available')
+                    timeout = 1000
+                    poll.unregister(w)
+        
+        if osname == "freebsd":
+            xes = connect_es(config)
+            observer = Observer()
+            for path in paths:
+                observer.schedule(BSDHandler(), path, recursive=True)
+                print("Recursively monitoring " + path.strip() + "...")
+            observer.start()
+            try:
+                while True:
+                    for x in json_pending:
+                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20):
+                            if not x in fp:
+                                fp[x] = True
+                                print("First push for " + x + "!")
+                            t = NodeThread()
+                            t.assign(json_pending[x], x, xes)
+                            t.start()
+                            json_pending[x] = []
+                            last_push[x] = time.time()
+                    time.sleep(0.5)
+                    
+            except KeyboardInterrupt:
+                observer.stop()
+            observer.join()                
+            
+            
+                
 
 parser = argparse.ArgumentParser(description='Command line options.')
 parser.add_argument('--user', dest='user', type=str, nargs=1,
