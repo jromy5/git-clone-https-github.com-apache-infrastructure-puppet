@@ -86,6 +86,11 @@ regexes = {
             r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" 
             r"\[(?P<pid>[\S.]+)\]\s+" 
             r"(?P<message>.+)"
+        ),
+    'pylogs': re.compile( 
+            r"(?P<date>\S+ \S+)\s+\[pylog\]\s+" 
+            r"\[(?P<type>[\S.]+)\]:\s+" 
+            r"(?P<message>.+)"
         )
 }
 
@@ -111,6 +116,10 @@ tuples = {
         ),
     'rsync': namedtuple('rsync', [
         'date', 'pid', 'message',
+        'filepath', 'logtype', 'timestamp']
+        ),
+    'pylogs': namedtuple('pylogs', [
+        'date', 'type', 'message',
         'filepath', 'logtype', 'timestamp']
         )
 }
