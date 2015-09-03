@@ -87,7 +87,7 @@ logrotate::rule:
     ensure: 'present'
     create_owner: 'root'
     create_group: 'apbackup'
-    rotate: 5
+    rotate: 2
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
