@@ -773,7 +773,7 @@ ea = rw
 @db-torque = rw
 
 [/deltacloud]
-@directmemory = rw
+@attic-pmc = rw
 
 [/deltaspike]
 @deltaspike = rw
