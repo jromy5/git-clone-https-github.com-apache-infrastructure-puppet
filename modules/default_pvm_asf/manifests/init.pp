@@ -2,7 +2,7 @@
 
 class default_pvm_asf (
 
-  $required_packages = ['joe' , 'ant' , 'unzip'],
+  $required_packages = ['joe' , 'ant' , 'unzip' , 'tomcat7'],
   $java = true,
   $java_version = '8', # 7, 8
   $java_ensure = 'latest', # present, latest, absent
