@@ -35,8 +35,6 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     priority: '12'
     servername: 'forrest-vm.apache.org'
-    serveraliases:
-      - 'cwiki.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
