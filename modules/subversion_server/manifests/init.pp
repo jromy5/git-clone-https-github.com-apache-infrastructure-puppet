@@ -20,6 +20,12 @@ class subversion_server (
     ensure => installed,
   }
 
+  user { 'www-data':
+    home        => '/home/www-data',
+    managehome  => true,
+    before      => Package['httpd'],
+  }
+
   # File block to deploy folders, scripts etc
   file {
     '/x1':
