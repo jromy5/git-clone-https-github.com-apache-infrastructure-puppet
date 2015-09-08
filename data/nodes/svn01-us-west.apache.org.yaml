@@ -88,10 +88,6 @@ nfs::server::export:
     options:   'ro'
     clients:   '140.211.11.32(ro)'
 
-ntp::interfaces:
-  - em1
-  - lo
-
 perl::module:
   net_ldap:
     name: 'Net::LDAP'
