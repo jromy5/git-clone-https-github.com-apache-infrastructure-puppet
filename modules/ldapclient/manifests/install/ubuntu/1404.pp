@@ -48,10 +48,6 @@ class ldapclient::install::ubuntu::1404 (
       require => File['/etc/ldap/cacerts'];
   }
   
-    service { 'nscd':
-      ensure => 'stopped',
-    }
-
     service { 'nslcd':
         ensure     => 'running',
         enable     => true,
