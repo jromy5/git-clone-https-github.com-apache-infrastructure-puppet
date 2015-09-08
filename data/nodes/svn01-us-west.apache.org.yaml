@@ -20,7 +20,6 @@ classes:
   - ssl::name::wildcard_apache_org
   - stunnel_asf
   - svnpubsub
-  - svnwcsub
   - subversion_server
   - subversion_server::board_reminders
   - vhosts_asf::modules
@@ -106,7 +105,6 @@ snmp::snmpd_config:
   - 'disk / 10000'
   - 'disk /var 5%'
   - 'includeAllDisks 10%'
-  - 'perl do "/root/bin/zpool.pl"'
 
 subversion_server::packages:
   - 'viewvc'
@@ -119,18 +117,6 @@ subversion_server::board_reminders::packages:
   - libfindbin-libs-perl
   - libfile-slurp-perl
   - libfile-spec-perl 
-
-svnwcsub::gid:              '9995'
-svnwcsub::uid:              '9995'
-svnwcsub::conf_file:        'svnwcsub.conf'
-svnwcsub:::conf_path:       '/etc/'
-svnwcsub::groupname:        'svnwc'
-svnwcsub::groups:
-  - 'svnwc'
-svnwcsub::service_ensure:   'stopped'
-svnwcsub::service_name:     'svnwcsub'
-svnwcsub::shell:            '/bin/bash'
-svnwcsub::username:         'svnwc'
 
 vhosts_asf::modules::modules:
   authz_svn:
