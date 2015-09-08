@@ -102,10 +102,12 @@ class subversion_server (
       source => 'puppet:///modules/subversion_server/svn_sync_to_aws_s3.sh',
       mode   => '0775';
     '/x1/www':
-      source => 'puppet:///modules/subversion_server/www/htdocs',
-      mode   => '0775',
-      owner  => 'www-data',
-      group  => 'svnadmins';
+      ensure  => directory,
+      recurse => true,
+      source  => 'puppet:///modules/subversion_server/www',
+      mode    => '0775',
+      owner   => 'www-data',
+      group   => 'svnadmins';
     '/x1/www/viewvc':
       ensure => link,
       target => '/usr/lib/viewvc/cgi-bin/viewvc.cgi',

@@ -1,0 +1,6 @@
+IndexIgnore robots.txt old-* no-* *.jpg *.ico
+
+IndexOptions FancyIndexing DescriptionWidth=*
+
+AddDescription "Web view of SVN repositories" viewvc
+
