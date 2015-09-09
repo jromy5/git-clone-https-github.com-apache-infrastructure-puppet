@@ -17,9 +17,11 @@ elasticsearch::version: '1.7.0'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::instances:
-  asful:
+  pony:
     config:
       node.name: 'pony-poc'
+      path.data: '/elastic/db'
+      network.host: '127.0.0.1'
       init_defaults:
         ES_HEAP_SIZE: '31g'
 
