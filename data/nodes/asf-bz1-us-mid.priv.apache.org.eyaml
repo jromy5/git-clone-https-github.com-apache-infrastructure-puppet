@@ -62,4 +62,4 @@ bugzilla::project:
     urlbase: 'https://bz.apache.org/ooo/'
     cookiepath: '/ooo/'
     bz_package: 'bugzilla-ooo'
-    package_ensure: '4.4.6-20150213'
+    package_ensure: '4.4.10-20150910'
