@@ -91,6 +91,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'pony-ssl_error.log'
     custom_fragment: |
       AcceptPathInfo On
+      AddOutputFilterByType DEFLATE application/json
       AddHandler lua-script .lua
       <Location /secret/>
           AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
