@@ -23,7 +23,7 @@ class subversion_server (
   user { 'www-data':
     home        => '/home/www-data',
     managehome  => true,
-    before      => Package['httpd'],
+    before      => Package['apache2'],
   }
 
   # File block to deploy folders, scripts etc
