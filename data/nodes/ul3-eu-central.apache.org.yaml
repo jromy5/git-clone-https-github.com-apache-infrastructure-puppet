@@ -2,9 +2,12 @@
 classes:
   - elasticsearch
   - asful
+  - datadog_agent::integrations::elasticsearch
   
 asful::nodename: 'ul3-eu-central'
 asful::nodeip: '10.91.64.152'
+
+datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.152:9200'
 
 elasticsearch::es_heap_size: '31G'
 elasticsearch::java_install: true

@@ -8,6 +8,7 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - datadog_agent::integrations::elasticsearch
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
@@ -20,6 +21,8 @@ vhosts_asf::modules::modules:
 
 asful::nodename: 'ul1-eu-central'
 asful::nodeip: '10.91.64.150'
+
+datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.150:9200'
 
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '31g'

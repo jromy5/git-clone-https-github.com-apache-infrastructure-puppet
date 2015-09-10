@@ -5,6 +5,7 @@ classes:
   - apache::mod::authnz_ldap
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - datadog_agent::integrations::elasticsearch
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
@@ -12,6 +13,8 @@ classes:
   
 asful::nodename: 'ul2-eu-central'
 asful::nodeip: '10.91.64.151'
+
+datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.151:9200'
 
 elasticsearch::es_heap_size: '31G'
 elasticsearch::init_defaults:
