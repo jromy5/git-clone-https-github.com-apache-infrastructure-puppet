@@ -1,22 +1,32 @@
 #/etc/puppet/modules/gitmirrorupdater/manifests/init.pp
 
 class gitmirrorupdater (
+  $packages = ['python-pyinotify'],
 ) {
 
-  file {
-    [ '/usr/local/etc/svn2gitupdate' ]:
-      ensure => 'directory',
-      owner  => 'git',
-      group  => 'git',
-  }
+  require git_mirror_asf::user
+
+  package { $packages:
+    ensure => present,
+  }->
 
   file {
-    '/x1/git/mirrors':
-      ensure => 'directory',
-      owner  => 'git',
-      group  => 'git',
-      mode   => '0755',
-  }
+    '/usr/local/etc/svn2gitupdate':
+      ensure => directory,
+      owner  => $git_mirror_asf::user::username,
+      group  => $git_mirror_asf::user::groupname;
+    '/var/log/svn2gitupdate':
+      ensure => directory,
+      owner  => $git_mirror_asf::user::username,
+      group  => $git_mirror_asf::user::groupname;
+    '/etc/init.d/svn2gitupdate':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => "puppet:///modules/gitmirrorupdater/svn2gitupdate.${::asfosname}",
+      require => User[$git_mirror_asf::user::username];
+  }->
 
   gitmirrorupdater::download_file {
     [
@@ -34,15 +44,15 @@ class gitmirrorupdater (
     '/usr/local/etc/svn2gitupdate/svn2gitupdate.cfg':
       ensure => file,
       audit  => 'content',
-      notify => Exec['restart_svn2gitupdate']
+      notify => Service['svn2gitupdate']
+  }->
+
+  service { 'svn2gitupdate':
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => File['/etc/init.d/svn2gitupdate'],
   }
 
-  exec {
-    'restart_svn2gitupdate':
-      refreshonly => true,
-      path        => '/usr/bin/:/bin/',
-      cwd         => '/usr/local/etc/svn2gitupdate',
-      command     => 'python /usr/local/etc/svn2gitupdate/svn2gitupdate.py restart', # lint:ignore:80chars
-      user        => 'git',
-  }
 }
