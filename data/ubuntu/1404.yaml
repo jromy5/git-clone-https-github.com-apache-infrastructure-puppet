@@ -7,6 +7,7 @@ classes:
   - datadog_agent
   - dnsclient
   - fail2ban_asf::config
+  - git_asf
   - orthrus
   - postfix::server
   - python
@@ -16,7 +17,6 @@ base::basepackages:
   - apt-file
   - bash
   - ca-certificates
-  - git
   - htop
   - libnet-snmp-perl
   - libsnmp-perl

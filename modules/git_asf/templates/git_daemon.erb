@@ -1,0 +1,21 @@
+#####################################
+## This file is managed by Puppet. ##
+## All changes will be overriden!  ##
+#####################################
+
+# Defaults for git-daemon initscript
+# sourced by /etc/init.d/git-daemon
+# installed at /etc/default/git-daemon by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+GIT_DAEMON_ENABLE=<%= @enable_daemon %>
+GIT_DAEMON_USER=<%= @daemon_user %>
+GIT_DAEMON_BASE_PATH=<%= @daemon_basepath %>
+GIT_DAEMON_DIRECTORY=<%= @daemon_directory %>
+
+# Additional options that are passed to the Daemon.
+GIT_DAEMON_OPTIONS="<%= @daemon_options %>"
+
