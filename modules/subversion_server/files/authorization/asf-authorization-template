@@ -662,6 +662,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @clerezza = rw
 
 [/click]
+@attic-pmc = rw
 * = r
 
 [/climate]
