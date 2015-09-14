@@ -27,9 +27,6 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-postfix::server::relayhost: '[mail-relay.apache.org]:587'
-postfix::server::smtp_use_tls: true
-
 vhosts_asf::vhosts::vhosts:
   forrest-vm-80:
     vhost_name: '*'
