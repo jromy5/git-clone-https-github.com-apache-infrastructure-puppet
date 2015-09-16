@@ -61,7 +61,7 @@ ACTION="$5"
 MAINTENANCE="/etc/nocommit"
 REVPROP_MAINTENANCE="/etc/norevprops"
 MASTER_HOSTNAME=<%= @svn_master_hostname %>
-HOSTNAME=`/bin/hostname`
+HOSTNAME=`/bin/hostname -f`
 SYNC_USER="asf-sync-process"
 
 

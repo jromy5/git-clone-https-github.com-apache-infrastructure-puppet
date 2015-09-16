@@ -38,7 +38,7 @@ SUDO=/usr/local/bin/sudo
 MAILER=/usr/bin/svn-mailer
 SETLOCK=/root/bin/setlock.pl
 MASTER_HOSTNAME=<%= @svn_master_hostname %>
-HOSTNAME=`/bin/hostname`
+HOSTNAME=`/bin/hostname -f`
 
 #
 REPOS="$1"
