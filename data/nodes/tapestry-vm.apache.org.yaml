@@ -1,0 +1,39 @@
+---
+classes:
+  - default_pvm_asf
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '2000'
+apache::mod::event::maxrequestworkers: '50'
+apache::mod::event::maxsparethreads: '20'
+apache::mod::event::minsparethreads: '15'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '50'
+apache::mod::event::threadsperchild: '5'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  tapestry-vm-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'tapestry-vm.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'tapestry_error.log'
+
