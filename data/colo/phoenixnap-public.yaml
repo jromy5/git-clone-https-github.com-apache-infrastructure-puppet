@@ -16,3 +16,4 @@ base::hosts:
     hosts_aliases:
       - 'svn-master.apache.org'
       - 'svn.us.apache.org'
+      - 'svn-us.apache.org'
