@@ -48,6 +48,10 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+base::hosts:
+  svn.us.apache.org:
+    ip: '10.41.0.6'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
