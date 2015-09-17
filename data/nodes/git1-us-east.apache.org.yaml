@@ -5,6 +5,7 @@ classes:
   - datadog_agent::integrations::http_check
   - loggy
   - blocky
+  - git_mirror_asf
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
   - ulimit_asf
