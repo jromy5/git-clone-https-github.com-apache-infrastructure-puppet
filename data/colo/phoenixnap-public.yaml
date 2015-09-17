@@ -13,7 +13,7 @@ base::hosts:
     ip: '10.41.0.12'
   svn.apache.org:
     ip: '10.41.0.6'
-    hosts_aliases:
+    host_aliases:
       - 'svn-master.apache.org'
       - 'svn.us.apache.org'
       - 'svn-us.apache.org'
