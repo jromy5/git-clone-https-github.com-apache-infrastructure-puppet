@@ -44,6 +44,7 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+
 base::basepackages:
   - 'lua5.2'
   - 'liblua5.2-dev'
@@ -60,7 +61,8 @@ postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'
-
+  allowmethods:
+    name: 'allowmethods'
 
 vhosts_asf::vhosts::vhosts:
   pony-poc:
