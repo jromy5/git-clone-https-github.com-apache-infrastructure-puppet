@@ -1,0 +1,88 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          svn2gitupdate
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: svn2gitupdate
+# Description:       start svn2gitupdate daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+
+svn2gitupdate_user=${svn2gitupdate_user-"git"}
+svn2gitupdate_group=${svn2gitupdate_group-"git"}
+svn2gitupdate_pidfile=${svn2gitupdate_pidfile-"/tmp/svn2gitupdate.pid"}
+svn2gitupdate_config=${svn2gitupdate_config-"/usr/local/etc/svn2gitupdate/svn2gitupdate.cfg"}
+svn2gitupdate_logfile=${svn2gitupdate_logfile-"/var/log/svn2gitupdate/svn2gitupdate.log"}
+svn2gitupdate_appdir=${svn2gitupdate_appdir-"/usr/local/etc/svn2gitupdate"}
+pidfile="${svn2gitupdate_pidfile}"
+
+RETVAL=0
+
+checkuser() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "This script must be run as root" 1>&2
+        exit 1
+    fi
+}
+
+start() {
+    echo "Starting svn2gitupdate daemon: "
+    cd $svn2gitupdate_appdir
+    su git -c "python2.7 $svn2gitupdate_appdir/svn2gitupdate.py start"
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+stop() {
+    echo "Stopping svn2gitupdate daemon: "
+    cd $svn2gitupdate_appdir
+    su git -c "python2.7 $svn2gitupdate_appdir/svn2gitupdate.py stop"
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+restart() {
+    echo "Restarting svn2gitupdate daemon: "
+    cd $svn2gitupdate_appdir
+    su git -c "python2.7 $svn2gitupdate_appdir/svn2gitupdate.py restart"
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        checkuser
+        start
+        ;;
+    stop)
+        checkuser
+        stop
+        ;;
+    restart)
+        checkuser
+        restart
+        ;;
+    status)
+        PID=`cat $svn2gitupdate_pidfile`
+        if ps -p $PID > /dev/null
+        then
+            echo "svn2gitupdate is running, yay!"
+            exit 0
+        else
+            echo "svn2gitupdate ain't running :("
+            exit 3
+        fi;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+esac
+
+exit $RETVAL

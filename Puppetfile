@@ -31,9 +31,11 @@ mod 'dell',
   :git => 'https://github.com/camptocamp/puppet-dell.git',
   :tag => '0.2.0'
 
+
 mod 'docker',
   :git => 'https://github.com/garethr/garethr-docker',
   :tag => 'v4.1.0'
+
 
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch',
