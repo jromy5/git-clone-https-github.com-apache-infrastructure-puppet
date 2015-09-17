@@ -51,6 +51,8 @@ apache::serveradmin:        'infrastructure@apache.org'
 base::hosts:
   svn.us.apache.org:
     ip: '10.41.0.6'
+  svn-master.apache.org:
+    ip: '10.41.0.6'
 
 logrotate::rule:
   apache2:
