@@ -36,7 +36,8 @@ mod 'docker',
   :tag => 'v4.1.0'
 
 mod 'elasticsearch',
-  :git => 'https://github.com/elastic/puppet-elasticsearch'
+  :git => 'https://github.com/elastic/puppet-elasticsearch',
+  :tag => '0.9.9'
 
 
 mod 'epel',
