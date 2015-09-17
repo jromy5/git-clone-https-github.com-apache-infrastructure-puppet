@@ -5,6 +5,7 @@ classes:
   - datadog_agent::integrations::http_check
   - loggy
   - blocky
+  - git_asf::git_daemon
   - git_mirror_asf
   - gitmirrorupdater
   - ssl::name::wildcard_apache_org
@@ -32,6 +33,10 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 
 datadog_agent::integrations::http_check::url: 'https://git.apache.org'
+
+git_asf::daemon_user: 'nobody'
+git_asf::daemon_basepath: '/x1/git/mirrors'
+git_asf::daemon_directory: '/x1/git/mirrors'
 
 logrotate::rule:
   apache2:
