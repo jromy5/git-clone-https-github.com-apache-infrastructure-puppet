@@ -18,3 +18,5 @@ base::hosts:
       - 'svn.us.apache.org'
       - 'svn-us.apache.org'
       - 'dist.apache.org'
+  ci.apache.org:
+    ip: '10.41.0.19'
