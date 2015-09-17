@@ -17,3 +17,4 @@ base::hosts:
       - 'svn-master.apache.org'
       - 'svn.us.apache.org'
       - 'svn-us.apache.org'
+      - 'dist.apache.org'
