@@ -894,7 +894,7 @@ ea = rw
 @hadoop = rw
 
 [/hama]
-@hama = rw
+* = r
 
 [/harmony]
 * = r
