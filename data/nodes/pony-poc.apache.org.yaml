@@ -96,6 +96,8 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       AcceptPathInfo On
       AddOutputFilterByType DEFLATE application/json
+      LuaScope thread
+      LuaCodeCache stat
       AddHandler lua-script .lua
       <Location /secret/>
           AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
