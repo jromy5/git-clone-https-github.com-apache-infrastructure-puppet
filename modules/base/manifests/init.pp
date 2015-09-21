@@ -2,6 +2,7 @@
 
 class base (
   $basepackages = [],
+  $gempackages  = [],
   $pkgprovider  = '',
 ) {
 
@@ -9,6 +10,11 @@ class base (
 
   package { $packages:
     ensure =>  installed,
+  }
+
+  packages { $gempackages:
+    ensure   => installed,
+    provider => 'gem',
   }
 
   $hosts = hiera_hash('base::hosts', {})
