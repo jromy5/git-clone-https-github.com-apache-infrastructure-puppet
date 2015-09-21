@@ -12,7 +12,7 @@ class base (
     ensure =>  installed,
   }
 
-  packages { $gempackages:
+  package { $gempackages:
     ensure   => installed,
     provider => 'gem',
   }
