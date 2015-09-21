@@ -107,10 +107,6 @@ vhosts_asf::vhosts::vhosts:
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
       </Location>
       <Location /archiver>
-          AllowMethods POST PUT HEAD
-          <If "%%{}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
-            Require all denied
-          </If>
           Require ip 209.188.14.143
           ProxyPass http://127.0.0.1:9200/
       </Location>
