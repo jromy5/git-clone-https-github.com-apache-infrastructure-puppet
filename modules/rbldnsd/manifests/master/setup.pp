@@ -2,38 +2,38 @@
 
 class rbldnsd::master::setup (
 
-  $RBLDISTDIR = '/etc/puppet/modules/rbldnsd/files/rbldnsd',
+  $rbldistdir = '/etc/puppet/modules/rbldnsd/files/rbldnsd',
 ){
 
   cron {
     'rbldnsd-sorbs-datafeed':
       ensure  => present,
-      require => File[$RBLDISTDIR],
-      command => "/usr/bin/rsync -az rsync.nl.sorbs.net::rbldnszones/ ${RBLDISTDIR}/sorbs/ > /dev/null", # lint:ignore:80chars
+      require => File[$rbldistdir],
+      command => "/usr/bin/rsync -az rsync://rsync.sorbs.net ${rbldistdir}/sorbs/ > /dev/null", # lint:ignore:80chars
       hour    => '*',
       minute  => '15';
     'rbldnsd-spamhaus-sbl-datafeed':
       ensure  => present,
-      require => File[$RBLDISTDIR],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/sbl ${RBLDISTDIR}/sbl/ > /dev/null", # lint:ignore:80chars
+      require => File[$rbldistdir],
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/sbl ${rbldistdir}/sbl/ > /dev/null", # lint:ignore:80chars
       hour    => '*',
       minute  => '20';
     'rbldnsd-spamhaus-xbl-datafeed':
       ensure  => present,
-      require => File[$RBLDISTDIR],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/xbl ${RBLDISTDIR}/xbl/ > /dev/null", # lint:ignore:80chars
+      require => File[$rbldistdir],
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/xbl ${rbldistdir}/xbl/ > /dev/null", # lint:ignore:80chars
       hour    => '*',
       minute  => '25';
     'rbldnsd-spamhaus-pbl-datafeed':
       ensure  => present,
-      require => File[$RBLDISTDIR],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/pbl ${RBLDISTDIR}/pbl/ > /dev/null", # lint:ignore:80chars
+      require => File[$rbldistdir],
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/pbl ${rbldistdir}/pbl/ > /dev/null", # lint:ignore:80chars
       hour    => '*',
       minute  => '30',
   }
 
   file {
-    $RBLDISTDIR:
+    $rbldistdir:
       ensure => 'directory',
       owner  => 'root',
       group  => 'root',
