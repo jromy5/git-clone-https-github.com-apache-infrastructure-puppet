@@ -21,9 +21,9 @@ class subversion_server (
   }
 
   user { 'www-data':
-    home        => '/home/www-data',
-    managehome  => true,
-    before      => Package['apache2'],
+    home       => '/home/www-data',
+    managehome => true,
+    before     => Package['apache2'],
   }
 
   # File block to deploy folders, scripts etc
@@ -118,16 +118,16 @@ class subversion_server (
   # file block for repo skeletons
   file {
     '/x1/svn/repos':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn'];
     '/x1/svn/repos/asf':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn/repos'];
     '/x1/svn/repos/asf/hooks':
       ensure => directory,
@@ -135,10 +135,10 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/repos/dist':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn/repos'];
     '/x1/svn/repos/dist/hooks':
       ensure => directory,
@@ -146,10 +146,10 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/repos/infra':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn/repos'];
     '/x1/svn/repos/infra/hooks':
       ensure => directory,
@@ -157,10 +157,10 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/repos/private':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn/repos'];
     '/x1/svn/repos/private/hooks':
       ensure => directory,
@@ -168,10 +168,10 @@ class subversion_server (
       group  => 'svnadmins',
       mode   => '0775';
     '/x1/svn/repos/tck':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'svnadmins',
-      mode   => '0775',
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
       require => File['/x1/svn/repos'];
     '/x1/svn/repos/tck/hooks':
       ensure => directory,
