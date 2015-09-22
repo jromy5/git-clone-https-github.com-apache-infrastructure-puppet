@@ -48,6 +48,9 @@ apache::mod::event::threadsperchild: '50'
 base::basepackages:
   - 'lua5.2'
   - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
 
 httpd_modules::dev_package:
   - 'apache2-dev'
