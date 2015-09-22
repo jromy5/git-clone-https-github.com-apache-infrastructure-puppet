@@ -1,0 +1,3 @@
+base::basepackages:
+  - 'open-vm-tools'
+  - 'open-vm-tools-dkms'

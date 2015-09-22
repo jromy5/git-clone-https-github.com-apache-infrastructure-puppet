@@ -22,6 +22,7 @@
     - "nodes/%{clientcert}"
     - "%{::asfosname}/%{::asfosrelease}"
     - "colo/%{asfcolo}"
+    - "%{::virtual}/%{::asfosname}/%{::asfosrelease}"
     - "oem/%{::oem}"
     - "common"
 
