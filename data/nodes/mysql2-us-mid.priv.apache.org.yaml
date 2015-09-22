@@ -2,7 +2,6 @@
 classes:
   - amanda::client
   - datadog_agent::integrations::mysql
-  - collectd::plugin_asf
   - mysql::server
   - mysql_asf::backup
   - ssl::name::abi_stunnel

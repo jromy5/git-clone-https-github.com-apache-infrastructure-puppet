@@ -3,22 +3,12 @@ classes:
   - asf999::create_user
   - base
   - base::snmp::createv3users
-  - collectd
-  - collectd::plugin::cpu
-  - collectd::plugin::df
-  - collectd::plugin::disk
-  - collectd::plugin::load
-  - collectd::plugin::logfile
-  - collectd::plugin::memory
-  - collectd::plugin::interface
-  - collectd::plugin::write_http
   - customfact
   - ldapclient
   - ntp
   - pam
   - puppet_asf
   - ssh_asf # this pulls in both server and client by default
-  - ssl::name::circonus_ca # required by collectd
   - sudoers
   - snmp
   - ulimit_asf
@@ -69,14 +59,6 @@ asf999::create_user::keycontent: |
 
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
-
-collectd::purge:  true
-collectd::recurse: true
-collectd::purge_config: true
-
-collectd::plugin::interface::interfaces:
-  - lo
-collectd::plugin::interface::ignoreselected: true
 
 fail2ban::disable: false
 fail2ban::ignoreip:

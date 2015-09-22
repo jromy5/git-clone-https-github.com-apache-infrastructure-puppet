@@ -1,7 +1,6 @@
 ---
 classes: 
   - apache
-  - collectd::plugin::postfix
   - loggy
   - mx_asf
   - pflogsumm

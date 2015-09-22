@@ -1,6 +1,5 @@
 ---
 classes:
-  - collectd::plugin::postfix
   - loggy
   - pflogsumm
   - postfix_asf

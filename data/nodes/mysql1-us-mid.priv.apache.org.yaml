@@ -2,7 +2,6 @@
 classes:
   - datadog_agent::integrations::mysql
   - mysql::server
-  - collectd::plugin_asf
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
