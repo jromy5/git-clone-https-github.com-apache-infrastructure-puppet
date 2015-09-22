@@ -1,9 +1,10 @@
 #/usr/local/etc/puppet/modules/base/manifests/init.pp
 
 class base (
-  $basepackages = [],
-  $gempackages  = [],
-  $pkgprovider  = '',
+  $basepackages   = [],
+  $gempackages    = [],
+  $purgedpackages = [],
+  $pkgprovider    = '',
 ) {
 
   $packages = hiera_array('base::basepackages', [])
@@ -15,6 +16,10 @@ class base (
   package { $gempackages:
     ensure   => installed,
     provider => 'gem',
+  }
+
+  package { $purgedpackages:
+    ensure => purged,
   }
 
   $hosts = hiera_hash('base::hosts', {})

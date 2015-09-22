@@ -25,6 +25,9 @@ base::basepackages:
   - software-properties-common
   - zsh
 
+base::purgedpackages:
+  - 'collectd'
+
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
 apache::mod::geoip::db_file:
