@@ -18,6 +18,10 @@ postfix::server::relay_domains: 'apache.org,incubator.apache.org,apachecon.com,a
 postfix::server::recipient_canonical_maps: 'regexp:/etc/postfix/recipient_canonical_maps'
 postfix::server::mynetworks: '127.0.0.0/8 [::1]/128 [fe80::]/64 %{::network_eth0}/%{::masklength} 209.188.14.139/32'
 
+postfix::server::header_checks:
+  - '# block spammer'
+  - '/^Subject: Fw: important/ REJECT Spam'
+
 postfix::server::asf_mx_enabled: 'true'
 postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
 postfix::server::max_postfix_amavis_procs: '25'
