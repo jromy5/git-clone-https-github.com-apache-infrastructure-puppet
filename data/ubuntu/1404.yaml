@@ -18,6 +18,7 @@ base::basepackages:
   - bash
   - ca-certificates
   - htop
+  - iotop
   - libnet-snmp-perl
   - libsnmp-perl
   - sockstat
