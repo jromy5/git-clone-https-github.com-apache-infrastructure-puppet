@@ -10,7 +10,7 @@ class puppet_asf::master {
   }
 
   package { 'puppetmaster':
-    ensure  => '3.8.2-1puppetlabs1',
+    ensure  => '3.8.3-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
     notify  => Service['puppetmaster'],
   }
