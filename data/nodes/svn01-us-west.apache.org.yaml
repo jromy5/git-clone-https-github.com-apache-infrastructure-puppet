@@ -418,6 +418,34 @@ vhosts_asf::vhosts::vhosts:
         Satisfy any
           
       </Location>
+
+      # test repo
+
+      <Location /repos/test>
+        DAV svn
+        SVNPath /x1/svn/repos/test
+        SVNCheckPathPrefix  /repos/test
+        SetOutputFilter DEFLATE
+
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap file
+
+        AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        #AuthzLDAPAuthoritative off
+
+        #Fall back to to using the local htpasswd file if LDAP fails.
+        AuthUserFile /x1/svn/asf-committers
+
+        ### use a different authorization file?
+        AuthzSVNAccessFile /x1/svn/asf-authorization
+
+        Require valid-user
+        Satisfy any
+
+      </Location>
+
         
       # Needed for sync
       <Location /repos/asf-proxy-sync>

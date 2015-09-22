@@ -178,6 +178,17 @@ class subversion_server (
       owner  => 'www-data',
       group  => 'svnadmins',
       mode   => '0775';
+    '/x1/svn/repos/test':
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/test/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
   }
 
   # file block for templated hooks
