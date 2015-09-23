@@ -23,6 +23,19 @@ pidfile="${loggy_pidfile}"
 RETVAL=0
  
 start() {
+    if [ -f $loggy_pidfile ]; then
+      # pid file exists, check is proc is running
+      PID=`cat $loggy_pidfile`
+      if kill -0 $PID >/dev/null 2>&1; then
+        echo 'loggy is already running'
+        return 1
+      else
+        # loggy was killed but not cleaned up
+        echo 'loggy was not stopped cleanly, cleaning up'
+        rm -f $loggy_pidfile
+      fi
+    fi
+
     echo "Starting loggy daemon: "
     cd $loggy_appdir
     python2.7 loggy.py --daemonize --user=$loggy_user --group=$loggy_group

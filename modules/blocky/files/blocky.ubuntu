@@ -23,6 +23,19 @@ pidfile="${blocky_pidfile}"
 RETVAL=0
  
 start() {
+    if [ -f $blocky_pidfile ]; then
+        # pid file exists, check is proc is running
+        PID=`cat $blocky_pidfile`
+        if kill -0 $PID >/dev/null 2>&1; then
+            echo 'Blocky is already running'
+            return 1
+        else
+            # blocky was killed but not cleaned up
+            echo 'Blocky was not stopped cleanly, cleaning up'
+            rm -f $blocky_pidfile
+        fi
+    fi
+
     echo "Starting blocky daemon: "
     cd $blocky_appdir
     python2.7 blocky.py --daemonize --user=$blocky_user --group=$blocky_group
