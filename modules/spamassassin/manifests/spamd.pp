@@ -177,4 +177,10 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       members => 'amavis',
       require => Package['clamav-daemon'],
   }
+
+  tidy { '/var/lib/amavis/virusmails':
+    age     => '1w',
+    matches => ['spam-*.gz'],
+    recurse => true,
+  }
 }
