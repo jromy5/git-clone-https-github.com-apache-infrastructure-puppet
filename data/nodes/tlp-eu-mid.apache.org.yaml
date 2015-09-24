@@ -551,7 +551,7 @@ vhosts_asf::vhosts::vhosts:
 
       Use BlockSvn
 
-  apachecon:
+  apachecon-archive:
     vhost_name: '*'
     port: 80
     servername: 'archive.apachecon.com'
@@ -561,6 +561,33 @@ vhosts_asf::vhosts::vhosts:
       - 'archive.*.apachecon.com'
       - 'apachecon.com'
       - 'www.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-na11:
+    vhost_name: '*'
+    port: 80
+    servername: 'na11.apachecon.com'
+    docroot: '/var/www/na11.apachecon.com'
+    manage_docroot: false
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-eu12:
+    vhost_name: '*'
+    port: 80
+    servername: 'eu12.apachecon.com'
+    docroot: '/var/www/eu12.apachecon.com'
+    manage_docroot: false
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-na13:
+    vhost_name: '*'
+    port: 80
+    servername: 'na13.apachecon.com'
+    docroot: '/var/www/na13.apachecon.com'
+    manage_docroot: false
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
 
@@ -578,7 +605,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
 
-  apachecon_na:
+  apachecon-na:
     vhost_name: '*'
     port: 80
     servername: 'na14.apachecon.com'
