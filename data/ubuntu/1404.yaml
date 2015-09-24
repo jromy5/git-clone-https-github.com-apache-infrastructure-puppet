@@ -27,6 +27,7 @@ base::basepackages:
 
 base::purgedpackages:
   - 'collectd'
+  - 'collectd-core'
 
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
