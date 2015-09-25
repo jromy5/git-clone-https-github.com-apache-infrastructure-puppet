@@ -52,6 +52,7 @@ postfix::server::relay_domains: 'hash:/usr/local/mailman3-core/mailman/data/post
 postfix::server::recipient_delimiter: '+'
 postfix::server::mydestination: 'mm3-core-poc.apache.org, localhost.apache.org, localhost, test1.apache.org, mmpoc.apache.org'
 postfix::server::inet_interfaces: 'all'
+postfix::server::relayhost: 'mm3-smtp-poc.apache.org'
 
 python::version: 'system'
 python::pip: true
