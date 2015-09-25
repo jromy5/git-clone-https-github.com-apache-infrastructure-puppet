@@ -23,7 +23,7 @@
     - "%{::asfosname}/%{::asfosrelease}"
     - "colo/%{asfcolo}"
     - "%{::virtual}/%{::asfosname}/%{::asfosrelease}"
-    - "oem/%{::oem}"
+    - "oem/%{oem}"
     - "common"
 
 :logger: console
