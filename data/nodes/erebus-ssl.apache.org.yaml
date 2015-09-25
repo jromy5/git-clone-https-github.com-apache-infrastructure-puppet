@@ -26,6 +26,8 @@ logrotate::rule:
 
 apache::default_vhost: false
 
+apache::logroot: '/x1/log'
+
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '500'
 apache::mod::event::maxconnectionsperchild: '200000'
