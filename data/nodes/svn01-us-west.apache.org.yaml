@@ -70,7 +70,7 @@ base::hosts:
     host_aliases:
       - 'svn01-us-west-internal.apache.org'
 
-datadog_agent::integrations::apache::url: 'https://tlp01-us-west.apache.org/server-status?auto'
+datadog_agent::integrations::apache::url: 'https://svn01-us-west-internal.apache.org/server-status?auto'
 
 fail2ban_asf::config::jails:
   httpd-svn:
