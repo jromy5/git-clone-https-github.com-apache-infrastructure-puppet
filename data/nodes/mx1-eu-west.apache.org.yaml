@@ -32,3 +32,4 @@ postfix::dbfile:
       foo@example.com     REJECT
       lrosen@rosenlaw.com REJECT
       lrosen@apache.org    REJECT
+      stevenn@outerthought.org   REJECT
