@@ -10,6 +10,7 @@ classes:
   - apache::mod::status
   - apache::mod::ssl
   - apbackup
+  - datadog_agent::integrations::apache
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - blocky
@@ -62,6 +63,14 @@ apbackup::uid: 9997
 base::basepackages:
   - libapache2-mod-geoip
   - svnmailer
+
+base::hosts:
+  localhost:
+    ip: '127.0.0.1'
+    host_aliases:
+      - 'svn01-us-west-internal.apache.org'
+
+datadog_agent::integrations::apache::url: 'https://tlp01-us-west.apache.org/server-status?auto'
 
 fail2ban_asf::config::jails:
   httpd-svn:
