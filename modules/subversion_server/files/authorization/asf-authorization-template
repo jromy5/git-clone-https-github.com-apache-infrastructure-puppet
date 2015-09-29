@@ -1409,8 +1409,8 @@ ea = rw
 [/onami]
 @onami = rw
 
-[/oodt]
-* = r
+[/oodt/cms_site]
+@oodt = rw
 
 [/oozie/site]
 @oozie = rw
