@@ -1410,7 +1410,7 @@ ea = rw
 @onami = rw
 
 [/oodt]
-@oodt = rw
+* = r
 
 [/oozie/site]
 @oozie = rw
