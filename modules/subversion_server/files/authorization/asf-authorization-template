@@ -689,6 +689,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/comdev/projects.apache.org/site/json]
 projects_role = rw
 
+[/comdev/reporter.apache.org/data/releases]
+projects_role = rw
+
 [/comdev/site]
 @committers = rw
 ea = rw
