@@ -167,8 +167,6 @@ derby=abrown,andreask,bakksjo,bandaram,bernt,bpendleton,chaase3,dag,davidvc,djd,
 devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
 devicemap-pmc={reuse:pit-authorization:devicemap-pmc}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
-directmemory={ldap:cn=directmemory,ou=groups,dc=apache,dc=org}
-directmemory-pmc={reuse:pit-authorization:directmemory-pmc}
 directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
