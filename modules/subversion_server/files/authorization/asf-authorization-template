@@ -689,7 +689,10 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/comdev/projects.apache.org/site/json]
 projects_role = rw
 
-[/comdev/reporter.apache.org/data/releases]
+[/comdev/reporter.apache.org/trunk/data/history]
+projects_role = rw
+
+[/comdev/reporter.apache.org/trunk/data/releases]
 projects_role = rw
 
 [/comdev/site]
@@ -1198,7 +1201,7 @@ ea = rw
 @kafka = r
 
 [/kafka/site]
-* = r
+@kafka = rw
 
 [/karaf]
 @karaf = r
