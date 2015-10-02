@@ -240,6 +240,9 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/nifi/>
         LimitRequestBody 400000000
       </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/openoffice/>
+        LimitRequestBody 100000000000
+      </LocationMatch>
 
       #<LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/$PMC/>
       #  LimitRequestBody $LIMIT
