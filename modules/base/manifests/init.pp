@@ -31,6 +31,9 @@ class base (
   $logrotate_rule = hiera_hash('logrotate::rule', {})
   create_resources(logrotate::rule, $logrotate_rule)
 
+  $crons = hiera_hash('cron', {})
+  create_resources(cron, $crons)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
