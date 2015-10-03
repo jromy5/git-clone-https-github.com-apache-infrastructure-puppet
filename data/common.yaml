@@ -122,11 +122,10 @@ ldapclient::nssbindpasswd: 'b1t3me'
 
 
 ldapserver::slapd_peers:
-  1: ldap1-us-west.apache.org
-  2: ldap2-us-west.apache.org
-  3: ldap3-us-west.apache.org
-  4: ldap1-us-east.apache.org
-  5: ldap1-eu-central.apache.org
+  1: ldap2-us-west.apache.org
+  2: ldap3-us-west.apache.org
+  3: ldap1-us-east.apache.org
+  4: ldap1-eu-central.apache.org
 
 ldapserver::schemas:
   - core
