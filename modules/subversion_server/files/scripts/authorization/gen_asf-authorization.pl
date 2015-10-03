@@ -21,7 +21,7 @@ use Net::LDAP::Constant qw(
   LDAP_SYNC_REFRESH_AND_PERSIST
   LDAP_SUCCESS );
 
-my $LDAPHOST  = "ldaps://ldap1-us-west.apache.org";
+my $LDAPHOST  = "ldaps://ldap3-us-west.apache.org";
 my $debug         = 1;
 my ( $cookie, $ldap, %watchlist );
 
