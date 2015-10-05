@@ -321,6 +321,7 @@ spamassassin::spamd::package_list:
 
 spamassassin::spamd::whitelist_from:
   - 'report@meltwater.com'
+  - 'isporders@symantec.com'
 
 spamassassin::spamd::whitelist_to:
   - '*-reject-*@apache.org'
