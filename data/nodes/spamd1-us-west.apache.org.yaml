@@ -24,6 +24,7 @@ postfix::dbfile:
     content: |
       test1.apache.org        smtp:[10.40.0.15]
       mmpoc.apache.org        smtp:[10.40.0.15]
+      .mmpoc.apache.org       smtp:[10.40.0.15]
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025
       apachecon.com           smtp:[hermes.apache.org]:2025
