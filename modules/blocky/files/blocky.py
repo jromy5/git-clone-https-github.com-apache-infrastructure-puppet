@@ -35,6 +35,9 @@ import ConfigParser
 import smtplib
 import socket
 import urllib
+import syslog
+
+syslog.openlog(logoption=syslog.LOG_PID, facility=syslog.LOG_SYSLOG)
 
 config = ConfigParser.ConfigParser()
 
@@ -191,9 +194,7 @@ class Blocky(Thread):
 									"Banned by Blocky"
 									])
 								message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
-								with open("/var/log/syslog", "a") as f:
-									f.write(message)
-									f.close()
+								syslog.syslog(syslog.LOG_INFO, message)
 						except Exception as err:
 							print(err)
 						baddies[i] = True
