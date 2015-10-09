@@ -1,9 +1,61 @@
 ---
 classes:
   - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
   - apache::mod::rewrite
-  - ssl::name::wildcard_apache_org
+  - blocky
+  - loggy
+  - ssl::name::crius_apache_org
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
 
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  crius-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'builds.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'builds.apache.org.error.log'
+    access_log_file: 'builds.apache.org.access.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://builds.apache.org/$1
+
+  crius-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'builds.apache.org'
+      port: 443
+      docroot: '/var/www'
+      error_log_file: 'builds.apache.org.error.log'
+      access_log_file: 'builds.apache.org.access.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/builds.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/builds.apache.org.chain'
+      ssl_key: '/etc/ssl/private/builds.apache.org.key'
+      custom_fragment: |
+        RewriteEngine On
+        ProxyPass / http://127.0.0.1:8090/
+        ProxyPassReverse / http://127.0.0.1:8090/
+        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
