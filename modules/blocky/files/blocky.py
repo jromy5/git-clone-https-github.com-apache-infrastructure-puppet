@@ -37,7 +37,7 @@ import socket
 import urllib
 import syslog
 
-syslog.openlog(logoption=syslog.LOG_PID, facility=syslog.LOG_SYSLOG)
+syslog.openlog('blocky', logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)
 
 config = ConfigParser.ConfigParser()
 
@@ -45,7 +45,7 @@ es = None
 hostname = socket.gethostname()
 if hostname.find(".apache.org") == -1:
 	hostname = hostname + ".apache.org"
-
+syslog.syslog(syslog.LOG_INFO, "Starting blocky on %s" % hostname)
 
 class Daemonize:
 	"""A generic daemon class.
