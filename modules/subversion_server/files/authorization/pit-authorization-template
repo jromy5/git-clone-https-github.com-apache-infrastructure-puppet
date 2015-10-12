@@ -996,6 +996,9 @@ openejb-tck = r
 [/pmc/shiro]
 @shiro-pmc = rw
 
+[/pmc/sling]
+@sling-pmc = rw
+
 [/pmc/sqoop]
 @sqoop-pmc = rw
 
