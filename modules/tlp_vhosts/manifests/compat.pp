@@ -21,8 +21,7 @@ class tlp_vhosts::compat {
   }
   
   file { '/x1':
-    ensure => 'link',
-    target => '/var',
+    ensure => directory,
   }
 
   file { '/dist':
