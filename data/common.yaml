@@ -64,6 +64,8 @@ fail2ban::disable: false
 fail2ban::ignoreip:
   - '127.0.0.1'
   - '140.211.11.0/24'
+  - '10.41.0.6'
+  - '160.45.251.2'
 fail2ban::jails_config: 'concat'
 fail2ban::puppi: 'false'
 fail2ban::monitor: 'false'
