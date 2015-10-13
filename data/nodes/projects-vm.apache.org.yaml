@@ -80,4 +80,20 @@ vhosts_asf::vhosts::vhosts:
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
       
+cron:
+  # Note: svn add is done by www-data cronjobs running at 40 mins past the hour
+  # Check in any updated data/releases files
+  rao_releases_ci:
+    minute:     45
+    hour:       */6
+    user:       'root'
+    command:    'cd /var/www/reporter.apache.org/data/releases && svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive'
+  #
+  # Check in any updated data/history files
+  # These are copied extracts of the files created by parsepmcs.py which is run at 00 min 4,12,20 hours
+  rao_history_ci:
+    minute:     10
+    hour:       4,12,20
+    user:       'root'
+    command:    'cd /var/www/reporter.apache.org/data/history && svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive'
 
