@@ -287,6 +287,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
+    directories:
+      -
+        path: '/var/www/openoffice.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       Use OpenOffice http
       Use BlockSvn
@@ -301,6 +317,10 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/openoffice-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   aoo-ssl:
     vhost_name: '*'
@@ -319,6 +339,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/openoffice.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       Use OpenOffice https
       Use BlockSvn
@@ -333,6 +369,10 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/openoffice-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   apache:
     vhost_name: '*'
@@ -701,6 +741,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/gump.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       ExpiresActive On
       ExpiresByType text/css "access plus 1 day"
@@ -717,6 +773,9 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
 
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   gump-ssl:
     vhost_name: '*'
@@ -730,6 +789,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/gump.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       ExpiresActive On
       ExpiresByType text/css "access plus 1 day"
@@ -745,6 +820,10 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   httpcomponents:
     vhost_name: '*'
@@ -1236,6 +1315,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/jackrabbit.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -1250,6 +1345,9 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
 
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   jackrabbit:
     vhost_name: '*'
@@ -1265,6 +1363,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/jackrabbit.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -2122,12 +2236,32 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/tomee.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   tomee-ssl:
     vhost_name: '*'
@@ -2150,12 +2284,32 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/tomee.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   uima:
     vhost_name: '*'
@@ -2417,6 +2571,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/xalan.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       <Location /xalan/samples/applet>
         deny from all
@@ -2430,6 +2600,10 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
 
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
   xalan-ssl:
     vhost_name: '*'
     port: 443
@@ -2442,6 +2616,22 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/xalan.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
     custom_fragment: |
       <Location /xalan/samples/applet>
         deny from all
@@ -2454,6 +2644,10 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   xerces:
     vhost_name: '*'
