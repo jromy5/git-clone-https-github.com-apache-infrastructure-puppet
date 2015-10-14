@@ -93,6 +93,10 @@ logrotate::rule:
     create_group: 'apbackup'
     rotate: 2
 
+ntp::interfaces:
+  - em1
+  - lo
+
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
 svnwcsub::conf_file:                         'svnwcsub.conf'
