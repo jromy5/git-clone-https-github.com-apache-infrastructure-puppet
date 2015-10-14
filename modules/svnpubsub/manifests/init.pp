@@ -11,12 +11,12 @@ class svnpubsub (
 
   package { $packages:
     ensure => latest,
-  }
+  }->
 
   file { "/var/log/${service_name}":
     ensure => directory,
     before => Service[$service_name],
-  }
+  }->
 
   file { "/var/run/${service_name}":
     ensure => directory,
@@ -24,7 +24,8 @@ class svnpubsub (
     owner  => 'daemon',
     group  => 'daemon',
     before => Service[$service_name],
-  }
+    notify => Service[$service_name],
+  }->
 
   file { "/etc/init.d/${service_name}":
     mode   => '0755',
@@ -32,7 +33,7 @@ class svnpubsub (
     group  => 'root',
     source => "puppet:///modules/svnpubsub/svnpubsub.${::asfosname}",
     before => Service[$service_name],
-  }
+  }->
 
   service { $service_name:
     ensure    => $service_ensure,
