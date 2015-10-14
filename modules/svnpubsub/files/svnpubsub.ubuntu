@@ -27,6 +27,10 @@ TWSITD_CMD="/usr/bin/twistd -y /opt/svnpubsub/svnpubsub.tac \
 RETVAL=0
  
 start() {
+    if [ ! -d "/var/run/svnpubsub" ]; then
+        mkdir -p /var/run/svnpubsub
+        chown $svnpubsub_user:$svnpubsub_group /var/run/svnpubsub
+    fi
     echo "Starting SvnPubSub Server: "
     $TWSITD_CMD
     RETVAL=$?
