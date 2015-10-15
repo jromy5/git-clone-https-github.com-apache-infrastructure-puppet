@@ -14,23 +14,32 @@ class rsync_mirror (
     postrotate   => ['if /etc/init.d/rsync status > /dev/null ; then /etc/init.d/rsync reload > /dev/null; fi;'], # lint:ignore:80chars
   }
 
-  file { 'rsync_hang.pl':
-    ensure => present,
-    path   => '/usr/local/bin/rsync_hang.pl',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0775',
-    source => 'puppet:///modules/rsync_mirror/rsync_hang.pl',
+  file {
+    'rsync_hang.pl':
+      ensure => present,
+      path   => '/usr/local/bin/rsync_hang.pl',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      source => 'puppet:///modules/rsync_mirror/rsync_hang.pl';
+    'kill_stale_rsync.sh':
+      ensure  => present,
+      path    => '/root/kill_stale_rsync.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/rsync_mirror/kill_stale_rsync.sh',
+      require => File['rsync_hang.pl'];
   }
 
   cron { 'kill stale rsync':
     ensure      => present,
-    command     => 'to_kill=$(/usr/local/bin/rsync_hang.pl | tail -1) && if [[ ! -z $to_kill ]] ; then kill -15 $to_kill ; fi', # lint:ignore:80chars
-    environment => "PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nSHELL=/bin/bash", # lint:ignore:double_quoted_strings
+    command     => '/bin/bash /root/kill_stale_rsync.sh',
+    environment => "PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", # lint:ignore:double_quoted_strings
     hour        => '0',
     minute      => '15',
     user        => 'root',
-    require     => File['rsync_hang.pl'],
+    require     => [ File['kill_stale_rsync.sh'], File['rsync_hang.pl'] ],
   }
 
 
