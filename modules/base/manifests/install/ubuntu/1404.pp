@@ -27,8 +27,8 @@ class base::install::ubuntu::1404 (
 
   cron { 'purge_old_kernels':
     ensure      => present,
-    command     => '/root/purge_old_kernels -y',
-    environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+    command     => '/bin/sh /root/purge_old_kernels -y > /dev/null',
+    environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin", # lint:ignore:double_quoted_strings
     minute      => '10',
     hour        => '0',
     weekday     => '0',
