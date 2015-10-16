@@ -1,6 +1,10 @@
 #/etc/puppet/modules/puppet_asf/manifests/master.pp
 
-class puppet_asf::master {
+class puppet_asf::master(
+  $pupetmaster_enabled_service   = 'apache2',
+  $puppetmaster_disabled_service = 'puppetmaster',
+
+) {
 
   cron { 'updatepuppet':
     command     => 'cd /etc/puppet; ./bin/pull deployment > /dev/null 2>&1',
@@ -12,20 +16,27 @@ class puppet_asf::master {
   package { 'puppetmaster':
     ensure  => '3.8.3-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
-    notify  => Service['puppetmaster'],
-  }
+    notify  => Service[$puppetmaster_service],
+  }->
 
-  service { 'puppetmaster':
+  service { $puppetmaster_enabled_service:
     ensure     => running,
     require    => Package['puppetmaster'],
     hasstatus  => true,
     hasrestart => true,
-  }
+  }->
+
+  service { $puppetmaster_disabled_service:
+    ensure     => stopped,
+    notify     => Service[$puppetmaster_enabled_service],
+    hasstatus  => true,
+    hasrestart => true,
+  }->
 
   file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
     ensure  => present,
     require => Package['puppetmaster'],
-    notify  => Service['puppetmaster'],
+    notify  => Service[$puppetmaster_enabled_service],
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
