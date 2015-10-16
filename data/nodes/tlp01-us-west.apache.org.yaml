@@ -1251,7 +1251,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
 
 
-  jackrabbit:
+    jackrabbit-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
