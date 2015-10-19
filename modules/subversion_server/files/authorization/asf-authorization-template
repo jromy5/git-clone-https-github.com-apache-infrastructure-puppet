@@ -362,6 +362,7 @@ river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
+rya=afuchs,busbey,edwardyoon,elserj,venkatesh,swagner
 s4=acmurthy,omalley,phunt,fpj,mmorel,leoneu,robbins,kishoreg,dferro
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
@@ -900,6 +901,9 @@ ea = rw
 [/hama]
 * = r
 
+[/hama/site]
+@hama = rw
+
 [/harmony]
 * = r
 
@@ -1059,6 +1063,9 @@ ea = rw
 
 [/incubator/ripple]
 @ripple = rw
+
+[/incubator/rya]
+@rya = rw
 
 [/incubator/s4]
 @s4 = rw
