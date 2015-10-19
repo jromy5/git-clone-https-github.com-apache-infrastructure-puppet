@@ -19,13 +19,6 @@ class puppet_asf::master(
     notify  => Service[$puppetmaster_enabled_service],
   }->
 
-  service { $puppetmaster_enabled_service:
-    ensure     => running,
-    require    => Package['puppetmaster'],
-    hasstatus  => true,
-    hasrestart => true,
-  }->
-
   service { $puppetmaster_disabled_service:
     ensure     => stopped,
     notify     => Service[$puppetmaster_enabled_service],
@@ -41,7 +34,7 @@ class puppet_asf::master(
     group   => 'puppet',
     mode    => '0755',
     source  => 'puppet:///modules/puppet_asf/foreman.rb'
-  }
+  }->
 
   file { '/etc/puppet/foreman.yaml':
     ensure  => present,
@@ -50,7 +43,7 @@ class puppet_asf::master(
     group   => 'puppet',
     mode    => '0644',
     source  => 'puppet:///modules/puppet_asf/foreman.yaml',
-  }
+  }->
 
   file { 'puppetmaster':
     ensure  => directory,
@@ -58,7 +51,7 @@ class puppet_asf::master(
     path    => '/usr/share/puppet/rack/puppetmasterd',
     owner   => 'puppet',
     group   => 'puppet',
-  }
+  }->
 
   file { '/usr/share/puppet/rack/puppetmasterd/config.ru':
     ensure  => present,
@@ -66,20 +59,29 @@ class puppet_asf::master(
     owner   => 'puppet',
     group   => 'puppet',
     mode    => '0644',
-  }
+  }->
 
-  $puppet_dirs = [
-    '/usr/share/puppet/rack/puppetmasterd/public',
-    '/usr/share/puppet/rack/puppetmasterd/tmp',
-  ]
+  file  {
+    '/usr/share/puppet/rack/puppetmasterd/public':
+      ensure  => directory,
+      require => File['puppetmaster'],
+      owner   => 'puppet',
+      group   => 'puppet',
+      mode    => '0755';
+    '/usr/share/puppet/rack/puppetmasterd/tmp':
+      ensure  => directory,
+      require => File['puppetmaster'],
+      owner   => 'puppet',
+      group   => 'puppet',
+      mode    => '0755';
+  }->
 
-  file  { $puppet_dirs:
-    ensure  => directory,
-    require => File['puppetmaster'],
-    owner   => 'puppet',
-    group   => 'puppet',
-    mode    => '0755',
-  }
+  service { $puppetmaster_enabled_service:
+    ensure     => running,
+    require    => Package['puppetmaster'],
+    hasstatus  => true,
+    hasrestart => true,
+  }->
 
   tidy { 'puppet-reports':
     path    => '/var/lib/puppet/reports',
