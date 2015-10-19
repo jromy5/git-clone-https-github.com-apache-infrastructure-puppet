@@ -16,7 +16,7 @@ class puppet_asf::master(
   package { 'puppetmaster':
     ensure  => '3.8.3-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
-    notify  => Service[$puppetmaster_service],
+    notify  => Service[$puppetmaster_enabled_service],
   }->
 
   service { $puppetmaster_enabled_service:
