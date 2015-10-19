@@ -51,8 +51,8 @@ for c in $CANDIDATES; do
 done
 
 if [ -z "$PURGE" ]; then
-    echo "No kernels are eligible for removal"
+    #echo "No kernels are eligible for removal"
     exit 0
 fi
 
-apt-get $APT_OPTS remove --purge $PURGE
+apt-get $APT_OPTS remove --purge $PURGE >/dev/null
