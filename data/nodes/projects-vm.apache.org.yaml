@@ -114,4 +114,5 @@ cron:
 
 # Install ldap3 for use by python cron scripts
 python::python_pips:
-  "ldap3":
+  ldap3:
+    ensure: present
