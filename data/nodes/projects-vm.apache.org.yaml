@@ -4,6 +4,7 @@ classes:
   - apache::mod::status
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+  - python
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -111,3 +112,7 @@ cron:
     hour:       4
     user:       'root'
     command:    'cd /var/www/projects.apache.org/site/json && svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive'
+
+# Install ldap3 for use by python cron scripts
+python::python_pips:
+  "ldap3":
