@@ -1,7 +1,7 @@
 #/etc/puppet/modules/puppet_asf/manifests/master.pp
 
 class puppet_asf::master(
-  $pupetmaster_enabled_service   = 'apache2',
+  $puppetmaster_enabled_service   = 'apache2',
   $puppetmaster_disabled_service = 'puppetmaster',
 
 ) {
