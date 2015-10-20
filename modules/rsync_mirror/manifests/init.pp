@@ -68,7 +68,7 @@ class rsync_mirror (
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
     exclude         => ['/.rsync.td/', '.svn', '/tmp/'],
     hosts_deny      => ['*'],
-    hosts_allow     => ['140.211.11.131', '192.87.106.229', '88.198.26.2'],
+    hosts_allow     => ['140.211.11.131', '192.87.106.229', '88.198.26.2', '140.211.11.105'],
   }
 
   rsync::server::module { 'apache-dist':
@@ -133,7 +133,7 @@ class rsync_mirror (
     exclude         => ['/www.apache.org/dist/.rsync.td/'],
     hosts_deny      => ['*'],
     hosts_allow     => ['192.87.106.229', '140.211.11.131', '140.211.11.9',
-                        '209.188.14.150'],
+                        '209.188.14.150', '140.211.11.105'],
   }
 
   rsync::server::module { 'rsync-logs':
