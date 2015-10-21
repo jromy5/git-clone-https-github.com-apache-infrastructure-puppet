@@ -1029,6 +1029,9 @@ openejb-tck = r
 [/pmc/tomcat]
 @tomcat-pmc = rw
 
+[/pmc/tomee]
+@tomee-pmc
+
 [/pmc/trafficserver]
 @trafficserver-pmc = rw
 
