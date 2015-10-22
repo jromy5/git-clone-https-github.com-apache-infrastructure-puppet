@@ -11,7 +11,7 @@ XARGS="xargs"
 SED="sed"
 
 pmcs=`$LDAPSEARCH -x -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
-committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: "
+committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: , :bookkeeper:"
 
 # preamble
 cat <<EOF
