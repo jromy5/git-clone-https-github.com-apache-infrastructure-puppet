@@ -599,27 +599,6 @@ vhosts_asf::vhosts::vhosts:
         Require user asf-sync-process
       </Location>
         
-      # Test repository for committers
-      <Location /repos/test>
-        DAV svn
-        SVNPath /x1/svn/test
-          
-        SetOutputFilter DEFLATE
-          
-        AuthName "ASF Committers"
-        AuthType Basic
-        AuthBasicProvider ldap
-          
-        AuthLDAPurl "ldaps://ldap3-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPRemoteUserAttribute uid
-        #AuthzLDAPAuthoritative off
-          
-        # Always require authentication on non-read access 
-        <LimitExcept GET OPTIONS PROPFIND REPORT>
-          require valid-user
-        </LimitExcept>
-      </Location>
-        
       # These are the infrastructure web forms which are committers-only
       <Location /dev/forms>
         Order allow,deny
