@@ -55,4 +55,4 @@ if [ -z "$PURGE" ]; then
     exit 0
 fi
 
-apt-get $APT_OPTS remove --purge $PURGE
+apt-get -q $APT_OPTS remove --purge $PURGE > /dev/null
