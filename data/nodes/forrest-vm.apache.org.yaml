@@ -31,11 +31,11 @@ logrotate::rule:
 vhosts_asf::vhosts::vhosts:
   forrest-vm-80:
     vhost_name: '*'
-    priority: '12'
     servername: 'forrest-vm.apache.org'
+    default_vhost: true
     port: 80
     ssl: false
-    docroot: '/var/www'
+    docroot: '/var/www/forrest'
     docroot_owner: 'forrest_role'
     docroot_group: 'www-data'
     error_log_file: 'forrest_error.log'
