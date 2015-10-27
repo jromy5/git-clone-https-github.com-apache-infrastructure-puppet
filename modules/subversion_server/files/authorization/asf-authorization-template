@@ -109,7 +109,8 @@ buildr={ldap:cn=buildr,ou=groups,dc=apache,dc=org}
 buildr-pmc={reuse:pit-authorization:buildr-pmc}
 bval={ldap:cn=bval,ou=groups,dc=apache,dc=org}
 bval-pmc={reuse:pit-authorization:bval-pmc}
-calcite=amansinha,cwensel,jacques,jamestaylor,jcamacho,jhyde,jni,jpullokk,ndimiduk,vladimirsitnikov
+calcite={ldap:cn=calcite,ou=groups,dc=apache,dc=org}
+calcite-pmc={reuse:pit-authorization:calcite-pmc}
 camel={ldap:cn=camel,ou=groups,dc=apache,dc=org}
 camel-pmc={reuse:pit-authorization:camel-pmc}
 cassandra={ldap:cn=cassandra,ou=groups,dc=apache,dc=org}
@@ -629,6 +630,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/camel]
 * = r
 
+[/calcite]
+@calcite = rw
+
 [/camel/website]
 @camel = rw
 
@@ -959,9 +963,6 @@ ea = rw
 
 [/incubator/brooklyn]
 @incubator = rw
-
-[/incubator/calcite]
-@calcite = rw
 
 [/incubator/callback]
 @incubator = rw

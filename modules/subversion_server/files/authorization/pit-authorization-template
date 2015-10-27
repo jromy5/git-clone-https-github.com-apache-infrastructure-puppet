@@ -46,6 +46,8 @@ buildr={reuse:asf-authorization:buildr}
 buildr-pmc={ldap:cn=buildr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 bval={reuse:asf-authorization:bval}
 bval-pmc={ldap:cn=bval,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+calcite={reuse:asf-authorization:calcite}
+calcite-pmc={ldap:cn=calcite,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 camel={reuse:asf-authorization:camel}
 camel-pmc={ldap:cn=camel,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 cassandra={reuse:asf-authorization:cassandra}
