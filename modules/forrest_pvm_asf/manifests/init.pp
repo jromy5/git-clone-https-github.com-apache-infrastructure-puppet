@@ -14,11 +14,12 @@ class forrest_pvm_asf (
 
   # manifest for forrest project vm
 
-  user { 'forrest':
+  user { 'forrest_role':
     ensure     => present,
-    name       => 'forrest',
+    name       => 'forrest_role',
     comment    => 'forrest role account',
     home       => '/home/forrest',
     managehome => true,
+    system     => true,
   }
 }
