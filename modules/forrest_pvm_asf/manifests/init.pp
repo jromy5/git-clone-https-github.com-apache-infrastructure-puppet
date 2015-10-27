@@ -18,7 +18,7 @@ class forrest_pvm_asf (
     ensure     => present,
     name       => 'forrest_role',
     comment    => 'forrest role account',
-    home       => '/home/forrest',
+    home       => '/home/forrest_role',
     managehome => true,
     system     => true,
   }
