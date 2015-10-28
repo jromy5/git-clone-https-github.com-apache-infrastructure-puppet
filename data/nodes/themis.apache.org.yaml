@@ -91,7 +91,7 @@ logrotate::rule:
     ensure: 'present'
     create_owner: 'root'
     create_group: 'apbackup'
-    rotate: 2
+    rotate: 5
 
 ntp::interfaces:
   - em1
