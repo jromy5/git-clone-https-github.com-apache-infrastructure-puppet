@@ -1542,6 +1542,9 @@ ea = rw
 [/servicemix]
 @servicemix=rw
 
+[/servicemix/maven/plugins]
+* = r
+
 [/servicemix/sandbox]
 @committers  = rw
 
