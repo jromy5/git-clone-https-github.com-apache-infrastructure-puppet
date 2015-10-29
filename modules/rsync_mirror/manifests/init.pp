@@ -36,7 +36,6 @@ class rsync_mirror (
     ensure      => present,
     command     => '/bin/bash /root/kill_stale_rsync.sh',
     environment => "PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", # lint:ignore:double_quoted_strings
-    hour        => '0',
     minute      => '15',
     user        => 'root',
     require     => [ File['kill_stale_rsync.sh'], File['rsync_hang.pl'] ],
