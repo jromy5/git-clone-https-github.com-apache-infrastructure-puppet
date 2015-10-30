@@ -11,6 +11,7 @@ classes:
   - ssh_asf # this pulls in both server and client by default
   - sudoers
   - snmp
+  - timezone
   - ulimit_asf
 
 ## MODULES
@@ -363,6 +364,9 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
+
+timezone::timezone: 'UTC'
+timezone::hw_utc: true
 
 ulimit::rule:
   all-hard-nofile:

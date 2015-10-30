@@ -210,6 +210,10 @@ mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
   :tag => '1.5.1'
 
+mod 'timezone',
+  :git => 'https://github.com/example42/puppet-timezone.git',
+  :tag => 'v2.0.13'
+
 
 mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
