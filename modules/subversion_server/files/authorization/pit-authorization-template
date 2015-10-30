@@ -1089,6 +1089,7 @@ openejb-tck = r
 [/travel-assistance/past-recipients]
 @svnadmins = rw
 @tac-pmc = rw
+ea = rw
 * =
 
 [/websites]
