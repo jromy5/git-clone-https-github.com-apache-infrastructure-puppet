@@ -173,6 +173,7 @@ directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
 droids=gsingers,javier,mingfai,olegk,ryan,thorsten,rfrovarp,bchapuis,tobr
+eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz
 easyant=antelder,antoine,bodewig,hibou,jbenois,jlboudart,kpsiddharth,xavier
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
@@ -978,6 +979,9 @@ ea = rw
 
 [/incubator/droids]
 @droids = rw
+
+[/incubator/eagle]
+@eagle = rw
 
 [/incubator/easyant]
 @easyant = rw
