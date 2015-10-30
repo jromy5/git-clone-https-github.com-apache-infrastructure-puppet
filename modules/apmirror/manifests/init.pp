@@ -12,7 +12,12 @@ class apmirror (
   $svnwc_user     = 'svnwc',
   $user_present   = 'present',
   $username       = 'apmirror',
+  $packages       = ['libwww-perl'],
 ){
+
+  package { $packages:
+    ensure => present,
+  }
 
   user { $username:
     ensure     => $user_present,
