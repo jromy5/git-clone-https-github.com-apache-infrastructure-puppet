@@ -10,6 +10,7 @@ classes:
   - loggy
   - ssl::name::wildcard_apache_org
   - ssl::name::reporting_cloudstack_apache_org
+  - vhosts_asf::vhosts
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
