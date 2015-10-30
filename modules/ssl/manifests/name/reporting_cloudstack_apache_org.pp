@@ -17,21 +17,6 @@ class ssl::name::reporting_cloudstack_apache_org (
 ) {
 
   file {
-    $sslrootdir:
-      ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
-      mode   => $sslrootdirumask;
-    "${sslrootdir}/certs":
-      ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
-      mode   => '0755';
-    "${sslrootdir}/private":
-      ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
-      mode   => '0700';
     "${sslrootdir}/certs/${sslcertname}":
       ensure  => present,
       require => File[$sslrootdir],
