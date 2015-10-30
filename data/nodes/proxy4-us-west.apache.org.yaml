@@ -1,0 +1,84 @@
+---
+classes:
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - blocky
+  - loggy
+  - ssl::name::wildcard_apache_org
+  - ssl::name::reporting_cloudstack_apache_org
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+  whimsy:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      - 'whimsy-test.apache.org'
+      - 'infra.apache.org'
+      - 'infra-test.apache.org'
+      - 'infrastructure.apache.org'
+      - 'infrastructure-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy.apache.org.http_access.log'
+    error_log_file: 'whimsy.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  whimsy-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      - 'whimsy-test.apache.org'
+      - 'infra.apache.org'
+      - 'infra-test.apache.org'
+      - 'infrastructure.apache.org'
+      - 'infrastructure-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy.apache.org.ssl_access.log'
+    error_log_file: 'whimsy.apache.org.error.log'
+    custom_fragment: |
+      # set hsts
+      Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
+
+      Proxypass / http://whimsy-vm2.apache.org/
+      ProxypassReverse / http://whimsy-vm2.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=503
+
