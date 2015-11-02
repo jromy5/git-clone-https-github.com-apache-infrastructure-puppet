@@ -156,9 +156,9 @@ access to dn.subtree="ou=people,dc=apache,dc=org"
   by * auth
   by anonymous auth
 
-## Allow self & secretary@ to edit email addresses
+## Allow self & secretary@ to edit email addresses, and github username
 access to dn.subtree="ou=people,dc=apache,dc=org"
-  attrs=mail
+  attrs=mail,githubUsername
   by self write
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
