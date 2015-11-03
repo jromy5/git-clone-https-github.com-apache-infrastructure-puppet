@@ -146,7 +146,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'dist.*.apache.org'
     custom_fragment: |
-      RedirectMatch permanent ^/$ https://dist.apache.org/repos/dist
+      RedirectMatch permanent ^(.*)$ https://dist.apache.org$1
 
   dist_https:
     vhost_name: '*'
