@@ -232,7 +232,7 @@ vhosts_asf::vhosts::vhosts:
         LimitRequestBody 600000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/zeppelin/>
-        LimitRequestBody 400000000
+        LimitRequestBody 600000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
         LimitRequestBody 500000000
