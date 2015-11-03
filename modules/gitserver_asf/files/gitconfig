@@ -1,4 +1,4 @@
 [receive]
-	fsckObjects = true
+        fsckObjects = true
         denyDeletes = true
         denyNonFastForwards = true
