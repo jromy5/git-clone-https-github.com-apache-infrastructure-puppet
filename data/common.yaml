@@ -365,7 +365,7 @@ ssh_asf::server_options:
     AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
     AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
 
-timezone::timezone: 'UTC'
+timezone::timezone: 'Etc/UTC'
 timezone::hw_utc: true
 
 ulimit::rule:
