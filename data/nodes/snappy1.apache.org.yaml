@@ -21,6 +21,8 @@ vhosts_asf::modules::modules:
 
 asful::nodename: 'snappy1'
 asful::nodeip: '10.91.102.202'
+asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
+asful::minimum_master_nodes: 3
 
 datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 

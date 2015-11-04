@@ -308,7 +308,8 @@ indices.recovery.max_bytes_per_sec: 100mb
 # operational within the cluster. Its recommended to set it to a higher value
 # than 1 when running more than 2 nodes in the cluster.
 #
-discovery.zen.minimum_master_nodes: 3
+discovery.zen.minimum_master_nodes: <%= @minimum_master_nodes %>
+
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network
@@ -330,8 +331,7 @@ discovery.zen.ping.timeout: 30s
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
 #
-discovery.zen.ping.unicast.hosts: ["10.91.64.150", "10.91.64.151", "10.91.64.152", "10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]
-
+discovery.zen.ping.unicast.hosts: <
 # EC2 discovery allows to use AWS EC2 API in order to perform discovery.
 #
 # You have to install the cloud-aws plugin for enabling the EC2 discovery.

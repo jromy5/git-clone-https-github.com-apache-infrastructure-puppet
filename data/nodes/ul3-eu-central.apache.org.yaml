@@ -6,6 +6,8 @@ classes:
   
 asful::nodename: 'ul3-eu-central'
 asful::nodeip: '10.91.64.152'
+asful::clusterlist: '["10.91.64.150", "10.91.64.151", "10.91.64.152"]'
+asful::minimum_master_nodes: 1
 
 datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.152:9200'
 
