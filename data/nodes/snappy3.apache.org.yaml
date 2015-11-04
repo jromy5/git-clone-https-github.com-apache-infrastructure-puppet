@@ -1,13 +1,6 @@
 ---
 classes:
   - elasticsearch
-  - apache
-  - apache::mod::authnz_ldap
-  - apache::mod::proxy
-  - apache::mod::proxy_http
-  - ssl::name::wildcard_apache_org
-  - vhosts_asf::modules
-  - vhosts_asf::vhosts
   - asful
   
 asful::nodename: 'snappy3'
@@ -26,52 +19,3 @@ elasticsearch::instances:
       node.name: 'snappy3'
       init_defaults:
         ES_HEAP_SIZE: '31g'
-
-
-apache::default_vhost: false
-apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
-apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
-apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
-
-apache::mpm_module:         'event'
-
-apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
-apache::mod::event::maxconnectionsperchild: '20000'
-apache::mod::event::maxrequestworkers: '300'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '6'
-apache::mod::event::startservers: '3'
-apache::mod::event::threadlimit: '300'
-apache::mod::event::threadsperchild: '50'
-
-vhosts_asf::modules::modules:
-  allowmethods:
-    name: 'allowmethods'
-
-logrotate::rule:
-  apache2:
-    ensure: 'present'
-
-vhosts_asf::vhosts::vhosts:
-  logsearch-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'logsearch.apache.org'
-    serveraliases:
-      - 'snappy3.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'logsearch.apache.org.ssl_access.log'
-    error_log_file: 'logsearch.apache.org.error.log'
-    custom_fragment: |
-      <Location /logstash>
-        AllowMethods POST PUT HEAD
-        <If "%%{}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
-          Require all denied
-        </If>
-        ProxyPass http://10.91.64.151:9200/
-      </Location>
