@@ -20,9 +20,9 @@ vhosts_asf::modules::modules:
     name: 'allowmethods'
 
 asful::nodename: 'snappy2'
-asful::nodeip: '163.172.5.19'
+asful::nodeip: '10.91.102.214'
 
-datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.150:9200'
+datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '31g'
@@ -100,7 +100,7 @@ vhosts_asf::vhosts::vhosts:
         </LimitExcept>
           SetOutputFilter to-browser
           SetInputFilter from-browser
-          ProxyPass http://10.91.64.150:9200/
+          ProxyPass http://10.91.102.202:9200/
       </Location>
       # To be locked down eventually
       <Location /logstash>
@@ -108,7 +108,7 @@ vhosts_asf::vhosts::vhosts:
           <If "%%{}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
             Require all denied
           </If>
-          ProxyPass http://10.91.64.150:9200/
+          ProxyPass http://10.91.102.202:9200/
       </Location>
       <Location /k4/>
           AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
