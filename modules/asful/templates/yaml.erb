@@ -331,7 +331,8 @@ discovery.zen.ping.timeout: 30s
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
 #
-discovery.zen.ping.unicast.hosts: <
+discovery.zen.ping.unicast.hosts: <%= @clusterlist %>
+
 # EC2 discovery allows to use AWS EC2 API in order to perform discovery.
 #
 # You have to install the cloud-aws plugin for enabling the EC2 discovery.
