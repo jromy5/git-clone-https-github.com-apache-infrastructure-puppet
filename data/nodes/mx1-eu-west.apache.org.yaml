@@ -33,3 +33,4 @@ postfix::dbfile:
       lrosen@rosenlaw.com REJECT
       lrosen@apache.org    REJECT
       stevenn@outerthought.org   REJECT
+      admin@hkug.org     REJECT
