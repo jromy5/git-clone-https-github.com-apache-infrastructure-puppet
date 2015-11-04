@@ -1,0 +1,122 @@
+---
+classes:
+  - elasticsearch
+  - asful
+  - kibana_asf
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - datadog_agent::integrations::elasticsearch
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+vhosts_asf::modules::modules:
+  ext_filter:
+    name: 'ext_filter'
+  allowmethods:
+    name: 'allowmethods'
+
+asful::nodename: 'snappy1'
+asful::nodeip: '163.172.5.7'
+
+datadog_agent::integrations::elasticsearch::url: 'http://10.91.64.150:9200'
+
+elasticsearch::init_defaults:
+  ES_HEAP_SIZE: '31g'
+elasticsearch::java_install: true
+elasticsearch::version: '1.7.0'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  asful:
+    config:
+      node.name: 'snappy1'
+      init_defaults:
+        ES_HEAP_SIZE: '31g'
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '300'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '50'
+apache::mod::event::serverlimit: '6'
+apache::mod::event::startservers: '3'
+apache::mod::event::threadlimit: '300'
+apache::mod::event::threadsperchild: '50'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  logsearch-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'logsearch.apache.org'
+    serveraliases:
+      - 'snappy1.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/usr/local/etc/logproxy/kibana'
+    access_log_file: 'logsearch.apache.org.ssl_access.log'
+    error_log_file: 'logsearch.apache.org.error.log'
+    custom_fragment: |
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
+      Alias /json/ /var/www/html/json/
+      <Directory /var/www/html>
+        Require all granted
+        Options +Indexes
+      </Directory>
+      ExtFilterDefine to-browser mode=output \
+        intype=application/json outtype=application/json \
+        cmd="/usr/bin/lua5.2 /usr/local/etc/logproxy/tobrowser.lua"
+      ExtFilterDefine from-browser mode=input \
+        intype=application/json outtype=application/json \
+        cmd="/usr/bin/lua5.2 /usr/local/etc/logproxy/frombrowser.lua"
+      <Location /_query>
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthName "ASF Committers"
+          AuthType Basic
+          AuthBasicProvider ldap
+          Require valid-user
+        <LimitExcept GET POST>
+          Require all denied
+        </LimitExcept>
+          SetOutputFilter to-browser
+          SetInputFilter from-browser
+          ProxyPass http://10.91.64.150:9200/
+      </Location>
+      # To be locked down eventually
+      <Location /logstash>
+          AllowMethods POST PUT HEAD
+          <If "%%{}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
+            Require all denied
+          </If>
+          ProxyPass http://10.91.64.150:9200/
+      </Location>
+      <Location /k4/>
+          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute member
+          AuthName "ASF Infrastructure-root Only"
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          ProxyPass http://127.0.0.1:5602/
+      </Location>
