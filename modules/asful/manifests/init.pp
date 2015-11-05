@@ -2,7 +2,9 @@
 
 class asful (
   $nodename       = 'ul1-eu-central',
-  $nodeip         = '10.91.64.150'
+  $nodeip         = '10.91.64.150',
+  $clusterlist    = '[]',
+  $minimum_master_nodes = 2
 
 ){
   include 'elasticsearch'
