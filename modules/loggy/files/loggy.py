@@ -624,7 +624,7 @@ class Loggy(Thread):
                             
             
                 for x in json_pending:
-                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20:
+                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50:
                         if not x in fp:
                             fp[x] = True
                             print("First push for " + x + "!")
@@ -653,7 +653,7 @@ class Loggy(Thread):
             try:
                 while True:
                     for x in json_pending:
-                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) > 20):
+                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50):
                             if not x in fp:
                                 fp[x] = True
                                 print("First push for " + x + "!")
