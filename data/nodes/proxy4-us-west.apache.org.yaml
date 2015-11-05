@@ -75,9 +75,8 @@ vhosts_asf::vhosts::vhosts:
       # set hsts
       Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
 
-      Proxypass / http://whimsy-vm2.apache.org/
-      ProxypassReverse / http://whimsy-vm2.apache.org/
-      ProxyPreserveHost On
+      Proxypass / http://10.40.0.23/
+      ProxypassReverse / http://10.40.0.23/
 
       ProxyErrorOverride On
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=500
