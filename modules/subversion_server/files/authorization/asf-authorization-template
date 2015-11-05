@@ -913,7 +913,7 @@ ea = rw
 * = r
 
 [/hbase/hbase.apache.org]
-@hbase = rw
+* = r
 
 [/helix]
 @committers = rw
