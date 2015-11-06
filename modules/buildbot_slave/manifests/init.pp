@@ -12,8 +12,10 @@ class buildbot_slave (
 
 )
 
-# buildbot specific
 {
+
+# buildbot specific
+
   user {
     $username:
       ensure     => $user_present,
