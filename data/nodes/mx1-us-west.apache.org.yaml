@@ -20,6 +20,7 @@ postfix::server::mynetworks: '127.0.0.0/8 [::1]/128 [fe80::]/64 %{::network_eth0
 postfix::server::header_checks:
   - '# block spammer'
   - '/^Subject: Fw: important/ REJECT Spam'
+  - '/^Subject: Fw: new message/ REJECT Spam'
 
 postfix::server::asf_mx_enabled: 'true'
 postfix::server::asf_mx_content_filter: 'smtp-amavis:[spamc1-us-west.apache.org]:10024'
