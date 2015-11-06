@@ -2,7 +2,6 @@
 
 class buildbot_slave (
 
-  $system                        = true,
   $group_present                 = 'present',
   $groupname                     = 'buildslave',
   $groups                        = [],
@@ -15,6 +14,7 @@ class buildbot_slave (
 
   user {
     $username:
+      system     => true,
       ensure     => $user_present,
       name       => $username,
       home       => "/home/${username}",
@@ -28,6 +28,7 @@ class buildbot_slave (
 
   group {
     $groupname:
+      system     => true,
       ensure => $group_present,
       name   => $groupname,
       gid    => $gid,
