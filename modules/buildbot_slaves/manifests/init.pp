@@ -33,16 +33,4 @@ class buildbot_slave (
       gid    => $gid,
 }
 
-  apt::source { 'utopic':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'utopic',
-    repos    => 'main',
-  }
-
-  apt::source { 'utopic-updates':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'utopic-updates',
-    repos    => 'main',
-  }
-
 }
