@@ -8,11 +8,14 @@ class buildbot_slave (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'buildslave',
-  $packages                      = []
+  $required_packages             =[ 'buildbot-slave' ],
+){
 
-)
-
-{
+# install required packages:
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
 
 # buildbot specific
 
