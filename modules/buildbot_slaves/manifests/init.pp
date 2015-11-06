@@ -17,7 +17,7 @@ class buildbot_slave (
     $username:
       ensure     => $user_present,
       name       => $username,
-      home       => "/x1/${username}",
+      home       => "/home/${username}",
       shell      => $shell,
       uid        => $uid,
       gid        => $groupname,
