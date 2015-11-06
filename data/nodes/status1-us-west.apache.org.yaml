@@ -83,12 +83,12 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       AddHandler cgi-script .cgi
+
   status-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
     docroot: '/x1/www/status'
-    default_vhost: true
     manage_docroot: false
     servername: 'status.apache.org'
     serveradmin: 'infrastructure@apache.org'
