@@ -2,8 +2,7 @@
 
 class buildbot_slave (
 
-  $uid                           = 8996,
-  $gid                           = 8996,
+  $system                        = true,
   $group_present                 = 'present',
   $groupname                     = 'buildslave',
   $groups                        = [],
