@@ -8,14 +8,15 @@ class buildbot_slave (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'buildslave',
+  $packages                      = []
 
 
 # buildbot specific
 
   user {
     $username:
-      system     => true,
       ensure     => $user_present,
+      system     => true,
       name       => $username,
       home       => "/home/${username}",
       shell      => $shell,
@@ -28,8 +29,8 @@ class buildbot_slave (
 
   group {
     $groupname:
-      system     => true,
       ensure => $group_present,
+      system => true,
       name   => $groupname,
       gid    => $gid,
 }
