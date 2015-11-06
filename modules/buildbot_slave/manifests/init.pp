@@ -10,29 +10,28 @@ class buildbot_slave (
   $username                      = 'buildslave',
   $packages                      = []
 
+)
 
 # buildbot specific
 
-  user {
-    $username:
-      ensure     => $user_present,
-      system     => true,
-      name       => $username,
-      home       => "/home/${username}",
-      shell      => $shell,
-      uid        => $uid,
-      gid        => $groupname,
-      groups     => $groups,
-      managehome => true,
-      require    => Group[$groupname],
-  }
-
-  group {
-    $groupname:
-      ensure => $group_present,
-      system => true,
-      name   => $groupname,
-      gid    => $gid,
+user {
+  $username:
+    ensure     => $user_present,
+    system     => true,
+    name       => $username,
+    home       => "/home/${username}",
+    shell      => $shell,
+    uid        => $uid,
+    gid        => $groupname,
+    groups     => $groups,
+    managehome => true,
+    require    => Group[$groupname],
 }
 
+group {
+  $groupname:
+    ensure => $group_present,
+    system => true,
+    name   => $groupname,
+    gid    => $gid,
 }
