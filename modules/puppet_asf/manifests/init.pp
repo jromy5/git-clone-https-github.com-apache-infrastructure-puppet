@@ -9,7 +9,7 @@ class puppet_asf (
   case $::asfosname {
     ubuntu: {
       package { 'puppet':
-        ensure  => '3.8.3-1puppetlabs1',
+        ensure  => '3.8.4-1puppetlabs1',
         require => Apt::Source['puppetlabs', 'puppetdeps'],
         notify  => Service['puppet'],
       }
