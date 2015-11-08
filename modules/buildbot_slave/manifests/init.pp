@@ -46,7 +46,7 @@ class buildbot_slave (
   exec {
     'bootstrap-buildslave':
       command => "buildslave create-slave /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
-      creates => /home/${username}/slave/buildbot.tac,
+      creates => "/home/${username}/slave/buildbot.tac",
       timeout => 1200,
   }
 
