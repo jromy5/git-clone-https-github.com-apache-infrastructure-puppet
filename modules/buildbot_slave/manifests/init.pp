@@ -54,7 +54,7 @@ class buildbot_slave (
     'bootstrap-buildslave':
       command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
       creates => "/home/${username}/slave/buildbot.tac",
-      user    => $username
+      user    => $username,
       timeout => 1200,
   }
 
@@ -79,7 +79,7 @@ file {
       enable     => true,
       hasstatus  => false,
       hasrestart => true,
-      require    => $required_packages,
+      require    => $required_packages;
   }
 
 }
