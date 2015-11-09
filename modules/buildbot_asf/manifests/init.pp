@@ -14,6 +14,9 @@ class buildbot_asf (
   $username                      = 'buildmaster',
   $required_packages             = ['python-mysqldb' 'buildbot'],
 
+  # list of passwords
+  $master_list                   = {},
+
   # override below in yaml
   $buildbot_base_dir             = ''
   $buildmaster_work_dir          = ''
@@ -36,6 +39,8 @@ class buildbot_asf (
   $pchangesource_pass            = ''
 
 ){
+
+  validate_hash($master_list)
 
 # install required packages:
   package {
