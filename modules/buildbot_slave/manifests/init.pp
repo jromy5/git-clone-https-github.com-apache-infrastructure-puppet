@@ -9,6 +9,11 @@ class buildbot_slave (
   $user_present                  = 'present',
   $username                      = 'buildslave',
   $required_packages             =[ 'buildbot-slave' ],
+
+  # override bwlow in yaml
+
+  $slavename,
+
 ){
 
 # install required packages:
@@ -45,7 +50,7 @@ class buildbot_slave (
 
   exec {
     'bootstrap-buildslave':
-      command => "/usr/bin/buildslave create-slave /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
+      command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
       creates => "/home/${username}/slave/buildbot.tac",
       timeout => 1200,
   }
