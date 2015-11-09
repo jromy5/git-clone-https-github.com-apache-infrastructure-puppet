@@ -79,7 +79,7 @@ class buildbot_slave (
       mode    => '0644',
       require => Exec['bootstrap-buildslave'];
 
-    "/home/${username}/slave/info/host":
+    "/home/${username}/slave/info/admin":
       content => template('buildbot_slave/admin.erb'),
       mode    => '0644',
       require => Exec['bootstrap-buildslave'];
