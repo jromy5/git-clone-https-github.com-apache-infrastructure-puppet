@@ -77,6 +77,16 @@ file {
       mode    => '0600',
       notify  => Service[$service_name],
       require => Exec['bootstrap-buildslave'];
+
+    "/home/${username}/slave/info/host":
+      content => template('buildbot_slave/host.erb'),
+      mode    => '0644',
+      require => Exec['bootstrap-buildslave'];
+
+    "/home/${username}/slave/info/host":
+      content => template('buildbot_slave/admin.erb'),
+      mode    => '0644',
+      require => Exec['bootstrap-buildslave'];
 }
 
   service {
