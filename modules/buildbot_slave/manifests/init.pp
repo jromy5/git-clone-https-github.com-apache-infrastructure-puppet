@@ -8,6 +8,8 @@ class buildbot_slave (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'buildslave',
+  $service_ensure                = 'running',
+  $service_name                  = 'buildslave',
   $required_packages             =[ 'buildbot-slave' ],
 
   # override bwlow in yaml
@@ -52,7 +54,32 @@ class buildbot_slave (
     'bootstrap-buildslave':
       command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
       creates => "/home/${username}/slave/buildbot.tac",
+      user    => $username
       timeout => 1200,
+  }
+
+file {
+
+    "/home/${username}/slave":
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      require => Exec['bootstrap-buildslave'];
+
+    "/home/${username}/slave/buildbot.tac":
+      content => template('buildbot_slave/buildbot.tac.erb'),
+      mode    => '0644',
+      notify => Service[$service_name];
+      require => Exec['bootstrap-buildslave'];
+}
+
+  service {
+    $service_name:
+      ensure     => $service_ensure,
+      enable     => true,
+      hasstatus  => false,
+      hasrestart => true,
+      require    => $required_packages,
   }
 
 }
