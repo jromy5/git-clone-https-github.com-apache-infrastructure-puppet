@@ -108,6 +108,7 @@ cron:
       - 18
     user:       'root'
     command:    'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+%Y-%m").log'
+    require:    'File[/var/log/www-data-root]'
   #
   # Check in any updated data/history files
   # These are copied extracts of the files created by parsepmcs.py which is run at 00 min 4,12,20 hours
@@ -119,6 +120,7 @@ cron:
       - 20
     user:       'root'
     command:    'cd /var/www/reporter.apache.org/data/history && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnhistory_$(date "+%Y-%m").log'
+    require:    'File[/var/log/www-data-root]'
   #
   # Check in any updated/new json files under projects.apache.org
   # The "svn add" job run under www-data is run at 04:10
@@ -127,6 +129,7 @@ cron:
     hour:       4
     user:       'root'
     command:    'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+%Y-%m").log'
+    require:    'File[/var/log/www-data-root]'
 
 # Install ldap3 for use by python cron scripts
 python::python_pips:
