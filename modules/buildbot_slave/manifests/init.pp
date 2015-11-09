@@ -31,7 +31,6 @@ class buildbot_slave (
       ensure => $group_present,
       system => true,
       name   => $groupname,
-      gid    => $gid,
   }->
 
   user {
@@ -41,7 +40,6 @@ class buildbot_slave (
       name       => $username,
       home       => "/home/${username}",
       shell      => $shell,
-      uid        => $uid,
       gid        => $groupname,
       groups     => $groups,
       managehome => true,
