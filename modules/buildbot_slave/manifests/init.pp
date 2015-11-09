@@ -69,7 +69,7 @@ file {
     "/home/${username}/slave/buildbot.tac":
       content => template('buildbot_slave/buildbot.tac.erb'),
       mode    => '0644',
-      notify => Service[$service_name];
+      notify  => Service[$service_name],
       require => Exec['bootstrap-buildslave'];
 }
 
