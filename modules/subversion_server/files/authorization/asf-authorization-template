@@ -1120,6 +1120,9 @@ ea = rw
 [/incubator/twill]
 @twill = rw
 
+[/incubator/unomi]
+@committers= rw
+
 [/incubator/wadi]
 * = r
 
