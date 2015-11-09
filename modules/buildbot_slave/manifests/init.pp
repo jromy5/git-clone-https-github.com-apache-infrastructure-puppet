@@ -79,7 +79,7 @@ file {
       enable     => true,
       hasstatus  => false,
       hasrestart => true,
-      require    => $required_packages;
+      require    => Exec['bootstrap-buildslave'];
   }
 
 }
