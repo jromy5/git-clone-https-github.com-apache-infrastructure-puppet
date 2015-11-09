@@ -30,7 +30,6 @@ class buildbot_slave (
     $groupname:
       ensure => $group_present,
       system => true,
-      name   => $groupname,
   }->
 
   user {
