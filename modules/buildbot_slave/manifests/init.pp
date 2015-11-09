@@ -22,9 +22,17 @@ class buildbot_slave (
   package {
     $required_packages:
       ensure => 'present',
-  }
+  }->
 
 # buildbot specific
+
+  group {
+    $groupname:
+      ensure => $group_present,
+      system => true,
+      name   => $groupname,
+      gid    => $gid,
+  }->
 
   user {
     $username:
@@ -38,15 +46,7 @@ class buildbot_slave (
       groups     => $groups,
       managehome => true,
       require    => Group[$groupname],
-  }
-
-  group {
-    $groupname:
-      ensure => $group_present,
-      system => true,
-      name   => $groupname,
-      gid    => $gid,
-  }
+  }->
 
 # Bootstrap the buildslave service
 
@@ -56,10 +56,9 @@ class buildbot_slave (
       creates => "/home/${username}/slave/buildbot.tac",
       user    => $username,
       timeout => 1200,
-  }
+  }->
 
-file {
-
+  file {
     "/home/${username}/slave":
       ensure  => directory,
       owner   => $username,
@@ -87,7 +86,7 @@ file {
       content => template('buildbot_slave/admin.erb'),
       mode    => '0644',
       require => Exec['bootstrap-buildslave'];
-}
+  }->
 
   service {
     $service_name:
