@@ -83,16 +83,16 @@ vhosts_asf::vhosts::vhosts:
 file:
   # ensure log file directories exist
   '/var/log/www-data':
-    ensure: directory
-      owner:  'www-data'
-      group:  'www-data'
-      mode:   0775
+    ensure: 'directory'
+    owner:  'www-data'
+    group:  'www-data'
+    mode:   0775
 
   '/var/log/www-data-root':
-    ensure: directory
-      owner:  'root'
-      group:  'root'
-      mode:   0775
+    ensure: 'directory'
+    owner:  'root'
+    group:  'root'
+    mode:   0775
 
 cron:
   # Note: svn add is done by www-data cronjobs running at 40 mins past the hour
