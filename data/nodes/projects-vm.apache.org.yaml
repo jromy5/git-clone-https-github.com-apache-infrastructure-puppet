@@ -5,7 +5,7 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - projects_pvm_asf
-  
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000
@@ -61,7 +61,7 @@ vhosts_asf::vhosts::vhosts:
       </Location>
       Redirect /feeds http://projects-old.apache.org/feeds
       Redirect /indexes http://projects-old.apache.org/indexes
-      
+
   reporter:
     vhost_name: '*'
     port: 80
@@ -80,7 +80,7 @@ vhosts_asf::vhosts::vhosts:
         Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
-      
+
 
 # Install ldap3 for use by python cron scripts
 python::python_pips:

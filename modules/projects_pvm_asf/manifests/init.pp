@@ -49,7 +49,7 @@ class projects_pvm_asf (
       hour    => '4',
       user    => 'root',
       require => File['/var/log/www-data-root'],
-      command => 'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+%Y-%m").log'; 
+      command => 'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+%Y-%m").log';
 
   }
 
