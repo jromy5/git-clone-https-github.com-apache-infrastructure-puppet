@@ -29,7 +29,7 @@ class projects_pvm_asf (
       minute  => '45',
       hour    => '0,6,12,18',
       user    => 'root',
-      require => 'File[/var/log/www-data-root]',
+      require => File['/var/log/www-data-root'],
       command => 'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+%Y-%m").log';
 
   #
@@ -39,7 +39,7 @@ class projects_pvm_asf (
       minute  => '10',
       hour    => '4,12,20',
       user    => 'root',
-      require => 'File[/var/log/www-data-root]',
+      require => File['/var/log/www-data-root'],
       command => 'cd /var/www/reporter.apache.org/data/history && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnhistory_$(date "+%Y-%m").log';
   #
   # Check in any updated/new json files under projects.apache.org
@@ -48,7 +48,7 @@ class projects_pvm_asf (
       minute  => '20',
       hour    => '4',
       user    => 'root',
-      require => 'File[/var/log/www-data-root]',
+      require => File['/var/log/www-data-root'],
       command => 'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+%Y-%m").log'; 
 
   }

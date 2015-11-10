@@ -4,6 +4,7 @@ classes:
   - apache::mod::status
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+  - projects_pvm_asf
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
