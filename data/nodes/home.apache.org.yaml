@@ -1,0 +1,65 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '50000'
+apache::mod::event::maxrequestworkers: '300'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '50'
+apache::mod::event::serverlimit: '6'
+apache::mod::event::startservers: '3'
+apache::mod::event::threadlimit: '300'
+apache::mod::event::threadsperchild: '50'
+
+vhosts_asf::modules::modules:
+  userdir:
+    name: 'userdir'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
+vhosts_asf::vhosts::vhosts:
+  home:
+    vhost_name: '*'
+    port: 80
+    servername: 'home.apache.org'
+    default_vhost: true
+    docroot: '/var/www/html'
+    manage_docroot: false
+    options:
+      - 'FollowSymLinks'
+      - 'MultiViews'
+    access_log_file: 'home_access.log'
+    error_log_file: 'home_error.log'
+    custom_fragment: |
+      UserDir public_html
+      
+  home-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'home.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    manage_docroot: false
+    access_log_file: 'home-ssl_access.log'
+    error_log_file: 'home-ssl_error.log'
+    custom_fragment: |
+      UserDir public_html
