@@ -2,19 +2,20 @@
 
 class buildbot_slave (
 
-  $group_present                 = 'present',
-  $groupname                     = 'buildslave',
-  $groups                        = [],
-  $shell                         = '/bin/bash',
-  $user_present                  = 'present',
-  $username                      = 'buildslave',
-  $service_ensure                = 'running',
-  $service_name                  = 'buildslave',
-  $required_packages             =[ 'buildbot-slave' ],
+  $group_present     = 'present',
+  $groupname         = 'buildslave',
+  $groups            = [],
+  $shell             = '/bin/bash',
+  $user_present      = 'present',
+  $username          = 'buildslave',
+  $service_ensure    = 'running',
+  $service_name      = 'buildslave',
+  $required_packages = ['buildbot-slave'],
 
   # override bwlow in yaml
 
-  $slavename,
+  $slave_name,
+  $slave_password,
 
 ){
 
@@ -49,7 +50,7 @@ class buildbot_slave (
 
   exec {
     'bootstrap-buildslave':
-      command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
+      command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 ${slave_name} ${slave_password}",
       creates => "/home/${username}/slave/buildbot.tac",
       user    => $username,
       timeout => 1200,
