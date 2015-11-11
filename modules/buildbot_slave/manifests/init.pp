@@ -14,6 +14,7 @@ class buildbot_slave (
 
   # override bwlow in yaml
 
+  $slave_name,
   $slave_password,
 
 ){
@@ -49,7 +50,7 @@ class buildbot_slave (
 
   exec {
     'bootstrap-buildslave':
-      command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 bb-slave1 temppw",
+      command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 ${slave_name} temppw",
       creates => "/home/${username}/slave/buildbot.tac",
       user    => $username,
       timeout => 1200,
