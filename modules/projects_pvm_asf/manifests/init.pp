@@ -32,7 +32,7 @@ class projects_pvm_asf (
       hour    => [0, 6, 12, 18],
       user    => 'root',
       require => File['/var/log/www-data-root'],
-      command => 'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+%\Y-\%m").log';
+      command => 'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+\%Y-\%m").log';
 
   #
   # Check in any updated data/history files
