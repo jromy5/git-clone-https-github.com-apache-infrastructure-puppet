@@ -2,19 +2,19 @@
 
 class buildbot_slave (
 
-  $group_present                 = 'present',
-  $groupname                     = 'buildslave',
-  $groups                        = [],
-  $shell                         = '/bin/bash',
-  $user_present                  = 'present',
-  $username                      = 'buildslave',
-  $service_ensure                = 'running',
-  $service_name                  = 'buildslave',
-  $required_packages             =[ 'buildbot-slave' ],
+  $group_present     = 'present',
+  $groupname         = 'buildslave',
+  $groups            = [],
+  $shell             = '/bin/bash',
+  $user_present      = 'present',
+  $username          = 'buildslave',
+  $service_ensure    = 'running',
+  $service_name      = 'buildslave',
+  $required_packages = ['buildbot-slave'],
 
   # override bwlow in yaml
 
-  $slavename,
+  $slave_password,
 
 ){
 
