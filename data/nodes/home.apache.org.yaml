@@ -24,6 +24,21 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+ssh_asf::server_options:
+    Protocol: '2'
+    ListenAddress: '0.0.0.0'
+    PasswordAuthentication: 'no'
+    SyslogFacility: 'AUTHPRIV'
+    UsePAM: 'yes'
+    X11Forwarding: 'no'
+    AuthorizedKeysCommand: '/etc/ssh/bin/asf-ldap-sshkeys.sh'
+    AuthorizedKeysFile: '/etc/ssh/ssh_keys/%u.pub'
+    'Match Group *,!asf999,!root-sudoers':
+      ForceCommand: 'internal-sftp'
+      X11Forwarding: 'no'
+      AllowTCPForwarding: 'no'
+      PermitTunnel: 'no'
+
 vhosts_asf::modules::modules:
   userdir:
     name: 'userdir'
