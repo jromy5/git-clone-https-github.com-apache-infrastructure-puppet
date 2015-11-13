@@ -5,6 +5,7 @@ local redded = 0 -- number of redacted entries
 
 -- Get which user has authed this request
 local user = os.getenv('REMOTE_USER')
+local kint = os.getenv('REQUEST_URI'):match("^/kibana-int/") and true or false
 
 -- Query LDAP for host records
 local hosts = {}
@@ -26,7 +27,9 @@ if p then
     p:close()
     for host in data:gmatch("host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
-        table.insert(hosts, host .. ".apache.org")
+        if host == "*" then
+            table.insert(hosts, host .. ".apache.org")
+        end
     end
     for host in data:gmatch("log%-access%-host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
@@ -91,10 +94,12 @@ local data = io.stdin:read("*a")
 local json = JSON:decode(data)
 
 -- Only retain allowed hosts from result set
-json = retain(json, {
-        ["@node"]   = hosts,
-        vhost       = vhosts
-    })
+if not kint then
+        json = retain(json, {
+                ["@node"]   = hosts,
+                vhost       = vhosts
+            })
+end
 
 -- Change search result info
 if redded > 0 and json._shards then

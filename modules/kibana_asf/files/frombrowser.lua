@@ -17,6 +17,7 @@ end
 
 -- Get which user has authed this request
 local user = os.getenv('REMOTE_USER')
+local kint = os.getenv('REQUEST_URI'):match("^/kibana-int/") and true or false
 
 -- Query LDAP for host records
 local hosts = {}
@@ -40,7 +41,9 @@ if p then
     p:close()
     for host in data:gmatch("host: ([^\r\n]+)") do
         host = host:gsub("%.apache%.org", "")
-        table.insert(hosts, ([[@node:"%s.apache.org"]]):format(host))
+        if host ~= "minotaur" then
+            table.insert(hosts, ([[@node:"%s.apache.org"]]):format(host))
+        end
         if host == "*" then
             allHosts = true
         end
@@ -68,7 +71,7 @@ local valid, json = pcall(function() return JSON:decode(data) end)
 -- If the input contains a query, then mangle it...
 if valid and json then
     -- If user doesn't have access to "*", then inject a host requirement into the query
-    if not allHosts then
+    if not allHosts or kint then
         local what = " AND (" .. table.concat(hosts, " OR ") .. ")"
         inject(json, what)
     end
