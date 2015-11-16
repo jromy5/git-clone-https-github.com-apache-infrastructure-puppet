@@ -23,7 +23,6 @@ classes:
   - stunnel_asf
   - svnpubsub
   - subversion_server
-  - subversion_server::board_reminders
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   
