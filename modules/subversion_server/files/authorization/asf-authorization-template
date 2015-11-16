@@ -978,7 +978,7 @@ ea = rw
 @datafu = rw
 
 [/incubator/droids]
-@droids = rw
+* = r
 
 [/incubator/eagle]
 @eagle = rw
