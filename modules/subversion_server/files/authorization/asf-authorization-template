@@ -172,7 +172,6 @@ directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
-droids=gsingers,javier,mingfai,olegk,ryan,thorsten,rfrovarp,bchapuis,tobr
 eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz
 easyant=antelder,antoine,bodewig,hibou,jbenois,jlboudart,kpsiddharth,xavier
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
