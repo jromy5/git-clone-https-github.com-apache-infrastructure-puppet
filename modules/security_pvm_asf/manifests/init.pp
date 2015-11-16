@@ -1,8 +1,8 @@
-##/etc/puppet/modules/ubuntu1510-maven/manifests/init.pp
+##/etc/puppet/modules/security_pvm_asf/manifests/init.pp
 
-class ubuntu1510-maven (
+class security_pvm_asf (
 
-  $required_packages             = []
+  $required_packages             = ['maven' 'git' 'openjdk-8-jdk']
 
 ) {
 

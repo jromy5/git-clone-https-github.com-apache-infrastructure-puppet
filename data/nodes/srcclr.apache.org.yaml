@@ -1,5 +1,3 @@
 ---
 classes:
-  - ubuntu1510-maven
-
-ubuntu1510-maven::required packages: ['git' 'openjdk-8-jdk']
+  - security_pvm_asf
