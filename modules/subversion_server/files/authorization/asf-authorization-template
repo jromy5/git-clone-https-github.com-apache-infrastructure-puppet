@@ -1032,6 +1032,9 @@ ea = rw
 [/incubator/mrql]
 @mrql= rw
 
+[/incubator/myriad]
+@myriad = rw
+
 [/incubator/nmaven]
 * = r
 
