@@ -178,7 +178,7 @@ class Blocky(Thread):
 			# Got a new one?? :)
 					i = baddie['ip']
 					ta = baddie['target']
-					if not i in baddies and (ta == hostname or ta == '*'):
+					if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
 						r = baddie['reason']
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						try:
