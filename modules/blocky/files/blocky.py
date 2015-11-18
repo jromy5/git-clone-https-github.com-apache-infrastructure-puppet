@@ -199,7 +199,7 @@ class Blocky(Thread):
 							print(err)
 						baddies[i] = time.time()
                                         elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
-                                                baddies[i] = time.time()
+						baddies[i] = time.time()
 						r = baddie['reason']
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						try:
