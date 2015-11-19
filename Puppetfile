@@ -14,7 +14,7 @@ mod 'apt',
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
-  :tag => '1.1.1'
+  :tag => '1.2.4'
 
 
 mod 'concat-native',
