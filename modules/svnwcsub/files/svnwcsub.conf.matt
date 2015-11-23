@@ -1,0 +1,21 @@
+# dummy change to test maybe-update-and-restart
+
+[DEFAULT]
+svnbin: /usr/bin/svn
+streams: http://svn-master.apache.org:2069/commits/svn
+#         http://dist.apache.org:2069/commits/svn
+hook: /home/svnwc/svnwcsub-hook
+
+ASF: http://svn-master.apache.org/repos/asf
+INFRA: https://svn-master.apache.org/repos/infra
+CMS: %(INFRA)s/websites/production
+APACHECON: %(INFRA)s/apachecon
+DIST: https://dist.apache.org/repos/dist
+
+[env]
+HOME: /home/svnwc
+LANG: en_US.UTF-8
+
+[track]
+/var/www/matt: %(INFRA)s/infrastructure/trunk/projects/matt/
+

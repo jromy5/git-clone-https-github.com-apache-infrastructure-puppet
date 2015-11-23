@@ -1,0 +1,111 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - elasticsearch
+  - loggy
+  - ssl::name::wildcard_apache_org
+  - svnwcsub
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '300'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '10'
+apache::mod::event::serverlimit: '4'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '300'
+apache::mod::event::threadsperchild: '50'
+
+
+base::basepackages:
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  
+elasticsearch::init_defaults:
+  ES_HEAP_SIZE: '1g'
+elasticsearch::java_install: true
+elasticsearch::version: '1.7.0'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  asful:
+    config:
+      node.name: 'matt'
+      network.host: '127.0.0.1'
+      init_defaults:
+        ES_HEAP_SIZE: '1g'
+
+httpd_modules::dev_package:
+  - 'apache2-dev'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+    
+vhosts_asf::modules::modules:
+  lua:
+    name: 'lua'
+  allowmethods:
+    name: 'allowmethods'
+
+vhosts_asf::vhosts::vhosts:
+  matt:
+    vhost_name: '*'
+    port: 80
+    servername: 'matt.apache.org'
+    default_vhost: true
+    docroot: '/var/www/matt/site'
+    manage_docroot: false
+    options:
+      - 'FollowSymLinks'
+      - 'MultiViews'
+    access_log_file: 'matt_access.log'
+    error_log_file: 'matt_error.log'
+    custom_fragment: |
+      Redirect permanent / https://matt.apache.org/
+      
+  matt-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'matt.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/matt/site'
+    manage_docroot: false
+    access_log_file: 'matt-ssl_access.log'
+    error_log_file: 'matt-ssl_error.log'
+    custom_fragment: |
+      AcceptPathInfo On
+      LuaScope thread
+      LuaCodeCache stat
+      AddHandler lua-script .lua
+
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.matt'
+svnwcsub::username:         'svnwc'
