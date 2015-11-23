@@ -415,6 +415,7 @@ synapse={ldap:cn=synapse,ou=groups,dc=apache,dc=org}
 synapse-pmc={reuse:pit-authorization:synapse-pmc}
 syncope={ldap:cn=syncope,ou=groups,dc=apache,dc=org}
 syncope-pmc={reuse:pit-authorization:syncope-pmc}
+systemml=acs_s,ae2015,dbtsai,deron,dusenberrymw,freiss,holden,jkbradley,lresende,mboehm7,meng,niketanpansare,prithvi,pwendell,rbowen,reinwald,rxin,shirisht
 # There is no tac unix group; ensure tac is published on people.a.o
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=groups,dc=apache,dc=org}
@@ -1102,6 +1103,10 @@ ea = rw
 
 [/incubator/streams/site]
 @streams = rw
+
+[/incubator/systeml]
+@systeml = rw
+
 
 [/incubator/tamaya/site]
 @incubator = rw
