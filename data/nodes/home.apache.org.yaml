@@ -56,6 +56,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'home_error.log'
     custom_fragment: |
       UserDir public_html
+      Options +Indexes
       
   home-ssl:
     vhost_name: '*'
@@ -70,3 +71,4 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'home-ssl_error.log'
     custom_fragment: |
       UserDir public_html
+      Options +Indexes
