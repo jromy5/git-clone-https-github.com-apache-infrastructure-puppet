@@ -24,7 +24,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     ip: "%{::ipaddress_eth0}"
     docroot: '/var/www/issues-data'
-    access_log_format: '%a %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
+    access_log_format: '%%{}{X-Forwarded-For}i %l %u %t \"%r\" %>s %O \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
     access_log_env_var: 'combined_forwarded'
     setenv: 'combined_forwarded'
     access_log_file: 'weblog.log'
