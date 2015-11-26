@@ -1104,9 +1104,8 @@ ea = rw
 [/incubator/streams/site]
 @streams = rw
 
-[/incubator/systeml]
-@systeml = rw
-
+[/incubator/systemml]
+@systemml = rw
 
 [/incubator/tamaya/site]
 @incubator = rw
