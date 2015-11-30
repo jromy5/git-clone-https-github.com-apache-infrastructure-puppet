@@ -5,7 +5,6 @@ classes:
   - elasticsearch
   - loggy
   - ssl::name::wildcard_apache_org
-  - svnwcsub
   - vhosts_asf::modules
   - vhosts_asf::vhosts
 
@@ -96,16 +95,3 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
-
-svnwcsub::gid:              '9995'
-svnwcsub::uid:              '9995'
-svnwcsub::conf_file:        'svnwcsub.conf'
-svnwcsub::service_ensure:   'running'
-svnwcsub:::conf_path:       '/etc/'
-svnwcsub::groupname:        'svnwc'
-svnwcsub::groups:
-  - 'svnwc'
-svnwcsub::service_name:     'svnwcsub'
-svnwcsub::shell:            '/bin/bash'
-svnwcsub::source:           'svnwcsub.conf.matt'
-svnwcsub::username:         'svnwc'
