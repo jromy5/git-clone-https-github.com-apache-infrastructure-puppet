@@ -1010,7 +1010,7 @@ ea = rw
 * = r
 
 [/incubator/kalumet]
-@committers = rw
+* = r
 
 [/incubator/kato]
 * = r
