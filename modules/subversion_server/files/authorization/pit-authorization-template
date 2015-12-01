@@ -173,6 +173,8 @@ karaf={reuse:asf-authorization:karaf}
 karaf-pmc={ldap:cn=karaf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 knox={reuse:asf-authorization:knox}
 knox-pmc={ldap:cn=knox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+kylin={reuse:asf-authorization:kylin}
+kylin-pmc={ldap:cn=kylin,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 kafka={reuse:asf-authorization:kafka}
 kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 labs-pmc={ldap:cn=labs,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}

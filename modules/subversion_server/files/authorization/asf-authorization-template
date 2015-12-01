@@ -252,9 +252,10 @@ karaf={ldap:cn=karaf,ou=groups,dc=apache,dc=org}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
 knox={ldap:cn=knox,ou=groups,dc=apache,dc=org}
 knox-pmc={reuse:pit-authorization:knox-pmc}
+kylin={ldap:cn=kylin,ou=groups,dc=apache,dc=org}
+kylin-pmc={reuse:pit-authorization:kylin-pmc}
 kafka={ldap:cn=kafka,ou=groups,dc=apache,dc=org}
 kafka-pmc={reuse:pit-authorization:kafka-pmc}
-kylin=lukehan,jiangxu,liyang,yisong,mahongbin,xduo,ankur,jhyde,omalley,tdunning,hsaputra,shaofengshi
 # kato=antelder,geirm,rdonkin,sgoyal,riccole,ccristal,monteith,spoole,simuvid
 # retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=groups,dc=apache,dc=org}
@@ -1018,9 +1019,6 @@ ea = rw
 [/incubator/kato]
 * = r
 
-[/incubator/kylin]
-@kylin = rw
-
 [/incubator/lcf]
 @lucene-connectors = rw
 
@@ -1232,6 +1230,9 @@ ea = rw
 
 [/knox]
 @knox = rw
+
+[/kylin]
+@kylin = rw
 
 [/labs]
 @committers  = rw
