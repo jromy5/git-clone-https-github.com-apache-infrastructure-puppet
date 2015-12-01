@@ -261,6 +261,8 @@ qpid={reuse:asf-authorization:qpid}
 qpid-pmc={ldap:cn=qpid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 rave={reuse:asf-authorization:rave}
 rave-pmc={ldap:cn=rave,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+reef={reuse:asf-authorization:reef}
+reef-pmc={ldap:cn=reef,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 river={reuse:asf-authorization:river}
 river-pmc={ldap:cn=river,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 roller={reuse:asf-authorization:roller}

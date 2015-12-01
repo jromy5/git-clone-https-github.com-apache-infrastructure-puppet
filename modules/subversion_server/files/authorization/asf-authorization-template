@@ -361,7 +361,8 @@ qpid-pmc={reuse:pit-authorization:qpid-pmc}
 ranger=alok,bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rmani,sneethir,sradia
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
-reef=bgchun,bmyers,cdouglas,chobrian,dongjoon,gwkim,gwlee,jerryjung,johnyangk,joshrosen,jrlee,jsjason,juliaw,mariia,mattmann,motus,omalley,rgardler,sears,sezgin,shravan,shulmanb,taegeonum,tcondie,tmajest,weimer,yingdachen,yunseong
+reef={ldap:cn=reef,ou=groups,dc=apache,dc=org}
+reef-pmc={reuse:pit-authorization:reef-pmc}
 ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,ibuziuk,jukka,raymondcamden,timb,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
@@ -1070,9 +1071,6 @@ ea = rw
 [/incubator/ranger]
 @ranger = rw
 
-[/incubator/reef]
-@reef = rw
-
 [/incubator/ripple]
 @ripple = rw
 
@@ -1540,6 +1538,9 @@ ea = rw
 
 [/rave]
 @rave = rw
+
+[/reef]
+@reef = rw
 
 [/river]
 @river = rw
