@@ -105,6 +105,8 @@ bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
 blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
 bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
+brooklyn={ldap:cn=brooklyn,ou=groups,dc=apache,dc=org}
+brooklyn-pmc={reuse:pit-authorization:brooklyn-pmc}
 buildr={ldap:cn=buildr,ou=groups,dc=apache,dc=org}
 buildr-pmc={reuse:pit-authorization:buildr-pmc}
 bval={ldap:cn=bval,ou=groups,dc=apache,dc=org}
@@ -624,6 +626,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/buildr]
 * = r
 
+[/brooklyn]
+@incubator = rw
+
 [/buildr/site]
 @buildr = rw
 
@@ -963,9 +968,6 @@ ea = rw
 
 [/incubator/blur]
 @blur = rw
-
-[/incubator/brooklyn]
-@incubator = rw
 
 [/incubator/callback]
 @incubator = rw

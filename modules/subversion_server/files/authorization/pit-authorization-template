@@ -42,6 +42,8 @@ bloodhound-pmc={ldap:cn=bloodhound,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 blur={reuse:asf-authorization:blur}
 bookkeeper={reuse:asf-authorization:bookkeeper}
 bookkeeper-pmc={ldap:cn=bookkeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+brooklyn={reuse:asf-authorization:brooklyn}
+brooklyn-pmc={ldap:cn=brooklyn,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 buildr={reuse:asf-authorization:buildr}
 buildr-pmc={ldap:cn=buildr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 bval={reuse:asf-authorization:bval}
