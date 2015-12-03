@@ -2,7 +2,7 @@
 
 class security_pvm_asf (
 
-  $required_packages             = ['maven' 'git' 'openjdk-8-jdk']
+  $required_packages             = ['maven', 'git', 'openjdk-8-jdk']
 
 ) {
 
