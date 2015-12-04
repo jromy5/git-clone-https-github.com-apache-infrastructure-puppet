@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::status
+  - apache::mod::headers
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - projects_pvm_asf
@@ -59,6 +60,9 @@ vhosts_asf::vhosts::vhosts:
       <Location />
         Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
       </Location>
+      <Directory /var/www/projects.apache.org/site/json/>
+        Header set Access-Control-Allow-Origin "*"
+      </Directory>
       Redirect /feeds http://projects-old.apache.org/feeds
       Redirect /indexes http://projects-old.apache.org/indexes
 
