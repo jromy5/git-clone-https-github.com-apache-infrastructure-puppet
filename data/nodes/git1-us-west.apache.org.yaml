@@ -153,8 +153,9 @@ gitserver_asf::custom_fragment_443: |
           Satisfy any
       </Location>
       
-      <Files "ref-updates.log">
-          AddOutputFilter sed git
-          OutputSed "s/(?:\d+[.]){3}\d+//g"
-      </Files> 
+      <Location /logs/asf/>
+          ForceType text/plain
+          OutputSed "s/http[0-9.]*/[redacted]/g"
+          SetOutputFilter sed
+      </Location> 
 
