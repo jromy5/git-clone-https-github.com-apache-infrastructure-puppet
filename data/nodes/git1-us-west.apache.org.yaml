@@ -3,6 +3,7 @@ classes:
   - amanda::client
   - apache
   - apache::mod::geoip
+  - apache::mod::sed
   - datadog_agent::integrations::http_check
   - gitserver_asf
   - blocky
@@ -151,4 +152,9 @@ gitserver_asf::custom_fragment_443: |
           Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
           Satisfy any
       </Location>
+      
+      <Files "ref-updates.log">
+          AddOutputFilter sed git
+          OutputSed "s/(?:\d+[.]){3}\d+//g"
+      </Files> 
 
