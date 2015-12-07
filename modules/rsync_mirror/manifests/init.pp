@@ -84,7 +84,7 @@ class rsync_mirror (
                         '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc',
                         '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/',
                         '/zzz/perms', '/zzz/rsync-module/apache-dist-most',
-                        '.rivision'],
+                        '.revision'],
     hosts_deny      => $deny,
   }
 
