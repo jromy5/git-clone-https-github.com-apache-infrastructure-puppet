@@ -2,7 +2,7 @@
 
 class security_pvm_asf (
 
-  $required_packages             = ['maven', 'openjdk-8-jdk']
+  $required_packages = ['maven3', 'openjdk-8-jdk']
 
 ) {
 
@@ -17,25 +17,9 @@ class security_pvm_asf (
     before => Package['openjdk-8-jdk'],
   }
 
-  apt::source { 'wily':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'wily',
-    repos    => 'main',
-  }
-
-  apt::source { 'wily-updates':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'wily-updates',
-    repos    => 'main',
-  }
-
-  apt::pin { 'wily-maven':
-    ensure   => present,
-    priority => 1800,
-    packages => 'maven',
-    codename => 'wily',
-    require  => Apt::Source['wily'],
-    before   => Package['maven'],
+  apt::ppa { 'ppa:andrei-pozolotin/maven3':
+    ensure => present,
+    before => Package['maven3'],
   }
 
 }
