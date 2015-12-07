@@ -83,7 +83,8 @@ class rsync_mirror (
                         '/tmp/', '*.md5', '*.MD5', 'MD5SUM', 'SHA*SUM*',
                         '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc',
                         '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/',
-                        '/zzz/perms', '/zzz/rsync-module/apache-dist-most'],
+                        '/zzz/perms', '/zzz/rsync-module/apache-dist-most',
+                        '.rivision'],
     hosts_deny      => $deny,
   }
 
@@ -100,7 +101,7 @@ class rsync_mirror (
                         '*.sha256', '*.sha512', '*.asc', 'MD5SUM', 'SHA*SUM*',
                         '*.sig', 'KEYS', 'KEYS.txt', '.svn/', '/.rsync.td/',
                         '/zzz/perms', '/openoffice',
-                        '/zzz/rsync-module/apache-dist'],
+                        '/zzz/rsync-module/apache-dist', '.revision'],
     hosts_deny      => $deny,
   }
 
