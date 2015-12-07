@@ -3,13 +3,13 @@ classes:
   - amanda::client
   - apache
   - apache::mod::geoip
-  - apache::mod::sed
   - datadog_agent::integrations::http_check
   - gitserver_asf
   - blocky
   - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org
+  - vhosts_asf::modules
 
   
 apache::keepalive:          'On'
@@ -42,6 +42,10 @@ base::gempackages:
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+vhosts_asf::modules::modules:
+  sed:
+    name: 'sed'
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
