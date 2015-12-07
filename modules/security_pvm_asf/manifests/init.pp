@@ -12,6 +12,10 @@ class security_pvm_asf (
       ensure => 'present',
   }
 
+  apt::ppa { 'ppa:openjdk-r/ppa':
+    ensure => present,
+    before => Package['openjdk-8-jdk'],
+  }
 
   apt::source { 'wily':
     location => 'http://us.archive.ubuntu.com/ubuntu/',
