@@ -2,6 +2,7 @@
 classes:
   - elasticsearch
   - asful
+  - ldapserver
   
 asful::nodename: 'snappy5'
 asful::nodeip: '10.91.102.218'
