@@ -3,8 +3,5 @@
 dnsclient::nameservers:
   - '10.3.0.2'
 
-ldapclient::ldapservers: 'ldaps://ldap1-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap2-us-west.apache.org:636 ldaps://ldap1-us-west.apache.org:636 ldaps://ldap1-us-east.apache.org:636'
 
-base::hosts:
-  ldap1-us-west.apache.org:
-    ip: '10.3.158.136'
