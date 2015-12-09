@@ -91,7 +91,7 @@ vhosts_asf::vhosts::vhosts:
         intype=application/json outtype=application/json \
         cmd="/usr/bin/lua5.2 /usr/local/etc/logproxy/frombrowser.lua"
       <Location /_query>
-          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap1-eu-central.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthName "ASF Committers"
           AuthType Basic
@@ -113,7 +113,7 @@ vhosts_asf::vhosts::vhosts:
           ProxyPass http://10.91.102.202:9200/
       </Location>
       <Location /k4/>
-          AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap1-eu-central.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root Only"
           AuthType Basic

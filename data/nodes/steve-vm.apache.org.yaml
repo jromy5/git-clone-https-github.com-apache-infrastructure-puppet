@@ -95,7 +95,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /steve/admin>
           AuthType Basic
           AuthName "STeVe administration"
-          AuthLDAPurl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
