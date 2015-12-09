@@ -38,6 +38,7 @@ classes:
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - gitwcsub
+  - ldapserver
 
 apache::keepalive:                           'On'
 apache::keepalive_timeout:                   '30'
