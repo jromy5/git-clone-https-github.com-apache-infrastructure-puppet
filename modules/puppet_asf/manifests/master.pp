@@ -85,7 +85,7 @@ class puppet_asf::master(
 
   cron { 'clean puppet reports':
     ensure  => present,
-    command => 'find /var/lib/puppet/reports/ -type f -iname "*.yaml" -mtime 7 -delete',
+    command => 'find /var/lib/puppet/reports/ -type f -iname "*.yaml" -mtime +7 -delete',
     user    => 'root',
     minute  => 7,
   }

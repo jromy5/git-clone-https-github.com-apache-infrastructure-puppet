@@ -180,14 +180,9 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
 
   cron { 'clean archived spam':
     ensure  => present,
-    command => 'find /var/lib/amavis/virusmails/ -type f -iname "spam-*.gz" -mtime 7 -delete',
+    command => 'find /var/lib/amavis/virusmails/ -type f -iname "spam-*.gz" -mtime +7 -delete',
     user    => 'root',
     minute  => 10,
   }
 
-  tidy { '/var/lib/amavis/virusmails':
-    age     => '1w',
-    matches => ['spam-*.gz'],
-    recurse => true,
-  }
 }
