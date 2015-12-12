@@ -83,13 +83,11 @@ class puppet_asf::master(
     hasrestart => true,
   }->
 
-  tidy { 'puppet-reports':
-    path    => '/var/lib/puppet/reports',
-    age     => '7d',
-    backup  => false,
-    recurse => true,
-    rmdirs  => true,
-    type    => 'ctime',
+  cron { 'clean puppet reports':
+    ensure  => present,
+    command => 'find /var/lib/puppet/reports/ -type f -iname "*.yaml" -mtime 7 -delete',
+    user    => 'root',
+    minute  => 7,
   }
 
 }
