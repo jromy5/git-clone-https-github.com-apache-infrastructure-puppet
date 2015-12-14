@@ -132,7 +132,7 @@ ldapserver::slapd_peers:
   2: ldap3-us-west.apache.org
   3: ldap1-us-east.apache.org
   4: ldap1-eu-central.apache.org
-  5: ldap1-us-west.apache.org
+  5: devops.apache.org
   6: snappy5.apache.org
 
 ldapserver::schemas:
