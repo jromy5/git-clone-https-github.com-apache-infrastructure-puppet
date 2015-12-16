@@ -225,6 +225,7 @@ ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
+impala=abehm,brock,cws,henry,jyu,lskuff,marcel,mgrund,tarasbob,todd,tomwhite
 # imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
@@ -292,7 +293,7 @@ mesos={ldap:cn=mesos,ou=groups,dc=apache,dc=org}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=groups,dc=apache,dc=org}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-metron=billie,lmccay,mattmann,omalley,ptgoetz,vinodkv
+metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
@@ -977,9 +978,6 @@ ea = rw
 
 [/incubator/corinthia]
 @corinthia = rw
-
-[/incubator/cotton]
-@cotton = rw
 
 [/incubator/datafu]
 @datafu = rw
