@@ -80,10 +80,9 @@ else
         if not (allHosts or kint) then
             local what = " AND (" .. table.concat(hosts, " OR ") .. ")"
             inject(json, what)
-        else 
-            local output = JSON:encode(json)
-            print(output) -- Send converted data down the chain
         end
+        local output = JSON:encode(json)
+        print(output) -- Send converted data down the chain
     -- If there's no query, just return what was sent
     else
         print(data)
