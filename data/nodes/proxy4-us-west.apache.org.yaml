@@ -108,4 +108,4 @@ vhosts_asf::vhosts::vhosts:
     error_log_file:  'tapestry-app.apache.org.error.log'
     custom_fragment: |
       Proxypass / http://10.40.0.27:8443/
-      ProxypassReverse / http://10.40.0.23/
+      ProxypassReverse / http://10.40.0.27:8443/
