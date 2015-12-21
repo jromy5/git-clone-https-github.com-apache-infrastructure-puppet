@@ -89,24 +89,28 @@
        </td>
      [else]
        [is entries.pathtype "dir"]
-       <td>&nbsp;[if-any entries.rev]<strong>r[entries.rev]</strong>[end]</td>
+       <td>&nbsp;[if-any entries.rev]<a href="[entries.log_href]" title="View directory revision log"><strong>[entries.rev]</strong></a>[end]</td>
        [else]
        [define rev_href][if-any entries.prefer_markup][entries.view_href][else][if-any entries.download_href][entries.download_href][end][end][end]
-       <td style="white-space: nowrap;">&nbsp;[if-any entries.rev]<strong>r[entries.rev]</strong>[end]
+       <td style="white-space: nowrap;">&nbsp;[if-any entries.rev][if-any rev_href]<a href="[rev_href]" title="[if-any entries.prefer_markup]View[else]Download[end] file contents">[end]<strong>[entries.rev]</strong>[if-any rev_href]</a>[end][end]
        [if-any entries.lockinfo]<img src="[docroot]/images/lock.png" alt="locked" class="vc_icon" title="Locked by [entries.lockinfo]" />[end]
        </td>
        [end]
        <td>&nbsp;[entries.ago]</td>
        <td>&nbsp;[entries.author]</td>
        [is cfg.options.show_logs "1"]
+         <td>&nbsp;
          [if-any entries.short_log]
-           <td>&nbsp;[entries.short_log][is entries.pathtype "dir"][is roottype "cvs"]
-             <em>(from [entries.log_file]/[entries.log_rev])</em>[end][end]</td>
-         [else]
-           <td>&nbsp;</td>
+           [if-any entries.log_rev]
+             <em>(from [entries.log_file]/[entries.log_rev])</em>
+             [entries.short_log]
+           [else][if-any entries.rev]
+             [entries.short_log]
+           [end][end]
          [end]
-      [end]
-    [end]
+         </td>
+       [end]
+     [end]
   </tr>
 [end]
 </tbody>
