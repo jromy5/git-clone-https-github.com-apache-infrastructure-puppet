@@ -109,3 +109,4 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Proxypass / http://10.40.0.27:8443/
       ProxypassReverse / http://10.40.0.27:8443/
+      ProxyPreserveHost Off
