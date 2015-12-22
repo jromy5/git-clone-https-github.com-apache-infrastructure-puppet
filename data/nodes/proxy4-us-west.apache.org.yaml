@@ -84,3 +84,29 @@ vhosts_asf::vhosts::vhosts:
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=503
 
+  tapestry-app:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'tapestry-app.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'tapestry-app.apache.org.http_access.log'
+    error_log_file:  'tapestry-app.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://tapestry-app.apache.org/
+
+  tapestry-app-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'tapestry-app.apache.org.http_access.log'
+    error_log_file:  'tapestry-app.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://10.40.0.27:8443/
+      ProxypassReverse / http://10.40.0.27:8443/
+      ProxyPreserveHost Off
