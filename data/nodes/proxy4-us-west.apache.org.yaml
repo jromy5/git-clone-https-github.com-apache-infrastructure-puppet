@@ -102,9 +102,11 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    serveradmin: 'infrastructure@apache.org'
+    servername: 'tapestry-app.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
-    access_log_file: 'tapestry-app.apache.org.http_access.log'
+    access_log_file: 'tapestry-app.apache.org.https_access.log'
     error_log_file:  'tapestry-app.apache.org.error.log'
     custom_fragment: |
       Proxypass / http://10.40.0.27:8443/
