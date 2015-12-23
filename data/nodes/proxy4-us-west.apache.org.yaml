@@ -109,6 +109,6 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'tapestry-app.apache.org.https_access.log'
     error_log_file:  'tapestry-app.apache.org.error.log'
     custom_fragment: |
-      Proxypass / http://10.40.0.27:8443/
-      ProxypassReverse / http://10.40.0.27:8443/
+      Proxypass / http://10.40.0.27:8080/
+      ProxypassReverse / http://10.40.0.27:8080/
       ProxyPreserveHost Off
