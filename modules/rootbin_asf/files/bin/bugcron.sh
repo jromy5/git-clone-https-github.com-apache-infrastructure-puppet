@@ -19,7 +19,7 @@ _doit() {
 #  "Fop" - Moved to Jira
   /bin/bash ${lgscr} ${bzfrom} "issues@jmeter.apache.org" "JMeter"
 #  "Lenya" - Active but no weekly e-mail
-  /bin/bash ${lgscr} ${bzfrom} "log4j-dev@logging.apache.org" "Log4j"
+#  "Log4j" - Moved to Jira for Log4j2
 #  "ORO" - Attic
 #  "POI" - Active but no weekly e-mail
 #  "Regexp" - Attic
