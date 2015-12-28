@@ -28,6 +28,9 @@ base::basepackages:
   - tcsh
 
 ssh_asf::server_options:
+  ListenAddress:
+    - '0.0.0.0'
+    - '::'
   'Match Group *,!asf999,!root-sudoers':
     ForceCommand: 'internal-sftp'
     X11Forwarding: 'no'
