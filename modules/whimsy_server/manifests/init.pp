@@ -6,9 +6,9 @@ class whimsy_server (
 ) {
 
   vcsrepo { '/srv/whimsy':
-    ensure => latest,
+    ensure   => latest,
     provider => git,
-    source => 'https://github.com/apache/whimsy.git'
+    source   => 'https://github.com/apache/whimsy.git'
   }
 
 }
