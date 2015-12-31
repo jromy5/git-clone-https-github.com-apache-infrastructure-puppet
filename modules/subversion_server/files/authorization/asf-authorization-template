@@ -253,6 +253,7 @@ karaf={ldap:cn=karaf,ou=groups,dc=apache,dc=org}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
 knox={ldap:cn=knox,ou=groups,dc=apache,dc=org}
 knox-pmc={reuse:pit-authorization:knox-pmc}
+kudu=dralves,jdcryans,wang,danburkert,misty
 kylin={ldap:cn=kylin,ou=groups,dc=apache,dc=org}
 kylin-pmc={reuse:pit-authorization:kylin-pmc}
 kafka={ldap:cn=kafka,ou=groups,dc=apache,dc=org}
@@ -1582,7 +1583,7 @@ ea = rw
 * = r
 
 [/shindig]
-@shindig = rw
+* = r
 
 [/shiro]
 @shiro = rw
