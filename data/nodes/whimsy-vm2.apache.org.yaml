@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::speling
   - apache::mod::rewrite
+  - rvm
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - whimsy_server
@@ -29,6 +30,18 @@ apache::default_vhost: false
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+rvm::system_rubies:
+  'ruby-2.3.0': {}
+
+rvm::system_users:
+  - vagrant
+
+rvm::rvm_gems:
+  'bundler':
+     name: 'bundler'
+     ruby_version: 'ruby-2.3.0'
+     ensure: latest
 
 vhosts_asf::modules::modules:
   cgi:
@@ -66,7 +79,19 @@ vhosts_asf::vhosts::vhosts:
       </Directory>
 
       RewriteEngine on
-      RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}] 
+      RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%%{}{HTTP:Authorization}]
+
+      RewriteRule ^/racktest/$ /racktest/index.html [PT]
+      Alias /racktest /srv/whimsy/www/racktest/public
+      <Location /racktest>
+        PassengerBaseURI /racktest
+        PassengerAppRoot /srv/whimsy/www/racktest
+      </Location>
+      <Directory /srv/whimsy/www/racktest/public>
+        Allow from all
+        Options -Multiviews +Indexes
+        Require all granted
+      </Directory>
 
       RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
       RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
@@ -215,8 +240,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/classic/board/agenda/$ /classic/board/agenda/index.html [PT]
       Alias /classic/board/agenda /srv/whimsy/www/classic/board/agenda/public
       <Location /classic/board/agenda>
-        # PassengerBaseURI /classic/board/agenda
-        # PassengerAppRoot /srv/whimsy/www/classic/board/agenda
+        PassengerBaseURI /classic/board/agenda
+        PassengerAppRoot /srv/whimsy/www/classic/board/agenda
       </Location>
       <Directory /srv/whimsy/www/classic/board/agenda/public>
         SetEnv HTTPS on
@@ -251,8 +276,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/test/icla/$ /test/icla/index.html [PT]
       Alias /test/icla /srv/whimsy/www/test/icla/public
       <Location /test/icla>
-        # PassengerBaseURI /test/icla
-        # PassengerAppRoot /srv/whimsy/www/test/icla
+        PassengerBaseURI /test/icla
+        PassengerAppRoot /srv/whimsy/www/test/icla
       </Location>
       <Directory /srv/whimsy/www/test/icla/public>
         SetEnv HTTPS on
@@ -272,8 +297,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/roster/$ /roster/index.html [PT]
       Alias /roster /srv/whimsy/www/roster/public
       <Location /roster>
-        # PassengerBaseURI /roster
-        # PassengerAppRoot /srv/whimsy/www/roster
+        PassengerBaseURI /roster
+        PassengerAppRoot /srv/whimsy/www/roster
       </Location>
       <Directory /srv/whimsy/www/roster/public>
         SetEnv HTTPS on
@@ -311,3 +336,4 @@ vhosts_asf::vhosts::vhosts:
       <Directory /srv/whimsy/www/logs>
         Options +Indexes
       </Directory>
+
