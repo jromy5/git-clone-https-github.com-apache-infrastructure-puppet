@@ -178,11 +178,27 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       require => Package['clamav-daemon'],
   }
 
-  cron { 'clean archived spam':
-    ensure  => present,
-    command => 'find /var/lib/amavis/virusmails/ -type f -iname "spam-*.gz" -mtime +7 -delete',
-    user    => 'root',
-    minute  => 10,
+  cron {
+    'clean archived spam':
+      ensure  => present,
+      command => 'find /var/lib/amavis/virusmails/ -type f -iname "spam-*.gz" -mtime +7 -delete',
+      user    => 'root',
+      minute  => 10;
+    'clean flagged virus':
+      ensure  => present,
+      command => 'find /var/lib/amavis/virusmails/ -type f -iname "virus*" -mtime +7 -delete',
+      user    => 'root',
+      minute  => 11;
+    'clean banned':
+      ensure  => present,
+      command => 'find /var/lib/amavis/virusmails/ -type f -iname "banned*" -mtime +7 -delete',
+      user    => 'root',
+      minute  => 12;
+    'clean badh':
+      ensure  => present,
+      command => 'find /var/lib/amavis/virusmails/ -type f -iname "badh*" -mtime +7 -delete',
+      user    => 'root',
+      minute  => 13;
   }
 
 }
