@@ -23,6 +23,8 @@ class base::install::ubuntu::1404 (
     '/etc/logrotate.d/rsyslog':
       ensure => present,
       source => 'puppet:///modules/base/logrotate-rsyslog';
+    '/var/lib/puppet/state/state.yaml':
+      ensure => absent;
   }->
 
   cron { 'purge_old_kernels':
