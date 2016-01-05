@@ -67,6 +67,10 @@ mod 'foreman_proxy',
   :tag => '2.2.1'
 
 
+mod 'gnupg',
+  :git => 'https://github.com/n1tr0g/golja-gnupg',
+  :tag => '1.2.1'
+
 mod 'iptables',
   :git    => 'https://github.com/pctony/puppet-iptables.git',
   :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
@@ -170,6 +174,11 @@ mod 'rsyslog',
 mod 'ruby',
   :git => 'https://github.com/puppetlabs/puppetlabs-ruby.git',
   :tag => '0.4.0'
+
+
+mod 'rvm',
+  :git => 'https://github.com/maestrodev/puppet-rvm.git',
+  :tag => 'v1.12.1'
 
 
 mod 's3fs',
