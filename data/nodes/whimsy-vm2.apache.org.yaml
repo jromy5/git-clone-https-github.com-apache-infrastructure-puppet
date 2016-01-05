@@ -4,11 +4,10 @@ classes:
   - apache::mod::authnz_ldap
   - apache::mod::headers
   - apache::mod::proxy
-  - apache::mod::speling
   - apache::mod::rewrite
   - rvm
-  - vhosts_asf::modules
-  - vhosts_asf::vhosts
+  - vhosts_whimsy::modules
+  - vhosts_whimsy::vhosts
   - whimsy_server
 
 apache::keepalive: 'On'
@@ -43,11 +42,11 @@ rvm::rvm_gems:
      ruby_version: 'ruby-2.3.0'
      ensure: latest
 
-vhosts_asf::modules::modules:
-  cgi:
-    name: 'cgi'
+vhosts_whimsy::modules::modules:
+  - cgi
+  - speling
 
-vhosts_asf::vhosts::vhosts:
+vhosts_whimsy::vhosts::vhosts:
   whimsy-vm-80:
     vhost_name: '*'
     default_vhost: true
@@ -57,6 +56,54 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
     access_log_file: 'whimsy_access.log'
+
+    passenger:
+    - /classic/board/agenda
+    - /racktest
+    - /test/roster
+
+    authldap:
+    - name: ASF Committers
+      group: cn=committers,ou=groups,dc=apache,dc=org
+      attribute: memberUid
+      locations:
+      - /board/subscriptions
+      - /classic/roster
+      - /committers
+      - /test/icla
+      - /test/roster
+
+    - name: ASF Members and Incubator PMC
+      group: cn=committers,ou=groups,dc=apache,dc=org
+      attribute: memberUid
+      locations:
+      - /incubator/moderators
+      - /incubator/signoff
+
+    - name: ASF Members and Officers
+      group: cn=committers,ou=groups,dc=apache,dc=org
+      attribute: memberUid
+      locations:
+      - /board/agenda
+      - /classic/board/agenda
+      - /fundraising
+      - /treasurer
+
+    - name: ASF Members
+      group: cn=member,ou=groups,dc=apache,dc=org
+      attribute: memberUid
+      locations:
+      - /apmail
+      - /members
+      - /secretary
+      - /voter
+
+    - name: ASF Secretarial Team
+      group: cn=member,ou=groups,dc=apache,dc=org
+      attribute: memberUid
+      locations:
+      - /board/publish_minutes
+
     custom_fragment: |
       AddCharset UTF-8 .json
 
@@ -81,259 +128,20 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine on
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%%{}{HTTP:Authorization}]
 
-      RewriteRule ^/racktest/$ /racktest/index.html [PT]
-      Alias /racktest /srv/whimsy/www/racktest/public
-      <Location /racktest>
-        PassengerBaseURI /racktest
-        PassengerAppRoot /srv/whimsy/www/racktest
-      </Location>
-      <Directory /srv/whimsy/www/racktest/public>
-        Allow from all
-        Options -Multiviews +Indexes
-        Require all granted
-      </Directory>
-
       RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
       RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
-      <LocationMatch (^/mattmann|^/upayavira)>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/apmail>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/treasurer>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
 
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
-      <LocationMatch (^/officers|^/committers)>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/infra>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/classic/roster>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
-      <LocationMatch ^/secretary>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/voter>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/fundraising>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/board/subscriptions>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/incubator/private-lists>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/incubator/signoff>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/incubator/moderators>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/members/>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      RewriteRule ^/classic/board/agenda/$ /classic/board/agenda/index.html [PT]
-      Alias /classic/board/agenda /srv/whimsy/www/classic/board/agenda/public
-      <Location /classic/board/agenda>
-        PassengerBaseURI /classic/board/agenda
-        PassengerAppRoot /srv/whimsy/www/classic/board/agenda
-      </Location>
-      <Directory /srv/whimsy/www/classic/board/agenda/public>
-        SetEnv HTTPS on
-        Options -MultiViews +Indexes
-        DirectoryIndex index.html
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </Directory>
 
       <Location /board/agenda/>
         # see /srv/puma/README
         ProxyPass http://localhost:7001/
         RequestHeader set X-WUNDERBAR-BASE /board/agenda/
-
         SetEnv HTTPS on
-        Options -MultiViews +Indexes
-        DirectoryIndex index.html
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://devops.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require valid-user
       </Location>
-
-      RewriteRule ^/test/icla/$ /test/icla/index.html [PT]
-      Alias /test/icla /srv/whimsy/www/test/icla/public
-      <Location /test/icla>
-        PassengerBaseURI /test/icla
-        PassengerAppRoot /srv/whimsy/www/test/icla
-      </Location>
-      <Directory /srv/whimsy/www/test/icla/public>
-        SetEnv HTTPS on
-        Options -MultiViews +Indexes
-        DirectoryIndex index.html
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </Directory>
-
-      RedirectMatch 301 ^/test/roster(/.*)?$ https://whimsy.apache.org/roster$1
-
-      RewriteRule ^/roster/$ /roster/index.html [PT]
-      Alias /roster /srv/whimsy/www/roster/public
-      <Location /roster>
-        PassengerBaseURI /roster
-        PassengerAppRoot /srv/whimsy/www/roster
-      </Location>
-      <Directory /srv/whimsy/www/roster/public>
-        SetEnv HTTPS on
-        Options -MultiViews +Indexes
-        DirectoryIndex index.html
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </Directory>
-
-      <LocationMatch ^/board/draft-minutes>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-      </LocationMatch>
-
-      <LocationMatch ^/board/publish_minutes>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Members"
-        AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
-      </LocationMatch>
 
       <Directory /srv/whimsy/www/logs>
         Options +Indexes
       </Directory>
-
