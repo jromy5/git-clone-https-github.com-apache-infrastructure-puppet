@@ -1,9 +1,9 @@
 Module description
 ==================
 
-This is a fully backwards compatible version of the vhosts_asf module, which in
-turn is a thin [hiera](http://docs.puppetlabs.com/hiera/latest/) wrapper over
-the
+This is a fully backwards compatible version of the `vhosts_asf` module, which
+in turn is a thin [hiera](http://docs.puppetlabs.com/hiera/latest/) wrapper
+over the
 [apache:::vhost](https://forge.puppetlabs.com/puppetlabs/apache#define-apachevhost),
 [apache::mod](https://forge.puppetlabs.com/puppetlabs/apache#installing-arbitrary-modules),
 and
@@ -77,10 +77,13 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
 Sample output
 =============
 
-Examples of HTTP configuration commands produced.
+Examples of HTTP configuration directives produced.
 
 passsenger
 ----------
+
+    RewriteRule ^/racktest/$ /racktest/index.html [PT]
+    Alias /racktest/$ /srv/whimsy/www/racktest/public
 
     <Location /racktest>
       PassengerBaseURI /racktest
