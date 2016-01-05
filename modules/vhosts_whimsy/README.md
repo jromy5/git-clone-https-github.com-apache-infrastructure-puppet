@@ -8,7 +8,9 @@ over the
 [apache::mod](https://forge.puppetlabs.com/puppetlabs/apache#installing-arbitrary-modules),
 and
 [apache::custom_config](https://forge.puppetlabs.com/puppetlabs/apache#define-apachecustom_config)
-portions of the Apache HTTP server puppet module.
+portions of the 
+[puppetlabs/apache](https://forge.puppetlabs.com/puppetlabs/apache)
+module on puppet forge.
 
 Usage
 =====
@@ -23,7 +25,7 @@ vhosts_whimsy::modules::modules
 As an alternative to specifying a hash listing modules to be installed, you can
 use a simple array.  Example:
 
-    vhosts_asf::modules::modules:
+    vhosts_whimsy::modules::modules:
       - cgi
       - speling
       
