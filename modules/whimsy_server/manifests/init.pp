@@ -15,10 +15,12 @@ class whimsy_server (
 
   $gems = [
     'bundler',
+    'rake',
   ]
 
-  package { $packages: ensure => installed}
-  package { $gems: ensure => installed, provider => gem}
+  package { $packages: ensure => installed } ->
+
+  package { $gems: ensure => installed, provider => gem } ->
 
   class { 'rvm::passenger::apache':
     version            => '5.0.23',
@@ -27,12 +29,16 @@ class whimsy_server (
     maxinstancesperapp => '0',
     maxpoolsize        => '30',
     spawnmethod        => 'smart-lv2',
-  }
+  } ->
 
   vcsrepo { '/srv/whimsy':
     ensure   => latest,
     provider => git,
     source   => 'https://github.com/apache/whimsy.git'
-  }
+  } ->
 
+  exec { 'rake::update':
+    command => '/usr/local/bin/rake update',
+    cwd => '/srv/whimsy',
+  }
 }
