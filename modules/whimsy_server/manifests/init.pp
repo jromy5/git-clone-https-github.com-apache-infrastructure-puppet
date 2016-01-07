@@ -35,7 +35,7 @@ class whimsy_server (
     ensure   => latest,
     provider => git,
     source   => 'https://github.com/apache/whimsy.git'
-  } ->
+  } ~>
 
   exec { 'rake::update':
     command => '/usr/local/bin/rake update',
