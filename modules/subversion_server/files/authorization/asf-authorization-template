@@ -1031,6 +1031,9 @@ ea = rw
 [/incubator/lucene4c]
 * = r
 
+[/incubator/milagro]
+@incubator = rw
+
 [/incubator/mrql]
 @mrql= rw
 
