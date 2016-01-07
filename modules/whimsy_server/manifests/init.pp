@@ -40,5 +40,6 @@ class whimsy_server (
   exec { 'rake::update':
     command => '/usr/local/bin/rake update',
     cwd => '/srv/whimsy',
+    refreshonly => true
   }
 }
