@@ -85,7 +85,7 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 datadog_agent::integrations::apache::url: 'https://tlp-eu-mid.apache.org/server-status'
 
 
-ldapclient::ldapservers: 'ldaps://ldap1-eu-central.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
 
 logrotate::rule:
   apache2:
