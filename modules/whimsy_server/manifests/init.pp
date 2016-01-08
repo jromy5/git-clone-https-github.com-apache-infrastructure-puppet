@@ -76,7 +76,7 @@ class whimsy_server (
   }
 
   $keydir = hiera('ssh::params::sshd_keysdir', '/etc/ssh/ssh_keys')
-  if hiera('ssh::params::sshd_keysdir', '') == '' {
+  if ! defined(File[$keydir]) {
     # for vagrant testing purposes
     file { $keydir: ensure => directory }
   }
