@@ -3,8 +3,6 @@
 
 class whimsy_server (
 
-  $crontab_entries = hiera('crontab_entries', {}),
-
   $apmail_keycontent = '',
 
   $keysdir = hiera('ssh::params::sshd_keysdir')
@@ -51,7 +49,8 @@ class whimsy_server (
   vcsrepo { '/srv/whimsy':
     ensure   => latest,
     provider => git,
-    source   => 'https://github.com/apache/whimsy.git'
+    source   => 'https://github.com/apache/whimsy.git',
+    before   => Apache::Vhost[whimsy-vm-80]
   } ~>
 
   exec { 'rake::update':
@@ -88,11 +87,5 @@ class whimsy_server (
     owner  => apmail,
     group  => apmail,
   }
-
-  ############################################################
-  #                          CRON jobs                       #
-  ############################################################
-
-  create_resources(cron, $crontab_entries)
 
 }
