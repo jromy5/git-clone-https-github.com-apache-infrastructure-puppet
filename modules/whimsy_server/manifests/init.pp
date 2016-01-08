@@ -75,11 +75,13 @@ class whimsy_server (
     uid      => 500,
   }
 
-  file { '/etc/ssh/ssh_keys':
-    ensure => directory,
+  $keydir = hiera('ssh::params::sshd_keysdir', '/etc/ssh/ssh_keys')
+  if ! defined(File[$keydir]) {
+    # for vagrant testing purposes
+    file { $keydir: ensure => directory }
   }
 
-  file { "/etc/ssh/ssh_keys/apmail.pub":
+  file { "$keydir/apmail.pub":
     content => $apmail_keycontent,
     owner   => apmail,
     mode    => '0640',
