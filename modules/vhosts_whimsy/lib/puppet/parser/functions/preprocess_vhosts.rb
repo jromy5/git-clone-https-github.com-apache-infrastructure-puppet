@@ -21,7 +21,7 @@ module Puppet::Parser::Functions
       @docroot = @facts['docroot'] || '/var/www'
       @fragment = @facts['custom_fragment'] || ''
 
-      @alias = Hash.new {|hash, key| key}
+      @alias = Hash.new {|hash, key| "#@docroot#{key}"}
 
       passenger = @facts.delete('passenger')
       expand_passenger(passenger) if passenger
@@ -74,13 +74,15 @@ module Puppet::Parser::Functions
     # expand authldap entries
     def expand_authldap(authldap)
       authldap.each do |auth|
+        isdn = auth['idsn'] || (auth['attribute']=='memberUid' ? 'off' : 'on')
+
         auth['locations'].each do |url|
           directory @alias[url], %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
             AuthLDAPUrl #{LDAPURL.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
-            AuthLDAPGroupAttributeIsDN #{auth['isdn'] || 'off'}
+            AuthLDAPGroupAttributeIsDN #{isdn}
             Require ldap-group #{auth['group']}
           }
         end

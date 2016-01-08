@@ -60,7 +60,7 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
       [AuthLDAPGroupAttribute](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapgroupattribute)
     * `isdn` - (optional) used as the
       [AuthLDAPGroupAttributeIsDN](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapgroupattributeisdn)
-      value (default is `off`)
+      value (default is `off` if `attribute` is `memberUid`, otherwise `on`)
     * `group` - used as the value for [Require
       ldap-group](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#reqgroup)
     * `locations` - list of locations against which to require this
@@ -102,7 +102,7 @@ passsenger
 authldap
 --------
 
-    <Directory /committers>
+    <Directory /srv/whimsy/www/committers>
       AuthType Basic
       AuthName "ASF Committers"
       AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
