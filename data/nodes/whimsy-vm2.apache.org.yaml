@@ -42,6 +42,15 @@ rvm::rvm_gems:
      ruby_version: 'ruby-2.3.0'
      ensure: latest
 
+whimsy_server::crontab_entries:
+  svnupdate:
+    command: "bash -c 'for i in /srv/svn/*; do (cd $i; svn cleanup; svn up)>/dev/null; done"
+    user: root
+    minute: '*/10'
+
+whimsy_server::apmail_keycontent: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCGgAIeu+84ADF0TjKLPJaEE8747Xb+KNjh8ESujparlJcoD0EaYXZ7fF7X24Di5DzETLnv3XzLRuTUG3RzfAovrrgdIOqF23L5QMK3yNHgphNF3ri3ClwATscursH7B38QpEqTTsFGYsBwpJImKEqCkVdoLf5AVu6zhoJIsvW+mDzwvjJN/II/iFeR2/gSm73TWif0tkL7ZSspl2Dj4YNcngCL/nPmPK9tA6EJO3FcZSJzji3pfMIReBM8E0123rYF1EaNqjqF9mw3gf4jNTi9eob3l7Pchdi/onDzthpJpjw6eDcyUisYpotAO1LR0+CJpwfbxSVsjMayKUEPuop apmail@hermes.apache.org
+
 vhosts_whimsy::modules::modules:
   - cgi
   - speling
@@ -60,6 +69,8 @@ vhosts_whimsy::vhosts::vhosts:
     passenger:
     - /classic/board/agenda
     - /racktest
+    - /roster
+    - /secmail
     - /test/roster
 
     authldap:
@@ -95,13 +106,14 @@ vhosts_whimsy::vhosts::vhosts:
       locations:
       - /apmail
       - /members
-      - /secretary
       - /voter
 
     - name: ASF Secretarial Team
-      group: cn=member,ou=groups,dc=apache,dc=org
-      attribute: memberUid
+      group: cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+      attribute: member
       locations:
+      - /secretary
+      - /secmail
       - /board/publish_minutes
 
     custom_fragment: |
