@@ -134,6 +134,7 @@ ldapserver::slapd_peers:
   4: ldap1-eu-central.apache.org
   5: devops.apache.org
   6: snappy5.apache.org
+  7: ldap2-lw-us.apache.org
 
 ldapserver::schemas:
   - core
