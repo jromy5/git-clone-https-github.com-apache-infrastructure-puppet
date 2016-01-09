@@ -31,7 +31,9 @@ logrotate::rule:
 vhosts_asf::vhosts::vhosts:
   forrest-vm-80:
     vhost_name: '*'
-    servername: 'forrest-vm.apache.org'
+    servername: 'forrest.zones.apache.org'
+    serveraliases:
+      - 'forrest-vm.apache.org'
     default_vhost: true
     port: 80
     ssl: false
