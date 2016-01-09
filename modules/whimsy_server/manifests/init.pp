@@ -14,6 +14,7 @@ class whimsy_server (
   ############################################################
 
   $packages = [
+    build-essential,
     libgmp3-dev,
     libldap2-dev,
     libsasl2-dev,
@@ -21,6 +22,7 @@ class whimsy_server (
     zlib1g-dev,
 
     imagemagick,
+    nodejs,
     pdftk,
   ]
 
@@ -28,6 +30,12 @@ class whimsy_server (
     bundler,
     rake,
   ]
+
+  exec { 'Add nodesource sources':
+    command => 'curl https://deb.nodesource.com/setup_5.x | bash -',
+    creates => '/etc/apt/sources.list.d/nodesource.list',
+    path    => ['/usr/bin', '/bin', '/usr/sbin']
+  } ->
 
   package { $packages: ensure => installed } ->
 
