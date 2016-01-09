@@ -14,6 +14,7 @@ class whimsy_server (
   ############################################################
 
   $packages = [
+    build-essential,
     libgmp3-dev,
     libldap2-dev,
     libsasl2-dev,
@@ -21,6 +22,7 @@ class whimsy_server (
     zlib1g-dev,
 
     imagemagick,
+    nodejs,
     pdftk,
   ]
 
@@ -28,6 +30,12 @@ class whimsy_server (
     bundler,
     rake,
   ]
+
+  exec { 'Add nodesource sources':
+    command => 'curl https://deb.nodesource.com/setup_5.x | bash -',
+    creates => '/etc/apt/sources.list.d/nodesource.list',
+    path    => ['/usr/bin', '/bin', '/usr/sbin']
+  } ->
 
   package { $packages: ensure => installed } ->
 
@@ -54,8 +62,8 @@ class whimsy_server (
   } ~>
 
   exec { 'rake::update':
-    command => '/usr/local/bin/rake update',
-    cwd => '/srv/whimsy',
+    command     => '/usr/local/bin/rake update',
+    cwd         => '/srv/whimsy',
     refreshonly => true
   }
 
@@ -71,12 +79,12 @@ class whimsy_server (
   #                       Mail Data Source                   #
   ############################################################
 
-  user { apmail:
-    ensure   => present,
-    uid      => 500,
+  user { 'apmail':
+    ensure => present,
+    uid    => 500,
   }
 
-  file { "$keysdir/apmail.pub":
+  file { "${keysdir}/apmail.pub":
     content => $apmail_keycontent,
     owner   => apmail,
     mode    => '0640',
