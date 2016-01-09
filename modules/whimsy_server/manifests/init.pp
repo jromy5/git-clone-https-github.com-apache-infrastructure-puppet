@@ -62,8 +62,8 @@ class whimsy_server (
   } ~>
 
   exec { 'rake::update':
-    command => '/usr/local/bin/rake update',
-    cwd => '/srv/whimsy',
+    command     => '/usr/local/bin/rake update',
+    cwd         => '/srv/whimsy',
     refreshonly => true
   }
 
@@ -79,12 +79,12 @@ class whimsy_server (
   #                       Mail Data Source                   #
   ############################################################
 
-  user { apmail:
-    ensure   => present,
-    uid      => 500,
+  user { 'apmail':
+    ensure => present,
+    uid    => 500,
   }
 
-  file { "$keysdir/apmail.pub":
+  file { "${keysdir}/apmail.pub":
     content => $apmail_keycontent,
     owner   => apmail,
     mode    => '0640',
