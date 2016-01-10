@@ -24,6 +24,7 @@ class whimsy_server (
     imagemagick,
     nodejs,
     pdftk,
+    procmail,
   ]
 
   $gems = [
@@ -68,6 +69,27 @@ class whimsy_server (
   }
 
   ############################################################
+  #                         Symlink Ruby                     #
+  ############################################################
+
+  define whimsy_server::ruby::symlink ($binary = $title, $ruby = '') {
+    $version = split($ruby, '-')
+    file { "/usr/local/bin/${binary}${version[1]}" :
+      ensure  => link,
+      target  => "/usr/local/rvm/wrappers/${ruby}/${binary}",
+      require => Class[rvm]
+    }
+  }
+
+  define whimsy_server::rvm::symlink ($ruby = $title) {
+    $binaries = [bundle, erb, gem, irb, rackup, rake, rdoc, ri, ruby, testrb]
+    whimsy_server::ruby::symlink { $binaries: ruby => $ruby}
+  }
+
+  $rubies = keys(hiera_hash('rvm::system_rubies'))
+  whimsy_server::rvm::symlink { $rubies: }
+
+  ############################################################
   #                    Subversion Data Source                #
   ############################################################
 
@@ -81,7 +103,6 @@ class whimsy_server (
 
   user { 'apmail':
     ensure => present,
-    uid    => 500,
   }
 
   file { "${keysdir}/apmail.pub":
@@ -94,6 +115,45 @@ class whimsy_server (
     ensure => directory,
     owner  => apmail,
     group  => apmail,
+  }
+
+  ############################################################
+  #                        Mail Delivery                     #
+  ############################################################
+
+  file { '/etc/procmailrc':
+    content => "MAILDIR=$DEFAULT\n"
+  }
+
+  $mailmap = hiera_hash('whimsy_server::mailmap', {})
+  $aliases = keys($mailmap)
+
+  mailalias { $aliases:
+    ensure    => present,
+    recipient => 'www-data'
+  } ~>
+
+  exec { 'newaliases' :
+    command     => "/usr/bin/newaliases",
+    refreshonly => true,
+  }
+
+  file { '/var/www/.procmailrc':
+    owner   => www-data,
+    group   => www-data,
+    content => template('whimsy_server/procmailrc.erb')
+  }
+
+  file { '/srv/mail':
+    ensure => directory,
+    owner  => www-data,
+    group  => www-data,
+  }
+
+  file { '/srv/mail/procmail.log':
+    ensure => present,
+    owner  => www-data,
+    group  => www-data,
   }
 
 }

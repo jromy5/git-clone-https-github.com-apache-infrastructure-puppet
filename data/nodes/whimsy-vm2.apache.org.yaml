@@ -48,6 +48,12 @@ cron:
     user: root
     minute: '*/10'
 
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+
+whimsy_server::mailmap:
+  secretary: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/secmail/deliver.rb"
+
 whimsy_server::apmail_keycontent: |
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCGgAIeu+84ADF0TjKLPJaEE8747Xb+KNjh8ESujparlJcoD0EaYXZ7fF7X24Di5DzETLnv3XzLRuTUG3RzfAovrrgdIOqF23L5QMK3yNHgphNF3ri3ClwATscursH7B38QpEqTTsFGYsBwpJImKEqCkVdoLf5AVu6zhoJIsvW+mDzwvjJN/II/iFeR2/gSm73TWif0tkL7ZSspl2Dj4YNcngCL/nPmPK9tA6EJO3FcZSJzji3pfMIReBM8E0123rYF1EaNqjqF9mw3gf4jNTi9eob3l7Pchdi/onDzthpJpjw6eDcyUisYpotAO1LR0+CJpwfbxSVsjMayKUEPuop apmail@hermes.apache.org
   ssh-dss AAAAB3NzaC1kc3MAAACBAIWDVep7yb1sS56YcIlaCBU6SfvU6j2TyH41OR7QbIr12vVIkyMAOY5abrnwX9K4zupDi1cNxoG4M3XrMd/g1DW3fg9PuDEog+0WVBLauzEeRVzAf/PSfYkL0Af1+FbRlpRRjEnRwALsXKFJCbgm8PlE7FEhYhKAAeHhHnraoEcZAAAAFQCV2bd7AMVJwJHIYyFiM4mPTn8CIwAAAIA4Nf0cinMlSVpO2VUmti4zNgKO0Hk4O0XI0UWsLZQn4dqYFjhN5ceimJLDThPaL9t7Ig4g/4dKnZiU/0PZdWYGF7YUttfMoBUUbubMolhdVszysyRtaZ19vXAmgbGvi16dJSjilk7UmtPWl5Fk3o0y+y3iHAk805zCizaTOSr/mgAAAIB2bpyY3MFdNSd16GA+wojb40Y3naTsvbLVRNGM9Z4ZzxdiuKcgdLu3+g7XDvTKnIGM5IlABblsDumUrtIlBv+RxdwbbN1ey3VvW4LpVWSNEmksvlHX0+PLKNredYgqn/6V7jVdq0Z/iEK8C0Br6uSHKR5Nz1rYFtv6u0hPjBXvyg== apmail@minotaur.apache.org
