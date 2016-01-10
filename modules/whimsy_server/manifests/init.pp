@@ -24,6 +24,7 @@ class whimsy_server (
     imagemagick,
     nodejs,
     pdftk,
+    procmail,
   ]
 
   $gems = [
@@ -114,6 +115,45 @@ class whimsy_server (
     ensure => directory,
     owner  => apmail,
     group  => apmail,
+  }
+
+  ############################################################
+  #                        Mail Delivery                     #
+  ############################################################
+
+  file { '/etc/procmailrc':
+    content => "MAILDIR=$DEFAULT\n"
+  }
+
+  $mailmap = hiera_hash('whimsy_server::mailmap', {})
+  $aliases = keys($mailmap)
+
+  mailalias { $aliases:
+    ensure    => present,
+    recipient => 'www-data'
+  } ~>
+
+  exec { 'newaliases' :
+    command     => "/usr/bin/newaliases",
+    refreshonly => true,
+  }
+
+  file { '/var/www/.procmailrc':
+    owner   => www-data,
+    group   => www-data,
+    content => template('whimsy_server/procmailrc.erb')
+  }
+
+  file { '/srv/mail':
+    ensure => directory,
+    owner  => www-data,
+    group  => www-data,
+  }
+
+  file { '/srv/mail/procmail.log':
+    ensure => present,
+    owner  => www-data,
+    group  => www-data,
   }
 
 }
