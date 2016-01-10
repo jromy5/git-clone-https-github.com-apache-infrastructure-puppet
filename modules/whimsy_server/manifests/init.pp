@@ -81,7 +81,6 @@ class whimsy_server (
 
   user { 'apmail':
     ensure => present,
-    uid    => 500,
   }
 
   file { "${keysdir}/apmail.pub":
