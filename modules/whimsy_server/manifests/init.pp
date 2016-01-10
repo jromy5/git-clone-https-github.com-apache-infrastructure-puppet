@@ -68,6 +68,27 @@ class whimsy_server (
   }
 
   ############################################################
+  #                         Symlink Ruby                     #
+  ############################################################
+
+  define whimsy_server::ruby::symlink ($binary = $title, $ruby = '') {
+    $version = split($ruby, '-')
+    file { "/usr/local/bin/${binary}${version[1]}" :
+      ensure  => link,
+      target  => "/usr/local/rvm/wrappers/${ruby}/${binary}",
+      require => Class[rvm]
+    }
+  }
+
+  define whimsy_server::rvm::symlink ($ruby = $title) {
+    $binaries = [bundle, erb, gem, irb, rackup, rake, rdoc, ri, ruby, testrb]
+    whimsy_server::ruby::symlink { $binaries: ruby => $ruby}
+  }
+
+  $rubies = keys(hiera_hash('rvm::system_rubies'))
+  whimsy_server::rvm::symlink { $rubies: }
+
+  ############################################################
   #                    Subversion Data Source                #
   ############################################################
 
