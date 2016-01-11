@@ -79,7 +79,7 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://10.40.0.23/
       ProxyPreserveHost On
 
-      ProxyErrorOverride On
+      ProxyErrorOverride Off
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=500
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy.apache.org&code=503
