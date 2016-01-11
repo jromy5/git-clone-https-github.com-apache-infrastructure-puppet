@@ -66,6 +66,8 @@ Facter.add("asfcolo") do
         "iliad-paris"
       when /^10.10.([0-9]+).([0-9]+)$/
         "lw-us"
+      when /^10.20.([0-9])+.([0-9]+)$/
+        "lw-nl"
       else
         "yahoo"
       end
