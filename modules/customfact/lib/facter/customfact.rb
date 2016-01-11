@@ -31,9 +31,7 @@ end
 Facter.add("asfcolo") do
   setcode do
     hostname = Facter.value('hostname')
-    if hostname.include? "us-mid"
-      "rax-vpc-us-mid"
-    elsif hostname.include? "ubuntu1464"
+    if hostname.include? "ubuntu1464"
       "vagrant"
     else
       ipadd = Facter.value('ipaddress_primary')
@@ -66,6 +64,10 @@ Facter.add("asfcolo") do
         "phoenixnap-private"
       when /^163.172.([0-9]+).([0-9]+)$/
         "iliad-paris"
+      when /^10.10.([0-9]+).([0-9]+)$/
+        "lw-us"
+      when /^10.20.([0-9])+.([0-9]+)$/
+        "lw-nl"
       else
         "yahoo"
       end
