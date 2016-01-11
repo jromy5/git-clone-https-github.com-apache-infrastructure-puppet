@@ -72,6 +72,10 @@ vhosts_whimsy::vhosts::vhosts:
     docroot: '/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
     access_log_file: 'whimsy_access.log'
+    options:
+      - '+FollowSymLinks'
+      - '+MultiViews'
+      - '+ExecCGI'
 
     passenger:
     - /classic/board/agenda
@@ -126,21 +130,18 @@ vhosts_whimsy::vhosts::vhosts:
     custom_fragment: |
       AddCharset UTF-8 .json
 
-      <Directory />
-        Options +FollowSymLinks
-        AllowOverride None
-      </Directory>
-
       <Directory /srv/whimsy/www/>
-        Options +FollowSymLinks +MultiViews +ExecCGI
         AddHandler cgi-script .cgi
         MultiViewsMatch Any
-        AllowOverride None
         CheckSpelling On
       </Directory>
 
       <Directory /srv/whimsy/www/public/>
         Header add Access-Control-Allow-Origin "*"
+        Options +Indexes
+      </Directory>
+
+      <Directory /srv/whimsy/www/logs>
         Options +Indexes
       </Directory>
 
@@ -160,7 +161,3 @@ vhosts_whimsy::vhosts::vhosts:
         RequestHeader set X-WUNDERBAR-BASE /board/agenda/
         SetEnv HTTPS on
       </Location>
-
-      <Directory /srv/whimsy/www/logs>
-        Options +Indexes
-      </Directory>

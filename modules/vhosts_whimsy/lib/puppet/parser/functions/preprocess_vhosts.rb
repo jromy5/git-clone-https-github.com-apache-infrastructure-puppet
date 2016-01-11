@@ -56,17 +56,13 @@ module Puppet::Parser::Functions
     def expand_passenger(passenger)
       passenger.each do |url|
         @alias[url] = "#@docroot#{url}/public"
-        @fragment += "\nRewriteRule ^#{url}/$ #{url}/index.html [PT]\n"
-        @fragment += "Alias #{url}/$ #{@alias[url]}\n"
+        @fragment += "\nAlias #{url}/ #{@alias[url]}\n"
         location url, %{
           PassengerBaseURI #{url}
           PassengerAppRoot #{@docroot}#{url}
-        }
-        directory @alias[url], %{
-          SetEnv HTTP on
-          Allow from all
-          Options -Multiviews
-          Require all granted
+          Options -MultiViews
+          CheckSpelling Off
+          SetEnv HTTPS on
         }
       end
     end
@@ -80,6 +76,7 @@ module Puppet::Parser::Functions
           directory @alias[url], %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
+            AuthBasicProvider ldap
             AuthLDAPUrl #{LDAPURL.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
             AuthLDAPGroupAttributeIsDN #{isdn}
