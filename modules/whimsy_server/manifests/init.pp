@@ -156,4 +156,22 @@ class whimsy_server (
     group  => www-data,
   }
 
+  logrotate::rule { 'procmail':
+    path         => '/srv/mail/procmail.log',
+    rotate       => 6,
+    rotate_every => 'month',
+    missingok    => true,
+    compress     => true,
+  }
+
+  ############################################################
+  #                  Other Working Directories               #
+  ############################################################
+
+  file { '/srv/gpg':
+    ensure => directory,
+    owner  => www-data,
+    group  => www-data,
+  }
+
 }
