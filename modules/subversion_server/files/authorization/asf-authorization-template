@@ -294,7 +294,7 @@ mesos={ldap:cn=mesos,ou=groups,dc=apache,dc=org}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=groups,dc=apache,dc=org}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv
+metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv,ddutta,discovery,reaperhulk,kirankom,rmerriman,prhodes,sirsean
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
