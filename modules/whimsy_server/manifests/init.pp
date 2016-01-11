@@ -130,7 +130,7 @@ class whimsy_server (
 
   mailalias { $aliases:
     ensure    => present,
-    recipient => 'www-data'
+    recipient => "${apache::user}"
   } ~>
 
   exec { 'newaliases' :
@@ -139,21 +139,21 @@ class whimsy_server (
   }
 
   file { '/var/www/.procmailrc':
-    owner   => www-data,
-    group   => www-data,
+    owner   => "${apache::user}",
+    group   => "${apache::group}",
     content => template('whimsy_server/procmailrc.erb')
   }
 
   file { '/srv/mail':
     ensure => directory,
-    owner  => www-data,
-    group  => www-data,
+    owner  => "${apache::user}",
+    group  => "${apache::group}",
   }
 
   file { '/srv/mail/procmail.log':
     ensure => present,
-    owner  => www-data,
-    group  => www-data,
+    owner  => "${apache::user}",
+    group  => "${apache::group}",
   }
 
   logrotate::rule { 'procmail':
@@ -170,8 +170,8 @@ class whimsy_server (
 
   file { '/srv/gpg':
     ensure => directory,
-    owner  => www-data,
-    group  => www-data,
+    owner  => "${apache::user}",
+    group  => "${apache::group}",
     mode    => '0700',
   }
 

@@ -128,8 +128,8 @@ vhosts_whimsy::vhosts::vhosts:
       - /board/publish_minutes
 
     custom_fragment: |
-      PassengerDefaultUser www-data
-      PassengerDefaultGroup www-data
+      PassengerDefaultUser %{apache::user}
+      PassengerDefaultGroup %{apache::group}
 
       AddCharset UTF-8 .json
 
