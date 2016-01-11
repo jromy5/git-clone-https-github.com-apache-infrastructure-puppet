@@ -172,6 +172,7 @@ class whimsy_server (
     ensure => directory,
     owner  => www-data,
     group  => www-data,
+    mode    => '0700',
   }
 
 }
