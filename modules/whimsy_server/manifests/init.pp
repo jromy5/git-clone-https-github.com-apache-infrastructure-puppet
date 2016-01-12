@@ -122,7 +122,7 @@ class whimsy_server (
   ############################################################
 
   file { '/etc/procmailrc':
-    content => "MAILDIR=$DEFAULT\n"
+    content => "MAILDIR=\$DEFAULT\n"
   }
 
   $mailmap = hiera_hash('whimsy_server::mailmap', {})
@@ -130,30 +130,30 @@ class whimsy_server (
 
   mailalias { $aliases:
     ensure    => present,
-    recipient => "${apache::user}"
+    recipient => $apache::user
   } ~>
 
   exec { 'newaliases' :
-    command     => "/usr/bin/newaliases",
+    command     => '/usr/bin/newaliases',
     refreshonly => true,
   }
 
   file { '/var/www/.procmailrc':
-    owner   => "${apache::user}",
-    group   => "${apache::group}",
+    owner   => $apache::user,
+    group   => $apache::group,
     content => template('whimsy_server/procmailrc.erb')
   }
 
   file { '/srv/mail':
     ensure => directory,
-    owner  => "${apache::user}",
-    group  => "${apache::group}",
+    owner  => $apache::user,
+    group  => $apache::group,
   }
 
   file { '/srv/mail/procmail.log':
     ensure => present,
-    owner  => "${apache::user}",
-    group  => "${apache::group}",
+    owner  => $apache::user,
+    group  => $apache::group,
   }
 
   logrotate::rule { 'procmail':
@@ -170,15 +170,15 @@ class whimsy_server (
 
   file { '/srv/gpg':
     ensure => directory,
-    owner  => "${apache::user}",
-    group  => "${apache::group}",
-    mode    => '0700',
+    owner  => $apache::user,
+    group  => $apache::group,
+    mode   => '0700',
   }
 
   file { ['/srv/whimsy/www/public', '/srv/whimsy/www/logs']:
     ensure => directory,
-    owner  => "${apache::user}",
-    group  => "${apache::group}",
+    owner  => $apache::user,
+    group  => $apache::group,
   }
 
 }
