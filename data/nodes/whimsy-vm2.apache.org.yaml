@@ -48,6 +48,21 @@ cron:
     user: root
     minute: '*/10'
 
+  public_committee:
+    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/public_committee_info.rb /srv/whimsy/www/roster/committee-info.json > /srv/whimsy/www/logs/public-committee-info 2>&1"
+    user: "%{apache::user}"
+    minute: '*/15'
+
+  public_icla:
+    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/public_icla_info.rb /srv/whimsy/www/roster/icla-info.json > /srv/whimsy/www/logs/public-icla-info 2>&1"
+    user: "%{apache::user}"
+    minute: '*/15'
+
+  public_member:
+    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/public_member_info.rb /srv/whimsy/www/roster/member-info.json > /srv/whimsy/www/logs/public-member-info 2>&1"
+    user: "%{apache::user}"
+    minute: '*/15'
+
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 

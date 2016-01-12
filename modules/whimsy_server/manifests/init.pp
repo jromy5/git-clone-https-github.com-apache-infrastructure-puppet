@@ -175,4 +175,10 @@ class whimsy_server (
     mode    => '0700',
   }
 
+  file { ['/srv/whimsy/www/public', '/srv/whimsy/www/logs']:
+    ensure => directory,
+    owner  => "${apache::user}",
+    group  => "${apache::group}",
+  }
+
 }
