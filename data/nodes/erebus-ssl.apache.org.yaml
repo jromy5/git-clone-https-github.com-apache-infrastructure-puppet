@@ -868,6 +868,8 @@ vhosts_asf::vhosts::vhosts:
 
       AddType application/x-java-jnlp-file .jnlp
 
+      RequestHeader set X-Forwarded-Proto "https"
+
       <Location /ssl>
             Options Indexes
             Order allow,deny
