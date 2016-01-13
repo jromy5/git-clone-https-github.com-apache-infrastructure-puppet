@@ -49,17 +49,17 @@ cron:
     minute: '*/10'
 
   public_committee:
-    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/roster/public_committee_info.rb /srv/whimsy/www/public/committee-info.json > /srv/whimsy/www/logs/public-committee-info 2>&1"
+    command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_committee_info.rb public/committee-info.json > logs/public-committee-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
 
   public_icla:
-    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/roster/public_icla_info.rb /srv/whimsy/www/public/icla-info.json > /srv/whimsy/www/logs/public-icla-info 2>&1"
+    command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_icla_info.rb public/icla-info.json > logs/public-icla-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
 
   public_member:
-    command: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/roster/public_member_info.rb /srv/whimsy/www/public/member-info.json > /srv/whimsy/www/logs/public-member-info 2>&1"
+    command: "(/srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_member_info.rb public/member-info.json > logs/public-member-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
 
