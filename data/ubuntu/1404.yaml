@@ -79,6 +79,15 @@ apt::sources:
     key_server: 'pgp.mit.edu'
     include_deb: true
     include_src: false
+  'lxc_docker':
+    location: 'https://get.docker.io/ubuntu'
+    release: 'docker'
+    repos: 'main'
+    key: '36A1D7869245C8950F966E92D8576A8BA88D21E9'
+    key_server: 'hkp://keyserver.ubuntu.com:80'
+    include_deb: true
+    include_src: false
+    ensure: 'absent'
   'docker-engine':
     location: 'https://apt.dockerproject.org/repo'
     release: 'ubuntu-trusty'
