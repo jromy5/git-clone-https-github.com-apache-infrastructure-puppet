@@ -44,7 +44,7 @@ rvm::rvm_gems:
 
 cron:
   svnupdate:
-    command: "bash -c 'for i in /srv/svn/*; do (cd $i; svn cleanup; svn up)>/dev/null; done'"
+    command: "bash -c '(for i in /srv/svn/*; do cd $i; echo; echo $i; svn cleanup; svn up; done) > /srv/whimsy/www/logs/svn-update 2>&1'"
     user: root
     minute: '*/10'
 
