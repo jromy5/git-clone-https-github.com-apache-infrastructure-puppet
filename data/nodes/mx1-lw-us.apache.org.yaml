@@ -1,15 +1,9 @@
 ---
 classes: 
-  - apache
   - loggy
   - mx_asf
-  - pflogsumm
   - postfix_asf
   - ssl::name::wildcard_apache_org
-
-logrotate::rule:
-  apache2:
-    ensure: 'present'
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'
