@@ -356,6 +356,7 @@ ssh::client_options:
         SendEnv: 'LANG LC_*'
         ForwardX11Trusted: 'no'
         ServerAliveInterval: '10'
+    'UseRoaming no'
 
 ssh::params::sshd_keysdir: '/etc/ssh/ssh_keys'
 
