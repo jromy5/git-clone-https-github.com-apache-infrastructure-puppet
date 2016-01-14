@@ -3,8 +3,14 @@ module Puppet::Parser::Functions
   newfunction(:preprocess_vhosts, :type => :rvalue) do |args|
     vhosts = args.first
 
+    # get ldap servers: prefer colo specific info over total list
+    ldap = function_hiera(['ldapclient::ldapservers', false])
+    ldap ||= function_hiera(['ldapserver::slapd_peers', {}]).values.
+      map {|name| "#{name}:636"}.join(' ')
+    ldap = 'ldap1-us-west.apache.org:636' if ldap.empty?
+
     vhosts.each do |vhost, config|
-      vhosts[vhost] = ApacheVHostMacros.new(vhosts[vhost]).result
+      vhosts[vhost] = ApacheVHostMacros.new(vhosts[vhost], ldap).result
     end
   end
 
@@ -12,14 +18,13 @@ module Puppet::Parser::Functions
   # Expand 'passenger' and 'authldap' entries into updates to 'custom_fragment'
   #
   class ApacheVHostMacros
-    LDAPURL = "ldaps://ldap1-us-west.apache.org " +
-      "ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-
     # extract facts, process passenger and authldap entries
-    def initialize(facts)
+    def initialize(facts, ldap)
       @facts = facts.dup
       @docroot = @facts['docroot'] || '/var/www'
       @fragment = @facts['custom_fragment'] || ''
+      @ldap = 'ldaps://' + ldap.gsub('ldaps://', '') +
+        '/ou=people,dc=apache,dc=org?uid'
 
       @alias = Hash.new {|hash, key| "#@docroot#{key}"}
 
@@ -77,7 +82,7 @@ module Puppet::Parser::Functions
             AuthType Basic
             AuthName #{auth['name'].inspect}
             AuthBasicProvider ldap
-            AuthLDAPUrl #{LDAPURL.inspect}
+            AuthLDAPUrl #{@ldap.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
             AuthLDAPGroupAttributeIsDN #{isdn}
             Require ldap-group #{auth['group']}
@@ -85,7 +90,7 @@ module Puppet::Parser::Functions
         end
       end
     end
-    
+
     # produce result
     def result
       @fragment.gsub! /\A\n+/, '' # eliminate leading whitespace
