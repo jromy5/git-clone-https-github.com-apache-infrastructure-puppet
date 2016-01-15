@@ -59,9 +59,14 @@ cron:
     minute: '*/15'
 
   public_member:
-    command: "(/srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_member_info.rb public/member-info.json > logs/public-member-info 2>&1)"
+    command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_member_info.rb public/member-info.json > logs/public-member-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
+
+  board_minutes:
+    command: "(cd /srv/whimsy/tools; /usr/bin/ruby collate_minutes.rb > ../www/logs/collate_minutes 2>&1)"
+    user: "%{apache::user}"
+    minute: '10'
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
