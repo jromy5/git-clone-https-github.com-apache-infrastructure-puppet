@@ -3,4 +3,4 @@ classes:
   - buildbot_slave
   - loggy
 
-buildbot_slave::slave_name: 'bb-slave1_ubuntu'
+buildbot_slave::slave_name: 'bb_slave1_ubuntu'
