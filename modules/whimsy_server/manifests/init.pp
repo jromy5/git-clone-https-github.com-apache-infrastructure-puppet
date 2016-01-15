@@ -181,4 +181,10 @@ class whimsy_server (
     group  => $apache::group,
   }
 
+  file { '/srv/whimsy/www/board/minutes':
+    ensure => directory,
+    owner  => $apache::user,
+    group  => $apache::group,
+  }
+
 }
