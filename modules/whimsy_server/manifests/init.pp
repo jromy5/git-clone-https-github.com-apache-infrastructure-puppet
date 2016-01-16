@@ -165,7 +165,7 @@ class whimsy_server (
   }
 
   ############################################################
-  #                  Other Working Directories               #
+  #             Other Working Directories and Files          #
   ############################################################
 
   file { '/srv/gpg':
@@ -183,6 +183,12 @@ class whimsy_server (
 
   file { '/srv/whimsy/www/board/minutes':
     ensure => directory,
+    owner  => $apache::user,
+    group  => $apache::group,
+  }
+
+  file { '/srv/whimsy/www/status/status.json':
+    ensure => file,
     owner  => $apache::user,
     group  => $apache::group,
   }
