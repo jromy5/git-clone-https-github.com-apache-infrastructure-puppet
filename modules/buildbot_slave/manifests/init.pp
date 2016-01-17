@@ -71,7 +71,8 @@ class buildbot_slave (
 
     "/home/${username}/slave/private.py":
       content => template('buildbot_slave/private.py.erb'),
-      mode    => '0600',
+      owner   => $username,
+      mode    => '0640',
       notify  => Service[$service_name],
       require => Exec['bootstrap-buildslave'];
 

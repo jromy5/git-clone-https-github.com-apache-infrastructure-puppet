@@ -12,31 +12,31 @@ class buildbot_asf (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'buildmaster',
-  $required_packages             = ['python-mysqldb' 'buildbot'],
+  $required_packages             = ['python-mysqldb', 'buildbot'],
 
   # list of passwords
   $master_list                   = {},
 
   # override below in yaml
-  $buildbot_base_dir             = ''
-  $buildmaster_work_dir          = ''
-  $connector_port                = ''
-  $slave_port_num                = ''
-  $mail_from_addr                = ''
-  $projectName                   = ''
-  $project_url                   = ''
-  $change_horizon                = ''
-  $build_horizon                 = ''
-  $event_horizon                 = ''
-  $log_horizon                   = ''
-  $build_cache_size              = ''
-  $change_cache_size             = ''
-  $projects_path                 = ''
+  $buildbot_base_dir             = '',
+  $buildmaster_work_dir          = '',
+  $connector_port                = '',
+  $slave_port_num                = '',
+  $mail_from_addr                = '',
+  $projectName                   = '',
+  $project_url                   = '',
+  $change_horizon                = '',
+  $build_horizon                 = '',
+  $event_horizon                 = '',
+  $log_horizon                   = '',
+  $build_cache_size              = '',
+  $change_cache_size             = '',
+  $projects_path                 = '',
 
   # below are contained in eyaml
-  $db_url                        = ''
-  $pbchangesource_user           = ''
-  $pchangesource_pass            = ''
+  $db_url                        = '',
+  $pbcsUser                      = '',
+  $pbcsPwd                       = ''
 
 ){
 
