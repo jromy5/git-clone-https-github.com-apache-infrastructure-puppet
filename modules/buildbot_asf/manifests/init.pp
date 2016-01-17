@@ -91,4 +91,33 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
+# cron jobs
+
+  cron {
+    'config-update-check':
+      user        => $username,
+      minute      => '*/5',
+      command     => "/x1/${username}/master1/config-update-check.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'convert-xml-to-html':
+      user        => $username,
+      minute      => '25',
+      command     => "/x1/${username}/master1/convert-xml-to-html.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'convert-master-xml-to-html':
+      user        => $username,
+      minute      => '28',
+      command     => "/x1/${username}/master1/convert-master-xml-to-html.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-master-index':
+      user        => $username,
+      minute      => 30,
+      command     => "/x1/${username}/master1/create-master-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username],
+}
+
 }
