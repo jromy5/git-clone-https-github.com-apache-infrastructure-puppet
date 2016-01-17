@@ -35,8 +35,8 @@ class buildbot_asf (
 
   # below are contained in eyaml
   $db_url                        = ''
-  $pbchangesource_user           = ''
-  $pchangesource_pass            = ''
+  $pbcsUser                      = ''
+  $pbcsPWD                       = ''
 
 ){
 
