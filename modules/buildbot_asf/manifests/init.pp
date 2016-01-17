@@ -36,7 +36,7 @@ class buildbot_asf (
   # below are contained in eyaml
   $db_url                        = ''
   $pbcsUser                      = ''
-  $pbcsPWD                       = ''
+  $pbcsPwd                       = ''
 
 ){
 
