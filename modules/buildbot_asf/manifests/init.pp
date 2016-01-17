@@ -12,7 +12,7 @@ class buildbot_asf (
   $shell                         = '/bin/bash',
   $user_present                  = 'present',
   $username                      = 'buildmaster',
-  $required_packages             = ['python-mysqldb' 'buildbot'],
+  $required_packages             = ['python-mysqldb', 'buildbot'],
 
   # list of passwords
   $master_list                   = {},
