@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - vhosts_asf::vhosts
+  - buildbot_asf::modules
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
