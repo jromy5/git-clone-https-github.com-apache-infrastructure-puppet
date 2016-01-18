@@ -91,6 +91,35 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
+# required scripts for cron jobs
+
+file {
+    "/x1/${username}/master1/config-update-check.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/config-update-check.sh";
+    "/x1/${username}/master1/convert-xml-to-html.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/convert-xml-to-html.sh";
+    "/x1/${username}/master1/convert-master-xml-to-html.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/convert-master-xml-to-html.sh";
+    "/x1/${username}/master1/create-master-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/create-master-index.sh";
+}
+
 # cron jobs
 
   cron {
