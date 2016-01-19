@@ -30,7 +30,7 @@ except ImportError:
 
 buildmaster_host = '10.40.0.13'
 port = 9989
-slavename = <%= @slave_name %>
+slavename = '<%= @slave_name %>'
 passwd = private.<%= @slave_name %>Pwd
 keepalive = 600
 usepty = 0
