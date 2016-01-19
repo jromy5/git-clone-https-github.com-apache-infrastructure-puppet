@@ -91,6 +91,23 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
+# various required files
+
+file {
+    "/x1/{username}/master1/templates/root.html":
+      ensure => 'present',
+      mode   => '0664',
+      owner  = $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/root.html";
+    "/x1/{username}/master1/create-master-rat-list.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => "puppet:///modules/buildbot_asf/create-master-rat-list.sh";
+}
+
 # required scripts for cron jobs
 
 file {
