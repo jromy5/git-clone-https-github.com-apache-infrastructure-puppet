@@ -1695,6 +1695,9 @@ svn-role = rw
 @thrift = rw
 
 [/tika]
+* = r
+
+[/tika/site]
 @tika = rw
 
 [/tiles]
