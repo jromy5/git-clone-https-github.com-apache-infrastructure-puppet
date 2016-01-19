@@ -13,7 +13,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 ENTITIES=`find -L . -mindepth 2 -maxdepth 4 -name "rat-output.xml" -exec dirname {} \; | sort | perl -p -i -e 's|./||'`
 FULLNAME=`find -L . -mindepth 2 -maxdepth 4 -name "rat-output.xml" -exec dirname {} \; | sort | perl -p -i -e 's|./public_html/projects/||' | perl -p -i -e s'|/|-|g'`
 for ENTITY in $ENTITIES ; do
-echo "$ENTITY SYSTEM \"$ENTITY/rat-output.xml\">" | perl -p -i -e s'|public_html/projects/|<!ENTITY |' >> filelist.xml
+echo "$ENTITY SYSTEM \"$ENTITY/rat-output.xml\">" | perl -pe s'|public_html/projects/|<!ENTITY |' >> filelist.xml
 done
 echo ']>
 <xsl:stylesheet version="1.0"
