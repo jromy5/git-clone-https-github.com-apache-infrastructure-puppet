@@ -279,8 +279,6 @@ serf={reuse:asf-authorization:serf}
 serf-pmc={ldap:cn=serf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 servicemix={reuse:asf-authorization:servicemix}
 servicemix-pmc={ldap:cn=servicemix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-shindig={reuse:asf-authorization:shindig}
-shindig-pmc={ldap:cn=shindig,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 shiro={reuse:asf-authorization:shiro}
 shiro-pmc={ldap:cn=shiro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 singa={reuse:asf-authorization:singa}
@@ -1367,7 +1365,7 @@ buildbot = rw
 @incubator = rw
 
 [/websites/production/shindig]
-@shindig = rw
+@attic-pmc = rw
 
 [/websites/production/shiro]
 @shiro = rw

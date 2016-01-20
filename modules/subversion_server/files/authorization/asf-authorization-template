@@ -385,8 +385,6 @@ serf={ldap:cn=serf,ou=groups,dc=apache,dc=org}
 serf-pmc={reuse:pit-authorization:serf-pmc}
 servicemix={ldap:cn=servicemix,ou=groups,dc=apache,dc=org}
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
-shindig={ldap:cn=shindig,ou=groups,dc=apache,dc=org}
-shindig-pmc={reuse:pit-authorization:shindig-pmc}
 shiro={ldap:cn=shiro,ou=groups,dc=apache,dc=org}
 shiro-pmc={reuse:pit-authorization:shiro-pmc}
 singa=daijy,dinhtta,gates,jinyang,kaiping,tankianlee,tdunning,thejas,wangsh,wangwei,zhaojing
