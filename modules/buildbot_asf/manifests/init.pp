@@ -91,13 +91,13 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
-  file { '/x1/{username}/master1/master.cfg':
+  file { '/x1/${username}/master1/master.cfg':
     owner   => $username,
     group   => $groupname,
     content => template('buildbot_asf/master.cfg.erb')
   }
 
-  file { '/x1/{username}/master1/buildbot.tac':
+  file { '/x1/${username}/master1/buildbot.tac':
     owner   => $username,
     group   => $groupname,
     content => template('buildbot_asf/buildbot.tac.erb')
@@ -107,13 +107,13 @@ class buildbot_asf (
 # various required files
 
 file {
-    "/x1/{username}/master1/templates/root.html":
+    "/x1/${username}/master1/templates/root.html":
       ensure => 'present',
       mode   => '0664',
       owner  => $username,
       group  => $groupname,
       source => "puppet:///modules/buildbot_asf/root.html";
-    "/x1/{username}/master1/create-master-rat-list.sh":
+    "/x1/${username}/master1/create-master-rat-list.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
