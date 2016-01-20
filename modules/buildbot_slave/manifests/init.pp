@@ -10,7 +10,7 @@ class buildbot_slave (
   $username          = 'buildslave',
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
-  $required_packages = ['buildbot-slave'],
+  $required_packages = ['buildbot-slave', 'openjdk-8-jdk'],
 
   # override bwlow in yaml
 
