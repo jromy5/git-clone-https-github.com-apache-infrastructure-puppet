@@ -103,7 +103,7 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       AddHandler lua-script .lua
       <Location /secret/>
-          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap1-eu-central.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root Only"
           AuthType Basic

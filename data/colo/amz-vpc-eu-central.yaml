@@ -3,10 +3,4 @@
 dnsclient::nameservers:
   - '8.8.8.8'
 
-ldapclient::ldapservers: 'ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
-
-base::hosts:
-  host:
-    name: 'ldap1-eu-central.apache.org'
-    ip: '10.30.232.30'
-    ensure: 'absent'
+ldapclient::ldapservers: 'ldaps://ldap-lb-eu.apache.org:636 ldaps://ldap1-eu-west.apache.org:636'
