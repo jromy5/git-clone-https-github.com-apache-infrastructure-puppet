@@ -10,7 +10,6 @@ class buildbot_slave (
   $username          = 'buildslave',
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
-  $required_packages = [],
 
   # override bwlow in yaml
 
@@ -19,11 +18,11 @@ class buildbot_slave (
 
 ){
 
-# install required packages:
+  # install required packages:
 
   $bb_basepackages = [
     'buildbot-slave',
-    'openjdk-8-jdk',
+    'openjdk-7-jdk',
     'ant',
     'zip',
     'unzip',
@@ -37,6 +36,7 @@ class buildbot_slave (
   ]
 
   # merge required packages from hiera for slaves
+
   $slave_packages = hiera_array('buildbot_slave::required_packages',[])
 
   package {
@@ -45,12 +45,18 @@ class buildbot_slave (
   }->
 
   # slave specific packages defined in hiera
+
   package {
     $slave_packages:
       ensure => 'present',
   }->
 
-# buildbot specific
+  class { 'oraclejava::install':
+    ensure  => 'latest',
+    version => '8',
+  }-> 
+
+  # buildbot specific
 
   group {
     $groupname:
@@ -71,7 +77,7 @@ class buildbot_slave (
       require    => Group[$groupname],
   }->
 
-# Bootstrap the buildslave service
+  # Bootstrap the buildslave service
 
   exec {
     'bootstrap-buildslave':
