@@ -10,7 +10,7 @@ class buildbot_slave (
   $username          = 'buildslave',
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
-  $required_packages = ['buildbot-slave', 'openjdk-8-jdk' , 'ant' , 'zip' , 'unzip' , 'cmake', 'doxygen' , 'software-properties-common' , 'maven', 'gradle' , 'autoconf' , 'automake' , 'rake'],
+  $required_packages = [],
 
   # override bwlow in yaml
 
@@ -20,8 +20,33 @@ class buildbot_slave (
 ){
 
 # install required packages:
+
+  $bb_basepackages = [
+    'buildbot-slave',
+    'openjdk-8-jdk',
+    'ant',
+    'zip',
+    'unzip',
+    'cmake',
+    'doxygen',
+    'maven',
+    'gradle',
+    'autoconf',
+    'automake',
+    'rake',
+  ]
+
+  # merge required packages from hiera for slaves
+  $slave_packages = hiera_array('buildbot_slave::required_packages',[])
+
   package {
-    $required_packages:
+    $bb_basepackages:
+      ensure => 'present',
+  }->
+
+  # slave specific packages defined in hiera
+  package {
+    $slave_packages:
       ensure => 'present',
   }->
 
