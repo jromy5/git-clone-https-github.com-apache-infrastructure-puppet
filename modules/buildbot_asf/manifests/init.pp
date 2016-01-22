@@ -68,7 +68,7 @@ class buildbot_asf (
       ensure => $group_present,
       name   => $groupname,
       gid    => $gid,
-}
+  }
 
   apt::source { 'utopic':
     location => 'http://us.archive.ubuntu.com/ubuntu/',
@@ -146,7 +146,7 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
-}
+  }
 
 # cron jobs
 
@@ -175,6 +175,6 @@ class buildbot_asf (
       command     => "/x1/${username}/master1/create-master-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
-}
+  }
 
 }
