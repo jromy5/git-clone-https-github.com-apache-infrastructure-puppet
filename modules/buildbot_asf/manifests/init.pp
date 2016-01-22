@@ -83,7 +83,7 @@ class buildbot_asf (
   }
 
   apt::pin { 'utopic-buildbot':
-    ensure   => present,
+    ensure   => 'present',
     priority => 1800,
     packages => 'buildbot',
     codename => 'utopic',
@@ -92,12 +92,14 @@ class buildbot_asf (
   }
 
   file { '/x1/${username}/master1/master.cfg':
+    ensure  => 'present',
     owner   => $username,
     group   => $groupname,
     content => template('buildbot_asf/master.cfg.erb')
   }
 
   file { '/x1/${username}/master1/buildbot.tac':
+    ensure  => 'present',
     owner   => $username,
     group   => $groupname,
     content => template('buildbot_asf/buildbot.tac.erb')
