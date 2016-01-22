@@ -91,24 +91,22 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
-  file { '/x1/${username}/master1/master.cfg':
-    ensure  => 'present',
-    owner   => $username,
-    group   => $groupname,
-    content => template('buildbot_asf/master.cfg.erb')
-  }
+  file { 
+    "/x1/${username}/master1/master.cfg":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $groupname,
+      content => template('buildbot_asf/master.cfg.erb');
 
-  file { '/x1/${username}/master1/buildbot.tac':
-    ensure  => 'present',
-    owner   => $username,
-    group   => $groupname,
-    content => template('buildbot_asf/buildbot.tac.erb')
-  }
+    "/x1/${username}/master1/buildbot.tac":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $groupname,
+      content => template('buildbot_asf/buildbot.tac.erb');
 
 
 # various required files
 
-file {
     "/x1/${username}/master1/templates/root.html":
       ensure => 'present',
       mode   => '0664',
@@ -121,11 +119,9 @@ file {
       owner  => $username,
       group  => $groupname,
       source => "puppet:///modules/buildbot_asf/create-master-rat-list.sh";
-}
 
 # required scripts for cron jobs
 
-file {
     "/x1/${username}/master1/config-update-check.sh":
       ensure => 'present',
       mode   => '0755',

@@ -54,7 +54,7 @@ class buildbot_slave (
   class { 'oraclejava::install':
     ensure  => 'latest',
     version => '8',
-  }-> 
+  }->
 
   # buildbot specific
 
