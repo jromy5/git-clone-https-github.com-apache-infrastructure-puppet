@@ -91,7 +91,7 @@ class buildbot_asf (
     before   => Package['buildbot'],
   }
 
-  file { 
+  file {
     "/x1/${username}/master1/master.cfg":
       ensure  => 'present',
       owner   => $username,
@@ -112,13 +112,13 @@ class buildbot_asf (
       mode   => '0664',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/root.html";
+      source => 'puppet:///modules/buildbot_asf/root.html';
     "/x1/${username}/master1/create-master-rat-list.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/create-master-rat-list.sh";
+      source => 'puppet:///modules/buildbot_asf/create-master-rat-list.sh';
 
 # required scripts for cron jobs
 
@@ -127,25 +127,25 @@ class buildbot_asf (
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/config-update-check.sh";
+      source => 'puppet:///modules/buildbot_asf/config-update-check.sh';
     "/x1/${username}/master1/convert-xml-to-html.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/convert-xml-to-html.sh";
+      source => 'puppet:///modules/buildbot_asf/convert-xml-to-html.sh';
     "/x1/${username}/master1/convert-master-xml-to-html.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/convert-master-xml-to-html.sh";
+      source => 'puppet:///modules/buildbot_asf/convert-master-xml-to-html.sh';
     "/x1/${username}/master1/create-master-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => "puppet:///modules/buildbot_asf/create-master-index.sh";
+      source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
 }
 
 # cron jobs
