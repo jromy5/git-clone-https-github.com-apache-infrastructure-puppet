@@ -98,7 +98,7 @@ vhosts_whimsy::vhosts::vhosts:
       - '+ExecCGI'
 
     passenger:
-    - /classic/board/agenda
+    - /board/agenda
     - /racktest
     - /roster
     - /secmail
@@ -178,10 +178,3 @@ vhosts_whimsy::vhosts::vhosts:
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
-
-      <Location /board/agenda/>
-        # see /srv/puma/README
-        ProxyPass http://localhost:7001/
-        RequestHeader set X-WUNDERBAR-BASE /board/agenda/
-        SetEnv HTTPS on
-      </Location>

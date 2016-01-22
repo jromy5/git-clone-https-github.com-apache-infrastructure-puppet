@@ -175,13 +175,16 @@ class whimsy_server (
     mode   => '0700',
   }
 
-  file { ['/srv/whimsy/www/public', '/srv/whimsy/www/logs']:
-    ensure => directory,
-    owner  => $apache::user,
-    group  => $apache::group,
-  }
+  $directories = [
+    '/srv/agenda',
+    '/srv/secretary',
+    '/srv/secretary/tlpreq',
+    '/srv/whimsy/www/board/minutes',
+    '/srv/whimsy/www/logs',
+    '/srv/whimsy/www/public',
+  ]
 
-  file { '/srv/whimsy/www/board/minutes':
+  file { $directories:
     ensure => directory,
     owner  => $apache::user,
     group  => $apache::group,
