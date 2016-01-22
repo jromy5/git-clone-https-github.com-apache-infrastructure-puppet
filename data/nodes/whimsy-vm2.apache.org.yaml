@@ -47,41 +47,49 @@ cron:
     command: "bash -c '(flock -x 1; for i in /srv/svn/*; do cd $i; echo; echo $i; svn cleanup; svn up; done) > /srv/whimsy/www/logs/svn-update 2>&1'"
     user: root
     minute: '*/10'
+    ensure: 'present'
 
   public_committee:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_committee_info.rb public/committee-info.json > logs/public-committee-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
+    ensure: 'present'
 
   public_icla:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_icla_info.rb public/icla-info.json > logs/public-icla-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
+    ensure: 'present'
 
   public_member:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_member_info.rb public/member-info.json > logs/public-member-info 2>&1)"
     user: "%{apache::user}"
     minute: '*/15'
+    ensure: 'present'
 
   public_ldap_committees:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_committees.rb public/public_ldap_committees.json > logs/public-ldap-committees 2>&1)"
     user: "%{apache::user}"
-    minute: '2,17,32,47'
+    minute: [2,17,32,47]
+    ensure: 'present'
 
   public_ldap_committers:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_committers.rb public/public_ldap_committers.json > logs/public-ldap-committers 2>&1)"
     user: "%{apache::user}"
-    minute: '4,19,34,49'
+    minute: [4,19,34,49]
+    ensure: 'present'
 
   public_ldap_groups:
     command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_groups.rb public/public_ldap_groups.json > logs/public-ldap-groups 2>&1)"
     user: "%{apache::user}"
-    minute: '6,21,36,51'
+    minute: [6,21,36,51]
+    ensure: 'present'
 
   board_minutes:
     command: "(cd /srv/whimsy/tools; /usr/bin/ruby collate_minutes.rb > ../www/logs/collate_minutes 2>&1)"
     user: "%{apache::user}"
     minute: '10'
+    ensure: 'present'
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
