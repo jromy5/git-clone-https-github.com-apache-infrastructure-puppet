@@ -1,19 +1,10 @@
 # -*- python -*-
 # ex: set syntax=python:
 
-# This is a sample buildmaster config file. It must be installed as
-# 'master.cfg' in your buildmaster's base directory (although the filename
-# can be changed with the --basedir option to 'mktap buildbot master').
+### WARNING THIS FILE IS IN PUPPET ###
+###     See buildbot_asf module    ###   
 
-# It has one job: define a dictionary named BuildmasterConfig. This
-# dictionary has a variety of keys to control different aspects of the
-# buildmaster. They are documented in docs/config.xhtml .
-
-
-# This is the dictionary that the buildmaster pays attention to. We also use
-# a shorter alias to save typing.
-
-FP="<%= @projects_path %>"
+FP="<%= @projects_path %>/"
 
 c = BuildmasterConfig = {}
 
