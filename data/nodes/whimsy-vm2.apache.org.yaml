@@ -85,6 +85,12 @@ cron:
     minute: [6,21,36,51]
     ensure: 'present'
 
+  public_nonldap_groups:
+    command: "(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_nonldap_groups.rb public/public_nonldap_groups.json > logs/public-nonldap-groups 2>&1)"
+    user: "%{apache::user}"
+    minute: '38'
+    ensure: 'present'
+
   board_minutes:
     command: "(cd /srv/whimsy/tools; /usr/bin/ruby collate_minutes.rb > ../www/logs/collate_minutes 2>&1)"
     user: "%{apache::user}"
