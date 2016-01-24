@@ -6,7 +6,7 @@ path = File.absolute_path(File.dirname(File.dirname(__FILE__)))
 path = Pathname.new(path)
 
 # Build up a list of modules we shouldn't syntax check
-excluded_modules = %w(_TEMPLATE)
+excluded_modules = %w(TEMPLATE)
 
 # Filter out the excluded modules
 modules = Dir.glob(path + 'modules/*')
