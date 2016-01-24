@@ -9,26 +9,26 @@ class kibana_asf (
   }
 
   file {
-    "/usr/local/etc/logproxy":
+    '/usr/local/etc/logproxy':
       ensure => directory,
       mode   => '0755',
       owner  => 'root',
       group  => 'root';
-    "/usr/local/etc/logproxy/frombrowser.lua":
+    '/usr/local/etc/logproxy/frombrowser.lua':
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/kibana_asf/frombrowser.lua";
-    "/usr/local/etc/logproxy/tobrowser.lua":
+      source => 'puppet:///modules/kibana_asf/frombrowser.lua';
+    '/usr/local/etc/logproxy/tobrowser.lua':
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/kibana_asf/tobrowser.lua";
-    "/usr/local/etc/logproxy/JSON.lua":
+      source => 'puppet:///modules/kibana_asf/tobrowser.lua';
+    '/usr/local/etc/logproxy/JSON.lua':
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/kibana_asf/JSON.lua";
+      source => 'puppet:///modules/kibana_asf/JSON.lua';
   } ->
 
 
