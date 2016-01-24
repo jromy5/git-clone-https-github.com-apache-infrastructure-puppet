@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+path = File.absolute_path(File.dirname(File.dirname(__FILE__)))
+path = Pathname.new(path)
+
+# Build up a list of modules we shouldn't syntax check
+excluded_modules = %w(_TEMPLATE)
+
+# Filter out the excluded modules
+modules = Dir.glob(path + 'modules/*')
+modules.reject!{ |mod| excluded_modules.include? File.basename(mod) }
+
+$status = 0
+output = []
+
+# Run puppet parser on each manifest file, store the output and return a
+# non-zero exit code if something failed
+modules.each do |mod|
+  Dir.glob(mod + '/**/*.pp') do |manifest|
+  result = `puppet parser validate --color false --render-as s --modulepath=modules #{manifest} 2>&1`
+  output << result if $?.exitstatus != 0
+  print '.'
+  $status = $?.exitstatus if $?.exitstatus != 0
+  end
+end
+
+puts
+puts output
+
+exit $status
+
