@@ -1,5 +1,5 @@
 LOGFILE=/srv/mail/procmail.log
-<% @mailmap.each do |name, script| %>
+<% @apache_mailmap.each do |name, script| %>
 :0
 * ^(To|Received).*<%= name %>@.*
 | <%= script %>
