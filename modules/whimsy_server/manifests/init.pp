@@ -93,6 +93,17 @@ class whimsy_server (
   #                    Subversion Data Source                #
   ############################################################
 
+  user { 'whimsysvn':
+    ensure => present,
+    home   => '/home/whimsysvn'
+  }
+
+  file { '/home/whimsysvn':
+    ensure => 'directory',
+    owner  => whimsysvn,
+    group  => whimsysvn,
+  }
+
   file { '/srv/svn':
     ensure => 'directory',
   }
