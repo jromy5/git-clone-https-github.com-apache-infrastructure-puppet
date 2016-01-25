@@ -39,19 +39,21 @@ class lucene1_pvm_asf (
   }
 
   apt::source { 'precise':
+    ensure   => absent,
     location => 'http://us.archive.ubuntu.com/ubuntu/',
     release  => 'precise',
     repos    => 'main',
   }
 
   apt::source { 'precise-updates':
+    ensure   => absent,
     location => 'http://us.archive.ubuntu.com/ubuntu/',
     release  => 'precise-updates',
     repos    => 'main',
   }
 
   apt::pin { 'precise-subversion':
-    ensure   => present,
+    ensure   => absent,
     priority => 1800,
     packages => 'subversion',
     codename => 'precise',
@@ -60,7 +62,7 @@ class lucene1_pvm_asf (
   }
   
   apt::pin { 'precise-libsvn1':
-    ensure   => present,
+    ensure   => absent,
     priority => 1800,
     packages => 'libsvn1',
     codename => 'precise',
