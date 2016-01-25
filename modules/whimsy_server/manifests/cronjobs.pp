@@ -6,8 +6,8 @@ class whimsy_server::cronjobs (
 
   cron { 'svnupdate':
     ensure  => present,
-    command => 'bash -c \'(flock -x 1; for i in /srv/svn/*; do cd $i; echo; echo $i; svn cleanup; svn up; done) > /srv/whimsy/www/logs/svn-update 2>&1\'',
-    user    => root,
+    command => 'bash -c \'(flock -x 1; cd /srv/whimsy; /usr/local/bin/rake svn:update) > www/logs/svn-update 2>&1\'',
+    user    => whimsysvn,
     minute  => '*/10'
   }
 

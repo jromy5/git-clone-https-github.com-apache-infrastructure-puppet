@@ -106,6 +106,8 @@ class whimsy_server (
 
   file { '/srv/svn':
     ensure => 'directory',
+    owner  => whimsysvn,
+    group  => whimsysvn,
   }
 
   ############################################################
@@ -205,6 +207,12 @@ class whimsy_server (
     ensure => file,
     owner  => $apache::user,
     group  => $apache::group,
+  }
+
+  file { '/srv/whimsy/www/logs/svn-update':
+    ensure => file,
+    owner  => whimsysvn,
+    group  => whimsysvn,
   }
 
 }
