@@ -10,6 +10,7 @@ classes:
   - vhosts_whimsy::vhosts
   - whimsy_server
   - whimsy_server::cronjobs
+  - whimsy_server::procmail
 
 apache::keepalive: 'On'
 apache::keepalive_timeout: '15'
@@ -46,8 +47,12 @@ rvm::rvm_gems:
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 
-whimsy_server::mailmap:
+whimsy_server::apache_mailmap:
   secretary: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/secmail/deliver.rb"
+
+whimsy_server::whimsysvn_mailmap:
+  svnupdate: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/svnupdate.rb"
+  gitupdate: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/gitupdate.rb"
 
 whimsy_server::apmail_keycontent: |
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCGgAIeu+84ADF0TjKLPJaEE8747Xb+KNjh8ESujparlJcoD0EaYXZ7fF7X24Di5DzETLnv3XzLRuTUG3RzfAovrrgdIOqF23L5QMK3yNHgphNF3ri3ClwATscursH7B38QpEqTTsFGYsBwpJImKEqCkVdoLf5AVu6zhoJIsvW+mDzwvjJN/II/iFeR2/gSm73TWif0tkL7ZSspl2Dj4YNcngCL/nPmPK9tA6EJO3FcZSJzji3pfMIReBM8E0123rYF1EaNqjqF9mw3gf4jNTi9eob3l7Pchdi/onDzthpJpjw6eDcyUisYpotAO1LR0+CJpwfbxSVsjMayKUEPuop apmail@hermes.apache.org
