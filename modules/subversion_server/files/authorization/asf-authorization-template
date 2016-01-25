@@ -1436,7 +1436,7 @@ ea = rw
 @oltu = rw
 
 [/onami]
-@onami = rw
+@attic-pmc = rw
 
 [/oodt/cms_site]
 @oodt = rw
@@ -1539,7 +1539,7 @@ ea = rw
 * = r
 
 [/rave]
-@rave = rw
+@attic-pmc = rw
 
 [/reef]
 @reef = rw
