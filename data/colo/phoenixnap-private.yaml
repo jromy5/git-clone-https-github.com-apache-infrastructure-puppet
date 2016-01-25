@@ -16,4 +16,4 @@ base::hosts:
   spamd4-us-west.apache.org:
     ip: '10.40.0.11'
 
-ldapclient::ldapservers: 'ldaps://ldap3-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap3-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
