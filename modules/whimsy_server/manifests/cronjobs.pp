@@ -5,7 +5,8 @@ class whimsy_server::cronjobs (
 ) {
 
   cron { 'public_ldap_committers':
-    	ensure  => absent
+    user    => $apache::user,
+    ensure  => absent
   }
 
   file { ['/srv/whimsy/www/public/public_ldap_people.json',
