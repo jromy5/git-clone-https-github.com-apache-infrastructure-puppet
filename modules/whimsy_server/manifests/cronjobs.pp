@@ -39,9 +39,9 @@ class whimsy_server::cronjobs (
     minute  => [2, 17, 32, 47]
   }
 
-  cron { 'public_ldap_committers':
+  cron { 'public_ldap_people':
     ensure  => present,
-    command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_committers.rb public/public_ldap_committers.json > logs/public-ldap-committers 2>&1)',
+    command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_people.rb public/public_ldap_people.json > logs/public-ldap-people 2>&1)',
     user    => $apache::user,
     minute  => [4, 19, 34, 49]
   }
