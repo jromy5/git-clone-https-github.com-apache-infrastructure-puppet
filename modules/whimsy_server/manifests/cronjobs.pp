@@ -4,6 +4,15 @@ class whimsy_server::cronjobs (
 
 ) {
 
+  cron { 'public_ldap_committers':
+    	ensure  => absent
+  }
+
+  file { ['/srv/whimsy/www/public/public_ldap_people.json',
+    '/srv/whimsy/www/logs/public-ldap-committers']:
+    ensure  => absent
+  }
+
   cron { 'svnupdate':
     ensure  => present,
     command => 'bash -c \'cd /srv/whimsy; (flock -x 1; /usr/local/bin/rake svn:update) > www/logs/svn-update 2>&1\'',
