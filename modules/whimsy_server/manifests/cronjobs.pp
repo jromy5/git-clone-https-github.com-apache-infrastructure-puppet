@@ -4,11 +4,6 @@ class whimsy_server::cronjobs (
 
 ) {
 
-  file { ['/srv/whimsy/www/public/public_ldap_committers.json',
-    '/srv/whimsy/www/logs/public-ldap-committers']:
-    ensure  => absent
-  }
-
   cron { 'svnupdate':
     ensure  => present,
     command => 'bash -c \'cd /srv/whimsy; (flock -x 1; /usr/local/bin/rake svn:update) > www/logs/svn-update 2>&1\'',
@@ -63,6 +58,13 @@ class whimsy_server::cronjobs (
     command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_nonldap_groups.rb public/public_nonldap_groups.json > logs/public-nonldap-groups 2>&1)',
     user    => $apache::user,
     minute  => 38
+  }
+
+  cron { 'public_ldap_services':
+    ensure  => present,
+    command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_ldap_services.rb public/public_ldap_services.json > logs/public-ldap-services 2>&1)',
+    user    => $apache::user,
+    minute  => 40
   }
 
   cron { 'board_minutes':
