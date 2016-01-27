@@ -44,9 +44,7 @@ rvm::rvm_gems:
      ruby_version: 'ruby-2.3.0'
      ensure: latest
 
-postfix::server::inet_interfaces: 'all'
-postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
-postfix::server::smtp_use_tls: true
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 
 whimsy_server::apache_mailmap:
   secretary: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/secmail/deliver.rb"
