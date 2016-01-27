@@ -28,6 +28,9 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 apache::default_vhost: false
 
+postfix::server::smtpd_tls_key_file:     '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
