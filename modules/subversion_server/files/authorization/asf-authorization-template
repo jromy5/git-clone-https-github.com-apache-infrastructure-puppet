@@ -235,10 +235,10 @@ isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
 jackrabbit-emeritus=asavory,bcm,gianugo,prussell,stefano,treilly
 jackrabbit-pmc={reuse:pit-authorization:jackrabbit-pmc}
+james={ldap:cn=james,ou=groups,dc=apache,dc=org}
 james-pmc={reuse:pit-authorization:james-pmc}
 jclouds={ldap:cn=jclouds,ou=groups,dc=apache,dc=org}
 jclouds-pmc={reuse:pit-authorization:jclouds-pmc}
-james={ldap:cn=james,ou=groups,dc=apache,dc=org}
 jena={ldap:cn=jena,ou=groups,dc=apache,dc=org}
 jena-pmc={reuse:pit-authorization:jena-pmc}
 jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
@@ -1197,6 +1197,9 @@ ea = rw
 @attic-pmc = rw
 
 [/james]
+* = r
+
+[/james/site]
 @james = rw
 
 [/jclouds]
