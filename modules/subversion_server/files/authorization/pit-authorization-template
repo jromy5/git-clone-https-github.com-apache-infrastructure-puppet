@@ -911,6 +911,9 @@ openejb-tck = r
 [/pmc/cordova]
 @cordova-pmc = rw
 
+[/pmc/couchdb]
+@couchdb-pmc = rw
+
 [/pmc/cxf]
 @cxf-pmc = rw
 
