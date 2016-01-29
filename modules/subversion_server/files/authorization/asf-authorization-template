@@ -1196,11 +1196,33 @@ ea = rw
 [/jakarta/site]
 @attic-pmc = rw
 
+# James has some sub projects moved to git, some still in svn, auth will look messy
 [/james]
+@james = rw
+
+# moved to git
+[/james/jdkim]
 * = r
 
-[/james/site]
-@james = rw
+# moved to git
+[/james/jsieve]
+* = r
+
+# moved to git
+[/james/jspf]
+* = r
+
+# moved to git
+[/james/mime4j]
+* = r
+
+# moved to git
+[/james/postage]
+* = r
+
+# moved to git
+[/james/project]
+* = rw
 
 [/jclouds]
 @jclouds = rw
