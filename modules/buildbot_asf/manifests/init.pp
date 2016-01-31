@@ -104,6 +104,12 @@ class buildbot_asf (
       group   => $groupname,
       content => template('buildbot_asf/buildbot.tac.erb');
 
+    "/x1/${username}/master1/private.py":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('buildbot_asf/private.py.erb');
 
 # various required files
 
