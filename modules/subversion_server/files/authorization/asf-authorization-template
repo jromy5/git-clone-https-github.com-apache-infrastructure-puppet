@@ -140,7 +140,6 @@ continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-corinthia=gmcdonald,orcmid,pescetti,svanteschubert,wave
 cotton=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
@@ -974,9 +973,6 @@ ea = rw
 
 [/incubator/callback]
 @incubator = rw
-
-[/incubator/corinthia]
-@corinthia = rw
 
 [/incubator/datafu]
 @datafu = rw
