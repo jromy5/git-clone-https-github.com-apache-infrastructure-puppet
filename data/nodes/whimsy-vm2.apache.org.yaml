@@ -28,6 +28,7 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 apache::default_vhost: false
 
+postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 
 postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
