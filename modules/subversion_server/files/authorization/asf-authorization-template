@@ -366,7 +366,6 @@ rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
 reef={ldap:cn=reef,ou=groups,dc=apache,dc=org}
 reef-pmc={reuse:pit-authorization:reef-pmc}
-ripple=mwbrooks,mdineen,brentlintner,filmaj,dansilivestru,gtanner,grobmeier,asavory,ibuziuk,jukka,raymondcamden,timb,axemclion,rgardler
 river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
@@ -1065,9 +1064,6 @@ ea = rw
 
 [/incubator/ranger]
 @ranger = rw
-
-[/incubator/ripple]
-@ripple = rw
 
 [/incubator/rya]
 @rya = rw
