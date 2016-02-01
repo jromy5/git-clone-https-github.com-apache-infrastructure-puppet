@@ -235,9 +235,6 @@ spamassassin::spamd::custom_scoring:
     name:             'RCVD_IN_XBL'
     score:            '4.0'
   RCVD_IN_PBL:
-    name:             'RCVD_IN_XBL'
-    score:            '0.0'
-  RCVD_IN_RP_RNBL:
     name:             'RCVD_IN_PBL'
     score:            '0.0'
   RCVD_IN_RP_RNBL:
@@ -247,18 +244,15 @@ spamassassin::spamd::custom_scoring:
     name:             'RDNS_NONE'
     score:            '3.0'
   HTML_MESSAGE:
-    name:             'RDNS_NONE'
+    name:             'HTML_MESSAGE'
     score:            '2.5'
   EXTRA_MPART_TYPE:
-    name:             'HTML_MESSAGE'
-    score:            '3.0'
-  MIME_HTML_ONLY:
     name:             'EXTRA_MPART_TYPE'
     score:            '3.5'
-  URIBL_BLACK:
+  MIME_HTML_ONLY:
     name:             'MIME_HTML_ONLY'
-    score:            '3.5'
-  DCC_CHECK:
+    score:            '3.0'
+  URIBL_BLACK:
     name:             'URIBL_BLACK'
     score:            '4.0'
   DCC_CHECK:
