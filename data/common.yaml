@@ -300,6 +300,15 @@ spamassassin::spamd::custom_scoring:
   FRT_ADOBE2:
     name:             'FRT_ADOBE2'
     score:            '0.0'
+  LOTS_OF_MONEY:
+    name:             'LOTS_OF_MONEY'
+    score:            '1.0'
+  DEAR_SOMETHING:
+    name:             'DEAR_SOMETHING'
+    score:            '2.0'
+  T_MONEY_PERCENT:
+    name:             'T_MONEY_PERCENT'
+    score:            '1.0'
 
 spamassassin::spamd::minspare: '1'
 spamassassin::spamd::mincheldren: '5'
