@@ -6,16 +6,16 @@
 ###########################################################################
 
 
-use_bayes 		0
+use_bayes 		<%= @use_bayes %>
 #use_auto_whitelist 	0
-required_hits 		10
-lock_method 		flock
-skip_rbl_checks 	0
+required_hits 		<%= @required_hits %>
+lock_method 		<%= @lock_method %>
+skip_rbl_checks 	<%= @skip_rbl_checks %>
 #check_mx_attempts 	0
-report_safe 		1
-use_pyzor 		0
-use_razor2 		0
-dns_available 		yes
+report_safe 		<%= @report_safe %>
+use_pyzor 		<%= @use_pyzor %>
+use_razor2 		<%= @use_razor2 %>
+dns_available 		<%= @dns_available %>
 remove_header 		all Report
 
 <% if @trusted_networks %>
