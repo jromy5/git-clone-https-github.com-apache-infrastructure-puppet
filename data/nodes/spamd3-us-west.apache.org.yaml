@@ -6,6 +6,10 @@ classes:
   - spamassassin::spamd
   - ssl::name::wildcard_apache_org
 
+dnsclient::nameservers:
+  - '10.40.0.8'
+  - '8.8.8.8'
+
 postfix::server::clamav_enabled: 'true'
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'false'

@@ -4,6 +4,10 @@ classes:
   - pdns_recursor
   - spamassassin::spamc
 
+dnsclient::nameservers:
+  - '127.0.0.1'
+  - '8.8.8.8'
+
 
 haproxy::hiera_listen::listener: 'spamd_daemon'
 haproxy::hiera_listen::ipaddress: '10.41.0.7'
