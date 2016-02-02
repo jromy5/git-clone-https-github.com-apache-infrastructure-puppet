@@ -28,6 +28,7 @@ base::basepackages:
 base::purgedpackages:
   - 'collectd'
   - 'collectd-core'
+  - 'lxc-docker'
 
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
@@ -84,6 +85,15 @@ apt::sources:
     repos: 'main'
     key: '36A1D7869245C8950F966E92D8576A8BA88D21E9'
     key_server: 'hkp://keyserver.ubuntu.com:80'
+    include_deb: true
+    include_src: false
+    ensure: 'absent'
+  'docker-engine':
+    location: 'https://apt.dockerproject.org/repo'
+    release: 'ubuntu-trusty'
+    repos: 'main'
+    key: '58118E89F3A912897C070ADBF76221572C52609D'
+    key_server: 'hkp://p80.pool.sks-keyservers.net:80'
     include_deb: true
     include_src: false
   'puppetlabs':
@@ -350,7 +360,7 @@ build_slaves::distro_packages:
   - linux-image-3.13.0-36-generic
   - linux-image-3.13.0-36-lowlatency
   - lua5.2
-  - lxc-docker
+  - docker-engine
   - mingw32
   - mingw32-binutils
   - mingw32-runtime
