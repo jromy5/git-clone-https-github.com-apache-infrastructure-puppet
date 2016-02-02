@@ -30,7 +30,7 @@ class pdns_recursor (
   $lua_dns_script             = undef,
   $max_cache_entries          = 1000000,
   $max_cache_ttl              = 86400,
-  $max_threads                = 2048,
+  $max_mthreads               = 2048,
   $max_negative_ttl           = 3600,
   $max_packetcache_entries    = 500000,
   $max_tcp_clients            = 128,
