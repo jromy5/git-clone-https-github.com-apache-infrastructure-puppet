@@ -42,6 +42,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   $use_razor2            = '0',
   $whitelist_from        = [],
   $whitelist_to          = [],
+  $lock_method           = 'flock',
 
 
 
