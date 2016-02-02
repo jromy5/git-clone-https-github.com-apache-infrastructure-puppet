@@ -45,6 +45,8 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/var/www/projects.apache.org/site'
+    docroot_owner: 'www-data'
+    docroot_group: 'www-data'
     servername: 'projects.apache.org'
     serveraliases:
       - 'projects-new.apache.org'
@@ -70,6 +72,8 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/var/www/reporter.apache.org/site'
+    docroot_owner: 'www-data'
+    docroot_group: 'www-data'
     servername: 'reporter.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'
