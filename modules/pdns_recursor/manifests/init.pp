@@ -14,7 +14,7 @@ class pdns_recursor (
   $delegation_only            = undef,
   $disable_edns               = undef,
   $disable_edns_ping          = 'no',
-  $disable_packetcache        = false,
+  $disable_packetcache        = 'no',
   $dont_query                 = ['127.0.0.1/8'],
   $entropy_source             = false,
   $export_etc_hosts           = 'off',
