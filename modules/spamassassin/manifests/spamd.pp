@@ -71,7 +71,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       cwd     => $install_folder,
       require => Package[ $package_list, 'pyzor' ],
       notify  => [Service['spamassassin'], Service['amavis']],
-      path    => ["/usr/bin", "/usr/sbin"],
+      path    => ['/usr/bin', '/usr/sbin'],
     }
   } else {
     # Otherwise, make sure pyzor is not installed
