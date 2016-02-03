@@ -25,7 +25,7 @@ class pdns_recursor (
   $ignore_rd_bit              = 'off',
   $local_address              = [::ipaddress_lo],
   $local_port                 = 53,
-  $log_common_errors          = false,
+  $log_common_errors          = 'yes',
   $logging_facility           = undef,
   $lua_dns_script             = undef,
   $max_cache_entries          = 1000000,
