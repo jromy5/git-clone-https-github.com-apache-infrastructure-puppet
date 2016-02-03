@@ -312,6 +312,12 @@ spamassassin::spamd::package_list:
   - 'clamsmtp'
   - 'opendkim'
   - 'spamassassin'
+  ## Install some perl libs for spamassassin
+  - 'libgeo-ip-perl'
+  - 'libio-socket-ip-perl'
+  - 'libdbi-perl'
+  - 'libencode-detect-perl'
+  - 'libnet-patricia-perl'
   ## Below is a list of packages used by clamav and friends to scan contents
   - 'arj'
   - 'cabextract'
