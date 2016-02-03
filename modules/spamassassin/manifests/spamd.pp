@@ -34,12 +34,12 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload', # lint:ignore:80chars
   $service_enable        = true,
   $service_ensure        = running,
-  $skip_rbl_checks       = '0',
+  $skip_rbl_checks       = false,
   $syslog                = 'mail',
   $trusted_networks      = '127.0.0.1', # e.g. '192.168.'
-  $use_bayes             = '0',
-  $use_pyzor             = '0',
-  $use_razor2            = '0',
+  $use_bayes             = false,
+  $use_pyzor             = false,
+  $use_razor2            = false,
   $whitelist_from        = [],
   $whitelist_to          = [],
   $lock_method           = 'flock',
@@ -48,9 +48,66 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
 
 ) {
 
+  validate_bool($allowtell)
+  validate_bool($createprefs)
+  validate_bool($local)
+  validate_bool($nouserconfig)
+  validate_bool($roundrobin)
+  validate_bool($service_enable)
+  validate_bool($skip_rbl_checks)
+  validate_bool($use_bayes)
+  validate_bool($use_pyzor)
+
+  # install pyzor if pyzor being used
+  if $use_pyzor {
+    package { 'pyzor':
+      ensure => $package_ensure,
+      notify => [Service['spamassassin'], Service['amavis']];
+    }->
+
+    exec { 'pyzor prime':
+      command => "pyzor --homedir ${install_folder} discover",
+      creates => "${install_folder}/servers",
+      cwd     => $install_folder,
+      require => Package[ $package_list, 'pyzor' ],
+      notify  => [Service['spamassassin'], Service['amavis']],
+      path    => ["/usr/bin", "/usr/sbin"],
+    }
+  } else {
+    # Otherwise, make sure pyzor is not installed
+    package { 'pyzor':
+      ensure => purged,
+      notify => [Service['spamassassin'], Service['amavis']];
+    }
+  }
+
+  if $use_razor2 {
+    package { 'razor':
+      ensure => $package_ensure,
+      notify => [Service['spamassassin'], Service['amavis']];
+    }
+  } else {
+    # Otherwise, make sure razor2 is not installed
+    package { 'razor':
+      ensure => purged,
+      notify => [Service['spamassassin'], Service['amavis']];
+    }
+  }
+
   package { $package_list:
     ensure => $package_ensure,
-  }
+    notify => [Service['spamassassin'], Service['amavis']];
+  }->
+
+  group {
+    'amavis':
+      members => 'clamav',
+      require => Package['amavisd-new'];
+    'clamav':
+      members => 'amavis',
+      require => Package['clamav-daemon'],
+  }->
+
 
   ## SpamAssassin Files
   file {
@@ -78,7 +135,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       source  => 'puppet:///modules/spamassassin/v330.pre',
       require => Package[ $package_list ],
       notify  => [Service['spamassassin'], Service['amavis']];
-  }
+  }->
   
   ## Amavis Files
   file {
@@ -89,14 +146,16 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      require => Package[ $package_list ],
       notify  => Service['amavis'];
     '/etc/amavis/conf.d/50-user':
       content => template('spamassassin/amavis/50-user.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      require => Package[ $package_list ],
       notify  => Service['amavis'];
-  }
+  }->
 
 
   ## ClamAV Files
@@ -107,6 +166,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      require => Package[ $package_list ],
       notify  => Service['clamav-daemon'];
     '/etc/clamsmtpd.conf':
       ensure  => present,
@@ -114,6 +174,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      require => Package[ $package_list ],
       notify  => Service['clamsmtp'];
   }
 
@@ -139,7 +200,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       user    => 'root',
       hour    => '1',
       minute  => '30';
-  }
+  }->
 
   service {
     'spamassassin':
@@ -169,15 +230,6 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       hasrestart => true;
   }
 
-
-  group {
-    'amavis':
-      members => 'clamav',
-      require => Package['amavisd-new'];
-    'clamav':
-      members => 'amavis',
-      require => Package['clamav-daemon'],
-  }
 
   cron {
     'clean archived spam':

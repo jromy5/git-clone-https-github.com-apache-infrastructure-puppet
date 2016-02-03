@@ -6,15 +6,15 @@
 ###########################################################################
 
 
-use_bayes 		<%= @use_bayes %>
+use_bayes 		<%= @use_bayes ? 1 : 0 %>
 #use_auto_whitelist 	0
 required_hits 		<%= @required_hits %>
 lock_method 		<%= @lock_method %>
-skip_rbl_checks 	<%= @skip_rbl_checks %>
+skip_rbl_checks 	<%= @skip_rbl_checks ? 1 : 0 %>
 #check_mx_attempts 	0
 report_safe 		<%= @report_safe %>
-use_pyzor 		<%= @use_pyzor %>
-use_razor2 		<%= @use_razor2 %>
+use_pyzor 		<%= @use_pyzor ? 1 : 0 %>
+use_razor2 		<%= @use_razor2 ? 1 : 0 %>
 dns_available 		<%= @dns_available %>
 remove_header 		all Report
 
