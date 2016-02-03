@@ -23,3 +23,5 @@ pdns_recursor::local_address:
   - "%{::ipaddress_lo}"
   - "%{::ipaddress_eth0}"
   - "%{::ipaddress_eth1}"
+
+pdns_recursor::max_cache_ttl: 3600
