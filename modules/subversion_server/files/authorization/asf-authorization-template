@@ -91,10 +91,10 @@ archiva-pmc={reuse:pit-authorization:archiva-pmc}
 aries={ldap:cn=aries,ou=groups,dc=apache,dc=org}
 aries-pmc={reuse:pit-authorization:aries-pmc}
 avro={ldap:cn=avro,ou=groups,dc=apache,dc=org}
+avro-pmc={reuse:pit-authorization:avro-pmc}
 attic={ldap:cn=attic,ou=groups,dc=apache,dc=org}
 aurora={ldap:cn=aurora,ou=groups,dc=apache,dc=org}
 aurora-pmc={reuse:pit-authorization:aurora-pmc}
-avro-pmc={reuse:pit-authorization:avro-pmc}
 axis={ldap:cn=axis,ou=groups,dc=apache,dc=org}
 axis-pmc={reuse:pit-authorization:axis-pmc}
 # awf=schildmeijer,jmeehan,nwhitehead,slemesle
@@ -599,7 +599,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 * = r
 
 [/avro]
-@avro = rw
+* = r
 
 [/axis]
 @axis = rw
