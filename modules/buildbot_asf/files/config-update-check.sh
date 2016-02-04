@@ -5,12 +5,12 @@
 
 # Perform an svn up on config files
 # But only if there has been a change.
-cd /x1/buildmaster/master1/projects || exit 1
+cd /x1/buildmaster/master1 || exit 1
 
-svn st -u | fgrep '*'
+svn st -u projects public_html | fgrep '*'
 if [ $? -eq 0 ]; then
 
- svn up --username=buildbot
+ svn up projects public_html --username=buildbot
 
  # check if any changes break the config
  output=`/usr/bin/buildbot checkconfig 2>&1`
