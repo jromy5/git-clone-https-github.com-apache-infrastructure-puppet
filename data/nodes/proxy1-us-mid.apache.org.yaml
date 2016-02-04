@@ -9,6 +9,8 @@ classes:
   - mysql::client
   - rootbin_asf
   - vhosts_asf::vhosts
+  - loggy
+  - blocky
 
 apache::default_vhost: false
 
