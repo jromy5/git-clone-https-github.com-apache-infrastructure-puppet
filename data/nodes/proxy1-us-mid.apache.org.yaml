@@ -4,6 +4,7 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::remoteip
   - apache::mod::rewrite
   - ssl::name::bz_apache_org
   - mysql::client
@@ -67,6 +68,8 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     custom_fragment: |
       Redirect permanent /jira https://issues.apache.org/jira
+
+      RemoteIPHeader X-Forwarded-For
 
       ProxyPreserveHost on
 
