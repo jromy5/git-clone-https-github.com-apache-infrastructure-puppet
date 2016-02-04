@@ -598,8 +598,15 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/avalon]
 * = r
 
+# avro migrated to git, some other stuff needs to be rw though
 [/avro]
 * = r
+
+[/avro/dist]
+@avro = rw
+
+[/avro/site]
+@avro = rw
 
 [/axis]
 @axis = rw
