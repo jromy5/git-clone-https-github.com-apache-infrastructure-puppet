@@ -10,6 +10,7 @@ classes:
   - mysql::client
   - rootbin_asf
   - vhosts_asf::vhosts
+  - vhosts_asf::modules
   - loggy
   - blocky
 
@@ -39,6 +40,10 @@ apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
  - 'issues-data'
+
+vhosts_asf::modules::modules:
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   proxy:
@@ -70,6 +75,10 @@ vhosts_asf::vhosts::vhosts:
       Redirect permanent /jira https://issues.apache.org/jira
 
       RemoteIPHeader X-Forwarded-For
+
+      LuaQuickHandler /var/www/issues-data/quickhook.lua first
+      LuaHookLog /var/www/issues-data/quickhook.lua last
+      LuaScope server 1 1
 
       ProxyPreserveHost on
 
