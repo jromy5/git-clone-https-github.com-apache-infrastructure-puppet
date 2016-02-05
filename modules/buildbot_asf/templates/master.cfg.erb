@@ -20,6 +20,7 @@ c['db_url'] = private.mysqlConnection
 # the 'slaves' list defines the set of allowable buildslaves. Each element is
 # a tuple of bot-name and bot-password. These correspond to values given to
 # the buildslave's mktap invocation.
+
 from buildbot.buildslave import BuildSlave
 
 c['slaves'] = [BuildSlave("orcus_ubuntu", private.slave1Pwd,
