@@ -189,6 +189,7 @@ class buildbot_asf (
   exec {
     'buildbot-reconfig':
       command => "/usr/bin/buildbot /x1/${username}/master1 reconfig",
+      onlyIf => "/usr/bin/buildbot /x1/${username}/master1 checkconfig",
       refreshOnly => true,
 }
 
