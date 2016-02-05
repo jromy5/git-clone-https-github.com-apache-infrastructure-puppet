@@ -4,8 +4,3 @@ classes:
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
-buildbot_slave::required_packages:
-  - 'tomcat7'
-  - 'libtool'
-  - 'libpcre3' 
-  - 'libpcre3-dev'
