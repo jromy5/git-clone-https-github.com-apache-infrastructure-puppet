@@ -35,14 +35,9 @@ class buildbot_slave (
     'rake',
   ]
 
-  # required packages for slaves
+  # merge required packages from hiera for slaves
 
-  $slave_packages = [
-    'tomcat7',
-    'libtool',
-    'libpcre3', 
-    'libpcre3-dev',
-  ]
+  $slave_packages = hiera_array('buildbot_slave::required_packages',[])
 
   package {
     $bb_basepackages:
