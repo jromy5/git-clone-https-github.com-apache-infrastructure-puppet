@@ -96,6 +96,7 @@ class buildbot_asf (
       ensure  => 'present',
       owner   => $username,
       group   => $groupname,
+      notify  => Exec['buildbot-reconfig'],
       content => template('buildbot_asf/master.cfg.erb');
 
     "/x1/${username}/master1/buildbot.tac":
@@ -182,5 +183,13 @@ class buildbot_asf (
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
   }
+
+# execs
+
+  exec {
+    'buildbot-reconfig':
+      command => "/usr/bin/buildbot /x1/${username}/master1 reconfig",
+      refreshOnly => true,
+}
 
 }
