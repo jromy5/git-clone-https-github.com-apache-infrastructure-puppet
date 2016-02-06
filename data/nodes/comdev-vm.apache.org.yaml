@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::headers
+  - apache::mod::authnz_ldap
   - elasticsearch
   - loggy
   - ssl::name::wildcard_apache_org
