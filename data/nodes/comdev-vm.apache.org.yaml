@@ -95,4 +95,12 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
-
+      # Auth
+      <Location /admin/>
+          AuthType Basic
+          AuthName "Apache committers only"
+          AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthBasicProvider ldap
+          require valid-user
+      </Location>
