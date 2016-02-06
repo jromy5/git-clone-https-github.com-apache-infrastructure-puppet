@@ -95,6 +95,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
+      Header set Access-Control-Allow-Origin "*"
       # Auth
       <Location /admin/>
           AuthType Basic
