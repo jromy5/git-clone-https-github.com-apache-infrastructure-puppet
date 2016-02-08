@@ -1572,7 +1572,7 @@ ea = rw
 @river = rw
 
 [/roller]
-@roller = rw
+* = r
 
 [/samza]
 @samza = rw
