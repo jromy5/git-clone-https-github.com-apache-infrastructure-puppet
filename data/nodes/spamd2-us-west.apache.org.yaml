@@ -44,3 +44,4 @@ spamassassin::spamd::allowedips: '10.40.0.8'
 spamassassin::spamd::listenip: '0.0.0.0'
 spamassassin::spamd::required_hits: '10'
 spamassassin::spamd::max_amavis_procs: '35'
+spamassassin::spamd::use_pyzor: true
