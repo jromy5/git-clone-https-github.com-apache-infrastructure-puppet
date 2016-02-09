@@ -26,7 +26,8 @@ svnwcsub::username:         'svnwc'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::java_install: true
-
+elasticsearch::init_defaults:
+  ES_HEAP_SIZE: '2g'
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -90,6 +91,10 @@ vhosts_asf::vhosts::vhosts:
       # REST API
       ScriptAlias /steve/admin /var/www/steve/www/cgi-bin/rest_admin.py
       ScriptAlias /steve/voter /var/www/steve/www/cgi-bin/rest_voter.py
+      
+      # Deflate JS
+      AddOutputFilterByType DEFLATE application/json
+      AddOutputFilterByType DEFLATE application/javascript
       
       # Auth
       <Location /steve/admin>
