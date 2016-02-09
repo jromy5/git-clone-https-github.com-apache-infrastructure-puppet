@@ -60,7 +60,6 @@ apbackup::gid: 9997
 apbackup::uid: 9997
 
 base::basepackages:
-  - libapache2-mod-geoip
   - svnmailer
 
 base::hosts:

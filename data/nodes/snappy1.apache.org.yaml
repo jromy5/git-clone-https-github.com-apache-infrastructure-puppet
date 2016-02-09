@@ -5,6 +5,7 @@ classes:
   - kibana_asf
   - apache
   - apache::mod::authnz_ldap
+  - apache::mod::ext_filter
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -14,8 +15,6 @@ classes:
   - vhosts_asf::vhosts
 
 vhosts_asf::modules::modules:
-  ext_filter:
-    name: 'ext_filter'
   allowmethods:
     name: 'allowmethods'
 

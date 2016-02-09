@@ -2,8 +2,8 @@
 classes:
   - apache
   - apache::mod::headers
+  - apache::mod::userdir
   - ssl::name::wildcard_apache_org
-  - vhosts_asf::modules
   - vhosts_asf::vhosts
 
 apache::default_vhost: false
@@ -36,10 +36,6 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AllowTCPForwarding: 'no'
     PermitTunnel: 'no'
-
-vhosts_asf::modules::modules:
-  userdir:
-    name: 'userdir'
 
 logrotate::rule:
   apache2:

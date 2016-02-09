@@ -81,7 +81,6 @@ apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
 base::basepackages:
-  - libapache2-mod-geoip
   - mod-lua-asf
 
 datadog_agent::integrations::http_check::url: 'https://themis.apache.org/server-status'
