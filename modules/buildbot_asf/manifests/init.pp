@@ -153,7 +153,12 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
-   "/x1/${username}/master1/create-ooo-snapshots-index.sh":
+    "/x1/${username}/master1/public_html/projects/openoffice/":
+      ensure => 'directory';
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+    "/x1/${username}/master1/public_html/projects/openoffice/create-ooo-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
@@ -192,7 +197,7 @@ class buildbot_asf (
       user        => $username,
       minute      => 40,
       hour        => 5,
-      command     => "/x1/${username}/master1/create-ooo-snapshots-index.sh",
+      command     => "/x1/${username}/master1/public_html/projects/openoffice/create-ooo-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
   }
