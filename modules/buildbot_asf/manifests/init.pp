@@ -188,6 +188,13 @@ class buildbot_asf (
       command     => "/x1/${username}/master1/create-master-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
+    'create-ooo-snapshots-index':
+      user        => $username,
+      minute      => 40,
+      hour        => 5,
+      command     => "/x1/${username}/master1/create-ooo-snapshots-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username],
   }
 
 # execs
