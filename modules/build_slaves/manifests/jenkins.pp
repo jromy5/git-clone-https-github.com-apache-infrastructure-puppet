@@ -2,7 +2,7 @@
 
 class build_slaves::jenkins (
   $nexus_password   = '',
-  $npmrc_passwrd    = '',
+  $npmrc_password    = '',
   $jenkins_pub_key  = '',
   $jenkins_packages = []
   ) {
