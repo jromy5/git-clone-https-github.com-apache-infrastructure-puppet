@@ -106,7 +106,6 @@ class build_slaves::jenkins (
 
   file { '/home/jenkins/.npmrc':
     ensure  => present,
-    require => File['/home/jenkins'],
     path    => '/home/jenkins/.npmrc',
     owner   => 'jenkins',
     group   => 'jenkins',
