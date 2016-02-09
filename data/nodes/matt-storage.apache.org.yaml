@@ -1,3 +1,111 @@
 ---
 classes:
+  - amanda::client
+  - apache
+  - apache::mod::geoip
+  - datadog_agent::integrations::http_check
+  - gitserver_asf
+  - blocky
   - loggy
+  - rootbin_asf
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::modules
+
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '30'
+apache::default_vhost:      true
+apache::docroot:            '/x1/git/htdocs'
+apache::docroot_owner:      'git'
+
+apache::mpm_module:         'prefork'
+apache::serveradmin:        'infrastructure@apache.org'
+
+
+datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
+
+base::gempackages:
+  - 'r10k'
+  - 'puppet-lint'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::modules::modules:
+  sed:
+    name: 'sed'
+
+gitserver_asf::custom_fragment_80: |
+      <Directory /x1/git/htdocs>
+       Require all granted 
+      </Directory>
+      
+      Redirect Permanent / https://git-dual.apache.org/
+
+gitserver_asf::custom_fragment_443: |
+      SetEnv PATH /bin:/usr/bin:/usr/local/bin
+      SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
+      SetEnv WRITE_LOCK /etc/nocommit
+      SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
+      SetEnv GIT_REPOS_ROOT /x1/git/repos
+      <Location /repos/>
+          SetEnv WEB_HOST https://git-dual.apache.org
+      </Location>
+      RewriteEngine On
+      <LocationMatch "^/repos/">
+        Require all denied
+        <If "%%{}{QUERY_STRING} =~ /service=git-receive-pack/ || %%{}{REQUEST_URI} =~ /git-receive-pack$/">
+                AuthType Basic
+                AuthName "ASF Committers"
+                AuthBasicProvider ldap
+                AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPGroupAttribute memberUid
+                AuthLDAPGroupAttributeIsDN off
+                Require ldap-attribute gidNumber=5000
+                Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+                Require valid-user
+        </If>
+        <Else>
+                Require all granted
+        </Else>
+      </LocationMatch>
+      AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/git/repos/asf/$1.git/ref-updates.log
+      BrowserMatch ".*MSIE.*" \
+          nokeepalive ssl-unclean-shutdown \
+          downgrade-1.0 force-response-1.0
+      # Handler for Github sync/PR and so on
+      ScriptAliasMatch ^/github$ /x1/git/git-dual/webhook.cgi
+      <Directory /usr/lib/cgi-bin>
+          require all granted
+          Options ExecCGI FollowSymlinks
+          SetHandler cgi-script
+      </Directory>
+      AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
+      AliasMatch ^/repos/(asf|svn)/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /x1/git/repos/$1/$2
+      AliasMatch ^/repos/(asf|svn)/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /x1/git/repos/$1/$2
+      ScriptAliasMatch \
+          "(?x)^/repos/([^/]+)/(.*/(HEAD | \
+              info/refs | \
+              objects/(info/[^/]+ | \
+                  [0-9a-f]{2}/[0-9a-f]{38} | \
+                  pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
+                  git-(upload|receive)-pack))$" \
+          /usr/lib/git-core/git-http-backend/$2
+      ScriptAliasMatch /repos/([^/]+) /usr/lib/cgi-bin/gitweb.cgi
+      RewriteRule ^/repos/([^/]+)/$ /repos/$1 [R]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?$ /repos/$1?p=$2.git [R]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/commit/(.*)$ /repos/$1?p=$2.git;a=commit;h=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/tree/(.*)$ /repos/$1?p=$2.git;a=tree;hb=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/diff/(.*)$ /repos/$1?p=$2.git;a=commitdiff;h=$3 [R,NE]
+      RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
+      SetEnv GIT_HTTP_EXPORT_ALL
+      <Location /repos/asf>
+          SetEnv GIT_PROJECT_ROOT /x1/git/repos/asf/
+          SetEnv GITWEB_CONFIG /x1/git/asfgit-admin/asf/conf/httpd/gitweb.asf.pl
+      </Location>
+      <Location /logs/asf/>
+          ForceType text/plain
+          OutputSed "s/http[0-9.]*/[redacted]/g"
+          SetOutputFilter sed
+      </Location> 
