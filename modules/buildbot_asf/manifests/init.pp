@@ -153,6 +153,12 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
+   "/x1/${username}/master1/create-ooo-snapshots-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/create-ooo-snapshots-index.sh';
   }
 
 # cron jobs
