@@ -34,8 +34,8 @@ class base (
   $crons = hiera_hash('cron', {})
   create_resources(cron, $crons)
 
-  $rsync_modules = hiera_hash('rsync::server::modules', {})
-  create_resources(rsync::server::modules, $rsync_modules)
+  $rsync_modules = hiera_hash('rsync::server::module', {})
+  create_resources(rsync::server::module, $rsync_modules)
 
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
