@@ -25,7 +25,7 @@ apache::default_ssl_chain:                   '/etc/ssl/certs/bz.apache.org.chain
 apache::default_ssl_key:                     '/etc/ssl/private/bz.apache.org.key'
 apache::default_ssl_vhost: false
 
-pache::mpm_module:         'event'
+apache::mpm_module:         'event'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '500'
