@@ -2,13 +2,26 @@
 
 class zfs_on_ubuntu {
 
-  $packages = ['zfs-dkms', 'ubuntu-zfs']
+  $packages_pre = [
+    "linux-headers-${kernelrelease}",
+  ]
+    
+  $packages_zfs = [
+    'zfs-dkms',
+    'ubuntu-zfs'
+  ]
 
-  apt::ppa { 'ppa:zfs-native/stable':
-  }
+  apt::ppa { 'ppa:zfs-native/stable': }
 
-  package { $packages:
+  package { $packages_pre:
+    ensure  => installed,
+  } ~> 
+  package { $packages_zfs:
     ensure  => installed,
     require => Apt::Ppa['ppa:zfs-native/stable'],
+  } ~> 
+  exec { 'modprobe zfs':
+    command => '/sbin/modprobe zfs'
   }
+
 }
