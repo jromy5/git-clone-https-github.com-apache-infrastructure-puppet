@@ -306,6 +306,7 @@ spamassassin::spamd::mincheldren: '5'
 spamassassin::spamd::maxspare: '10'
 spamassassin::spamd::maxconnsperchild: '1000'
 spamassassin::spamd::maxchildren: '40'
+spamassassin::spamd::use_pyzor: true
 spamassassin::spamd::package_list:
   - 'amavisd-new'
   - 'clamav-daemon'
