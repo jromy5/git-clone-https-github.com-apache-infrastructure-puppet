@@ -42,19 +42,10 @@ module Puppet::Parser::Functions
       end
 
       if content
+        path = Regexp.escape(path)
         content.strip!.gsub! /^\s*/, '  '
         @fragment[/\n<#{tag} #{path}>\n.*?()<\/#{tag}>/m, 1] = content + "\n"
       end
-    end
-
-    # add/update a Location section
-    def location(path, content=nil)
-      section('Location', path, content)
-    end
-
-    # add/update a Directory section
-    def directory(path, content=nil)
-      section('Directory', path, content)
     end
 
     # expand passenger entries
@@ -62,7 +53,7 @@ module Puppet::Parser::Functions
       passenger.each do |url|
         @alias[url] = "#@docroot#{url}/public"
         @fragment += "\nAlias #{url}/ #{@alias[url]}\n"
-        location url, %{
+        section 'Location', url, %{
           PassengerBaseURI #{url}
           PassengerAppRoot #{@docroot}#{url}
           Options -MultiViews
@@ -78,7 +69,15 @@ module Puppet::Parser::Functions
         isdn = auth['idsn'] || (auth['attribute']=='memberUid' ? 'off' : 'on')
 
         auth['locations'].each do |url|
-          directory @alias[url], %{
+          if url.end_with? '/'
+            directive = 'Directory'
+            path = @alias[url].chomp('/')
+          else
+            directive = 'LocationMatch'
+            path = '^' + url
+          end
+
+          section directive, path, %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
             AuthBasicProvider ldap

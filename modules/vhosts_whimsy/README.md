@@ -64,7 +64,9 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
     * `group` - used as the value for [Require
       ldap-group](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#reqgroup)
     * `locations` - list of locations against which to require this
-      authentication
+      authentication.  Terminate directory names with a trailing slash.
+      Locations without a trailing slash are treated as a location prefix,
+      which is useful for individual CGI scripts.
 
   Example:
 
@@ -73,8 +75,8 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
           group: cn=committers,ou=groups,dc=apache,dc=org
           attribute: memberUid
           locations:
-            - /committer
-            - /roster
+            - /board/agenda/
+            - /board/publish_minutes
 
 Sample output
 =============
@@ -84,25 +86,20 @@ Examples of HTTP configuration directives produced.
 passsenger
 ----------
 
-    RewriteRule ^/racktest/$ /racktest/index.html [PT]
     Alias /racktest/$ /srv/whimsy/www/racktest/public
 
     <Location /racktest>
       PassengerBaseURI /racktest
       PassengerAppRoot /srv/whimsy/www/racktest
-    </Location>
-
-    <Directory /srv/whimsy/www/racktest/public>
-      SetEnv HTTP on
-      Allow from all
       Options -Multiviews
-      Require all granted
-    </Directory>
+      CheckSpelling Off
+      SetEnv HTTPS on
+    </Location>
 
 authldap
 --------
 
-    <Directory /srv/whimsy/www/committers>
+    <Directory /srv/whimsy/www/board/agenda>
       AuthType Basic
       AuthName "ASF Committers"
       AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
@@ -110,3 +107,12 @@ authldap
       AuthLDAPGroupAttributeIsDN off
       Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
     </Directory>
+
+    <LocationMatch ^/www/board/publish_minutes>
+      AuthType Basic
+      AuthName "ASF Committers"
+      AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+      AuthLDAPGroupAttribute memberUid
+      AuthLDAPGroupAttributeIsDN off
+      Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+    </LocationMatch>

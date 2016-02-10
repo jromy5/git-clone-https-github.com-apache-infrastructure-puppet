@@ -93,10 +93,11 @@ vhosts_whimsy::vhosts::vhosts:
       attribute: memberUid
       locations:
       - /board/subscriptions
-      - /classic/roster
-      - /committers
-      - /test/icla
-      - /test/roster
+      - /classic/roster/
+      - /committers/
+      - /test/icla/
+      - /roster/
+      - /test/roster/
 
     - name: ASF Members and Incubator PMC
       group: cn=committers,ou=groups,dc=apache,dc=org
@@ -109,25 +110,25 @@ vhosts_whimsy::vhosts::vhosts:
       group: cn=committers,ou=groups,dc=apache,dc=org
       attribute: memberUid
       locations:
-      - /board/agenda
-      - /classic/board/agenda
-      - /fundraising
-      - /treasurer
+      - /board/agenda/
+      - /classic/board/agenda/
+      - /fundraising/
+      - /treasurer/
 
     - name: ASF Members
       group: cn=member,ou=groups,dc=apache,dc=org
       attribute: memberUid
       locations:
-      - /apmail
-      - /members
-      - /voter
+      - /apmail/
+      - /members/
+      - /voter/
 
     - name: ASF Secretarial Team
       group: cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
       attribute: member
       locations:
-      - /secretary
-      - /secmail
+      - /secretary/
+      - /secmail/
       - /board/publish_minutes
 
     custom_fragment: |
