@@ -7,6 +7,11 @@ classes:
   - bugzilla::custom_project
   - perl
   - vhosts_asf::vhosts
+  - vhosts_asf::modules
+
+vhosts_asf::modules::modules:
+  cgid:
+    name: 'cgid'
 
 apache::default_vhost: false
 
