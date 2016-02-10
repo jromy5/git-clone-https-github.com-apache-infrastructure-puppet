@@ -1572,8 +1572,12 @@ ea = rw
 [/river]
 @river = rw
 
+# Moved to git
 [/roller]
 * = r
+
+[/rooler/cmssite]
+@roller = rw
 
 [/samza]
 @samza = rw
