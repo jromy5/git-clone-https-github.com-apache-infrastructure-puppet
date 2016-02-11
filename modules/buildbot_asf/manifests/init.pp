@@ -161,7 +161,7 @@ class buildbot_asf (
     'config-update-check':
       user        => $username,
       minute      => '*/5',
-      command     => "/x1/${username}/master1/config-update-check.sh",
+      command     => "/x1/${username}/master1/config-update-check.sh  > /dev/null 2>&1",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'convert-xml-to-html':
