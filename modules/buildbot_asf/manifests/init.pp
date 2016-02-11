@@ -173,7 +173,7 @@ class buildbot_asf (
     'convert-master-xml-to-html':
       user        => $username,
       minute      => '28',
-      command     => "/x1/${username}/master1/convert-master-xml-to-html.sh",
+      command     => "/x1/${username}/master1/convert-master-xml-to-html.sh > /dev/null 2>&1",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-master-index':
