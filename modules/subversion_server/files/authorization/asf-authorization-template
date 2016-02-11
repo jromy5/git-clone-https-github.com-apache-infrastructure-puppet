@@ -1576,7 +1576,7 @@ ea = rw
 [/roller]
 * = r
 
-[/rooler/cmssite]
+[/roller/cmssite]
 @roller = rw
 
 [/samza]
