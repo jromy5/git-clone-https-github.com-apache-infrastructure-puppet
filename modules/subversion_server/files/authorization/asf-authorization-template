@@ -225,7 +225,7 @@ ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
-impala=abehm,brock,cws,henry,jyu,lskuff,marcel,mgrund,tarasbob,todd,tomwhite
+impala=abehm,brock,casey,cws,dhecht,henry,jrussell,jyu,kwho,lskuff,marcel,mgrund,mjacobs,sailesh,tarasbob,tarmstrong,todd,tomwhite
 # imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
@@ -462,7 +462,7 @@ velocity={ldap:cn=velocity,ou=groups,dc=apache,dc=org}
 velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=groups,dc=apache,dc=org}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
-wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,yurize,zdwang,stenyak,jblossom
+wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,wisebaldone,yurize,zdwang,stenyak,jblossom
 whimsy={ldap:cn=whimsy,ou=groups,dc=apache,dc=org}
 whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=groups,dc=apache,dc=org}
