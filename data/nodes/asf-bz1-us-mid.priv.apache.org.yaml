@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::expires
   - apache::mod::headers
+  - apache::mod::remoteip
   - bugzilla
   - bugzilla::custom_project
   - perl
@@ -111,6 +112,8 @@ vhosts_asf::vhosts::vhosts:
         directoryindex: 'index.cgi index.html'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
+    custom_fragment: |
+      RemoteIPHeader X-Forwarded-For
 
 ntp::interfaces:
   - eth1
