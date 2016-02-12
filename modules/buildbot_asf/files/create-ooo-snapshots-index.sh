@@ -1,5 +1,8 @@
 #!/bin/sh
 
+## THIS FILE IS MANAGED IN PUPPET: git.apache.org/infrastructure-puppet.git
+## Open pull requests here: https://github.com/apache/infrastructure-puppet
+
 cd /x1/buildmaster/master1/public_html/projects/openoffice
 cat header.inc > index.html
 echo '<div id="contenta">
