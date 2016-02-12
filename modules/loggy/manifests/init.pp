@@ -9,11 +9,16 @@ class loggy (
 ){
   require python
 
+  package { 'gcc':
+    ensure => present,
+  }->
+
   python::pip {
     'elasticsearch' :
-      ensure        => '1.6.0';
+      ensure => '1.6.0';
     'python-inotify==0.6-test' :
-      ensure        => present
+      ensure  => present,
+      require => Package['gcc'];
   } ->
 
   file {
