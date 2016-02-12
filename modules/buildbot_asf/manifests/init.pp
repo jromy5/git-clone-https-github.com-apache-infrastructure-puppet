@@ -154,7 +154,7 @@ class buildbot_asf (
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
     "/x1/${username}/master1/public_html/projects/openoffice/":
-      ensure => 'directory';
+      ensure => 'directory',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
