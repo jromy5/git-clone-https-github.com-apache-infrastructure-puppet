@@ -1222,7 +1222,7 @@ ea = rw
 
 # moved to git
 [/james/project]
-* = rw
+* = r
 
 [/jclouds]
 @jclouds = rw
