@@ -382,7 +382,6 @@ build_slaves::distro_packages:
   - python-all-dev
   - python-boto
   - python-dev
-  - python-pip
   - python-setuptools
   - python-support
   - re2c
