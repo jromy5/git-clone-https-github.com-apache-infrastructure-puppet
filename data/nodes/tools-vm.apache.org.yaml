@@ -91,6 +91,7 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       AddHandler lua-script .lua
       DirectoryIndex index.lua
+      FallbackResource /index.lua
       # committers-only pastes:
       <Location /p/>
           AuthType Basic
