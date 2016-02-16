@@ -1,6 +1,7 @@
 ---
 classes:
   - apache
+  - apache::mod::authnz_ldap
   - apache::mod::headers
   - elasticsearch
   - loggy
@@ -89,6 +90,15 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
+      # committers-only pastes:
+      <Location /p/>
+          AuthType Basic
+          AuthName "Apache committers only"
+          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthBasicProvider ldap
+          require valid-user
+      </Location>
       
   shorten:
     vhost_name: '*'
@@ -119,3 +129,12 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       AddHandler lua-script .lua
       FallbackResource /shorten.lua
+      # committers-only:
+      <Location /new>
+          AuthType Basic
+          AuthName "Apache committers only"
+          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthBasicProvider ldap
+          require valid-user
+      </Location>
