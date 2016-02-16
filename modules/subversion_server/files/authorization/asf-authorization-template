@@ -636,7 +636,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 * = r
 
 [/brooklyn]
-@incubator = rw
+@brooklyn = rw
 
 [/buildr/site]
 @buildr = rw
