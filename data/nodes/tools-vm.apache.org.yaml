@@ -90,6 +90,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
+      DirectoryIndex index.lua
       # committers-only pastes:
       <Location /p/>
           AuthType Basic
