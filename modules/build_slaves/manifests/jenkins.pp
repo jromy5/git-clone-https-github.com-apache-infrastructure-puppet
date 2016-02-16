@@ -131,4 +131,9 @@ class build_slaves::jenkins (
   package { $jenkins_packages:
     ensure   => installed,
   }
+
+  service { 'apache2':
+    ensure => 'stopped',
+  }
+
 }
