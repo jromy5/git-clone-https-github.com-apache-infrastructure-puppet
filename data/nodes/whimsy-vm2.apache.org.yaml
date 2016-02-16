@@ -64,6 +64,7 @@ whimsy_server::apmail_keycontent: |
 vhosts_whimsy::modules::modules:
   - cgi
   - speling
+  - remoteip
 
 vhosts_whimsy::vhosts::vhosts:
   whimsy-vm-80:
@@ -132,6 +133,8 @@ vhosts_whimsy::vhosts::vhosts:
       - /board/publish_minutes
 
     custom_fragment: |
+      RemoteIPHeader X-Forwarded-For
+
       PassengerFriendlyErrorPages on
       PassengerDefaultUser %{apache::user}
       PassengerDefaultGroup %{apache::group}
