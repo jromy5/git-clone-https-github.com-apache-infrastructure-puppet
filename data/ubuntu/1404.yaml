@@ -285,7 +285,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk1.7.0-32
   - asf-build-jdk1.7.0-55
   - asf-build-jdk1.7.0-64
-  - asf-build-jdk1.7.0_79-unlimited-security
+  - asf-build-jdk1.7.0-79-unlimited-security
   - asf-build-jdk1.8.0
   - asf-build-jira-cli-2.1.0
 
