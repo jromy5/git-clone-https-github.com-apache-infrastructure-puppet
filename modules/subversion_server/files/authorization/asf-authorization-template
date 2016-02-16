@@ -975,6 +975,9 @@ ea = rw
 [/incubator/batchee/site]
 @incubator = rw
 
+[/incubator/beam]
+@incubator = rw
+
 [/incubator/blur]
 @blur = rw
 
