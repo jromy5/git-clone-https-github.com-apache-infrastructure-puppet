@@ -34,14 +34,6 @@ class build_slaves::jenkins (
     target  => '/usr/local/jenkins',
   }
 
-  file { '/home/jenkins/.ssh':
-    ensure  => directory,
-    require => User['jenkins'],
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    mode    => '0700'
-  }
-
   file { '/home/jenkins/env.sh':
     ensure => present,
     mode   => '0755',
@@ -50,12 +42,12 @@ class build_slaves::jenkins (
     group  => 'jenkins',
   }
 
-  ssh_authorized_key { 'jenkins':
+  file { '/etc/ssh/ssh_keys/jenkins.pub':
     ensure  => present,
-    require => User['jenkins'],
-    user    => 'jenkins',
-    type    => 'ssh-rsa',
-    key     => 'AAAAB3NzaC1yc2EAAAABIwAAAIEAtxkcKDiPh1OaVzaVdc80daKq2sRy8aAgt8u2uEcLClzMrnv/g19db7XVggfT4+HPCqcbFbO3mtVnUnWWtuSEpDjqriWnEcSj2G1P53zsdKEu9qCGLmEFMgwcq8b5plv78PRdAQn09WCBI1QrNMypjxgCKhNNn45WqV4AD8Jp7/8=' # lint:ignore:80chars
+    mode    => '0640',
+    source  => 'puppet:///modules/build_slaves/jenkins.pub',
+    owner   => 'jenkins',
+    group   => 'root',
   }
 
   file { '/home/jenkins/.m2':
