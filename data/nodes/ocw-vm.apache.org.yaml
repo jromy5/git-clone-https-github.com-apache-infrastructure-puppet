@@ -1,0 +1,30 @@
+---
+classes:
+  - default_pvm_asf
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+
+default_pvm_asf::java: false
+default_pvm_asf::required_packages:
+  - nodejs
+  - nodejs-legacy
+  - npm
+
+vhosts_asf::vhosts::vhosts:
+  ocw:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'ocw-demo.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'ocw-demo.apache.org.http_access.log'
+    error_log_file: 'ocw-demo.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:9000
+      ProxyPassReverse / http://127.0.0.1:9000
+      ProxyPreserveHost Off
