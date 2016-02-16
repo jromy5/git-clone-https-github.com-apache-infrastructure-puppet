@@ -20,7 +20,7 @@ class whimsy_server::cronjobs (
 
   cron { 'public_icla':
     ensure  => present,
-    command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_icla_info.rb public/icla-info.json > logs/public-icla-info 2>&1)',
+    command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_icla_info.rb public/icla-info.json public/icla-info_noid.json > logs/public-icla-info 2>&1)',
     user    => $apache::user,
     minute  => '*/15'
   }
