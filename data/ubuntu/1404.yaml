@@ -329,7 +329,6 @@ build_slaves::distro_packages:
   - libc6-dev-i386
   - libclass-accessor-class-perl
   - libcppunit-dev
-  - libcurl4-nss-dev
   - libcurl4-openssl-dev
   - libevent-dev
   - libfuse-dev
