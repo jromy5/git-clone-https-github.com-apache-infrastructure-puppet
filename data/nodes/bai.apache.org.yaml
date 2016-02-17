@@ -3,29 +3,37 @@ classes:
   - apt::unattended_upgrades
   - apt::update
   - fail2ban_asf::config
+  - rsync::server
+  - rsync_bai_asf
   - s3fs
   - ssl::name::wildcard_apache_org
   - zmanda_asf::install
+  - zfs_on_ubuntu
 
-apt::unattended_upgrades::update: 1
-apt::unattended_upgrades::download: 1
-apt::unattended_upgrades::upgrade: 1
-apt::unattended_upgrades::autoclean: 7
-apt::unattended_upgrades::origins:
-  - '${distro_id} ${distro_codename}-security'
-  - '${distro_id} ${distro_codename}-updates'
-  
-fail2ban::service_autorestart: true
-fail2ban::disable: false
-fail2ban::service_status: true
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
 
-fail2ban_asf::config::jails:
-  ssh:
-    filter: sshd
-    action:
-      - iptables-allports
-    logpath: /var/log/auth.log
-    findtime: 1800
-    maxretry: 5
-    enable: true
+rsync::server::module:
+  analysis-vm:
+    path: '/x1/backups/analysis-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.128'
+    auth_users: 'apb-analysis-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+  roller-vm:
+    path: '/x1/backups/roller-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.128'
+    auth_users: 'apb-roller-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+  mysql2-us-mid:
+    path: '/x1/backups/mysql2-us-mid/./target/'
+    hosts_allow: '127.0.0.1 23.253.172.122'
+    auth_users: 'apb-mysql2-us-mid'
+    secrets_file: '/etc/rsyncd.secrets'
+  allura-vm:
+    path: '/x1/backups/allura-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.147'
+    auth_users: 'apb-allura'
+    secrets_file: '/etc/rsyncd.secrets'
+
 
