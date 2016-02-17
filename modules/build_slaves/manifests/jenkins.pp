@@ -16,7 +16,7 @@ class build_slaves::jenkins (
 
   group { 'docker':
     ensure => present,
-  }=>
+  }~>
 
   user { 'jenkins':
     ensure     => present,
