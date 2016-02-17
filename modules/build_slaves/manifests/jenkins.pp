@@ -16,7 +16,7 @@ class build_slaves::jenkins (
 
   user { 'jenkins':
     ensure     => present,
-    require    => Group['jenkins'],
+    require    => [Group['jenkins'], Group['docker']],
     shell      => '/bin/bash',
     managehome => true,
   }
