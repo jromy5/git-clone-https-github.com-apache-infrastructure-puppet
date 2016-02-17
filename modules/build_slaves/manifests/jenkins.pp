@@ -23,7 +23,7 @@ class build_slaves::jenkins (
     require    => Group['jenkins'],
     shell      => '/bin/bash',
     managehome => true,
-    groups     => 'docker',
+    groups     => ['docker', 'jenkins'],
   }
 
   file { '/usr/local/jenkins':
