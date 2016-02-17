@@ -14,11 +14,16 @@ class build_slaves::jenkins (
     ensure => present,
   }
 
+  group { 'docker':
+    ensure => present,
+  }=>
+
   user { 'jenkins':
     ensure     => present,
-    require    => [Group['jenkins'], Group['docker']],
+    require    => Group['jenkins'],
     shell      => '/bin/bash',
     managehome => true,
+    groups     => 'docker',
   }
 
   file { '/usr/local/jenkins':
