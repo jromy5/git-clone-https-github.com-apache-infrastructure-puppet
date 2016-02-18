@@ -16,6 +16,7 @@ classes:
 base::basepackages:
   - apt-file
   - bash
+  - bc
   - ca-certificates
   - htop
   - iotop
