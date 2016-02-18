@@ -9,4 +9,11 @@ class rsync_bai_asf (
     mode    => '0600',
   }
 
+  cron  { 'zfs-snapshot-bai':
+    command   => '/root/bin/zfs-snapshot-bai.sh tank/x1',
+    user      => 'root',
+    hour      => 2,
+    minute    => 0,
+  }
+
 }
