@@ -13,7 +13,6 @@ default_pvm_asf::required_packages:
   - nodejs
   - nodejs-legacy
   - npm
-  - screen
 
 vhosts_asf::vhosts::vhosts:
   ocw:
