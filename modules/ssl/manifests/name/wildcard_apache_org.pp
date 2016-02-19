@@ -16,22 +16,27 @@ class ssl::name::wildcard_apache_org (
   $sslrootdirumask     = '0755',
 ) {
 
-  file {
-    $sslrootdir:
-      ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
-      mode   => $sslrootdirumask;
+  if !defined(File["${sslrootdir}"]) {
+    file {
+     "${sslrootdir}":
+       ensure => directory,
+       group  => 'root',
+       owner  => 'root',
+       mode   => '0755';
     "${sslrootdir}/certs":
       ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
+      group  => 'root',
+      owner  => 'root',
       mode   => '0755';
     "${sslrootdir}/private":
       ensure => directory,
-      group  => $sslrootdirgroup,
-      owner  => $sslrootdirowner,
+      group  => 'root',
+      owner  => 'root',
       mode   => '0700';
+    }
+  }
+
+  file {
     "${sslrootdir}/certs/${sslcertname}":
       ensure  => present,
       require => File[$sslrootdir],
