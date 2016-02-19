@@ -22,6 +22,7 @@ base::basepackages:
   - iotop
   - libnet-snmp-perl
   - libsnmp-perl
+  - screen
   - sockstat
   - software-properties-common
   - zsh

@@ -33,7 +33,6 @@ class buildbot_slave (
     'autoconf',
     'automake',
     'rake',
-    'screen',
   ]
 
   # merge required packages from hiera for slaves
