@@ -37,6 +37,9 @@ class base (
   $rsync_modules = hiera_hash('rsync::server::module', {})
   create_resources(rsync::server::module, $rsync_modules)
 
+  $stunnels = hiera_hash('stunnel::tun', {})
+  create_resources(stunnel::tun, $stunnels)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }

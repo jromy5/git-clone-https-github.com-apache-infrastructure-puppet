@@ -8,6 +8,7 @@ classes:
   - rsync_bai_asf
   - s3fs
   - ssl::name::wildcard_apache_org
+  - stunnel
   - zmanda_asf::install
   - zfs_on_ubuntu
 
@@ -41,3 +42,16 @@ rsync::server::module:
     hosts_allow: '127.0.0.1 140.211.11.3'
     auth_users: 'apb-hermes'
     secrets_file: '/etc/rsyncd.secrets'
+
+stunnel::tun:
+  rsyncd:
+    certificate: '/root/ap-ssl/certs/abi.apache.org.crt'
+    private_key: '/root/ap-ssl/keys/abi.apache.org.key'
+    ca_file: '/root/ap-ssl/keys/some-ca-file.crt'
+    crl_file: '/root/ap-ssl/keys/some-crl-file.crt'
+    chroot: '/var/tmp/stunnel4/rsyncd'
+    user: 'stunnel4'
+    group: 'nogroup'
+    client: false
+    accept: 443
+    connect: 873

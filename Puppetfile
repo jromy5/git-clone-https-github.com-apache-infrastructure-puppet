@@ -204,16 +204,16 @@ mod 'stahnma-epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
 
-
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
   :tag => '4.3.2'
 
+mod 'stunnel',
+  :git => 'https://github.com/puppetlabs/puppetlabs-stunnel'
 
 mod 'sysctl',
   :git => 'https://github.com/thias/puppet-sysctl.git',
   :tag => '1.0.2'
-
 
 mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
