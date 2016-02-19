@@ -27,7 +27,7 @@ logrotate::rule:
     ensure: 'present'
 
 vhosts_asf::vhosts::vhosts:
-  forrest-vm-80:
+  struts-vm-80:
     vhost_name: '*'
     servername: 'struts-vm.apache.org'
     default_vhost: true
