@@ -36,5 +36,8 @@ rsync::server::module:
     hosts_allow: '127.0.0.1 140.211.11.147'
     auth_users: 'apb-allura'
     secrets_file: '/etc/rsyncd.secrets'
-
-
+  hermes:
+    path: '/x1/backups/hermes/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.3'
+    auth_users: 'apb-hermes'
+    secrets_file: '/etc/rsyncd.secrets'
