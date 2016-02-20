@@ -67,17 +67,17 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     docroot: '/var/www/steve'
-    servername: 'vote-wip.apache.org'
+    servername: 'vote.apache.org'
     directoryindex: 'index.html'
     custom_fragment: |
-      Redirect permanent / https://vote-wip.apache.org/
+      Redirect permanent / https://vote.apache.org/
       
   steve_https:
     vhost_name: '*'
     port: 443
     ssl: true
     docroot: '/var/www/steve/www/htdocs'
-    servername: 'vote-wip.apache.org'
+    servername: 'vote.apache.org'
     directoryindex: 'index.html'
     ssl_cert: '/etc/ssl/certs/vote.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/vote.apache.org.chain'
@@ -96,7 +96,18 @@ vhosts_asf::vhosts::vhosts:
       AddOutputFilterByType DEFLATE application/json
       AddOutputFilterByType DEFLATE application/javascript
       
-      # Auth
+      # Member Auth for now
+      <Location />
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthName "ASF Members Only"
+        AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute memberUid
+        AuthLDAPGroupAttributeIsDN off
+        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+      </Location>
+      
+      # Admin Auth
       <Location /steve/admin>
           AuthType Basic
           AuthName "STeVe administration"
