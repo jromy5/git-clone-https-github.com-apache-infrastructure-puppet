@@ -56,3 +56,7 @@ stunnel::tun:
     client:        false
     accept:        8443
     connect:       873
+    ssl_version:  'all'
+    verify:       1
+    options:
+      - NO_SSLv2

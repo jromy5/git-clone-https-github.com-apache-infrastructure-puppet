@@ -209,7 +209,7 @@ mod 'stdlib',
   :tag => '4.3.2'
 
 mod 'stunnel',
-  :git => 'https://github.com/puppetlabs/puppetlabs-stunnel'
+  :git => 'https://github.com/clambertus/puppetlabs-stunnel'
 
 mod 'sysctl',
   :git => 'https://github.com/thias/puppet-sysctl.git',
