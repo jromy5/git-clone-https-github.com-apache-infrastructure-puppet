@@ -46,13 +46,13 @@ rsync::server::module:
 
 stunnel::tun:
   rsyncd:
-    certificate: '/etc/ssl/certs/bai.apache.org.crt'
-    private_key: '/etc/ssl/private/bai.apache.org.key'
-    ca_file: '/etc/ssl/certs/bai.apache.org.ca'
-    crl_file: '/root/ap-ssl/keys/some-crl-file.crt'
-    chroot: '/var/tmp/stunnel4/rsyncd'
-    user: 'stunnel4'
-    group: 'nogroup'
-    client: false
-    accept: 443
-    connect: 873
+    certificate:  '/etc/ssl/certs/bai.apache.org.crt'
+    private_key:  '/etc/ssl/private/bai.apache.org.key'
+    ca_file:      '/etc/ssl/certs/bai.apache.org.ca'
+    crl_file:     '/etc/ssl/private/bai.apache.org.crl'
+    chroot:       '/var/lib/stunnel4/rsyncd'
+    user:         'stunnel4'
+    group:        'nogroup'
+    client:        false
+    accept:        8443
+    connect:       873
