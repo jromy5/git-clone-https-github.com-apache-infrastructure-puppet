@@ -54,7 +54,7 @@ stunnel::tun:
     user:         'stunnel4'
     group:        'nogroup'
     client:        false
-    accept:        8443
+    accept:        443
     connect:       873
     ssl_version:  'all'
     verify:       1
