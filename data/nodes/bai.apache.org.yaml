@@ -23,26 +23,31 @@ rsync::server::module:
     hosts_allow: '127.0.0.1 140.211.11.128'
     auth_users: 'apb-analysis-vm'
     secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   roller-vm:
     path: '/x1/backups/roller-vm/./target/'
     hosts_allow: '127.0.0.1 140.211.11.128'
     auth_users: 'apb-roller-vm'
     secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   mysql2-us-mid:
     path: '/x1/backups/mysql2-us-mid/./target/'
     hosts_allow: '127.0.0.1 23.253.172.122'
     auth_users: 'apb-mysql2-us-mid'
     secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   allura-vm:
     path: '/x1/backups/allura-vm/./target/'
     hosts_allow: '127.0.0.1 140.211.11.147'
     auth_users: 'apb-allura'
     secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   hermes:
     path: '/x1/backups/hermes/./target/'
     hosts_allow: '127.0.0.1 140.211.11.3'
     auth_users: 'apb-hermes'
     secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
