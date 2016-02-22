@@ -121,6 +121,12 @@ class whimsy_server (
     mode   => '0700',
   }
 
+  file { '/srv/subscriptions':
+    ensure => directory,
+    owner  => 'apmail',
+    group  => 'apmail',
+  }
+
   $directories = [
     '/srv/agenda',
     '/srv/secretary',
