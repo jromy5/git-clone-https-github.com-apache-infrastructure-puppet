@@ -52,6 +52,8 @@ rvm::rvm_gems:
 
 whimsy_server::apache_mailmap:
   secretary: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/secmail/deliver.rb"
+  members: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/deliver.rb"
+  board: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/deliver.rb"
 
 whimsy_server::whimsysvn_mailmap:
   svnupdate: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/svnupdate.rb"

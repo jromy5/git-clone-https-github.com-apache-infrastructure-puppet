@@ -62,6 +62,18 @@ class whimsy_server::procmail (
     group  => $apache::group,
   }
 
+  $mailboxes = [
+    '/srv/mail/secretary',
+    '/srv/mail/members',
+    '/srv/mail/board'
+  ]
+
+  file { $mailboxes:
+    ensure => directory,
+    owner  => $apache::user,
+    group  => $apache::group,
+  }
+
   file { '/srv/mail/procmail.log':
     ensure => present,
     owner  => $apache::user,
