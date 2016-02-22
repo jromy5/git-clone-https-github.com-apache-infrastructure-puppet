@@ -44,6 +44,7 @@ gitserver_asf::custom_fragment_80: |
       Redirect Permanent / https://git-dual.apache.org/
 
 gitserver_asf::custom_fragment_443: |
+      ServerName git-dual.apache.org
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
       SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
       SetEnv WRITE_LOCK /etc/nocommit
