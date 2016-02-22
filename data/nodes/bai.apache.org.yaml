@@ -62,6 +62,12 @@ rsync::server::module:
     auth_users: 'apb-hermes'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  minotaur:
+    path: '/x1/backups/minotaur/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.9'
+    auth_users: 'apb-minotaur'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   ooo-forums:
     path: '/x1/backups/ooo-forums/./target/'
     hosts_allow: '127.0.0.1 140.211.167'
