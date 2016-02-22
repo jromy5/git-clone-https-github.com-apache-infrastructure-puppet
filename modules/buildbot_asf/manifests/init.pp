@@ -126,6 +126,12 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-rat-list.sh';
+    "/x1/${username}/master1/public_html/asf_logo_wide_2016.png":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/asf_logo_wide_2016.png';
 
 # required scripts for cron jobs
 
