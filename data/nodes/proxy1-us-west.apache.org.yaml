@@ -783,7 +783,7 @@ vhosts_asf::vhosts::vhosts:
 
   whimsy:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'whimsy.apache.org'
     serveraliases:
@@ -800,7 +800,7 @@ vhosts_asf::vhosts::vhosts:
 
   whimsy-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'whimsy.apache.org'
