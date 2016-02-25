@@ -388,7 +388,6 @@ build_slaves::distro_packages:
   - re2c
   - ruby
   - ruby-dev
-  - screen
   - sharutils
   - shellcheck
   - sloccount
