@@ -1449,8 +1449,15 @@ ea = rw
 [/nifi]
 @nifi = rw
 
+# Moved to git
 [/nutch]
 * = r
+
+[/nutch/cms_site]
+@nutch = rw
+
+[/nutch/site]
+@nutch = rw
 
 [/ode]
 @ode=r
