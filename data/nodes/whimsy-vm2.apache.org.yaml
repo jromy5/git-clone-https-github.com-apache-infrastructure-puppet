@@ -73,7 +73,9 @@ vhosts_whimsy::vhosts::vhosts:
     vhost_name: '*'
     default_vhost: true
     ip: "%{::ipaddress_eth1}"
-    servername: 'whimsy-test.apache.org'
+    servername: 'whimsy.apache.org'
+    serveraliases:
+    -  'whimsy-test.apache.org'
     port: 80
     docroot: '/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
