@@ -244,6 +244,7 @@ jena-pmc={reuse:pit-authorization:jena-pmc}
 jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
 johnzon=dblevins,dkulp,gpetracek,grobmeier,jlmonteiro,jmclean,rmannibucau,sagara,salyh,struberg
+joshua=hsaputra,lewismc,magicaltrout,mattmann,post,tommaso
 jspwiki={ldap:cn=jspwiki,ou=groups,dc=apache,dc=org}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=groups,dc=apache,dc=org}
@@ -378,7 +379,7 @@ samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
-sentry=arvind,jzb,ke4qqq,olamy,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp,asuresh,gqshen,tuongtruong,vamsee,xiaom,colin,anneyu,daly
+sentry=arvind,jzb,ke4qqq,phunt,tomwhite,brock,gchanan,jarcec,prasadm,mackrorysd,xuefu,shreepadma,ali,ctang,daisy,erickt,hadi,dreambird,kramachandran,mark,milo,lskuff,sravya,raghu_mani,sdp,asuresh,gqshen,tuongtruong,vamsee,xiaom,colin,anneyu,daly,hahao
 # Don't remove 'serf'; pit and committers-index use it
 serf={ldap:cn=serf,ou=groups,dc=apache,dc=org}
 serf-pmc={reuse:pit-authorization:serf-pmc}
@@ -1013,6 +1014,9 @@ ea = rw
 
 [/incubator/johnzon/site]
 @incubator = rw
+
+[/incubator/joshua]
+@htrace = rw
 
 [/incubator/juice]
 * = r
