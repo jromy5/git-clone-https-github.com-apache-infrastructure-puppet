@@ -1450,7 +1450,7 @@ ea = rw
 @nifi = rw
 
 [/nutch]
-@nutch = rw
+* = r
 
 [/ode]
 @ode=r
