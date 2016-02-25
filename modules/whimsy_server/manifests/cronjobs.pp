@@ -57,7 +57,7 @@ class whimsy_server::cronjobs (
     ensure  => present,
     command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_nonldap_groups.rb public/public_nonldap_groups.json > logs/public-nonldap-groups 2>&1)',
     user    => $apache::user,
-    minute  => 38
+    minute  => [8, 23, 38, 53]
   }
 
   cron { 'public_ldap_services':
