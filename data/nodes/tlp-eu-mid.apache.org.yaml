@@ -395,6 +395,7 @@ vhosts_asf::vhosts::vhosts:
       - 'apachegroup.org'
       - 'www.apachegroup.org'
       - 'www.*.apache.org'
+      - 'www-eu.apache.org'
     directories:
       -
         path: '/var/www/www.apache.org/content'
@@ -505,6 +506,7 @@ vhosts_asf::vhosts::vhosts:
       - 'apachegroup.org'
       - 'www.apachegroup.org'
       - 'www.*.apache.org'
+      - 'www-eu.apache.org'
     directories:
       -
         path: '/var/www/www.apache.org/content'
