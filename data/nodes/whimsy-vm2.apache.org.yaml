@@ -163,6 +163,9 @@ vhosts_whimsy::vhosts::vhosts:
       RewriteEngine on
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%%{}{HTTP:Authorization}]
 
+      # for secretary workbench
+      Alias /members/received /srv/secretary/workbench/documents/received
+
       RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
       RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
 
