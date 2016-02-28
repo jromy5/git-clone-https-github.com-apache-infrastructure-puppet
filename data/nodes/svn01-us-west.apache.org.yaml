@@ -254,6 +254,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - svn-master.apache.org
       - svn-us.apache.org
+      - svn-eu.apache.org
       - svn.*.apache.org
       - svn01-us-west.apache.org
       - svn01-us-west.*.apache.org
@@ -347,6 +348,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - svn-master.apache.org
       - svn-us.apache.org
+      - svn-eu.apache.org
       - svn.*.apache.org
       - svn01-us-west.apache.org
       - svn01-us-west.*.apache.org
