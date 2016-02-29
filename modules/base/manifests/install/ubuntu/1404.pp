@@ -29,7 +29,7 @@ class base::install::ubuntu::1404 (
     'purge_old_kernels':
       ensure      => present,
       command     => '/bin/sh /root/purge_old_kernels -y > /dev/null',
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin", # lint:ignore:double_quoted_strings
+      environment => 'MAILTO=""',
       minute      => '10',
       hour        => '0',
       weekday     => '0',
