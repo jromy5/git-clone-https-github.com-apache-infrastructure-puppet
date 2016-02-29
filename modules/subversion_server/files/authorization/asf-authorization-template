@@ -318,8 +318,6 @@ olingo={ldap:cn=olingo,ou=groups,dc=apache,dc=org}
 olingo-pmc={reuse:pit-authorization:olingo-pmc}
 oltu={ldap:cn=oltu,ou=groups,dc=apache,dc=org}
 oltu-pmc={reuse:pit-authorization:oltu-pmc}
-onami={ldap:cn=onami,ou=groups,dc=apache,dc=org}
-onami-pmc={reuse:pit-authorization:onami-pmc}
 # now part of commons: ognl=apetrelli,grobmeier,javadrewd,jkuhnert,jochen,lukaszlenart,mcucchiara,olamy,simonetripodi,upayavira,leadpipe
 oodt={ldap:cn=oodt,ou=groups,dc=apache,dc=org}
 oodt-pmc={reuse:pit-authorization:oodt-pmc}

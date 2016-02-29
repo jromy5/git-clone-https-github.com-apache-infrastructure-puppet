@@ -224,8 +224,6 @@ olingo={reuse:asf-authorization:olingo}
 olingo-pmc={ldap:cn=olingo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 oltu={reuse:asf-authorization:oltu}
 oltu-pmc={ldap:cn=oltu,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-onami={reuse:asf-authorization:onami}
-onami-pmc={ldap:cn=onami,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 oodt={reuse:asf-authorization:oodt}
 oodt-pmc={ldap:cn=oodt,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 oozie={reuse:asf-authorization:oozie}
