@@ -48,6 +48,8 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'home.apache.org'
+    serveraliases:
+      - 'people.apache.org'
     default_vhost: true
     docroot: '/var/www/html'
     manage_docroot: false
@@ -68,6 +70,8 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'home.apache.org'
+    serveraliases:
+      - 'people.apache.org'
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www/html'
     manage_docroot: false
