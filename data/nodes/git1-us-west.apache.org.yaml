@@ -1,6 +1,5 @@
 ---
 classes:
-  - amanda::client
   - apache
   - apache::mod::geoip
   - datadog_agent::integrations::http_check
