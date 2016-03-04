@@ -170,6 +170,48 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-ooo-snapshots-index.sh';
+    "/x1/${username}/master1/public_html/projects/ofbiz/create-ofbiz-snapshots-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/create-ofbiz-snapshots-index.sh';
+    "/x1/${username}/master1/public_html/projects/ofbiz/create-ofbiz-archives-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/create-ofbiz-archives-index.sh';
+    "/x1/${username}/master1/public_html/projects/ofbiz/archive-snapshots-monthly.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/archive-snapshots-monthly.sh';
+    "/x1/${username}/master1/public_html/projects/ofbiz/remove-snapshots-daily.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/projects/remove-snapshots-daily.sh';
+    "/x1/${username}/master1/public_html/projects/fop/create-fop-snapshots-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/create-fop-snapshots-index.sh';
+    "/x1/${username}/master1/public_html/projects/subversion/nightlies/create-subversion-nightlies-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/create-subversion-nightlies-index.sh';
+    "/x1/${username}/master1/public_html/projects/jmeter/nightlies/create-jmeter-nightlies-index.sh":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/projects/create-jmeter-nightlies-index.sh';
   }
 
 # cron jobs
@@ -204,6 +246,54 @@ class buildbot_asf (
       minute      => 40,
       hour        => 5,
       command     => "/x1/${username}/master1/public_html/projects/openoffice/create-ooo-snapshots-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-ofbiz-snapshots-index':
+      user        => $username,
+      minute      => '31',
+      command     => "/x1/${username}/master1/public_html/projects/ofbiz/create-ofbiz-snapshots-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-ofbiz-archives-index':
+      user        => $username,
+      minute      => '32',
+      command     => "/x1/${username}/master1/public_html/projects/ofbiz/create-ofbiz-archives-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'archive-snapshots-monthly':
+      user        => $username,
+      minute      => '1',
+      hour        => '0',
+      month       => '1',
+      command     => "/x1/${username}/master1/public_html/projects/ofbiz/archive-snapshots-monthly.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'remove-snapshots-daily':
+      user        => $username,
+      minute      => '5',
+      hour        => '0',
+      command     => "/x1/${username}/master1/public_html/projects/ofbiz/remove-snapshots-daily.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-fop-snapshots-index':
+      user        => $username,
+      minute      => '10',
+      hour        => '10',
+      command     => "/x1/${username}/master1/public_html/projects/fop/create-fop-snapshots-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-subversion-nightlies-index':
+      user        => $username,
+      minute      => '5',
+      hour        => '4',
+      command     => "/x1/${username}/master1/public_html/projects/subversion/nightlies/create-subversion-nightlies-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'create-jmeter-nightlies-index':
+      user        => $username,
+      minute      => '5',
+      hour        => '5',
+      command     => "/x1/${username}/master1/public_html/projects/jmeter/nightlies/create-jmeter-nightlies-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
   }
