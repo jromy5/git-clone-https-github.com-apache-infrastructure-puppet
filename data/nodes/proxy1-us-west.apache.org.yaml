@@ -781,3 +781,45 @@ vhosts_asf::vhosts::vhosts:
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=503
 
+  whimsy-old:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'whimsy-old.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+      - 'whimsy.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy-old.apache.org.http_access.log'
+    error_log_file: 'whimsy-old.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  whimsy-old-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'whimsy-old.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+      - 'whimsy.apache.org' 
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy-old.apache.org.https_access.log'
+    error_log_file: 'whimsy-old.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://whimsy-vm.apache.org/
+      ProxyPassReverse / http://whimsy-vm.apache.org/
+      ProxyPreserveHost On
+      ProxyVia On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=503
