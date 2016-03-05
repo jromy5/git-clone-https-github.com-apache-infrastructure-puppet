@@ -287,6 +287,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://ofbiz-vm.apache.org:8080/
       ProxyPassReverse / http://ofbiz-vm.apache.org:8080/
+      RequestHeader set X-Forwarded-Proto http
 
   demo-trunk-ofbiz-ssl:
     vhost_name: '*'
@@ -303,6 +304,7 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass / https://ofbiz-vm.apache.org:8443/
       ProxyPassReverse / https://ofbiz-vm.apache.org:8443/
       ProxyPreserveHost On
+      RequestHeader set X-Forwarded-Proto https
 
       ProxyErrorOverride On
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=500
