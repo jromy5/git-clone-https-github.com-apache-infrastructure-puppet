@@ -66,6 +66,8 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
 vhosts_asf::modules::modules:
   cgi:
     name: 'cgi'
