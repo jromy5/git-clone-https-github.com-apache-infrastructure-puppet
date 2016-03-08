@@ -1628,7 +1628,7 @@ ea = rw
 * = r
 
 [/shiro]
-@shiro = rw
+* = r
 
 [/sis]
 @sis = rw
