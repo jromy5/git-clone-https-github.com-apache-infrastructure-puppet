@@ -1,5 +1,7 @@
 #/etc/puppet/modules/build_slaves/manifests/jenkins.pp
 
+include apt
+
 class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_password    = '',
@@ -9,6 +11,14 @@ class build_slaves::jenkins (
 
   require stdlib
   require build_slaves
+
+  apt::ppa { 'ppa:ubuntu-lxc/lxd-stable': 
+    ensure => present,
+  }->
+
+  package { 'golang':
+    ensure => present,
+  }
 
   group { 'jenkins':
     ensure => present,
@@ -132,5 +142,6 @@ class build_slaves::jenkins (
   service { 'apache2':
     ensure => 'stopped',
   }
+
 
 }
