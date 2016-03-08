@@ -232,6 +232,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
     custom_fragment: |
+      SSLProxyCheckPeerName off
       SSLProxyEngine On
       ProxyPass / https://ofbiz-vm.apache.org:28443/
       ProxyPassReverse / https://ofbiz-vm.apache.org:28443/
@@ -267,6 +268,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
     custom_fragment: |
+      SSLProxyCheckPeerName off
       SSLProxyEngine On
       ProxyPass / https://ofbiz-vm.apache.org:18443/
       ProxyPassReverse / https://ofbiz-vm.apache.org:18443/
@@ -302,6 +304,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
     custom_fragment: |
+      SSLProxyCheckPeerName off
       SSLProxyEngine On
       ProxyPass / https://ofbiz-vm.apache.org:8443/
       ProxyPassReverse / https://ofbiz-vm.apache.org:8443/
