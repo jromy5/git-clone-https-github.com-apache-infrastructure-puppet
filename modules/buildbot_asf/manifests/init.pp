@@ -291,21 +291,21 @@ class buildbot_asf (
       user        => $username,
       minute      => '10',
       hour        => '10',
-      command     => "/x1/${username}/master1/public_html/projects/fop/create-fop-snapshots-index.sh",
+      command     => "/x1/${username}/master1/public_html/projects/zmlgraphics/fop/create-fop-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-batik-snapshots-index':
       user        => $username,
       minute      => '15',
       hour        => '10',
-      command     => "/x1/${username}/master1/public_html/projects/batik/create-batik-snapshots-index.sh",
+      command     => "/x1/${username}/master1/public_html/projects/xmlgraphics/batik/create-batik-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-commons-snapshots-index':
       user        => $username,
       minute      => '20',
       hour        => '10',
-      command     => "/x1/${username}/master1/public_html/projects/commons/create-commons-snapshots-index.sh",
+      command     => "/x1/${username}/master1/public_html/projects/xmlgraphics/commons/create-commons-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-subversion-nightlies-index':
