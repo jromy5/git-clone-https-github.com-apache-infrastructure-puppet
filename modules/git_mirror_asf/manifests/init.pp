@@ -34,7 +34,8 @@ class git_mirror_asf (
     'check git and clean stale connections':
       command => '/bin/bash /root/bin/check_git.sh',
       user    => 'root',
-      minute  => '*/10';
+      minute  => '*/10',
+      require => Class['rootbin_asf'];
     'update authors.txt':
       command => 'wget https://git-wip-us.apache.org/authors.txt -O /x1/git/authors.txt  /x1/logs/authors-cron.log 2>&1', # lint:ignore:80chars
       user    => $git_mirror_asf::user::username,
