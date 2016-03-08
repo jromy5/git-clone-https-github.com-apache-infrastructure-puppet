@@ -291,7 +291,7 @@ class buildbot_asf (
       user        => $username,
       minute      => '10',
       hour        => '10',
-      command     => "/x1/${username}/master1/public_html/projects/zmlgraphics/fop/create-fop-snapshots-index.sh",
+      command     => "/x1/${username}/master1/public_html/projects/xmlgraphics/fop/create-fop-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-batik-snapshots-index':
