@@ -221,6 +221,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://ofbiz-vm.apache.org:18080/
       ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+      RequestHeader set X-Forwarded-Proto http
 
   demo-old-ofbiz-ssl:
     vhost_name: '*'
@@ -255,6 +256,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://ofbiz-vm.apache.org:18080/
       ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+      RequestHeader set X-Forwarded-Proto http
 
   demo-stable-ofbiz-ssl:
     vhost_name: '*'
@@ -289,6 +291,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://ofbiz-vm.apache.org:8080/
       ProxyPassReverse / http://ofbiz-vm.apache.org:8080/
+      RequestHeader set X-Forwarded-Proto http
 
   demo-trunk-ofbiz-ssl:
     vhost_name: '*'
