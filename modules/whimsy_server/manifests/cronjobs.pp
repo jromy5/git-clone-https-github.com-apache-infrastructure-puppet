@@ -11,6 +11,13 @@ class whimsy_server::cronjobs (
     minute  => '*/10'
   }
 
+  cron { 'gitpull':
+    ensure  => present,
+    command => 'bash -c \'cd /srv/whimsy; (flock -x 1; /usr/local/bin/rake git:pull) > www/logs/git-pull 2>&1\'',
+    user    => whimsysvn,
+    minute  => '*/10'
+  }
+
   cron { 'public_committee':
     ensure  => present,
     command => '(cd /srv/whimsy/www; /usr/local/bin/ruby2.3.0 roster/public_committee_info.rb public/committee-info.json > logs/public-committee-info 2>&1)',
