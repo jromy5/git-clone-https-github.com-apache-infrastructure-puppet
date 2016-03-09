@@ -160,4 +160,10 @@ class whimsy_server (
     group  => whimsysvn,
   }
 
+  file { '/srv/whimsy/www/logs/git-pull':
+    ensure => file,
+    owner  => whimsysvn,
+    group  => whimsysvn,
+  }
+
 }
