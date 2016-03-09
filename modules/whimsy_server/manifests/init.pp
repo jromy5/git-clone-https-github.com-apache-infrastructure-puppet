@@ -90,7 +90,7 @@ class whimsy_server (
   whimsy_server::rvm::symlink { $rubies: }
 
   ############################################################
-  #                    Subversion Data Source                #
+  #                 Subversion/Git Data Sources              #
   ############################################################
 
   user { 'whimsysvn':
@@ -105,6 +105,12 @@ class whimsy_server (
   }
 
   file { '/srv/svn':
+    ensure => 'directory',
+    owner  => whimsysvn,
+    group  => whimsysvn,
+  }
+
+  file { '/srv/git':
     ensure => 'directory',
     owner  => whimsysvn,
     group  => whimsysvn,
