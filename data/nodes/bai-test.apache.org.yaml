@@ -1,0 +1,136 @@
+---
+classes:
+  - apt::unattended_upgrades
+  - apt::update
+  - fail2ban_asf::config
+  - rootbin_asf
+  - rsync::server
+  - rsync_bai_asf
+  - s3fs
+  - ssl::name::bai_stunnel
+  - ssl::name::wildcard_apache_org
+  - stunnel
+  - zmanda_asf::install
+  - zfs_on_ubuntu
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  allura-vm:
+    path: '/x1/backups/allura-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.147'
+    auth_users: 'apb-allura'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  analysis-vm:
+    path: '/x1/backups/analysis-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.128'
+    auth_users: 'apb-analysis-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  bil:
+    path: '/x1/backups/bil/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.118'
+    auth_users: 'apb-bil'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  eir:
+    path: '/x1/backups/eir/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.115'
+    auth_users: 'apb-eir'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  eos:
+    path: '/x1/backups/eos/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.131'
+    auth_users: 'apb-eos'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+    incoming_chmod: 'g-s'
+  hel:
+    path: '/x1/backups/hel/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.116'
+    auth_users: 'apb-hel'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+    incoming_chmod: 'g-s'
+  hermes:
+    path: '/x1/backups/hermes/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.3'
+    auth_users: 'apb-hermes'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  minotaur:
+    path: '/x1/backups/minotaur/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.9'
+    auth_users: 'apb-minotaur'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  ooo-forums:
+    path: '/x1/backups/ooo-forums/./target/'
+    hosts_allow: '127.0.0.1 140.211.167'
+    auth_users: 'apb-ooo-forums'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  ooo-wiki:
+    path: '/x1/backups/ooo-wiki/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.91'
+    auth_users: 'apb-ooo-wiki'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  mysql2-us-mid:
+    path: '/x1/backups/mysql2-us-mid/./target/'
+    hosts_allow: '127.0.0.1 23.253.172.122'
+    auth_users: 'apb-mysql2-us-mid'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  roller-vm:
+    path: '/x1/backups/roller-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.128'
+    auth_users: 'apb-roller-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  sif:
+    path: '/x1/backups/sif/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.123'
+    auth_users: 'apb-sif'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  tac-vm:
+    path: '/x1/backups/tac-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.86'
+    auth_users: 'apb-tacvm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  thor:
+    path: '/x1/backups/thor/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.22'
+    auth_users: 'apb-thor'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+    incoming_chmod: 'g-s'
+  translate-vm:
+    path: '/x1/backups/translate-vm/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.86'
+    auth_users: 'apb-translate-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+
+stunnel::tun:
+  rsyncd:
+    certificate:  '/etc/ssl/certs/bai.apache.org.crt'
+    private_key:  '/etc/ssl/private/bai.apache.org.key'
+    ca_file:      '/etc/ssl/certs/bai.apache.org.ca'
+    crl_file:     '/etc/ssl/private/bai.apache.org.crl'
+    chroot:       '/var/lib/stunnel4/rsyncd'
+    user:         'stunnel4'
+    group:        'nogroup'
+    client:        false
+    accept:        443
+    connect:       873
+    ssl_version:  'all'
+    verify:       1
+    options:
+      - NO_SSLv2
