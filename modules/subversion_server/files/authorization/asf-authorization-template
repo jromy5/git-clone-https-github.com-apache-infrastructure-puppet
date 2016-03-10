@@ -1630,6 +1630,9 @@ ea = rw
 [/shiro]
 * = r
 
+[/shiro/board]
+@shiro = rw
+
 [/shiro/site]
 @shiro = rw
 
