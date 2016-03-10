@@ -573,14 +573,6 @@ acrequser = r
 @pmc-chairs = rw
 @staff = rw
 
-# Temporary permission easing until after the RFP is out
-[/foundation/Events/RFP_2011]
-@member = rw
-# ConCom interested non-members helping with the RFP
-issac = rw
-@svnadmins = rw
-* =
-
 [/geronimo-tck]
 @jcp = rw
 @jcp-j2ee-nda = rw
