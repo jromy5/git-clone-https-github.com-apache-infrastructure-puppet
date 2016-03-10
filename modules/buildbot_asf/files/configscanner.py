@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ############################################################
-# svngit2jira - Subversion/Git to JIRA integration service #
+# ConfigScanner - A buildbot config scanner and updater    #
 # Also does ReviewBoard (and at some point Bugzilla?)      #
 # Built for Python 3, works with 2.7 with a few tweaks     #
 ############################################################
@@ -20,7 +20,8 @@ from threading import Thread
 from datetime import datetime
 
 # Rest
-import sys
+import sys, os
+import argparse, grp, pwd, shutil
 
 version = 2
 if sys.hexversion < 0x03000000:
@@ -329,28 +330,42 @@ class MyDaemon(daemon):
         main()
  
 if __name__ == "__main__":
-        daemon = MyDaemon('/tmp/configscanner.pid')
-        if len(sys.argv) == 2:
-                if 'start' == sys.argv[1]:
-                    daemon.start()
-                elif 'stop' == sys.argv[1]:
-                    daemon.stop()
-                elif 'restart' == sys.argv[1]:
-                    daemon.restart()
-                elif 'foreground' == sys.argv[1]:
-                    debug = True
-                    logging.getLogger().addHandler(logging.StreamHandler())
-                    main()
-                elif 'test' == sys.argv[1]:
-                    debug = True
-                    logging.getLogger().addHandler(logging.StreamHandler())
-                    logging.info("Running tests")
-                    run_test()
-                else:
-                    print("Unknown command")
-                    sys.exit(2)
-                sys.exit(0)
-        else:
-                print("usage: %s start|stop|restart|foreground|test" % sys.argv[0])
-                sys.exit(2)
+
+    parser = argparse.ArgumentParser(description='Command line options.')
+    parser.add_argument('--user', dest='user', type=str, nargs=1,
+                       help='Optional user to run ConfigScanner as')
+    parser.add_argument('--group', dest='group', type=str, nargs=1,
+                       help='Optional group to run ConfigScanner as')
+    parser.add_argument('--pidfile', dest='pidfile', type=str, nargs=1,
+                       help='Optional pid file location')
+    parser.add_argument('--daemonize', dest='daemon', action='store_true',
+                       help='Run as a daemon')
+    parser.add_argument('--stop', dest='kill', action='store_true',
+                       help='Kill the currently running ConfigScanner process')
+    args = parser.parse_args()
+    
+    pidfile = "/var/run/configscanner.pid"
+    if args.pidfile and len(args.pidfile) > 2:
+        pidfile = args.pidfile
+    
+    if args.group and len(args.group) > 0:
+        gid = grp.getgrnam(args.group[0])
+        os.setgid(gid[2])
+
+    if args.user and len(args.user) > 0:
+        print("Switching to user %s" % args.user[0])
+        uid = pwd.getpwnam(args.user[0])[2]
+        os.setuid(uid)
+
+    daemon = MyDaemon(pidfile)
+    
+    if args.kill:
+        daemon.stop()
+    elif args.daemon:
+        daemon.start()
+    else:
+        debug = True
+        logging.getLogger().addHandler(logging.StreamHandler())
+        main()
+    sys.exit(0)
 
