@@ -132,6 +132,12 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/asf_logo_wide_2016.png';
+    "/x1/${username}/master1/configscanner.py":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/configscanner.py';
 
 # required scripts for cron jobs
 
