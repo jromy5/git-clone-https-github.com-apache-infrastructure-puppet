@@ -761,7 +761,8 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://freemarker.org/
+      RewriteRule ^/(.*)$ http://freemarker.incubator.apache.org/$1 [R]
+
   gump:
     vhost_name: '*'
     port: 80
