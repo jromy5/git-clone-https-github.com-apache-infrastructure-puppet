@@ -755,11 +755,13 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'freemarker.org'
+      - 'freemarker.incubator.apache.org'
+      - 'freemarker.apache.org'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://freemarker.incubator.apache.org/
+      Redirect permanent / http://freemarker.org/
   gump:
     vhost_name: '*'
     port: 80
