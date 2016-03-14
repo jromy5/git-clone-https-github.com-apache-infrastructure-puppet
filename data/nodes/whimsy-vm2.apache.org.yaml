@@ -160,6 +160,10 @@ vhosts_whimsy::vhosts::vhosts:
         Options +Indexes
       </Directory>
 
+      <Directory /srv/whimsy/www/members/log>
+        Options +Indexes
+      </Directory>
+
       RewriteEngine on
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%%{}{HTTP:Authorization}]
 

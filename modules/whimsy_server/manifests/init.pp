@@ -148,6 +148,16 @@ class whimsy_server (
     group  => $apache::group,
   }
 
+  file { '/srv/whimsy/www/members/log':
+    ensure => link,
+    target => '/var/log/apache2'
+  }
+
+  file { '/var/log/apache2':
+    ensure => directory,
+    mode   => '0755',
+  }
+
   file { '/srv/whimsy/www/status/status.json':
     ensure => file,
     owner  => $apache::user,
