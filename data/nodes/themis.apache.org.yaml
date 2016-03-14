@@ -765,6 +765,11 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/freemarker.apache.org'
+        allow_override:
+              - 'FileInfo'
     custom_fragment: |
       RewriteRule ^/(.*)$ http://freemarker.incubator.apache.org/$1 [R]
 
