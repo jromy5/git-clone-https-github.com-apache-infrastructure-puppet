@@ -140,3 +140,43 @@ vhosts_asf::vhosts::vhosts:
           AuthBasicProvider ldap
           require valid-user
       </Location>
+      
+  reference:
+    vhost_name: '*'
+    port: 80
+    servername: 'reference.apache.org'
+    default_vhost: true
+    docroot: '/var/www/reference/'
+    manage_docroot: false
+    access_log_file: 'reference_access.log'
+    error_log_file: 'reference_error.log'
+    custom_fragment: |
+      Redirect permanent / https://reference.apache.org/
+
+  reference-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'reference.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/reference/'
+    manage_docroot: false
+    access_log_file: 'reference-ssl_access.log'
+    error_log_file: 'reference-ssl_error.log'
+    custom_fragment: |
+      AcceptPathInfo On
+      LuaScope thread
+      LuaCodeCache stat
+      AddHandler lua-script .lua
+      FallbackResource /index.lua
+      # infra only:
+      <Location /infra/>
+          AuthType Basic
+          AuthName "Apache infrastructure team only"
+          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+      </Location>
