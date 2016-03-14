@@ -12,6 +12,7 @@ classes:
   - postfix::server
   - python
   - subversionclient
+  - loggy
 
 base::basepackages:
   - apt-file
