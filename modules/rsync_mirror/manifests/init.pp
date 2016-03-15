@@ -67,7 +67,7 @@ class rsync_mirror (
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
     exclude         => ['/.rsync.td/', '.svn', '/tmp/'],
     hosts_deny      => ['*'],
-    hosts_allow     => ['140.211.11.131', '192.87.106.229', '88.198.26.2', '140.211.11.105', '127.0.0.1'],
+    hosts_allow     => ['140.211.11.131', '192.87.106.229', '88.198.26.2', '140.211.11.105', '127.0.0.1', '37.48.69.226'],
   }
 
   rsync::server::module { 'apache-dist':
