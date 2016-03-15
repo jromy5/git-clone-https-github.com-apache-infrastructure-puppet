@@ -244,7 +244,7 @@ jena-pmc={reuse:pit-authorization:jena-pmc}
 jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
 johnzon=dblevins,dkulp,gpetracek,grobmeier,jlmonteiro,jmclean,rmannibucau,sagara,salyh,struberg
-joshua=hsaputra,lewismc,magicaltrout,mattmann,post,tommaso
+joshua=hsaputra,lewismc,magicaltrout,mattmann,mjpost,tommaso
 jspwiki={ldap:cn=jspwiki,ou=groups,dc=apache,dc=org}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=groups,dc=apache,dc=org}
