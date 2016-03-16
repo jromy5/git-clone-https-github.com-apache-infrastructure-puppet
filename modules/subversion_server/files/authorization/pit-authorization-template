@@ -1081,11 +1081,13 @@ openejb-tck = r
 [/travel-assistance]
 @member = rw
 @svnadmins = rw
++ea = rw
 * =
 
 [/travel-assistance/past-recipients]
 @svnadmins = rw
 @tac-pmc = rw
+@board = rw
 ea = rw
 * =
 
