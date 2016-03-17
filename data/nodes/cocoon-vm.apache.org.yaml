@@ -1,11 +1,16 @@
 ---
 classes:
-  - default_pvm_asf
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - vhosts_asf::vhosts
+
+base::basepackages:
+  - joe
+  - ant
+  - unzip
+  - tcsh
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
