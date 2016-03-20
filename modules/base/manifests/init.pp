@@ -40,6 +40,9 @@ class base (
   $stunnels = hiera_hash('stunnel::tun', {})
   create_resources(stunnel::tun, $stunnels)
 
+  $awscli_profile = hiera_hash('awscli::profile', {})
+  create_resources(awscli::profile, $awscli_profile)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }

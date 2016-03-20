@@ -12,6 +12,10 @@ mod 'apt',
   :tag => '1.8.0'
 
 
+mod 'awscli',
+  :git => 'https://github.com/clambertus/puppet-awscli'
+
+
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
   :tag => '1.2.4'
