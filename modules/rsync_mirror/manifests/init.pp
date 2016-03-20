@@ -146,7 +146,7 @@ class rsync_mirror (
     list            => 'no',
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
     hosts_deny      => ['*'],
-    hosts_allow     => ['140.211.11.9', 'localhost'],
+    hosts_allow     => ['140.211.11.9', 'localhost', '37.48.69.226'],
   }
 
 }
