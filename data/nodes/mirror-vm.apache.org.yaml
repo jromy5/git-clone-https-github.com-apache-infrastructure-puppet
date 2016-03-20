@@ -1,3 +1,5 @@
 ---
 classes:
   - loggy
+
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
