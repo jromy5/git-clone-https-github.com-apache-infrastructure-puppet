@@ -1,6 +1,6 @@
 #/etc/puppet/modules/zmanda/manifests/install.pp
 
-class zmanda_asf::install {
+class zmanda_asf::server {
 
   $zmandapkgs = [
     'libc6:i386',

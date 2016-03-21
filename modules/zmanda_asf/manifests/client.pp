@@ -1,6 +1,9 @@
 #/etc/puppet/modules/zmanda/manifests/install.pp
 
-class zmanda_asf::client {
+class zmanda_asf::client (
+  $zmanda_client_version  = "3.3.9-1",
+  $s3_prefix              = "s3://asf-private/packages",
+){
 
   $zmandapkgs = [
     'libc6:i386',
@@ -41,8 +44,9 @@ class zmanda_asf::client {
 
   if ! defined(Package['awscli']) {
     package { 'awscli':
-      ensure   => 'present',
-      provider => 'pip',
+      ensure    => 'present',
+      provider  => 'pip',
+      require   => Package['pip'],
     }
   }
 
@@ -56,8 +60,13 @@ class zmanda_asf::client {
       ensure  => 'installed',
       require => Exec['/usr/bin/dpkg --add-architecture i386'],
     }
-    # insert s3 copy code for ubuntu installer here
 
+    # exec { 's3copy':
+
+    # is zmanda client installed?
+    # /usr/bin/dpkg-query -W amanda-enterprise-backup-client (1 or 0)
+
+    # insert s3 copy code for ubuntu installer here
     # insert ubuntu zmanda client install code here
   }
 
