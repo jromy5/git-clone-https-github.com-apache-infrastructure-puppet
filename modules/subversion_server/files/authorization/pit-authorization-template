@@ -407,7 +407,7 @@ member={ldap:cn=member,ou=groups,dc=apache,dc=org}
 pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
 security={ldap:cn=security,ou=groups,dc=apache,dc=org}
 security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg
+svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg,pono
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
