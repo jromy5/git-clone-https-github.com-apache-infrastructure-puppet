@@ -17,6 +17,7 @@
 ^(ofbiz/branches/release12.04)/(.*)
 ^(ofbiz/branches/release13.07)/(.*)
 ^(ofbiz/branches/release14.12)/(.*)
+^(ofbiz/branches/release15.12)/(.*)
 ^(logging/log4php/trunk)/(.*)
 ^(incubator/photark/server/trunk|photark/server/trunk)/(.*)
 ^(juddi/trunk/juddi-console)/(.*)
