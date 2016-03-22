@@ -387,3 +387,5 @@ ulimit::rule:
     ulimit_item: 'nofile'
     ulimit_value: '1048576'
 
+zmanda_asf::client::keycontent: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjURV0FXxmTqc40G7FAcXf3RVvpwPlbzRi4SIFq9abHz5qE1s0vEtO2NNc82yZ8REVhbYyHsIPuG/Cgm8W3iKLQKaQz+7rSO9gQ1m7JqxSRHBW1Aw7zDZ5boKfpP8Ll3dOCfP6H3HW855t05UtY6fCo8Ie+F9HBxbwhdfrjT4/EpjpFkEkze3PzkosH2k1NdX8Q4mg7eE7sclOGinAHbL5HtUGw/V/oFgRbrxl46CVgUr+QTEbWrr8QHqm5FIe8XoJPExQjrRYleo+TLPj29Fdv/HTtGKI0+LwDyjcJ7Rxjs8UKZfGn3CHgv1sDTAmvqrRy1oU2HrOSJZCzJDGdPr9 amandabackup

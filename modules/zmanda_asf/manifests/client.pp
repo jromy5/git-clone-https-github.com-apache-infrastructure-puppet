@@ -1,8 +1,12 @@
 #/etc/puppet/modules/zmanda/manifests/install.pp
 
 class zmanda_asf::client (
-  $zmanda_client_version  = "3.3.9-1",
-  $s3_prefix              = "s3://asf-private/packages",
+  $zmanda_client_version  = '3.3.9-1',
+  $zmanda_pkg             = 'amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.tar',
+  $s3_prefix              = 's3://asf-private/packages',
+  $amandauser             = 'amandabackup',
+  $keycontent             = '', # amanadauser ssh public key
+  $sshdkeysdir            = '/etc/ssh/ssh_keys',
 ){
 
   $zmandapkgs = [
@@ -40,15 +44,12 @@ class zmanda_asf::client (
     'libclass-methodmaker-perl',
     'libdata-dump-perl',
     'libsoap-lite-perl',
+    'gettext',
+    'libcroco3',
+    'libunistring0',
+    'libasprintf-dev',
+    'libgettextpo-dev',
   ]
-
-  if ! defined(Package['awscli']) {
-    package { 'awscli':
-      ensure    => 'present',
-      provider  => 'pip',
-      require   => Package['pip'],
-    }
-  }
 
   if $::lsbdistcodename == 'trusty' {
     exec { '/usr/bin/dpkg --add-architecture i386':
@@ -59,37 +60,38 @@ class zmanda_asf::client (
     package { $zmandapkgs:
       ensure  => 'installed',
       require => Exec['/usr/bin/dpkg --add-architecture i386'],
+      before  => Exec['s3copy']
     }
 
-    # exec { 's3copy':
+    exec { 's3copy':
+      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/${zmanda_pkg} /tmp",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+      require => Class['Awscli'],
+    } -> Exec['untar zmanda']
 
-    # is zmanda client installed?
-    # /usr/bin/dpkg-query -W amanda-enterprise-backup-client (1 or 0)
+    exec { 'untar zmanda':
+      command => "/bin/tar -xf /tmp/${zmanda_pkg} -C /tmp",
+    } -> Package['zmanda-enterprise-client']
 
-    # insert s3 copy code for ubuntu installer here
-    # insert ubuntu zmanda client install code here
+    package { 'zmanda-enterprise-client':
+      ensure    => latest,
+      provider  => dpkg,
+      source    => '/tmp/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb',
+    } -> Package['zmanda-enterprise-extensions']
+
+    package { 'zmanda-enterprise-extensions':
+      ensure    => latest,
+      provider  => dpkg,
+      source    => '/tmp/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb',
+    } -> File["${sshdkeysdir}/amandabackup.pub"]
+
+    file {"${sshdkeysdir}/amandabackup.pub":
+      content => $keycontent,
+      owner   => 'amandabackup',
+      mode    => '0640',
+    }
   }
-
-  # exec { 'copy from s3fs':
-    # # command => '/bin/mount /mnt/asf-private',
-    # unless  => '/bin/grep -qs asf-private /etc/mtab',
-    # require => S3fs::Mount['asf-private'],
-  # } -> File['/tmp/amanda-enterprise-3.3.6-linux.run']
-
-  # file { '/tmp/amanda-enterprise-3.3.6-linux.run':
-    # mode   => '0755',
-    # owner  => 'root',
-    # group  => 'root',
-    # source => '/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run',
-    # before => Exec['install zmanda'],
-  # }
-# 
-  # exec { 'install zmanda':
-    # command => '/tmp/amanda-enterprise-3.3.6-linux.run --mode unattended',
-    # unless  => '/usr/bin/test -f /var/lib/amanda/amanda-release',
-    # require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
-  # }
-# 
+#
   # file { '/etc/zmanda/zmanda_license':
     # mode    => '0664',
     # owner   => 'root',
@@ -97,7 +99,7 @@ class zmanda_asf::client (
     # source  => '/mnt/asf-private/licenses/zmanda_license',
     # require => Exec['install zmanda'],
   # }
-# 
+#
   # file { '/opt/zmanda/amanda/apache2/conf/ssl.conf':
     # mode    => '0644',
     # owner   => 'root',
@@ -105,4 +107,5 @@ class zmanda_asf::client (
     # source  => 'puppet:///modules/zmanda_asf/ssl.conf',
     # require => File['/etc/zmanda/zmanda_license']
   # }
+
 }
