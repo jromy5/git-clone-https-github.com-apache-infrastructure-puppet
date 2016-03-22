@@ -15,6 +15,8 @@ dnsclient::nameservers:
   - '2001:4860:4860::8844'
   - '8.8.8.8'
 
+ldapclient::ldapservers: ~
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
