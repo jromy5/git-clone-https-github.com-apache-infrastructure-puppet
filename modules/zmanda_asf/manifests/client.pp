@@ -91,21 +91,4 @@ class zmanda_asf::client (
       mode    => '0640',
     }
   }
-#
-  # file { '/etc/zmanda/zmanda_license':
-    # mode    => '0664',
-    # owner   => 'root',
-    # group   => 'root',
-    # source  => '/mnt/asf-private/licenses/zmanda_license',
-    # require => Exec['install zmanda'],
-  # }
-#
-  # file { '/opt/zmanda/amanda/apache2/conf/ssl.conf':
-    # mode    => '0644',
-    # owner   => 'root',
-    # group   => 'root',
-    # source  => 'puppet:///modules/zmanda_asf/ssl.conf',
-    # require => File['/etc/zmanda/zmanda_license']
-  # }
-
 }

@@ -1,6 +1,5 @@
 ---
 classes:
-  - amanda::client
   - apache
   - apache::mod::status
   - apache::mod::ssl
@@ -9,6 +8,7 @@ classes:
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+  - zmanda::client
 
 dnsclient::nameservers:
   - '2001:4860:4860::8888'

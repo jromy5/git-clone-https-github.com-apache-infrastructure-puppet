@@ -10,7 +10,7 @@ classes:
   - ssl::name::bai_stunnel
   - ssl::name::wildcard_apache_org
   - stunnel
-  - zmanda_asf::install
+  - zmanda_asf::server
   - zfs_on_ubuntu
 
 rsync::package_ensure:        'latest'

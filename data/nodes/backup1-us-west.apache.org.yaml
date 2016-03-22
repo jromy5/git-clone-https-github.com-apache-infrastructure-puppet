@@ -5,7 +5,6 @@ classes:
   - fail2ban_asf::config
   - s3fs
   - ssl::name::wildcard_apache_org
-  - zmanda_asf::install
 
 apt::unattended_upgrades::update: 1
 apt::unattended_upgrades::download: 1
