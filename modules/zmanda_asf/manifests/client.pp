@@ -1,12 +1,13 @@
 #/etc/puppet/modules/zmanda/manifests/install.pp
 
 class zmanda_asf::client (
+  $amandauser             = 'amandabackup',
+  $backupserver           = 'bai.apache.org',
+  $keycontent             = '', # amanadauser ssh public key
+  $s3_prefix              = 's3://asf-private/packages',
+  $sshdkeysdir            = '/etc/ssh/ssh_keys',
   $zmanda_client_version  = '3.3.9-1',
   $zmanda_pkg             = 'amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.tar',
-  $s3_prefix              = 's3://asf-private/packages',
-  $amandauser             = 'amandabackup',
-  $keycontent             = '', # amanadauser ssh public key
-  $sshdkeysdir            = '/etc/ssh/ssh_keys',
 ){
 
   include awscli
@@ -59,11 +60,13 @@ class zmanda_asf::client (
   ]
 
   if $::lsbdistcodename == 'trusty' {
+
     exec { '/usr/bin/dpkg --add-architecture i386':
-      unless => '/bin/grep -q i386 /var/lib/dpkg/arch',
-      before => Package[$zmandapkgs],
-      notify => Exec['apt_update'],
+      command => '/usr/bin/dpkg --add-architecture i386 && apt-get update',
+      unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
+      before  => Package[$zmandapkgs],
     }
+
     package { $zmandapkgs:
       ensure  => 'installed',
       require => Exec['/usr/bin/dpkg --add-architecture i386'],
@@ -71,26 +74,34 @@ class zmanda_asf::client (
     }
 
     exec { 's3copy':
-      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/${zmanda_pkg} /tmp",
+      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/${zmanda_pkg} /root",
       unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
       require => Class['Awscli'],
     } -> Exec['untar zmanda']
 
     exec { 'untar zmanda':
-      command => "/bin/tar -xf /tmp/${zmanda_pkg} -C /tmp",
-    } -> Package['zmanda-enterprise-client']
+      command => "/bin/tar -xf /root/${zmanda_pkg} -C /root",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+    } -> Exec['install client']
 
-    package { 'zmanda-enterprise-client':
-      ensure    => latest,
-      provider  => dpkg,
-      source    => '/tmp/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb',
-    } -> Package['zmanda-enterprise-extensions']
+    exec { 'install client':
+      command => "/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+    } -> Exec['install extensions']
 
-    package { 'zmanda-enterprise-extensions':
-      ensure    => latest,
-      provider  => dpkg,
-      source    => '/tmp/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb',
-    } -> File["${sshdkeysdir}/amandabackup.pub"]
+    exec { 'install extensions':
+      command => "/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-extensions-client',
+    } -> File['update amandahosts']
+
+    file {'update amandahosts':
+      path    => '/var/lib/amanda/.amandahosts',
+      ensure  => present,
+      content => "${backupserver} amandabackup amdump",
+      owner   => 'amandabackup',
+      group   => 'disk',
+      mode    => '0600',
+    }
 
     file {"${sshdkeysdir}/amandabackup.pub":
       content => $keycontent,
