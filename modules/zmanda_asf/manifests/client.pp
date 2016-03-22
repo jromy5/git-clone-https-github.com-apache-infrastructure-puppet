@@ -3,7 +3,6 @@
 class zmanda_asf::client (
   $amandauser             = 'amandabackup',
   $backupserver           = 'bai.apache.org',
-  $keycontent             = '', # amanadauser ssh public key
   $s3_prefix              = 's3://asf-private/packages',
   $sshdkeysdir            = '/etc/ssh/ssh_keys',
   $zmanda_client_version  = '3.3.9-1',
