@@ -161,7 +161,6 @@
 ^(thrift/cms-site)/(.*)
 ^(nutch/cms_site)/(.*)
 ^(incubator/slider\/site|slider\/site)/(.*)
-^(incubator/slider\/site|slider\/site)/(.*)
 ^(bookkeeper/site)/(.*)
 ^(oodt/cms_site)/(.*)
 ^(incubator/tamaya\/site|tamaya\/site)/(.*)
