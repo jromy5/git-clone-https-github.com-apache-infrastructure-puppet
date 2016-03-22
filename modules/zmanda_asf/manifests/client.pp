@@ -9,6 +9,8 @@ class zmanda_asf::client (
   $sshdkeysdir            = '/etc/ssh/ssh_keys',
 ){
 
+  include awscli
+
   $zmandapkgs = [
     'libc6:i386',
     'libncurses5:i386',
