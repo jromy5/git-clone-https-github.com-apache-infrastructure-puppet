@@ -11,6 +11,11 @@ class zmanda_asf::client (
 
   include awscli
 
+  awscli::profile { 'default':
+    aws_access_key_id     => hiera('s3fs::aws_access_key_id'),
+    aws_secret_access_key => hiera('s3fs::aws_secret_access_key'),
+  }
+
   $zmandapkgs = [
     'libc6:i386',
     'libncurses5:i386',
