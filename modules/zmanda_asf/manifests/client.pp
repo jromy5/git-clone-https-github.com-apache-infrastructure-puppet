@@ -104,7 +104,7 @@ class zmanda_asf::client (
     }
 
     file {"${sshdkeysdir}/amandabackup.pub":
-      content => $keycontent,
+      content => hiera('zmanda_asf::amdump_public_key'),
       owner   => 'amandabackup',
       mode    => '0640',
     }

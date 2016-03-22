@@ -1,6 +1,21 @@
 #/etc/puppet/modules/zmanda/manifests/install.pp
 
-class zmanda_asf::server {
+class zmanda_asf::server (
+  $amandauser             = 'amandabackup',
+  $backupserver           = 'bai.apache.org',
+  $keycontent             = '', # amanadauser ssh public key
+  $s3_prefix              = 's3://asf-private',
+  $sshdkeysdir            = '/etc/ssh/ssh_keys',
+  $zmanda_lic             = 'zmanda_license',
+  $zmanda_pkg             = 'amanda-enterprise-3.3.9-linux.run',
+){
+
+  include awscli
+
+  awscli::profile { 'default':
+    aws_access_key_id     => hiera('s3fs::aws_access_key_id'),
+    aws_secret_access_key => hiera('s3fs::aws_secret_access_key'),
+  }
 
   $zmandapkgs = [
     'libc6:i386',
@@ -40,54 +55,35 @@ class zmanda_asf::server {
   ]
 
   if $::lsbdistcodename == 'trusty' {
+
     exec { '/usr/bin/dpkg --add-architecture i386':
-      unless => '/bin/grep -q i386 /var/lib/dpkg/arch',
-      before => Package[$zmandapkgs],
-      notify => Exec['apt_update'],
+      command => '/usr/bin/dpkg --add-architecture i386 && apt-get update',
+      unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
+      before  => Package[$zmandapkgs],
     }
+
     package { $zmandapkgs:
       ensure  => 'installed',
       require => Exec['/usr/bin/dpkg --add-architecture i386'],
+      before  => Exec['s3copy']
     }
-  }
 
-  s3fs::mount { 'asf-private':
-    ensure      => defined,
-    bucket      => 'asf-private',
-    mount_point => '/mnt/asf-private',
-    before      => Exec['mount s3fs'],
-  }
+    exec { 's3copy':
+      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/packages/${zmanda_pkg} /root",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-server',
+      require => Class['Awscli'],
+    } -> Exec['install zmanda']
 
-  exec { 'mount s3fs':
-    command => '/bin/mount /mnt/asf-private',
-    unless  => '/bin/grep -qs asf-private /etc/mtab',
-    require => S3fs::Mount['asf-private'],
-  } -> File['/tmp/amanda-enterprise-3.3.6-linux.run']
+    exec { 'install zmanda':
+      command => "/bin/chmod +x /root/${zmanda_pkg} && /root/${zmanda_pkg} --mode unattended",
+      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-server',
+    }
 
-  file { '/tmp/amanda-enterprise-3.3.6-linux.run':
-    mode   => '0755',
-    owner  => 'root',
-    group  => 'root',
-    source => '/mnt/asf-private/packages/amanda-enterprise-3.3.6-linux.run',
-    before => Exec['install zmanda'],
-  }
+    exec { 's3copy license':
+      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/licenses/${zmanda_lic} /etc/zmanda/zmanda_license",
+      require => Exec['install zmanda'],
+    } 
 
-  exec { 'install zmanda':
-    command => '/tmp/amanda-enterprise-3.3.6-linux.run --mode unattended',
-    unless  => '/usr/bin/test -f /var/lib/amanda/amanda-release',
-    require => File['/tmp/amanda-enterprise-3.3.6-linux.run'],
-  }
-
-  file { '/etc/zmanda/zmanda_license':
-    mode    => '0664',
-    owner   => 'root',
-    group   => 'root',
-    source  => '/mnt/asf-private/licenses/zmanda_license',
-    require => Exec['install zmanda'],
-  } -> Exec['unmount s3fs']
-
-  exec { 'unmount s3fs':
-    command => '/bin/umount /mnt/asf-private',
   }
 
   file { '/opt/zmanda/amanda/apache2/conf/ssl.conf':
@@ -95,6 +91,39 @@ class zmanda_asf::server {
     owner   => 'root',
     group   => 'root',
     source  => 'puppet:///modules/zmanda_asf/ssl.conf',
-    require => File['/etc/zmanda/zmanda_license']
+    require => Exec['install zmanda'],
   }
+
+  file { '/var/lib/amanda/.ssh/id_rsa_amdump':
+    mode    =>  '0600',
+    owner   =>  'amandabackup',
+    group   =>  'disk',
+    content =>  hiera('zmanda_asf::amdump_private_key'),
+    require => Exec['install zmanda'],
+  }
+
+  file { '/var/lib/amanda/.ssh/id_rsa_amrecover':
+    mode    =>  '0600',
+    owner   =>  'amandabackup',
+    group   =>  'disk',
+    content =>  hiera('zmanda_asf::amrecover_private_key'),
+    require => Exec['install zmanda'],
+  }
+
+  file { '/var/lib/amanda/.ssh/id_rsa_amdump.pub':
+    mode    =>  '0600',
+    owner   =>  'amandabackup',
+    group   =>  'disk',
+    content =>  hiera('zmanda_asf::amdump_public_key'),
+    require => Exec['install zmanda'],
+  }
+
+  file { '/var/lib/amanda/.ssh/id_rsa_amrecover.pub':
+    mode    =>  '0600',
+    owner   =>  'amandabackup',
+    group   =>  'disk',
+    content =>  hiera('zmanda_asf::amrecover_public_key'),
+    require => Exec['install zmanda'],
+  }
+
 }
