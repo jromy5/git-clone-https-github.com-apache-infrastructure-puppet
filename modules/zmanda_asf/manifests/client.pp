@@ -81,6 +81,7 @@ class zmanda_asf::client (
       content => $keycontent,
       owner   => 'amandabackup',
       mode    => '0640',
+      require => Exec['install client'],
     }
   }
 }
