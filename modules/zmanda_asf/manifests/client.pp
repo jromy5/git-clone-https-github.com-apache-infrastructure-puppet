@@ -80,6 +80,7 @@ class zmanda_asf::client (
       content => hiera('zmanda_asf::amdump_public_key'),
       owner   => 'amandabackup',
       mode    => '0640',
+      require => Exec['install client'],
     }
   }
 }
