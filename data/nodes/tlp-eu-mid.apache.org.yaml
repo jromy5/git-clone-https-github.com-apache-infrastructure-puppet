@@ -726,7 +726,9 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'couchapp.org'
       - 'couchapp.com'
+      - 'couchhack.org'
       - 'www.couchapp.com'
+      - 'www.couchhack.org'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
