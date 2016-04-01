@@ -32,7 +32,8 @@ firewall:
     iniface: 'eth0'
     action: 'accept'
     proto: 'tcp'
-    port: '10080'
+    port: '22'
+    source: '62.210.89.91'
     destination: '192.168.3.4'
 
   100-zmanda-dnat:
@@ -40,9 +41,10 @@ firewall:
     jump: 'DNAT'
     table: 'nat'
     proto: 'tcp'
-    todest: '192.168.3.4:10080'
+    todest: '192.168.3.4:22'
     iniface: 'eth0'
-    dport: '10080'
+    dport: '22'
+    source: '62.210.89.91'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
