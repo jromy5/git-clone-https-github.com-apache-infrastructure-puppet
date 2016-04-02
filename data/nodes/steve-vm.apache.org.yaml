@@ -113,15 +113,17 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       AddHandler lua-script .lua
       
-      # Member Auth for now
+      # Committer Auth for now, member auth commented out
       <Location />
         AuthType Basic
         AuthBasicProvider ldap
-        AuthName "ASF Members Only"
+        AuthName "ASF Committers Only"
         AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute memberUid
-        AuthLDAPGroupAttributeIsDN off
-        Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        #AuthLDAPGroupAttribute memberUid
+        #AuthLDAPGroupAttributeIsDN off
+        #Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        AuthLDAPRemoteUserAttribute uid
+        require valid-user
       </Location>
       
       # Admin Auth
