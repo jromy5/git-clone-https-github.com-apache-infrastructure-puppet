@@ -1357,7 +1357,7 @@ buildbot = rw
 buildbot = rw
 
 [/websites/production/sentry]
-@incubator = rw
+@sentry = rw
 
 [/websites/production/shindig]
 @attic-pmc = rw
