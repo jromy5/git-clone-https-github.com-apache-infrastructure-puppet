@@ -65,8 +65,6 @@ vhosts_asf::vhosts::vhosts:
       <Directory /var/www/projects.apache.org/site/json/>
         Header set Access-Control-Allow-Origin "*"
       </Directory>
-      Redirect /feeds http://projects-old.apache.org/feeds
-      Redirect /indexes http://projects-old.apache.org/indexes
 
   reporter:
     vhost_name: '*'
