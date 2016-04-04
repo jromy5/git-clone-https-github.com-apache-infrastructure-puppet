@@ -273,6 +273,7 @@ samza-pmc={ldap:cn=samza,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 santuario={reuse:asf-authorization:santuario}
 santuario-pmc={ldap:cn=santuario,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 sentry={reuse:asf-authorization:sentry}
+serf-pmc={ldap:cn=sentry,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 serf={reuse:asf-authorization:serf}
 serf-pmc={ldap:cn=serf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 servicemix={reuse:asf-authorization:servicemix}
