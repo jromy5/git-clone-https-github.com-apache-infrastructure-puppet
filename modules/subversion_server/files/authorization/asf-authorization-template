@@ -1087,9 +1087,6 @@ ea = rw
 [/incubator/samoa]
 @samoa = rw
 
-[/incubator/sentry]
-@sentry = rw
-
 [/incubator/singa]
 @singa = rw
 
@@ -1596,6 +1593,9 @@ ea = rw
 
 [/santuario]
 @santuario = rw
+
+[/sentry]
+@sentry = rw
 
 [/serf]
 @committers = rw
