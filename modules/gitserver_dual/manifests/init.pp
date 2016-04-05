@@ -15,6 +15,15 @@ package {
     ensure  => installed,
 }
 
+  
+file { '/x1/git/asfgit-dual':
+  source   => 'puppet://modules/gitdual_asf',
+  recurse  => true,
+  owner    => 'root',
+  group    => 'www-data',
+  mode     => '0750';
+}
+
 file {
   '/x1/git/htdocs':
     ensure  => link,
@@ -40,14 +49,7 @@ file {
     ensure   => present,
     source   => 'puppet:///modules/gitdual_asf/gitconfig';
   }
-  
-file { '/x1/git/asfgit-dual':
-  source   => 'puppet://modules/gitdual_asf',
-  recurse  => true,
-  owner    => 'root',
-  group    => 'www-data',
-  mode     => '0750';
-}
+
 
 #cron {
 #  'asfgit-admin update svn authors':
