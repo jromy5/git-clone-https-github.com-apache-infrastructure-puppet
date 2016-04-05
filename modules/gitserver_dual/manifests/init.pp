@@ -24,6 +24,18 @@ file { '/x1/git/asfgit-dual':
   mode     => '0750';
 }
 
+
+file {
+  '/var/www/.ssh':
+    ensure   => directory,
+    owner    => 'www-data',
+    group    => 'www-data',
+    mode     => '0750';
+  '/var/www/.ssh/config':
+    ensure  => present,
+    source   => 'puppet:///modules/gitdual_asf/gitconf/config';
+}
+
 file {
   '/x1/git/htdocs':
     ensure  => link,
