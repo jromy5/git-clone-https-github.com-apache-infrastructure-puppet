@@ -5,7 +5,8 @@ class gitserver_dual (
   $custom_fragment_80  = '',
   $custom_fragment_443 = '',
   $packages            = ['gitweb', 'libnet-github-perl',
-                          'libnet-ldap-perl', 'swaks', 'python'],
+                          'libnet-ldap-perl', 'swaks', 'python',
+                          'python-ldap'],
 
 
 ) {
