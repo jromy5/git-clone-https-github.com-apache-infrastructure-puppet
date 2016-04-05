@@ -26,11 +26,20 @@ NO_MERGES = u"""\
 Merges are not allowed on %s.
 """
 
+SYNC_BROKEN = u"""\
+This repository is currently out of sync, please
+contact infrastructure@apache.org!
+"""
+
 def main():
     # Check if commits are enabled.
     for lockname in cfg.write_locks:
         if os.path.exists(lockname):
             util.abort(WRITE_LOCKED)
+
+    # Check if the repo is out of sync
+    if os.path.exists("/x1/git/git-dual/broken/%s.txt" % cfg.repo_name):
+        util.abort(SYNC_BROKEN)
 
     # Check committer's authorization for this
     # repository.
