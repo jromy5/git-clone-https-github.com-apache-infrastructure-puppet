@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SUDO=/usr/local/bin/sudo
+GIT=/usr/local/bin/git
+GIT_DIR=/usr/local/etc/asfgit-admin/.git
+GIT_WORK_TREE=/usr/local/etc/asfgit-admin/
+
+echo "Updating hosting configuration... "
+cd $GIT_WORK_TREE
+
+# make sure the line in sudoers is an exact match
+$SUDO $GIT --git-dir=$GIT_DIR --work-tree=$GIT_WORK_TREE pull --rebase
+status=$?
+
+if [ $status -eq 0 ]; then
+   echo "OK"
+else
+   echo "Failed."
+fi
+
+exit $status
+

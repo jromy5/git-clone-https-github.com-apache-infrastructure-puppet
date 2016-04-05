@@ -1,0 +1,25 @@
+
+
+# ASF Git configuration starts here. Review the settings
+# below to make sure everything looks sane.
+#
+# NOTE: Make sure and set hooks.asfgit.recips to the proper
+#       commits mailing list.
+
+[remote "github-copy"]
+    url = https://github.com/apache/%(git_repo)s
+    mirror = true
+
+[gitweb]
+    owner = The Apache Software Foundation
+
+[hooks.asfgit]
+    debug = false
+    protect = refs/heads/trunk refs/heads/master refs/heads/rel/ refs/tags/rel/
+    no-merges = false
+    sendmail = /usr/local/sbin/sendmail
+    recips = %(commit)s
+    max-emails = 50
+    max-size = 90000
+    # buildbot-project = name # The buildbot project to notify
+    # cia-project = name # The CIA.vc project to report to

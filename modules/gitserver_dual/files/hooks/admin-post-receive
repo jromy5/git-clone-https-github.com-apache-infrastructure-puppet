@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# By doing things in this order we ensure the mail hook
+# runs before any changes are made to the hooks.  Yes this
+# means your changes won't take effect until a subsequent
+# push happens.
+
+# this never fails, just reports errors to the client
+$ASFGIT_ADMIN/hooks/post-receive
+
+# sh will use this for the exit status
+$ASFGIT_ADMIN/hooks/admin-update

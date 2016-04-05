@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+if [ $# -eq 0 ]
+    then
+    cat <<EOT
+usage:
+    asfgit-find-bad-authors path/to/repo > outputfile
+
+example:
+    asfgit-find-bad-authors incubator/datafu > badauthors.txt
+EOT
+    exit 1
+fi
+authors=$(svn log -q https://svn.apache.org/repos/asf/$1 | grep -E '^r[0-9]+' | cut -d '|' -f2 | sort | uniq | xargs -I {} echo '{}')
+for author in ${authors}; do
+  if [[ "`ldapsearch -LLL uid=$author`" == "" ]]; then
+    echo $author
+  fi
+done
