@@ -154,7 +154,7 @@
 ^(metamodel\/site|metamodel\/site)/(.*)
 ^(incubator/infrastructure\/financials\/src|infrastructure\/financials\/src)/(.*)
 ^(hive/cms)/(.*)
-^(incubator/sentry\/site|sentry\/site)/(.*)
+^(sentry\/site)/(.*)
 ^(mahout/site/mahout_cms)/(.*)
 ^(juddi/cms-site)/(.*)
 ^(ofbiz/cmssite)/(.*)
