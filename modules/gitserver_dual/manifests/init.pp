@@ -16,9 +16,29 @@ package {
     ensure  => installed,
 }
 
-  
+file { '/x1':
+  ensure  => directory,
+  owner   => 'root',
+  group   => 'www-data',
+  mode    => '0750',
+}
+file { '/x1/git':
+  ensure  => directory,
+  owner   => 'root',
+  group   => 'www-data',
+  mode    => '0750',
+  require => File['/x1'],
+}
+file { '/x1/git/htdocs':
+  ensure  => directory,
+  owner   => 'root',
+  group   => 'www-data',
+  mode    => '0750',
+  require => File['/x1/git'],
+}
+ 
 file { '/x1/git/asfgit-dual':
-  source   => 'puppet://modules/gitdual_asf',
+  source   => 'puppet://modules/gitserver_dual',
   recurse  => true,
   owner    => 'root',
   group    => 'www-data',
@@ -34,7 +54,7 @@ file {
     mode     => '0750';
   '/var/www/.ssh/config':
     ensure  => present,
-    source   => 'puppet:///modules/gitdual_asf/gitconf/config';
+    source   => 'puppet:///modules/gitserver_dual/gitconf/config';
 }
 
 file {
@@ -52,7 +72,7 @@ file {
     mode     => '0750';
   '/etc/apache2/gitweb.conf':
     ensure   => present,
-    source   => 'puppet:///modules/gitdual_asf/gitweb.conf',
+    source   => 'puppet:///modules/gitserver_dual/gitweb.conf',
     notify   => Service['apache2'],
     require  => Package['apache2'];
   '/usr/local/sbin/sendmail':
@@ -60,7 +80,7 @@ file {
     target   => '/usr/sbin/sendmail';
   '/etc/gitconfig':
     ensure   => present,
-    source   => 'puppet:///modules/gitdual_asf/gitconfig';
+    source   => 'puppet:///modules/gitserver_dual/gitconfig';
   }
 
 
