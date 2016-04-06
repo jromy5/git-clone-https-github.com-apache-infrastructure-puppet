@@ -63,11 +63,6 @@ file {
     owner    => 'root',
     group    => 'www-data',
     mode     => '0750';
-  '/etc/apache2/gitweb.conf':
-    ensure   => present,
-    source   => 'puppet:///modules/gitserver_dual/gitweb.conf',
-    notify   => Service['apache2'],
-    require  => Package['apache2'];
   '/usr/local/sbin/sendmail':
     ensure   => link,
     target   => '/usr/sbin/sendmail';
