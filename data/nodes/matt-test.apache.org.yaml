@@ -75,6 +75,7 @@ gitserver_dual::custom_fragment_443: |
           downgrade-1.0 force-response-1.0
       # Handler for Github sync/PR and so on
       ScriptAliasMatch ^/github$ /x1/git/asfgit-dual/cgi-bin/webhook.cgi
+      ScriptAliasMatch ^/([^/]+)\.cgi$ /x1/git/asfgit-dual/cgi-bin/$1.cgi
       <Directory /x1/git/asfgit-dual/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
