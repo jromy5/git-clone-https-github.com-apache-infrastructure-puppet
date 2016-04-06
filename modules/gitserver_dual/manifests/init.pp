@@ -31,7 +31,7 @@ file { '/x1/git':
 }
  
 file { '/x1/git/asfgit-dual':
-  source   => 'puppet://modules/gitserver_dual',
+  source   => 'puppet:///modules/gitserver_dual',
   recurse  => true,
   owner    => 'root',
   group    => 'www-data',
