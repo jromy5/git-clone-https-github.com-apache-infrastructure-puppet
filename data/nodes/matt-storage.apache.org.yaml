@@ -21,7 +21,7 @@ apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
 
 
-datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
+datadog_agent::integrations::http_check::url: 'https://git-dual.apache.org/repos/asf'
 
 base::gempackages:
   - 'r10k'
