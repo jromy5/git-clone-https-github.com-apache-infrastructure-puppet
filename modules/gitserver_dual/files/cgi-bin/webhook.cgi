@@ -26,7 +26,7 @@ from netaddr import IPNetwork, IPAddress
 GitHubNetwork = IPNetwork("192.30.252.0/22")
 callerIP = IPAddress(os.environ['REMOTE_ADDR'])
 if not callerIP in GitHubNetwork:
-    print("Status: 401 Unaythorized\r\nContent-Type: text/plain\r\n\r\nI don't know you!\r\n")
+    print("Status: 401 Unauthorized\r\nContent-Type: text/plain\r\n\r\nI don't know you!\r\n")
     sys.exit(0)
 
 
