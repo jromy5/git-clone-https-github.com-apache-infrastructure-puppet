@@ -15,7 +15,9 @@ if __name__ == '__main__':
     import asfgit.util as util
 
     try:
-        hook.main()
+        # Only sync if this isn't a mail-only call
+        if not os.environ.get("NO_SYNC"):
+            hook.main()
 
     except Exception, exc:
         log.exception()

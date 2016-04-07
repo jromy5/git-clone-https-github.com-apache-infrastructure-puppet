@@ -53,6 +53,7 @@ if 'repository' in data:
             # Change to repo dir
             os.chdir("/x1/git/repos/asf/%s.git" % reponame)
             # set some vars
+            os.environ['NO_SYNC'] = 'yes'
             os.environ['GIT_COMMITTER_NAME'] = data['pusher']
             os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % data['pusher']
             os.environ['GIT_PROJECT_ROOT'] = "/x1/git/repos/asf/" + reponame + ".git"
