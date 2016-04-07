@@ -3,7 +3,7 @@ classes:
   - apache
   - apache::mod::geoip
   - datadog_agent::integrations::http_check
-  - gitserver_asf
+  - gitserver_dual
   - blocky
   - loggy
   - rootbin_asf
@@ -35,19 +35,18 @@ vhosts_asf::modules::modules:
   sed:
     name: 'sed'
 
-gitserver_asf::custom_fragment_80: |
+gitserver_dual::custom_fragment_80: |
       <Directory /x1/git/htdocs>
        Require all granted 
       </Directory>
-      
       Redirect Permanent / https://git-dual.apache.org/
 
-gitserver_asf::custom_fragment_443: |
+gitserver_dual::custom_fragment_443: |
       ServerName git-dual.apache.org
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
-      SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
+      SetEnv ASFGIT_ADMIN /x1/git/asfgit-dual/
       SetEnv WRITE_LOCK /etc/nocommit
-      SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
+      SetEnv AUTH_FILE /x1/git/asfgit-dual/conf/auth.cfg
       SetEnv GIT_REPOS_ROOT /x1/git/repos
       <Location /repos/>
           SetEnv WEB_HOST https://git-dual.apache.org
@@ -59,7 +58,7 @@ gitserver_asf::custom_fragment_443: |
                 AuthType Basic
                 AuthName "ASF Committers"
                 AuthBasicProvider ldap
-                AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
                 Require ldap-attribute gidNumber=5000
@@ -75,7 +74,13 @@ gitserver_asf::custom_fragment_443: |
           nokeepalive ssl-unclean-shutdown \
           downgrade-1.0 force-response-1.0
       # Handler for Github sync/PR and so on
-      ScriptAliasMatch ^/github$ /x1/git/git-dual/webhook.cgi
+      ScriptAliasMatch ^/github$ /x1/git/asfgit-dual/cgi-bin/webhook.cgi
+      ScriptAliasMatch ^/([^/]+)\.cgi$ /x1/git/asfgit-dual/cgi-bin/$1.cgi
+      <Directory /x1/git/asfgit-dual/cgi-bin>
+          require all granted
+          Options ExecCGI FollowSymlinks
+          SetHandler cgi-script
+      </Directory>
       <Directory /usr/lib/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
@@ -102,7 +107,7 @@ gitserver_asf::custom_fragment_443: |
       SetEnv GIT_HTTP_EXPORT_ALL
       <Location /repos/asf>
           SetEnv GIT_PROJECT_ROOT /x1/git/repos/asf/
-          SetEnv GITWEB_CONFIG /x1/git/asfgit-admin/asf/conf/httpd/gitweb.asf.pl
+          SetEnv GITWEB_CONFIG /x1/git/asfgit-dual/conf/httpd/gitweb.asf.pl
       </Location>
       <Location /logs/asf/>
           ForceType text/plain
