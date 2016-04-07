@@ -15,6 +15,7 @@ class ldapserver::install::ubuntu::1404 (
   $directory        = '/var/lib/ldap',
   $rootdn           = 'cn=root,dc=apache,dc=org',
   $rootpw           = '',
+  $replcreds        = '',
   $maxsize          = '1024000000',
   $indexes          = [],
   $cafile           = '/etc/ldap/cacerts/cacert.pem',

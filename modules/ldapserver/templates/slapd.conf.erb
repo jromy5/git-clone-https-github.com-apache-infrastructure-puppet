@@ -101,7 +101,7 @@ syncrepl rid=<%= id %>
         provider=ldaps://<%= server %>:636
         binddn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org"
         bindmethod=simple
-        credentials="6^sj2aksh8e9xk&"
+        credentials="<%= replcreds %>"
         attrs="*,+"
         searchbase="dc=apache,dc=org"
         type=refreshAndPersist
