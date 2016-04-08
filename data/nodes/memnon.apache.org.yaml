@@ -54,6 +54,13 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/x1/archive.apache.org'
     servername: 'archive.apache.org'
     directoryindex: 'index.html'
+    LuaScope server 5 10
+    LuaCodeCache stat
+    custom_fragment: |
+      # BW limiter
+      LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
+      LuaScope server 5 10
+      LuaCodeCache stat
       
   archive_https:
     vhost_name: '*'
@@ -69,7 +76,7 @@ vhosts_asf::vhosts::vhosts:
       - Indexes
       - FollowSymLinks
     custom_fragment: |
-
-      # Lua for later use
+      # BW limiter
+      LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
       LuaScope server 5 10
       LuaCodeCache stat
