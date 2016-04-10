@@ -39,6 +39,12 @@ base::basepackages:
   - 'mod-lua-asf'
   - 'rsync'
 
+cron:
+  archiver:
+    minute: '0'
+    hour: '1'
+    command: '/usr/bin/rsync -aq --no-o --no-g rsync.eu.apache.org::apache-dist-for-archive /x1/archive.apache.org/dist/'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
