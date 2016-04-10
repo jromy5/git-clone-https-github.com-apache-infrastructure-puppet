@@ -129,7 +129,6 @@ ldapclient::nssbindpasswd: 'b1t3me'
 
 ldapserver::slapd_peers:
   1: themis.apache.org
-  2: ldap3-us-west.apache.org
   3: ldap1-lw-us.apache.org
   4: ldap1-lw-eu.apache.org
   5: devops.apache.org
