@@ -468,8 +468,6 @@ wicket={ldap:cn=wicket,ou=groups,dc=apache,dc=org}
 wicket-pmc={reuse:pit-authorization:wicket-pmc}
 wink={ldap:cn=wink,ou=groups,dc=apache,dc=org}
 wink-pmc={reuse:pit-authorization:wink-pmc}
-wookie={ldap:cn=wookie,ou=groups,dc=apache,dc=org}
-wookie-pmc={reuse:pit-authorization:wookie-pmc}
 ws-pmc={reuse:pit-authorization:ws-pmc}
 ws={ldap:cn=ws,ou=groups,dc=apache,dc=org}
 xalan={ldap:cn=xalan,ou=groups,dc=apache,dc=org}
@@ -1812,7 +1810,7 @@ svn-role = rw
 @wink = rw
 
 [/wookie]
-@wookie = rw
+@attic-pmc = rw
 
 [/xalan]
 @xalan = rw

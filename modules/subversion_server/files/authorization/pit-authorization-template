@@ -352,8 +352,6 @@ wicket={reuse:asf-authorization:wicket}
 wicket-pmc={ldap:cn=wicket,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wink={reuse:asf-authorization:wink}
 wink-pmc={ldap:cn=wink,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-wookie={reuse:asf-authorization:wookie}
-wookie-pmc={ldap:cn=wookie,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ws={reuse:asf-authorization:ws}
 ws-pmc={ldap:cn=ws,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 xalan={reuse:asf-authorization:xalan}
@@ -1431,7 +1429,7 @@ buildbot = rw
 @wink = rw
 
 [/websites/production/wookie]
-@wookie = rw
+@attic-pmc = rw
 
 [/websites/production/www]
 @member = rw
