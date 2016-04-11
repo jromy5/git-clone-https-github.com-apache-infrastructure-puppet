@@ -1036,6 +1036,9 @@ openejb-tck = r
 [/pmc/tuscany]
 @tuscany-pmc = rw
 
+[/pmc/whimsy]
+@whimsy-pmc = rw
+
 [/pmc/wicket]
 @wicket = rw
 
