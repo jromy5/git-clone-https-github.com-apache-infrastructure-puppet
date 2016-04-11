@@ -101,7 +101,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /admin/>
           AuthType Basic
           AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user

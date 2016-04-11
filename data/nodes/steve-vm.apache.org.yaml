@@ -118,7 +118,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
         AuthName "ASF Committers Only"
-        AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
         #AuthLDAPGroupAttribute memberUid
         #AuthLDAPGroupAttributeIsDN off
         #Require ldap-group cn=member,ou=groups,dc=apache,dc=org
@@ -130,7 +130,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /steve/admin>
           AuthType Basic
           AuthName "STeVe administration"
-          AuthLDAPurl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
