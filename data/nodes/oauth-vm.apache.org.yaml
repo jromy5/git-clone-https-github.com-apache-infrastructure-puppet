@@ -84,7 +84,7 @@ vhosts_asf::vhosts::vhosts:
       FallbackResource /index.lua
 
       <Location /auth>
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers only"
         AuthType Basic
