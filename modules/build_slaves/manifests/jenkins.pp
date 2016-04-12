@@ -36,19 +36,6 @@ class build_slaves::jenkins (
     groups     => ['docker', 'jenkins'],
   }
 
-  file { '/usr/local/jenkins':
-    ensure  => directory,
-    require => User['jenkins'],
-    owner   => 'jenkins',
-    group   => 'jenkins',
-  }
-
-  file { '/home/jenkins/tools':
-    ensure  => 'link',
-    require => File['/usr/local/jenkins'],
-    target  => '/usr/local/jenkins',
-  }
-
   file { '/home/jenkins/env.sh':
     ensure => present,
     mode   => '0755',
