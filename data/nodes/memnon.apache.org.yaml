@@ -65,6 +65,7 @@ vhosts_asf::vhosts::vhosts:
       LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
       LuaScope server 5 10
       LuaCodeCache stat
+      IndexOptions FoldersFirst
       
   archive_https:
     vhost_name: '*'
@@ -84,3 +85,4 @@ vhosts_asf::vhosts::vhosts:
       LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
       LuaScope server 5 10
       LuaCodeCache stat
+      IndexOptions FoldersFirst
