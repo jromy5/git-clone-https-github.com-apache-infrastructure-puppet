@@ -537,7 +537,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @activemq = rw
 
 [/airavata/site]
-@airavata=rw
+@airavata=r
 
 [/allura]
 @allura = rw
