@@ -15,7 +15,7 @@ echo '<div class="block content">
   <div class="section-content">
    <p>Welcome to the ASF Buildbot Instance. Projects are welcome to sign up to have their projects make use of Buildbot.</p>
    <p>For more information see the main <a href="https://ci.apache.org/buildbot.html">Buildbot information page</a></p>
-   <p>For info on other CI systems we use at the ASF such as Jenkins, Continuum and Gump see the main <a href="https://ci.apache.org/"> Index page</a></p>
+   <p>For info on other CI systems we use at the ASF such as Jenkins and Gump see the main <a href="https://ci.apache.org/"> Index page</a></p>
   </div>
   <h4 id="docs">
    Projects that have published docs and or APIs
