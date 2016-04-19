@@ -229,55 +229,6 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / http://bloodhound-vm2.apache.org/
       ProxyPreserveHost On
 
-  continuum-ci:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'continuum-ci.apache.org'
-    serveraliases:
-      - 'www.continuum-ci.apache.org'
-    serveradmin: 'continuum@apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'continuum-ci.apache.org.http_access.log'
-    error_log_file:  'continuum-ci.apache.org.error.log'
-    custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://continuum-ci.apache.org/$1
-
-  continuum-ci-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'continuum-ci.apache.org'
-    serveraliases:
-      - 'www.continuum-ci.apache.org'
-    serveradmin: 'continuum@apache.org'
-    docroot: '/var/www'
-    directories:
-      -
-        path: '/var/www'
-        options:
-          - 'None'
-        allow_override:
-          - 'None'
-        order: 'allow,deny'
-        allow: 'from all'
-    log_level: 'warn'
-    access_log_file: 'continuum-ci.apache.org.ssl_access.log'
-    error_log_file:  'continuum-ci.apache.org.error.log'
-    custom_fragment: |
-      <Directory />
-        Options FollowSymLinks
-        AllowOverride None
-      </Directory>
-
-      RedirectMatch ^/$ https://continuum-ci.apache.org/
-
-      Proxypass / http://continuum-vm.apache.org/
-      ProxypassReverse / http://continuum-vm.apache.org/
-      ProxyPreserveHost On
-
   demo-ctakes:
     vhost_name: '*'
     ensure: 'present'
