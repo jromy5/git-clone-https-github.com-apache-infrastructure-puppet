@@ -26,6 +26,40 @@ apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
   - tcsh
+  
+cron:
+  json1:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/member-info.json && mv member-info.json /var/www/html/site/public/member-info.json'
+  json2:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/public_ldap_people.json && mv public_ldap_people.json /var/www/html/site/public/public_ldap_people.json'
+  json3:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/committee-info.json && mv committee-info.json /var/www/html/site/public/committee-info.json'
+  json4:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/icla-info.json && mv icla-info.json /var/www/html/site/public/icla-info.json'
+  json5:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/public_ldap_groups.json && mv public_ldap_groups.json /var/www/html/site/public/public_ldap_groups.json'
+  json6:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/public_ldap_committees.json && mv public_ldap_committees.json /var/www/html/site/public/public_ldap_committees.json'
+  json7:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/public_ldap_services.json && mv public_ldap_services.json /var/www/html/site/public/public_ldap_services.json'
+  json8:
+    minute: '0'
+    hour: '*'
+    command: 'cd /tmp/ && wget https://whimsy.apache.org/public/public_nonldap_groups.json && mv public_nonldap_groups.json /var/www/html/site/public/public_nonldap_groups.json'
 
 ssh_asf::server_options:
   ListenAddress:
