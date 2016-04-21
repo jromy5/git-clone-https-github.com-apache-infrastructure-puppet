@@ -70,24 +70,24 @@ class buildbot_asf (
       gid    => $gid,
   }
 
-  apt::source { 'utopic':
+  apt::source { 'vivid':
     location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'utopic',
+    release  => 'vivid',
     repos    => 'main',
   }
 
-  apt::source { 'utopic-updates':
+  apt::source { 'vivid-updates':
     location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'utopic-updates',
+    release  => 'vivid-updates',
     repos    => 'main',
   }
 
-  apt::pin { 'utopic-buildbot':
+  apt::pin { 'vivid-buildbot':
     ensure   => 'present',
     priority => 1800,
     packages => 'buildbot',
-    codename => 'utopic',
-    require  => Apt::Source['utopic'],
+    codename => 'vivid',
+    require  => Apt::Source['vivid'],
     before   => Package['buildbot'],
   }
 
