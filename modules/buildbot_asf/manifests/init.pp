@@ -145,8 +145,7 @@ class buildbot_asf (
       ensure => 'absent',
       mode   => '0755',
       owner  => $username,
-      group  => $groupname,
-      source => 'puppet:///modules/buildbot_asf/config-update-check.sh';
+      group  => $groupname;
     "/x1/${username}/master1/convert-xml-to-html.sh":
       ensure => 'present',
       mode   => '0755',
