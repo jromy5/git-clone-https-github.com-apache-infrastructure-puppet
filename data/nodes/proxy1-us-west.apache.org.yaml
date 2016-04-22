@@ -848,5 +848,5 @@ fail2ban_asf::config::jails:
 fail2ban_asf::config::filters:
   asf-jira:
     filterfailregex: |
-      ^.*/secure/Signup.jspa.*$
-      ^.*/login.jsp.*$
+      ^.*"clientip": "<HOST>".*"uri": "[^"]*/secure/Signup.jspa.*$
+      ^.*"clientip": "<HOST>".*"uri": "[^"]*/login.jsp.*$
