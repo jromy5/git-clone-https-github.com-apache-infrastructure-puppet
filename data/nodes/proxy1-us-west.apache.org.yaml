@@ -833,3 +833,20 @@ vhosts_asf::vhosts::vhosts:
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=500
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=503
+
+
+fail2ban_asf::config::jails:
+  jira:
+    filter: asf-jira
+    action:
+      - iptables-allports
+    logpath: /var/log/apache2/issues.apache.org.ssl_access.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-jira:
+    filterfailregex: |
+      ^.*/secure/Signup.jspa.*$
+      ^.*/login.jsp.*$
