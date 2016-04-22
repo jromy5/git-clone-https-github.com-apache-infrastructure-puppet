@@ -842,7 +842,7 @@ fail2ban_asf::config::jails:
       - iptables-allports
     logpath: /var/log/apache2/issues.apache.org.ssl_access.log
     findtime: 3600
-    maxretry: 1
+    maxretry: 3
     enable: true
 
 fail2ban_asf::config::filters:
