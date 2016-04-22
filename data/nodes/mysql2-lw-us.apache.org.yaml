@@ -1,0 +1,30 @@
+---
+classes:
+  - datadog_agent::integrations::mysql
+  - mysql::server
+  - mysql_asf::backup
+  - zmanda_asf::client
+
+datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
+datadog_agent::integrations::mysql::user: 'datadog_slave'
+datadog_agent::integrations::mysql::replication: 1
+
+mysql::server::override_options:
+  mysqld:
+    ft_min_word_len: 2
+    bind-address: "%{::ipaddress_eth1}"
+    server-id: 2
+    binlog-format: 'mixed'
+    relay-log: '/var/log/mysql/mysql-relay-bin.log'
+    read-only: 1
+    character-set-server: 'utf8'
+    max_allowed_packet: '64M'
+    max_connections: '4096'
+  mysqldump:
+    max_allowed_packet: '64M'
+
+mysql::server::databases:
+  crowd:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
