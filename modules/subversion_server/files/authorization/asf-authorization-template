@@ -140,7 +140,6 @@ continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
-cotton=jfarrell,dlester,caniszczyk,vinodkone,tobi,sunil,yan,benh,hsaputra
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
 couchdb-pmc={reuse:pit-authorization:couchdb-pmc}
 creadur={ldap:cn=creadur,ou=groups,dc=apache,dc=org}
@@ -173,7 +172,6 @@ directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
-droids=gsingers,javier,mingfai,olegk,ryan,thorsten,rfrovarp,bchapuis,tobr
 eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao
 easyant=antelder,antoine,bodewig,hibou,jbenois,jlboudart,kpsiddharth,xavier
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
@@ -209,7 +207,6 @@ hawq=adenissov,aelhelw,atri,bc,bhuvnesh2703,bosco,cjcjameson,cos,cwelton,dbbaske
 hbase={ldap:cn=hbase,ou=groups,dc=apache,dc=org}
 hbase-pmc={reuse:pit-authorization:hbase-pmc}
 hcatalog=akarasulu,ddas,gates,hashutosh,khorgath,macyang,omalley,pauly,toffer,daijy,avandana,travis
-hdt=adamb,rvs,mattmann,evert,jzemerick,rwk
 helix={ldap:cn=helix,ou=groups,dc=apache,dc=org}
 helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
@@ -371,7 +368,6 @@ river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
 rya=afuchs,busbey,edwardyoon,elserj,venkatesh,swagner
-s4=acmurthy,omalley,phunt,fpj,mmorel,leoneu,robbins,kishoreg,dferro
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
@@ -1000,7 +996,7 @@ ea = rw
 @hcatalog = rw
 
 [/incubator/hdt]
-@committers = rw
+* = r
 
 [/incubator/heraldry]
 * = r
@@ -1080,7 +1076,7 @@ ea = rw
 @rya = rw
 
 [/incubator/s4]
-@s4 = rw
+* = r
 
 [/incubator/samoa]
 @samoa = rw
