@@ -990,13 +990,7 @@ ea = rw
 [/incubator/eagle]
 @eagle = rw
 
-[/incubator/easyant]
-@easyant = rw
-
 [/incubator/graffito]
-* = r
-
-[/incubator/hcatalog]
 * = r
 
 [/incubator/hdt]
