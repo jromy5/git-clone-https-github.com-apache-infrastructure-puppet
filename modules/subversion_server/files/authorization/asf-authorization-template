@@ -997,7 +997,7 @@ ea = rw
 * = r
 
 [/incubator/hcatalog]
-@hcatalog = rw
+* = r
 
 [/incubator/hdt]
 @committers = rw
