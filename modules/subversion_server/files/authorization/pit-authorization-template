@@ -1297,7 +1297,7 @@ buildbot = rw
 @mina = rw
 
 [/websites/production/mrunit]
-@mrunit = rw
+@attic-pmc = rw
 
 [/websites/production/myfaces]
 @myfaces = rw

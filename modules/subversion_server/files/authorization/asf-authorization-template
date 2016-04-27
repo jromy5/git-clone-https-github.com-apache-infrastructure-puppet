@@ -1425,10 +1425,10 @@ ea = rw
 @mina = rw
 
 [/mrunit]
-@mrunit = r
+@attic-pmc = rw
 
 [/mrunit/site]
-@mrunit = rw
+@attic-pmc = rw
 
 [/myfaces]
 @myfaces = rw
