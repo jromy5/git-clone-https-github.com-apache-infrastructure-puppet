@@ -35,6 +35,13 @@ apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
   - issues-data
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
 
 logrotate::rule:
   apache2:
@@ -43,6 +50,8 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   substitute:
     name: 'substitute'
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   allura:
