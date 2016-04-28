@@ -443,6 +443,13 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /jira http://192.168.0.39:10343/jira   retry=0 timeout=1800 max=400
       SetEnvIf Request_URI "^/activemq" asf_proxy=issues-vm.jira-main
       SetEnvIf Request_URI "^/jira" asf_proxy=issues-vm.jira-main
+      
+      # Anti-spam for Aardvark
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+      <Location /jira/>
+        SetInputFilter AntiSpam
+      </Location>
 
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
