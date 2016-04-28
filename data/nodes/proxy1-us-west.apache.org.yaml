@@ -856,9 +856,9 @@ fail2ban_asf::config::jails:
     filter: asf-jira
     action:
       - iptables-allports
-    logpath: /var/log/apache2/issues.apache.org.ssl_access.log
+    logpath: /usr/local/etc/aardvark/spammers.txt
     findtime: 3600
-    maxretry: 3
+    maxretry: 1
     enable: true
 
 fail2ban_asf::config::filters:
