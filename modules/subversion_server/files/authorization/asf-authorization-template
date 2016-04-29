@@ -424,7 +424,7 @@ tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=groups,dc=apache,dc=org}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
 # tashi=clr,mriou,pzf,stroucki,mryan3,rgass
-tamaya=anatole,aalmiray,dblevins,gpetracek,johndament,otaviojava,plexus,rmannibucau,rsandtner,struberg,wkeil
+tamaya=anatole,aalmiray,dblevins,gpetracek,johndament,otaviojava,plexus,pottlinger,rmannibucau,rsandtner,struberg,wkeil
 tapestry={ldap:cn=tapestry,ou=groups,dc=apache,dc=org}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
 taverna=andy,djd,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,gnaylor,hainesr,ianwdunlop,jgarrido,redmitry,shoaibsufi,stain,stuzart
