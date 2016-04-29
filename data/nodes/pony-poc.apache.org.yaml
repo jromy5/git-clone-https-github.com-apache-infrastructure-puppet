@@ -143,5 +143,6 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'lists-ssl_access.log'
     error_log_file: 'lists-ssl_error.log'
     custom_fragment: |
+      ProxyPreserveHost On
       ProxyPass / https://cust-asf.ponee.io/
       ProxyPassReverse / https://cust-asf.ponee.io/
