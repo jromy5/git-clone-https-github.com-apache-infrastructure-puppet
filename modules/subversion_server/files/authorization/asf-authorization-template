@@ -135,7 +135,8 @@ cocoon={ldap:cn=cocoon,ou=groups,dc=apache,dc=org}
 cocoon-pmc={reuse:pit-authorization:cocoon-pmc}
 commons={ldap:cn=commons,ou=groups,dc=apache,dc=org}
 commons-pmc={reuse:pit-authorization:commons-pmc}
-commonsrdf=
+# Only used for http://people.apache.org/phonebook.html?podling=commonsrdf
+commonsrdf=lewismc,johndament,ggregory,wikier,stain,enridaga,britter
 continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
 continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
