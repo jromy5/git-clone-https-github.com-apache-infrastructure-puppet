@@ -1819,43 +1819,8 @@ svn-role = rw
 [/xerces/xerces-p]
 @xerces-p = rw
 
-[/xml/axkit]
-@xml-axkit = r
-
-[/xml/commons]
-# @xml-pmc = rw
-@cocoon = rw
-@forrest = rw
-@xalan = rw
-@xerces = rw
-@xerces-j = rw
-@xml-commons = rw
-@xmlgraphics-batik = rw
-@xmlgraphics-fop = rw
-
-[/xml/crimson]
-* = r
-
-[/xml/site]
-# @xml-pmc = rw
-@cocoon = rw
-@forrest = rw
-@xalan = rw
-@xerces = rw
-@xerces-j = rw
-@xml-commons = rw
-@santuario = rw
-@xmlgraphics-batik = rw
-@xmlgraphics-fop = rw
-
-[/xml/stylebook]
-@xalan = rw
-
-[/xml/xang]
-* = r
-
-[/xml/xindice]
-* = r
+[/xml]
+@attic-pmc = rw
 
 [/xmlbeans]
 @attic-pmc = rw
