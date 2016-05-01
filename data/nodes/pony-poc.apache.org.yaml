@@ -151,3 +151,4 @@ vhosts_asf::vhosts::vhosts:
       SSLProxyCheckPeerExpire off
       ProxyPass / https://cust-asf.ponee.io/
       ProxyPassReverse / https://cust-asf.ponee.io/
+      AddOutputFilterByType DEFLATE application/json
