@@ -30,55 +30,46 @@ base::basepackages:
 cron:
   json1:
     user: 'www-data'
-    group: 'www-data'
     minute: '1'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/member-info.json'
   json2:
     user: 'www-data'
-    group: 'www-data'
     minute: '2'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_people.json'
   json3:
     user: 'www-data'
-    group: 'www-data'
     minute: '3'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/committee-info.json'
   json4:
     user: 'www-data'
-    group: 'www-data'
     minute: '4'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/icla-info.json'
   json5:
     user: 'www-data'
-    group: 'www-data'
     minute: '5'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_groups.json'
   json6:
     user: 'www-data'
-    group: 'www-data'
     minute: '6'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_committees.json'
   json7:
     user: 'www-data'
-    group: 'www-data'
     minute: '6'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_services.json'
   json8:
     user: 'www-data'
-    group: 'www-data'
     minute: '8'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_nonldap_groups.json'
   html1:
     user: 'www-data'
-    group: 'www-data'
     minute: '10'
     hour: '*'
     command: '/usr/bin/python3 /var/www/tools/committers.py'
