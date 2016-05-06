@@ -174,7 +174,6 @@ directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
 eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao
-easyant=antelder,antoine,bodewig,hibou,jbenois,jlboudart,kpsiddharth,xavier
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
 etch={ldap:cn=etch,ou=groups,dc=apache,dc=org}
@@ -207,7 +206,6 @@ hama-pmc={reuse:pit-authorization:hama-pmc}
 hawq=adenissov,aelhelw,atri,bc,bhuvnesh2703,bosco,cjcjameson,cos,cwelton,dbbaskette,entong,foyzur,gates,gcaragea,godenyao,gregchase,hubertzhang,huor,iweng,jacksoncvm,jakob,jaoki,jda,jian,jyao,jz,lei_chang,lilima,litzell,mkiyama,mli,mnxn,msoliman,nalex,nhorn,odiachenko,omalley,rlei,rvs,schubert,shivram,ssa,thejas,tushar_pednekar,tzolov,vraghavan78,vvineet,wangzw,wlin,yjin,yozie,ztao1987
 hbase={ldap:cn=hbase,ou=groups,dc=apache,dc=org}
 hbase-pmc={reuse:pit-authorization:hbase-pmc}
-hcatalog=akarasulu,ddas,gates,hashutosh,khorgath,macyang,omalley,pauly,toffer,daijy,avandana,travis
 helix={ldap:cn=helix,ou=groups,dc=apache,dc=org}
 helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
