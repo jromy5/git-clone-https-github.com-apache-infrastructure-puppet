@@ -209,7 +209,9 @@ def updatePending():
             # Otherwise, just pull in changes
                 else:
                     logging.info("Pulling changes into %s" % path)
-                    rv = subprocess.check_output(("git", "pull"))
+                    rv = subprocess.check_output(("git", "fetch", "origin", config.get("Misc", "branch")))
+                    logging.info(rv)
+                    rv = subprocess.check_output(("git", "reset", "--hard", "origin/%s" % config.get("Misc", "branch")))
                     logging.info(rv)
             except Exception as err:
                 logging.error("Git update error: %s" % err)
