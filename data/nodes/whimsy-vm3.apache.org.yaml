@@ -52,13 +52,13 @@ rvm::rvm_gems:
      ensure: latest
 
 whimsy_server::apache_mailmap:
-  secretary: "/usr/local/bin/ruby2.3.0 /srv/whimsy/www/secmail/deliver.rb"
-  members: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/deliver.rb"
-  board: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/deliver.rb"
+  secretary: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/www/secmail/deliver.rb"
+  members: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/deliver.rb"
+  board: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/deliver.rb"
 
 whimsy_server::whimsysvn_mailmap:
-  svnupdate: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/svnupdate.rb"
-  gitupdate: "/usr/local/bin/ruby2.3.0 /srv/whimsy/tools/gitupdate.rb"
+  svnupdate: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/svnupdate.rb"
+  gitupdate: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/gitupdate.rb"
 
 whimsy_server::apmail_keycontent: |
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCGgAIeu+84ADF0TjKLPJaEE8747Xb+KNjh8ESujparlJcoD0EaYXZ7fF7X24Di5DzETLnv3XzLRuTUG3RzfAovrrgdIOqF23L5QMK3yNHgphNF3ri3ClwATscursH7B38QpEqTTsFGYsBwpJImKEqCkVdoLf5AVu6zhoJIsvW+mDzwvjJN/II/iFeR2/gSm73TWif0tkL7ZSspl2Dj4YNcngCL/nPmPK9tA6EJO3FcZSJzji3pfMIReBM8E0123rYF1EaNqjqF9mw3gf4jNTi9eob3l7Pchdi/onDzthpJpjw6eDcyUisYpotAO1LR0+CJpwfbxSVsjMayKUEPuop apmail@hermes.apache.org
@@ -79,7 +79,7 @@ vhosts_whimsy::vhosts::vhosts:
       -  'whimsy-test.apache.org'
       -  'whimsy3.apache.org'
     port: 80
-    docroot: '/srv/whimsy/www'
+    docroot: '/x1/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
     access_log_file: 'whimsy_access.log'
     options:
@@ -147,22 +147,22 @@ vhosts_whimsy::vhosts::vhosts:
 
       AddCharset UTF-8 .json
 
-      <Directory /srv/whimsy/www/>
+      <Directory /x1/srv/whimsy/www/>
         AddHandler cgi-script .cgi
         MultiViewsMatch Any
         CheckSpelling On
       </Directory>
 
-      <Directory /srv/whimsy/www/public/>
+      <Directory /x1/srv/whimsy/www/public/>
         Header add Access-Control-Allow-Origin "*"
         Options +Indexes
       </Directory>
 
-      <Directory /srv/whimsy/www/logs>
+      <Directory /x1/srv/whimsy/www/logs>
         Options +Indexes
       </Directory>
 
-      <Directory /srv/whimsy/www/members/log>
+      <Directory /x1/srv/whimsy/www/members/log>
         Options +Indexes
       </Directory>
 
@@ -170,7 +170,7 @@ vhosts_whimsy::vhosts::vhosts:
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%%{}{HTTP:Authorization}]
 
       # for secretary workbench
-      Alias /members/received /srv/secretary/workbench/documents/received
+      Alias /members/received /x1/srv/secretary/workbench/documents/received
 
       RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
       RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/

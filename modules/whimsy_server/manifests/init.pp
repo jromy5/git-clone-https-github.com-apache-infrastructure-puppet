@@ -9,6 +9,11 @@ class whimsy_server (
 
 ) {
 
+  file { '/srv':
+    ensure => link,
+    target => '/x1/srv'
+  }
+
   ############################################################
   #                       System Packages                    #
   ############################################################
@@ -55,7 +60,7 @@ class whimsy_server (
     spawnmethod        => 'smart-lv2',
   } ->
 
-  vcsrepo { '/srv/whimsy':
+  vcsrepo { '/x1/srv/whimsy':
     ensure   => latest,
     provider => git,
     source   => 'https://git-dual.apache.org/repos/asf/whimsy.git',
@@ -64,7 +69,7 @@ class whimsy_server (
 
   exec { 'rake::update':
     command     => '/usr/local/bin/rake update',
-    cwd         => '/srv/whimsy',
+    cwd         => '/x1/srv/whimsy',
     refreshonly => true
   }
 
@@ -104,13 +109,13 @@ class whimsy_server (
     group  => whimsysvn,
   }
 
-  file { '/srv/svn':
+  file { '/x1/srv/svn':
     ensure => 'directory',
     owner  => whimsysvn,
     group  => whimsysvn,
   }
 
-  file { '/srv/git':
+  file { '/x1/srv/git':
     ensure => 'directory',
     owner  => whimsysvn,
     group  => whimsysvn,
@@ -120,26 +125,26 @@ class whimsy_server (
   #             Other Working Directories and Files          #
   ############################################################
 
-  file { '/srv/gpg':
+  file { '/x1/srv/gpg':
     ensure => directory,
     owner  => $apache::user,
     group  => $apache::group,
     mode   => '0700',
   }
 
-  file { '/srv/subscriptions':
+  file { '/x1/srv/subscriptions':
     ensure => directory,
     owner  => 'apmail',
     group  => 'apmail',
   }
 
   $directories = [
-    '/srv/agenda',
-    '/srv/secretary',
-    '/srv/secretary/tlpreq',
-    '/srv/whimsy/www/board/minutes',
-    '/srv/whimsy/www/logs',
-    '/srv/whimsy/www/public',
+    '/x1/srv/agenda',
+    '/x1/srv/secretary',
+    '/x1/srv/secretary/tlpreq',
+    '/x1/srv/whimsy/www/board/minutes',
+    '/x1/srv/whimsy/www/logs',
+    '/x1/srv/whimsy/www/public',
   ]
 
   file { $directories:
@@ -148,7 +153,7 @@ class whimsy_server (
     group  => $apache::group,
   }
 
-  file { '/srv/whimsy/www/members/log':
+  file { '/x1/srv/whimsy/www/members/log':
     ensure => link,
     target => '/var/log/apache2'
   }
@@ -158,19 +163,19 @@ class whimsy_server (
     mode   => '0755',
   }
 
-  file { '/srv/whimsy/www/status/status.json':
+  file { '/x1/srv/whimsy/www/status/status.json':
     ensure => file,
     owner  => $apache::user,
     group  => $apache::group,
   }
 
-  file { '/srv/whimsy/www/logs/svn-update':
+  file { '/x1/srv/whimsy/www/logs/svn-update':
     ensure => file,
     owner  => whimsysvn,
     group  => whimsysvn,
   }
 
-  file { '/srv/whimsy/www/logs/git-pull':
+  file { '/x1/srv/whimsy/www/logs/git-pull':
     ensure => file,
     owner  => whimsysvn,
     group  => whimsysvn,
