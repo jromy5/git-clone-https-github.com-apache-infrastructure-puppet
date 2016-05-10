@@ -18,7 +18,7 @@ class whimsy_server::procmail (
     mode    => '0640',
   }
 
-  file { '/srv/mbox':
+  file { '/x1/srv/mbox':
     ensure => directory,
     owner  => apmail,
     group  => apmail,
@@ -56,16 +56,16 @@ class whimsy_server::procmail (
     content => template('whimsy_server/apache-mailrc.erb')
   }
 
-  file { '/srv/mail':
+  file { '/x1/srv/mail':
     ensure => directory,
     owner  => $apache::user,
     group  => $apache::group,
   }
 
   $mailboxes = [
-    '/srv/mail/secretary',
-    '/srv/mail/members',
-    '/srv/mail/board'
+    '/x1/srv/mail/secretary',
+    '/x1/srv/mail/members',
+    '/x1/srv/mail/board'
   ]
 
   file { $mailboxes:
@@ -74,14 +74,14 @@ class whimsy_server::procmail (
     group  => $apache::group,
   }
 
-  file { '/srv/mail/procmail.log':
+  file { '/x1/srv/mail/procmail.log':
     ensure => present,
     owner  => $apache::user,
     group  => $apache::group,
   }
 
   logrotate::rule { 'procmail':
-    path         => '/srv/mail/procmail.log',
+    path         => '/x1/srv/mail/procmail.log',
     rotate       => 6,
     rotate_every => 'month',
     missingok    => true,
@@ -108,14 +108,14 @@ class whimsy_server::procmail (
   }
 
 
-  file { '/srv/svn/procmail.log':
+  file { '/x1/srv/svn/procmail.log':
     ensure => present,
     owner  => whimsysvn,
     group  => whimsysvn,
   }
 
   logrotate::rule { 'procmail-svn':
-    path         => '/srv/svn/procmail.log',
+    path         => '/x1/srv/svn/procmail.log',
     rotate       => 6,
     rotate_every => 'month',
     missingok    => true,
