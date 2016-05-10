@@ -70,7 +70,7 @@ vhosts_whimsy::modules::modules:
   - remoteip
 
 vhosts_whimsy::vhosts::vhosts:
-  whimsy-vm-80:
+  whimsy-vm-443:
     vhost_name: '*'
     default_vhost: true
     ip: "%{::ipaddress_eth1}"
@@ -78,7 +78,8 @@ vhosts_whimsy::vhosts::vhosts:
     serveraliases:
       -  'whimsy-test.apache.org'
       -  'whimsy3.apache.org'
-    port: 80
+      -  'whimsy-vm3.apache.org'
+    port: 443
     docroot: '/x1/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
     access_log_file: 'whimsy_access.log'
@@ -139,6 +140,19 @@ vhosts_whimsy::vhosts::vhosts:
       - /board/publish_minutes
 
     custom_fragment: |
+      SSLCertificateFile /etc/letsencrypt/live/whimsy3.apache.org/cert.pem
+      SSLCertificateKeyFile /etc/letsencrypt/live/whimsy3.apache.org/privkey.pem
+
+      # Include /etc/letsencrypt/options-ssl-apache.conf
+      SSLEngine on
+      SSLProtocol             all -SSLv2 -SSLv3
+      SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA
+      SSLHonorCipherOrder     on
+      SSLCompression          off
+      SSLOptions +StrictRequire
+
+      SSLCertificateChainFile /etc/letsencrypt/live/whimsy3.apache.org/chain.pem
+
       RemoteIPHeader X-Forwarded-For
 
       PassengerFriendlyErrorPages on
