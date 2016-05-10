@@ -368,7 +368,7 @@ river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
 rya=afuchs,busbey,edwardyoon,elserj,venkatesh,swagner
-s2graph=wikier,apurtell,hyunsik,bzz,lukehan,rain
+s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamshon,jaesang,lukehan,mskim
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
