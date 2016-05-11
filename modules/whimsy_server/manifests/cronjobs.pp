@@ -81,4 +81,12 @@ class whimsy_server::cronjobs (
     minute  => 10
   }
 
+  cron { 'letsencrypt_auto':
+    ensure  => present,
+    command => '/srv/git/letsencrypt/letsencrypt-auto renew > /srv/whimsy/www/logs/etsencrypt-auto 2>&1',
+    user    => root,
+    weekday => 3,
+    hour    => 5,
+    minute  => 57
+  }
 }
