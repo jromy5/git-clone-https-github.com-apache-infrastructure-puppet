@@ -54,3 +54,4 @@ class ssl::name::apachecon_com (
       owner   => $sslrootdirowner,
       group   => $sslrootdirgroup;
   }
+}
