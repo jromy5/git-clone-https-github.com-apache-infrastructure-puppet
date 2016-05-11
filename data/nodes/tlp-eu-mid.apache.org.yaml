@@ -618,6 +618,23 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
 
+  apachecon-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'archive.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'archive.*.apachecon.com'
+      - 'apachecon.com'
+      - 'www.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    ssl_cert: '/etc/ssl/certs/wildcard.incubator.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.incubator.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.incubator.apache.org.key'
+
   apachecon-archive-na11:
     vhost_name: '*'
     port: 80
