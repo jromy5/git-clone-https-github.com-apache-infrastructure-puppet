@@ -88,7 +88,6 @@ vhosts_whimsy::vhosts::vhosts:
   whimsy-vm-443:
     vhost_name: '*'
     default_vhost: true
-    ip: "%{::ipaddress_eth1}"
     servername: 'whimsy.apache.org'
     serveraliases:
       -  'whimsy-test.apache.org'
