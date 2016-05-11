@@ -25,6 +25,7 @@ classes:
   - datadog_agent::integrations::apache
   - loggy
   - ssl::name::wildcard_apache_org
+  - ssl::name::apachecon_com
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
@@ -631,9 +632,9 @@ vhosts_asf::vhosts::vhosts:
       - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
-    ssl_cert: '/etc/ssl/certs/wildcard.incubator.apache.org.crt'
-    ssl_chain: '/etc/ssl/certs/wildcard.incubator.apache.org.chain'
-    ssl_key: '/etc/ssl/private/wildcard.incubator.apache.org.key'
+    ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
+    ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
+    ssl_key: '/etc/ssl/private/apachecon.com.key'
 
   apachecon-archive-na11:
     vhost_name: '*'
