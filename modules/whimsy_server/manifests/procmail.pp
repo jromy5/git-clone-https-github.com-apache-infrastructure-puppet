@@ -2,6 +2,10 @@
 
 class whimsy_server::procmail (
 
+  $apmail_keycontent = hiera('whimsy_server::procmail::apmail_keycontent'),
+
+  $keysdir = hiera('ssh::params::sshd_keysdir', '/etc/ssh/ssh_keys')
+
 ) {
 
   ############################################################
@@ -11,6 +15,10 @@ class whimsy_server::procmail (
   user { 'apmail':
     ensure => present,
   }
+
+  file { $keysdir:
+    ensure => directory,
+  } ->
 
   file { "${keysdir}/apmail.pub":
     content => $apmail_keycontent,
