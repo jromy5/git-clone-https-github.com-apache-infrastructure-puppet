@@ -70,6 +70,21 @@ vhosts_whimsy::modules::modules:
   - remoteip
 
 vhosts_whimsy::vhosts::vhosts:
+  whimsy-vm-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      -  'whimsy-test.apache.org'
+      -  'whimsy3.apache.org'
+      -  'whimsy-vm3.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'whimsy_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://whimsy3.apache.org/$1
+
   whimsy-vm-443:
     vhost_name: '*'
     default_vhost: true
