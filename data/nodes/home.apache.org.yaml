@@ -75,7 +75,6 @@ cron:
     command: '/usr/bin/python3 /var/www/tools/committers.py'
   keys1:
     user: 'www-data'
-    group: 'www-data'
     minute: '10'
     hour: '01'
     command: '/usr/bin/lua /var/www/tools/pgp.lua'
