@@ -3,10 +3,6 @@
 
 class whimsy_server (
 
-  $apmail_keycontent = '',
-
-  $keysdir = hiera('ssh::params::sshd_keysdir', '/etc/ssh/ssh_keys')
-
 ) {
 
   file { '/srv':
