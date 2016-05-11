@@ -72,13 +72,28 @@ vhosts_whimsy::modules::modules:
 vhosts_whimsy::vhosts::vhosts:
   whimsy-vm-80:
     vhost_name: '*'
-    default_vhost: true
-    ip: "%{::ipaddress_eth1}"
+    priority: '12'
     servername: 'whimsy.apache.org'
     serveraliases:
       -  'whimsy-test.apache.org'
       -  'whimsy3.apache.org'
+      -  'whimsy-vm3.apache.org'
     port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'whimsy_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://whimsy3.apache.org/$1
+
+  whimsy-vm-443:
+    vhost_name: '*'
+    default_vhost: true
+    servername: 'whimsy.apache.org'
+    serveraliases:
+      -  'whimsy-test.apache.org'
+      -  'whimsy3.apache.org'
+      -  'whimsy-vm3.apache.org'
+    port: 443
     docroot: '/x1/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
     access_log_file: 'whimsy_access.log'
@@ -86,6 +101,10 @@ vhosts_whimsy::vhosts::vhosts:
       - '+FollowSymLinks'
       - '+MultiViews'
       - '+ExecCGI'
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/whimsy3.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/whimsy3.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/whimsy3.apache.org/chain.pem
 
     passenger:
     - /board/agenda
