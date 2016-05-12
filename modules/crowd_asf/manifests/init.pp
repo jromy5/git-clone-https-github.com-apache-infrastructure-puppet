@@ -77,7 +77,11 @@ class crowd_asf (
       gid    => $gid,
   }
 
+<<<<<<< HEAD
 # download standalone Crowd
+=======
+# download standalone Confluence
+>>>>>>> 1dce1f0bcd026d0e353aa314b5805cc0e5e666e4
   exec {
     'download-crowd':
       command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
@@ -137,6 +141,15 @@ class crowd_asf (
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
+<<<<<<< HEAD
+=======
+    $intermediates_dir:
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'crowd',
+      mode    => '0775',
+      require => Class['apache'];
+>>>>>>> 1dce1f0bcd026d0e353aa314b5805cc0e5e666e4
     "${install_dir}/crowd/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
       mode    => '0644';
@@ -161,6 +174,30 @@ class crowd_asf (
       owner   => 'root',
       group   => 'root',
       content => template('crowd_asf/crowd-init-script.erb');
+<<<<<<< HEAD
+=======
+    "${intermediates_dir}/header.inc":
+      ensure => present,
+      source => 'puppet:///modules/crowd_asf/header.inc';
+    "${intermediates_dir}/footer.inc":
+      ensure => present,
+      source => 'puppet:///modules/crowd_asf/footer.inc';
+    "/home/${username}/create-intermediates-index.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('crowd_asf/create-intermediates-index.sh.erb'),
+      mode    => '0755';
+    "/home/${username}/copy-intermediate-html.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('crowd_asf/copy-intermediate-html.sh.erb'),
+      mode    => '0755';
+    "/home/${username}/remove-intermediates-daily.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('crowd_asf/remove-intermediates-daily.sh.erb'),
+      mode    => '0755';
+>>>>>>> 1dce1f0bcd026d0e353aa314b5805cc0e5e666e4
     "/home/${username}/cleanup-tomcat-logs.sh":
       owner   => $username,
       group   => $groupname,
@@ -180,6 +217,28 @@ class crowd_asf (
 # cron jobs
 
   cron {
+<<<<<<< HEAD
+=======
+    'create-intermediates-index':
+      user        => $username,
+      minute      => '*/30',
+      command     => "/home/${username}/create-intermediates-index.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'copy-intermediate-html':
+      user        => $username,
+      minute      => '*/10',
+      command     => "/home/${username}/copy-intermediate-html.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+    'remove-intermediates-daily':
+      user        => $username,
+      minute      => 05,
+      hour        => 07,
+      command     => "/home/${username}/remove-intermediates-daily.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+>>>>>>> 1dce1f0bcd026d0e353aa314b5805cc0e5e666e4
     'cleanup-tomcat-logs':
       user        => $username,
       minute      => 20,
