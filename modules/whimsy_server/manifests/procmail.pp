@@ -16,8 +16,10 @@ class whimsy_server::procmail (
     ensure => present,
   }
 
-  file { $keysdir:
-    ensure => directory,
+  exec { "mkdir_${keysdir}":
+    command => "mkdir ${keysdir}",
+    unless => "test -d ${keysdir}",
+    path => '/bin:/usr/bin'
   } ->
 
   file { "${keysdir}/apmail.pub":
