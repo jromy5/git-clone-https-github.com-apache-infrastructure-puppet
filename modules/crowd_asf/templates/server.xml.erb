@@ -2,7 +2,7 @@
 
 ## This file is puppet managed, any changes will be lost.
 ## This file is dervied from a puppet template,
-## modules/cwiki_asf/templates/server.xml.erb
+## modules/crowd_asf/templates/server.xml.erb
 
 -->
 
@@ -20,33 +20,13 @@
 
             <Host name="localhost" debug="0" appBase="webapps" unpackWARs="true" autoDeploy="false">
 
-                <Context path="<%= @context_path %>" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
-                    <!-- Logger is deprecated in Tomcat 5.5. Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
+                <Context path="<%= @context_path %>" docBase="../crowd" debug="0" reloadable="false" useHttpOnly="true">
                     <Manager pathname="" />
                 </Context>
             </Host>
 
         </Engine>
 
-        <!--
-            To run Confluence via HTTPS:
-             * Uncomment the Connector below
-             * Execute:
-                 %JAVA_HOME%\bin\keytool -genkey -alias tomcat -keyalg RSA (Windows)
-                 $JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA  (Unix)
-               with a password value of "changeit" for both the certificate and the keystore itself.
-             * Restart and visit https://localhost:8443/
-
-             For more info, see http://confluence.atlassian.com/display/DOC/Adding+SSL+for+Secure+Logins+and+Page+Security
-        -->
-<!--
-        <Connector port="8443" maxHttpHeaderSize="8192"
-                   maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
-                   enableLookups="false" disableUploadTimeout="true"
-                   acceptCount="100" scheme="https" secure="true"
-                   clientAuth="false" sslProtocol="TLS" SSLEnabled="true"
-                   URIEncoding="UTF-8" keystorePass="<MY_CERTIFICATE_PASSWORD>"/>
--->
     </Service>
 </Server>
 

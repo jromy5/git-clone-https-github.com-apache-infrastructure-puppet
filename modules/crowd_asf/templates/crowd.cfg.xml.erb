@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<confluence-configuration>
+<crowd-configuration>
   <setupStep>complete</setupStep>
   <setupType>custom</setupType>
   <buildNumber>5982</buildNumber>
   <properties>
-    <property name="confluence.license.message"><%= @confluence_license_message %></property>
-    <property name="attachments.dir">${confluenceHome}/attachments</property>
-    <property name="confluence.plugin.state.global.com.atlassian.confluence.extra.gallery">false</property>
-    <property name="confluence.plugin.state.global.confluence.ext.code:code">false</property>
-    <property name="confluence.plugin.state.global.confluence.extra.userlister:userlistener">true</property>
-    <property name="confluence.plugin.state.global.confluence.extra.webdav">true</property>
-    <property name="confluence.plugin.state.global.confluence.macros.html:html">false</property>
-    <property name="confluence.setup.server.id"><%= @confluence_setup_server_id %></property>
-    <property name="confluence.webapp.context.path">/confluence</property>
-    <property name="default.space.index.content">{index}</property>
-    <property name="default.space.index.title">Space Index</property>
+    <property name="crowd.license.message"><%= @crowd_license_message %></property>
+    <property name="attachments.dir">${crowdHome}/attachments</property>
+    <property name="crowd.setup.server.id"><%= @crowd_setup_server_id %></property>
+    <property name="crowd.webapp.context.path">/crowd</property>
     <property name="email.configured">true</property>
     <property name="hibernate.c3p0.acquire_increment">1</property>
     <property name="hibernate.c3p0.idle_test_period">100</property>
@@ -32,7 +25,6 @@
     <property name="hibernate.dialect">com.atlassian.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.setup">true</property>
     <property name="lucene.index.dir">${localHome}/index</property>
-    <property name="webwork.multipart.saveDir">${localHome}/temp</property>
   </properties>
-</confluence-configuration>
+</crowd-configuration>
 
