@@ -70,8 +70,5 @@ vhosts_asf::vhosts::vhosts:
       ssl_key: '/etc/ssl/private/idm01.apache.org.key'
       custom_fragment: |
         RewriteEngine On
-        ProxyPass /intermediates !
         ProxyPass /crowd/ http://127.0.0.1:8095/crowd/
         ProxyPassReverse /crowd/ http://127.0.0.1:8095/crowd/
-        RewriteCond $1 !(crowd|intermediates)
-        RewriteRule ^/(.*) https://idm01.apache.org/crowd/display/$1 [R=301,L]

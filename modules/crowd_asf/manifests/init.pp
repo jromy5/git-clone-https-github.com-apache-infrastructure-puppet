@@ -77,7 +77,7 @@ class crowd_asf (
       gid    => $gid,
   }
 
-# download standalone Confluence
+# download standalone Crowd
   exec {
     'download-crowd':
       command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
@@ -137,12 +137,6 @@ class crowd_asf (
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
-    $intermediates_dir:
-      ensure  => directory,
-      owner   => 'www-data',
-      group   => 'crowd',
-      mode    => '0775',
-      require => Class['apache'];
     "${install_dir}/crowd/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
       mode    => '0644';
@@ -167,27 +161,6 @@ class crowd_asf (
       owner   => 'root',
       group   => 'root',
       content => template('crowd_asf/crowd-init-script.erb');
-    "${intermediates_dir}/header.inc":
-      ensure => present,
-      source => 'puppet:///modules/crowd_asf/header.inc';
-    "${intermediates_dir}/footer.inc":
-      ensure => present,
-      source => 'puppet:///modules/crowd_asf/footer.inc';
-    "/home/${username}/create-intermediates-index.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('crowd_asf/create-intermediates-index.sh.erb'),
-      mode    => '0755';
-    "/home/${username}/copy-intermediate-html.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('crowd_asf/copy-intermediate-html.sh.erb'),
-      mode    => '0755';
-    "/home/${username}/remove-intermediates-daily.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('crowd_asf/remove-intermediates-daily.sh.erb'),
-      mode    => '0755';
     "/home/${username}/cleanup-tomcat-logs.sh":
       owner   => $username,
       group   => $groupname,
@@ -207,25 +180,6 @@ class crowd_asf (
 # cron jobs
 
   cron {
-    'create-intermediates-index':
-      user        => $username,
-      minute      => '*/30',
-      command     => "/home/${username}/create-intermediates-index.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'copy-intermediate-html':
-      user        => $username,
-      minute      => '*/10',
-      command     => "/home/${username}/copy-intermediate-html.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'remove-intermediates-daily':
-      user        => $username,
-      minute      => 05,
-      hour        => 07,
-      command     => "/home/${username}/remove-intermediates-daily.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
     'cleanup-tomcat-logs':
       user        => $username,
       minute      => 20,
