@@ -17,6 +17,7 @@ class zmanda_asf::client (
   }
 
   $zmandapkgs = [
+    'libswitch-perl',
     'libcurl3-gnutls',
     'libcurl3',
     'libglib2.0-0',
