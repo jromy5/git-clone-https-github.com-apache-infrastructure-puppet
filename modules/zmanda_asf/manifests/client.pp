@@ -77,6 +77,15 @@ class zmanda_asf::client (
       mode    => '0600',
     }
 
+    file {'update amanda-client.conf':
+      path    => '/etc/amanda/amanda-client.conf',
+      ensure  => present,
+      content => template('client/amanda-client.conf.erb'),
+      owner   => 'amandabackup',
+      group   => 'disk',
+      mode    => '0600',
+    }
+
     file {"${sshdkeysdir}/amandabackup.pub":
       content => hiera('zmanda_asf::amdump_public_key'),
       owner   => 'amandabackup',
