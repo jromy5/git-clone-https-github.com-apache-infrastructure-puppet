@@ -1,0 +1,7 @@
+---
+classes:
+  - blocky
+  - loggy
+  - rootbin_asf
+  - zmanda_asf::client
+
