@@ -198,7 +198,7 @@ class buildbot_asf (
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
-      source => 'puppet:///modules/buildbot_asf/projects/projects/remove-snapshots-daily.sh';
+      source => 'puppet:///modules/buildbot_asf/projects/remove-snapshots-daily.sh';
     "/x1/${username}/master1/public_html/projects/xmlgraphics/fop/create-fop-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
