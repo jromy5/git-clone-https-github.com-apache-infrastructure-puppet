@@ -80,7 +80,7 @@ class zmanda_asf::client (
     file {'update amanda-client.conf':
       path    => '/etc/amanda/amanda-client.conf',
       ensure  => present,
-      content => template('client/amanda-client.conf.erb'),
+      content => template('zmanda_asf/client/amanda-client.conf.erb'),
       owner   => 'amandabackup',
       group   => 'disk',
       mode    => '0600',
