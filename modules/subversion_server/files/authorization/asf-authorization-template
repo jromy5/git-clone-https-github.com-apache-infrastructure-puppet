@@ -188,6 +188,7 @@ flink={ldap:cn=flink,ou=groups,dc=apache,dc=org}
 flink-pmc={reuse:pit-authorization:flink-pmc}
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
+fluo=billie,drew,elserj,cjnolet,ctubbsii,kturner,mwalch
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
 forrest-pmc={reuse:pit-authorization:forrest-pmc}
 geronimo={ldap:cn=geronimo,ou=groups,dc=apache,dc=org}
