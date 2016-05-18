@@ -4,3 +4,9 @@ classes:
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave3_ubuntu'
+
+# mkdocs needed for eagle docs build
+
+python::python_pips:
+  mkdocs:
+    ensure: present
