@@ -76,9 +76,12 @@ vhosts_asf::vhosts::vhosts:
 
       RemoteIPHeader X-Forwarded-For
 
-      LuaQuickHandler /var/www/issues-data/quickhook.lua first
-      LuaHookLog /var/www/issues-data/quickhook.lua last
-      LuaScope server 1 1
+      # Spam filter
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+      <Location />
+        SetInputFilter AntiSpam
+      </Location>
 
       ProxyPreserveHost on
 
