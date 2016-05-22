@@ -188,6 +188,7 @@ flink={ldap:cn=flink,ou=groups,dc=apache,dc=org}
 flink-pmc={reuse:pit-authorization:flink-pmc}
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
+fluo=billie,drew,elserj,cjnolet,ctubbsii,kturner,mwalch
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
 forrest-pmc={reuse:pit-authorization:forrest-pmc}
 geronimo={ldap:cn=geronimo,ou=groups,dc=apache,dc=org}
@@ -291,7 +292,7 @@ mesos={ldap:cn=mesos,ou=groups,dc=apache,dc=org}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=groups,dc=apache,dc=org}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv,ddutta,discovery,reaperhulk,kirankom,rmerriman,prhodes,sirsean,smogg,dev_warlord
+metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv,ddutta,discovery,reaperhulk,kirankom,rmerriman,prhodes,sirsean,smogg,dev_warlord,mperez,nickallen,lyle,rurcioli
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
