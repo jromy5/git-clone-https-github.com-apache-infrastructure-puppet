@@ -429,6 +429,7 @@ tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
 taverna=andy,djd,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,gnaylor,hainesr,ianwdunlop,jgarrido,redmitry,shoaibsufi,stain,stuzart
 tcl={ldap:cn=tcl,ou=groups,dc=apache,dc=org}
 tcl-pmc={reuse:pit-authorization:tcl-pmc}
+tephra=anew,chtyim,gokul,poorna,jamestaylor,tdsilva,garyh,larsh,apurtell,gates,hsaputra
 tez={ldap:cn=tez,ou=groups,dc=apache,dc=org}
 tez-pmc={reuse:pit-authorization:tez-pmc}
 thrift={ldap:cn=thrift,ou=groups,dc=apache,dc=org}
