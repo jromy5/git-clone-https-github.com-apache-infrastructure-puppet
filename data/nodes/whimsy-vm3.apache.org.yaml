@@ -29,6 +29,9 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 apache::default_vhost: false
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 
