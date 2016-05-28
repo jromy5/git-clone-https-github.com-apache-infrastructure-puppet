@@ -25,7 +25,7 @@ class build_slaves::jenkins (
   }
 
   group { 'docker':
-    ensure => latest,
+    ensure => present,
   }->
 
   user { 'jenkins':
