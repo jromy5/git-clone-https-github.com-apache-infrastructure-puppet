@@ -21,7 +21,7 @@ class build_slaves::jenkins (
   }
 
   group { 'jenkins':
-    ensure => latest,
+    ensure => ensure,
   }
 
   group { 'docker':
@@ -123,7 +123,7 @@ class build_slaves::jenkins (
   }
 
   package { $jenkins_packages:
-    ensure   => installed,
+    ensure   => latest,
   }
 
   service { 'apache2':
