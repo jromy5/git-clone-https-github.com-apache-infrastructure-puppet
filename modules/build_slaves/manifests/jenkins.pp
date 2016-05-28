@@ -21,7 +21,7 @@ class build_slaves::jenkins (
   }
 
   group { 'jenkins':
-    ensure => ensure,
+    ensure => present,
   }
 
   group { 'docker':
