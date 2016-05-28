@@ -17,15 +17,15 @@ class build_slaves::jenkins (
   }->
 
   package { 'golang':
-    ensure => present,
+    ensure => latest,
   }
 
   group { 'jenkins':
-    ensure => present,
+    ensure => latest,
   }
 
   group { 'docker':
-    ensure => present,
+    ensure => latest,
   }->
 
   user { 'jenkins':
