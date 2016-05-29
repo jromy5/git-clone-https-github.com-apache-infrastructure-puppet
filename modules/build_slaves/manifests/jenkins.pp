@@ -14,6 +14,20 @@ class build_slaves::jenkins (
   require stdlib
   require build_slaves
 
+  define build_slaves::symlink-tools ($tool = $title) {
+    file {"/home/jenkins/tools/$tool":
+      ensure => link,
+      target => "/usr/local/asfpackages/$tool",
+    }
+  }
+  
+  define build_slaves::symlink-java ($java = $title) {
+    file {"/home/jenkins/tools/java/$java":
+      ensure => link,
+      target => "/usr/local/asfpackages/java/asf-build-$tool",
+    }
+  }
+
   apt::ppa { 'ppa:ubuntu-lxc/lxd-stable': 
     ensure => present,
   }->
@@ -124,30 +138,17 @@ class build_slaves::jenkins (
     match => '^USERGROUPS_ENAB.*'
   }
 
-  package { $jenkins_packages:
-    ensure   => latest,
-  }
-
-
   file {"/home/jenkins/tools/":
     ensure  => 'directory',
   }->
 
-  $tools.each |String $tools| {
-    file {"/home/jenkins/tools/$tools":
-      ensure  => 'directory'
-    }
+  build_slaves::symlink-tools { $tools: }
+
+  package { $jenkins_packages:
+    ensure   => latest,
   }->
-
-  $javas.each |String $javas| {
-    file {"/home/jenkins/tools/java/$javas":
-      # this is a hack because package name is different than dir name
-      require => Package["asf-build-"+$javas.tr("_", "-")],
-      ensure  => link,
-      target  => "/usr/local/asfpackages/java/$javas",
-    }
-  }
-
+	
+  build_slaves::symlink-java  { $javas: }
 
   service { 'apache2':
     ensure => 'stopped',
