@@ -14,10 +14,9 @@ class build_slaves::jenkins (
   require stdlib
   require build_slaves
 
-  define build_slaves::symlink-tools ($tool = $title) {
+  define build_slaves::mkdir-tools ($tool = $title) {
     file {"/home/jenkins/tools/$tool":
-      ensure => link,
-      target => "/usr/local/asfpackages/$tool",
+      ensure => directory,
     }
   }
   
@@ -142,7 +141,7 @@ class build_slaves::jenkins (
     ensure  => 'directory',
   }->
 
-  build_slaves::symlink-tools { $tools: }
+  build_slaves::mkdir-tools { $tools: }
 
   package { $jenkins_packages:
     ensure   => latest,
