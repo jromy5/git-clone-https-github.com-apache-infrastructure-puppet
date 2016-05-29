@@ -358,7 +358,7 @@ portals-pmc={reuse:pit-authorization:portals-pmc}
 # provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
 qpid={ldap:cn=qpid,ou=groups,dc=apache,dc=org}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
-quarks=cazen,djd,dlaboss,home4slc,vdogaru,wcmarsha
+quarks=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
 ranger=alok,bosco,ddas,dillidorai,gates,humbedooh,jghoman,kminder,lmccay,omalley,rmani,sneethir,sradia
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
