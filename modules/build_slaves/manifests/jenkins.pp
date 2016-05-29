@@ -6,7 +6,9 @@ class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
-  $jenkins_packages = []
+  $jenkins_packages = [],
+  $tools = ["java"],
+  $javas = ["jdk1.7.0_79-unlimited-security", "jdk1.8.0_66-unlimited-security"]
   ) {
 
   require stdlib
@@ -125,6 +127,27 @@ class build_slaves::jenkins (
   package { $jenkins_packages:
     ensure   => latest,
   }
+
+
+  file {"/home/jenkins/tools/":
+    ensure  => 'directory',
+  }->
+
+  $tools.each |String $tools| {
+    file {"/home/jenkins/tools/$tools":
+      ensure  => 'directory'
+    }
+  }->
+
+  $javas.each |String $javas| {
+    file {"/home/jenkins/tools/java/$javas":
+      # this is a hack because package name is different than dir name
+      require => Package["asf-build-"+$javas.tr("_", "-")],
+      ensure  => link,
+      target  => "/usr/local/asfpackages/java/$javas",
+    }
+  }
+
 
   service { 'apache2':
     ensure => 'stopped',
