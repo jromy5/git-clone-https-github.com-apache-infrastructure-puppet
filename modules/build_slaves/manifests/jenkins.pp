@@ -23,7 +23,7 @@ class build_slaves::jenkins (
   define build_slaves::symlink-java ($java = $title) {
     file {"/home/jenkins/tools/java/$java":
       ensure => link,
-      target => "/usr/local/asfpackages/java/asf-build-$tool",
+      target => "/usr/local/asfpackages/java/$java",
     }
   }
 
