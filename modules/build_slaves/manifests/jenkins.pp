@@ -141,7 +141,8 @@ class build_slaves::jenkins (
 
   $javas.each |String $javas| {
     file {"/home/jenkins/tools/java/$javas":
-      require => Package["asf-build-$javas"],
+      # this is a hack because package name is different than dir name
+      require => Package["asf-build-"+$javas.tr("_", "-")],
       ensure  => link,
       target  => "/usr/local/asfpackages/java/$javas",
     }
