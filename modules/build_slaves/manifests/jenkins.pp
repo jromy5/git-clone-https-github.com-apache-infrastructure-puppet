@@ -139,6 +139,9 @@ class build_slaves::jenkins (
 
   file {"/home/jenkins/tools/":
     ensure  => 'directory',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0755',
   }->
 
   build_slaves::mkdir-tools { $tools: }
