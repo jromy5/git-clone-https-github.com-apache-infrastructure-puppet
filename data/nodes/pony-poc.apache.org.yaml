@@ -81,7 +81,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'pony_access.log'
     error_log_file: 'pony_error.log'
     custom_fragment: |
-      Redirect permanent / https://pony-poc.apache.org/
+      Redirect permanent / https://lists.apache.org/
       
   pony-poc-ssl:
     vhost_name: '*'
@@ -97,24 +97,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'pony-ssl_access.log'
     error_log_file: 'pony-ssl_error.log'
     custom_fragment: |
-      AcceptPathInfo On
-      AddOutputFilterByType DEFLATE application/json
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      <Location /secret/>
-          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute member
-          AuthName "ASF Infrastructure-root Only"
-          AuthType Basic
-          AuthBasicProvider ldap
-          AuthLDAPGroupAttributeIsDN on
-          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-      </Location>
-      <Location /archiver>
-          Require ip 209.188.14.143
-          ProxyPass http://127.0.0.1:9200/
-      </Location>
+      Redirect permanent / https://lists.apache.org/
 
   lists:
     vhost_name: '*'
