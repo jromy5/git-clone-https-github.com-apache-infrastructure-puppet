@@ -18,7 +18,7 @@ class nexus {
   file { '/etc/init.d/nexus':
     ensure  => present,
     mode    => '0755',
-    source  => 'puppet://modules/nexus_asf/init.d/nexus',
+    source  => 'puppet:///modules/nexus_asf/init.d/nexus',
   }
 
   service { 'nexus':
