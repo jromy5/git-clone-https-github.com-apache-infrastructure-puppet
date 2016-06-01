@@ -7,23 +7,72 @@ class build_slaves::jenkins (
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
   $jenkins_packages = [],
-  $tools = ["java"],
-  $javas = ["jdk1.7.0_79-unlimited-security", "jdk1.8.0_66-unlimited-security"]
-  ) {
+  $tools = ["ant","clover","findbugs","forrest","java","jiracli","maven"],
+  $ant = ["apache-ant-1.9.4"],
+  $clover = ["clover-ant-4.1.1"],
+  $findbugs = ["findbugs-2.0.3"],
+  $forrest = ["apache-forrest-0.9"],
+  $jiracli = ["jira-cli-2.1.0"],
+  $maven = ["apache-maven-2.2.1","apache-maven-3.0.4","apache-maven-3.2.1"],
+  $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-32-unlimited-security','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.6.0_45-64','jdk1.7.0_04','jdk1.7.0_25-32','jdk1.7.0_25-64','jdk1.7.0-32','jdk1.7.0_55','jdk1.7.0-64','jdk1.8.0'],
+  $java_asfpackages = ['jdk1.7.0_79-unlimited-security','jdk1.8.0_66-unlimited-security'],
+) {
 
   require stdlib
   require build_slaves
 
-  define build_slaves::mkdir-tools ($tool = $title) {
+  define build_slaves::mkdir_tools ($tool = $title) {
     file {"/home/jenkins/tools/$tool":
       ensure => directory,
     }
   }
-  
-  define build_slaves::symlink-java ($java = $title) {
-    file {"/home/jenkins/tools/java/$java":
+
+  define build_slaves::symlink_ant ($ant_version = $title) {
+    file {"/home/jenkins/tools/ant/$ant_version":
       ensure => link,
-      target => "/usr/local/asfpackages/java/$java",
+      target => "/usr/local/jenkins/ant/$ant_version",
+    }
+  }
+ 
+  define build_slaves::symlink_findbugs ($findbugs_version = $title) {
+    file {"/home/jenkins/tools/findbugs/$findbugs_version":
+      ensure => link,
+      target => "/usr/local/jenkins/findbugs/$findbugs_version",
+    }
+  }
+ 
+  define build_slaves::symlink_forrest ($forrest_version = $title) {
+    file {"/home/jenkins/tools/forrest/$forrest_version":
+      ensure => link,
+      target => "/usr/local/jenkins/forrest/$forrest_version",
+    }
+  }
+ 
+  define build_slaves::symlink_jiracli ($jiracli_version = $title) {
+    file {"/home/jenkins/tools/jiracli/$jiracli_version":
+      ensure => link,
+      target => "/usr/local/jenkins/jiracli/$jiracli_version",
+    }
+  }
+
+  define build_slaves::symlink_maven ($maven_version = $title) {
+    file {"/home/jenkins/tools/maven/$maven_version":
+      ensure => link,
+      target => "/usr/local/jenkins/maven/$maven_version",
+    }
+  }
+ 
+  define build_slaves::symlink_jenkins ($javaj = $title) {
+    file {"/home/jenkins/tools/java/$javaj":
+      ensure => link,
+      target => "/usr/local/jenkins/java/$javaj",
+    }
+  }
+
+  define build_slaves::symlink_asfpackages ($javaa = $title) {
+    file {"/home/jenkins/tools/java/$javaa":
+      ensure => link,
+      target => "/usr/local/asfpackages/java/$javaa",
     }
   }
 
@@ -144,13 +193,75 @@ class build_slaves::jenkins (
     mode    => '0755',
   }->
 
-  build_slaves::mkdir-tools { $tools: }
+  build_slaves::mkdir_tools { $tools: }
 
+	
   package { $jenkins_packages:
     ensure   => latest,
   }->
-	
-  build_slaves::symlink-java  { $javas: }
+
+  build_slaves::symlink_ant          { $ant: }
+  build_slaves::symlink_findbugs     { $findbugs: }
+  build_slaves::symlink_forrest      { $forrest: }
+  build_slaves::symlink_jiracli      { $jiracli: }
+  build_slaves::symlink_maven        { $maven: }
+  build_slaves::symlink_jenkins { $java_jenkins: }
+  build_slaves::symlink_asfpackages  { $java_asfpackages: }
+
+  file { "/home/jenkins/tools/ant/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/ant/apache-ant-1.9.4",
+  }
+
+  file { "/home/jenkins/tools/findbugs/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/findbugs/findbugs-2.0.3",
+  }
+
+  file { "/home/jenkins/tools/forrest/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/forrest/apache-forrest-0.9",
+  }
+
+  file { "/home/jenkins/tools/jiracli/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/jiracli/jira-cli-2.1.0",
+  }
+
+  file { "/home/jenkins/tools/maven/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/maven/apache-maven-3.2.1",
+  }
+
+  file { "/home/jenkins/tools/java/latest":
+    ensure => link,
+    target => "/usr/local/jenkins/java/jdk1.8.0",
+  }
+
+  file { "/home/jenkins/tools/java/latest1.4":
+    ensure => link,
+    target => "/usr/local/jenkins/java/j2sdk1.4.2_19",
+  }
+
+  file { "/home/jenkins/tools/java/latest1.5":
+    ensure => link,
+    target => "/usr/local/jenkins/java/jdk1.5.0_22-64",
+  }
+
+  file { "/home/jenkins/tools/java/latest1.6":
+    ensure => link,
+    target => "/usr/local/jenkins/java/jdk1.6.0_45-64",
+  }
+
+  file { "/home/jenkins/tools/java/latest1.7":
+    ensure => link,
+    target => "/usr/local/jenkins/java/jdk1.7.0_25-64",
+  }
+
+  file { "/home/jenkins/tools/java/latest1.8":
+    ensure => link,
+    target => "/usr/local/jenkins/java/jdk1.8.0",
+  }
 
   service { 'apache2':
     ensure => 'stopped',
