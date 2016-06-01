@@ -1720,6 +1720,10 @@ svn-role = rw
 [/tcl]
 @tcl = rw
 
+[/incubator/tephra]
+@tephra = rw
+@incubator = rw
+
 [/tez]
 * = r
 @svnadmins = rw
