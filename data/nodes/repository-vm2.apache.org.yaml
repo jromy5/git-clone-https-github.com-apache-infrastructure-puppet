@@ -3,5 +3,6 @@ classes:
   - blocky
   - loggy
   - rootbin_asf
+  - nexus_asf
   - zmanda_asf::client
 
