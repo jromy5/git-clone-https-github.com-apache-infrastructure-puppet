@@ -79,9 +79,12 @@ gitserver_asf::custom_fragment_443: |
                 AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
+                # Fall back to auth file for role accounts
+                AuthUserFile /x1/git/asfgit/asf/auth/roleaccounts
                 Require ldap-attribute gidNumber=5000
                 Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
                 Require valid-user
+                Satisfy Any
         </If>
         <Else>
                 Require all granted
