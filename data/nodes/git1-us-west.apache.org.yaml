@@ -80,7 +80,7 @@ gitserver_asf::custom_fragment_443: |
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
                 # Fall back to auth file for role accounts
-                AuthUserFile /x1/git/asfgit/asf/auth/roleaccounts
+                AuthUserFile /x1/git/asfgit-admin/asf/auth/roleaccounts
                 Require ldap-attribute gidNumber=5000
                 Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
                 Require valid-user
