@@ -24,6 +24,8 @@ class build_slaves::jenkins (
   define build_slaves::mkdir_tools ($tool = $title) {
     file {"/home/jenkins/tools/$tool":
       ensure => directory,
+      owner  => 'jenkins',
+      group  => 'jenkins',
     }
   }
 
