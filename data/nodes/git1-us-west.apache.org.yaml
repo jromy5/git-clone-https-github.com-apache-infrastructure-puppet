@@ -89,7 +89,6 @@ gitserver_asf::custom_fragment_443: |
                   </RequireAll>
                   Require valid-user
                 </RequireAny>
-#                Satisfy Any
         </If>
         <Else>
                 Require all granted
