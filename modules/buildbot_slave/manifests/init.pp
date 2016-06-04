@@ -11,10 +11,12 @@ class buildbot_slave (
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
 
-  # override bwlow in yaml
+  # override below in eyaml
 
   $slave_name,
   $slave_password,
+  $gsr_user,
+  $gsr_pw,
 
 ){
 
@@ -89,6 +91,12 @@ class buildbot_slave (
   }->
 
   file {
+   "/home/${username}/.git-credentials"
+     content => template('buildbot_slave/git-credentials.erb'),
+     mode    => '0640',
+     owner   => $username,
+     group   => $groupname;
+
     "/home/${username}/slave":
       ensure  => directory,
       owner   => $username,
