@@ -91,7 +91,7 @@ class buildbot_slave (
   }->
 
   file {
-   "/home/${username}/.git-credentials"
+   "/home/${username}/.git-credentials":
      content => template('buildbot_slave/git-credentials.erb'),
      mode    => '0640',
      owner   => $username,
