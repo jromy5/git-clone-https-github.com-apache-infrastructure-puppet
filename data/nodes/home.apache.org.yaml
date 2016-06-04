@@ -115,6 +115,7 @@ vhosts_asf::vhosts::vhosts:
       <Directory "/home/*/public_html/">
         Options Indexes MultiViews
       </Directory>
+      Redirect /map.html http://community.zones.apache.org/map.html
       
   home-ssl:
     vhost_name: '*'
@@ -134,3 +135,4 @@ vhosts_asf::vhosts::vhosts:
       <Directory "/home/*/public_html/">
         Options Indexes MultiViews
       </Directory>
+      Redirect /map.html http://community.zones.apache.org/map.html
