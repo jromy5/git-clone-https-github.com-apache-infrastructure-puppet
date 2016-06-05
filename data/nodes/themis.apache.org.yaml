@@ -722,7 +722,7 @@ vhosts_asf::vhosts::vhosts:
       - 'cloudstack.org'
       - 'cloudstack.com'
       - 'www.cloudstack.com'
-      - 'cloudstack.org.uk',
+      - 'cloudstack.org.uk'
       - 'www.cloudstack.org.uk'
     serveradmin: 'infrastructure@apache.org'
     access_log_file: 'weblog.log'
