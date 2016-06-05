@@ -102,7 +102,7 @@ class buildbot_slave (
 
    "/home/${username}/.gitconfig":
      ensure => 'present',
-     source => 'puppet:///modules/buildbot_slave/gitconfig';
+     source => 'puppet:///modules/buildbot_slave/gitconfig',
      mode    => '0644',
      owner   => $username,
      group   => $groupname;
