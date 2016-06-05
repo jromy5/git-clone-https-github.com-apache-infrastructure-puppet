@@ -38,6 +38,7 @@ class buildbot_slave (
     'ruby-dev',
     'python3-pip',
     'python3-dev',
+    'python3-markdown',
   ]
 
   # merge required packages from hiera for slaves
