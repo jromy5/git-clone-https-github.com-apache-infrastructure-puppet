@@ -4,3 +4,5 @@
 [push]
         default = nothing
 
+[credential]
+        helper = store
