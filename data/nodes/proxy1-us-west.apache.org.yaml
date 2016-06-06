@@ -30,7 +30,7 @@ apache::mod::event::maxsparethreads: '250'
 apache::mod::event::minsparethreads: '150'
 apache::mod::event::serverlimit: '20'
 apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
+apache::mod::event::threadlimit: '1000'
 apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
