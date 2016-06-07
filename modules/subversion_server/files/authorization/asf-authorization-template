@@ -735,7 +735,7 @@ ea = rw
 @committers = rw
 
 [/continuum]
-@continuum = rw
+@attic-pmc = rw
 
 [/cordova]
 @cordova = rw
