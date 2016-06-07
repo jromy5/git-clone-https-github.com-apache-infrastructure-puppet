@@ -197,6 +197,7 @@ giraph={ldap:cn=giraph,ou=groups,dc=apache,dc=org}
 giraph-pmc={reuse:pit-authorization:giraph-pmc}
 gora={ldap:cn=gora,ou=groups,dc=apache,dc=org}
 gora-pmc={reuse:pit-authorization:gora-pmc}
+gossip=busbey,dorian,ecapriolo,elserj,gdusbabek,ptgoetz
 gump={ldap:cn=gump,ou=groups,dc=apache,dc=org}
 #only here to ease LDAP migration
 gump-pmc={reuse:pit-authorization:gump-pmc}
