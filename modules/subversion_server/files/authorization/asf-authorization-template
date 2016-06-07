@@ -1768,7 +1768,7 @@ svn-role = rw
 @turbine = rw
 
 [/tuscany]
-@tuscany = rw
+@attic-pmc = rw
 
 [/tuscany/collaboration]
 @committers  = rw
