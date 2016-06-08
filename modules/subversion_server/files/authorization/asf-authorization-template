@@ -1116,6 +1116,9 @@ ea = rw
 [/incubator/taverna]
 @taverna = rw
 
+[/incubator/tephra]
+@tephra = rw
+
 [/incubator/tinkerpop]
 @tinkerpop = rw
 
