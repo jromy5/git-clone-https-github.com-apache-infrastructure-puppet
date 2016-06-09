@@ -21,7 +21,7 @@ if [ -n "$PODLING_DIR" ] && [ -n "$NAME" ] && [ -n "$TLP_REPO" ]; then
     # From asfgit-admin NOTES on TLP move:
     # Change commit mailing list address in project.git/config
     COMMITS_EMAIL="commits@$NAME.apache.org"
-    if ! /usr/local/bin/swaks -q RCPT -t "$COMMITS_EMAIL" -s mx1.us.apache.org. >/dev/null; then
+    if ! /usr/local/bin/swaks -q RCPT -t "$COMMITS_EMAIL" -s mx1-lw-us.apache.org. >/dev/null; then
         echo "Runtime error: '$COMMITS_EMAIL' rejected by MX" >&2
         exit 2
     fi
@@ -29,8 +29,8 @@ if [ -n "$PODLING_DIR" ] && [ -n "$NAME" ] && [ -n "$TLP_REPO" ]; then
 
     # change dir to git dir so we can run `git remote` properly
     cd "$PODLING_DIR"
-    # Update the -eu mirror destination name in project.git/config
-    $GIT remote set-url asf-mirror "https://git-wip-eu.apache.org/repos/asf/$TLP_REPO" 
+    # Update the mirror destination name in project.git/config
+    $GIT remote set-url asf-mirror "https://git-wip-us.apache.org/repos/asf/$TLP_REPO" 
 
     # If a github mirror exists, name change needs to be reflected there too (project.git/config)
     $GIT remote set-url github-mirror "https://github.com/apache/$TLP_REPO"
