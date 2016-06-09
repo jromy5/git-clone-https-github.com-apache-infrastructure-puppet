@@ -440,7 +440,8 @@ tika={ldap:cn=tika,ou=groups,dc=apache,dc=org}
 tika-pmc={reuse:pit-authorization:tika-pmc}
 tiles={ldap:cn=tiles,ou=groups,dc=apache,dc=org}
 tiles-pmc={reuse:pit-authorization:tiles-pmc}
-tinkerpop=okram,spmallette,humbedooh,rbowen,ke4qqq,hadrian,mfranklin
+tinkerpop={ldap:cn=tinkerpop,ou=groups,dc=apache,dc=org}
+tinkerpop-pmc={reuse:pit-authorization:tinkerpop-pmc}
 tomee={ldap:cn=tomee,ou=groups,dc=apache,dc=org}
 tomee-pmc={reuse:pit-authorization:tomee-pmc}
 tomcat={ldap:cn=tomcat,ou=groups,dc=apache,dc=org}
@@ -1004,8 +1005,8 @@ ea = rw
 [/incubator/htrace]
 @htrace = rw
 
-[/incubator/johnzon/site]
-@incubator = rw
+[/johnzon]
+@johnzon = rw
 
 [/incubator/joshua]
 @htrace = rw
@@ -1117,7 +1118,7 @@ ea = rw
 [/incubator/taverna]
 @taverna = rw
 
-[/incubator/tinkerpop]
+[/tinkerpop]
 @tinkerpop = rw
 
 [/incubator/triplesoup]

@@ -323,6 +323,7 @@ tika-pmc={ldap:cn=tika,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tiles={reuse:asf-authorization:tiles}
 tiles-pmc={ldap:cn=tiles,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tinkerpop={reuse:asf-authorization:tinkerpop}
+tinkerpop-pmc={ldap:cn=tinkerpop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tomee={reuse:asf-authorization:tomee}
 tomee-pmc={ldap:cn=tomee,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tomcat={reuse:asf-authorization:tomcat}
