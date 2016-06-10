@@ -363,6 +363,8 @@ xmlgraphics-pmc={ldap:cn=xmlgraphics,ou=pmc,ou=committees,ou=groups,dc=apache,dc
 # yoko={reuse:asf-authorization:# yoko}
 yetus={reuse:asf-authorization:yetus}
 yetus-pmc={ldap:cn=yetus,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+zeppelin={reuse:asf-authorization:zeppelin}
+zeppelin-pmc={ldap:cn=zeppelin,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 zest={reuse:asf-authorization:zest}
 zest-pmc={ldap:cn=zest,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 zookeeper={reuse:asf-authorization:zookeeper}
