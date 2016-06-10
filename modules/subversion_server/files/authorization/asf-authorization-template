@@ -492,6 +492,8 @@ xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfu
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 yetus={ldap:cn=yetus,ou=groups,dc=apache,dc=org}
 yetus-pmc={reuse:pit-authorization:yetus-pmc}
+zeppelin={ldap:cn=zeppelin,ou=groups,dc=apache,dc=org}
+zeppelin-pmc={reuse:pit-authorization:zeppelin-pmc}
 zest={ldap:cn=zest,ou=groups,dc=apache,dc=org}
 zest-pmc={reuse:pit-authorization:zest-pmc}
 zookeeper={ldap:cn=zookeeper,ou=groups,dc=apache,dc=org}
@@ -1148,8 +1150,8 @@ ea = rw
 [/incubator/yoko]
 * = r
 
-[/incubator/zeppelin/site]
-@incubator = rw
+[/zeppelin/site]
+@zeppelin = rw
 
 [/incubator/zetacomponents]
 * = r
