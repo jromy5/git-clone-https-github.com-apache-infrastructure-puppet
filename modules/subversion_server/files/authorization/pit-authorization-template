@@ -161,6 +161,8 @@ jena={reuse:asf-authorization:jena}
 jena-pmc={ldap:cn=jena,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jmeter={reuse:asf-authorization:jmeter}
 jmeter-pmc={ldap:cn=jmeter,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+johnzon={reuse:asf-authorization:johnzon}
+johnzon-pmc={ldap:cn=johnzon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jspwiki={reuse:asf-authorization:jspwiki}
 jspwiki-pmc={ldap:cn=jspwiki,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 juddi={reuse:asf-authorization:juddi}
@@ -321,6 +323,7 @@ tika-pmc={ldap:cn=tika,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tiles={reuse:asf-authorization:tiles}
 tiles-pmc={ldap:cn=tiles,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tinkerpop={reuse:asf-authorization:tinkerpop}
+tinkerpop-pmc={ldap:cn=tinkerpop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tomee={reuse:asf-authorization:tomee}
 tomee-pmc={ldap:cn=tomee,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tomcat={reuse:asf-authorization:tomcat}
@@ -932,6 +935,9 @@ openejb-tck = r
 
 [/pmc/incubator]
 @incubator-pmc = rw
+
+[/pmc/johnzon]
+@johnzon-pmc = rw
 
 [/pmc/jclouds]
 @jclouds-pmc = rw

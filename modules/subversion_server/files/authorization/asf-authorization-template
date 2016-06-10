@@ -241,7 +241,8 @@ jena={ldap:cn=jena,ou=groups,dc=apache,dc=org}
 jena-pmc={reuse:pit-authorization:jena-pmc}
 jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
-johnzon=dblevins,dkulp,gpetracek,grobmeier,jlmonteiro,jmclean,rmannibucau,sagara,salyh,struberg
+johnzon={ldap:cn=johnzon,ou=groups,dc=apache,dc=org}
+johnzon-pmc={reuse:pit-authorization:johnzon-pmc}
 joshua=hsaputra,lewismc,magicaltrout,mattmann,mjpost,tommaso,kellen,fhieber,thammegowda
 jspwiki={ldap:cn=jspwiki,ou=groups,dc=apache,dc=org}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
@@ -439,7 +440,8 @@ tika={ldap:cn=tika,ou=groups,dc=apache,dc=org}
 tika-pmc={reuse:pit-authorization:tika-pmc}
 tiles={ldap:cn=tiles,ou=groups,dc=apache,dc=org}
 tiles-pmc={reuse:pit-authorization:tiles-pmc}
-tinkerpop=okram,spmallette,humbedooh,rbowen,ke4qqq,hadrian,mfranklin
+tinkerpop={ldap:cn=tinkerpop,ou=groups,dc=apache,dc=org}
+tinkerpop-pmc={reuse:pit-authorization:tinkerpop-pmc}
 tomee={ldap:cn=tomee,ou=groups,dc=apache,dc=org}
 tomee-pmc={reuse:pit-authorization:tomee-pmc}
 tomcat={ldap:cn=tomcat,ou=groups,dc=apache,dc=org}
@@ -1003,8 +1005,8 @@ ea = rw
 [/incubator/htrace]
 @htrace = rw
 
-[/incubator/johnzon/site]
-@incubator = rw
+[/johnzon]
+@johnzon = rw
 
 [/incubator/joshua]
 @htrace = rw
@@ -1116,10 +1118,7 @@ ea = rw
 [/incubator/taverna]
 @taverna = rw
 
-[/incubator/tephra]
-@tephra = rw
-
-[/incubator/tinkerpop]
+[/tinkerpop]
 @tinkerpop = rw
 
 [/incubator/triplesoup]
