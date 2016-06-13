@@ -5,7 +5,16 @@ class whimsy_server (
 
 ) {
 
+  file { '/x1':
+    ensure => directory,
+  }
+
+  file { '/x1/srv':
+    ensure => directory,
+  }
+
   file { '/srv':
+    force => true,
     ensure => link,
     target => '/x1/srv'
   }
@@ -147,6 +156,7 @@ class whimsy_server (
     ensure => directory,
     owner  => $apache::user,
     group  => $apache::group,
+    require => Vcsrepo['/x1/srv/whimsy']
   }
 
   file { '/x1/srv/whimsy/www/members/log':
