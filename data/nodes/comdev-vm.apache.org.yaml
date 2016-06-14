@@ -4,7 +4,6 @@ classes:
   - apache::mod::headers
   - apache::mod::authnz_ldap
   - default_pvm_asf
-  - docker
   - elasticsearch
   - loggy
   - ssl::name::wildcard_apache_org
