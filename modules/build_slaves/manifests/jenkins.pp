@@ -232,12 +232,12 @@ class build_slaves::jenkins (
 
   file { "/home/jenkins/tools/maven/latest":
     ensure => link,
-    target => "/usr/local/jenkins/maven/apache-maven-3.3.9",
+    target => "/usr/local/asfpackages/maven/apache-maven-3.3.9",
   }
 
   file { "/home/jenkins/tools/maven/latest3":
     ensure => link,
-    target => "/usr/local/jenkins/maven/apache-maven-3.3.9",
+    target => "/usr/local/asfpackages/maven/apache-maven-3.3.9",
   }
 
   file { "/home/jenkins/tools/java/latest":
