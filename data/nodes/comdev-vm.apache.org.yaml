@@ -30,6 +30,7 @@ apache::mod::event::threadsperchild: '50'
 
 
 base::basepackages:
+  - mod-lua-asf
   - 'lua5.2'
   - 'liblua5.2-dev'
   - 'lua5.2-cjson'
