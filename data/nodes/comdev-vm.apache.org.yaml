@@ -4,7 +4,6 @@ classes:
   - apache::mod::headers
   - apache::mod::authnz_ldap
   - default_pvm_asf
-  - docker
   - elasticsearch
   - loggy
   - ssl::name::wildcard_apache_org
@@ -31,6 +30,7 @@ apache::mod::event::threadsperchild: '50'
 
 
 base::basepackages:
+  - mod-lua-asf
   - 'lua5.2'
   - 'liblua5.2-dev'
   - 'lua5.2-cjson'
