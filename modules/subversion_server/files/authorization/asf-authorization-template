@@ -446,6 +446,7 @@ tomee={ldap:cn=tomee,ou=groups,dc=apache,dc=org}
 tomee-pmc={reuse:pit-authorization:tomee-pmc}
 tomcat={ldap:cn=tomcat,ou=groups,dc=apache,dc=org}
 tomcat-pmc={reuse:pit-authorization:tomcat-pmc}
+toree=cstubbs,hitesh,jodersky,julien,lbustelo,lresende,rxin,chipsenkbeil
 trafficserver={ldap:cn=trafficserver,ou=groups,dc=apache,dc=org}
 trafficserver-pmc={reuse:pit-authorization:trafficserver-pmc}
 # trafficserver=akundu,andrewhsu,balajd,bcall,dianes,dima,ericb,georgep,jim,jplevyak,manjesh,mlibbey,mturk,pquerna,rayray,sjiang,vmamidi,zwoop
