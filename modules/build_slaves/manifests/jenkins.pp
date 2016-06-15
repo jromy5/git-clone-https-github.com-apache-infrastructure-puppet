@@ -242,7 +242,7 @@ class build_slaves::jenkins (
 
   file { "/home/jenkins/tools/java/latest":
     ensure => link,
-    target => "/usr/local/jenkins/java/jdk1.8.0",
+    target => "/usr/local/jenkins/java/jdk1.8.0_92",
   }
 
   file { "/home/jenkins/tools/java/latest1.4":
@@ -267,7 +267,7 @@ class build_slaves::jenkins (
 
   file { "/home/jenkins/tools/java/latest1.8":
     ensure => link,
-    target => "/usr/local/asfpackages/java/jdk1.8.0-92",
+    target => "/usr/local/asfpackages/java/jdk1.8.0_92",
   }
 
   service { 'apache2':
