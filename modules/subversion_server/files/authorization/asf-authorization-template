@@ -1124,6 +1124,9 @@ ea = rw
 [/tinkerpop]
 @tinkerpop = rw
 
+[/incubator/toree]
+@toree = rw
+
 [/incubator/triplesoup]
 * = r
 
