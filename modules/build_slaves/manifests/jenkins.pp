@@ -13,7 +13,8 @@ class build_slaves::jenkins (
   $findbugs = ["findbugs-2.0.3"],
   $forrest = ["apache-forrest-0.9"],
   $jiracli = ["jira-cli-2.1.0"],
-  $maven = ["apache-maven-2.2.1","apache-maven-3.0.4","apache-maven-3.2.1", "apache-maven-3.3.9"],
+  $maven_old = ["apache-maven-2.2.1","apache-maven-3.0.4","apache-maven-3.2.1"],
+  $maven = ["apache-maven-3.3.9"],
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-32-unlimited-security','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.6.0_45-64','jdk1.7.0_04','jdk1.7.0_25-32','jdk1.7.0_25-64','jdk1.7.0-32','jdk1.7.0_55','jdk1.7.0-64','jdk1.8.0'],
   $java_asfpackages = ['jdk1.7.0_79-unlimited-security','jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92'],
 ) {
@@ -57,10 +58,17 @@ class build_slaves::jenkins (
     }
   }
 
+  define build_slaves::symlink_maven_old ($maven_old_version = $title) {
+    file {"/home/jenkins/tools/maven/$maven_old_version":
+      ensure => link,
+      target => "/usr/local/jenkins/maven/$maven_old_version",
+    }
+  }
+
   define build_slaves::symlink_maven ($maven_version = $title) {
     file {"/home/jenkins/tools/maven/$maven_version":
       ensure => link,
-      target => "/usr/local/jenkins/maven/$maven_version",
+      target => "/usr/local/asfpackages/maven/$maven_version",
     }
   }
  
@@ -206,6 +214,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_findbugs     { $findbugs: }
   build_slaves::symlink_forrest      { $forrest: }
   build_slaves::symlink_jiracli      { $jiracli: }
+  build_slaves::symlink_maven_old    { $maven_old: }
   build_slaves::symlink_maven        { $maven: }
   build_slaves::symlink_jenkins { $java_jenkins: }
   build_slaves::symlink_asfpackages  { $java_asfpackages: }
