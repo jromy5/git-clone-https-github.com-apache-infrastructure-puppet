@@ -206,8 +206,6 @@ metamodel-pmc={ldap:cn=metamodel,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={reuse:asf-authorization:mina}
 mina-pmc={ldap:cn=mina,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-mrunit={reuse:asf-authorization:mrunit}
-mrunit-pmc={ldap:cn=mrunit,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 myfaces={reuse:asf-authorization:myfaces}
 myfaces-pmc={ldap:cn=myfaces,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 nifi={reuse:asf-authorization:nifi}

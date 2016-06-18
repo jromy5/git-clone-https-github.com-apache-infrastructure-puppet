@@ -299,8 +299,6 @@ metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmcc
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
 mrql=edwardyoon,akarasulu,mnour,adc,antelder,fegaras,ugupta,maqsoodalam,johnshope,msw,kmensah,kasha
-mrunit={ldap:cn=mrunit,ou=groups,dc=apache,dc=org}
-mrunit-pmc={reuse:pit-authorization:mrunit-pmc}
 myfaces={ldap:cn=myfaces,ou=groups,dc=apache,dc=org}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
 myriad=benh,danese,darinj,kensipe,lresende,me,mohit,smarella,swapnil,tdunning
