@@ -452,7 +452,8 @@ turbine={ldap:cn=turbine,ou=groups,dc=apache,dc=org}
 turbine-pmc={reuse:pit-authorization:turbine-pmc}
 tuscany={ldap:cn=tuscany,ou=groups,dc=apache,dc=org}
 tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
-twill=acmurthy,asavu,phunt,tomwhite,anew,chtyim,garyh,hsaputra,ashau,poorna
+twill={ldap:cn=twill,ou=groups,dc=apache,dc=org}
+twill-pmc={reuse:pit-authorization:twill-pmc}
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
 uima-pmc={reuse:pit-authorization:uima-pmc}
 usergrid={ldap:cn=usergrid,ou=groups,dc=apache,dc=org}

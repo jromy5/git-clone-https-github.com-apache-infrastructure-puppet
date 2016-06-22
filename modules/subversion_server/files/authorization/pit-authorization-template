@@ -332,6 +332,8 @@ turbine={reuse:asf-authorization:turbine}
 turbine-pmc={ldap:cn=turbine,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 tuscany={reuse:asf-authorization:tuscany}
 tuscany-pmc={ldap:cn=tuscany,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+twill={reuse:asf-authorization:twill}
+twill-pmc={ldap:cn=twill,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 uima={reuse:asf-authorization:uima}
 uima-pmc={ldap:cn=uima,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 usergrid={reuse:asf-authorization:usergrid}
