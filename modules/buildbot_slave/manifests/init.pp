@@ -39,6 +39,7 @@ class buildbot_slave (
     'python3-pip',
     'python3-dev',
     'python3-markdown',
+    'libpam0g-dev',
   ]
 
   # merge required packages from hiera for slaves
