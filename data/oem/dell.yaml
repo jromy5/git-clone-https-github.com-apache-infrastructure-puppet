@@ -9,14 +9,14 @@ $omsa_packages_7401 = ['srvadmin-deng', 'srvadmin-deng-snmp', 'srvadmin-hapi', '
 
 $omsa_packages_7402 = ['srvadmin-omacs', 'srvadmin-omcommon']
 
-package { $omsa_packages_740:
+apt::pin { $omsa_packages_740:
   ensure  => '7.4.0',
 }
 
-package { $omsa_packages_7401:
-  ensure  => '7.4.0-1',
+apt::pin { $omsa_packages_7401:
+  release_version  => '7.4.0-1',
 }
 
-package { $omsa_packages_7402:
-  ensure  => '7.4.0-2',
+apt::pin { $omsa_packages_7402:
+  release_version  => '7.4.0-2',
 }
