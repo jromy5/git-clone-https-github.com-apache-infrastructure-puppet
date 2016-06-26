@@ -23,7 +23,7 @@ bugzilla::required_packages:
   - 'libencode-detect-perl'
   - 'libfile-mimeinfo-perl'
 
-postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 postfix::server::smtp_use_tls: true
 
 logrotate::rule:
