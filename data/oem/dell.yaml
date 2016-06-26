@@ -2,3 +2,21 @@
 classes:
   - dell
   - dell::openmanage
+
+$omsa_packages_740 = ['srvadmin-base', 'srvadmin-storageservices', 'srvadmin-storageservices-cli', 'srvadmin-storageservices-snmp']
+
+$omsa_packages_7401 = ['srvadmin-deng', 'srvadmin-deng-snmp', 'srvadmin-hapi', 'srvadmin-idrac-snmp', 'srvadmin-isvc', 'srvadmin-isvc-snmp', 'srvadmin-nvme', 'srvadmin-omacore', '  srvadmin-storelib', 'srvadmin-storelib-sysfs', 'srvadmin-xmlsup', '  srvadmin-omilcore', 'srvadmin-ominst', 'srvadmin-realssd', 'srvadmin-rnasoap', 'srvadmin-smcommon', 'srvadmin-storage', 'srvadmin-storage-cli', 'srvadmin-storage-snmp']
+
+$omsa_packages_7402 = ['srvadmin-omacs', 'srvadmin-omcommon']
+
+package { $omsa_packages_740:
+  ensure  => '7.4.0',
+}
+
+package { $omsa_packages_7401:
+  ensure  => '7.4.0-1',
+}
+
+package { $omsa_packages_7402:
+  ensure  => '7.4.0-2',
+}
