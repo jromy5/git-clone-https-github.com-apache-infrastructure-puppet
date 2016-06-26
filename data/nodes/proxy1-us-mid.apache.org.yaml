@@ -104,8 +104,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine on
 
       # Main Bugzilla instance on eir.zones
-      ProxyPass /bugzilla                 http://192.168.3.5:80/bugzilla                 retry=0 timeout=60
-      ProxyPass /bugzilla/sanitycheck.cgi http://192.168.3.5:80/bugzilla/sanitycheck.cgi retry=0 timeout=300
+      ProxyPass /bugzilla                 http://192.168.3.7:80/bugzilla                 retry=0 timeout=60
+      ProxyPass /bugzilla/sanitycheck.cgi http://192.168.3.7:80/bugzilla/sanitycheck.cgi retry=0 timeout=300
       SetEnvIf Request_URI "^/bugzilla" asf_proxy=eir.mainbz
       # To enable system maintenance, comment out the two lines above and uncomment the five lines below
       # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
@@ -115,13 +115,13 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.211\.105
       # RewriteRule ^/bugzilla/(.*) http://192.168.3.5:80/bugzilla/$1 [P]
       <Location /bugzilla>
-        ProxyPassReverseCookiePath http://192.168.3.5/bugzilla http://bz.apache.org/bugzilla
+        ProxyPassReverseCookiePath http://192.168.3.7/bugzilla http://bz.apache.org/bugzilla
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
       # SA Bugzilla instance on eir.zones
-      ProxyPass /SpamAssassin                 http://192.168.3.5:80/SpamAssassin                 retry=0 timeout=60
-      ProxyPass /SpamAssassin/sanitycheck.cgi http://192.168.3.5:80/SpamAssassin/sanitycheck.cgi retry=0 timeout=300
+      ProxyPass /SpamAssassin                 http://192.168.3.7:80/SpamAssassin                 retry=0 timeout=60
+      ProxyPass /SpamAssassin/sanitycheck.cgi http://192.168.3.7:80/SpamAssassin/sanitycheck.cgi retry=0 timeout=300
       SetEnvIf Request_URI "^/SpamAssassin" asf_proxy=eir.sabz
       # To enable system maintenance, comment out the two lines above and uncomment the five lines below
       # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
@@ -131,13 +131,13 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.211\.105
       # RewriteRule ^/SpamAssassin/(.*) http://192.168.3.5:80/SpamAssassin/$1 [P]
       <Location /SpamAssassin>
-        ProxyPassReverseCookiePath http://192.168.3.5/SpamAssassin http://bz.apache.org/SpamAssassin
+        ProxyPassReverseCookiePath http://192.168.3.7/SpamAssassin http://bz.apache.org/SpamAssassin
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
       # OOO Bugzilla instance on sif.zones
-      ProxyPass /ooo                 http://192.168.3.5:80/ooo retry=0 timeout=60
-      ProxyPass /ooo/sanitycheck.cgi http://192.168.3.5:80/ooo/sanitycheck.cgi retry=0 timeout=300
+      ProxyPass /ooo                 http://192.168.3.7:80/ooo retry=0 timeout=60
+      ProxyPass /ooo/sanitycheck.cgi http://192.168.3.7:80/ooo/sanitycheck.cgi retry=0 timeout=300
       SetEnvIf Request_URI "^/ooo" asf_proxy=sif
       # To enable system maintenance, comment out the two lines above and uncomment the five lines below
       # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
@@ -147,7 +147,7 @@ vhosts_asf::vhosts::vhosts:
       # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.200\.75
       # RewriteRule ^/ooo/(.*) http://192.168.3.5:80/ooo/$1 [P]
       <Location /ooo>
-        ProxyPassReverseCookiePath http://192.168.3.5/ooo http://bz.apache.org/ooo
+        ProxyPassReverseCookiePath http://192.168.3.7/ooo http://bz.apache.org/ooo
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
