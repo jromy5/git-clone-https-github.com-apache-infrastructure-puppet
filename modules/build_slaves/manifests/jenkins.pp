@@ -219,7 +219,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_jenkins { $java_jenkins: }
   build_slaves::symlink_asfpackages  { $java_asfpackages: }
 
-  file { "/usr/local/jenkins/tools/java/ibm-1.7-64":
+  file { "/home/jenkins/tools/java/ibm-1.7-64":
     ensure => link,
     target => "/usr/local/asfpackages/java/ibm-java-x86_64-70",
   }
