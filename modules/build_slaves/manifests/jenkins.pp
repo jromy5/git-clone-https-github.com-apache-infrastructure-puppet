@@ -219,6 +219,11 @@ class build_slaves::jenkins (
   build_slaves::symlink_jenkins { $java_jenkins: }
   build_slaves::symlink_asfpackages  { $java_asfpackages: }
 
+  file { "/usr/local/jenkins/tools/java/ibm-1.7-64":
+    ensure => link,
+    target => "/usr/local/asfpackages/java/ibm-java-x86_64-70",
+  }
+
   file { "/home/jenkins/tools/ant/latest":
     ensure => link,
     target => "/usr/local/jenkins/ant/apache-ant-1.9.4",
