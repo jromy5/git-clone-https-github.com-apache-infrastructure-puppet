@@ -227,9 +227,6 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/release/mahout/>
         LimitRequestBody 600000000
       </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/zeppelin/>
-        LimitRequestBody 600000000
-      </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
         LimitRequestBody 500000000
       </LocationMatch>
@@ -249,7 +246,7 @@ vhosts_asf::vhosts::vhosts:
         LimitRequestBody 350000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/zeppelin/>
-        LimitRequestBody 350000000
+        LimitRequestBody 750000000
       </LocationMatch>
       #<LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/$PMC/>
       #  LimitRequestBody $LIMIT
