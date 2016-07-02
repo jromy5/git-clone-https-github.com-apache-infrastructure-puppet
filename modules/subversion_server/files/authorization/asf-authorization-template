@@ -349,6 +349,7 @@ perl-reload=
 perl-bootstrap=
 perl-dbi=
 perl-pmc={reuse:pit-authorization:perl-pmc}
+pirk=billie,joewitt,elserj,smarthi,tellison,eawilliams,charris,jacobwilder,tbrown,raydulany
 pivot={ldap:cn=pivot,ou=groups,dc=apache,dc=org}
 pivot-pmc={reuse:pit-authorization:pivot-pmc}
 poi={ldap:cn=poi,ou=groups,dc=apache,dc=org}
