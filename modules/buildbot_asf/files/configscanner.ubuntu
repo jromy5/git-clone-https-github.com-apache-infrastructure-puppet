@@ -1,0 +1,81 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          configscanner
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: configscanner
+# Description:       start configscanner daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+configscanner_user=${configscanner_user-"root"}
+configscanner_group=${configscanner_group-"root"}
+configscanner_pidfile=${configscanner_pidfile-"/var/run/configscanner.pid"}
+configscanner_logfile=${configscanner_logfile-"/var/log/configscanner.log"}
+configscanner_appdir=${configscanner_appdir-"/x1/buildmaster/master1/configscanner.py"}
+pidfile="${configscanner_pidfile}"
+
+RETVAL=0
+ 
+start() {
+    if [ -f $configscanner_pidfile ]; then
+      # pid file exists, check is proc is running
+      PID=`cat $configscanner_pidfile`
+      if kill -0 $PID >/dev/null 2>&1; then
+        echo 'configscanner is already running'
+        return 1
+      else
+        # configscanner was killed but not cleaned up
+        echo 'configscanner was not stopped cleanly, cleaning up'
+        rm -f $configscanner_pidfile
+      fi
+    fi
+
+    echo "Starting configscanner daemon: "
+    cd $configscanner_appdir
+    python2.7 configscanner.py --daemonize --user=$configscanner_user --group=$configscanner_group
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+ 
+stop() {
+    echo "Stopping configscanner daemon: "
+    cd $configscanner_appdir
+    python2.7 configscanner.py --stop
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        PID=`cat $configscanner_pidfile`
+        if ps -p $PID > /dev/null
+        then
+            echo "Config scanner is running, yay!"
+            exit 0
+        else
+            echo "Config scanner ain't running :("
+            exit 3
+        fi;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+esac
+
+exit $RETVAL

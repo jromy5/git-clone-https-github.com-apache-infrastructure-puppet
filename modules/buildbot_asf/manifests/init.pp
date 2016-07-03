@@ -320,3 +320,14 @@ class buildbot_asf (
 }
 
 }
+
+
+# Buildbot config scanner app
+service { 'configscanner':
+        ensure    => 'running',
+        enable    => true,
+        hasstatus => true,
+        subscribe => [
+          File['/home/buildmaster/master1/configscanner.py']
+        ]
+    }
