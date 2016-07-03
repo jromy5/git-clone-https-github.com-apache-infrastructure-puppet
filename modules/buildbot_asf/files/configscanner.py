@@ -352,17 +352,20 @@ if __name__ == "__main__":
         gid = grp.getgrnam(args.group[0])
         os.setgid(gid[2])
 
-    if args.user and len(args.user) > 0:
-        print("Switching to user %s" % args.user[0])
-        uid = pwd.getpwnam(args.user[0])[2]
-        os.setuid(uid)
+    
 
     daemon = MyDaemon(pidfile)
+    
+    
     
     if args.kill:
         daemon.stop()
     elif args.daemon:
         daemon.start()
+        if args.user and len(args.user) > 0:
+            print("Switching to user %s" % args.user[0])
+            uid = pwd.getpwnam(args.user[0])[2]
+            os.setuid(uid)
     else:
         debug = True
         logging.getLogger().addHandler(logging.StreamHandler())
