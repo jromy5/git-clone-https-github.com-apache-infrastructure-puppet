@@ -328,6 +328,6 @@ service { 'configscanner':
         enable    => true,
         hasstatus => true,
         subscribe => [
-          File['/home/buildmaster/master1/configscanner.py']
+          File['/x1/buildmaster/master1/configscanner.py']
         ]
     }
