@@ -138,6 +138,13 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/configscanner.py';
+    "/etc/init.d/configscanner":
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/configscanner.ubuntu';
+      
 
 # required scripts for cron jobs
 
