@@ -219,6 +219,7 @@ def read_chunk(req):
 # PubSub class: handles connecting to a pubsub service and checking commits
 class PubSubClient(Thread):
     def run(self):
+        broken = {}
         while True:
             logging.info("Connecting to " + self.url + "...")
             self.req = None
@@ -284,7 +285,18 @@ class PubSubClient(Thread):
                                         subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
                                         subprocess.call(["/usr/bin/svn", "up", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
                                         subprocess.check_output(["/usr/bin/buildbot", "reconfig"], stderr=subprocess.STDOUT)
+                                        if buildbotFile in broken:
+                                            del broken[buildbotFile]
+                                            blamelist.append(email)
+                                            for rec in blamelist:
+                                                sendEmail(
+                                                    rec,
+                                                    "Buildbot configuration back to normal for %s" % buildbotFile,
+                                                    "Looks like things got fixed, yay!"
+                                                    )
+                                            blamelist.remove(email)
                                     except subprocess.CalledProcessError as err:
+                                        broken[buildbotFile] = True
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
                                         blamelist.append(email)
@@ -302,6 +314,7 @@ Please correct the below and commit your fixes:
                                                 "Buildbot configuration failure in %s" % buildbotFile,
                                                 out
                                                 )
+                                        blamelist.remove(email)
                                         subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
                                         print("Cleaning up...")
                                         # Unsure whether the below is needed or will bork things:
