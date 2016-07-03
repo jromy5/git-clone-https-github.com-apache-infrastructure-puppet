@@ -42,7 +42,7 @@ logging.basicConfig(filename='configscanner.log', format='[%(asctime)s]: %(messa
 path = os.path.dirname(sys.argv[0])
 if len(path) == 0:
     path = "."
-    
+
 
 def sendEmail(rcpt, subject, message):
     sender = "<buildbot@buildbot-vm.apache.org>"
@@ -56,133 +56,137 @@ Subject: %s
 With regards,
 BuildBot
 """ % (sender, rcpt, subject, message)
-    
+
     try:
-       smtpObj = smtplib.SMTP("localhost")
-       smtpObj.sendmail(sender, receivers, msg)         
+        smtpObj = smtplib.SMTP("localhost")
+        smtpObj.sendmail(sender, receivers, msg)
     except SMTPException:
-       raise Exception("Could not send email - SMTP server down??")
-    
+        raise Exception("Could not send email - SMTP server down??")
+
 ###########################################################
 # Daemon class, curtesy of an anonymous good-hearted soul #
 ###########################################################
 class daemon:
-	"""A generic daemon class.
+    """A generic daemon class.
 
-	Usage: subclass the daemon class and override the run() method."""
+    Usage: subclass the daemon class and override the run() method."""
 
-	def __init__(self, pidfile): self.pidfile = pidfile
-	
-	def daemonize(self):
-		"""Deamonize class. UNIX double fork mechanism."""
+    def __init__(self, pidfile): self.pidfile = pidfile
 
-		try: 
-			pid = os.fork() 
-			if pid > 0:
-				# exit first parent
-				sys.exit(0) 
-		except OSError as err: 
-			sys.stderr.write('fork #1 failed: {0}\n'.format(err))
-			sys.exit(1)
-	
-		# decouple from parent environment
-		os.chdir('/') 
-		os.setsid() 
-		os.umask(0) 
-	
-		# do second fork
-		try: 
-			pid = os.fork() 
-			if pid > 0:
+    def daemonize(self):
+        """Deamonize class. UNIX double fork mechanism."""
 
-				# exit from second parent
-				sys.exit(0) 
-		except OSError as err: 
-			sys.stderr.write('fork #2 failed: {0}\n'.format(err))
-			sys.exit(1) 
-	
-		# redirect standard file descriptors
-		sys.stdout.flush()
-		sys.stderr.flush()
-		si = open(os.devnull, 'r')
-		so = open(os.devnull, 'a+')
-		se = open(os.devnull, 'a+')
+        try:
+            pid = os.fork()
+            if pid > 0:
+                # exit first parent
+                sys.exit(0)
+        except OSError as err:
+            sys.stderr.write('fork #1 failed: {0}\n'.format(err))
+            sys.exit(1)
 
-		os.dup2(si.fileno(), sys.stdin.fileno())
-		os.dup2(so.fileno(), sys.stdout.fileno())
-		os.dup2(se.fileno(), sys.stderr.fileno())
-	
-		# write pidfile
-		atexit.register(self.delpid)
+        # decouple from parent environment
+        os.chdir('/')
+        os.setsid()
+        os.umask(0)
 
-		pid = str(os.getpid())
-		with open(self.pidfile,'w+') as f:
-			f.write(pid + '\n')
-	
-	def delpid(self):
-		os.remove(self.pidfile)
+        # do second fork
+        try:
+            pid = os.fork()
+            if pid > 0:
 
-	def start(self):
-		"""Start the daemon."""
+                # exit from second parent
+                sys.exit(0)
+        except OSError as err:
+            sys.stderr.write('fork #2 failed: {0}\n'.format(err))
+            sys.exit(1)
 
-		# Check for a pidfile to see if the daemon already runs
-		try:
-			with open(self.pidfile,'r') as pf:
+        # redirect standard file descriptors
+        sys.stdout.flush()
+        sys.stderr.flush()
+        si = open(os.devnull, 'r')
+        so = open(os.devnull, 'a+')
+        se = open(os.devnull, 'a+')
 
-				pid = int(pf.read().strip())
-		except IOError:
-			pid = None
-	
-		if pid:
-			message = "pidfile {0} already exist. " + \
-					"Daemon already running?\n"
-			sys.stderr.write(message.format(self.pidfile))
-			sys.exit(1)
-		
-		# Start the daemon
-		self.daemonize()
-		self.run()
+        os.dup2(si.fileno(), sys.stdin.fileno())
+        os.dup2(so.fileno(), sys.stdout.fileno())
+        os.dup2(se.fileno(), sys.stderr.fileno())
 
-	def stop(self):
-		"""Stop the daemon."""
+        # write pidfile
+        atexit.register(self.delpid)
 
-		# Get the pid from the pidfile
-		try:
-			with open(self.pidfile,'r') as pf:
-				pid = int(pf.read().strip())
-		except IOError:
-			pid = None
-	
-		if not pid:
-			message = "pidfile {0} does not exist. " + \
-					"Daemon not running?\n"
-			sys.stderr.write(message.format(self.pidfile))
-			return # not an error in a restart
+        pid = str(os.getpid())
+        with open(self.pidfile,'w+') as f:
+            f.write(pid + '\n')
+        if args.user and len(args.user) > 0:
+            print("Switching to user %s" % args.user[0])
+            uid = pwd.getpwnam(args.user[0])[2]
+            os.setuid(uid)
 
-		# Try killing the daemon process	
-		try:
-			while 1:
-				os.kill(pid, signal.SIGTERM)
-				time.sleep(0.1)
-		except OSError as err:
-			e = str(err.args)
-			if e.find("No such process") > 0:
-				if os.path.exists(self.pidfile):
-					os.remove(self.pidfile)
-			else:
-				print (str(err.args))
-				sys.exit(1)
+    def delpid(self):
+        os.remove(self.pidfile)
 
-	def restart(self):
-		"""Restart the daemon."""
-		self.stop()
-		self.start()
+    def start(self):
+        """Start the daemon."""
 
-	def run(self):
-		"""You should override this method when you subclass Daemon.
-		
-		It will be called after the process has been daemonized by 
-		start() or restart()."""
+        # Check for a pidfile to see if the daemon already runs
+        try:
+            with open(self.pidfile,'r') as pf:
+
+                pid = int(pf.read().strip())
+        except IOError:
+            pid = None
+
+        if pid:
+            message = "pidfile {0} already exist. " + \
+                            "Daemon already running?\n"
+            sys.stderr.write(message.format(self.pidfile))
+            sys.exit(1)
+
+        # Start the daemon
+        self.daemonize()
+        self.run()
+
+    def stop(self):
+        """Stop the daemon."""
+
+        # Get the pid from the pidfile
+        try:
+            with open(self.pidfile,'r') as pf:
+                pid = int(pf.read().strip())
+        except IOError:
+            pid = None
+
+        if not pid:
+            message = "pidfile {0} does not exist. " + \
+                            "Daemon not running?\n"
+            sys.stderr.write(message.format(self.pidfile))
+            return # not an error in a restart
+
+        # Try killing the daemon process
+        try:
+            while 1:
+                os.kill(pid, signal.SIGTERM)
+                time.sleep(0.1)
+        except OSError as err:
+            e = str(err.args)
+            if e.find("No such process") > 0:
+                if os.path.exists(self.pidfile):
+                    os.remove(self.pidfile)
+            else:
+                print (str(err.args))
+                sys.exit(1)
+
+    def restart(self):
+        """Restart the daemon."""
+        self.stop()
+        self.start()
+
+    def run(self):
+        """You should override this method when you subclass Daemon.
+
+        It will be called after the process has been daemonized by
+        start() or restart()."""
 
 
 
@@ -229,7 +233,7 @@ class PubSubClient(Thread):
                     logging.warning("Could not connect to %s, retrying in 30 seconds..." % self.url)
                     time.sleep(30)
                     continue
-                
+
             for line in read_chunk(self.req):
                 if version == 3:
                     line = str( line, encoding='ascii' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
@@ -240,9 +244,9 @@ class PubSubClient(Thread):
                     if "commit" in obj and "repository" in obj['commit']:
                         if debug:
                             logging.info("Found a commit in %s", obj['commit']['repository'])
-                            
+
                         if obj['commit']['repository'] == "git":
-                        
+
                             # grab some vars
                             commit = obj['commit']
                             project = commit['project']
@@ -252,11 +256,11 @@ class PubSubClient(Thread):
                             author = commit['author']
                             email = commit['email']
                             ref = commit['ref']
-                            
-                                            
+
+
                         # If it's not git (and not JIRA), it must be subversion
                         elif obj['commit']['repository']:
-                        
+
                             #Grab some vars
                             commit = obj['commit']
                             body = commit['log']
@@ -286,7 +290,7 @@ class PubSubClient(Thread):
                                         blamelist.append(email)
                                         out = err.output
                                         for rec in blamelist:
-                                            
+
                                             sendEmail(
                                                 rec,
                                                 "Buildbot configuration failure in %s" % buildbotFile,
@@ -296,28 +300,28 @@ class PubSubClient(Thread):
                                         print("Cleaning up...")
                                         # Unsure whether the below is needed or will bork things:
 #                                        subprocess.call(["/usr/bin/svn", "update", "-r", "%u" % before, "projects/%s" % buildbotFile])
-                                        
+
                                     print("All done, back to listening for changes :)")
-                            
+
                 except ValueError as detail:
                     logging.warning("Bad JSON or something: %s", detail)
                     continue
             logging.info("Disconnected from %s, reconnecting" % self.url)
 
- 
 
-################         
+
+################
 # Main program #
 ################
 def main():
     if debug:
         print("Foreground test mode enabled, no updates will happen")
-        
+
     # Start the svn thread
     svn_thread = PubSubClient()
     svn_thread.url = "http://svn-master.apache.org:2069/commits/*"
     svn_thread.start()
-    
+
     while True:
         time.sleep(10)
 
@@ -328,7 +332,7 @@ def main():
 class MyDaemon(daemon):
     def run(self):
         main()
- 
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Command line options.')
@@ -343,32 +347,27 @@ if __name__ == "__main__":
     parser.add_argument('--stop', dest='kill', action='store_true',
                        help='Kill the currently running ConfigScanner process')
     args = parser.parse_args()
-    
+
     pidfile = "/var/run/configscanner.pid"
     if args.pidfile and len(args.pidfile) > 2:
         pidfile = args.pidfile
-    
+
     if args.group and len(args.group) > 0:
         gid = grp.getgrnam(args.group[0])
         os.setgid(gid[2])
 
-    
+
 
     daemon = MyDaemon(pidfile)
-    
-    
-    
+
+
+
     if args.kill:
         daemon.stop()
     elif args.daemon:
         daemon.start()
-        if args.user and len(args.user) > 0:
-            print("Switching to user %s" % args.user[0])
-            uid = pwd.getpwnam(args.user[0])[2]
-            os.setuid(uid)
     else:
         debug = True
         logging.getLogger().addHandler(logging.StreamHandler())
         main()
     sys.exit(0)
-
