@@ -288,7 +288,13 @@ class PubSubClient(Thread):
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
                                         blamelist.append(email)
-                                        out = err.output
+                                        out = """
+The error(s) below happened while validating the committed changes.
+As a precaution, this commit has not yet been applied to BuildBot.
+Please correct the below and commit your fixes:
+
+%s
+""" % err.output
                                         for rec in blamelist:
 
                                             sendEmail(
