@@ -12,8 +12,8 @@
 . /lib/init/vars.sh
 . /lib/lsb/init-functions
 
-configscanner_user=${configscanner_user-"root"}
-configscanner_group=${configscanner_group-"root"}
+configscanner_user=${configscanner_user-"buildmaster"}
+configscanner_group=${configscanner_group-"buildmaster"}
 configscanner_pidfile=${configscanner_pidfile-"/var/run/configscanner.pid"}
 configscanner_logfile=${configscanner_logfile-"/var/log/configscanner.log"}
 configscanner_appdir=${configscanner_appdir-"/x1/buildmaster/master1/"}
