@@ -233,7 +233,7 @@ opennlp={reuse:asf-authorization:opennlp}
 opennlp-pmc={ldap:cn=opennlp,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 openoffice={reuse:asf-authorization:openoffice}
 openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-openoffice-security=orw,orcmid,malte,hdu,alg,af,arielch,damjan,pats,pescetti
+openoffice-security=orw,orcmid,malte,hdu,alg,af,arielch,damjan,pats,pescetti,cmarcum,kschenk
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 orc={reuse:asf-authorization:orc}
