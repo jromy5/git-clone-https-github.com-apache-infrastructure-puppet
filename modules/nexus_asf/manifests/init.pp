@@ -1,7 +1,7 @@
 # class: nexus
 # prepare the base system for a nexus install
 #
-class nexus {
+class nexus_asf {
 
   user { 'nexus':
     home        => '/home/nexus',
