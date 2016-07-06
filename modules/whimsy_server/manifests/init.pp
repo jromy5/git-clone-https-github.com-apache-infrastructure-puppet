@@ -3,6 +3,8 @@
 
 class whimsy_server (
 
+  $ruby_version = hiera('ruby_version'),
+
 ) {
 
   file { '/x1':
@@ -37,11 +39,6 @@ class whimsy_server (
     procmail,
   ]
 
-  $gems = [
-    bundler,
-    rake,
-  ]
-
   exec { 'Add nodesource sources':
     command => 'curl https://deb.nodesource.com/setup_5.x | bash -',
     creates => '/etc/apt/sources.list.d/nodesource.list',
@@ -50,15 +47,13 @@ class whimsy_server (
 
   package { $packages: ensure => installed } ->
 
-  package { $gems: ensure => installed, provider => gem } ->
-
   ############################################################
   #               Web Server / Application content           #
   ############################################################
 
   class { 'rvm::passenger::apache':
-    version            => '5.0.23',
-    ruby_version       => 'ruby-2.3.0',
+    version            => '5.0.29',
+    ruby_version       => "ruby-${ruby_version}",
     mininstances       => '3',
     maxinstancesperapp => '0',
     maxpoolsize        => '30',
@@ -73,9 +68,13 @@ class whimsy_server (
   } ~>
 
   exec { 'rake::update':
-    command     => '/usr/local/bin/rake update',
+    command     => "/usr/local/bin/rake${ruby_version} update",
     cwd         => '/x1/srv/whimsy',
-    refreshonly => true
+    refreshonly => true,
+    require     => [
+      Rvm_gem['bundler'],
+      Rvm_gem['rake'],
+    ]
   }
 
   ############################################################

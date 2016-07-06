@@ -42,8 +42,10 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
+ruby_version: '2.3.1'
+
 rvm::system_rubies:
-  'ruby-2.3.0': {}
+  "ruby-%{hiera('ruby_version')}": {}
 
 rvm::system_users:
   - vagrant
@@ -51,17 +53,21 @@ rvm::system_users:
 rvm::rvm_gems:
   'bundler':
      name: 'bundler'
-     ruby_version: 'ruby-2.3.0'
+     ruby_version: "ruby-%{hiera('ruby_version')}"
+     ensure: latest
+  'rake':
+     name: 'rake'
+     ruby_version: "ruby-%{hiera('ruby_version')}"
      ensure: latest
 
 whimsy_server::apache_mailmap:
-  secretary: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/www/secmail/deliver.rb"
-  members: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/deliver.rb"
-  board: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/deliver.rb"
+  secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secmail/deliver.rb"
+  members: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
+  board: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
 
 whimsy_server::whimsysvn_mailmap:
-  svnupdate: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/svnupdate.rb"
-  gitupdate: "/usr/local/bin/ruby2.3.0 /x1/srv/whimsy/tools/gitupdate.rb"
+  svnupdate: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/svnupdate.rb"
+  gitupdate: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/gitupdate.rb"
 
 whimsy_server::procmail::apmail_keycontent: |
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCGgAIeu+84ADF0TjKLPJaEE8747Xb+KNjh8ESujparlJcoD0EaYXZ7fF7X24Di5DzETLnv3XzLRuTUG3RzfAovrrgdIOqF23L5QMK3yNHgphNF3ri3ClwATscursH7B38QpEqTTsFGYsBwpJImKEqCkVdoLf5AVu6zhoJIsvW+mDzwvjJN/II/iFeR2/gSm73TWif0tkL7ZSspl2Dj4YNcngCL/nPmPK9tA6EJO3FcZSJzji3pfMIReBM8E0123rYF1EaNqjqF9mw3gf4jNTi9eob3l7Pchdi/onDzthpJpjw6eDcyUisYpotAO1LR0+CJpwfbxSVsjMayKUEPuop apmail@hermes.apache.org
@@ -162,6 +168,8 @@ vhosts_whimsy::vhosts::vhosts:
 
     custom_fragment: |
       RemoteIPHeader X-Forwarded-For
+
+      SetEnv PATH /usr/local/rvm/wrappers/ruby-%{hiera('ruby_version')}:${PATH}
 
       PassengerFriendlyErrorPages on
       PassengerDefaultUser %{apache::user}
