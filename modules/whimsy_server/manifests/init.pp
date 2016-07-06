@@ -3,6 +3,8 @@
 
 class whimsy_server (
 
+  $ruby_version = hiera('ruby_version'),
+
 ) {
 
   file { '/x1':
@@ -51,7 +53,7 @@ class whimsy_server (
 
   class { 'rvm::passenger::apache':
     version            => '5.0.29',
-    ruby_version       => 'ruby-2.3.1',
+    ruby_version       => "ruby-${ruby_version}",
     mininstances       => '3',
     maxinstancesperapp => '0',
     maxpoolsize        => '30',
@@ -66,7 +68,7 @@ class whimsy_server (
   } ~>
 
   exec { 'rake::update':
-    command     => '/usr/local/bin/rake2.3.1 update',
+    command     => "/usr/local/bin/rake${ruby_version} update",
     cwd         => '/x1/srv/whimsy',
     refreshonly => true,
     require     => [
