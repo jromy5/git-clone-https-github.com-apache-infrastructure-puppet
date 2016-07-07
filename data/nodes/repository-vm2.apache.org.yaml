@@ -4,5 +4,8 @@ classes:
   - loggy
   - rootbin_asf
   - nexus_asf
+  - oraclejava::install
   - zmanda_asf::client
 
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
