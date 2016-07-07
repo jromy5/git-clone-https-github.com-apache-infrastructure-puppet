@@ -1,0 +1,144 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::ssl
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - vhosts_asf::vhosts
+  - loggy
+  - blocky
+
+apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:   '/etc/ssl/private/wildcard.apache.org.key'
+apache::mpm_module:        'event'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+apache::default_vhost: false
+
+apache::logroot: '/x1/log'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
+vhosts_asf::vhosts::vhosts:
+  repository:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'None'
+        allow_override:
+          - 'None'
+        order: 'allow,deny'
+        allow: 'from all'
+    log_level: 'warn'
+    access_log_format: '%h %l %u %t \"%r\" %>s %b \"%%{}{User-agent}i\" %%{}{SSL_PROTOCOL}x %%{}{SSL_CIPHER}x %D'
+    access_log_env_var: 'combinednoreferer'
+    access_log_file: 'repository-vm2.apache.org.http_access.log'
+    error_log_file:  'repository-vm2.apache.org.error.log'
+    custom_fragment: |
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      TimeOut 60
+
+      RewriteEngine On
+      ProxyRequests Off
+
+      # Temporarily serve local server-status
+      RewriteRule ^/server-status - [L]
+
+      # <Disable Service - root@ - 20120814>
+      #  RewriteCond %%{}{REQUEST_URI} !/maintenance.html
+      #  RewriteRule ^(.*)$ /maintenance.html [L,R=503]
+      #  ErrorDocument 503 /maintenance.html
+      # </Disable Service - root@ - 20120814
+
+      #INFRA-2492
+      RewriteRule ^/snapshots$ /snapshots/ [R,L]
+      RewriteRule ^/snapshots/(.*) http://repository-vm2.apache.org:8081/content/groups/snapshots/$1 [P]
+
+      #only allow gets on the snapshot group url to be http, everything else is https
+      RewriteCond %%{}{THE_REQUEST} !^(GET|HEAD)\ /content/groups/snapshots.*$
+      RewriteCond %%{}{REQUEST_URI} !^/ssl.*$
+      RewriteRule ^(.*)$ https://repository.apache.org$1 [R,L]
+
+      RewriteRule ^/content/groups/snapshots$ /content/groups/snapshots/ [R,L]
+      RewriteCond %%{}{REQUEST_URI} !^/ssl.*$
+      RewriteRule ^(.*)$ http://repository-vm2.apache.org:8081$1 [P,L]
+      SetEnv force-proxy-request-1.0 1
+      SetEnv proxy-nokeepalive 1
+
+      AddType application/x-java-jnlp-file .jnlp
+
+      RequestHeader set X-Forwarded-Proto "https"
+
+      <Location /ssl>
+            Options Indexes
+            Order allow,deny
+            Allow from all
+      </Location>
+
+  repository-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_format: '%h %l %u %t \"%r\" %>s %b \"%%{}{User-agent}i\" %%{}{SSL_PROTOCOL}x %%{}{SSL_CIPHER}x %D'
+    access_log_env_var: 'combinednoreferer'
+    access_log_file: 'repository-vm2.apache.org.ssl_access.log'
+    error_log_file:  'repository-vm2.apache.org.error.log'
+    custom_fragment: |
+      # Brian Fox says to leave this, so...
+      Timeout 60
+
+      ProxyPreserveHost On
+
+      RewriteEngine On
+      # <Disable Service - root@ - 20120814>
+      # RewriteCond %{REQUEST_URI} !/maintenance.html
+      # RewriteRule ^(.*)$ /maintenance.html [L,R=503]
+      # ErrorDocument 503 /maintenance.html
+      # </Disable Service - root@ - 20120814>
+
+      <Proxy "!/ssl.cert.+">
+        Require all granted
+      </Proxy>
+      ProxyPass /snapshots http://repository-vm2.apache.org:8081/content/groups/snapshots
+
+      ProxyPass / http://repository-vm2.apache.org:8081/
+      ProxyPassReverse / http://repository-vm2.apache.org:8081/
