@@ -78,3 +78,8 @@ Cmnd_Alias OOOWIKI = /usr/sbin/service ooo-wiki2 start, /usr/sbin/service ooo-wi
 %lucene ALL=(jenkins) ALL
 <% end -%>
 
+<% if @fqdn == 'repository-vm2.apache.org' -%>
+# allow nexus to restart nexus
+nexus ALL= NOPASSWD: /etc/init.d/nexus
+<% end -%>
+
