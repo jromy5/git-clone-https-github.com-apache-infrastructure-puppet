@@ -86,6 +86,13 @@ class build_slaves::jenkins (
     }
   }
 
+  apt::ppa { 'ppa:cwchien/gradle':
+    ensure => present,
+  } ->
+  package { 'gradle':
+    ensure => latest,
+  }
+
   apt::ppa { 'ppa:ubuntu-lxc/lxd-stable': 
     ensure => present,
   }->
