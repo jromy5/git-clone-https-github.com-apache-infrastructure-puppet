@@ -1666,7 +1666,7 @@ spamassassin_role = rw
 spamassassin_role = rw
 
 [/spark]
-@spark = rw
+@spark = r
 
 [/sqoop]
 @sqoop = r
