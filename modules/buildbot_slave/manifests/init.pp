@@ -63,6 +63,14 @@ class buildbot_slave (
     version => '8',
   }->
 
+  apt::ppa { 'ppa:cwchien/gradle':
+    ensure => present,
+  } ->
+
+  package { 'gradle':
+    ensure => latest,
+  } ->
+
   # buildbot specific
 
   group {
