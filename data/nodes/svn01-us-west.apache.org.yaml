@@ -251,6 +251,12 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/zeppelin/>
         LimitRequestBody 750000000
       </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/phoenix/>
+        LimitRequestBody 400000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dist/phoenix/>
+        LimitRequestBody 400000000
+      </LocationMatch>
       #<LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/$PMC/>
       #  LimitRequestBody $LIMIT
       #</LocationMatch>
