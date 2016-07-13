@@ -374,6 +374,7 @@ s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamsho
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
+senssoft=jpoore,lewismc,lmariano,cgimenez,aford,syork,fsun,mbeard,rfoley,kfinley
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry={ldap:cn=sentry,ou=groups,dc=apache,dc=org}
@@ -1015,7 +1016,7 @@ ea = rw
 @johnzon = rw
 
 [/incubator/joshua]
-@htrace = rw
+@joshua = rw
 
 [/incubator/juice]
 * = r
@@ -1093,6 +1094,9 @@ ea = rw
 
 [/incubator/samoa]
 @samoa = rw
+
+[/incubator/senssoft]
+@senssoft = rw
 
 [/incubator/singa]
 @singa = rw
