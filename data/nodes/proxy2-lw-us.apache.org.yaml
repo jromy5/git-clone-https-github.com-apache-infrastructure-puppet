@@ -1,0 +1,867 @@
+---
+classes:
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - blocky
+  - loggy
+  - postgresql::client
+  - ssl::name::wildcard_apache_org
+  - ssl::name::allura_selfsigned
+  - ssl::name::bloodhound_ca
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '1000'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '1000'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '20'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '1000'
+apache::mod::event::threadsperchild: '50'
+
+base::basepackages:
+  - issues-data
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  allura:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'forge-allura.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'forge-allura.apache.org.http_access.log'
+    error_log_file: 'forge-allura.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://forge-allura.apache.org/
+
+  allura-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'forge-allura.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'forge-allura.apache.org.ssl_access.log'
+    error_log_file: 'forge-allura.apache.org.error.log'
+    custom_fragment: |
+      # Setup SSL Proxy Support (needed to allow SSL proxying)
+      SSLProxyEngine On
+      SSLProxyCACertificateFile /etc/ssl/certs/allura-selfsigned.crt
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # All content served by httpd instance on allura-vm
+      ProxyPassMatch ^/(.*)$ https://allura-vm.apache.org:443/$1 retry=0 timeout=60
+
+  archiva-repository:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.http_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://archiva-repository.apache.org/$1
+
+  archiva-repository-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.ssl_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://archiva-vm.apache.org/
+      ProxyPassReverse / http://archiva-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=503
+
+  blogs:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'blogs.apache.org.http_access.log'
+    error_log_file: 'blogs.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://blogs.apache.org/
+
+  blogs-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'blogs.apache.org'
+    serveraliases:
+      - 'www.blogs.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'blogs.apache.org.ssl_access.log'
+    error_log_file: 'blogs.apache.org.error.log'
+    custom_fragment: |
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+      Proxypass / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org:8080/
+      ProxypassReverse / http://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org/
+      ProxypassReverse / https://roller-vm.apache.org:8443/
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=503
+
+  comments:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'comments.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'comments.apache.org.http_access.log'
+    error_log_file: 'comments.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://comments.apache.org/
+
+  comments-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'comments.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'comments.apache.org.ssl_access.log'
+    error_log_file: 'comments.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      ProxyPassMatch ^/(?!committers\.lua)(.*)$ http://192.168.0.62:8080/$1 retry=0 timeout=60
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+        <Location /committers.lua>
+          # Require LDAP authentication for /committers.lua
+          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute uid
+          AuthName "ASF Committers"
+          AuthType Basic
+          AuthBasicProvider ldap
+          Require valid-user
+
+          # Pass on X-Authenticated-User to backend server
+          RewriteEngine On
+          RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+          RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+          # Remove Authorization header to prevent passwords from being transmitted
+          RequestHeader unset Authorization
+          ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
+        </Location>
+
+  demo-old-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-old-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:18080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+      RequestHeader set X-Forwarded-Proto http
+
+  demo-old-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-old-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerCN off
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:28443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:28443/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=503
+
+  demo-stable-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-stable-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:18080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
+      RequestHeader set X-Forwarded-Proto http
+
+  demo-stable-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-stable-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerCN off
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:18443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:18443/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=503
+
+  demo-trunk-ofbiz:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-trunk-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://ofbiz-vm.apache.org:8080/
+      ProxyPassReverse / http://ofbiz-vm.apache.org:8080/
+      RequestHeader set X-Forwarded-Proto http
+
+  demo-trunk-ofbiz-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'demo-trunk-ofbiz.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
+    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
+    custom_fragment: |
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerCN off
+      SSLProxyEngine On
+      ProxyPass / https://ofbiz-vm.apache.org:8443/
+      ProxyPassReverse / https://ofbiz-vm.apache.org:8443/
+      ProxyPreserveHost On
+      RequestHeader set X-Forwarded-Proto https
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=503
+
+  helpinfrahelpyou:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  helpinfrahelpyou-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'jira.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  inventory:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'inventory.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'inventory.apache.org.http_access.log'
+    error_log_file: 'inventory.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://inventory.apache.org/
+
+  inventory-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'inventory.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'inventory.apache.org.ssl_access.log'
+    error_log_file: 'inventory.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      <Location />
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthName "Root members only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
+      </Location>
+
+  issues:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/issues-data'
+    servername: 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.http_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://issues.apache.org/
+
+  issues-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/issues-data'
+    servername: 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.ssl_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent /bugzilla https://bz.apache.org/bugzilla
+      Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
+      Redirect permanent /ooo https://bz.apache.org/ooo    
+
+      ProxyPreserveHost on
+
+      # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
+      SSLProxyEngine On
+      SSLProxyCACertificateFile /etc/ssl/certs/bloodhound-ca.crt
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # Jira live instance
+      # Redirects for some of the migrated Jira instances
+      RewriteRule ^/activemq/(.*) /jira/$1 [R=permanent,L]
+      # Proxy requests
+      ProxyPass /jira http://192.168.0.39:10343/jira   retry=0 timeout=1800 max=400
+      SetEnvIf Request_URI "^/activemq" asf_proxy=issues-vm.jira-main
+      SetEnvIf Request_URI "^/jira" asf_proxy=issues-vm.jira-main
+      
+      # Anti-spam for Aardvark
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+      <Location /jira/>
+        SetInputFilter AntiSpam
+      </Location>
+
+      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
+      RewriteCond /etc/tomcat-jira-main.maint -f
+      RewriteCond %%{}{REQUEST_URI} !/jira/maintenance.html
+      RewriteCond %%{}{REMOTE_ADDR} !^(86\.164\.153\.81)$
+      RewriteRule ^/jira/(.*) /jira/maintenance.html
+      RewriteCond %%{}{REMOTE_ADDR} ^(86\.164\.153\.81)$
+      RewriteRule ^/jira/(.*) http://192.168.0.39:10343/jira/$1 [P]
+
+      # Fix URLs in SOAP requests
+      <Location /jira/rpc/soap>
+        AddOutputFilterByType SUBSTITUTE text/xml
+        Substitute s!http://issues.apache.org/!https://issues.apache.org/!
+      </Location>
+
+      ProxyPass /jira-test     http://192.168.0.39:10143/jira-test timeout=1000 ttl=270
+      SetEnvIf Request_URI "^/jira-test" asf_proxy=hel.jira-test
+      #RewriteCond %%{}{REQUEST_URI} !/jira-test/maintenance.html
+      #RewriteRule ^/jira-test/(.*) /jira-test/maintenance.html
+
+      # Jira 4.2.1 Second test instance
+      ProxyPass /jira-test2    http://192.168.0.53:10243/jira-test2 timeout=100 ttl=270
+      SetEnvIf Request_URI "^/jira-test2" asf_proxy=hel.jira-test2
+
+      # Bloodhound instance on bloodhound-vm.a.o
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
+      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
+
+  modules:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'modules.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'modules.apache.org.http_access.log'
+    error_log_file: 'modules.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://modules.apache.org/
+
+  modules-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'modules.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'modules.apache.org.ssl_access.log'
+    error_log_file: 'modules.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite for doing maintenance
+      RewriteEngine on
+
+      ProxyPass / http://192.168.0.55:10180/ retry=0 timeout=60
+      # To enable system maintenance, comment out the line above and uncomment the five lines below
+      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
+      # RewriteCond %%{}{REQUEST_URI} !/maintenance.html
+      # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.222\.166
+      # RewriteRule ^/(.*) /maintenance.html
+      # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.222\.166
+      # RewriteRule ^/(.*) http://192.168.0.55:10180/$1 [P]     
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+  pad:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'pad.apache.org.http_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://pad.apache.org/
+
+  pad-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'pad.apache.org.ssl_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      <Location />
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location>
+
+      ProxyPass / http://whimsy-vm.apache.org:9001/
+      ProxyPassReverse / http://whimsy-vm.apache.org:9001/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=503
+
+  paste:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'paste.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'paste.apache.org.http_access.log'
+    error_log_file: 'paste.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://paste.apache.org/
+
+  paste-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'paste.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'paste.apache.org.ssl_access.log'
+    error_log_file: 'paste.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      ProxyPassMatch ^/(?!p|token)(.*)$ http://192.168.0.55:8080/$1 retry=0 timeout=60
+
+      # Protect cookies - not sure this is needed yet
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      <Location /p>
+        # Require LDAP authentication for /p[id], /post or /token
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
+      </Location>
+
+  projects:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'projects.apache.org'
+    serveraliases:
+      - 'projects-new.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'projects.apache.org.http_access.log'
+    error_log_file: 'projects.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  projects-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'projects.apache.org'
+    serveraliases:
+      - 'projects-new.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'projects.apache.org.ssl_access.log'
+    error_log_file: 'projects.apache.org.error.log'
+    custom_fragment: |
+      <Location /edit>
+        AuthType Basic
+        AuthName "ASF Committers"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+        RequestHeader unset Authorization
+      </Location>
+
+      ProxyPass / http://projects-vm.apache.org/
+      ProxyPassReverse / http://projects-vm.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=503
+
+  reference:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'reference.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'reference.apache.org.http_access.log'
+    error_log_file: 'reference.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://reference.apache.org/
+
+  reference-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'reference.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'reference.apache.org.ssl_access.log'
+    error_log_file: 'reference.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite for doing maintenance
+      RewriteEngine on
+
+      ProxyPass / http://192.168.0.55:8080/ retry=0 timeout=60
+
+      <Location / >
+        Header edit Set-Cookie (^.*$) "$1; Secure"
+      </Location>
+
+      <Location /infra>
+        AuthType Basic
+        AuthName "Infrastructure members only"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+
+        # Remove Authorization header to prevent passwords from being transmitted
+        RequestHeader unset Authorization
+        ProxyPass http://192.168.0.55:8080/infra retry=0 timeout=60
+
+      </Location>
+
+  reporter:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'reporter.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'reporter.apache.org.http_access.log'
+    error_log_file: 'reporter.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://reporter.apache.org/
+
+  reporter-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'reporter.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'reporter.apache.org.ssl_access.log'
+    error_log_file: 'reporter.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://projects-vm.apache.org/
+      ProxyPassReverse / http://projects-vm.apache.org/
+      ProxyPreserveHost On
+
+      <Location />
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "PMC Members Only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+        RequestHeader unset Authorization
+      </Location>
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=503
+
+  translate:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'translate.apache.org'
+    serveraliases:
+      - 'translate-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'translate.apache.org.http_access.log'
+    error_log_file: 'translate.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://translate.apache.org/
+
+  translate-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'translate.apache.org'
+    serveraliases:
+      - 'translate-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'translate.apache.org.ssl_access.log'
+    error_log_file: 'translate.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / http://translate-vm2.apache.org/
+      ProxypassReverse / http://translate-vm2.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=translate.apache.org&code=503
+
+  whimsy-old:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'whimsy-old.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+      - 'whimsy.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy-old.apache.org.http_access.log'
+    error_log_file: 'whimsy-old.apache.org.error.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP_HOST} ^(.*)$
+      RewriteRule ^/(.*)$ https://%1/$1 [R=301,L]
+
+  whimsy-old-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'whimsy-old.apache.org'
+    serveraliases:
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
+      - 'whimsy.apache.org' 
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'whimsy-old.apache.org.https_access.log'
+    error_log_file: 'whimsy-old.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://whimsy-vm.apache.org/
+      ProxyPassReverse / http://whimsy-vm.apache.org/
+      ProxyPreserveHost On
+      ProxyVia On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=503
+
+
+fail2ban_asf::config::jails:
+  jira:
+    filter: asf-jira
+    action:
+      - iptables-allports
+    logpath: /usr/local/etc/aardvark/spammers.txt
+    findtime: 3600
+    maxretry: 1
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-jira:
+    filterfailregex: |
+      <HOST> spammed Aardvark
