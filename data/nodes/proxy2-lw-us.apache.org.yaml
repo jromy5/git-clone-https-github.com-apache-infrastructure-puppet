@@ -190,7 +190,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPreserveHost on
 
-      ProxyPassMatch ^/(?!committers\.lua)(.*)$ http://urd.zones.apache.org:8080/$1 retry=0 timeout=60
+      ProxyPassMatch ^/(?!committers\.lua)(.*)$ http://192.168.0.62:8080/$1 retry=0 timeout=60
 
       # Protect cookies - not sure this is needed yet
       <Location / >
@@ -213,7 +213,7 @@ vhosts_asf::vhosts::vhosts:
 
           # Remove Authorization header to prevent passwords from being transmitted
           RequestHeader unset Authorization
-          ProxyPass http://urd.zones.apache.org:8080/committers.lua retry=0 timeout=60
+          ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
         </Location>
 
   demo-old-ofbiz:
@@ -397,7 +397,7 @@ vhosts_asf::vhosts::vhosts:
 
         # Remove Authorization header to prevent passwords from being transmitted
         RequestHeader unset Authorization
-        ProxyPass http://bil.zones.apache.org:8080/ retry=0 timeout=60
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
       </Location>
 
   issues:
@@ -440,7 +440,7 @@ vhosts_asf::vhosts::vhosts:
       # Redirects for some of the migrated Jira instances
       RewriteRule ^/activemq/(.*) /jira/$1 [R=permanent,L]
       # Proxy requests
-      ProxyPass /jira http://arcas.apache.org:10343/jira   retry=0 timeout=1800 max=400
+      ProxyPass /jira http://192.168.0.39:10343/jira   retry=0 timeout=1800 max=400
       SetEnvIf Request_URI "^/activemq" asf_proxy=issues-vm.jira-main
       SetEnvIf Request_URI "^/jira" asf_proxy=issues-vm.jira-main
       
@@ -457,7 +457,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REMOTE_ADDR} !^(86\.164\.153\.81)$
       RewriteRule ^/jira/(.*) /jira/maintenance.html
       RewriteCond %%{}{REMOTE_ADDR} ^(86\.164\.153\.81)$
-      RewriteRule ^/jira/(.*) http://arcas.apache.org:10343/jira/$1 [P]
+      RewriteRule ^/jira/(.*) http://192.168.0.39:10343/jira/$1 [P]
 
       # Fix URLs in SOAP requests
       <Location /jira/rpc/soap>
@@ -465,95 +465,13 @@ vhosts_asf::vhosts::vhosts:
         Substitute s!http://issues.apache.org/!https://issues.apache.org/!
       </Location>
 
-      ProxyPass /jira-test     http://arcas.apache.org:10143/jira-test timeout=1000 ttl=270
+      ProxyPass /jira-test     http://192.168.0.39:10143/jira-test timeout=1000 ttl=270
       SetEnvIf Request_URI "^/jira-test" asf_proxy=hel.jira-test
       #RewriteCond %%{}{REQUEST_URI} !/jira-test/maintenance.html
       #RewriteRule ^/jira-test/(.*) /jira-test/maintenance.html
 
       # Jira 4.2.1 Second test instance
-      ProxyPass /jira-test2    http://hel.zones.apache.org:10243/jira-test2 timeout=100 ttl=270
-      SetEnvIf Request_URI "^/jira-test2" asf_proxy=hel.jira-test2
-
-      # Bloodhound instance on bloodhound-vm.a.o
-      SSLProxyVerify none
-      SSLProxyCheckPeerCN off
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerExpire off
-      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
-      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
-
-issues-test:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    docroot: '/var/www/issues-data'
-    servername: 'issues-test.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'issues-test.apache.org.http_access.log'
-    error_log_file: 'issues-test.apache.org.error.log'
-    custom_fragment: |
-      Redirect / https://issues-test.apache.org/
-
-  issues-ssl-test:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    docroot: '/var/www/issues-data'
-    servername: 'issues-test.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'issues-test.apache.org.ssl_access.log'
-    error_log_file: 'issues-test.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent /bugzilla https://bz.apache.org/bugzilla
-      Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
-      Redirect permanent /ooo https://bz.apache.org/ooo    
-
-      ProxyPreserveHost on
-
-      # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
-      SSLProxyEngine On
-      SSLProxyCACertificateFile /etc/ssl/certs/bloodhound-ca.crt
-
-      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
-      RewriteEngine on
-
-      # Jira live instance
-      # Redirects for some of the migrated Jira instances
-      RewriteRule ^/activemq/(.*) /jira/$1 [R=permanent,L]
-      # Proxy requests
-      ProxyPass /jira http://arcas.apache.org:10343/jira   retry=0 timeout=1800 max=400
-      SetEnvIf Request_URI "^/activemq" asf_proxy=issues-vm.jira-main
-      SetEnvIf Request_URI "^/jira" asf_proxy=issues-vm.jira-main
-      
-      # Anti-spam for Aardvark
-      LuaScope thread
-      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
-      <Location /jira/>
-        SetInputFilter AntiSpam
-      </Location>
-
-      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
-      RewriteCond /etc/tomcat-jira-main.maint -f
-      RewriteCond %%{}{REQUEST_URI} !/jira/maintenance.html
-      RewriteCond %%{}{REMOTE_ADDR} !^(86\.164\.153\.81)$
-      RewriteRule ^/jira/(.*) /jira/maintenance.html
-      RewriteCond %%{}{REMOTE_ADDR} ^(86\.164\.153\.81)$
-      RewriteRule ^/jira/(.*) http://arcas.apache.org:10343/jira/$1 [P]
-
-      # Fix URLs in SOAP requests
-      <Location /jira/rpc/soap>
-        AddOutputFilterByType SUBSTITUTE text/xml
-        Substitute s!http://issues-test.apache.org/!https://issues-test.apache.org/!
-      </Location>
-
-      ProxyPass /jira-test     http://arcas.apache.org:10143/jira-test timeout=1000 ttl=270
-      SetEnvIf Request_URI "^/jira-test" asf_proxy=hel.jira-test
-      #RewriteCond %%{}{REQUEST_URI} !/jira-test/maintenance.html
-      #RewriteRule ^/jira-test/(.*) /jira-test/maintenance.html
-
-      # Jira 4.2.1 Second test instance
-      ProxyPass /jira-test2    http://hel.zones.apache.org:10243/jira-test2 timeout=100 ttl=270
+      ProxyPass /jira-test2    http://192.168.0.53:10243/jira-test2 timeout=100 ttl=270
       SetEnvIf Request_URI "^/jira-test2" asf_proxy=hel.jira-test2
 
       # Bloodhound instance on bloodhound-vm.a.o
@@ -592,14 +510,14 @@ issues-test:
       # Need to use mod_rewrite for doing maintenance
       RewriteEngine on
 
-      ProxyPass / http://bil.zones.apache.org:10180/ retry=0 timeout=60
+      ProxyPass / http://192.168.0.55:10180/ retry=0 timeout=60
       # To enable system maintenance, comment out the line above and uncomment the five lines below
       # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
       # RewriteCond %%{}{REQUEST_URI} !/maintenance.html
       # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.222\.166
       # RewriteRule ^/(.*) /maintenance.html
       # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.222\.166
-      # RewriteRule ^/(.*) http://bil.zones.apache.org:10180/$1 [P]     
+      # RewriteRule ^/(.*) http://192.168.0.55:10180/$1 [P]     
 
       # Protect cookies - not sure this is needed yet
       <Location / >
@@ -672,7 +590,7 @@ issues-test:
     custom_fragment: |
       ProxyPreserveHost on
 
-      ProxyPassMatch ^/(?!p|token)(.*)$ http://bil.zones.apache.org:8080/$1 retry=0 timeout=60
+      ProxyPassMatch ^/(?!p|token)(.*)$ http://192.168.0.55:8080/$1 retry=0 timeout=60
 
       # Protect cookies - not sure this is needed yet
       <Location / >
@@ -695,7 +613,7 @@ issues-test:
 
         # Remove Authorization header to prevent passwords from being transmitted
         RequestHeader unset Authorization
-        ProxyPass http://bil.zones.apache.org:8080/ retry=0 timeout=60
+        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
       </Location>
 
   projects:
@@ -780,7 +698,7 @@ issues-test:
       # Need to use mod_rewrite for doing maintenance
       RewriteEngine on
 
-      ProxyPass / http://bil.zones.apache.org:8080/ retry=0 timeout=60
+      ProxyPass / http://192.168.0.55:8080/ retry=0 timeout=60
 
       <Location / >
         Header edit Set-Cookie (^.*$) "$1; Secure"
@@ -802,7 +720,7 @@ issues-test:
 
         # Remove Authorization header to prevent passwords from being transmitted
         RequestHeader unset Authorization
-        ProxyPass http://bil.zones.apache.org:8080/infra retry=0 timeout=60
+        ProxyPass http://192.168.0.55:8080/infra retry=0 timeout=60
 
       </Location>
 
