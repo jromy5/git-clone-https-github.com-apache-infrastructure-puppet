@@ -2,7 +2,7 @@
 cd /x1/buildmaster/master1/public_html/projects/xmlgraphics/batik/snapshots
 # remove older than 30 days old snapshots first.
 
-find . -maxdepth 1 -mtime +29 -exec rm -f {} \;
+find . -maxdepth 1 -type f -mtime +29 -exec rm -f {} \;
 
 # remove entries in table.inc that match the old files we just removed.
 sed -e :a -e '$d;N;2,5ba' -e 'P;D' < ../table.inc > ../table.inc.tmp

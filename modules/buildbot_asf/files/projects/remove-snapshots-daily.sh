@@ -5,7 +5,7 @@
 
 cd /x1/buildmaster/master1/public_html/projects/ofbiz/snapshots
 
-find . -maxdepth 1 -mtime +29 -exec rm -f {} \;
+find . -maxdepth 1 -type f -mtime +29 -exec rm -f {} \;
 
 # now run the snapshots re-index page to bring it upto date.
 
