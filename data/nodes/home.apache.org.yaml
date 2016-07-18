@@ -5,6 +5,7 @@ classes:
   - apache::mod::userdir
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
+  - zmanda_asf::client
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
