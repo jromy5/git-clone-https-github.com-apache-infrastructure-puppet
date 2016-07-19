@@ -3,7 +3,3 @@ classes:
   - dell
   - dell::openmanage
 
-apt::pin { 'srvadmin*':
-  ensure  => '7.4*',
-}
-
