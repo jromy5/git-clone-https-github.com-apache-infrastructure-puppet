@@ -158,7 +158,7 @@ db={ldap:cn=db,ou=groups,dc=apache,dc=org}
 db-ddlutils=arminw,brianm,brj,henning,mattbaird,mkalen,mvdb,rsfeir,seade,tfischer,thma,tomdz
 db-site={ldap:cn=db-site,ou=groups,dc=apache,dc=org}
 db-torque=brekke,dlr,dobbs,fedor,gmonroe,henning,hhernandez,jmcnally,jon,jtaylor,jvanzyl,kschrader,quintonm,seade,stephenh,tfischer,tv
-db-jdo=brazil,brianm,btopping,clr,dain,ebengston,geirm,madams,mbo,mcaisse,mzaun,pcl,andyj,tilmannz
+db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org}
 db-pmc={reuse:pit-authorization:db-pmc}
 deltacloud={ldap:cn=deltacloud,ou=groups,dc=apache,dc=org}
 deltacloud-pmc={reuse:pit-authorization:deltacloud-pmc}

@@ -223,10 +223,11 @@ access to dn.subtree="ou=people,dc=apache,dc=org"
 
 ## Allow PMC chairs, and Hudson admins to grant job admin privs
 access to dn.subtree="ou=hudson,ou=apps,ou=groups,dc=apache,dc=org"
-  attrs=memberUid,member
+  attrs=memberUid,member,owner
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=hudson-admin,ou=groups,ou=services,dc=apache,dc=org" write
+  by dnattr=owner write
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
   by * read
@@ -242,12 +243,25 @@ access to dn.subtree="ou=groups,dc=apache,dc=org"
   by * read
   by anonymous auth
 
-## Allow the PMC chairs to edit group memberships.
-access to dn.subtree="ou=groups,dc=apache,dc=org"
+## Allow members of auth groups to edit their own groups.
+access to dn.subtree="ou=auth,ou=groups,dc=apache,dc=org"
   attrs=memberUid,member
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
+  by dnattr=member write
+  by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
+  by * read
+  by anonymous auth
+
+
+## Allow the PMC chairs and PMC members to edit group memberships.
+access to dn.subtree="ou=groups,dc=apache,dc=org"
+  attrs=memberUid,member,owner
+  by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org" write
+  by dnattr=owner write
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
   by * read
