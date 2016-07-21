@@ -15,7 +15,7 @@ class jira_asf (
   # override below in yaml
   $jira_version                  = '',
   $pgsql_connector_version       = '',
-  $parent_dir,
+  $parent_dir                    = '/x1/jira',
   $server_port                   = '',
   $connector_port                = '',
   $context_path                  = '',
@@ -45,15 +45,15 @@ class jira_asf (
   }
 
 # jira specific
-  $pgsql_connector          = "postgresql-${pgsql_connector_version}.jar" # lint:ignore:80chars
+  $pgsql_connector          = "postgresql-${pgsql_connector_version}.jar" 
   $pgsql_connector_dest_dir = '/x1/jira/current/jira/WEB-INF/lib'
-  $jira_build         = "atlassian-jira-${jira_version}"
-  $tarball                  = "${jira_build}.tar.gz"
+  $jira_build               = "atlassian-jira-${jira_version}-standalone"
+  $tarball                  = "atlassian-jira-${jira_version}.tar.gz"
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${tarball}"
   $download_url             = "http://www.atlassian.com/software/jira/downloads/binary/${tarball}"
   $install_dir              = "${parent_dir}/${jira_build}"
-  $jira_home          = "${parent_dir}/jira-data"
+  $jira_home                = "${parent_dir}/jira-data"
   $current_dir              = "${parent_dir}/current"
 
   user {
