@@ -1,0 +1,14 @@
+##
+## This file is managed by puppet, all local changes will be lost 
+## during the next puppet run.
+## 
+## Source file:  puppet/modules/pam/files/ubuntu/1604/ppp
+##
+
+
+#%PAM-1.0
+# Information for the PPPD process with the 'login' option.
+auth	required	pam_nologin.so
+@include common-auth
+@include common-account
+@include common-session

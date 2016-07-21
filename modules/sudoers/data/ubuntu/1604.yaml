@@ -1,0 +1,8 @@
+---
+
+sudoers::sudoers_packages:
+  - 'sudo'
+
+sudoers::sudoers_file: '/etc/sudoers'
+sudoers::sudoers_template: '/usr/local/etc/puppet/modules/sudoers/templates/ubuntu_1604_sudoers.erb'
+

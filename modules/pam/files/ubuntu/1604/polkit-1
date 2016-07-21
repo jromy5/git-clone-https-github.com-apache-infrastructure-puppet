@@ -1,0 +1,16 @@
+##
+## This file is managed by puppet, all local changes will be lost 
+## during the next puppet run.
+## 
+## Source file:  puppet/modules/pam/files/ubuntu/1604/polkit-1
+##
+
+
+#%PAM-1.0
+
+@include common-auth
+@include common-account
+@include common-password
+session       required   pam_env.so readenv=1 user_readenv=0
+session       required   pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0
+@include common-session
