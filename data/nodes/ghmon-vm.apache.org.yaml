@@ -5,6 +5,7 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::rewrite
+  - ghmon_server
   - vhosts_asf::vhosts
 
 apache::keepalive: 'On'
@@ -47,8 +48,8 @@ vhosts_asf::vhosts::vhosts:
     ssl: false
     docroot: '/var/www/html'
     error_log_file: 'ghmon_error.log'
-#   custom_fragment: |
-#     RedirectMatch permanent ^/(.*)$ https://ghmon.apache.org/$1
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://ghmon.apache.org/$1
 
   ghmon-vm-443:
     vhost_name: '*'
@@ -64,8 +65,8 @@ vhosts_asf::vhosts::vhosts:
       - '+FollowSymLinks'
       - '+MultiViews'
       - '+ExecCGI'
-#   ssl: true
-#   ssl_cert: /etc/letsencrypt/live/ghmon.apache.org/cert.pem
-#   ssl_key: /etc/letsencrypt/live/ghmon.apache.org/privkey.pem
-#   ssl_chain: /etc/letsencrypt/live/ghmon.apache.org/chain.pem
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/ghmon.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/ghmon.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/ghmon.apache.org/chain.pem
 
