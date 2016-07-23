@@ -248,6 +248,7 @@ jspwiki={ldap:cn=jspwiki,ou=groups,dc=apache,dc=org}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=groups,dc=apache,dc=org}
 juddi-pmc={reuse:pit-authorization:juddi-pmc}
+juneau=johndament,jochen,clr,stain,jamesbognar
 # juice=amattheu,blautenb,dims,kwouters,vdkoogh,nlevitt,raul,wassa,werner
 karaf={ldap:cn=karaf,ou=groups,dc=apache,dc=org}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
@@ -354,6 +355,7 @@ pivot={ldap:cn=pivot,ou=groups,dc=apache,dc=org}
 pivot-pmc={reuse:pit-authorization:pivot-pmc}
 poi={ldap:cn=poi,ou=groups,dc=apache,dc=org}
 poi-pmc={reuse:pit-authorization:poi-pmc}
+ponymail=johndament,abayer,humbedooh,pctony,rbowen,ilgrosso,rubys,curcuru,jim,ucb
 portals={ldap:cn=portals,ou=groups,dc=apache,dc=org}
 portals-pmc={reuse:pit-authorization:portals-pmc}
 # provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
