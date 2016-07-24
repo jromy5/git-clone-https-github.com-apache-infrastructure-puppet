@@ -28,7 +28,7 @@ class ofbiz_pvm_asf (
     ensure     => directory,
     owner      => $demouser,
     group      => 'www-data',
-    require    => User[$demouser];
+    require    => [User[$demouser],Class['apache']];
   }
 }
 
