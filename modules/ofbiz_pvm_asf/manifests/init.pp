@@ -2,7 +2,7 @@
 
 class ofbiz_pvm_asf (
 
-  $required_packages = [''],
+  $required_packages = [],
 
 ){
 
