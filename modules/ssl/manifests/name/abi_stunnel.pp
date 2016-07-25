@@ -23,12 +23,12 @@ class ssl::name::abi_stunnel (
       owner  => $sslrootdirowner,
       mode   => $sslrootdirumask;
     "${sslrootdir}/certs":
-      ensure   =>  directory,
-      group    =>  $sslrootdirgroup,
-      owner    =>  $sslrootdirowner,
-      mode     =>  '0755';
+      ensure =>  directory,
+      group  =>  $sslrootdirgroup,
+      owner  =>  $sslrootdirowner,
+      mode   =>  '0755';
     "${sslrootdir}/certs/${sslcertname}":
-      ensure   => present,
+      ensure  => present,
       require => File[$sslrootdir],
       content => $sslcertcontents,
       owner   => $sslrootdirowner,
