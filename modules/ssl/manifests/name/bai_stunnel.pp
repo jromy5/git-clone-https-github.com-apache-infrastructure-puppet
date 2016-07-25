@@ -20,46 +20,46 @@ class ssl::name::bai_stunnel (
 
   if !defined(File["${sslrootdir}"]) {
     file {
-     "${sslrootdir}":
-       ensure => directory,
-       group  => 'root',
-       owner  => 'root',
-       mode   => '0755';
-    "${sslrootdir}/certs":
-      ensure => directory,
-      group  => 'root',
-      owner  => 'root',
-      mode   => '0755';
-    "${sslrootdir}/private":
-      ensure => directory,
-      group  => 'root',
-      owner  => 'root',
-      mode   => '0700';
-    }
+      "${sslrootdir}":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
+      "${sslrootdir}/certs":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
+      "${sslrootdir}/private":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0700';
+      }
   }
 
   file {
     "${sslrootdir}/certs/${sslcertname}":
-      ensure   => present,
-      require => File["$sslrootdir/certs"],
+      ensure  => present,
+      require => File["${sslrootdir}/certs"],
       content => $sslcertcontents,
       owner   => $sslrootdirowner,
       group   => $sslrootdirgroup;
     "${sslrootdir}/private/${sslcrlname}":
       ensure  => present,
-      require => File["$sslrootdir/private"],
+      require => File["${sslrootdir}/private"],
       content => $sslcrlcontents,
       owner   => $sslrootdirowner,
       group   => $sslrootdirgroup;
     "${sslrootdir}/private/${sslkeyname}":
       ensure  => present,
-      require => File["$sslrootdir/private"],
+      require => File["${sslrootdir}/private"],
       content => $sslkeycontents,
       owner   => $sslrootdirowner,
       group   => $sslrootdirgroup;
     "${sslrootdir}/certs/${sslchainname}":
       ensure  => present,
-      require => File["$sslrootdir/certs"],
+      require => File["${sslrootdir}/certs"],
       content => $sslchaincontents,
       owner   => $sslrootdirowner,
       group   => $sslrootdirgroup;
