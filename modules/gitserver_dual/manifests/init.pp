@@ -13,14 +13,14 @@ class gitserver_dual (
 
 package {
   $packages:
-    ensure  => installed,
+    ensure => installed,
 }
 
 file { '/x1':
-  ensure  => directory,
-  owner   => 'root',
-  group   => 'www-data',
-  mode    => '0750',
+  ensure => directory,
+  owner  => 'root',
+  group  => 'www-data',
+  mode   => '0750',
 }
 file { '/x1/git':
   ensure  => directory,
@@ -29,46 +29,46 @@ file { '/x1/git':
   mode    => '0750',
   require => File['/x1'],
 }
- 
+
 file { '/x1/git/asfgit-dual':
-  source   => 'puppet:///modules/gitserver_dual',
-  recurse  => true,
-  owner    => 'root',
-  group    => 'www-data',
-  mode     => '0750';
+  source  => 'puppet:///modules/gitserver_dual',
+  recurse => true,
+  owner   => 'root',
+  group   => 'www-data',
+  mode    => '0750';
 }
 
 
 file {
   '/var/www/.ssh':
-    ensure   => directory,
-    owner    => 'www-data',
-    group    => 'www-data',
-    mode     => '0750';
+    ensure => directory,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0750';
   '/var/www/.ssh/config':
-    ensure  => present,
-    source   => 'puppet:///modules/gitserver_dual/gitconf/config';
+    ensure => present,
+    source => 'puppet:///modules/gitserver_dual/gitconf/config';
 }
 
 file {
   '/x1/git/htdocs':
-    ensure  => link,
-    target  => '/x1/git/asfgit-dual/htdocs';
+    ensure => link,
+    target => '/x1/git/asfgit-dual/htdocs';
   '/x1/git/htdocs/repos':
-    ensure  => link,
-    target  => '/x1/git/repos';
+    ensure => link,
+    target => '/x1/git/repos';
   '/etc/gitweb':
-    ensure   => directory,
-    require  => Package[$packages],
-    owner    => 'root',
-    group    => 'www-data',
-    mode     => '0750';
+    ensure  => directory,
+    require => Package[$packages],
+    owner   => 'root',
+    group   => 'www-data',
+    mode    => '0750';
   '/usr/local/sbin/sendmail':
-    ensure   => link,
-    target   => '/usr/sbin/sendmail';
+    ensure => link,
+    target => '/usr/sbin/sendmail';
   '/etc/gitconfig':
-    ensure   => present,
-    source   => 'puppet:///modules/gitserver_dual/gitconfig';
+    ensure => present,
+    source => 'puppet:///modules/gitserver_dual/gitconfig';
   }
 
 
