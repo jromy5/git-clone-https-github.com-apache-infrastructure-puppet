@@ -18,8 +18,8 @@ class whimsy_server::procmail (
 
   exec { "mkdir_${keysdir}":
     command => "mkdir ${keysdir}",
-    unless => "test -d ${keysdir}",
-    path => '/bin:/usr/bin'
+    unless  => "test -d ${keysdir}",
+    path    => '/bin:/usr/bin'
   } ->
 
   file { "${keysdir}/apmail.pub":

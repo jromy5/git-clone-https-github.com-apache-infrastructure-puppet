@@ -16,8 +16,8 @@ class whimsy_server (
   }
 
   file { '/srv':
-    force => true,
     ensure => link,
+    force  => true,
     target => '/x1/srv'
   }
 
@@ -152,9 +152,9 @@ class whimsy_server (
   ]
 
   file { $directories:
-    ensure => directory,
-    owner  => $apache::user,
-    group  => $apache::group,
+    ensure  => directory,
+    owner   => $apache::user,
+    group   => $apache::group,
     require => Vcsrepo['/x1/srv/whimsy']
   }
 
