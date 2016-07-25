@@ -16,22 +16,22 @@ class ssl::name::apachecon_com (
 
   if !defined(File["${sslrootdir}"]) {
     file {
-     "${sslrootdir}":
-       ensure => directory,
-       group  => 'root',
-       owner  => 'root',
-       mode   => '0755';
-    "${sslrootdir}/certs":
-      ensure => directory,
-      group  => 'root',
-      owner  => 'root',
-      mode   => '0755';
-    "${sslrootdir}/private":
-      ensure => directory,
-      group  => 'root',
-      owner  => 'root',
-      mode   => '0700';
-    }
+      "${sslrootdir}":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
+      "${sslrootdir}/certs":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
+      "${sslrootdir}/private":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0700';
+      }
   }
 
   file {
