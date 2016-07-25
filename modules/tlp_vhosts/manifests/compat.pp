@@ -19,7 +19,7 @@ class tlp_vhosts::compat {
     ensure => 'link',
     target => '/var/www',
   }
-  
+
   file { '/x1':
     ensure => directory,
   }
