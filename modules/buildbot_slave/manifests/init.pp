@@ -103,18 +103,18 @@ class buildbot_slave (
   }->
 
   file {
-   "/home/${username}/.git-credentials":
-     content => template('buildbot_slave/git-credentials.erb'),
-     mode    => '0640',
-     owner   => $username,
-     group   => $groupname;
+    "/home/${username}/.git-credentials":
+      content => template('buildbot_slave/git-credentials.erb'),
+      mode    => '0640',
+      owner   => $username,
+      group   => $groupname;
 
-   "/home/${username}/.gitconfig":
-     ensure => 'present',
-     source => 'puppet:///modules/buildbot_slave/gitconfig',
-     mode    => '0644',
-     owner   => $username,
-     group   => $groupname;
+    "/home/${username}/.gitconfig":
+      ensure => 'present',
+      source => 'puppet:///modules/buildbot_slave/gitconfig',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname;
 
     "/home/${username}/slave":
       ensure  => directory,
