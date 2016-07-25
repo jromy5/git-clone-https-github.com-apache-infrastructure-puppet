@@ -9,7 +9,7 @@ class subversionclient (
 ) {
 
   package { $packages:
-    ensure   =>  installed,
+    ensure =>  installed,
   }
 
   file {
@@ -19,14 +19,14 @@ class subversionclient (
       group  => 'root',
       mode   => '0755';
     $svn_conf_config:
-      source  => 'puppet:///modules/subversionclient/config',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644';
+      source => 'puppet:///modules/subversionclient/config',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
     $svn_conf_servers:
-      source  => 'puppet:///modules/subversionclient/servers',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644';
+      source => 'puppet:///modules/subversionclient/servers',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
   }
 }
