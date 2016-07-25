@@ -1,7 +1,7 @@
 #/etc/puppet/modules/svnpubsub/manifests/init.pp
 
 class svnpubsub (
-  
+
   $packages       = ['python-twisted'],
   $service_ensure = 'running',
   $service_name   = 'svnpubsub',
