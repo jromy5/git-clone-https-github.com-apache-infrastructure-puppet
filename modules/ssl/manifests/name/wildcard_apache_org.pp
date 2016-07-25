@@ -18,11 +18,11 @@ class ssl::name::wildcard_apache_org (
 
   if !defined(File["${sslrootdir}"]) {
     file {
-     "${sslrootdir}":
-       ensure => directory,
-       group  => 'root',
-       owner  => 'root',
-       mode   => '0755';
+      "${sslrootdir}":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
     "${sslrootdir}/certs":
       ensure => directory,
       group  => 'root',
