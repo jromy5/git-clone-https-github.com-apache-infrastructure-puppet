@@ -82,7 +82,7 @@ class zmanda_asf::server (
     exec { 's3copy license':
       command => "/usr/local/bin/aws s3 cp ${s3_prefix}/licenses/${zmanda_lic} /etc/zmanda/zmanda_license",
       require => Exec['install zmanda'],
-    } 
+    }
 
   }
 
