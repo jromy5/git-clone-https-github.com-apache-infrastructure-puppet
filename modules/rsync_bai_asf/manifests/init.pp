@@ -1,3 +1,4 @@
+# rsync to bai class containing default empty secrets variable.
 class rsync_bai_asf (
   $secretcontents = '',
 ) {
@@ -10,10 +11,10 @@ class rsync_bai_asf (
   }
 
   cron  { 'zfs-snapshot-bai':
-    command   => '/root/bin/zfs-snapshot-bai.sh tank/x1/backups',
-    user      => 'root',
-    hour      => 2,
-    minute    => 0,
+    command => '/root/bin/zfs-snapshot-bai.sh tank/x1/backups',
+    user    => 'root',
+    hour    => 2,
+    minute  => 0,
   }
 
 }
