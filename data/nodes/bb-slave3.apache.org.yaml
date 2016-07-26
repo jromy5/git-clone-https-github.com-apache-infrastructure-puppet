@@ -18,7 +18,7 @@ rvm::system_rubies:
   "ruby-%{hiera('ruby_version')}": {}
 
 rvm::system_users:
-  - buildslave29
+  - buildslave
 
 rvm::rvm_gems:
   'jekyll':
