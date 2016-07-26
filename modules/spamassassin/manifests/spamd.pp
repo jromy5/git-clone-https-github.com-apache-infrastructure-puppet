@@ -136,7 +136,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       require => Package[ $package_list ],
       notify  => [Service['spamassassin'], Service['amavis']];
   }->
-  
+
   ## Amavis Files
   file {
     '/etc/amavis/conf.d':
