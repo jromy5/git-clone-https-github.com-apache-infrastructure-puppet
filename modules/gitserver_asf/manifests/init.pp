@@ -17,28 +17,28 @@ package {
 
 file {
   '/x1/git/htdocs':
-    ensure  => link,
-    target  => '/x1/git/asfgit-admin/asf/site/htdocs';
+    ensure => link,
+    target => '/x1/git/asfgit-admin/asf/site/htdocs';
   '/x1/git/htdocs/repos':
-    ensure  => link,
-    target  => '/x1/git/repos';
+    ensure => link,
+    target => '/x1/git/repos';
   '/etc/gitweb':
-    ensure   => directory,
-    require  => Package[$packages],
-    owner    => 'root',
-    group    => 'www-data',
-    mode     => '0750';
+    ensure  => directory,
+    require => Package[$packages],
+    owner   => 'root',
+    group   => 'www-data',
+    mode    => '0750';
   '/etc/apache2/gitweb.conf':
-    ensure   => present,
-    source   => 'puppet:///modules/gitserver_asf/gitweb.conf',
-    notify   => Service['apache2'],
-    require  => Package['apache2'];
+    ensure  => present,
+    source  => 'puppet:///modules/gitserver_asf/gitweb.conf',
+    notify  => Service['apache2'],
+    require => Package['apache2'];
   '/usr/local/sbin/sendmail':
-    ensure   => link,
-    target   => '/usr/sbin/sendmail';
+    ensure => link,
+    target => '/usr/sbin/sendmail';
   '/etc/gitconfig':
-    ensure   => present,
-    source   => 'puppet:///modules/gitserver_asf/gitconfig';
+    ensure => present,
+    source => 'puppet:///modules/gitserver_asf/gitconfig';
   }
 
 cron {
