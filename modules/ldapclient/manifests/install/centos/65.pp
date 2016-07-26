@@ -26,8 +26,8 @@ class ldapclient::install::centos::65 (
       source  => 'puppet:///modules/ldapclient/etc/nsswitch.conf',
       require => File['/etc/ldap.conf'];
     '/etc/openldap/cacerts':
-      ensure  => directory,
-      mode    => '0755';
+      ensure => directory,
+      mode   => '0755';
     $tlscertpath:
       content => $ldapcert,
       require => File['/etc/openldap/cacerts'];

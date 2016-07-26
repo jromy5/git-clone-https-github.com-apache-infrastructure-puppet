@@ -25,13 +25,13 @@ class ldapclient (
 
   file {
     $authorizedkeysfolder:
-      ensure  => directory,
-      owner   => 'root',
-      mode    => '0750';
+      ensure => directory,
+      owner  => 'root',
+      mode   => '0750';
     "${authorizedkeysfolder}/${authorizedkeysfile}":
-      source  => "puppet:///modules/ldapclient/${authorizedkeysfile}",
-      mode    => '0750',
-      owner   => 'root';
+      source => "puppet:///modules/ldapclient/${authorizedkeysfile}",
+      mode   => '0750',
+      owner  => 'root';
   }
 
   class { "ldapclient::install::${::asfosname}::${::asfosrelease}":

@@ -41,13 +41,13 @@ class ldapclient::install::ubuntu::1604 (
       source  => 'puppet:///modules/ldapclient/etc/nsswitch.conf',
       require => File['/etc/ldap.conf'];
     '/etc/ldap/cacerts':
-      ensure  => directory,
-      mode    => '0755';
+      ensure => directory,
+      mode   => '0755';
     '/etc/ldap/cacerts/ldap-client.pem':
       content => $ldapcert,
       require => File['/etc/ldap/cacerts'];
   }
-  
+
     service { 'nslcd':
         ensure     => 'running',
         enable     => true,
