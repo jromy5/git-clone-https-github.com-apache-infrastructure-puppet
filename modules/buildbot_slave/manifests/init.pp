@@ -31,7 +31,6 @@ class buildbot_slave (
     'cmake',
     'doxygen',
     'maven',
-    'gradle',
     'autoconf',
     'automake',
     'rake',
