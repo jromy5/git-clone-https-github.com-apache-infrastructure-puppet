@@ -12,10 +12,16 @@ python::python_pips:
   mkdocs:
     ensure: present
 
+ruby_version: '2.3.1'
+
+rvm::system_rubies:
+  "ruby-%{hiera('ruby_version')}": {}
+
 rvm::system_users:
   - buildslave29
 
 rvm::rvm_gems:
   'jekyll':
     name: 'jekyll'
+    ruby_version: "ruby-%{hiera('ruby_version')}"
     ensure: latest
