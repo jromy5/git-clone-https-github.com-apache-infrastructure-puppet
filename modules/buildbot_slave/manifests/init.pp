@@ -41,6 +41,15 @@ class buildbot_slave (
     'libpam0g-dev',
   ]
 
+  # install gradle PPA and gradle 2.x
+
+  apt::ppa { 'ppa:cwchien/gradle':
+    ensure => present,
+  } ->
+  package { 'gradle':
+    ensure => latest,
+  }
+
   # merge required packages from hiera for slaves
 
   $slave_packages = hiera_array('buildbot_slave::required_packages',[])
@@ -61,14 +70,6 @@ class buildbot_slave (
     ensure  => 'latest',
     version => '8',
   }->
-
-  apt::ppa { 'ppa:cwchien/gradle':
-    ensure => present,
-  } ->
-
-  package { 'gradle':
-    ensure => latest,
-  } ->
 
   # buildbot specific
 
