@@ -25,10 +25,10 @@ class ofbiz_pvm_asf (
 
 # ensure bigfiles parent dir exists
   file { '/var/www/ofbiz':
-    ensure     => directory,
-    owner      => $demouser,
-    group      => 'www-data',
-    require    => [User[$demouser],Class['apache']];
+    ensure  => directory,
+    owner   => $demouser,
+    group   => 'www-data',
+    require => [User[$demouser],Class['apache']];
   }
 }
 
