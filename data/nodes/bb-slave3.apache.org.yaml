@@ -2,6 +2,7 @@
 classes:
   - buildbot_slave
   - loggy
+  - rvm
 
 buildbot_slave::slave_name: 'bb_slave3_ubuntu'
 
@@ -10,3 +11,11 @@ buildbot_slave::slave_name: 'bb_slave3_ubuntu'
 python::python_pips:
   mkdocs:
     ensure: present
+
+rvm::system_users:
+  - buildslave29
+
+rvm::rvm_gems:
+  'jekyll':
+    name: 'jekyll'
+    ensure: latest
