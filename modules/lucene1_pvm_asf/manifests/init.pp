@@ -60,7 +60,7 @@ class lucene1_pvm_asf (
     require  => Apt::Source['precise'],
     before   => Package['subversion'],
   }
-  
+
   apt::pin { 'precise-libsvn1':
     ensure   => absent,
     priority => 1800,
