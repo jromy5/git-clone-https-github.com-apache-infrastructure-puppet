@@ -13,7 +13,7 @@ class ghmon_server {
   } ->
 
   file { '/usr/local/bin/certbot-auto':
-    mode => 0755
+    mode => '0755'
   }
 
   cron { 'certbot renew':
