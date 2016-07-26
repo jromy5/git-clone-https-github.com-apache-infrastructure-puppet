@@ -138,13 +138,13 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/configscanner.py';
-    "/etc/init.d/configscanner":
+    '/etc/init.d/configscanner':
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/configscanner.ubuntu';
-      
+
 
 # required scripts for cron jobs
 
@@ -321,8 +321,8 @@ class buildbot_asf (
 
   exec {
     'buildbot-reconfig':
-      command => "/usr/bin/buildbot /x1/${username}/master1 reconfig",
-      onlyif => "/usr/bin/buildbot /x1/${username}/master1 checkconfig",
+      command     => "/usr/bin/buildbot /x1/${username}/master1 reconfig",
+      onlyif      => "/usr/bin/buildbot /x1/${username}/master1 checkconfig",
       refreshonly => true,
 }
 
