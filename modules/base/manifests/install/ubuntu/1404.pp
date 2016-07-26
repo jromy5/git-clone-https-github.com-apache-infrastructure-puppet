@@ -5,9 +5,9 @@ class base::install::ubuntu::1404 (
 
   file {
     '/root':
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755';
+      owner => 'root',
+      group => 'root',
+      mode  => '0755';
     '/root/purge_old_kernels':
       ensure => present,
       owner  => 'root',

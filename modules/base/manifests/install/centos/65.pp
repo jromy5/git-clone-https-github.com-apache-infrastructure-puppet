@@ -3,7 +3,7 @@
 class base::install::centos::65 (
   $asfinternalrepo    = '',
   ) {
-  
+
   yumrepo { 'asf_internal':
     baseurl  => $asfinternalrepo,
     enabled  => 1,

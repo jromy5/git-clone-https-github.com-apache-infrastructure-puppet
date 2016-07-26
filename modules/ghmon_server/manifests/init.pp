@@ -18,7 +18,7 @@ class ghmon_server {
 
   cron { 'certbot renew':
     ensure  => present,
-    command => "/usr/local/bin/certbot-auto renew --quiet",
+    command => '/usr/local/bin/certbot-auto renew --quiet',
     user    => root,
     hour    => [2, 14],
     minute  => '43'
