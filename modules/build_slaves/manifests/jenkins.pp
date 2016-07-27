@@ -290,6 +290,14 @@ class build_slaves::jenkins (
     target => '/usr/local/asfpackages/java/jdk1.8.0_92',
   }
 
+  file { '/home/jenkins/tools/jiracli':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => [ User['jenkins'], Package['jiracli'] ],
+    recurse => true,
+  }
+
   service { 'apache2':
     ensure => 'stopped',
   }
