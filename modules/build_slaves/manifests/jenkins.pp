@@ -22,70 +22,6 @@ class build_slaves::jenkins (
   require stdlib
   require build_slaves
 
-  define build_slaves::mkdir_tools ($tool = $title) {
-    file {"/home/jenkins/tools/${tool}":
-      ensure => directory,
-      owner  => 'jenkins',
-      group  => 'jenkins',
-    }
-  }
-
-  define build_slaves::symlink_ant ($ant_version = $title) {
-    file {"/home/jenkins/tools/ant/$(ant_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/ant/${ant_version}",
-    }
-  }
-
-  define build_slaves::symlink_findbugs ($findbugs_version = $title) {
-    file {"/home/jenkins/tools/findbugs/${findbugs_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/findbugs/${findbugs_version}",
-    }
-  }
-
-  define build_slaves::symlink_forrest ($forrest_version = $title) {
-    file {"/home/jenkins/tools/forrest/${forrest_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/forrest/${forrest_version}",
-    }
-  }
-
-  define build_slaves::symlink_jiracli ($jiracli_version = $title) {
-    file {"/home/jenkins/tools/jiracli/${jiracli_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/jiracli/${jiracli_version}",
-    }
-  }
-
-  define build_slaves::symlink_maven_old ($maven_old_version = $title) {
-    file {"/home/jenkins/tools/maven/${maven_old_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/maven/${maven_old_version}",
-    }
-  }
-
-  define build_slaves::symlink_maven ($maven_version = $title) {
-    file {"/home/jenkins/tools/maven/${maven_version}":
-      ensure => link,
-      target => "/usr/local/asfpackages/maven/${maven_version}",
-    }
-  }
-
-  define build_slaves::symlink_jenkins ($javaj = $title) {
-    file {"/home/jenkins/tools/java/${javaj}":
-      ensure => link,
-      target => "/usr/local/jenkins/java/${javaj}",
-    }
-  }
-
-  define build_slaves::symlink_asfpackages ($javaa = $title) {
-    file {"/home/jenkins/tools/java/${javaa}":
-      ensure => link,
-      target => "/usr/local/asfpackages/java/${javaa}",
-    }
-  }
-
   apt::ppa { 'ppa:cwchien/gradle':
     ensure => present,
   } ->
@@ -210,92 +146,140 @@ class build_slaves::jenkins (
     mode   => '0755',
   }->
 
+  # populate /home/jenkins/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
+  define build_slaves::mkdir_tools ($tool = $title) {
+    file {"/home/jenkins/tools/${tool}":
+      ensure => directory,
+      owner  => 'jenkins',
+      group  => 'jenkins',
+    }
+  }
 
   package { $jenkins_packages:
     ensure => latest,
-  }->
-
-  build_slaves::symlink_ant          { $ant: }
-  build_slaves::symlink_findbugs     { $findbugs: }
-  build_slaves::symlink_forrest      { $forrest: }
-  build_slaves::symlink_jiracli      { $jiracli: }
-  build_slaves::symlink_maven_old    { $maven_old: }
-  build_slaves::symlink_maven        { $maven: }
-  build_slaves::symlink_jenkins { $java_jenkins: }
-  build_slaves::symlink_asfpackages  { $java_asfpackages: }
-
-  file { '/home/jenkins/tools/java/ibm-1.7-64':
-    ensure => link,
-    target => '/usr/local/asfpackages/java/ibm-java-x86_64-70',
   }
 
+  # ant symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_ant          { $ant: }
+  define build_slaves::symlink_ant ($ant_version = $title) {
+    file {"/home/jenkins/tools/ant/$(ant_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/ant/${ant_version}",
+    }
+  }
   file { '/home/jenkins/tools/ant/latest':
     ensure => link,
     target => '/usr/local/jenkins/ant/apache-ant-1.9.4',
   }
 
+  # findbugs symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_findbugs     { $findbugs: }
+  define build_slaves::symlink_findbugs ($findbugs_version = $title) {
+    file {"/home/jenkins/tools/findbugs/${findbugs_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/findbugs/${findbugs_version}",
+    }
+  } 
   file { '/home/jenkins/tools/findbugs/latest':
     ensure => link,
     target => '/usr/local/jenkins/findbugs/findbugs-2.0.3',
   }
 
+  # forrest symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_forrest      { $forrest: }
+  define build_slaves::symlink_forrest ($forrest_version = $title) {
+    file {"/home/jenkins/tools/forrest/${forrest_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/forrest/${forrest_version}",
+    }
+  }
   file { '/home/jenkins/tools/forrest/latest':
     ensure => link,
     target => '/usr/local/jenkins/forrest/apache-forrest-0.9',
   }
 
+  # jiracli symlinks - populate array, make all symlinks, make latest symlink,
+  build_slaves::symlink_jiracli      { $jiracli: }
+  define build_slaves::symlink_jiracli ($jiracli_version = $title) {
+    file {"/home/jenkins/tools/jiracli/${jiracli_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/jiracli/${jiracli_version}",
+    }
+  }
   file { '/home/jenkins/tools/jiracli/latest':
     ensure => link,
     target => '/usr/local/jenkins/jiracli/jira-cli-2.1.0',
   }
 
+  # maven old symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_maven_old    { $maven_old: }
+  define build_slaves::symlink_maven_old ($maven_old_version = $title) {
+    file {"/home/jenkins/tools/maven/${maven_old_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/maven/${maven_old_version}",
+    }
+  }
+
+  # maven old symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_maven        { $maven: }
+  define build_slaves::symlink_maven ($maven_version = $title) {
+    file {"/home/jenkins/tools/maven/${maven_version}":
+      ensure => link,
+      target => "/usr/local/asfpackages/maven/${maven_version}",
+    }
+  }
   file { '/home/jenkins/tools/maven/latest':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
-
   file { '/home/jenkins/tools/maven/latest3':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
 
+  # java symlinks - old java location, new java location, and latest symlinks
+  build_slaves::symlink_jenkins { $java_jenkins: }
+  define build_slaves::symlink_jenkins ($javaj = $title) {
+    file {"/home/jenkins/tools/java/${javaj}":
+      ensure => link,
+      target => "/usr/local/jenkins/java/${javaj}",
+    }
+  }
+  build_slaves::symlink_asfpackages  { $java_asfpackages: }
+  define build_slaves::symlink_asfpackages ($javaa = $title) {
+    file {"/home/jenkins/tools/java/${javaa}":
+      ensure => link,
+      target => "/usr/local/asfpackages/java/${javaa}",
+    }
+  }
+  file { '/home/jenkins/tools/java/ibm-1.7-64':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/ibm-java-x86_64-70',
+  }
   file { '/home/jenkins/tools/java/latest':
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_92',
   }
-
   file { '/home/jenkins/tools/java/latest1.4':
     ensure => link,
     target => '/usr/local/jenkins/java/j2sdk1.4.2_19',
   }
-
   file { '/home/jenkins/tools/java/latest1.5':
     ensure => link,
     target => '/usr/local/jenkins/java/jdk1.5.0_22-64',
   }
-
   file { '/home/jenkins/tools/java/latest1.6':
     ensure => link,
     target => '/usr/local/jenkins/java/jdk1.6.0_45-64',
   }
-
   file { '/home/jenkins/tools/java/latest1.7':
     ensure => link,
     target => '/usr/local/jenkins/java/jdk1.7.0_25-64',
   }
-
   file { '/home/jenkins/tools/java/latest1.8':
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_92',
-  }
-
-  file { '/home/jenkins/tools/jiracli':
-    ensure  => directory,
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    require => [ User['jenkins'], Package['jiracli'] ],
-    recurse => true,
   }
 
   service { 'apache2':
