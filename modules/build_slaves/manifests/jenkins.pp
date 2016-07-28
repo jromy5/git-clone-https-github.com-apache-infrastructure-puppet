@@ -7,7 +7,7 @@ class build_slaves::jenkins (
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
   $jenkins_packages = [],
-  $tools = ['ant','clover','findbugs','forrest','java','maven'],
+  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
   $ant = ['apache-ant-1.9.4'],
   $clover = ['clover-ant-4.1.1'],
   $findbugs = ['findbugs-2.0.3'],
@@ -205,7 +205,7 @@ class build_slaves::jenkins (
 
   # populate /home/jenkins/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
-  file {"/home/jenkins/tools/jiracli":
+  file {"/usr/local/jenkins/jiracli/":
     ensure => directory,
     owner  => 'jenkins',
     group  => 'jenkins',
