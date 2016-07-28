@@ -86,7 +86,8 @@ vhosts_asf::vhosts::vhosts:
 
       #INFRA-2492
       RewriteRule ^/snapshots$ /snapshots/ [R,L]
-      RewriteRule ^/snapshots/(.*) http://repository-vm2.apache.org:8081/content/groups/snapshots/$1 [P]
+      RewriteRule ^/snapshots/(.*) http://10.10.3.250:8081/content/groups/snapshots/$1 [P]
+      # RewriteRule ^/snapshots/(.*) http://repository-vm2.apache.org:8081/content/groups/snapshots/$1 [P]
 
       #only allow gets on the snapshot group url to be http, everything else is https
       RewriteCond %%{}{THE_REQUEST} !^(GET|HEAD)\ /content/groups/snapshots.*$
@@ -95,7 +96,8 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteRule ^/content/groups/snapshots$ /content/groups/snapshots/ [R,L]
       RewriteCond %%{}{REQUEST_URI} !^/ssl.*$
-      RewriteRule ^(.*)$ http://repository-vm2.apache.org:8081$1 [P,L]
+      RewriteRule ^(.*)$ http://10.10.3.250:8081$1 [P,L]
+      # RewriteRule ^(.*)$ http://repository-vm2.apache.org:8081$1 [P,L]
       SetEnv force-proxy-request-1.0 1
       SetEnv proxy-nokeepalive 1
 
@@ -138,7 +140,8 @@ vhosts_asf::vhosts::vhosts:
       <Proxy "!/ssl.cert.+">
         Require all granted
       </Proxy>
-      ProxyPass /snapshots http://repository-vm2.apache.org:8081/content/groups/snapshots
+      ProxyPass /snapshots http://10.10.3.250:8081/content/groups/snapshots
+      # ProxyPass /snapshots http://repository-vm2.apache.org:8081/content/groups/snapshots
 
       # ProxyPass / http://repository-vm2.apache.org:8081/
       # ProxyPassReverse / http://repository-vm2.apache.org:8081/
