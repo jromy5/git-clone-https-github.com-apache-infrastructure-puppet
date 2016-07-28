@@ -212,6 +212,13 @@ class build_slaves::jenkins (
     require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
+  file {"/usr/local/jenkins/forrest/":
+    ensure => directory,
+    owner  => 'jenkins',
+    group  => 'jenkins',
+    require => [ User['jenkins'], Package['asf-build-apache-forrest-0.9'] ],
+    recurse => true,
+  }
 
   package { $jenkins_packages:
     ensure => latest,
