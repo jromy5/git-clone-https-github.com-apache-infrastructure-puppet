@@ -140,5 +140,7 @@ vhosts_asf::vhosts::vhosts:
       </Proxy>
       ProxyPass /snapshots http://repository-vm2.apache.org:8081/content/groups/snapshots
 
-      ProxyPass / http://repository-vm2.apache.org:8081/
-      ProxyPassReverse / http://repository-vm2.apache.org:8081/
+      # ProxyPass / http://repository-vm2.apache.org:8081/
+      # ProxyPassReverse / http://repository-vm2.apache.org:8081/
+      ProxyPass / http://10.10.3.250:8081/
+      ProxyPassReverse / http://10.10.3.250:8081/
