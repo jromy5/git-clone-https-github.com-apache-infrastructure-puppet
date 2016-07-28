@@ -159,7 +159,7 @@ class build_slaves::jenkins (
     ensure => directory,
     owner  => 'jenkins',
     group  => 'jenkins',
-    require => [ User['jenkins'], Package['jiracli'] ],
+    require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
 
