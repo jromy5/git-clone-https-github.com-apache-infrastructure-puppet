@@ -173,7 +173,7 @@ directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
-eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao
+eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao,mw
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
 etch={ldap:cn=etch,ou=groups,dc=apache,dc=org}
