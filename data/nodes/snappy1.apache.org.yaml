@@ -23,6 +23,7 @@ datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '31g'
   DATA_DIR: '/elastic/db/'
+  CONF_FILE: '/etc/elaticsearch/asful/elasticsearch.asful.yaml'
 elasticsearch::java_install: true
 elasticsearch::version: '2.3.4'
 elasticsearch::ensure: 'present'

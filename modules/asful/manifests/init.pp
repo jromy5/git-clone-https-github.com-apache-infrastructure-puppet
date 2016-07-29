@@ -9,7 +9,7 @@ class asful (
 ){
   include 'elasticsearch'
 
-  File<|title == '/etc/elasticsearch/asful/elasticsearch.yml'|> {
+  File<|title == '/etc/elasticsearch/asful/elasticsearch.asful.yml'|> {
       ensure => file,
       mode   => '0755',
       owner  => 'elasticsearch',
