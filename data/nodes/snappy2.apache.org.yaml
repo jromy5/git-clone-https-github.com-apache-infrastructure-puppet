@@ -38,6 +38,7 @@ elasticsearch::instances:
       node.name: 'snappy2'
       init_defaults:
         ES_HEAP_SIZE: '31g'
+        DATA_DIR: '/elastic/db'
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'

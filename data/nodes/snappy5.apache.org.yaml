@@ -23,3 +23,4 @@ elasticsearch::instances:
       node.name: 'snappy5'
       init_defaults:
         ES_HEAP_SIZE: '31g'
+        DATA_DIR: '/elastic/db/'
