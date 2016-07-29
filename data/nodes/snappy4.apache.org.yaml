@@ -25,4 +25,4 @@ elasticsearch::instances:
 asful::nodename: 'snappy4'
 asful::nodeip: '10.91.102.217'
 asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
-asful::minimum_master_nodes: 3
+asful::minimum_master_nodes: 4
