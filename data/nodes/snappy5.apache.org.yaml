@@ -4,10 +4,6 @@ classes:
   - asful
   - ldapserver
   
-asful::nodename: 'snappy5'
-asful::nodeip: '10.91.102.218'
-asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
-asful::minimum_master_nodes: 3
 
 elasticsearch::es_heap_size: '31G'
 elasticsearch::init_defaults:
@@ -25,3 +21,8 @@ elasticsearch::instances:
       init_defaults:
         ES_HEAP_SIZE: '31g'
         DATA_DIR: '/elastic/db/'
+
+asful::nodename: 'snappy5'
+asful::nodeip: '10.91.102.218'
+asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
+asful::minimum_master_nodes: 3

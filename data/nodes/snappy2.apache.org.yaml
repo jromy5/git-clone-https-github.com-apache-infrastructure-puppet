@@ -18,11 +18,6 @@ vhosts_asf::modules::modules:
   allowmethods:
     name: 'allowmethods'
 
-asful::nodename: 'snappy2'
-asful::nodeip: '10.91.102.214'
-asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
-asful::minimum_master_nodes: 3
-
 datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 
 elasticsearch::init_defaults:
@@ -40,6 +35,11 @@ elasticsearch::instances:
       init_defaults:
         ES_HEAP_SIZE: '31g'
         DATA_DIR: '/elastic/db'
+        
+asful::nodename: 'snappy2'
+asful::nodeip: '10.91.102.214'
+asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
+asful::minimum_master_nodes: 3
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
