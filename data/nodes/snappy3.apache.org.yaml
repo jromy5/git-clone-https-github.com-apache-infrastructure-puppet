@@ -15,7 +15,6 @@ elasticsearch::java_install: true
 elasticsearch::version: '2.3.4'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
-elasticsearch::datadir: '/elastic/db/'
 elasticsearch::instances:
   asful:
     datadir: '/elastic/db/'
