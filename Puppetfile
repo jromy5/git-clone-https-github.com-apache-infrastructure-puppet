@@ -26,6 +26,11 @@ mod 'concat-native',
   :tag => '1.4.0'
 
 
+mod 'datacat',
+  :git => 'https://github.com/richardc/puppet-datacat',
+  :tag => '0.6.2'
+
+
 mod 'datadog_agent',
   :git => 'https://github.com/DataDog/puppet-datadog-agent',
   :tag => '1.3.0'
