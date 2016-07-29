@@ -729,10 +729,12 @@ ea = rw
 # migrated to git
 [/commons/proper/csv]
 @commons-pmc = rw
+* = r
 
 # PMC only as it's moved to git. let them sort it out.
 [/commons/_moved_to_git]
 @commons-pmc = rw
+* = r
 
 # Note: since commons/proper/[lang|math|scxml] have now been moved under _moved_to_git and
 # only a README remains, there is now no need to make those directory trees read-only.
