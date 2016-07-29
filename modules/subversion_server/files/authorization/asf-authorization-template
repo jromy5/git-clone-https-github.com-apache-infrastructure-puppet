@@ -728,11 +728,11 @@ ea = rw
 
 # migrated to git
 [/commons/proper/csv]
-* = r
-# archive area for components that have been moved to Git
-# must remain read-only except as needed to move components
+@commons-pmc = rw
+
+# PMC only as it's moved to git. let them sort it out.
 [/commons/_moved_to_git]
-* = r
+@commons-pmc = rw
 
 # Note: since commons/proper/[lang|math|scxml] have now been moved under _moved_to_git and
 # only a README remains, there is now no need to make those directory trees read-only.
