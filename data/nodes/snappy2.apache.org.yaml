@@ -34,6 +34,7 @@ elasticsearch::status: 'enabled'
 elasticsearch::datadir: '/elastic/db/'
 elasticsearch::instances:
   asful:
+    datadir: '/elastic/db/'
     config:
       node.name: 'snappy2'
       init_defaults:
