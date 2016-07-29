@@ -76,7 +76,7 @@ apt::sources:
     include_deb: true
     include_src: false
   'elasticsearch':
-    location: 'https://packages.elasticsearch.org/elasticsearch/1.7/debian'
+    location: 'https://packages.elastic.co/elasticsearch/2.x/debian'
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
