@@ -1140,9 +1140,6 @@ ea = rw
 [/incubator/tsik]
 * = r
 
-[/incubator/twill]
-@twill = rw
-
 [/incubator/unomi]
 @committers= rw
 
@@ -1787,6 +1784,9 @@ svn-role = rw
 
 [/tuscany/collaboration]
 @committers  = rw
+
+[/twill]
+@twill = rw
 
 [/uima]
 @uima = rw
