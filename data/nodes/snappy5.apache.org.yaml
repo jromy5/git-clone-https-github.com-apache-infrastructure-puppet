@@ -12,6 +12,7 @@ asful::minimum_master_nodes: 3
 elasticsearch::es_heap_size: '31G'
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '31g'
+  DATA_DIR: '/elastic/db/'
 elasticsearch::java_install: true
 elasticsearch::version: '2.3.4'
 elasticsearch::ensure: 'present'
