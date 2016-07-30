@@ -34,7 +34,8 @@ elasticsearch::instances:
     config:
       node.name: 'snappy1'
       discovery.zen.minimum_master_nodes: '3'
-      network.host:
+      network.host: '10.91.102.202'
+      discovery.zen.ping.unicast.hosts:
         - 10.91.102.202
         - 10.91.102.214
         - 10.91.102.216
