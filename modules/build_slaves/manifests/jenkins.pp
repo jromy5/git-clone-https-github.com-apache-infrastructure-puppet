@@ -16,7 +16,7 @@ class build_slaves::jenkins (
   $maven_old = ['apache-maven-2.2.1','apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-3.3.9'],
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-32-unlimited-security','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.6.0_45-64','jdk1.7.0_04','jdk1.7.0_25-32','jdk1.7.0_25-64','jdk1.7.0-32','jdk1.7.0_55','jdk1.7.0-64','jdk1.8.0'],
-  $java_asfpackages = ['jdk1.7.0_79-unlimited-security','jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk-9-ea-b128'],
+  $java_asfpackages = ['jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk-9-ea-b128'],
 ) {
 
   require stdlib
@@ -291,7 +291,7 @@ class build_slaves::jenkins (
   }
   file { '/home/jenkins/tools/java/latest1.7':
     ensure => link,
-    target => '/usr/local/jenkins/java/jdk1.7.0_25-64',
+    target => '/usr/local/asfpackages/java/jdk1.7.0_80',
   }
   file { '/home/jenkins/tools/java/latest1.8':
     ensure => link,
