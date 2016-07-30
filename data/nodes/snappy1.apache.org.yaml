@@ -1,6 +1,7 @@
 ---
 classes:
   - elasticsearch
+  - asful
   - kibana_asf
   - apache
   - apache::mod::authnz_ldap
@@ -33,11 +34,20 @@ elasticsearch::instances:
     config:
       node.name: 'snappy1'
       discovery.zen.minimum_master_nodes: '3'
-      network.host: '10.91.102.202'
-      discovery.zen.ping.unicast.hosts: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
+      network.host:
+        - 10.91.102.202
+        - 10.91.102.214
+        - 10.91.102.216
+        - 10.91.102.217
+        - 10.91.102.218
       init_defaults:
         ES_HEAP_SIZE: '31g'
         DATA_DIR: '/elastic/db/'
+
+asful::nodename: 'snappy1'
+asful::nodeip: '10.91.102.202'
+asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
+asful::minimum_master_nodes: 4
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
