@@ -1,7 +1,6 @@
 ---
 classes:
   - elasticsearch
-  - asful
   
 
 
@@ -18,11 +17,13 @@ elasticsearch::instances:
     datadir: '/elastic/db/'
     config:
       node.name: 'snappy4'
+      network.host: '10.91.102.217'
+      discovery.zen.ping.unicast.hosts:
+        - 10.91.102.202
+        - 10.91.102.214
+        - 10.91.102.216
+        - 10.91.102.217
+        - 10.91.102.218
       init_defaults:
         ES_HEAP_SIZE: '31g'
         DATA_DIR: '/elastic/db/'
-
-asful::nodename: 'snappy4'
-asful::nodeip: '10.91.102.217'
-asful::clusterlist: '["10.91.102.202", "10.91.102.214", "10.91.102.216", "10.91.102.217", "10.91.102.218"]'
-asful::minimum_master_nodes: 4
