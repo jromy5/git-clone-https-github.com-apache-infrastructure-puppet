@@ -317,12 +317,11 @@ class NodeThread(Thread):
         for entry in self.json:
             js = entry
             # GeoHash conversion
-            if 'geo_coords' in js:
+            if 'geo_lat' in js and 'geo_long' in js:
                 try:
-                    arr = js['geo_coords'].split(",")
                     js['geo_location'] = {
-                        "lat": float(arr[0]),
-                        "lon": float(arr[1])
+                        "lat": float(js['geo_lat']),
+                        "lon": float(js['geo_long'])
                     }
                 except:
                     pass
