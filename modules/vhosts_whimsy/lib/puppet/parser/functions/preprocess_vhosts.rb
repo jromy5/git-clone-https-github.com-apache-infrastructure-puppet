@@ -92,7 +92,8 @@ module Puppet::Parser::Functions
 
     # produce result
     def result
-      @fragment.gsub! /\A\n+/, '' # eliminate leading whitespace
+      @fragment.gsub!(/\A\n+/, '') # eliminate leading whitespace
+      @fragment.gsub!(/%\((\w+:?\w*)\)/, '%{\1}') # convert %(...) => %{...}
       @facts['custom_fragment'] = @fragment unless @fragment.empty?
       @facts
     end

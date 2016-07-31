@@ -78,6 +78,11 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
             - /board/agenda/
             - /board/publish_minutes
 
+Additionally as the `hiera` and Apache escape sequence for variables uses the
+same syntax, and as the workarounds for escaping in hiera are both clumsy and
+don't consistently work in all environments, this function will globally
+replace %(varname) with %{varname} in vhost `custom_fragment`s.
+
 Sample output
 =============
 
