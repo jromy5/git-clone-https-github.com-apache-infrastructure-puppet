@@ -32,13 +32,13 @@ class build_slaves::jenkins (
     }
   }
   define build_slaves::symlink_ant_old ($ant_old_version = $title) {
-    file {"/home/jenkins/tools/ant/$(ant_old_version}":
+    file {"/home/jenkins/tools/ant/${ant_old_version}":
       ensure => link,
       target => "/usr/local/jenkins/ant/${ant_old_version}",
     }
   }
   define build_slaves::symlink_ant ($ant_version = $title) {
-    file {"/home/jenkins/tools/ant/$(ant_version}":
+    file {"/home/jenkins/tools/ant/${ant_version}":
       ensure => link,
       target => "/usr/local/asfpackages/ant/${ant_version}",
     }
