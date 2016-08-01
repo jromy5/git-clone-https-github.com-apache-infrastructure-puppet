@@ -303,7 +303,9 @@ class NodeThread(Thread):
                         "mappings" : mappings
                     }
                 )
-                json_pending['loggy-indices'] = []
+                if not 'loggy-indices' in json_pending:
+                    json_pending['loggy-indices'] = []
+                    last_push['loggy-indices'] = time.time()
                 json_pending['loggy-indices'].append({
                     '@node': hostname,
                     'index_created': iname,
