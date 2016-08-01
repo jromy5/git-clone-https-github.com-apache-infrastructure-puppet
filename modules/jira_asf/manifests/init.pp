@@ -46,7 +46,7 @@ class jira_asf (
 
 # jira specific
   $pgsql_connector          = "postgresql-${pgsql_connector_version}.jar" 
-  $pgsql_connector_dest_dir = '/x1/jira/current/jira/WEB-INF/lib'
+  $pgsql_connector_dest_dir = '/x1/jira/current/lib'
   $jira_build               = "atlassian-jira-${jira_version}-standalone"
   $tarball                  = "atlassian-jira-${jira_version}.tar.gz"
   $download_dir             = '/tmp'
@@ -102,7 +102,7 @@ class jira_asf (
 
   exec {
     'chown-jira-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
+      command => "/bin/chown -R ${username}:${username} ${install_dir}",
       timeout => 1200,
       require => [User[$username],Group[$username]],
   }
