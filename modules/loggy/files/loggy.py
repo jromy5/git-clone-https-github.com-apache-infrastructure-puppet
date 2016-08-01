@@ -289,7 +289,8 @@ class NodeThread(Thread):
                         "_all" : {"enabled" : True},
                         "properties": {
                             "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
-                            "@node" : { "store": True, "type" : "string", "index": "not_analyzed"}
+                            "@node" : { "store": True, "type" : "string", "index": "not_analyzed"},
+                            "geo_location" : { "type": "geo_point", "geohash": True }
                         }
                     }
                     for field in config.get('RawFields', entry).split(","):
@@ -302,7 +303,9 @@ class NodeThread(Thread):
                         "mappings" : mappings
                     }
                 )
-                json_pending['loggy-indices'] = []
+                if not 'loggy-indices' in json_pending:
+                    json_pending['loggy-indices'] = []
+                    last_push['loggy-indices'] = time.time()
                 json_pending['loggy-indices'].append({
                     '@node': hostname,
                     'index_created': iname,
@@ -315,6 +318,15 @@ class NodeThread(Thread):
         js_arr = []
         for entry in self.json:
             js = entry
+            # GeoHash conversion
+            if 'geo_lat' in js and 'geo_long' in js:
+                try:
+                    js['geo_location'] = {
+                        "lat": float(js['geo_lat']),
+                        "lon": float(js['geo_long'])
+                    }
+                except:
+                    pass
             js['@version'] = 2
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
@@ -325,6 +337,7 @@ class NodeThread(Thread):
                     js['url'] = match.group(2)
             if 'bytes' in js and isinstance(js['bytes'], basestring) and js['bytes'].isdigit():
                 js['bytes_int'] = int(js['bytes'])
+            
             js_arr.append({
                 '_op_type': 'index',
                 '_index': iname,

@@ -9,7 +9,7 @@ class build_slaves::jenkins (
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
   $ant_old = ['apache-ant-1.9.4'],
-  $ant = ['apache-ant-1.9.7'],
+  $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
   $clover = ['clover-ant-4.1.1'],
   $findbugs = ['findbugs-2.0.3'],
   $forrest = ['apache-forrest-0.9'],
@@ -264,7 +264,10 @@ class build_slaves::jenkins (
 
   # maven old symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_maven_old    { $maven_old: }
-
+  file { '/home/jenkins/tools/maven/latest2':
+    ensure => link,
+    target => '/usr/local/jenkins/maven/apache-maven-2.2.1',
+  }
   # maven old symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_maven        { $maven: }
   file { '/home/jenkins/tools/maven/latest':

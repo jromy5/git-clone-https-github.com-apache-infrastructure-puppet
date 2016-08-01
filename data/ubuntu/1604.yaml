@@ -256,6 +256,7 @@ ssh_asf::server_options:
 build_slaves::jenkins::jenkins_pub_key:  'AAAAB3NzaC1yc2EAAAABIwAAAIEAtxkcKDiPh1OaVzaVdc80daKq2sRy8aAgt8u2uEcLClzMrnv/g19db7XVggfT4+HPCqcbFbO3mtVnUnWWtuSEpDjqriWnEcSj2G1P53zsdKEu9qCGLmEFMgwcq8b5plv78PRdAQn09WCBI1QrNMypjxgCKhNNn45WqV4AD8Jp7/8='
 
 build_slaves::jenkins::jenkins_packages:
+  - asf-build-apache-ant-1.8.4
   - asf-build-apache-ant-1.9.4
   - asf-build-apache-ant-1.9.7
   - asf-build-apache-forrest-0.9
