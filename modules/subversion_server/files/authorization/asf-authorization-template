@@ -254,7 +254,7 @@ karaf={ldap:cn=karaf,ou=groups,dc=apache,dc=org}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
 knox={ldap:cn=knox,ou=groups,dc=apache,dc=org}
 knox-pmc={reuse:pit-authorization:knox-pmc}
-kudu=dralves,jdcryans,wang,danburkert,misty
+kudu={ldap:cn=kudu,ou=groups,dc=apache,dc=org}
 kudu-pmc={reuse:pit-authorization:kudu-pmc}
 kylin={ldap:cn=kylin,ou=groups,dc=apache,dc=org}
 kylin-pmc={reuse:pit-authorization:kylin-pmc}
