@@ -257,6 +257,7 @@ build_slaves::jenkins::jenkins_pub_key:  'AAAAB3NzaC1yc2EAAAABIwAAAIEAtxkcKDiPh1
 
 build_slaves::jenkins::jenkins_packages:
   - asf-build-apache-ant-1.9.4
+  - asf-build-apache-ant-1.9.7
   - asf-build-apache-forrest-0.9
   - asf-build-apache-maven-2.2.1
   - asf-build-apache-maven-3.0.4

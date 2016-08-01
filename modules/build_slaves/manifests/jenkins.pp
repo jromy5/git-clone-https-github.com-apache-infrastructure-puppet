@@ -8,7 +8,8 @@ class build_slaves::jenkins (
   $jenkins_pub_key  = '',
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
-  $ant = ['apache-ant-1.9.4'],
+  $ant_old = ['apache-ant-1.9.4'],
+  $ant = ['apache-ant-1.9.7'],
   $clover = ['clover-ant-4.1.1'],
   $findbugs = ['findbugs-2.0.3'],
   $forrest = ['apache-forrest-0.9'],
@@ -30,10 +31,10 @@ class build_slaves::jenkins (
       group  => 'jenkins',
     }
   }
-  define build_slaves::symlink_ant ($ant_version = $title) {
-    file {"/home/jenkins/tools/ant/$(ant_version}":
+  define build_slaves::symlink_ant_old ($ant_old_version = $title) {
+    file {"/home/jenkins/tools/ant/$(ant_old_version}":
       ensure => link,
-      target => "/usr/local/jenkins/ant/${ant_version}",
+      target => "/usr/local/jenkins/ant/${ant_old_version}",
     }
   }
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
@@ -224,11 +225,14 @@ class build_slaves::jenkins (
     ensure => latest,
   }
 
+  # ant_old symlinks - populate array, make all symlinks
+  build_slaves::symlink_ant_old          { $ant_old: }
+
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
   file { '/home/jenkins/tools/ant/latest':
     ensure => link,
-    target => '/usr/local/jenkins/ant/apache-ant-1.9.4',
+    target => '/usr/local/asfpackages/ant/apache-ant-1.9.7',
   }
 
   # findbugs symlinks - populate array, make all symlinks, make latest symlink
