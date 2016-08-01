@@ -264,7 +264,10 @@ class build_slaves::jenkins (
 
   # maven old symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_maven_old    { $maven_old: }
-
+  file { '/home/jenkins/tools/maven/latest2':
+    ensure => link,
+    target => '/usr/local/jenkins/maven/apache-maven-2.2.1',
+  }
   # maven old symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_maven        { $maven: }
   file { '/home/jenkins/tools/maven/latest':
