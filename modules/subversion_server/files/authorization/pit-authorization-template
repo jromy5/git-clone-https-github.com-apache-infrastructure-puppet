@@ -168,14 +168,16 @@ jspwiki-pmc={ldap:cn=jspwiki,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 juddi={reuse:asf-authorization:juddi}
 juddi-pmc={ldap:cn=juddi,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # juice={reuse:asf-authorization:# juice}
+kafka={reuse:asf-authorization:kafka}
+kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 karaf={reuse:asf-authorization:karaf}
 karaf-pmc={ldap:cn=karaf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 knox={reuse:asf-authorization:knox}
 knox-pmc={ldap:cn=knox,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+kudu={reuse:asf-authorization:kudu}
+kudu-pmc={ldap:cn=kudu,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 kylin={reuse:asf-authorization:kylin}
 kylin-pmc={ldap:cn=kylin,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-kafka={reuse:asf-authorization:kafka}
-kafka-pmc={ldap:cn=kafka,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 labs-pmc={ldap:cn=labs,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 lens={reuse:asf-authorization:lens}
 lens-pmc={ldap:cn=lens,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
