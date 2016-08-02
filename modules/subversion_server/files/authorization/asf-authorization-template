@@ -155,9 +155,9 @@ cxf={ldap:cn=cxf,ou=groups,dc=apache,dc=org}
 cxf-pmc={reuse:pit-authorization:cxf-pmc}
 datafu=cestella,evion,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
 db={ldap:cn=db,ou=groups,dc=apache,dc=org}
-db-ddlutils=arminw,brianm,brj,henning,mattbaird,mkalen,mvdb,rsfeir,seade,tfischer,thma,tomdz
+db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
 db-site={ldap:cn=db-site,ou=groups,dc=apache,dc=org}
-db-torque=brekke,dlr,dobbs,fedor,gmonroe,henning,hhernandez,jmcnally,jon,jtaylor,jvanzyl,kschrader,quintonm,seade,stephenh,tfischer,tv
+db-torque={ldap:cn=db-torque,ou=auth,ou=groups,dc=apache,dc=org}
 db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org} 
 db-pmc={reuse:pit-authorization:db-pmc}
 deltacloud={ldap:cn=deltacloud,ou=groups,dc=apache,dc=org}
@@ -212,7 +212,7 @@ helix={ldap:cn=helix,ou=groups,dc=apache,dc=org}
 helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
 hive-pmc={reuse:pit-authorization:hive-pmc}
-hive-hcatalog=gates,khorgath,toffer,daijy,avandana,travis,mithun
+hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
 htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
 httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
@@ -231,7 +231,7 @@ incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
-jackrabbit-emeritus=asavory,bcm,gianugo,prussell,stefano,treilly
+jackrabbit-emeritus={ldap:cn=jackrabbit-emeritus,ou=auth,ou=groups,dc=apache,dc=org}
 jackrabbit-pmc={reuse:pit-authorization:jackrabbit-pmc}
 james={ldap:cn=james,ou=groups,dc=apache,dc=org}
 james-pmc={reuse:pit-authorization:james-pmc}
@@ -274,12 +274,12 @@ log4cxx=grobmeier,sdeboy,fseydoux,chand,nickwilliams,tschoening,rhys,joseph,alex
 lucene={ldap:cn=lucene,ou=groups,dc=apache,dc=org}
 lucene-pmc={reuse:pit-authorization:lucene-pmc}
 # lucene-c=ehatcher,rooneg,pquerna
-lucene-connectors=aroush,bakerkj,bp,gsingers,jstrandberg,kwright,markrmiller,mmeadows,noble,otis,piergiorgio,ridder,rmuir,ryan,shalin,shinichiro,simonw,siren
+lucene-connectors={ldap:cn=lucene-connectors,ou=auth,ou=groups,dc=apache,dc=org}
 # Note: 'lucene-lucy' is legacy lucene subproject, 'lucy' is newer podling project
 # Note: 'lucene-lucy' - the lucy podling just graduated.
-lucene-lucy=dbalmain,marvin
-lucene-orp=ab,gsingers,otis,rmuir,simonw
-lucene-py=vajda,mikemccand,gsingers
+lucene-lucy={ldap:cn=lucene-lucy,ou=auth,ou=groups,dc=apache,dc=org}
+lucene-orp={ldap:cn=lucene-orp,ou=auth,ou=groups,dc=apache,dc=org}
+lucene-py={ldap:cn=lucene-py,ou=auth,ou=groups,dc=apache,dc=org}
 lucenenet={ldap:cn=lucenenet,ou=groups,dc=apache,dc=org}
 lucenenet-pmc={reuse:pit-authorization:lucenenet-pmc}
 lucy={ldap:cn=lucy,ou=groups,dc=apache,dc=org}
@@ -342,11 +342,11 @@ pig={ldap:cn=pig,ou=groups,dc=apache,dc=org}
 pig-pmc={reuse:pit-authorization:pig-pmc}
 perl={ldap:cn=perl,ou=groups,dc=apache,dc=org}
 # perl-docs: pereinar,
-perl-docs=moseley,theory,fwiles,autarch
-perl-test=theory
+perl-docs={ldap:cn=perl-docs,ou=auth,ou=groups,dc=apache,dc=org}
+perl-test={ldap:cn=perl-test,ou=auth,ou=groups,dc=apache,dc=org}
 phoenix={ldap:cn=phoenix,ou=groups,dc=apache,dc=org}
 phoenix-pmc={reuse:pit-authorization:phoenix-pmc}
-perl-sizelimit=autarch
+perl-sizelimit={ldap:cn=perl-sizelimit,ou=auth,ou=groups,dc=apache,dc=org}
 perl-reload=
 perl-bootstrap=
 perl-dbi=
@@ -395,7 +395,7 @@ sis-pmc={reuse:pit-authorization:sis-pmc}
 slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron,gourksaha,yuliu
 sling={ldap:cn=sling,ou=groups,dc=apache,dc=org}
 sling-pmc={reuse:pit-authorization:sling-pmc}
-sling-emeritus=farra,jukka
+sling-emeritus={ldap:cn=sling-emeritus,ou=auth,ou=groups,dc=apache,dc=org}
 #socialsite=snoopdave,henning
 spamassassin={ldap:cn=spamassassin,ou=groups,dc=apache,dc=org}
 spamassassin-pmc={reuse:pit-authorization:spamassassin-pmc}
@@ -480,20 +480,20 @@ ws-pmc={reuse:pit-authorization:ws-pmc}
 ws={ldap:cn=ws,ou=groups,dc=apache,dc=org}
 xalan={ldap:cn=xalan,ou=groups,dc=apache,dc=org}
 xalan-pmc={reuse:pit-authorization:xalan-pmc}
-xerces-p=jasons
-xerces-j=ankitp,mrglavas,sandygao,nddelima,venu,elena,kohsuke,andyc,neilg,neeraj,peterjm,hiranya,mukulg,knoaman
+xerces-p={ldap:cn=xerces-p,ou=auth,ou=groups,dc=apache,dc=org}
+xerces-j={ldap:cn=xerces-j,ou=auth,ou=groups,dc=apache,dc=org}
 xerces-pmc={reuse:pit-authorization:xerces-pmc}
 xerces={ldap:cn=xerces,ou=groups,dc=apache,dc=org}
 # xml cannot be enabled at present because it contains ids which are non-existent
 ## xml={ldap:cn=xml,ou=groups,dc=apache,dc=org}
 # xml-pmc={reuse:pit-authorization:xml-pmc}
 # xml-axkit: jwalt,
-xml-axkit=twl,kip,darobin,barries,matts,dirkx,mach,nachbaur
-xml-commons=twl,dirkx,ndw
+xml-axkit={ldap:cn=xml-axkit,ou=auth,ou=groups,dc=apache,dc=org}
+xml-commons={ldap:cn=xml-commons,ou=auth,ou=groups,dc=apache,dc=org}
 xmlgraphics-pmc={reuse:pit-authorization:xmlgraphics-pmc}
 xmlgraphics={ldap:cn=xmlgraphics,ou=groups,dc=apache,dc=org}
-xmlgraphics-batik=cam,deweese,dvholten,helder,jeremias
-xmlgraphics-fop=acumiskey,adelmelle,cbowditch,clay,gadams,jeremias,lbernardo,lfurini,matthias,mehdi,phancock,pietsch,psancho,rmeyer,spepping,ssteiner,vhennebert
+xmlgraphics-batik={ldap:cn=xmlgraphics-batik,ou=auth,ou=groups,dc=apache,dc=org}
+xmlgraphics-fop={ldap:cn=xmlgraphics-fop,ou=auth,ou=groups,dc=apache,dc=org}
 # yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 yetus={ldap:cn=yetus,ou=groups,dc=apache,dc=org}
 yetus-pmc={reuse:pit-authorization:yetus-pmc}

@@ -235,7 +235,7 @@ opennlp={reuse:asf-authorization:opennlp}
 opennlp-pmc={ldap:cn=opennlp,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 openoffice={reuse:asf-authorization:openoffice}
 openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-openoffice-security=orw,orcmid,malte,hdu,alg,af,arielch,damjan,pats,pescetti,cmarcum,kschenk,marcus,truckman
+openoffice-security={ldap:cn=openoffice-security,ou=auth,ou=groups,dc=apache,dc=org}
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 orc={reuse:asf-authorization:orc}
@@ -374,23 +374,23 @@ zookeeper-pmc={ldap:cn=zookeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
 
 
 # JCP
-jcp-axis-nda=dims,hemapani,venkat,gdaniels,tomj,ias,guillaume,azeez,dug,dblevins
-jcp-tomee-nda=adc,ammulder,dain,dblevins,djencks,gawor,gdamour,hogstrom,jgallimore,jgenender,jlaskowski,jlmonteiro,kevan,kmalhi,rickmcguire,xuhaihong,stephenc,tveronezi,simoneg,rmannibucau,mnour,andygumbrecht
-jcp-servicemix-nda=geirm,bsnyder,gnodet,ulhasbhole,gertv
-jcp-j2ee-nda=geirm,jboynes,dain,dblevins,gregw,djencks,adc,chirino,gdamour,dims,jstrachan,hemapani,jlaskowski,jgenender,ammulder,jsisson,bsnyder,hogstrom,kevan,rickmcguire,jdillon,jbohn,sppatel,ccardona,pmcmahan,gawor,matzew,prasad,akulshreshtha,hcunico,mcconne,jaydm,jawarner,dwoods,linsun,xuhaihong,genspring,delos,vamsic007,xiaming,rwonly,hanhongfang,violalu,michaelfang,johnxiao
-jcp-j2ee-nda-ro=dkulp,dandiep,dmiddlem,baranda,vmz,gtully,gerdogdu,kmalhi,jgallimore,jlmonteiro,stephenc,tveronezi,simoneg,rmannibucau,mnour,curtisr7,geronimotck,openejb-tck
-jcp-jaxrs-nda=dkulp,elman,jdillon,martins,sergeyb,ashakirin
-jcp-jaxws-nda=dkulp,dandiep,jliu,gawor,ema,jgenender,sandakith,gdaniels,isurues,sagara,asoldano,ashakirin
+jcp-axis-nda={ldap:cn=jcp-axis-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-tomee-nda={ldap:cn=jcp-tomee-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-servicemix-nda={ldap:cn=jcp-servicemix-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-j2ee-nda={ldap:cn=jcp-j2ee-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-j2ee-nda-ro={ldap:cn=jcp-j2ee-nda-ro,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-jaxrs-nda={ldap:cn=jcp-jaxrs-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp-jaxws-nda={ldap:cn=jcp-jaxws-nda,ou=auth,ou=groups,dc=apache,dc=org}
 # note jcp-nda is in the same order as foundation/Correspondence/JCP
 # Do not make changes to jcp-nda without agreement from the person(s) in charge of the JCP NDA agreement
-jcp-nda=jsisson,jgenender,jlaskowski,jules,dblevins,gdamour,djencks,chirino,bsnyder,adc,dims,janb,gregw,ammulder,jboynes,dain,jstrachan,geirm,hogstrom,oros,matzew,tomsp,manolito,bdudney,mmarinschek,grantsmith,svieujot,baranda,mbr,ias,hemapani,venkat,cziegeler,aslom,rkellogg,brett,ate,ddewolf,yoavs,kevan,markt,zheng,azeez,dug,cdoremus,chinthaka,ajith,ruchithf,dennisbyrne,jhook,mkienenb,rickmcguire,jdillon,fhanik,gnodet,wsmoak,aadamchik,jbohn,jdcasey,clr,jmitchell,jukka,hcunico,rajith,steshaw,ritchiem,rgreig,bhupendrab,rajdavies,sppatel,pmcmahan,mprudhom,dkulp,ccardona,dandiep,ema,jliu,adisakala,gawor,deepal,prasad,gvanmatre,pcl,dmiddlem,akulshreshtha,mcconne,jaydm,vmz,jawarner,dwoods,jfclere,gtully,sergeyb,xuhaihong,elman,talial,martins,sagara,isurues,linsun,rjung,fmeschbe,genspring,delos,asoldano,vamsic007,gerdogdu,jgallimore,kmalhi,zoe,lu4242,xiaming,rwonly,mturk,hanhongfang,jim,violalu,jlmonteiro,tveronezi,simoneg,rmannibucau,mnour,davidb,cumminsh,kwsutter,allee8285,cschneider,ashakirin,johnxiao,anierbeck,andygumbrecht
-jcp=markt,dkulp,kevan
-osgi-rw=rickhall,fmeschbe,davidb
-osgi-ro=bob
+jcp-nda={ldap:cn=jcp-nda,ou=auth,ou=groups,dc=apache,dc=org}
+jcp={ldap:cn=jcp,ou=auth,ou=groups,dc=apache,dc=org}
+osgi-rw={ldap:cn=osgi-rw,ou=auth,ou=groups,dc=apache,dc=org}
+osgi-ro={ldap:cn=osgi-ro,ou=auth,ou=groups,dc=apache,dc=org}
 
 # Not TLPs or podlings.  
-accounting=gmorris,mball,tpappas
-apachecon=coar,ben,lars,jerenkrantz,rbowen,farra,mvdb,danese,wrowe,curcuru,cliff,noel,nick,zoe,svanderwaal
+accounting={ldap:cn=accounting,ou=auth,ou=groups,dc=apache,dc=org}
+apachecon={ldap:cn=apachecon,ou=auth,ou=groups,dc=apache,dc=org}
 apsite={ldap:cn=apsite,ou=groups,dc=apache,dc=org}
 attic-pmc={ldap:cn=attic,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 audit={ldap:cn=audit,ou=groups,ou=services,dc=apache,dc=org}
@@ -398,8 +398,8 @@ board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
 comdev={ldap:cn=comdev,ou=groups,dc=apache,dc=org}
 comdev-pmc={ldap:cn=comdev,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 concom={ldap:cn=concom,ou=groups,dc=apache,dc=org}
-exec-officers=brett,gstein,rbowen,mattmann,rgardler,clr,rubys,uli
-fundraising=serge,upayavira
+exec-officers={ldap:cn=exec-officers,ou=auth,ou=groups,dc=apache,dc=org}
+fundraising={ldap:cn=fundraising,ou=auth,ou=groups,dc=apache,dc=org}
 infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-adminsearch={ldap:cn=infrastructure-adminsearch,ou=groups,ou=services,dc=apache,dc=org}
@@ -409,12 +409,12 @@ member={ldap:cn=member,ou=groups,dc=apache,dc=org}
 pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
 security={ldap:cn=security,ou=groups,dc=apache,dc=org}
 security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-svnadmins=joes,pquerna,gmcdonald,pctony,danielsh,markt,humbedooh,jfarrell,cml,coreyg,pono
-trademarks=grobmeier,clr,ke4qqq,cutting,gsingers,jim,jukka,curcuru,upayavira
+svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
+trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
-pres-commitee-vps=curcuru,uli,hadrian,jim,sk,gmcdonald,ea
+pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
 
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
