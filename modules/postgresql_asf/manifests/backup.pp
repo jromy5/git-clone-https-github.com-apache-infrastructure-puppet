@@ -1,22 +1,27 @@
 # /etc/puppet/modules/postgresql_asf/manifests/backup.pp
 
 class postgresql_asf::backup (
-  $dumproot    = '/x1/db_dump/potgres',
+  $dumproot    = '/x1/db_dump/postgres',
   $hour        = 8,
   $minute      = 20,
   $age         = '5d',
   $script_path = '/root',
   $script_name = 'dbsave_postgres.sh',
-  $user        = $postgresql::params::user,
-  $group       = $postgresql::params::group,
+  $user        = 'postgres',
+  $group       = 'postgres',
 ) {
+
+  exec {"check_pgdumproot":
+    command => "/bin/mkdir -p ${dumproot}",
+    onlyif  => "/usr/bin/test ! -e ${dumproot}",
+  }
 
   file { 'dbsave_postgres.sh':
     ensure  => present,
     path    => "${script_path}/${script_name}",
     owner   => 'root',
-    group   => $postgresql::params::group,
-    mode    => '0754',
+    group   => 'root',
+    mode    => '0750',
     content => template('postgresql_asf/dbsave_postgres.sh.erb'),
   }
 
@@ -28,6 +33,7 @@ class postgresql_asf::backup (
   }
 
   cron { 'postgresql dump':
+    user    => 'root',
     hour    => $hour,
     minute  => $minute,
     command => "${script_path}/${script_name}",
