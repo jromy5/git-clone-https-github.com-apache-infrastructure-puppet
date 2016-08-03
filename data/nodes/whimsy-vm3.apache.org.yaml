@@ -149,6 +149,7 @@ vhosts_whimsy::vhosts::vhosts:
       - /board/agenda/
       - /classic/board/agenda/
       - /fundraising/
+      - /officers/
       - /treasurer/
 
     - name: ASF Members
