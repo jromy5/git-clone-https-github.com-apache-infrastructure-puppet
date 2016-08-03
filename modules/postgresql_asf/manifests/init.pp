@@ -3,6 +3,14 @@
 class postgresql_asf (
 ) {
 
+  $datadir = hiera('postgresql::server::datadir')
+
+  exec {"check_pgdatadir":
+    command => "/bin/mkdir -p ${datadir}",
+    onlyif  => "/usr/bin/test ! -e ${datadir}",
+    before  => Class[Postgresql::Server],
+  }
+
   $config_entry = hiera_hash('postgresql::server::config_entry', {})
   create_resources(postgresql::server::config_entry, $config_entry)
 
