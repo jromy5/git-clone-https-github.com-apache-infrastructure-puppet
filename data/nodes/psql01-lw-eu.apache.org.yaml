@@ -3,12 +3,13 @@ classes:
   - postgresql::server
   - postgresql_asf
 
-## Postgresql master in LeaseWeb US ##
+## Postgresql replication target in LeaseWeb EU ##
 
-postgresql::server::listen_addresses: "localhost,%{::ipaddress_eth0}"
+postgresql::server::listen_addresses: '*'
 postgresql::server::encoding: 'UTF-8'
 postgresql::server::locale: 'en_US.UTF-8'
 postgresql::server::datadir: '/x1/postgresql/9.3/main'
+postgresql::server::needs_initdb: true
 
 postgresql::server::config_entry:
   wal_level:
@@ -19,13 +20,5 @@ postgresql::server::config_entry:
     value: 8
   wal_keep_segments:
     value: 8
-
-postgresql::server::pg_hba_rule:
-  replication:
-    description: 'enable replication'
-    type: 'hostssl'
-    database: 'replication'
-    user: 'rep'
-    address: '10.10.3.76/32'
-    auth_method: 'md5'
-
+  hot_standby:
+    value: 'on'

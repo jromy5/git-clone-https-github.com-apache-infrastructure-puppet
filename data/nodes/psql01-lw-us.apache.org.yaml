@@ -1,0 +1,46 @@
+---
+classes:
+  - postgresql::server
+  - postgresql_asf
+  - postgresql_asf::backup
+
+## Postgresql master in LeaseWeb US ##
+
+postgresql::server::listen_addresses: "*"
+postgresql::server::encoding: 'UTF-8'
+postgresql::server::locale: 'en_US.UTF-8'
+postgresql::server::datadir: '/x1/postgresql/9.3/main'
+postgresql::server::needs_initdb: true
+
+postgresql::server::config_entry:
+  wal_level:
+    value: 'hot_standby'
+  max_wal_senders:
+    value: 3
+  checkpoint_segments:
+    value: 8
+  wal_keep_segments:
+    value: 8
+
+postgresql::server::pg_hba_rule:
+  replication:
+    description: 'enable replication'
+    type: 'hostssl'
+    database: 'replication'
+    user: 'rep'
+    address: '37.48.69.242/32'
+    auth_method: 'md5'
+  jira-test:
+    description: 'jira test instance'
+    type: 'hostssl'
+    database: 'jira-test'
+    user: 'jira-test'
+    address: '37.48.69.242/32'
+    auth_method: 'md5'
+  jira:
+    description: 'jira prod instance'
+    type: 'hostssl'
+    database: 'jira'
+    user: 'jira'
+    address: '37.48.69.242/32'
+    auth_method: 'md5'
