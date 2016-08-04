@@ -4,6 +4,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - apache::mod::headers
   - blocky
   - loggy
   - ssl::name::wildcard_apache_org
