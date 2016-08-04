@@ -59,3 +59,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyPass / http://127.0.0.1:8090/
         ProxyPassReverse / http://127.0.0.1:8090/
         RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "X-PINGOTHER"
+        Header set Access-Control-Max-Age "1728000"
