@@ -182,8 +182,20 @@ class Blocky(Thread):
 						r = baddie['reason']
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						try:
-							print("Found a culprit for us, banning " + i)
-							if not firstRun:
+							# Check if we already have such a ban in place using iptables -C
+							try:
+								subprocess.check_call([
+									"iptables",
+									"-C", "INPUT",
+									"-s", i,
+									"-j", "DROP",
+									"-m", "comment",
+									"--comment",
+									"Banned by Blocky"
+									])
+								# If we reach this point, the rule exists, no need to re-add it
+							except CalledProcessError as err:
+								# We're here which means the rule didn't exist, so let's add it!
 								subprocess.check_call([
 									"iptables",
 									"-A", "INPUT",
@@ -196,7 +208,7 @@ class Blocky(Thread):
 								message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
 								syslog.syslog(syslog.LOG_INFO, message)
 						except Exception as err:
-							print(err)
+							syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + err)
 						baddies[i] = time.time()
 					elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 						baddies[i] = time.time()
