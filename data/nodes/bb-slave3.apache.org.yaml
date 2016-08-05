@@ -5,6 +5,8 @@ classes:
   - rvm
 
 buildbot_slave::slave_name: 'bb_slave3_ubuntu'
+buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
 
 # mkdocs needed for eagle docs build
 

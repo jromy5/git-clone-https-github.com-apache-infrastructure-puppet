@@ -24,7 +24,6 @@ class buildbot_slave (
 
   $bb_basepackages = [
     'buildbot-slave',
-    'openjdk-7-jdk',
     'ant',
     'zip',
     'unzip',

@@ -5,7 +5,8 @@ classes:
 
 buildbot_slave::slave_name: 'bb_1604-test_ubuntu'
 buildbot_slave::required_packages:
-  - 'tomcat7'
+  - 'openjdk-8-jdk'
+  - 'tomcat8'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'

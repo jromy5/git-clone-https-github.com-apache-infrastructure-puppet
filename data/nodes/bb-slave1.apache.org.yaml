@@ -5,6 +5,7 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
 buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
   - 'tomcat7'
   - 'libtool'
   - 'libpcre3' 
