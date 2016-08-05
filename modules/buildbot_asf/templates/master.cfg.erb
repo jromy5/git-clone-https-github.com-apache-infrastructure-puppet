@@ -130,6 +130,15 @@ c['slaves'] = [BuildSlave("orcus_ubuntu", private.slave1Pwd,
                           missing_timeout=300,
                           max_builds=2,
                           ),
+
+# Leaswweb Hosted Slaves
+
+               BuildSlave("bb_1604_test_ubuntu", private.bb_1604_test_ubuntuPwd,
+                          notify_on_missing="infrastructure@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
               ]
 
 # to limit to two concurrent builds on a slave, use
