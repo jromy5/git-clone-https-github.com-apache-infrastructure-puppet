@@ -194,7 +194,7 @@ class Blocky(Thread):
 									"Banned by Blocky"
 									])
 								# If we reach this point, the rule exists, no need to re-add it
-							except CalledProcessError as err:
+							except subprocess.CalledProcessError as err:
 								# We're here which means the rule didn't exist, so let's add it!
 								subprocess.check_call([
 									"iptables",
