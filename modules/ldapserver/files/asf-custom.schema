@@ -163,6 +163,23 @@ objectclass ( 1.3.6.1.4.1.18060.2.0.100
         MAY ( asf-member-activeprojects $ asf-member-affiliation $ asf-member-personalurl $ asf-member-affiliationurl )
  )
 
+
+## These attributes are applicable to ASF PMCs only
+
+attributetype ( 1.3.6.1.4.1.18060.2.0.201
+        NAME 'pmcMember'
+        DESC 'Distinguished Names (dns) for members of the PMCs'
+        EQUALITY caseExactMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+ )
+
+objectclass ( 1.3.6.1.4.1.18060.2.0.200
+        NAME 'asf-pmc'
+        DESC 'Object class for Project Management Committees (PMCs)'
+        AUXILIARY
+        MAY ( pmcMember )
+ )
+
 ## ----------------------------------------
 
 ## NONE ASF CUSTOM - IMPORTED ObjectClasses
