@@ -86,7 +86,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'snappy1.apache.org'
     serveradmin: 'webmaster@apache.org'
-    docroot: '/usr/local/etc/logproxy/kibana'
+    docroot: '/var/www/snappy/'
     access_log_file: 'logsearch.apache.org.ssl_access.log'
     error_log_file: 'logsearch.apache.org.error.log'
     custom_fragment: |
