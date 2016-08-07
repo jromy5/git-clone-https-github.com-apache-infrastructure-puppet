@@ -138,7 +138,7 @@ vhosts_asf::vhosts::vhosts:
           LuaScope thread
           LuaCodeCache stat
           AddHandler lua-script .lua
-          DirectoryIndex index.lua
+          DirectoryIndex index.html
       </Location>
       <Location /k4/>
           AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
