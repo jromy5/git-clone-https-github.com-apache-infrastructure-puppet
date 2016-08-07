@@ -278,7 +278,7 @@ class NodeThread(Thread):
         global gotindex, config, json_pending
         random.seed(time.time())
         #print("Pushing %u json objects" % len(json_pending))
-        iname = time.strftime("logstash-%Y.%m.%d")
+        iname = time.strftime("loggy-%Y.%m.%d")
         sys.stderr.flush()
         if not iname in gotindex:
             gotindex[iname] = True
@@ -666,6 +666,8 @@ class Loggy(Thread):
             try:
                 while True:
                     for x in json_pending:
+                        if not x in last_push:
+                            last_push[x] = time.time()
                         if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50):
                             if not x in fp:
                                 fp[x] = True
