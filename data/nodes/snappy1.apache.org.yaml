@@ -13,10 +13,20 @@ classes:
   - vhosts_asf::modules
   - vhosts_asf::vhosts
 
+base::basepackages:
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
 vhosts_asf::modules::modules:
   allowmethods:
     name: 'allowmethods'
-
+  lua:
+    name: 'lua'
+    
 datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 
 elasticsearch::init_defaults:
@@ -116,6 +126,20 @@ vhosts_asf::vhosts::vhosts:
             Require all denied
           </If>
           ProxyPass http://10.91.102.202:9200/
+      </Location>
+      <Location /blocky/>
+          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute member
+          AuthName "ASF Infrastructure-root Only"
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          AcceptPathInfo On
+          LuaScope thread
+          LuaCodeCache stat
+          AddHandler lua-script .lua
+          DirectoryIndex index.lua
       </Location>
       <Location /k4/>
           AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
