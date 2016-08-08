@@ -7,6 +7,7 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::rewrite
   - datadog_agent::integrations::elasticsearch
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
@@ -126,6 +127,11 @@ vhosts_asf::vhosts::vhosts:
           </If>
           ProxyPass http://10.91.102.202:9200/
       </Location>
+      LuaScope thread
+      LuaCodeCache stat
+      AddHandler lua-script .lua
+      RewriteEngine On
+      RewriteRule ^/?blocky.json /blocky/api/blocklist.lua
       <Location /blocky/>
           AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
@@ -135,9 +141,6 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
           AcceptPathInfo On
-          LuaScope thread
-          LuaCodeCache stat
-          AddHandler lua-script .lua
           DirectoryIndex index.html
       </Location>
       <Location /k4/>
