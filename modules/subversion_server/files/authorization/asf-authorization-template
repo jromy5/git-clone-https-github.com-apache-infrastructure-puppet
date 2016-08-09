@@ -1502,7 +1502,7 @@ ea = rw
 @openmeetings = rw
 
 [/opennlp]
-@opennlp = rw
+@opennlp = r
 
 [/openoffice]
 @openoffice = rw
