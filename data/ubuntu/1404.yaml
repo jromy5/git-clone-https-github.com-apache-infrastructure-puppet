@@ -66,6 +66,8 @@ apache::log_formats:
     \"geo_combo\": \"%%{}{GEOIP_CITY}n, %%{}{GEOIP_COUNTRY_NAME}n\"
     }'
 
+apache::trace_enable: Off
+
 apt::sources:
   'asf_internal':
     location: 'https://packages.apache.org/asf_internal'
