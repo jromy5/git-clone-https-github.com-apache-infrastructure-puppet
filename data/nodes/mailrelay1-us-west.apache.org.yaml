@@ -26,7 +26,7 @@ postfix::dbfile:
 
     
 postfix::server::myhostname:             "%{::fqdn}"
-postfix::server::mynetworks:             '127.0.0.0/8 10.41.0.0/16 [::1]/128 [fe80::]/64 209.188.14.139/32 195.154.156.166/32 207.244.88.128/27 37.48.69.226/32 37.48.69.234/32 163.172.22.183/32 138.201.36.225/32 162.242.174.13/32'
+postfix::server::mynetworks:             '127.0.0.0/8 10.41.0.0/16 [::1]/128 [fe80::]/64 209.188.14.139/32 195.154.156.166/32 207.244.88.128/27 37.48.69.226/32 37.48.69.234/32 163.172.22.183/32 138.201.36.225/32 23.253.172.122/32'
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
 postfix::server::inet_interfaces:        'all'
