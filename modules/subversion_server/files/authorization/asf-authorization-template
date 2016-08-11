@@ -362,7 +362,7 @@ portals-pmc={reuse:pit-authorization:portals-pmc}
 # provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
 qpid={ldap:cn=qpid,ou=groups,dc=apache,dc=org}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
-quarks=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
+edgent=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
 ranger=alok,bganesan,bosco,coheigea,ddas,dillidorai,gates,gautam,humbedooh,jghoman,kminder,lmccay,madhan,omalley,rmani,sneethir,sradia,vel
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
@@ -1082,8 +1082,8 @@ ea = rw
 @apsite = rw
 @incubator-site = rw
 
-[/incubator/quarks]
-@quarks = rw
+[/incubator/edgent]
+@edgent = rw
 
 [/incubator/ranger]
 @ranger = rw
