@@ -267,6 +267,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-apache-maven-3.0.5
   - asf-build-apache-maven-3.2.1
   - asf-build-apache-maven-3.2.5
+  - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
   - asf-build-clover-ant-4.1.1
   - asf-build-findbugs-2.0.3
