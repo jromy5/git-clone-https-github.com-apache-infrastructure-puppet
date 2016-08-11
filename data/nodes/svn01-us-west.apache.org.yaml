@@ -230,6 +230,9 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
         LimitRequestBody 500000000
       </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/release/stratos/>
+        LimitRequestBody 500000000
+      </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/nifi/>
         LimitRequestBody 800000000
       </LocationMatch>
