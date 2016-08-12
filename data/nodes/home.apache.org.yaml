@@ -69,6 +69,11 @@ cron:
     minute: '8'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_nonldap_groups.json'
+  json9:
+    user: 'www-data'
+    minute: '9'
+    hour: '*'
+    command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_authgroups.json'
   html1:
     user: 'www-data'
     minute: '10'

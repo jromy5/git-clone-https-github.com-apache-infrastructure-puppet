@@ -72,6 +72,13 @@ class whimsy_server::cronjobs (
     minute  => [8, 23, 38, 53]
   }
 
+  cron { 'public_ldap_authgroups':
+    ensure  => present,
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_groups.rb public/public_ldap_authgroups.json > logs/public-ldap-authgroups 2>&1)",
+    user    => $apache::user,
+    minute  => [10, 25, 40, 55]
+  }
+
   cron { 'public_ldap_services':
     ensure  => present,
     command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_services.rb public/public_ldap_services.json > logs/public-ldap-services 2>&1)",
