@@ -1,6 +1,7 @@
 ---
 classes:
   - jira_asf
+  - oraclejava::install
 
 # jira_asf class variables.
 jira_asf::jira_version: '6.3.4'
@@ -11,3 +12,5 @@ jira_asf::connector_port: '8888'
 jira_asf::context_path: '/jira'
 jira_asf::docroot: '/var/www'
 
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true

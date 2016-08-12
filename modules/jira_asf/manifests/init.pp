@@ -1,41 +1,44 @@
 #/etc/puppet/modules/jira_asf/manifests/init.pp
 
 class jira_asf (
-  $uid                           = 9997,
-  $gid                           = 9997,
-  $group_present                 = 'present',
-  $groupname                     = 'jira',
-  $groups                        = [],
-  $service_ensure                = 'running',
-  $service_name                  = 'jira',
-  $shell                         = '/bin/bash',
-  $user_present                  = 'present',
-  $username                      = 'jira',
+  $uid                            = 9997,
+  $gid                            = 9997,
+  $group_present                  = 'present',
+  $groupname                      = 'jira',
+  $groups                         = [],
+  $service_ensure                 = 'running',
+  $service_name                   = 'jira',
+  $shell                          = '/bin/bash',
+  $user_present                   = 'present',
+  $username                       = 'jira',
 
   # override below in yaml
-  $jira_version                  = '',
-  $pgsql_connector_version       = '',
-  $parent_dir                    = '/x1/jira',
-  $server_port                   = '',
-  $connector_port                = '',
-  $context_path                  = '',
-  $docroot                       = '',
-  $server_alias                  = '',
-  $heap_min_size                 = '',
-  $heap_max_size                 = '',
+  $jira_version                   = '',
+  $pgsql_connector_version        = '',
+  $parent_dir                     = '/x1/jira',
+  $server_port                    = '',
+  $connector_port                 = '',
+  $context_path                   = '',
+  $docroot                        = '',
+  $server_alias                   = '',
+  $heap_min_size                  = '',
+  $heap_max_size                  = '',
   # Below setting replaces PermGen, uses native memory for class metadata.
   # If not set resizes according to available native memory.
-  $maxmetaspacesize              = '',
+  $maxmetaspacesize               = '',
+  $jdbc_user                      = '',
+  $jdbc_password                  = '',
+  $jdbc_url                       = '',
 
   # below are contained in eyaml
-  $jira_license_hash       = '',
-  $jira_license_message    = '',
-  $jira_setup_server_id    = '',
-  $hibernate_connection_password = '',
-  $hibernate_connection_username = '',
-  $hibernate_connection_url      = '',
+  $jira_license_hash              = '',
+  $jira_license_message           = '',
+  $jira_setup_server_id           = '',
+  $hibernate_connection_password  = '',
+  $hibernate_connection_username  = '',
+  $hibernate_connection_url       = '',
 
-  $required_packages             = ['graphviz' , 'graphviz-dev'],
+  $required_packages              = ['graphviz' , 'graphviz-dev'],
 ){
 
 # install required packages:
@@ -55,6 +58,8 @@ class jira_asf (
   $install_dir              = "${parent_dir}/${jira_build}"
   $jira_home                = "${parent_dir}/jira-data"
   $current_dir              = "${parent_dir}/current"
+  $dbconfig                 = "${jira_home}/dbconfig.xml"
+  $jira_properties          = "${current_dir}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 
   user {
     $username:
@@ -89,17 +94,17 @@ class jira_asf (
     require => Exec['download-jira'],
   }
 
-# extract the download and move it
+# extract the download and move it into place
+# once extracted, chain the chown to set appropriate owner/group
   exec {
     'extract-jira':
-      command => "/bin/tar -xvzf ${tarball} && mv ${jira_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${tarball} && mv ${jira_build} ${parent_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  }
-
+  } -> 
   exec {
     'chown-jira-dirs':
       command => "/bin/chown -R ${username}:${username} ${install_dir}",
@@ -107,18 +112,12 @@ class jira_asf (
       require => [User[$username],Group[$username]],
   }
 
-  # exec {
-    # 'check_cfg_exists':
-      # command => '/bin/true',
-      # onlyif  => "/usr/bin/test -e ${jira_home}/jira.cfg.xml",
-  # }
-
   file {
     $parent_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755';
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755';
     $jira_home:
       ensure  => directory,
       owner   => 'jira',
@@ -136,35 +135,26 @@ class jira_asf (
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
-    # "${install_dir}/jira/WEB-INF/classes/jira-init.properties":
-      # content => template('jira_asf/jira-init.properties.erb'),
-      # mode    => '0644';
-    # "${install_dir}/conf/server.xml":
-      # content => template('jira_asf/server.xml.erb'),
-      # mode    => '0644';
-    # "${install_dir}/bin/setenv.sh":
-      # content => template('jira_asf/setenv.sh.erb'),
-      # mode    => '0644';
-    # "${jira_home}/jira.cfg.xml":
-      # content => template('jira_asf/jira.cfg.xml.erb'),
-      # owner   => 'jira',
-      # group   => 'jira',
-      # mode    => '0644',
-      # require => Exec['check_cfg_exists'],
-      # notify  => Service[$service_name];
+    $dbconfig:
+      content => template ('jira_asf/dbconfig.xml.erb'),
+      mode    => '0640',
+      owner   => 'jira',
+      group   => 'jira',
+      require => File[$jira_home];
+    $jira_properties:
+      content => template ('jira_asf/jira-application.properties.erb'),
+      mode    => '0640',
+      owner   => 'jira',
+      group   => 'jira',
+      require => File[$jira_home];
     "${pgsql_connector_dest_dir}/${pgsql_connector}":
-      ensure => present,
-      source => "puppet:///modules/jira_asf/${pgsql_connector}";
+      ensure  => present,
+      source  => "puppet:///modules/jira_asf/${pgsql_connector}";
     # "/etc/init.d/${service_name}":
       # mode    => '0755',
       # owner   => 'root',
       # group   => 'root',
       # content => template('jira_asf/jira-init-script.erb');
-    # "/home/${username}/cleanup-tomcat-logs.sh":
-      # owner   => $username,
-      # group   => $groupname,
-      # content => template('jira_asf/cleanup-tomcat-logs.sh.erb'),
-      # mode    => '0755';
   }
 
   # service {
