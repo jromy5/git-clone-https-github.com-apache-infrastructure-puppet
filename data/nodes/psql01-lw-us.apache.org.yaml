@@ -30,12 +30,12 @@ postgresql::server::pg_hba_rule:
     user: 'rep'
     address: '37.48.69.242/32'
     auth_method: 'md5'
-  jira-test:
+  jiratest:
     description: 'jira test instance'
     type: 'hostssl'
-    database: 'jira-test'
-    user: 'jira-test'
-    address: '37.48.69.242/32'
+    database: 'jiratest'
+    user: 'jiratest'
+    address: '10.10.3.229/32'
     auth_method: 'md5'
   jira:
     description: 'jira prod instance'
