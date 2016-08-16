@@ -18,11 +18,13 @@ base::basepackages:
   - apt-file
   - bash
   - bc
+  - bwm-ng
   - ca-certificates
   - htop
   - iotop
   - libnet-snmp-perl
   - libsnmp-perl
+  - ncdu
   - nload
   - screen
   - sockstat
