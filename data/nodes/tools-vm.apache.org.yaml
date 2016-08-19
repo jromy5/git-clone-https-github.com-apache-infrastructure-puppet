@@ -218,9 +218,4 @@ reporeq:
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
-        # Pass on X-Authenticated-User to backend server
-        RewriteEngine On
-        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
-        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
-        RequestHeader unset Authorization
       </Location>
