@@ -180,3 +180,47 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
       </Location>
+
+
+reporeq:
+    vhost_name: '*'
+    port: 80
+    servername: 'reporeq.apache.org'
+    default_vhost: true
+    docroot: '/var/www/git-setup/'
+    manage_docroot: false
+    access_log_file: 'reporeq.log'
+    error_log_file: 'reporeq.log'
+    custom_fragment: |
+      Redirect permanent / https://reporeq.apache.org/
+
+  reporeq-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'reporeq.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/git-setup/'
+    manage_docroot: false
+    access_log_file: 'reporeq-ssl_access.log'
+    error_log_file: 'reporeq-ssl_error.log'
+    custom_fragment: |
+      AcceptPathInfo On
+      LuaScope thread
+      LuaCodeCache stat
+      AddHandler lua-script .lua
+      FallbackResource /index.html
+      <Location />
+        AuthLDAPUrl "ldaps://snappy5.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "PMC Members Only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+        # Pass on X-Authenticated-User to backend server
+        RewriteEngine On
+        RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
+        RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
+        RequestHeader unset Authorization
+      </Location>
