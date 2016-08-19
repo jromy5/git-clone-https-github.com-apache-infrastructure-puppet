@@ -194,7 +194,7 @@ reporeq:
     custom_fragment: |
       Redirect permanent / https://reporeq.apache.org/
 
-  reporeq-ssl:
+reporeq-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
