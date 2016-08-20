@@ -93,4 +93,9 @@ class zmanda_asf::client (
       require => Exec['install client'],
     }
   }
+
+  service {"xinetd":
+    ensure  => stopped,
+  }
+
 }
