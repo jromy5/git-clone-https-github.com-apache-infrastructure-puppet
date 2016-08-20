@@ -86,6 +86,13 @@ class whimsy_server::cronjobs (
     minute  => 40
   }
 
+  cron { 'public_podlings':
+    ensure  => present,
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_podlings.rb public/public_podling_status.json public/public_podlings.json > logs/public-podlings 2>&1)",
+    user    => $apache::user,
+    minute  => 45
+  }
+
   cron { 'board_minutes':
     ensure  => present,
     command => "(cd /srv/whimsy/tools; ${ruby} collate_minutes.rb > ../www/logs/collate_minutes 2>&1)",
