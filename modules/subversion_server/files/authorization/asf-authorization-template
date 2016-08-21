@@ -153,7 +153,7 @@ curator={ldap:cn=curator,ou=groups,dc=apache,dc=org}
 curator-pmc={reuse:pit-authorization:curator-pmc}
 cxf={ldap:cn=cxf,ou=groups,dc=apache,dc=org}
 cxf-pmc={reuse:pit-authorization:cxf-pmc}
-datafu=cestella,evion,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
+datafu=cestella,evion,eyal,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
 db={ldap:cn=db,ou=groups,dc=apache,dc=org}
 db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
 db-site={ldap:cn=db-site,ou=groups,dc=apache,dc=org}
