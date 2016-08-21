@@ -424,12 +424,18 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule .* %%{}{PATH_INFO} [L,R=301]
         
       Redirect /dump http://svn-dump.apache.org
-
+      
       <Location /repos/asf>
         DAV svn
         SVNPath /x1/svn/repos/asf
         SVNCheckPathPrefix  /repos/asf
-        SetOutputFilter DEFLATE
+        
+        # Disable compression for git.apache.org which doesn't like it very much
+        # Enable for everyone else
+        <If "%{REMOTE_ADDR} != '54.84.58.65'">
+          SetOutputFilter DEFLATE
+        </If>
+        
           
         AuthName "ASF Committers"
         AuthType Basic
