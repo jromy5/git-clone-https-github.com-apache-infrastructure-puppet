@@ -432,7 +432,7 @@ vhosts_asf::vhosts::vhosts:
         
         # Disable compression for git.apache.org which doesn't like it very much
         # Enable for everyone else
-        <If "%{REMOTE_ADDR} != '54.84.58.65'">
+        <If "%%{}{REMOTE_ADDR} != '54.84.58.65'">
           SetOutputFilter DEFLATE
         </If>
         
