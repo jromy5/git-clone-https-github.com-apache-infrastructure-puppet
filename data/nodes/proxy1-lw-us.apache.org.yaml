@@ -1,5 +1,6 @@
 ---
 classes:
+  - aardvark_asf # requires lua deps in basepackages
   - apache
   - apache::mod::headers
   - apache::mod::proxy
@@ -205,3 +206,18 @@ vhosts_asf::vhosts::vhosts:
       # ProxyPassReverse / http://repository-vm2.apache.org:8081/
       ProxyPass / http://10.10.3.250:8081/
       ProxyPassReverse / http://10.10.3.250:8081/
+
+fail2ban_asf::config::jails:
+  jira:
+    filter: asf-jira
+    action:
+      - iptables-allports
+    logpath: /usr/local/etc/aardvark/spammers.txt
+    findtime: 3600
+    maxretry: 1
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-jira:
+    filterfailregex: |
+      <HOST> spammed Aardvark
