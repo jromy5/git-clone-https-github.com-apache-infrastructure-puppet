@@ -31,6 +31,12 @@ apache::docroot_owner:      'git'
 apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
 
+cron:
+  makerepo:
+    user: 'www-data'
+    minute: '30'
+    hour: '*'
+    command: 'cd /x1/git/asfgit-admin/asf/bin && python3 repocron.py'
 
 datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
 
