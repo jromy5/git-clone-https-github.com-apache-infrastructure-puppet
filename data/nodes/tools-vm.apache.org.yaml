@@ -217,5 +217,9 @@ vhosts_asf::vhosts::vhosts:
         AuthName "PMC Members Only"
         AuthType Basic
         AuthBasicProvider ldap
-        Require valid-user
+        <RequireAny>
+          Require ip 140.211.11.23
+          Require ip 54.84.58.65
+          Require valid-user
+        </RequireAny>
       </Location>
