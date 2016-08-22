@@ -27,6 +27,7 @@ base::basepackages:
   - screen
   - sockstat
   - software-properties-common
+  - tcsh
   - zsh
 
 base::purgedpackages:
