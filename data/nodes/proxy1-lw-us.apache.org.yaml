@@ -42,6 +42,15 @@ apache::mod::event::threadsperchild:         '150'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 
+base::basepackages:
+  - issues-data
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
 vhosts_asf::vhosts::vhosts:
   issues-test:
     vhost_name: '*'
