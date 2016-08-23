@@ -1,0 +1,14 @@
+---
+classes:
+  - buildbot_slave
+  - loggy
+
+buildbot_slave::slave_name: 'bb_slave4_ubuntu'
+buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
+
+# mkdocs needed for eagle docs build
+
+python::python_pips:
+  mkdocs:
+    ensure: present
