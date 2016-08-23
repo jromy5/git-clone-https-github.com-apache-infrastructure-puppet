@@ -467,6 +467,7 @@ staff=
 @committers  = rw
 @svnadmins = rw
 whimsysvn = r
+comdev-svn = r
 * =
 
 # Allow read only access for the rptremind account
