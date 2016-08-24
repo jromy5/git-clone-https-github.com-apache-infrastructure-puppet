@@ -336,7 +336,6 @@ build_slaves::distro_packages:
   - gcc-multilib
   - ghc
   - git-core
-  - lib32bz2-1.0
   - lib32ncurses5
   - lib32z1
   - libapr1-dev
@@ -362,7 +361,7 @@ build_slaves::distro_packages:
   - libjpeg8-dev
   - liblzo2-dev
   - liblua5.2-dev
-  - libmono-system-web2.0-cil
+  - libmono-system-web4.0-cil
   - libqt4-dev
   - libsasl2-dev
   - libsnappy-dev
@@ -374,27 +373,27 @@ build_slaves::distro_packages:
   - libtool
   - libxml-xpath-perl
   - libz-dev
-  - linux-headers-3.13.0-36
-  - linux-headers-3.13.0-36-generic
-  - linux-image-3.13.0-36-generic
-  - linux-image-3.13.0-36-lowlatency
+  - linux-headers-4.4.0-34
+  - linux-headers-4.4.0-34-generic
+  - linux-image-4.4.0-34-generic
+  - linux-image-4.4.0-34-lowlatency
   - lua5.2
   - docker-engine
-  - mingw32
-  - mingw32-binutils
-  - mingw32-runtime
+  - mingw64
+  - binutils-mingw-w64
+  - mingw64-tools
+  - mingw-w64-common
   - mono-devel
-  - mono-gmcs
+  - mono-complete
   - nodejs
   - nodejs-dev
   - nodejs-legacy
   - npm
   - nsis
-  - openjdk-7-jdk
+  - openjdk-9-jdk
   - php-pear
-  - php5
-  - php5-cli
-  - php5-dev
+  - php-dev
+  - php7.0-cli
   - pkg-config
   - protobuf-compiler
   - python-all
@@ -402,7 +401,6 @@ build_slaves::distro_packages:
   - python-all-dev
   - python-boto
   - python-setuptools
-  - python-support
   - re2c
   - ruby
   - ruby-dev
