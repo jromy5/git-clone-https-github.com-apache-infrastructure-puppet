@@ -72,7 +72,7 @@ apache::trace_enable: Off
 apt::sources:
   'asf_internal':
     location: 'https://packages.apache.org/asf_internal'
-    release: 'trusty'
+    release: 'xenial'
     repos: 'main'
     key: '390EF70BB1EA12B2773962950EE62FB37A00258D'
     key_server: 'pgp.mit.edu'
@@ -97,7 +97,7 @@ apt::sources:
     ensure: 'absent'
   'docker-engine':
     location: 'https://apt.dockerproject.org/repo'
-    release: 'ubuntu-trusty'
+    release: 'ubuntu-xenial'
     repos: 'main'
     key: '58118E89F3A912897C070ADBF76221572C52609D'
     key_server: 'hkp://p80.pool.sks-keyservers.net:80'
@@ -105,7 +105,7 @@ apt::sources:
     include_src: false
   'puppetlabs':
     location: 'https://apt.puppetlabs.com'
-    release: 'trusty'
+    release: 'xenial'
     repos: 'main'
     key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
     key_server: 'keyserver.ubuntu.com'
@@ -113,7 +113,7 @@ apt::sources:
     include_src: false
   'puppetdeps':
     location: 'https://apt.puppetlabs.com'
-    release: 'trusty'
+    release: 'xenial'
     repos: 'dependencies'
     key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
     key_server: 'keyserver.ubuntu.com'
@@ -121,7 +121,7 @@ apt::sources:
     include_src: false
   'vmware-tools':
     location: 'http://packages.vmware.com/packages/ubuntu'
-    release: 'trusty'
+    release: 'xenial'
     repos: 'main'
     key: '36E47E1CC4DCC5E8152D115CC0B5E0AB66FD4949'
     key_server: 'pgp.mit.edu'
