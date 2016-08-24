@@ -25,9 +25,6 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
-base::basepackages:
-  - tcsh
-  
 cron:
   json1:
     user: 'www-data'
