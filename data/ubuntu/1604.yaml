@@ -379,9 +379,9 @@ build_slaves::distro_packages:
   - linux-image-4.4.0-34-lowlatency
   - lua5.2
   - docker-engine
-  - mingw64
+  - mingw-w64
   - binutils-mingw-w64
-  - mingw64-tools
+  - mingw-w64-tools
   - mingw-w64-common
   - mono-devel
   - mono-complete
