@@ -121,7 +121,7 @@ apt::sources:
     include_src: false
   'vmware-tools':
     location: 'http://packages.vmware.com/packages/ubuntu'
-    release: 'xenial'
+    release: 'trusty'
     repos: 'main'
     key: '36E47E1CC4DCC5E8152D115CC0B5E0AB66FD4949'
     key_server: 'pgp.mit.edu'
