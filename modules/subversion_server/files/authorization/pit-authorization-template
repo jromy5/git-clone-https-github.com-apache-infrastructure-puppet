@@ -884,17 +884,26 @@ openejb-tck = r
 [/pmc/aries]
 @aries-pmc = rw
 
+[/pmc/attic]
+@attic-pmc = rw
+
 [/pmc/bloodhound]
 @bloodhound-pmc = rw
 
 [/pmc/camel]
 @camel-pmc = rw
 
+[/pmc/cassandra]
+@cassandra-pmc = rw
+
 [/pmc/cloudstack]
 @cloudstack-pmc = rw
 
 [/pmc/cocoon]
 @cocoon = rw
+
+[/pmc/comdev]
+@comdev-pmc = rw
 
 [/pmc/commons]
 @commons-pmc = rw
@@ -910,6 +919,9 @@ openejb-tck = r
 
 [/pmc/cxf]
 @cxf-pmc = rw
+
+[/pmc/directory]
+@directory-pmc = rw
 
 [/pmc/forrest]
 @forrest-pmc = rw
@@ -928,6 +940,9 @@ openejb-tck = r
 
 [/pmc/harmony]
 @attic-pmc = rw
+
+[/pmc/helix]
+@helix-pmc = rw
 
 [/pmc/hive]
 @hive-pmc = rw
@@ -966,6 +981,9 @@ openejb-tck = r
 [/pmc/juddi]
 @juddi-pmc = rw
 
+[/pmc/labs]
+@labs-pmc = rw
+
 [/pmc/libcloud]
 @libcloud-pmc = rw
 
@@ -987,6 +1005,9 @@ openejb-tck = r
 [/pmc/myfaces]
 @myfaces = rw
 
+[/pmc/ofbiz]
+@ofbiz-pmc = rw
+
 [/pmc/oodt]
 @oodt-pmc = rw
 
@@ -996,8 +1017,14 @@ openejb-tck = r
 [/pmc/pig]
 @pig-pmc = rw
 
+[/pmc/portals]
+@portals-pmc = rw
+
 [/pmc/rave]
 @rave = rw
+
+[/pmc/serf]
+@serf-pmc = rw
 
 [/pmc/shiro]
 @shiro-pmc = rw
@@ -1052,6 +1079,9 @@ openejb-tck = r
 
 [/pmc/wicket]
 @wicket = rw
+
+[/pmc/ws]
+@ws-pmc = rw
 
 [/pmc/xml]
 # @xml-pmc = rw
