@@ -35,7 +35,6 @@ class git_self_serve::mirror (
     user        => 'git',
     minute      => 50,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-    require     => Class['git_mirror_asf'],
   }
 
   cron { 'self-serve-github-update':
@@ -43,7 +42,6 @@ class git_self_serve::mirror (
     user        => 'git',
     minute      => 55,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-    require     => Class['git_mirror_asf'],
   }
 
 }

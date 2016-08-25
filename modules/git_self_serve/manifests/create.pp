@@ -18,7 +18,6 @@ class git_self_serve::create ( ) {
     user        => 'www-data',
     minute      => 45,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-    require     => Class['gitserver_asf'],
   }
 
 }
