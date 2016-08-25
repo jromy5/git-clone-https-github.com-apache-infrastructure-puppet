@@ -9,224 +9,224 @@ local hct = "<%= @hipchattoken %>"
  
 -- Get a list of PMCs the user is a part of
 function getPMCs(r, uid)
-		local groups = {}
-		local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b %s -LLL "(|(memberUid=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, aaa_base, uid, uid)
-		local ldapdata = io.popen(ldapquery)
-		local data = ldapdata:read("*a")
-		for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=pmc,ou=committees,ou=groups,dc=apache,dc=org") do
-				table.insert(groups, match)
-		end
-		return groups
+    local groups = {}
+    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b %s -LLL "(|(memberUid=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, aaa_base, uid, uid)
+    local ldapdata = io.popen(ldapquery)
+    local data = ldapdata:read("*a")
+    for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=pmc,ou=committees,ou=groups,dc=apache,dc=org") do
+        table.insert(groups, match)
+    end
+    return groups
 end
  
 -- Function for sending a hipchat message
-function hipchat(msg)
-		payload = {
-						room_id= "669587",
-						auth_token = hct,
-						from = "RepoReq",
-						message_format = 'html',
-						notify = '0',
-						color =  'green',
-						message = msg
-				}
-		out = {}
-		for k, v in pairs(payload) do
-				table.insert(out, k .. "=" .. r:escape(v))
-		end
-		rv, rv2 = http.request('https://api.hipchat.com/v1/rooms/message',table.concat(out, "&"))
+function hipchat(r, msg)
+    payload = {
+            room_id= "669587",
+            auth_token = hct,
+            from = "RepoReq",
+            message_format = 'html',
+            notify = '0',
+            color =  'green',
+            message = msg
+        }
+    out = {}
+    for k, v in pairs(payload) do
+        table.insert(out, k .. "=" .. r:escape(v))
+    end
+    rv, rv2 = http.request('https://api.hipchat.com/v1/rooms/message',table.concat(out, "&"))
 end
  
 function handle(r)
-		local post = r:parsebody()
-		local get = r:parseargs()
-		r.content_type = "application/json"
-		
-		-- call to fetch list of PMCs a user belongs to?
-		if get.action and get.action == 'pmcs' then
-				local pmcs = getPMCs(r, r.user or 'nobody')
-				r:puts(JSON.encode{
-						okay = true,
-						pmcs =pmcs
-				})
-				return apache2.OK
-		end
-		
-		-- call to create a repo?
-		if post.create and post.name and post.pmc and post.notify then
-				
-				-- Make sure this user can create this repo (is in the PMC)
-				local pmcs = getPMCs(r, r.user or 'nobody')
-				local found = false
-				for k, v in pairs(pmcs) do
-						if v == post.pmc then
-								found = true
-								break
-						end
-				end
-				if not found then
-						r:puts(JSON.encode{
-								okay = false,
-								err = "You are not a part of that specific PMC!"
-						})
-				else
-						-- Read json queue
-						local f = io.open("/var/www/git-setup/queue.json", "r")
-						local d = f:read("*a")
-						f:close()
-						json = {}
-						if #d > 2 then
-								json = JSON.decode(d)
-						end
-						
-						-- Make sure we have a proper notify list
-						post.notify = (post.notify and post.notify:match(".+@.+")) and post.notify or "commits@" .. post.pmc .. ".apache.org"
-						
-						-- Append new queue item
-						local rname = post.pmc
-						if #post.name > 1 and post.name ~= "-" then
-								-- format: pmc-$sub.git - lowercase only
-								rname = rname .. "-" .. post.name:gsub("[^-_0-9a-zA-Z]+", ""):lower() .. ".git"
-						else
-								rname = rname .. ".git"
-						end
-						
-						-- Construct queue object
-						local req = {
-								name = rname,
-								pmc = post.pmc,
-								description = (post.description or "Apache Foo"):gsub('"', "'"),
-								notify = post.notify,
-								timestamp = os.time(),
-								requester = r.user or 'nobody',
-								mirror = (post.mirror and #post.mirror > 0) and true or false,
-								github = (post.github and #post.github > 0) and true or false,
-								ghnotify = (post.ghnotify and post.ghnotify:match(".+@.+")) and post.ghnotify or post.notify
-						}
-						-- add to JSON
-						table.insert(json, req)
-						
-						-- re-write queue JSON
-						local f = io.open("/var/www/git-setup/queue.json", "w")
-						f:write(JSON.encode(json))
-						f:close()
-						
-						-- tell the client
-						r:puts(JSON.encode{
-								okay = true,
-								err = "Request submitted!"
-						})
-						
-						-- send message to hipchat
-						hipchat(("<b>New git repo request:</b> %s has requested %s, notifications to: %s. %s %s"):format(
-										r.user, rname, post.notify, req.mirror and "This will be mirrored on git.a.o." or "",
-										req.github and "This will have GitHub integrations enabled." or ""))
-				end
-				return apache2.OK
-		end
-		
-		-- queue list
-		if get.list then
-				-- Read json queue
-				local f = io.open("/var/www/git-setup/queue.json", "r")
-				local d = f:read("*a")
-				f:close()
-				r:puts(d)
-				return apache2.OK
-		end
-		
-		-- setup repo call from git-wip
-		if get.created and r.useragent_ip == '140.211.11.23' then
-				-- Read json queue
-				local f = io.open("/var/www/git-setup/queue.json", "r")
-				local d = f:read("*a")
-				f:close()
-				json = {}
-				if #d > 2 then
-						json = JSON.decode(d)
-				end
-				
-				-- Mark repos as created
-				for k, v in pairs(json) do
-						if v.name == get.created then
-								v.created = true
-						end
-				end
-				-- re-write the queue JSON
-				local f = io.open("/var/www/git-setup/queue.json", "w")
-				f:write(JSON.encode(json))
-				f:close()
-				
-				-- tell the client we did that...
-				r:puts(JSON.encode{okay = true, message = "event recorded!"})
-				
-				-- send message to hipchat
-				hipchat(("New git repo %s has been set up on git-wip at: <a href='https://git-wip-us.apache.org/repos/asf/%s'>https://git-wip-us.apache.org/repos/asf/%s</a>"):format(get.created, get.created, get.created))
-				
-				return apache2.OK
-		end
-		
-		-- mirror repo call from git.a.o
-		if get.mirrored and r.useragent_ip == '54.84.58.65' then
-				-- Read json queue
-				local f = io.open("/var/www/git-setup/queue.json", "r")
-				local d = f:read("*a")
-				f:close()
-				json = {}
-				if #d > 2 then
-						json = JSON.decode(d)
-				end
-				
-				-- Mark repos as mirrored
-				for k, v in pairs(json) do
-						if v.name == get.mirrored then
-								v.mirrored = true
-								v.mirrordate = os.time()
-						end
-				end
-				
-				-- re-write the queue JSON
-				local f = io.open("/var/www/git-setup/queue.json", "w")
-				f:write(JSON.encode(json))
-				f:close()
-				
-				-- send message to hipchat
-				hipchat(("New git repo %s has now been mirrored at <a href='https://git.apache.org/%s'>https://git.apache.org/%s</a>"):format(get.mirrored, get.mirrored, get.mirrored))
-				
-				-- tell the client
-				r:puts(JSON.encode{okay = true, message = "event recorded!"})
-				return apache2.OK
-		end
-		
-		 -- GH integration call from git.a.o
-		if get.githubbed and r.useragent_ip == '54.84.58.65' then
-				-- Read json queue
-				local f = io.open("/var/www/git-setup/queue.json", "r")
-				local d = f:read("*a")
-				f:close()
-				json = {}
-				if #d > 2 then
-						json = JSON.decode(d)
-				end
-				
-				-- Mark repos as mirrored
-				for k, v in pairs(json) do
-						if v.name == get.githubbed then
-								v.githubbed = true
-								v.githubdate = os.time()
-						end
-				end
-				
-				-- re-write the queue JSON
-				local f = io.open("/var/www/git-setup/queue.json", "w")
-				f:write(JSON.encode(json))
-				f:close()
-				
-				-- send message to hipchat
-				hipchat(("Git repo %s has now had web hooks set up on GitHub!"):format(get.githubbed))
-				
-				-- tell the client
-				r:puts(JSON.encode{okay = true, message = "event recorded!"})
-				return apache2.OK
-		end
+    local post = r:parsebody()
+    local get = r:parseargs()
+    r.content_type = "application/json"
+    
+    -- call to fetch list of PMCs a user belongs to?
+    if get.action and get.action == 'pmcs' then
+        local pmcs = getPMCs(r, r.user or 'nobody')
+        r:puts(JSON.encode{
+            okay = true,
+            pmcs =pmcs
+        })
+        return apache2.OK
+    end
+    
+    -- call to create a repo?
+    if post.create and post.name and post.pmc and post.notify then
+        
+        -- Make sure this user can create this repo (is in the PMC)
+        local pmcs = getPMCs(r, r.user or 'nobody')
+        local found = false
+        for k, v in pairs(pmcs) do
+            if v == post.pmc then
+                found = true
+                break
+            end
+        end
+        if not found then
+            r:puts(JSON.encode{
+                okay = false,
+                err = "You are not a part of that specific PMC!"
+            })
+        else
+            -- Read json queue
+            local f = io.open("/var/www/git-setup/queue.json", "r")
+            local d = f:read("*a")
+            f:close()
+            json = {}
+            if #d > 2 then
+                json = JSON.decode(d)
+            end
+            
+            -- Make sure we have a proper notify list
+            post.notify = (post.notify and post.notify:match(".+@.+")) and post.notify or "commits@" .. post.pmc .. ".apache.org"
+            
+            -- Append new queue item
+            local rname = post.pmc
+            if #post.name > 1 and post.name ~= "-" then
+                -- format: pmc-$sub.git - lowercase only
+                rname = rname .. "-" .. post.name:gsub("[^-_0-9a-zA-Z]+", ""):lower() .. ".git"
+            else
+                rname = rname .. ".git"
+            end
+            
+            -- Construct queue object
+            local req = {
+                name = rname,
+                pmc = post.pmc,
+                description = (post.description or "Apache Foo"):gsub('"', "'"),
+                notify = post.notify,
+                timestamp = os.time(),
+                requester = r.user or 'nobody',
+                mirror = (post.mirror and #post.mirror > 0) and true or false,
+                github = (post.github and #post.github > 0) and true or false,
+                ghnotify = (post.ghnotify and post.ghnotify:match(".+@.+")) and post.ghnotify or post.notify
+            }
+            -- add to JSON
+            table.insert(json, req)
+            
+            -- re-write queue JSON
+            local f = io.open("/var/www/git-setup/queue.json", "w")
+            f:write(JSON.encode(json))
+            f:close()
+            
+            -- tell the client
+            r:puts(JSON.encode{
+                okay = true,
+                err = "Request submitted!"
+            })
+            
+            -- send message to hipchat
+            hipchat(("<b>New git repo request:</b> %s has requested %s, notifications to: %s. %s %s"):format(
+                    r.user, rname, post.notify, req.mirror and "This will be mirrored on git.a.o." or "",
+                    req.github and "This will have GitHub integrations enabled." or ""))
+        end
+        return apache2.OK
+    end
+    
+    -- queue list
+    if get.list then
+        -- Read json queue
+        local f = io.open("/var/www/git-setup/queue.json", "r")
+        local d = f:read("*a")
+        f:close()
+        r:puts(d)
+        return apache2.OK
+    end
+    
+    -- setup repo call from git-wip
+    if get.created and r.useragent_ip == '140.211.11.23' then
+        -- Read json queue
+        local f = io.open("/var/www/git-setup/queue.json", "r")
+        local d = f:read("*a")
+        f:close()
+        json = {}
+        if #d > 2 then
+            json = JSON.decode(d)
+        end
+        
+        -- Mark repos as created
+        for k, v in pairs(json) do
+            if v.name == get.created then
+                v.created = true
+            end
+        end
+        -- re-write the queue JSON
+        local f = io.open("/var/www/git-setup/queue.json", "w")
+        f:write(JSON.encode(json))
+        f:close()
+        
+        -- tell the client we did that...
+        r:puts(JSON.encode{okay = true, message = "event recorded!"})
+        
+        -- send message to hipchat
+        hipchat(r, ("New git repo %s has been set up on git-wip at: <a href='https://git-wip-us.apache.org/repos/asf/%s'>https://git-wip-us.apache.org/repos/asf/%s</a>"):format(get.created, get.created, get.created))
+        
+        return apache2.OK
+    end
+    
+    -- mirror repo call from git.a.o
+    if get.mirrored and r.useragent_ip == '54.84.58.65' then
+        -- Read json queue
+        local f = io.open("/var/www/git-setup/queue.json", "r")
+        local d = f:read("*a")
+        f:close()
+        json = {}
+        if #d > 2 then
+            json = JSON.decode(d)
+        end
+        
+        -- Mark repos as mirrored
+        for k, v in pairs(json) do
+            if v.name == get.mirrored then
+                v.mirrored = true
+                v.mirrordate = os.time()
+            end
+        end
+        
+        -- re-write the queue JSON
+        local f = io.open("/var/www/git-setup/queue.json", "w")
+        f:write(JSON.encode(json))
+        f:close()
+        
+        -- send message to hipchat
+        hipchat(r, ("New git repo %s has now been mirrored at <a href='https://git.apache.org/%s'>https://git.apache.org/%s</a>"):format(get.mirrored, get.mirrored, get.mirrored))
+        
+        -- tell the client
+        r:puts(JSON.encode{okay = true, message = "event recorded!"})
+        return apache2.OK
+    end
+    
+     -- GH integration call from git.a.o
+    if get.githubbed and r.useragent_ip == '54.84.58.65' then
+        -- Read json queue
+        local f = io.open("/var/www/git-setup/queue.json", "r")
+        local d = f:read("*a")
+        f:close()
+        json = {}
+        if #d > 2 then
+            json = JSON.decode(d)
+        end
+        
+        -- Mark repos as mirrored
+        for k, v in pairs(json) do
+            if v.name == get.githubbed then
+                v.githubbed = true
+                v.githubdate = os.time()
+            end
+        end
+        
+        -- re-write the queue JSON
+        local f = io.open("/var/www/git-setup/queue.json", "w")
+        f:write(JSON.encode(json))
+        f:close()
+        
+        -- send message to hipchat
+        hipchat(r, ("Git repo %s has now had web hooks set up on GitHub!"):format(get.githubbed))
+        
+        -- tell the client
+        r:puts(JSON.encode{okay = true, message = "event recorded!"})
+        return apache2.OK
+    end
 end
