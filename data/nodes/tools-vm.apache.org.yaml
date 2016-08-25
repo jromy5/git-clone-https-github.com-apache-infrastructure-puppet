@@ -4,7 +4,7 @@ classes:
   - apache::mod::authnz_ldap
   - apache::mod::headers
   - elasticsearch
-  - git-self-serve::tools
+  - git_self_serve::tools
   - loggy
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
