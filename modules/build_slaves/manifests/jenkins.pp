@@ -14,8 +14,8 @@ class build_slaves::jenkins (
   $findbugs = ['findbugs-2.0.3'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
-  $maven_old = ['apache-maven-2.2.1','apache-maven-3.0.4','apache-maven-3.2.1'],
-  $maven = ['apache-maven-3.0.5', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'],
+  # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
+  $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'],
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-32-unlimited-security','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.6.0_45-64','jdk1.7.0_04','jdk1.7.0_25-32','jdk1.7.0_25-64','jdk1.7.0-32','jdk1.7.0_55','jdk1.7.0-64','jdk1.8.0'],
   $java_asfpackages = ['jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'ibm-java-x86_64-80'],
 ) {
@@ -263,13 +263,13 @@ class build_slaves::jenkins (
   }
 
   # maven old symlinks - populate array, make all symlinks, make latest symlink
-  build_slaves::symlink_maven_old    { $maven_old: }
+  # build_slaves::symlink_maven_old    { $maven_old: }
+  # maven symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_maven        { $maven: }
   file { '/home/jenkins/tools/maven/latest2':
     ensure => link,
-    target => '/usr/local/jenkins/maven/apache-maven-2.2.1',
+    target => '/usr/local/asfpackages/maven/apache-maven-2.2.1',
   }
-  # maven old symlinks - populate array, make all symlinks, make latest symlink
-  build_slaves::symlink_maven        { $maven: }
   file { '/home/jenkins/tools/maven/latest':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
