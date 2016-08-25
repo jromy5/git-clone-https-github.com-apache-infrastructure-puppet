@@ -1,4 +1,4 @@
-define git_self_serve::mirror ( 
+class git_self_serve::mirror (
 
   $nssbinddn = '',
   $nssbingpasswd = '',

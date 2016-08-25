@@ -1,4 +1,4 @@
-define git_self_serve::tools ( ) {
+class git_self_serve::tools ( ) {
 
   file {
     '/var/www/git-setup/':

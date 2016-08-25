@@ -1,4 +1,4 @@
-define git_self_serve::create ( ) {
+class git_self_serve::create ( ) {
 
   file { 
     '/usr/local/etc/git_self_serve':
