@@ -1,8 +1,5 @@
 class git_self_serve::mirror (
 
-  $nssbinddn,
-  $nssbingpasswd,
-  $hipchattoken,
   $github_token,
 
 ) {

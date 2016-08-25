@@ -1,4 +1,10 @@
-class git_self_serve::tools ( ) {
+class git_self_serve::tools (
+
+  $nssbinddn,
+  $nssbingpasswd,
+  $hipchattoken,
+
+) {
 
   file {
     '/var/www/git-setup/':
