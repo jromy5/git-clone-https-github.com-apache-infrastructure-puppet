@@ -4,6 +4,7 @@ classes:
   - apache::mod::geoip
   - datadog_agent::integrations::http_check
   - gitserver_asf
+  - git-self-serve::create
   - blocky
   - loggy
   - rootbin_asf

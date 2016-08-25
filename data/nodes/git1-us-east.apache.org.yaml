@@ -6,6 +6,7 @@ classes:
   - blocky
   - git_asf::git_daemon
   - git_mirror_asf
+  - git-self-serve::create
   - gitmirrorupdater
   - rootbin_asf
   - ssl::name::wildcard_apache_org
