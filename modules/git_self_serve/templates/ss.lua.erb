@@ -6,7 +6,7 @@ local aaa_binddn = "<%= @nssbinddn %>"
 local aaa_bindpw = "<%= @nssbindpasswd %>"
 local aaa_base = "dc=apache,dc=org"
 local hct = "<%= @hipchattoken %>"
- 
+
 -- Get a list of PMCs the user is a part of
 function getPMCs(r, uid)
     local groups = {}
@@ -18,7 +18,7 @@ function getPMCs(r, uid)
     end
     return groups
 end
- 
+
 -- Function for sending a hipchat message
 function hipchat(r, msg)
     payload = {
@@ -36,7 +36,7 @@ function hipchat(r, msg)
     end
     rv, rv2 = http.request('https://api.hipchat.com/v1/rooms/message',table.concat(out, "&"))
 end
- 
+
 function handle(r)
     local post = r:parsebody()
     local get = r:parseargs()
