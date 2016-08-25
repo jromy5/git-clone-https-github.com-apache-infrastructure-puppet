@@ -1,4 +1,4 @@
-define git-self-serve::mirror ( 
+define git_self_serve::mirror ( 
 
   $nssbinddn = '',
   $nssbingpasswd = '',
@@ -8,30 +8,30 @@ define git-self-serve::mirror (
 ) {
 
 	file {
-    '/usr/local/etc/git-self-serve':
+    '/usr/local/etc/git_self_serve':
       ensure => directory,
       mode   => '0755',
       owner  => 'root',
       group  => 'root';
-		'/usr/local/etc/git-self-serve/mirrorcron.py':
+		'/usr/local/etc/git_self_serve/mirrorcron.py':
 			mode   => '0755',
 			owner  => 'git',
-			group  => 'git'
-			source => "puppet:///modules/git-self-serve/mirrorcron.py";	
-		'/usr/local/etc/git-self-serve/githubcron.py':
+			group  => 'git',
+			source => "puppet:///modules/git_self_serve/mirrorcron.py";	
+		'/usr/local/etc/git_self_serve/githubcron.py':
 			mode   => '0755',
 			owner  => 'git',
-			group  => 'git'
-			source => "puppet:///modules/git-self-serve/githubcron.py";
-		'/usr/local/etc/git-self-serve/add-webhook.sh':
+			group  => 'git',
+			source => "puppet:///modules/git_self_serve/githubcron.py";
+		'/usr/local/etc/git_self_serve/add-webhook.sh':
 			mode   => '0755',
 			owner  => 'git',
-			group  => 'git'
-      content => template('git-self-serve/add-webhook.sh.erb');
+			group  => 'git',
+      content => template('git_self_serve/add-webhook.sh.erb');
 	}
 
   cron { 'self-serve-mirror':
-    command     => '/usr/local/etc/git-self-serve/mirrorcron.py',
+    command     => '/usr/local/etc/git_self_serve/mirrorcron.py',
     user        => 'git',
     minute      => 35,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
@@ -39,7 +39,7 @@ define git-self-serve::mirror (
   }
 
   cron { 'self-serve-github-update':
-    command     => '/usr/local/etc/git-self-serve/githubcron.py',
+    command     => '/usr/local/etc/git_self_serve/githubcron.py',
     user        => 'git',
     minute      => 40,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings

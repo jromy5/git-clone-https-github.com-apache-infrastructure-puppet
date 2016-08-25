@@ -1,4 +1,4 @@
-define git-self-serve::tools( ) {
+define git_self_serve::tools ( ) {
 
   file {
     '/var/www/git-setup/':
@@ -10,12 +10,12 @@ define git-self-serve::tools( ) {
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/git-self-serve/index.html";
+      source => "puppet:///modules/git_self_serve/index.html";
     '/var/www/git-setup/ss.lua':
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      content => template('git-self-server/ss.lua.erb');
+      content => template('git_self_serve/ss.lua.erb');
     '/var/www/git-setup/js':
       ensure => directory,
       mode   => '0755',
@@ -25,7 +25,7 @@ define git-self-serve::tools( ) {
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/git-self-serve/ss.js";
+      source => "puppet:///modules/git_self_serve/ss.js";
   }
 
 }
