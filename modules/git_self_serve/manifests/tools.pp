@@ -1,7 +1,7 @@
 class git_self_serve::tools (
 
   $nssbinddn,
-  $nssbingpasswd,
+  $nssbindpasswd,
   $hipchattoken,
 
 ) {
