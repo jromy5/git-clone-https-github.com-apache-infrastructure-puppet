@@ -30,14 +30,14 @@ class git_self_serve::mirror (
   cron { 'self-serve-mirror':
     command     => '/usr/local/etc/git_self_serve/mirrorcron.py',
     user        => 'git',
-    minute      => 05,
+    minute      => 15,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
   cron { 'self-serve-github-update':
     command     => '/usr/local/etc/git_self_serve/githubcron.py',
     user        => 'git',
-    minute      => 10,
+    minute      => 20,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
