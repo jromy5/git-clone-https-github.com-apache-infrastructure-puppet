@@ -16,7 +16,7 @@ class git_self_serve::create ( ) {
   cron { 'reporeq':
     command     => '/usr/local/etc/git_self_serve/repocron.py',
     user        => 'www-data',
-    minute      => 10,
+    minute      => 20,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
