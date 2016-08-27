@@ -38,6 +38,7 @@ class buildbot_slave (
     'python3-dev',
     'python3-markdown',
     'libpam0g-dev',
+    'junit4',
   ]
 
   # install gradle PPA and gradle 2.x
