@@ -80,7 +80,7 @@ if js:
             result = urllib.request.urlopen(request)
 
             # Inform infra@ and private@$pmc that the mirror has been set up
-            msg = MIMEText("New repository %s has now had GitHub integration enabled!\n\nWith regards,\nApache Infrastructure." % (reponame, item['requester']))
+            msg = MIMEText("New repository %s has now had GitHub integration enabled!\n\nWith regards,\nApache Infrastructure." % (reponame))
             msg['Subject'] = 'Github integration set up: %s' % reponame
             msg['From'] = "git@apache.org"
             msg['Reply-To'] = "infrastructure@apache.org"
