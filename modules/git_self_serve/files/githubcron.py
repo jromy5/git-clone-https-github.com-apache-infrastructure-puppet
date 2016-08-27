@@ -67,7 +67,7 @@ if js:
                 print("%s is there, adding web hooks" % reponame)
                 try:
                     xreponame = reponame.replace(".git", "") # Cut off the .git part, so GH will not bork
-                    inp = subprocess.check_output("/x1/git/bin/add-webhook.sh %s" % xreponame, shell = True).decode('ascii', 'replace')
+                    inp = subprocess.check_output("/usr/local/etc/git_self_serve/add-webhook.sh %s" % xreponame, shell = True).decode('ascii', 'replace')
                 except subprocess.CalledProcessError as err:
                     print("Borked: %s" % err.output)
                     continue
