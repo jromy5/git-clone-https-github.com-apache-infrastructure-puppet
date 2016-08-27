@@ -118,7 +118,7 @@ function handle(r)
             })
             
             -- send message to hipchat
-            hipchat(("<b>New git repo request:</b> %s has requested %s, notifications to: %s. %s %s"):format(
+            hipchat(r, ("<b>New git repo request:</b> %s has requested %s, notifications to: %s. %s %s"):format(
                     r.user, rname, post.notify, req.mirror and "This will be mirrored on git.a.o." or "",
                     req.github and "This will have GitHub integrations enabled." or ""))
         end
