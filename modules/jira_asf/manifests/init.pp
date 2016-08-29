@@ -48,7 +48,7 @@ class jira_asf (
   }
 
 # jira specific
-  $pgsql_connector          = "postgresql-${pgsql_connector_version}.jar" 
+  $pgsql_connector          = "postgresql-${pgsql_connector_version}.jar"
   $pgsql_connector_dest_dir = '/x1/jira/current/lib'
   $jira_build               = "atlassian-jira-${jira_version}-standalone"
   $tarball                  = "atlassian-jira-${jira_version}.tar.gz"
@@ -104,7 +104,7 @@ class jira_asf (
       creates => "${install_dir}/NOTICE",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  } -> 
+  } ->
   exec {
     'chown-jira-dirs':
       command => "/bin/chown -R ${username}:${username} ${install_dir}",
@@ -114,10 +114,10 @@ class jira_asf (
 
   file {
     $parent_dir:
-      ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755';
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
     $jira_home:
       ensure  => directory,
       owner   => 'jira',
@@ -148,8 +148,8 @@ class jira_asf (
       group   => 'jira',
       require => File[$jira_home];
     "${pgsql_connector_dest_dir}/${pgsql_connector}":
-      ensure  => present,
-      source  => "puppet:///modules/jira_asf/${pgsql_connector}";
+      ensure => present,
+      source => "puppet:///modules/jira_asf/${pgsql_connector}";
     # "/etc/init.d/${service_name}":
       # mode    => '0755',
       # owner   => 'root',
