@@ -94,7 +94,7 @@ class zmanda_asf::client (
     }
   }
 
-  service {"xinetd":
+  service {'xinetd':
     ensure  => stopped,
   }
 
