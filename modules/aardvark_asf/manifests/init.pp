@@ -19,7 +19,7 @@ class aardvark_asf (
   $aardvark                 = '/usr/local/etc/aardvark'
   $aardvark_filter          = "${aardvark}/filter.lua"
 
-  exec { "check_aardvark":
+  exec { 'check_aardvark':
     command => "/bin/mkdir -p ${aardvark}",
     onlyif  => "/usr/bin/test ! -e ${aardvark}",
     before  => File[$aardvark_filter],
@@ -27,10 +27,10 @@ class aardvark_asf (
 
   file {
     $aardvark:
-      ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755';
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
     $aardvark_filter:
       ensure  => present,
       owner   => 'root',
