@@ -1,6 +1,7 @@
+# git self serve create class.
 class git_self_serve::create ( ) {
 
-  file { 
+  file {
     '/usr/local/etc/git_self_serve':
       ensure => directory,
       mode   => '0755',
@@ -10,8 +11,8 @@ class git_self_serve::create ( ) {
       mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data',
-      source => "puppet:///modules/git_self_serve/repocron.py";	
-	}
+      source => 'puppet:///modules/git_self_serve/repocron.py';
+  }
 
   cron { 'reporeq':
     command     => '/usr/local/etc/git_self_serve/repocron.py',

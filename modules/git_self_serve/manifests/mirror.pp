@@ -1,31 +1,32 @@
+# git self-serve mirror class
 class git_self_serve::mirror (
 
   $github_token,
 
 ) {
 
-	file {
+  file {
     '/usr/local/etc/git_self_serve':
       ensure => directory,
       mode   => '0755',
       owner  => 'root',
       group  => 'root';
-		'/usr/local/etc/git_self_serve/mirrorcron.py':
-			mode   => '0755',
-			owner  => 'git',
-			group  => 'git',
-			source => "puppet:///modules/git_self_serve/mirrorcron.py";	
-		'/usr/local/etc/git_self_serve/githubcron.py':
-			mode   => '0755',
-			owner  => 'git',
-			group  => 'git',
-			source => "puppet:///modules/git_self_serve/githubcron.py";
-		'/usr/local/etc/git_self_serve/add-webhook.sh':
-			mode   => '0755',
-			owner  => 'git',
-			group  => 'git',
+    '/usr/local/etc/git_self_serve/mirrorcron.py':
+      mode   => '0755',
+      owner  => 'git',
+      group  => 'git',
+      source => 'puppet:///modules/git_self_serve/mirrorcron.py';
+    '/usr/local/etc/git_self_serve/githubcron.py':
+      mode   => '0755',
+      owner  => 'git',
+      group  => 'git',
+      source => 'puppet:///modules/git_self_serve/githubcron.py';
+    '/usr/local/etc/git_self_serve/add-webhook.sh':
+      mode    => '0755',
+      owner   => 'git',
+      group   => 'git',
       content => template('git_self_serve/add-webhook.sh.erb');
-	}
+  }
 
   cron { 'self-serve-mirror':
     command     => '/usr/local/etc/git_self_serve/mirrorcron.py',

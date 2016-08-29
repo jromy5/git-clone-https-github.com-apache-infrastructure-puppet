@@ -1,3 +1,4 @@
+# class git self serve for tools.
 class git_self_serve::tools (
 
   $nssbinddn,
@@ -16,11 +17,11 @@ class git_self_serve::tools (
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/git_self_serve/index.html";
+      source => 'puppet:///modules/git_self_serve/index.html';
     '/var/www/git-setup/ss.lua':
-      mode   => '0755',
-      owner  => 'root',
-      group  => 'root',
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
       content => template('git_self_serve/ss.lua.erb');
     '/var/www/git-setup/js':
       ensure => directory,
@@ -31,7 +32,7 @@ class git_self_serve::tools (
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/git_self_serve/ss.js";
+      source => 'puppet:///modules/git_self_serve/ss.js';
   }
 
 }
