@@ -2,6 +2,7 @@
 
 include apt
 
+# jenkins class for the build slaves.
 class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_password    = '',
@@ -31,54 +32,63 @@ class build_slaves::jenkins (
       group  => 'jenkins',
     }
   }
+  #define ant old symlinking
   define build_slaves::symlink_ant_old ($ant_old_version = $title) {
     file {"/home/jenkins/tools/ant/${ant_old_version}":
       ensure => link,
       target => "/usr/local/jenkins/ant/${ant_old_version}",
     }
   }
+  #define ant symlinking
   define build_slaves::symlink_ant ($ant_version = $title) {
     file {"/home/jenkins/tools/ant/${ant_version}":
       ensure => link,
       target => "/usr/local/asfpackages/ant/${ant_version}",
     }
   }
+  #define findbugs symlinking
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
     file {"/home/jenkins/tools/findbugs/${findbugs_version}":
       ensure => link,
       target => "/usr/local/jenkins/findbugs/${findbugs_version}",
     }
   }
+  #define forrest symlinking
   define build_slaves::symlink_forrest ($forrest_version = $title) {
     file {"/home/jenkins/tools/forrest/${forrest_version}":
       ensure => link,
       target => "/usr/local/jenkins/forrest/${forrest_version}",
     }
   }
+  #define jiracli symlinking
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
     file {"/home/jenkins/tools/jiracli/${jiracli_version}":
       ensure => link,
       target => "/usr/local/jenkins/jiracli/${jiracli_version}",
     }
   }
+  #define maven old symlinking (deprecated, remove soon)
   define build_slaves::symlink_maven_old ($maven_old_version = $title) {
     file {"/home/jenkins/tools/maven/${maven_old_version}":
       ensure => link,
       target => "/usr/local/jenkins/maven/${maven_old_version}",
     }
   }
+  #define maven symlinking (installs to /usr/local/asfpackages)
   define build_slaves::symlink_maven ($maven_version = $title) {
     file {"/home/jenkins/tools/maven/${maven_version}":
       ensure => link,
       target => "/usr/local/asfpackages/maven/${maven_version}",
     }
   }
+  #define java symlinking
   define build_slaves::symlink_jenkins ($javaj = $title) {
     file {"/home/jenkins/tools/java/${javaj}":
       ensure => link,
       target => "/usr/local/jenkins/java/${javaj}",
     }
   }
+  #define java symlinking
   define build_slaves::symlink_asfpackages ($javaa = $title) {
     file {"/home/jenkins/tools/java/${javaa}":
       ensure => link,
@@ -212,17 +222,17 @@ class build_slaves::jenkins (
 
   # populate /home/jenkins/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
-  file {"/usr/local/jenkins/jiracli/":
-    ensure => directory,
-    owner  => 'jenkins',
-    group  => 'jenkins',
+  file {'/usr/local/jenkins/jiracli/':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
     require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
-  file {"/usr/local/jenkins/forrest/":
-    ensure => directory,
-    owner  => 'jenkins',
-    group  => 'jenkins',
+  file {'/usr/local/jenkins/forrest/':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
     require => [ User['jenkins'], Package['asf-build-apache-forrest-0.9'] ],
     recurse => true,
   }
