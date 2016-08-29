@@ -11,7 +11,7 @@ class postgresql_asf::backup (
   $group       = 'postgres',
 ) {
 
-  exec {"check_pgdumproot":
+  exec {'check_pgdumproot':
     command => "/bin/mkdir -p ${dumproot}",
     onlyif  => "/usr/bin/test ! -e ${dumproot}",
   }
