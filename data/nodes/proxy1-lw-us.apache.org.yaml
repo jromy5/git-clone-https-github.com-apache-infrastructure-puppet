@@ -4,6 +4,7 @@ classes:
   - apache
   - apache::mod::headers
   - apache::mod::proxy
+  - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
@@ -89,7 +90,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine on
 
       # Proxy requests
-      ProxyPass /jira http://10.10.3.161:8080/jira   retry=0 timeout=1800 max=400
+      ProxyPass /jira ajp://10.10.3.161:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
       LuaScope thread
