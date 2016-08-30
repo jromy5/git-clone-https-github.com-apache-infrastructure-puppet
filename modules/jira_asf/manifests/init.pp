@@ -59,6 +59,7 @@ class jira_asf (
   $jira_home                = "${parent_dir}/jira-data"
   $current_dir              = "${parent_dir}/current"
   $dbconfig                 = "${jira_home}/dbconfig.xml"
+  $serverxml                = "${current_dir}/conf/server.xml"
   $jira_properties          = "${current_dir}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 
   user {
@@ -137,6 +138,12 @@ class jira_asf (
       require => File[$install_dir];
     $dbconfig:
       content => template ('jira_asf/dbconfig.xml.erb'),
+      mode    => '0640',
+      owner   => 'jira',
+      group   => 'jira',
+      require => File[$jira_home];
+    $serverxml:
+      content => template ('jira_asf/server.xml.erb'),
       mode    => '0640',
       owner   => 'jira',
       group   => 'jira',
