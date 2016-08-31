@@ -97,7 +97,6 @@ deltacloud-pmc={ldap:cn=deltacloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 deltaspike={reuse:asf-authorization:deltaspike}
 deltaspike-pmc={ldap:cn=deltaspike,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # depot={reuse:asf-authorization:# depot}
-derby={reuse:asf-authorization:derby}
 devicemap={reuse:asf-authorization:devicemap}
 devicemap-pmc={ldap:cn=devicemap,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 directory={reuse:asf-authorization:directory}

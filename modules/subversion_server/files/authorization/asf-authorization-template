@@ -165,7 +165,7 @@ deltacloud-pmc={reuse:pit-authorization:deltacloud-pmc}
 deltaspike={ldap:cn=deltaspike,ou=groups,dc=apache,dc=org}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
-derby=abrown,andreask,bakksjo,bandaram,bernt,bpendleton,chaase3,dag,davidvc,djd,dyre,fernanda,fuzzylogic,johnemb,halleypo,jboynes,jorgenlo,jta,kahatlen,kmarsden,kristwaa,mamta,mikem,myrnavl,ole,oysteing,rhillegas,scotsmatrix,suresht,thomanie,tmnk,vnarayanan
+db-derby={ldap:cn=db-derby,ou=auth,ou=groups,dc=apache,dc=org} 
 devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
 devicemap-pmc={reuse:pit-authorization:devicemap-pmc}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
@@ -795,7 +795,7 @@ ea = rw
 @db-ddlutils = rw
 
 [/db/derby]
-@derby = rw
+@db-derby = rw
 
 [/db/jdo]
 @db = rw
