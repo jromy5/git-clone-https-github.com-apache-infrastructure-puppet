@@ -11,6 +11,8 @@ jira_asf::server_port: '8008'
 jira_asf::connector_port: '8888'
 jira_asf::context_path: '/jira'
 jira_asf::docroot: '/var/www'
+jira_asf::jvm_min_size: '6144m'
+jira_asf::jvm_max_size: '6144m'
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true

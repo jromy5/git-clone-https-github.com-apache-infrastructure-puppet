@@ -21,8 +21,8 @@ class jira_asf (
   $context_path                   = '',
   $docroot                        = '',
   $server_alias                   = '',
-  $heap_min_size                  = '',
-  $heap_max_size                  = '',
+  $jvm_min_size                   = '',
+  $jvm_max_size                   = '',
   # Below setting replaces PermGen, uses native memory for class metadata.
   # If not set resizes according to available native memory.
   $maxmetaspacesize               = '',
@@ -60,6 +60,7 @@ class jira_asf (
   $current_dir              = "${parent_dir}/current"
   $dbconfig                 = "${jira_home}/dbconfig.xml"
   $serverxml                = "${current_dir}/conf/server.xml"
+  $setenv                   = "${current_dir}/bin/setenv.sh"
   $jira_properties          = "${current_dir}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 
   user {
@@ -144,6 +145,12 @@ class jira_asf (
       require => File[$jira_home];
     $serverxml:
       content => template ('jira_asf/server.xml.erb'),
+      mode    => '0640',
+      owner   => 'jira',
+      group   => 'jira',
+      require => File[$jira_home];
+    $setenv:
+      content => template ('jira_asf/setenv.sh.erb'),
       mode    => '0640',
       owner   => 'jira',
       group   => 'jira',
