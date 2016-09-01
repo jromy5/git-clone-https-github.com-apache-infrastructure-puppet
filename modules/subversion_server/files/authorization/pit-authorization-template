@@ -1058,6 +1058,9 @@ openejb-tck = r
 [/pmc/thrift]
 @thrift-pmc = rw
 
+[/pmc/tinkerpop]
+@tinkerpop-pmc = rw
+
 [/pmc/tomcat]
 @tomcat-pmc = rw
 
