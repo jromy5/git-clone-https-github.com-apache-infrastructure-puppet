@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::cpan
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave4_ubuntu'
@@ -28,6 +29,14 @@ buildbot_slave::required_packages:
   - 'libxmu-headers'
   - 'libxpm-dev'
   - 'freeglut3-dev'
+  - 'libssl-dev'
+
+buildbot_slave::cpan::modules: 
+  - 'Archive::Zip'
+  - 'LWP::UserAgent'
+  - 'LWP::Protocol'
+  - 'XML::Parser'
+  - 'LWP::Protocol::https'
 
 python::python_pips:
   mkdocs:

@@ -26,6 +26,11 @@ mod 'concat-native',
   :tag => '1.4.0'
 
 
+mod 'cpan',
+  :git => 'https://github.com/meltwater/puppet-cpan',
+  :tag => 'v2.0.0'
+
+
 mod 'datacat',
   :git => 'https://github.com/richardc/puppet-datacat',
   :tag => '0.6.2'
