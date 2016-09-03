@@ -2,9 +2,9 @@
 
 include cpan
 
-# jenkins class for the build slaves.
+# buildbot cpan  class for the build slaves.
 class buildbot_slave::cpan (
-  
+
   $cpan_modules,
 
 ) {
