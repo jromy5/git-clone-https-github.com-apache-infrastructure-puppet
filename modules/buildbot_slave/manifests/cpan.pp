@@ -5,7 +5,7 @@ include cpan
 # jenkins class for the build slaves.
 class buildbot_slave::cpan (
   
-  $modules,
+  $cpan_modules,
 
 ) {
 
@@ -18,7 +18,7 @@ class buildbot_slave::cpan (
     }
   }
 
-  buildbot_slave::install_modules   { $modules: }
+  buildbot_slave::install_modules   { $cpan_modules: }
 
 
 }
