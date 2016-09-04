@@ -8,8 +8,8 @@
   $src_dir       = '.',
   # $build_dir: Default is 'build' and appends to $src_dir
   $build_dir     = 'build',
-  # $build_version: Whatever version the project is building, default trunk.
-  $build_version = 'TRUNK',
+  # $build_version: Whatever version of the RAT tool we are using.
+  $build_version = '0.9-SNAPSHOT',
   # $report_file: the xml output of the rat report (to be uploaded to master) : default 'rat-output.xml' 
   $report_file   = 'rat-output.xml',
   # $rat_excludes: A file in the source checkout that contains a list of patterns to exclude from the RAT check.
