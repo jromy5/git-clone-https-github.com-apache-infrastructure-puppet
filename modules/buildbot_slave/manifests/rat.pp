@@ -20,14 +20,22 @@
 require stdlib
 require buildbot_slave
 
-  file { '/home/buildslave/slave/rat-buildfiles/rat.xml':
+  file {
+    '/home/buildslave/slave/rat-buildfiles/rat.xml':
     ensure  => present,
     path    => '/home/buildslave/slave/rat-buildfiles/rat.xml',
     owner   => 'buildbot_slave::username',
     group   => 'buildbot_slave::groupname',
     mode    => '0640',
-    content => template('buildbot_slave/rat.xml.erb')
-    require => [Package['ant'],File['/home/buildslave/slave/rat-buildfiles'],Group['buildbot_slave::groupname'];
+    content => template('buildbot_slave/rat.xml.erb'),
+    require => [Package['ant'],File['/home/buildslave/slave/rat-buildfiles'],Group['buildbot_slave::groupname']];
+
+    '/home/buildslave/slave/rat-buildfiles':
+    ensure  => 'directory',
+    owner   => 'buildbot_slave::username',
+    group   => 'buildbot_slave::groupname',
+    mode    => '0755',
+    require => [Group['buildbot_slave::groupname']];
   }
 
 }
