@@ -24,18 +24,18 @@ require buildbot_slave
     '/home/buildslave/slave/rat-buildfiles/rat.xml':
     ensure  => present,
     path    => '/home/buildslave/slave/rat-buildfiles/rat.xml',
-    owner   => $username,
-    group   => $groupname,
+    owner   => $buildbot_slave::username,
+    group   => $buildbot_slave::groupname,
     mode    => '0640',
     content => template('buildbot_slave/rat.xml.erb'),
-    require => [Package['ant'],File['/home/buildslave/slave/rat-buildfiles'],Group[$groupname]];
+    require => [Package['ant'],File['/home/buildslave/slave/rat-buildfiles'],Group[$buildbot_slave::groupname]];
 
     '/home/buildslave/slave/rat-buildfiles':
     ensure  => 'directory',
     owner   => $username,
     group   => $groupname,
     mode    => '0755',
-    require => [Group[$groupname]];
+    require => [Group[$buildbot_slave::groupname]];
   }
 
 }
