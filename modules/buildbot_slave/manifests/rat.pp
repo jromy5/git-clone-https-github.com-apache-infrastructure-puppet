@@ -26,7 +26,7 @@ require buildbot_slave
   $download_dir       = '/tmp'
   $downloaded_tarball = "${download_dir}/${tarball}"
   $download_url       = "http://apache.org/dist/creadur/${rat_build}/${tarball}"
-  $install_dir        = '/home/buildslave'
+  $install_dir        = '/home/buildslave/'
 
   file {
     '/home/buildslave/slave/rat-buildfiles/rat.xml':
