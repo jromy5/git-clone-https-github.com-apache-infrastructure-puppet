@@ -45,12 +45,6 @@ require buildbot_slave
     mode    => '0755',
     require => [Group[$buildbot_slave::groupname]];
 
-    $install_dir:
-    ensure  => 'directory',
-    owner   => $buildbot_slave::username,
-    group   => $buildbot_slave::groupname,
-    mode    => '0755',
-    require => [Group[$buildbot_slave::groupname]];
   }
 
 # download RAT
@@ -74,7 +68,8 @@ require buildbot_slave
       user    => 'root',
       creates => "${install_dir}/NOTICE",
       timeout => 1200,
-      require => [File[$downloaded_tarball],File[$install_dir]],
+      require => [File[$downloaded_tarball]],
+      onlyif  => "/usr/bin/test -d ${install_dir}",
   }
 
 }
