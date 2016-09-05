@@ -42,7 +42,6 @@ buildbot_slave::cpan::cpan_modules:
 buildbot_slave::rat::project_name: 'OpenOffice'
 buildbot_slave::rat::src_dir: 'openoffice-nightly-rat'
 buildbot_slave::rat::build_dir: 'build'
-buildbot_slave::rat::build_version: '0.9-SNAPSHOT'
 buildbot_slave::rat::report_file: 'rat-output-xml'
 buildbot_slave::rat::rat_excludes: 'main/rat-excludes'
 
