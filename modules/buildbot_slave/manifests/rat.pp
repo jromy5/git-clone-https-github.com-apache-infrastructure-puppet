@@ -44,6 +44,13 @@ require buildbot_slave
     group   => $buildbot_slave::groupname,
     mode    => '0755',
     require => [Group[$buildbot_slave::groupname]];
+
+    $install_dir:
+    ensure  => 'directory',
+    owner   => $buildbot_slave::username,
+    group   => $buildbot_slave::groupname,
+    mode    => '0755',
+    require => [Group[$buildbot_slave::groupname]];
   }
 
 # download RAT
