@@ -63,7 +63,7 @@ require buildbot_slave
 # extract the download and move it
   exec {
     'extract-rat':
-      command => "/bin/tar -xvzf ${tarball} && mv ${rat_build}.jar ${install_dir}",
+      command => "/bin/tar -xvzf ${tarball} && mv ${rat_build}/${rat_build}.jar ${install_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/${rat_build}.jar",
