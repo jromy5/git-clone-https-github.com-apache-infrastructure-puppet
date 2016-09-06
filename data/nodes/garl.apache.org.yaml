@@ -7,15 +7,15 @@ classes:
 base::basepackages:
   - 'bridge-utils'
 
-datadog_agent::integrations::mysql::host: "%{::ipaddress_em1}"
+datadog_agent::integrations::mysql::host: "%{::ipaddress_cloudbr0}"
 datadog_agent::integrations::mysql::user: 'datadog'
 
 mysql::server::override_options:
   mysqld:
     ft_min_word_len: 2
-    bind-address: "%{::ipaddress_em1}"
+    bind-address: "%{::ipaddress_cloudbr0}"
     server-id: 1
-    binlog-format: 'mixed'
+    binlog-format: 'ROW'
     log_bin: '/var/log/mysql/mysql-bin.log'
     innodb_flush_log_at_trx_commit: '1'
     sync_binlog: '1'
@@ -24,5 +24,8 @@ mysql::server::override_options:
     character-set-server: 'utf8'
     max_allowed_packet: '64M'
     max_connections: '4096'
+    innodb_rollback_on_timeout: 1
+    innodb_lock_wait_timeout: 600
+
   mysqldump:
     max_allowed_packet: '64M'
