@@ -71,7 +71,7 @@ echo "$GIT_DIR: Mirror created, doing the initial svn sync..."
 /x1/git/bin/update-mirror.sh $GIT_DIR
 
 echo
-echo "$GIT_DIR: Mirror synhronized, updating http://git.apache.org/"
+echo "$GIT_DIR: Mirror synchronized, updating http://git.apache.org/"
 /x1/git/bin/update-index.sh
 
 echo

@@ -53,7 +53,7 @@ touch "$GIT_DIR/git-daemon-export-ok"
 git update-server-info
 
 echo
-echo "$GIT_DIR: Mirror synhronized, updating http://git.apache.org/"
+echo "$GIT_DIR: Mirror synchronized, updating http://git.apache.org/"
 /x1/git/bin/update-index.sh
 
 echo
