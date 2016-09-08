@@ -21,7 +21,7 @@
     Check over Apache <%= @project_name %> source files for license headers.
   </description>
 
-  <property name="src-dir" location="<%= @src_dir %>/<%= @build_dir %>"/>
+  <property name="src-dir" location="../<%= @src_dir %>/<%= @build_dir %>"/>
   <property name="version" value="<%= @build_version %>"/>
   <target name="buildsources" depends="-taskdef"
     description="runs the tasks over <%= @project_name %> tree.">
