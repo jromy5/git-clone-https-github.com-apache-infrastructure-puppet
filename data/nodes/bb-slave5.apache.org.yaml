@@ -6,8 +6,29 @@ classes:
 buildbot_slave::slave_name: 'bb_slave5_ubuntu'
 buildbot_slave::required_packages:
   - 'openjdk-7-jdk'
-
-# mkdocs needed for eagle docs build
+  - 'libcups2-dev'
+  - 'rpm'
+  - 'pkg-config'
+  - 'libfreetype6-dev'
+  - 'libfontconfig1-dev'
+  - 'libxrandr-dev'
+  - 'bison'
+  - 'flex'
+  - 'libgconf2-dev'
+  - 'libgnomevfs2-dev'
+  - 'libgtk2.0-dev'
+  - 'libhamcrest1.2-java'
+  - 'libdbus-glib-1-dev'
+  - 'libarchive-zip-perl'
+  - 'libidl-dev'
+  - 'liborbit2-dev'
+  - 'orbit2'
+  - 'libxaw7-dev'
+  - 'libxmu-dev'
+  - 'libxmu-headers'
+  - 'libxpm-dev'
+  - 'freeglut3-dev'
+  - 'libssl-dev'
 
 python::python_pips:
   mkdocs:
