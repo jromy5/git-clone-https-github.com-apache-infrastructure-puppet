@@ -31,6 +31,7 @@ buildbot_slave::required_packages:
   - 'libxpm-dev'
   - 'freeglut3-dev'
   - 'libssl-dev'
+  - 'gperf'
 
 buildbot_slave::cpan::cpan_modules: 
   - 'Archive::Zip'

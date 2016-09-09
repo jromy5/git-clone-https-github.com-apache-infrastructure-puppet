@@ -29,6 +29,14 @@ buildbot_slave::required_packages:
   - 'libxpm-dev'
   - 'freeglut3-dev'
   - 'libssl-dev'
+  - 'gperf'
+
+buildbot_slave::cpan::cpan_modules:
+  - 'Archive::Zip'
+  - 'LWP::UserAgent'
+  - 'LWP::Protocol'
+  - 'XML::Parser'
+  - 'LWP::Protocol::https'
 
 python::python_pips:
   mkdocs:
