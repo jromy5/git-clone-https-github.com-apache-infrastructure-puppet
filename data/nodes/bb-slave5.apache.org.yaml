@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::cpan
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave5_ubuntu'
