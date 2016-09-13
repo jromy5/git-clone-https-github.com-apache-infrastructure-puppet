@@ -18,4 +18,4 @@ base::basepackages:
   - mono-mcs
   - g++
   - mailutils
-  - liexpat1-dev
+  - libxpat1-dev
