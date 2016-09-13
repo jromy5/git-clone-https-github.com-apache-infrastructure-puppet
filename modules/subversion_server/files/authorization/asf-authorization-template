@@ -137,8 +137,6 @@ commons={ldap:cn=commons,ou=groups,dc=apache,dc=org}
 commons-pmc={reuse:pit-authorization:commons-pmc}
 # Only used for http://people.apache.org/phonebook.html?podling=commonsrdf
 commonsrdf=lewismc,johndament,ggregory,wikier,stain,enridaga,britter
-continuum={ldap:cn=continuum,ou=groups,dc=apache,dc=org}
-continuum-pmc={reuse:pit-authorization:continuum-pmc}
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
@@ -455,8 +453,6 @@ trafficserver-pmc={reuse:pit-authorization:trafficserver-pmc}
 # trafficserver=akundu,andrewhsu,balajd,bcall,dianes,dima,ericb,georgep,jim,jplevyak,manjesh,mlibbey,mturk,pquerna,rayray,sjiang,vmamidi,zwoop
 turbine={ldap:cn=turbine,ou=groups,dc=apache,dc=org}
 turbine-pmc={reuse:pit-authorization:turbine-pmc}
-tuscany={ldap:cn=tuscany,ou=groups,dc=apache,dc=org}
-tuscany-pmc={reuse:pit-authorization:tuscany-pmc}
 twill={ldap:cn=twill,ou=groups,dc=apache,dc=org}
 twill-pmc={reuse:pit-authorization:twill-pmc}
 uima={ldap:cn=uima,ou=groups,dc=apache,dc=org}
@@ -1788,7 +1784,7 @@ svn-role = rw
 @attic-pmc = rw
 
 [/tuscany/collaboration]
-@committers  = rw
+@attic-pmc  = rw
 
 [/twill]
 @twill = rw
