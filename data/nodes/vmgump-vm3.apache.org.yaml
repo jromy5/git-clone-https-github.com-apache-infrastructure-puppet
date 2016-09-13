@@ -11,7 +11,6 @@ base::basepackages:
   - nant
   - autoconf
   - automake
-  - unzip
   - libtool
   - mysql-server
   - mysql-client
