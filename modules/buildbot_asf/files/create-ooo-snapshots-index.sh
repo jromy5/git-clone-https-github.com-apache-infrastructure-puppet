@@ -14,7 +14,7 @@ echo '<div id="contenta">
 
   <h2>Build Analysis</h2>
     <p  id="rat"> <a href="https://ci.apache.org/projects/openoffice/rat-output.html" target="_blank">RAT Report</a> on the trunk build.</p>
-    <p  id="rat"> <a href="https://ci.apache.org/projects/openoffice/AOO410/rat-output.html" target="_blank">RAT Report</a> on the AOO410 branch build.</p>
+    <p  id="rat"> <a href="https://ci.apache.org/projects/openoffice/AOO413/rat-output.html" target="_blank">RAT Report</a> on the AOO413 branch build.</p>
   <hr />
 
   <h2>Install Packages / Buildbot Logs</h2>
