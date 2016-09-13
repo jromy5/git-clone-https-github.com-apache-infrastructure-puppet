@@ -1,0 +1,22 @@
+---
+classes:
+  - default_pvm_asf
+  - apache
+
+base::basepackages: 
+  - cvs
+  - mercurial
+  - bzr
+  - darcs
+  - nant
+  - autoconf
+  - automake
+  - unzip
+  - libtool
+  - mysql-server
+  - mysql-client
+  - python-mysqldb
+  - mono-mcs
+  - g++
+  - mailutils
+  - liexpat1-dev
