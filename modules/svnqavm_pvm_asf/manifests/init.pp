@@ -16,7 +16,7 @@ class svnqavm_pvm_asf (
 
   user { 'svnsvn':
     ensure     => present,
-    name       => 'svn_role',
+    name       => 'svnsvn',
     comment    => 'svn role account',
     home       => '/home/svnsvn',
     managehome => true,
@@ -25,7 +25,7 @@ class svnqavm_pvm_asf (
 
   user { 'wayita':
     ensure     => present,
-    name       => 'wayita_role',
+    name       => 'wayita',
     comment    => 'wayita role account',
     home       => '/home/wayita',
     managehome => true,
