@@ -1,0 +1,64 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - blocky
+  - loggy
+  - oraclejava::install
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+base::basepackages:
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  sparql:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'www.sparql.org'
+    serveralias: 'sparql.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'sparql.org.access.log'
+    error_log_file: 'sparql.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:3030/ max=4
+      ProxyPassReverse / http://127.0.0.1:3030/
+      ProxyPreserveHost On
+      RequestHeader set X-Forwarded-Proto http
+
