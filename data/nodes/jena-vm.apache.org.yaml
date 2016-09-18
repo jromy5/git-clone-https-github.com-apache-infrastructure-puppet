@@ -47,13 +47,23 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
-  sparql:
+  jena-vm:
     vhost_name: '*'
     ensure: 'present'
     port: 80
     servername: 'jena-vm.apache.org'
     serveraliases:
-      - 'sparql.org'
+      - 'jena-vm'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'jena-vm.apache.org.access.log'
+    error_log_file: 'jena-vm.apache.org.error.log'
+  sparql:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'sparql.org'
+    serveraliases:
       - 'wwww.sparql.org'
       - 'sparql.net'
       - 'wwww.sparql.net'
