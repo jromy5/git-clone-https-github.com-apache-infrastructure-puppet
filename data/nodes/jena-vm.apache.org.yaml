@@ -51,9 +51,12 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 80
-    servername: 'www.sparql.org'
+    servername: 'jena-vm.apache.org'
     serveraliases:
       - 'sparql.org'
+      - 'wwww.sparql.org'
+      - 'sparql.net'
+      - 'wwww.sparql.net'
     serveradmin: 'infrastructure@apache.org'
     docroot: '/var/www/html'
     access_log_file: 'sparql.org.access.log'
