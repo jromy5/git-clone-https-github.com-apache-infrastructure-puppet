@@ -126,6 +126,14 @@ class jira_asf (
       group   => 'jira',
       mode    => '0755',
       require => File[$install_dir];
+    "$jira_home/logos":
+      ensure  => directory,
+      owner   => 'jira',
+      group   => 'jira',
+      mode    => '0755',
+      source  => 'puppet:///modules/jira_asf/logos',
+      recurse => true,
+      require => File[$jira_home];
     $install_dir:
       ensure  => directory,
       owner   => 'root',
