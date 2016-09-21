@@ -140,6 +140,8 @@ httpcomponents={reuse:asf-authorization:httpcomponents}
 httpcomponents-pmc={ldap:cn=httpcomponents,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 httpd={reuse:asf-authorization:httpd}
 httpd-pmc={ldap:cn=httpd,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# non PMC members invited to security@httpd.a.o
+httpd-security-extra=jchampion
 ignite={reuse:asf-authorization:ignite}
 ignite-pmc={ldap:cn=ignite,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # imperius={reuse:asf-authorization:# imperius}
@@ -944,6 +946,10 @@ openejb-tck = r
 
 [/pmc/httpd]
 @httpd-pmc = rw
+
+[/pmc/httpd/SECURITY]
+@httpd-pmc = rw
+@httpd-security-extra = rw
 
 [/pmc/incubator]
 @incubator-pmc = rw
