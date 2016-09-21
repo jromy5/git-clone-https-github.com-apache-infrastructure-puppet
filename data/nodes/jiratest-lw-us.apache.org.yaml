@@ -4,7 +4,7 @@ classes:
   - oraclejava::install
 
 # jira_asf class variables.
-jira_asf::jira_version: '6.3.4'
+jira_asf::jira_version: '6.4.14'
 jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
