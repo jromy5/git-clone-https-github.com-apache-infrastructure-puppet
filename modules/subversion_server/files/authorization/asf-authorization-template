@@ -918,6 +918,9 @@ ea = rw
 [/hadoop]
 @hadoop-pmc = r
 
+[/hadoop/nightly]
+@hadoop-pmc = rw
+
 [/hadoop/common]
 @hadoop = r
 
