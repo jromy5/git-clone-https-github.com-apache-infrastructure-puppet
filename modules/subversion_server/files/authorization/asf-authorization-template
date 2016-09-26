@@ -921,6 +921,9 @@ ea = rw
 [/hadoop/common]
 @hadoop = r
 
+[/hadoop/logos]
+@hadoop-pmc = rw
+
 [/hadoop/common/dist]
 @hadoop = rw
 
