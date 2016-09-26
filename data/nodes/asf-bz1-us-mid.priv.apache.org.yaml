@@ -18,6 +18,8 @@ apache::default_vhost: false
 
 bugzilla::cpan_modules:
   - 'PatchReader'
+  - 'DateTime::TimeZone'
+  - 'Email::Sender'
 bugzilla::required_packages:
   - 'make'
   - 'libencode-detect-perl'
