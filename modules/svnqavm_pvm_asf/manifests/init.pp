@@ -2,7 +2,7 @@
 
 class svnqavm_pvm_asf (
 
-  $required_packages = [],
+  $required_packages = ['libapr1-dev' , 'libaprutil1-dev'],
 
 ){
 
