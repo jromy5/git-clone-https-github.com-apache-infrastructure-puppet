@@ -196,14 +196,14 @@ puppet_asf::enable_daemon: true
 ## SNMP
 snmp::agentaddress: 'udp:*:161'
 snmp::com2sec:
-  - "circonus-broker 140.211.11.6 asfro"
-  - "circonus-broker 37.139.9.72 asfro"
+  - "snmp-monitor 127.0.0.1 asfro"
+  - "snmp-monitor 37.139.9.72 asfro"
 snmp::groups:
-  - "circonus-broker v2c circonus-broker"
+  - "snmp-monitor v2c snmp-monitor"
 snmp::views:
   - "all included .1"
 snmp::accesses:
-  - 'circonus-broker "" any noauth exact all none all'
+  - 'snmp-monitor "" any noauth exact all none all'
 snmp::snmpd_config:
   - 'rouser monitor authNoPriv'
   - 'smuxpeer .1.3.6.1.4.1.674.10892.1'
