@@ -121,7 +121,7 @@ vhosts_whimsy::vhosts::vhosts:
     - /racktest
     - /roster
     - /secmail
-    - /test/roster
+    - /test/icla
 
     authldap:
     - name: ASF Committers
