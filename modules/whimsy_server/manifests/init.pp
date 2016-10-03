@@ -126,6 +126,19 @@ class whimsy_server (
   }
 
   ############################################################
+  #              Board Agenda WebSocket Server               #
+  ############################################################
+
+  file { '/etc/init/board-agenda-websocket.conf' :
+    source => 'puppet:///modules/whimsy_server/board-agenda-websocket.conf'
+  } ->
+
+  service { 'board-agenda-websocket':
+    ensure => running,
+    require => Vcsrepo['/x1/srv/whimsy']
+  }
+
+  ############################################################
   #             Other Working Directories and Files          #
   ############################################################
 
