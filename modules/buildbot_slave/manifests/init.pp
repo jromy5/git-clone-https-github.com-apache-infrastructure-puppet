@@ -18,28 +18,9 @@ class buildbot_slave (
   $gsr_user,
   $gsr_pw,
 
+  $bb_basepackages   = [],
+
 ){
-
-  # install required packages:
-
-  $bb_basepackages = [
-    'buildbot-slave',
-    'ant',
-    'zip',
-    'unzip',
-    'cmake',
-    'doxygen',
-    'maven',
-    'autoconf',
-    'automake',
-    'rake',
-    'ruby-dev',
-    'python3-pip',
-    'python3-dev',
-    'python3-markdown',
-    'libpam0g-dev',
-    'junit4',
-  ]
 
   # install gradle PPA and gradle 2.x
 
