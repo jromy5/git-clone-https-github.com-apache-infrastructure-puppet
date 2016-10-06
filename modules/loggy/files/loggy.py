@@ -38,6 +38,9 @@ from threading import Lock
 import subprocess, collections, argparse, grp, pwd, shutil
 import ConfigParser
 import platform
+import syslog
+
+syslog.openlog('loggy', logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)
 
 osname = platform.system().lower()
 if osname == "linux":
@@ -52,13 +55,14 @@ from elasticsearch import Elasticsearch, helpers
 
 config = ConfigParser.ConfigParser()
 
-paths = ['/var/log/', '/x1/log']
+paths = ['/var/log/']
+
 
 es = None
 hostname = socket.gethostname()
 if hostname.find(".apache.org") == -1:
     hostname = hostname + ".apache.org"
-print("Using %s as node name" % hostname)
+syslog.syslog(syslog.LOG_INFO, "Using %s as node name" % hostname)
 
 inodes = {}
 inodes_path = {}
@@ -102,7 +106,15 @@ regexes = {
             r"(?P<date>\S+ \S+)\s+\[pylog\]\s+" 
             r"\[(?P<type>[\S.]+)\]:\s+" 
             r"(?P<message>.+)"
-        )
+        ),
+    'qmail': re.compile( 
+            r"(?P<mid>@[a-f0-9]+)\s+" 
+            r"(?P<message>.+)"
+        ),
+    'lastlog': re.compile(
+        r"(?P<user>[a-z0-9]+)\s+(?P<term>(pts/\d+|tty\d+|system))\s+"
+        r"(?P<stats>.+)"
+    )
 }
 
 
@@ -131,6 +143,14 @@ tuples = {
         ),
     'pylogs': namedtuple('pylogs', [
         'date', 'type', 'message',
+        'filepath', 'logtype', 'timestamp']
+        ),
+    'qmail': namedtuple('qmail', [
+        'mid', 'message',
+        'filepath', 'logtype', 'timestamp']
+        ),
+    'lastlog': namedtuple('lastlog', [
+        'user', 'term', 'stats',
         'filepath', 'logtype', 'timestamp']
         )
 }
@@ -661,7 +681,7 @@ class Loggy(Thread):
             observer = Observer()
             for path in paths:
                 observer.schedule(BSDHandler(), path, recursive=True)
-                print("Recursively monitoring " + path.strip() + "...")
+                syslog.syslog(syslog.LOG_INFO, "Recursively monitoring " + path.strip() + "...")
             observer.start()
             try:
                 while True:
@@ -671,7 +691,7 @@ class Loggy(Thread):
                         if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50):
                             if not x in fp:
                                 fp[x] = True
-                                print("First push for " + x + "!")
+                                syslog.syslog(syslog.LOG_INFO, "First push for " + x + "!")
                             t = NodeThread()
                             t.assign(json_pending[x], x, xes)
                             t.start()
