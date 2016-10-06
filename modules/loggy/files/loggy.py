@@ -55,7 +55,7 @@ from elasticsearch import Elasticsearch, helpers
 
 config = ConfigParser.ConfigParser()
 
-paths = ['/var/log/']
+paths = ['/var/log/', '/x1/log']
 
 
 es = None
