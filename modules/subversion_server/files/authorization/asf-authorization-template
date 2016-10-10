@@ -370,7 +370,7 @@ river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
-rya=afuchs,busbey,edwardyoon,elserj,venkatesh,swagner
+rya=adina,afuchs,busbey,caleb,dnrapp,edwardyoon,elserj,jbrown,mihalik,pujav65,roshanp,swagner,venkatesh
 s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamshon,jaesang,lukehan,mskim
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
