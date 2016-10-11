@@ -408,6 +408,7 @@ build_slaves::distro_packages:
   - sloccount
   - tmux
   - unzip
+  - virtualenvwrapper
   - xvfb
 
 logrotate::rule:

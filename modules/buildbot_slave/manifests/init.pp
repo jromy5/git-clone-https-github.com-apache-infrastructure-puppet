@@ -31,6 +31,10 @@ class buildbot_slave (
     ensure => latest,
   }
 
+  python::pip { 'Flask':
+    pkgname => 'Flask';
+  }
+
   # merge required packages from hiera for slaves
 
   $slave_packages = hiera_array('buildbot_slave::required_packages',[])
