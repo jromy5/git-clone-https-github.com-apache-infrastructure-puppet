@@ -109,15 +109,7 @@ apt::sources:
     location: 'https://apt.puppetlabs.com'
     release: 'trusty'
     repos: 'main'
-    key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
-    key_server: 'keyserver.ubuntu.com'
-    include_deb: true
-    include_src: false
-  'puppetdeps':
-    location: 'https://apt.puppetlabs.com'
-    release: 'trusty'
-    repos: 'dependencies'
-    key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+    key: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
     key_server: 'keyserver.ubuntu.com'
     include_deb: true
     include_src: false
