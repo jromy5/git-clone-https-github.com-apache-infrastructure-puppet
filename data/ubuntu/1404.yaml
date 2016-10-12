@@ -115,7 +115,7 @@ apt::sources:
     include_src: false
   'puppetdeps':
     location: 'https://apt.puppetlabs.com'
-    release: 'xenial'
+    release: 'trusty'
     repos: 'dependencies'
     key: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
     key_server: 'keyserver.ubuntu.com'
