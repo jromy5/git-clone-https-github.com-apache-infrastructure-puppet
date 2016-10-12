@@ -113,6 +113,14 @@ apt::sources:
     key_server: 'keyserver.ubuntu.com'
     include_deb: true
     include_src: false
+  'puppetdeps':
+    location: 'https://apt.puppetlabs.com'
+    release: 'xenial'
+    repos: 'dependencies'
+    key: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
+    key_server: 'keyserver.ubuntu.com'
+    include_deb: true
+    include_src: false
   'vmware-tools':
     location: 'http://packages.vmware.com/packages/ubuntu'
     release: 'trusty'
