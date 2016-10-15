@@ -2,20 +2,12 @@
 classes:
   - default_pvm_asf
   - apache
+  - gump_server
+  - gump_server::cronjobs
 
-base::basepackages: 
-  - cvs
-  - mercurial
-  - bzr
-  - darcs
-  - nant
-  - autoconf
-  - automake
-  - libtool
-  - mysql-server
-  - mysql-client
-  - python-mysqldb
-  - mono-mcs
-  - g++
-  - mailutils
-  - libexpat1-dev
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
+postfix::server::inet_interfaces: 'all'
+postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
