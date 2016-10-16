@@ -3,6 +3,7 @@ classes:
   - apt::unattended_upgrades
   - apt::update
   - fail2ban_asf::config
+  - maven_central_mirror_asf
 
 apt::unattended_upgrades::update: 1
 apt::unattended_upgrades::download: 1
@@ -12,9 +13,6 @@ apt::unattended_upgrades::origins:
   - '${distro_id} ${distro_codename}-security'
   - '${distro_id} ${distro_codename}-updates'
 
-base::basepackages:
-  - awscli
-  
 fail2ban::service_autorestart: true
 fail2ban::disable: false
 fail2ban::service_status: true
