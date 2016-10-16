@@ -7,16 +7,16 @@ class maven_central_mirror_asf (
 
   include python
 
-  # remote ancient ubuntu package
+  # remove ancient ubuntu package version of awscli
 
   package { 'awscli':
-    ensure  => 'absent',
+    ensure  => absent,
   }
 
   # install current awscli with pip
 
   python::pip { 'awscli':
-    pkgname   => 'pip';
+    pkgname => 'awscli';
   }
 
   file {
