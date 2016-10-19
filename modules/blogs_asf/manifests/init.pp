@@ -18,6 +18,20 @@ class blogs_asf (
   $t_user_present    = 'present',
   $t_username        = 'tcblogs',
   $required_packages = [],
+
+# override below in yaml
+  $roller_version           = '',
+  $roller_revision_number   = '',
+  $mysql_connector_version  = '',
+  $server_port              = '',
+  $connector_port           = '',
+  $context_path             = '',
+  $docroot                  = '',
+  $parent_dir               = '',
+  $tomcat_version           = '',
+  $tomcat_minor             = '',
+  $tomcat_revision_number   = '',
+
 ){
 
 # install required packages:
@@ -27,35 +41,25 @@ class blogs_asf (
   }
 
 # roller specific
-  $roller_version           = '5.1'
-  $roller_revision_number   = '2'
   $roller_release           = "${roller_version}.${roller_revision_number}"
-  $mysql_connector_version  = '5.1.11'
   $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
-  $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
+  $mysql_connector_dest_dir = "${current_dir}/roller/WEB-INF/lib'
   $roller_build             = "roller-release-${roller_release}"
   $r_tarball                = "${roller_build}-standard.tar.gz"
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${r_tarball}"
   $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/v${roller_release}/${r_tarball}"
-  $parent_dir               = '/usr/local/roller'
   $install_dir              = "${parent_dir}/${roller_build}"
   $data_dir                 = "${parent_dir}/roller_data"
-  $server_port              = '8008'
-  $connector_port           = '8080'
-  $context_path             = '/'
   $current_dir              = "${parent_dir}/current"
-  $docroot                  = '/var/www'
 
 # tomcat specific
-  $tomcat_version           = '8'
-  $tomcat_minor             = '5'
-  $tomcat_revision_number   = '6'
   $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}"
   $tomcat_build             = "apache-tomcat-${tomcat_release}"
   $t_tarball                = "${tomcat_build}.tar.gz"
   $downloaded_t_tarball     = "${download_dir}/${t_tarball}"
   $download_t_url           = "https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
+  $tomcat_dir               = "${parent_dir}/${tomcat_build}"
 
   user {
     $r_username:
@@ -145,34 +149,19 @@ class blogs_asf (
 # extract the download and move it
   exec {
     'extract-tomcat':
-      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${parent_dir}",
+      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${tomcat_dir}",
       cwd     => $download_dir,
       user    => 'root',
-      creates => "${install_dir}/NOTICE",
+      creates => "${tomcat_dir}/NOTICE",
       timeout => 1200,
       require => [File[$downloaded_t_tarball],File[$parent_dir]],
   }
 
   exec {
     'chown-tomcat-dirs':
-      command => "/bin/chown -R ${t_username}:${t_username} ${install_dir}",
+      command => "/bin/chown -R ${t_username}:${t_groupname} ${tomcat_dir}",
       timeout => 1200,
-      require => [User[$t_username],Group[$t_username]],
-  }
-
-  apache::vhost {
-    'blogs-vm-80':
-      vhost_name     => '*',
-      priority       => '12',
-      servername     => 'roller-vm2.apache.org',
-      port           => '80',
-      ssl            => false,
-      docroot        => $docroot,
-      error_log_file => 'blogs_error.log',
-      serveraliases  => [
-        'blogs-test.apache.org',
-      ],
-      #custom_fragment => 'RedirectMatch permanent ^/(.*)$ https://blogs-test.apache.org/$1'
+      require => [User[$t_username],Group[$t_groupname]],
   }
 
   file {
@@ -186,6 +175,11 @@ class blogs_asf (
       owner  => $t_username,
       group  => $r_groupname,
       mode   => '0775';
-
+    $current_dir:
+      ensure  => link,
+      target  => $install_dir,
+      owner   => 'root',
+      group   => 'root',
+      require => File[$install_dir];
   }
 }

@@ -1,0 +1,76 @@
+---
+classes:
+  - blogs_asf
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - blocky
+  - loggy
+  - ssl::name::blogs_apache_org
+  - vhosts_asf::vhosts
+
+apache::keepalive: 'On'
+apache::keepalive_timeout: '15'
+apache::timeout: 600
+apache::mpm_module: 'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+# blogs_asf class variables.
+blogs_asf::roller_version: '5.1'
+blogs_asf::roller_revision_number: '2'
+blogs_asf::mysql_connector_version: '5.1.11'
+blogs_asf::parent_dir: '/usr/local/roller'
+blogs_asf::data_dir: '/usr/local/roller_data'
+blogs_asf::server_port: '8008'
+blogs_asf::connector_port: '8080'
+blogs_asf::context_path: '/'
+blogs_asf::docroot: '/var/www'
+blogs_asf::server_alias: 'blogs-test.apache.org'
+blogs_asf::tomcat_version: '8'
+blogs_asf::tomcat_minor: '5'
+blogs_asf::tomcat_revision_number: '6'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  roller-vm2-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'roller-vm2.apache.org'
+    serveraliases:
+      - 'blogs-test.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'blogs_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://roller-vm2.apache.org/$1
+  roller-vm2-443:
+    vhost_name: '*'
+    default_vhost: true
+    servername: 'roller-vm2.apache.org'
+    serveraliases:
+      - 'blogs-test.apache.org'
+    port: 443
+    docroot: '/var/www'
+    error_log_file: 'blogs_error.log'
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/blogs.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/blogs.apache.org.chain'
+    ssl_key: '/etc/ssl/private/blogs.apache.org.key'
+    custom_fragment: |
+      RewriteEngine On
+      ProxyPass / http://127.0.0.1:8080/
+      ProxyPassReverse / http://127.0.0.1:8080/
