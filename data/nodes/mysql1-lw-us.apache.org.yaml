@@ -1,6 +1,7 @@
 ---
 classes:
   - datadog_agent::integrations::mysql
+  - mysql_asf::backup
   - mysql::server
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
