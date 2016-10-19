@@ -31,16 +31,16 @@ class blogs_asf (
   $roller_revision_number   = '2'
   $roller_release           = "${roller_version}.${roller_revision_number}"
   $mysql_connector_version  = '5.1.11'
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
   $mysql_connector_dest_dir = '/x1/roller/current/roller/WEB-INF/lib'
   $roller_build             = "roller-release-${roller_release}"
   $r_tarball                = "${roller_build}-standard.tar.gz"
   $download_dir             = '/tmp'
   $downloaded_tarball       = "${download_dir}/${r_tarball}"
   $download_url             = "https://dist.apache.org/repos/dist/release/roller/roller-${roller_version}/v${roller_release}/${r_tarball}"
-  $parent_dir               = '/x1/roller'
+  $parent_dir               = '/usr/local/roller'
   $install_dir              = "${parent_dir}/${roller_build}"
-  $data_dir                 = '/x1/roller_data'
+  $data_dir                 = "${parent_dir}/roller_data"
   $server_port              = '8008'
   $connector_port           = '8080'
   $context_path             = '/'
@@ -49,9 +49,9 @@ class blogs_asf (
 
 # tomcat specific
   $tomcat_version           = '8'
-  $tomcat_minor             = '0'
-  $tomcat_revision_number   = '21'
-  $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}" # lint:ignore:80chars
+  $tomcat_minor             = '5'
+  $tomcat_revision_number   = '6'
+  $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}"
   $tomcat_build             = "apache-tomcat-${tomcat_release}"
   $t_tarball                = "${tomcat_build}.tar.gz"
   $downloaded_t_tarball     = "${download_dir}/${t_tarball}"
@@ -113,7 +113,7 @@ class blogs_asf (
 # extract the download and move it
   exec {
     'extract-roller':
-      command => "/bin/tar -xvzf ${r_tarball} && mv ${roller_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${r_tarball} && mv ${roller_build} ${parent_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE.txt",
@@ -145,7 +145,7 @@ class blogs_asf (
 # extract the download and move it
   exec {
     'extract-tomcat':
-      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${parent_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
@@ -164,7 +164,7 @@ class blogs_asf (
     'blogs-vm-80':
       vhost_name     => '*',
       priority       => '12',
-      servername     => 'blogs-vm.apache.org',
+      servername     => 'roller-vm2.apache.org',
       port           => '80',
       ssl            => false,
       docroot        => $docroot,
