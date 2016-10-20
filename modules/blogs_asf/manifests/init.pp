@@ -32,6 +32,13 @@ class blogs_asf (
   $tomcat_minor             = '',
   $tomcat_revision_number   = '',
 
+# override below in eyaml
+
+  $jdbc_connection_url = '',
+  $jdbc_username       = '',
+  $jdbc_password       = '',
+  $akismet_apikey      = '',
+
 ){
 
 # install required packages:
