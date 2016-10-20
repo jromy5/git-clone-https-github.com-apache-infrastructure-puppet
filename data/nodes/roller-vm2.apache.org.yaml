@@ -9,6 +9,10 @@ classes:
   - loggy
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
+  - oraclejava::install
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
 
 apache::keepalive: 'On'
 apache::keepalive_timeout: '15'
