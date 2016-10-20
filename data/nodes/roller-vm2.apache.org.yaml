@@ -7,7 +7,7 @@ classes:
   - apache::mod::rewrite
   - blocky
   - loggy
-  - ssl::name::blogs_apache_org
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
 apache::keepalive: 'On'
@@ -67,9 +67,9 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'blogs_error.log'
     ssl: true
-    ssl_cert: '/etc/ssl/certs/blogs.apache.org.crt'
-    ssl_chain: '/etc/ssl/certs/blogs.apache.org.chain'
-    ssl_key: '/etc/ssl/private/blogs.apache.org.key'
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     custom_fragment: |
       RewriteEngine On
       ProxyPass / http://127.0.0.1:8080/
