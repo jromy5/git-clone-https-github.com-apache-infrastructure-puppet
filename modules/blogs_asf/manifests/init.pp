@@ -188,5 +188,8 @@ class blogs_asf (
       owner   => 'root',
       group   => 'root',
       require => File[$parent_dir];
+    "${tomcat_dir}/lib/roller-custom.properties":
+      content => template('blogs_asf/roller-custom.properties.erb'),
+      mode    => '0644';
   }
 }
