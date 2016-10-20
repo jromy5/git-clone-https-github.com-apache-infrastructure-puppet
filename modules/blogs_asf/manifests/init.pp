@@ -180,6 +180,6 @@ class blogs_asf (
       target  => $install_dir,
       owner   => 'root',
       group   => 'root',
-      require => File[$install_dir];
+      require => File[$parent_dir];
   }
 }
