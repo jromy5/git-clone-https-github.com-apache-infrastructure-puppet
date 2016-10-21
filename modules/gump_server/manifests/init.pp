@@ -6,7 +6,6 @@ class gump_server {
     mercurial,
     bzr,
     darcs,
-    subversion,
     nant,
     autoconf,
     automake,
@@ -18,7 +17,6 @@ class gump_server {
     'g++',
     mailutils,
     libexpat1-dev,
-    git,
     curl,
   ]
 
