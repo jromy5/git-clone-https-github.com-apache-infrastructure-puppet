@@ -421,6 +421,7 @@ buildbot_slave::bb_basepackages:
   - asf-build-jdk1.8.0-66-unlimited-security
   - asf-build-jdk1.8.0-92
   - asf-build-jdk1.8.0-102
+  - asf-build-jdk9-ea-b139
   - buildbot-slave
   - ant
   - zip
