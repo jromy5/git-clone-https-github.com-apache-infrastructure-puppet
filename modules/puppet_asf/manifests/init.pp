@@ -8,10 +8,20 @@ class puppet_asf (
 
   case $::asfosname {
     ubuntu: {
-      package { 'puppet':
-        ensure  => '3.8.7-1puppetlabs1',
-        require => Apt::Source['puppetlabs', 'puppetdeps'],
-        notify  => Service['puppet'],
+      case $::lsbdistrelease {
+        14.04: {
+          package { 'puppet':
+            ensure  => '3.8.7-1puppetlabs1',
+            require => Apt::Source['puppetlabs', 'puppetdeps'],
+            notify  => Service['puppet'],
+          }
+        }
+        16.04: {
+          package { 'puppet':
+            ensure  => 'latest',
+            notify  => Service['puppet'],
+          }
+        }
       }
 
       file { 'puppet_daemon_conf':
@@ -24,7 +34,6 @@ class puppet_asf (
         mode    => '0644',
         content => template("puppet_asf/puppet_daemon.${::asfosname}.erb"),
       }
-
     }
     centos: {
       package { 'puppet':
