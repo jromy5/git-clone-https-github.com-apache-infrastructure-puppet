@@ -12,14 +12,6 @@ class build_slaves (
       ensure => installed,
   }
 
-  class { 'python' :
-    version    => 'system',
-    pip        => 'present',
-    dev        => 'absent',
-    virtualenv => 'present',
-    gunicorn   => 'absent',
-  }
-
   python::pip { 'Flask' :
     pkgname       => 'Flask';
   }
