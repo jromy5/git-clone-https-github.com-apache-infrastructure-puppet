@@ -43,7 +43,7 @@ mod 'datadog_agent',
 
 mod 'dell',
   :git => 'https://github.com/camptocamp/puppet-dell.git',
-  :tag => '0.2.0'
+  :tag => '0.5.1'
 
 
 mod 'docker',
