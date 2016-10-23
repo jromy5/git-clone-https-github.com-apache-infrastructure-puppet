@@ -411,7 +411,6 @@ build_slaves::distro_packages:
   - sloccount
   - tmux
   - unzip
-  - virtualenvwrapper
   - xvfb
 
 buildbot_slave::bb_basepackages:
@@ -439,7 +438,6 @@ buildbot_slave::bb_basepackages:
   - python3-markdown
   - libpam0g-dev
   - junit4
-  - virtualenvwrapper
 
 
 logrotate::rule:
