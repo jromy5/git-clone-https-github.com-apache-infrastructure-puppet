@@ -22,4 +22,15 @@ class build_slaves (
     pkgname       => 'Flask';
   }
 
+## temporary block -- cml -- remove old .save and duplicate declares ##
+
+  exec { 'delete extra sources.list.d files':
+    command => "/bin/rm -f /etc/apt/sources.list.d/*.save",
+  } -> 
+  exec { 'delete dupe sources.list.d files':
+    command => "/bin/rm -f /etc/apt/sources.list.d/packages_apache_org_asf_internal.list /etc/apt/sources.list.d/get_docker_io_ubuntu.list",
+  }
+
+## end temporary block
+
 }
