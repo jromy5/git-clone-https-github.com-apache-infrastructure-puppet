@@ -1,7 +1,5 @@
 #/etc/puppet/modules/build_slaves/manifests/init.pp
 
-include python
-
 class build_slaves (
   $distro_packages  = [],
   ) {
