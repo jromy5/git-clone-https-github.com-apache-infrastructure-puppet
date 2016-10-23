@@ -8,7 +8,7 @@ class build_slaves (
   }
 
   exec { 'Add nodesource-6 sources':
-    command => 'if [ ! -f /etc/apt/sources.list.d/nodesource.list ] ; then curl https://deb.nodesource.com/setup_6.x ; fi | bash -',
+    command => '/usr/bin/test ! -f /etc/apt/sources.list.d/nodesource.list && curl https://deb.nodesource.com/setup_6.x | bash -',
     creates => '/etc/apt/sources.list.d/nodesource.list',
     path    => ['/usr/bin', '/bin', '/usr/sbin']
   }
