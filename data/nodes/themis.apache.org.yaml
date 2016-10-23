@@ -24,6 +24,8 @@ classes:
   - blocky
   - datadog_agent::integrations::apache
   - datadog_agent::integrations::http_check
+  - dell
+  - dell::openmanage
   - loggy
   - rootbin_asf
   - rsync
