@@ -389,9 +389,6 @@ build_slaves::distro_packages:
   - mono-devel
   - mono-complete
   - nodejs
-  - nodejs-dev
-  - nodejs-legacy
-  - npm
   - nsis
   - php-pear
   - php-dev

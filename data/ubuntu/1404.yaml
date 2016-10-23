@@ -387,9 +387,6 @@ build_slaves::distro_packages:
   - mono-devel
   - mono-gmcs
   - nodejs
-  - nodejs-dev
-  - nodejs-legacy
-  - npm
   - nsis
   - openjdk-7-jdk
   - php-pear
