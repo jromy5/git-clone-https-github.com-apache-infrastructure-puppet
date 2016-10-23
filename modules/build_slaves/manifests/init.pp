@@ -28,7 +28,7 @@ class build_slaves (
     command => "/bin/rm -f /etc/apt/sources.list.d/*.save",
   } -> 
   exec { 'delete dupe sources.list.d files':
-    command => "/bin/rm -f /etc/apt/sources.list.d/packages_apache_org_asf_internal.list /etc/apt/sources.list.d/get_docker_io_ubuntu.list",
+    command => "/bin/rm -f /etc/apt/sources.list.d/packages_apache_org_asf_internal.list /etc/apt/sources.list.d/get_docker_io_ubuntu.list /etc/apt/sources.list.d/dell.list",
   }
 
 ## end temporary block
