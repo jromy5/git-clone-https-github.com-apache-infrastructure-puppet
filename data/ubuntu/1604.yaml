@@ -47,6 +47,7 @@ apache::log_formats:
   combined: '<%%JSON:httpd_access%%> {
     \"time\": \"%%{}{%Y-%m-%dT%H:%M:%S%z}t\",
     \"clientip\": \"%a\",
+    \"forwarded\": \"%{X-Forwarded-For}i %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"\",    
     \"duration\": %D,
     \"status\": %>s,
     \"request\": \"%U%q\",
