@@ -30,14 +30,6 @@ class buildbot_slave::buildbot (
   }
 
   #define java symlinking
-  define buildbot_slave::symlink_buildbot ($javaj = $title) {
-    file {"/home/buildbot/tools/java/${javaj}":
-      ensure => link,
-      target => "/usr/local/buildbot/java/${javaj}",
-    }
-  }
-
-  #define java symlinking
   define buildbot_slave::symlink_asfpackages ($javaa = $title) {
     file {"/home/buildbot/tools/java/${javaa}":
       ensure => link,
