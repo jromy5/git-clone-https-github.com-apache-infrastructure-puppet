@@ -423,6 +423,8 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
   - asf-build-ibm-java-x86-64-80
+  - asf-build-jdk1.5.0-22-64
+  - asf-build-jdk1.6.0-45-64
   - asf-build-jdk1.7.0-79-unlimited-security
   - asf-build-jdk1.7.0-80
   - asf-build-jdk1.8.0
