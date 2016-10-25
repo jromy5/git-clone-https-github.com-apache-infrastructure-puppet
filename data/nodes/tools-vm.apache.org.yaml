@@ -234,7 +234,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'oauth.apache.org.access.log'
     error_log_file: 'oauth.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://reporeq.apache.org/
+      Redirect permanent / https://oauth.apache.org/
   oauth-ssl:
     vhost_name: '*'
     port: 443
