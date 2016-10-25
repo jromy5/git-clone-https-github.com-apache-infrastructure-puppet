@@ -24,7 +24,7 @@ class buildbot_slave::buildbot (
 
   #define maven symlinking (installs to /usr/local/asfpackages)
   define buildbot_slave::symlink_maven ($maven_version = $title) {
-    file {"/home/buildbot/slave/tools/maven/${maven_version}":
+    file {"/home/buildslave/slave/tools/maven/${maven_version}":
       ensure => link,
       target => "/usr/local/asfpackages/maven/${maven_version}",
     }
@@ -32,7 +32,7 @@ class buildbot_slave::buildbot (
 
   #define java symlinking
   define buildbot_slave::symlink_asfpackages ($javaa = $title) {
-    file {"/home/buildbot/tools/java/${javaa}":
+    file {"/home/buildslave/slave/tools/java/${javaa}":
       ensure => link,
       target => "/usr/local/asfpackages/java/${javaa}",
     }
@@ -54,15 +54,15 @@ class buildbot_slave::buildbot (
 
   # maven symlinks - populate array, make all symlinks, make latest symlink
   buildbot_slave::symlink_maven        { $maven: }
-  file { '/home/buildbot/tools/maven/latest2':
+  file { '/home/buildslave/slaves/tools/maven/latest2':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-2.2.1',
   }
-  file { '/home/buildbot/tools/maven/latest':
+  file { '/home/buildslave/slaves/tools/maven/latest':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
-  file { '/home/buildbot/tools/maven/latest3':
+  file { '/home/buildslave/slaves/tools/maven/latest3':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
