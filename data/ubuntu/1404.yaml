@@ -35,6 +35,7 @@ base::basepackages:
 base::purgedpackages:
   - 'collectd'
   - 'collectd-core'
+  - 'virtualenvwrapper'
 
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
