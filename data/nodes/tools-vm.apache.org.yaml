@@ -224,3 +224,45 @@ vhosts_asf::vhosts::vhosts:
           Require valid-user
         </RequireAny>
       </Location>
+  oauth:
+    vhost_name: '*'
+    port: 80
+    servername: 'oauth.apache.org'
+    default_vhost: true
+    docroot: '/var/www/oauth/html'
+    manage_docroot: false
+    access_log_file: 'oauth.apache.org.access.log'
+    error_log_file: 'oauth.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://reporeq.apache.org/
+  oauth-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    default_vhost: true
+    docroot: '/var/www/oauth/html'
+    manage_docroot: false
+    servername: 'oauth.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    directoryindex: 'index.lua'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+    access_log_file: 'oauth.apache.org.ssl_access.log'
+    error_log_file: 'oauth.apache.org.ssl_error.log'
+    custom_fragment: |
+      Header set Access-Control-Allow-Origin "*.apache.org"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
+      AddHandler lua-script .lua
+      FallbackResource /index.lua
+      <Location /auth>
+        AuthLDAPUrl "ldaps://snappy5.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers only"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location> 
