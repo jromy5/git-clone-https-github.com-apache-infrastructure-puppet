@@ -415,6 +415,12 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-ant-1.8.4
   - asf-build-apache-ant-1.9.4
   - asf-build-apache-ant-1.9.7
+  - asf-build-apache-maven-2.2.1
+  - asf-build-apache-maven-3.0.4
+  - asf-build-apache-maven-3.0.5
+  - asf-build-apache-maven-3.2.1
+  - asf-build-apache-maven-3.2.5
+  - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
   - asf-build-jdk1.7.0-79-unlimited-security
   - asf-build-jdk1.7.0-80
