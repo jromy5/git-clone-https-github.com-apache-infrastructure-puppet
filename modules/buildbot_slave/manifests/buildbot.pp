@@ -13,7 +13,7 @@ class buildbot_slave::buildbot (
   require buildbot_slave
 
   #define all symlink making iterators
-  define build_slaves::mkdir_tools ($tool = $title) {
+  define buildbot_slave::mkdir_tools ($tool = $title) {
     file {"/home/buildslave/slave/tools/${tool}":
       ensure => directory,
       owner  => 'buildslave',
@@ -30,7 +30,7 @@ class buildbot_slave::buildbot (
   }
 
   #define java symlinking
-  define build_slaves::symlink_buildbot ($javaj = $title) {
+  define buildbot_slave::symlink_buildbot ($javaj = $title) {
     file {"/home/buildbot/tools/java/${javaj}":
       ensure => link,
       target => "/usr/local/buildbot/java/${javaj}",
@@ -38,7 +38,7 @@ class buildbot_slave::buildbot (
   }
 
   #define java symlinking
-  define build_slaves::symlink_asfpackages ($javaa = $title) {
+  define buildbot_slave::symlink_asfpackages ($javaa = $title) {
     file {"/home/buildbot/tools/java/${javaa}":
       ensure => link,
       target => "/usr/local/asfpackages/java/${javaa}",
