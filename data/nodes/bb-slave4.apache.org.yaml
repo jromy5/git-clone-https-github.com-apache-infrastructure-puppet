@@ -3,6 +3,7 @@ classes:
   - buildbot_slave
   - buildbot_slave::cpan
   - buildbot_slave::rat
+  - buildbot_slave::buildbot
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave4_ubuntu'
