@@ -411,7 +411,7 @@ build_slaves::distro_packages:
   - unzip
   - xvfb
 
-buildbot_slave::bb_basepackages:
+buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.3.9
   - asf-build-jdk1.7.0-79-unlimited-security
   - asf-build-jdk1.7.0-80
@@ -420,6 +420,8 @@ buildbot_slave::bb_basepackages:
   - asf-build-jdk1.8.0-92
   - asf-build-jdk1.8.0-102
   - asf-build-jdk9-ea-b139
+
+buildbot_slave::bb_basepackages:
   - buildbot-slave
   - ant
   - zip
@@ -436,7 +438,6 @@ buildbot_slave::bb_basepackages:
   - python3-markdown
   - libpam0g-dev
   - junit4
-
 
 logrotate::rule:
   apache2:
