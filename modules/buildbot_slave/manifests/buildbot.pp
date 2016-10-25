@@ -54,15 +54,15 @@ class buildbot_slave::buildbot (
 
   # maven symlinks - populate array, make all symlinks, make latest symlink
   buildbot_slave::symlink_maven        { $maven: }
-  file { '/home/buildslave/slaves/tools/maven/latest2':
+  file { '/home/buildslave/slave/tools/maven/latest2':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-2.2.1',
   }
-  file { '/home/buildslave/slaves/tools/maven/latest':
+  file { '/home/buildslave/slave/tools/maven/latest':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
-  file { '/home/buildslave/slaves/tools/maven/latest3':
+  file { '/home/buildslave/slave/tools/maven/latest3':
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
   }
