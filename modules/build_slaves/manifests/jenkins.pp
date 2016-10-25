@@ -103,10 +103,6 @@ class build_slaves::jenkins (
     ensure => latest,
   }
 
-  apt::ppa { 'ppa:ubuntu-lxc/lxd-stable':
-    ensure => present,
-  }->
-
   package { 'golang':
     ensure => latest,
   }
