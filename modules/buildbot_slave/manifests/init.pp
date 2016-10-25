@@ -22,6 +22,8 @@ class buildbot_slave (
 
 ){
 
+  include buildbot_slave::buildbot
+
   # install gradle PPA and gradle 2.x
 
   apt::ppa { 'ppa:cwchien/gradle':
