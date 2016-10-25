@@ -5,9 +5,10 @@ include apt
 # buildbot class for the buildbot slaves.
 class buildbot_slave::buildbot (
   $buildbot_packages = [],
+  $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'],
   $java_asfpackages = ['jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'ibm-java-x86_64-80'],
-  $tools = ['maven', 'java'],
+  $tools = ['ant', 'maven', 'java'],
 ) {
 
   require stdlib
@@ -19,6 +20,14 @@ class buildbot_slave::buildbot (
       ensure => directory,
       owner  => 'buildslave',
       group  => 'buildslave',
+    }
+  }
+
+  #define ant symlinking
+  define build_slaves::symlink_ant ($ant_version = $title) {
+    file {"/home/buildslave/slave/tools/ant/${ant_version}":
+      ensure => link,
+      target => "/usr/local/asfpackages/ant/${ant_version}",
     }
   }
 
@@ -51,6 +60,14 @@ class buildbot_slave::buildbot (
   package { $buildbot_packages:
     ensure => latest,
   }
+
+  # ant symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_ant          { $ant: }
+  file { '/home/buildslave/slave/tools/ant/latest':
+    ensure => link,
+    target => '/usr/local/asfpackages/ant/apache-ant-1.9.7',
+  }
+
 
   # maven symlinks - populate array, make all symlinks, make latest symlink
   buildbot_slave::symlink_maven        { $maven: }
