@@ -31,6 +31,14 @@ buildbot_slave::required_packages:
   - 'freeglut3-dev'
   - 'libssl-dev'
   - 'gperf'
+  - 'libwww-perl'
+  - 'libxml-parser-perl'
+  - 'libpam0g-dev'
+  - 'libgstreamer0.10-dev'
+  - 'libgstreamer-plugins-base0.10-dev'
+  - 'mesa-common-dev'
+  - 'libgl1-mesa-dev'
+  - 'libglu1-mesa-dev'
 
 buildbot_slave::cpan::cpan_modules:
   - 'Archive::Zip'
