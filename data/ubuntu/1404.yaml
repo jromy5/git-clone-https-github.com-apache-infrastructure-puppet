@@ -121,6 +121,12 @@ apt::sources:
     key_server: 'pgp.mit.edu'
     include_deb: true
     include_src: false
+  'nodesource-6':
+    location: 'https://deb.nodesource.com/node_6.x'
+    release: 'trusty'
+    repos: 'main'
+    include_deb: true
+    include_src: false
 
 apt::force:
   'orthrus':
