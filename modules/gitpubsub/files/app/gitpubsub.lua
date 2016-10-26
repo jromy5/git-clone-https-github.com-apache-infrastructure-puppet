@@ -195,8 +195,19 @@ function closeSocket(socket)
     SENT = SENT + s
     RECEIVED = RECEIVED + r
     socket:close()
-    for k, v in pairs(readFrom) do if v == socket then table.remove(readFrom, k) break end end
-    for k, v in pairs(writeTo) do if v == socket then table.remove(writeTo, k) break end end
+    for k, v in pairs(readFrom) do
+        if v == socket then
+            readFrom[k] = nil
+            break
+        end
+    end
+    for k, v in pairs(writeTo) do
+        if v == socket then
+            writeTo[k] = nil
+            break
+        end
+    end
+    collectgarbage()
     requests[socket] = nil
 end
 
