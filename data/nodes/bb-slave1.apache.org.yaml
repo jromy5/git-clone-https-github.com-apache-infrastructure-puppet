@@ -10,3 +10,8 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
+
+python::python_pips:
+  pelican:
+  markdown:
+ensure: present
