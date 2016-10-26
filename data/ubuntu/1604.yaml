@@ -1,7 +1,6 @@
 ---
 classes: 
   - apt
-  - apt::unattended_upgrades
   - apt::update
   - base
   - datadog_agent
@@ -13,6 +12,7 @@ classes:
   - python
   - subversionclient
   - loggy
+  - unattended_upgrades
 
 base::basepackages:
   - apt-file
@@ -123,12 +123,13 @@ apt::force:
     release: 'main'
   require: Apt::Source['asf_internal']
 
-apt::unattended_upgrades::update: 1
-apt::unattended_upgrades::download: 1
-apt::unattended_upgrades::upgrade: 1
-apt::unattended_upgrades::autoclean: 7
-apt::unattended_upgrades::origins:
+unattended_upgrades::update: 1
+unattended_upgrades::download: 1
+unattended_upgrades::upgrade: 1
+unattended_upgrades::autoclean: 7
+unattended_upgrades::origins:
   - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'
 
 apt::always_apt_update: true
 
