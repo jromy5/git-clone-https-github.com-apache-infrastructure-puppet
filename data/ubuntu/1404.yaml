@@ -15,6 +15,7 @@ classes:
   - loggy
 
 base::basepackages:
+  - apt-transport-https
   - apt-file
   - bash
   - bc
