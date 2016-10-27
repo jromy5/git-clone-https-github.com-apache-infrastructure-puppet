@@ -13,5 +13,6 @@ buildbot_slave::required_packages:
 
 python::python_pips:
   pelican:
+ensure: present
   markdown:
 ensure: present
