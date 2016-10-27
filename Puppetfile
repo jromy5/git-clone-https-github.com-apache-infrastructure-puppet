@@ -9,7 +9,7 @@ mod 'apache',
 
 mod 'apt',
   :git => 'https://github.com/puppetlabs/puppetlabs-apt',
-  :tag => '1.8.0'
+  :tag => '2.3.0'
 
 
 mod 'awscli',
@@ -220,7 +220,7 @@ mod 'stahnma-epel',
 
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
-  :tag => '4.3.2'
+  :tag => '4.13.1'
 
 mod 'stunnel',
   :git => 'https://github.com/clambertus/puppetlabs-stunnel'
@@ -247,11 +247,14 @@ mod 'ulimit',
   :git => 'https://github.com/clambertus/puppet-ulimit.git'
 
 
+mod 'unattended_upgrades',
+  :git => 'https://github.com/puppet-community/puppet-unattended_upgrades'
+
+
 mod 'vcsrepo',
   :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
 
 
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
-
 
