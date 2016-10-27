@@ -4,6 +4,11 @@ classes:
   - apache
   - gump_server
   - gump_server::cronjobs
+  - vhosts_asf::vhosts
+
+default_pvm_asf::required_packages:
+  - unzip
+  - joe
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
