@@ -16,3 +16,25 @@ postfix::server::smtp_use_tls: true
 postfix::server::inet_interfaces: 'all'
 postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
 postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
+apache::default_vhost: false
+
+vhosts_asf::vhosts::vhosts:
+  vmgump:
+    vhost_name: '*'
+    port: 80
+    servername: 'vmgump-vm3.apache.org'
+    default_vhost: true
+    docroot: '/srv/gump/public/workspace/log/'
+    manage_docroot: false
+    options:
+      - 'Indexes'
+      - 'FollowSymLinks'
+      - 'MultiViews'
+    access_log_file: 'vmgump_access.log'
+    error_log_file: 'vmgump_error.log'
+    custom_fragment: |
+      <Location /workspace_defn.html>
+          Order deny,allow
+          Deny from all
+      </Location>
