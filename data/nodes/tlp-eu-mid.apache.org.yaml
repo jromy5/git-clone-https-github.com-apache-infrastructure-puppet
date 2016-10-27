@@ -2990,7 +2990,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'infra.apache.org'
-    docroot: '/var/www/infra.apache.org/content'
+    docroot: '/var/www/infra.apache.org/output'
     manage_docroot: false
     serveraliases:
       - 'infra-test.apache.org'
@@ -2998,7 +2998,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     directories:
       -
-        path: '/var/www/infra.apache.org/content'
+        path: '/var/www/infra.apache.org/output'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -3015,7 +3015,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'infra.apache.org'
-    docroot: '/var/www/infra.apache.org/content'
+    docroot: '/var/www/infra.apache.org/output'
     manage_docroot: false
     serveraliases:
       - 'infra.*.apache.org'
@@ -3023,7 +3023,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'infrastructure@apache.org'
     directories:
       -
-        path: '/var/www/infra.apache.org/content'
+        path: '/var/www/infra.apache.org/output'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
