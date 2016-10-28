@@ -1506,6 +1506,9 @@ ea = rw
 [/opennlp]
 @opennlp = r
 
+[/opennlp/site]
+@opennlp = rw
+
 [/openoffice]
 @openoffice = rw
 
