@@ -4,10 +4,7 @@
 ]]--
 
 --[[ External dependencies ]]--
-local json = false
-local JSON = false
-pcall(function() JSON = require "JSON" end) -- JSON: http://regex.info/code/JSON.lua
-pcall(function() json = require "json" end) -- LuaJSON, if available
+local JSON = require 'cjson'
 local lfs = false -- LuaFileSystem
 local socket = require "socket" -- Lua Sockets
 local config = require "config" -- Configuration parser
@@ -99,14 +96,12 @@ function checkJSON()
             if rl then 
                 local okay = false
                 if JSON then 
-                    okay = pcall(function() return JSON:decode(rl) end)
-                elseif json then
-                    okay = pcall(function() return json.decode(rl) end)
+                    okay, js = pcall(function() return JSON.decode(rl) end)
                 end
                 if okay then
                     table.insert(history, { timestamp = now, data = rl, uri = child.uri } )
-                    cwrite(writeTo, rl, child.uri)
                     child.socket:send(greeting .."X-Timestamp: " .. now .. "\r\n\r\nMessage sent!\r\n")
+                    cwrite(writeTo, rl, child.uri)
                 else
                     child.socket:send("HTTP/1.1 400 Bad request\r\n\r\nInvalid JSON data posted :(\r\n")
                 end
@@ -115,7 +110,7 @@ function checkJSON()
             elseif err == "closed" then
                 closeSocket(child.socket)
                 waitingForJSON[k] = nil
-            elseif (now - child.putTime > 5) then
+            elseif (now - child.putTime > 15) then
                 child.socket:send("HTTP/1.1 400 Bad request\r\n\r\nRequest timed out :(\r\n")
                 closeSocket(child.socket)
                 waitingForJSON[k] = nil
