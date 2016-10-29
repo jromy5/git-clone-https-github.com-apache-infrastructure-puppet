@@ -133,4 +133,10 @@ class gump_server {
     url => 'http://gump.apache.org/repoproxy-0.5.zip',
     linkname => 'repoproxy'
   }
+
+  exec { "Install nuget":
+    command => "curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/bin/nuget.exe && chmod 755 /usr/bin/nuget.exe",
+    creates => "/usr/bin/nuget.exe",
+    path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  }
 }
