@@ -1,4 +1,4 @@
-export GUMP_WORKSPACE=/srv/gump/public/gump/metadata/testbed
+export GUMP_WORKSPACE=/srv/gump/public/gump/metadata/vmgump
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export MAVEN_HOME=/opt/maven
 export M2_HOME=/opt/maven2
