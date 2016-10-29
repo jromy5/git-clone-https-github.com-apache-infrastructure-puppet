@@ -33,4 +33,12 @@ class gump_server::cronjobs {
     hour => [6,12,18],
     minute => '0',
   }
+
+  cron { 'Official Gump run sending out nag mails':
+    ensure => present,
+    command => "cd /srv/gump/public/gump/cron; /bin/bash gump.sh all --official",
+    user => gump,
+    hour => 0,
+    minute => '0',
+  }
 }
