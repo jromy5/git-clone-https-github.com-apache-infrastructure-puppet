@@ -20,6 +20,7 @@ bugzilla::cpan_modules:
   - 'PatchReader'
   - 'DateTime::TimeZone'
   - 'Email::Sender'
+  - 'Text::Wrap'
 bugzilla::required_packages:
   - 'make'
   - 'libencode-detect-perl'
