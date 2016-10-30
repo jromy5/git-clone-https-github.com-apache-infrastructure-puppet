@@ -1532,6 +1532,9 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'jspwiki.apache.org'
+    serveraliases: 
+      - 'jspwiki.org'
+      - 'www.jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
