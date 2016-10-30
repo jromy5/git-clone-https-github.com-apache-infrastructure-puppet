@@ -68,7 +68,7 @@ mod 'fail2ban',
 
 mod 'firewall',
   :git => 'https://github.com/puppetlabs/puppetlabs-firewall.git',
-  :tag => '1.3.0'
+  :tag => '1.8.1'
 
 
 mod 'foreman',
@@ -118,6 +118,11 @@ mod 'letsencrypt',
 mod 'mailman3',
   :git => 'https://github.com/pctony/puppet-mailman3.git',
   :branch => 'asf_development'
+
+
+mod 'memcached',
+  :git => 'https://github.com/saz/puppet-memcached',
+  :tag => 'v2.8.1'
 
 
 mod 'module_data',
