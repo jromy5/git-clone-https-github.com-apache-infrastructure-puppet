@@ -16,3 +16,5 @@ python::python_pips:
     ensure: present
   markdown:
     ensure: present
+  beautifulsoup4:
+    ensure: present
