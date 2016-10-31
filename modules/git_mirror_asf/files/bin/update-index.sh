@@ -1,8 +1,10 @@
 #! /bin/sh
 #
-# Updates the http://git.apache.org/ web page
+# Updates the http://git.apache.org/ web page and http://git.apache.org/index.json
 
 cd /x1/git/mirrors
+
+echo "{" >index.json.new
 
 cat <<EOT >index.new
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -120,12 +122,13 @@ for d in *.git; do
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="$g"><img title="Go to canonical repository" src="/images/icon_commit.png" height="16" width="16"/></a>
+              <a href="$g"><img title="Go to canonical Git repository" src="/images/icon_commit.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
   else
     svnurl=`git config svn-remote.svn.fetch | sed "s/trunk.*:.*//"`
+    g=https://svn.apache.org/repos/asf/$svnurl
     cat <<EOT >>index.new
           <tr>
             <td>$d</td>
@@ -135,11 +138,14 @@ EOT
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="https://svn.apache.org/repos/asf/$svnurl"><img title="View Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
+              <a href="$g"><img title="Go to Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
   fi
+  cat <<EOT >>index.json.new
+"$n": "$g",
+EOT
 done
 
 cat <<EOT >>index.new
@@ -151,11 +157,13 @@ cat <<EOT >>index.new
     </div> 
 
     <div id="copyright" class="container_16"> 
-      <p>Copyright &#169; 2010-2014 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
+      <p>Copyright &#169; 2010-2016 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
     </div> 
   </body> 
 </html>
 EOT
+sed -i '$s/,$//' index.json.new
+echo "}" >>index.json.new
 
 mv -f index.new index.html
-
+mv -f index.json.new index.json
