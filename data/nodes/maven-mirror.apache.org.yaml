@@ -1,6 +1,5 @@
 ---
 classes:
-  - apt::update
   - fail2ban_asf::config
   - maven_central_mirror_asf
   - unattended_upgrades

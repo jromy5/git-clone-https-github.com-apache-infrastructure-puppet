@@ -1,6 +1,5 @@
 ---
 classes:
-  - apt::update
   - fail2ban_asf::config
   - rootbin_asf
   - rsync::server
