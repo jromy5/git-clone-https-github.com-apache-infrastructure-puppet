@@ -1,17 +1,9 @@
 ---
 classes:
-  - apt::unattended_upgrades
   - apt::update
   - fail2ban_asf::config
   - maven_central_mirror_asf
-
-apt::unattended_upgrades::update: 1
-apt::unattended_upgrades::download: 1
-apt::unattended_upgrades::upgrade: 1
-apt::unattended_upgrades::autoclean: 7
-apt::unattended_upgrades::origins:
-  - '${distro_id} ${distro_codename}-security'
-  - '${distro_id} ${distro_codename}-updates'
+  - unattended_upgrades
 
 fail2ban::service_autorestart: true
 fail2ban::disable: false
@@ -27,3 +19,10 @@ fail2ban_asf::config::jails:
     maxretry: 5
     enable: true
 
+unattended_upgrades::update: 1
+unattended_upgrades::download: 1
+unattended_upgrades::upgrade: 1
+unattended_upgrades::autoclean: 7
+unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'

@@ -1,6 +1,5 @@
 ---
 classes:
-  - apt::unattended_upgrades
   - apt::update
   - fail2ban_asf::config
   - rootbin_asf
@@ -12,6 +11,7 @@ classes:
   - stunnel
   - zmanda_asf::server
   - zfs_on_ubuntu
+  - unattended_upgrades
 
 rsync::package_ensure:        'latest'
 rsync::server::use_xinetd:    false
@@ -134,3 +134,11 @@ stunnel::tun:
     verify:       1
     options:
       - NO_SSLv2
+
+unattended_upgrades::update: 1
+unattended_upgrades::download: 1
+unattended_upgrades::upgrade: 1
+unattended_upgrades::autoclean: 7
+unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'
