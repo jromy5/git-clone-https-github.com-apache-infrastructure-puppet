@@ -33,6 +33,11 @@ else:
     version = 3
     import json, httplib2, http.client, urllib.request, urllib.parse, re, base64, sys, os, time, atexit, signal, logging, subprocess
 
+
+PROJECTS_CONF = ('infrastructure/buildbot/aegis/buildmaster/master1/projects/'
+                 'projects.conf')
+
+
 ############################################
 # Get path, set up logging and read config #
 ############################################
@@ -268,6 +273,15 @@ class PubSubClient(Thread):
                             svnuser = commit['committer']
                             revision = commit['id']
                             email = svnuser + "@apache.org"
+
+                            # If projects.conf is changed, then possibly a new
+                            # .conf was added. We want that handled first, so
+                            # it is on-disk when projects.conf is checked.
+                            if PROJECTS_CONF in commit['changed']:
+                              # move projects.conf to the last item.
+                              commit['changed'].remove(PROJECTS_CONF)
+                              commit['changed'].append(PROJECTS_CONF)
+
                             for path in commit['changed']:
                                 m = re.match(r"infrastructure/buildbot/aegis/buildmaster/master1/projects/(.+\.conf)", path)
                                 if m:
