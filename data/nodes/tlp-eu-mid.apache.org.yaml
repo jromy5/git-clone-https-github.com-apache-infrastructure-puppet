@@ -3035,6 +3035,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     custom_fragment: |
       # Proxying will go here...
+      SSLProxyEngine on
       ProxyPass /self-serve/reporeq/ https://reporeq.apache.org/
       ProxyPass /self-serve/id/ https://id.apache.org/
       ProxyPass /self-serve/acreq/ https://id.apache.org/acreq/
