@@ -77,3 +77,4 @@ vhosts_asf::vhosts::vhosts:
       #Rewrites
       RewriteEngine On
       RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
+      RewriteRule ^/wiki(.*)$ /www/wiki/share/moin/htdocs$1 [L]
