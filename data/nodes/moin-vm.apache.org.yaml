@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::ssl
+  - apache::mod::rewrite
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
@@ -74,4 +75,5 @@ vhosts_asf::vhosts::vhosts:
       WSGIApplicationGroup %%{}{GLOBAL}
       
       #Rewrites
+      RewriteEngine On
       RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
