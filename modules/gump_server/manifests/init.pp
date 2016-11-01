@@ -35,19 +35,19 @@ class gump_server {
   } ->
 
   file { '/home/gump/.forward':
-    ensure => file,
+    ensure  => file,
     content => 'general@gump.apache.org',
-    owner => gump,
+    owner   => gump,
   } ->
 
   file { '/home/gump/.gitconfig':
     ensure => file,
     source => 'puppet:///modules/gump_server/.gitconfig',
-    owner => gump,
+    owner  => gump,
   }
 
   file { '/root/.forward':
-    ensure => file,
+    ensure  => file,
     content => 'private@gump.apache.org',
   }
 
@@ -58,20 +58,24 @@ class gump_server {
   file { '/srv':
     ensure => directory,
   } ->
-  file { [ '/srv/gump', '/srv/gump/public',
-           '/srv/gump/public/workspace', '/srv/gump/public/workspace/log' ]:
-    ensure => directory,
-    owner  => gump,
-    group  => gump,
+    file { [
+      '/srv/gump',
+      '/srv/gump/public',
+      '/srv/gump/public/workspace',
+      '/srv/gump/public/workspace/log'
+    ]:
+    ensure  => directory,
+    owner   => gump,
+    group   => gump,
     require => User['gump'],
   } ->
   vcsrepo { '/srv/gump/public/gump':
     ensure   => present,
     provider => svn,
     source   => 'https://svn.apache.org/repos/asf/gump/live/',
-    owner  => gump,
-    group  => gump,
-    require => Package['subversion'],
+    owner    => gump,
+    group    => gump,
+    require  => Package['subversion'],
   } ->
   file { '/srv/gump/public/gump/metadata/testbed.xml':
     ensure => file,
@@ -79,13 +83,13 @@ class gump_server {
     group  => gump,
     source => 'puppet:///modules/gump_server/testbed.xml',
   } ->
-  file { "/srv/gump/public/gump/cron/local-env-${hostname}.sh":
+  file { "/srv/gump/public/gump/cron/local-env-${::hostname}.sh":
     ensure => file,
     owner  => gump,
     group  => gump,
     source => 'puppet:///modules/gump_server/localenv.sh',
   } ->
-  file { "/srv/gump/public/gump/cron/local-post-run-${hostname}.sh":
+  file { "/srv/gump/public/gump/cron/local-post-run-${::hostname}.sh":
     ensure => file,
     owner  => gump,
     group  => gump,
@@ -97,52 +101,39 @@ class gump_server {
   #              Required Software                 #
   ##################################################
 
-  define gump_server::opt_package ($dirname = $title, $url, $linkname) {
-    exec { "Add ${dirname}":
-      command => "curl ${url} -o ${$dirname}.zip && unzip ${dirname}.zip -d /opt/__versions__",
-      creates => "/opt/__versions__/${dirname}",
-      path    => ['/usr/bin', '/bin', '/usr/sbin']
-    } ->
-    file { "/opt/${linkname}":
-      ensure => link,
-      force  => true,
-      target => "/opt/__versions__/${dirname}"
-    }
-  }
-
   file { ['/opt', '/opt/__versions__']:
     ensure => directory,
   } ->
   gump_server::opt_package { 'maven-1.1':
-    url => 'https://archive.apache.org/dist/maven/maven-1/1.1/binaries/maven-1.1.zip',
+    url      => 'https://archive.apache.org/dist/maven/maven-1/1.1/binaries/maven-1.1.zip',
     linkname => 'maven'
   } ->
   gump_server::opt_package { 'apache-maven-2.2.1':
-    url => 'https://archive.apache.org/dist/maven/maven-2/2.2.1/binaries/apache-maven-2.2.1-bin.zip',
+    url      => 'https://archive.apache.org/dist/maven/maven-2/2.2.1/binaries/apache-maven-2.2.1-bin.zip',
     linkname => 'maven2'
   } ->
   gump_server::opt_package { 'apache-maven-3.3.9':
-    url => 'https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip',
+    url      => 'https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip',
     linkname => 'maven3'
   } ->
   gump_server::opt_package { 'gradle-2.14.1':
-    url => 'https://downloads.gradle.org/distributions/gradle-2.14.1-bin.zip',
+    url      => 'https://downloads.gradle.org/distributions/gradle-2.14.1-bin.zip',
     linkname => 'gradle'
   } ->
   gump_server::opt_package { 'repoproxy-0.5':
-    url => 'http://gump.apache.org/repoproxy-0.5.zip',
+    url      => 'http://gump.apache.org/repoproxy-0.5.zip',
     linkname => 'repoproxy'
   }
 
-  exec { "Install nuget":
-    command => "curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/bin/nuget.exe && chmod 755 /usr/bin/nuget.exe",
-    creates => "/usr/bin/nuget.exe",
+  exec { 'Install nuget':
+    command => 'curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/bin/nuget.exe && chmod 755 /usr/bin/nuget.exe',
+    creates => '/usr/bin/nuget.exe',
     path    => ['/usr/bin', '/bin', '/usr/sbin'],
   }
 
   exec { "Install certs in Mono's truststore":
     command => 'mozroots --import --sync --machine --url "http://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt" && touch /root/mozroots-synced',
-    creates => "/root/mozroots-synced",
+    creates => '/root/mozroots-synced',
     path    => ['/usr/bin', '/bin', '/usr/sbin'],
     require => Package['mono-mcs'],
   }
