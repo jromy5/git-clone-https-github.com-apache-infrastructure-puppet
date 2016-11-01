@@ -71,7 +71,7 @@ vhosts_asf::vhosts::vhosts:
       WSGIDaemonProcess wiki processes=20 threads=1 maximum-requests=500 group=www-data display-name=moinwiki
       WSGIProcessGroup wiki
       WSGIScriptAliasMatch /([^/]+) /www/wiki/share/moin/server/moin.wsgi
-      WSGIApplicationGroup %{GLOBAL}
+      WSGIApplicationGroup %%{}{GLOBAL}
       
       #Rewrites
       RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
