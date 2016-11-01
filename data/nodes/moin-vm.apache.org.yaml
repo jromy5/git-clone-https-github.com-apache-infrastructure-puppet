@@ -1,0 +1,77 @@
+---
+classes:
+  - apache
+  - apache::mod::ssl
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::max_keepalive_requests: 1000
+apache::timeout: 600
+apache::default_vhost:      false
+apache::docroot:            '/www/wiki'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '800'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '800'
+apache::mod::event::maxsparethreads: '200'
+apache::mod::event::minsparethreads: '50'
+apache::mod::event::serverlimit: '4'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '800'
+apache::mod::event::threadsperchild: '200'
+
+apache::mod::status::allow_from:
+  - all
+
+apache::mpm_module:         'event'
+apache::serveradmin:        'users@infra.@apache.org'
+
+base::basepackages:
+  - 'rsync'
+  - 'libapache2-mod-wsgi'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::modules::modules:
+  wsgi:
+    name: 'wsgi'
+
+vhosts_asf::vhosts::vhosts:
+  moin_http:
+    vhost_name: '*'
+    port: 80
+    docroot: '/www/wiki/share/moin/htdocs'
+    servername: 'wiki.apache.org'
+    directoryindex: 'index.html'
+    custom_fragment: |
+      # Redir to https (fix name later)
+      Redirect / https://moin-vm.apache.org/
+      
+  wiki_https:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    docroot: '/www/wiki/share/moin/htdocs'
+    servername: 'wiki.apache.org'
+    directoryindex: 'index.html'
+    ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+    options:
+      - Indexes
+      - FollowSymLinks
+    custom_fragment: |
+      # WSGI
+      WSGIDaemonProcess wiki processes=20 threads=1 maximum-requests=500 group=www-data display-name=moinwiki
+      WSGIProcessGroup wiki
+      WSGIScriptAliasMatch /([^/]+) /www/wiki/share/moin/server/moin.wsgi
+      WSGIApplicationGroup %{GLOBAL}
+      
+      #Rewrites
+      RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
