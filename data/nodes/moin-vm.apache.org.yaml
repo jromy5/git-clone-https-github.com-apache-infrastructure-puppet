@@ -6,6 +6,7 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+  - zmanda_asf::client
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
