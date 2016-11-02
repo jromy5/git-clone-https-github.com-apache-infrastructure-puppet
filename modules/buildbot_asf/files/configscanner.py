@@ -287,13 +287,26 @@ class PubSubClient(Thread):
                                 m = re.match(r"infrastructure/buildbot/aegis/buildmaster/master1/projects/(.+\.conf)", path)
                                 if m:
                                     buildbotFile = m.group(1)
+                                    isNewFile = False
                                     time.sleep(3)
                                     before = revision - 1
                                     print("%s changed, validating..." % buildbotFile)
                                     try:
                                         os.chdir(buildbotDir)
                                         print("Checking out new config")
-                                        subprocess.check_output(["/usr/bin/svn cat projects/%s -r %u > projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
+                                        # If this is a new file, svn cat doesn't work - we gotta check it out and test, then
+                                        # rm it if it borks.
+                                        if not os.path.exists("/x1/buildmaster/master1/projects/%s" % buildbotFile):
+                                            isNewFile = True
+                                            # If this was here before (and we rm'ed it), svn up won't help, try svn revert first
+                                            try:
+                                                subprocess.check_output(["/usr/bin/svn revert projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
+                                            except:
+                                                pass
+                                            # Fall back to svn up
+                                            subprocess.check_output(["/usr/bin/svn up projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
+                                        else:
+                                            subprocess.check_output(["/usr/bin/svn cat projects/%s -r %u > projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
                                         print("Running config check")
                                         subprocess.check_output(["/usr/bin/buildbot", "checkconfig"], stderr=subprocess.STDOUT)
                                         print("Check passed, updating project file permanently")
@@ -314,6 +327,9 @@ class PubSubClient(Thread):
                                         broken[buildbotFile] = True
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
+                                        if isNewFile and os.path.isfile("/x1/buildmaster/master1/projects/%s" % buildbotFile):
+                                            print("Cleaning up new file that borked")
+                                            os.unlink("/x1/buildmaster/master1/projects/%s" % buildbotFile)
                                         blamelist.append(email)
                                         out = """
 The error(s) below happened while validating the committed changes.
