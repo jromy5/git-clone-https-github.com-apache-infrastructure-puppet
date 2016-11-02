@@ -322,6 +322,8 @@ class PubSubClient(Thread):
                                         if isNewFile and os.path.isfile("/x1/buildmaster/master1/projects/%s" % buildbotFile):
                                             print("Cleaning up new file that borked")
                                             os.unlink("/x1/buildmaster/master1/projects/%s" % buildbotFile)
+                                        else:
+                                            subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
                                         blamelist.append(email)
                                         out = """
 The error(s) below happened while validating the committed changes.
@@ -338,7 +340,6 @@ Please correct the below and commit your fixes:
                                                 out
                                                 )
                                         blamelist.remove(email)
-                                        subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
                                         print("Cleaning up...")
                                         # Unsure whether the below is needed or will bork things:
 #                                        subprocess.call(["/usr/bin/svn", "update", "-r", "%u" % before, "projects/%s" % buildbotFile])
