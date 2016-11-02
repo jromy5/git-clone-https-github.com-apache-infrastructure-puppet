@@ -37,7 +37,6 @@ else:
 PROJECTS_CONF = ('infrastructure/buildbot/aegis/buildmaster/master1/projects/'
                  'projects.conf')
 
-os.environ['HOME'] = '/x1/buildmaster'
 
 ############################################
 # Get path, set up logging and read config #
@@ -291,6 +290,7 @@ class PubSubClient(Thread):
                                     time.sleep(3)
                                     before = revision - 1
                                     print("%s changed, validating..." % buildbotFile)
+                                    os.environ['HOME'] = '/x1/buildmaster'
                                     try:
                                         os.chdir(buildbotDir)
                                         print("Checking out new config")
