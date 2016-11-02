@@ -53,7 +53,7 @@ vhosts_asf::vhosts::vhosts:
     directoryindex: 'index.html'
     custom_fragment: |
       # Redir to https (fix name later)
-      Redirect / https://moin-vm.apache.org/
+      Redirect / https://wiki.apache.org/general/
       
   wiki_https:
     vhost_name: '*'
@@ -79,3 +79,4 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine On
       RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
       RewriteRule ^/wiki(.*)$ /www/wiki/share/moin/htdocs$1 [L]
+      Redirect / https://wiki.apache.org/general/
