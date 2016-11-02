@@ -298,15 +298,7 @@ class PubSubClient(Thread):
                                         # rm it if it borks.
                                         if not os.path.exists("/x1/buildmaster/master1/projects/%s" % buildbotFile):
                                             isNewFile = True
-                                            # If this was here before (and we rm'ed it), svn up won't help, try svn revert first
-                                            try:
-                                                subprocess.check_output(["/usr/bin/svn revert projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
-                                            except:
-                                                pass
-                                            # Fall back to svn up
-                                            subprocess.check_output(["/usr/bin/svn up projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
-                                        else:
-                                            subprocess.check_output(["/usr/bin/svn cat projects/%s -r %u > projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
+                                        subprocess.check_output(["/usr/bin/svn cat https://svn.apache.org/repos/infra/infrastructure/buildbot/aegis/buildmaster/master1/projects/%s -r %u > projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
                                         print("Running config check")
                                         subprocess.check_output(["/usr/bin/buildbot", "checkconfig"], stderr=subprocess.STDOUT)
                                         print("Check passed, updating project file permanently")
