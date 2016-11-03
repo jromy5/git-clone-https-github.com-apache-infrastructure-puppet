@@ -54,13 +54,6 @@ class build_slaves::jenkins (
       target => "/usr/local/jenkins/findbugs/${findbugs_old_version}",
     }
   }
-  #define findbugs_old symlinking
-  define build_slaves::symlink_findbugs_old ($findbugs_old_version = $title) {
-    file {"/home/jenkins/tools/findbugs/${findbugs_old_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/findbugs/${findbugs_old_version}",
-    }
-  }
   #define findbugs symlinking
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
     file {"/home/jenkins/tools/findbugs/${findbugs_version}":
