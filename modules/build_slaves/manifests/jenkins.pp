@@ -13,7 +13,7 @@ class build_slaves::jenkins (
   $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs_old = ['findbugs-2.0.3'],
-  $findbugs = ['findbugs-3.0.1],
+  $findbugs = ['findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
