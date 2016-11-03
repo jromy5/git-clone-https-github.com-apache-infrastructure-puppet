@@ -54,6 +54,13 @@ class build_slaves::jenkins (
       target => "/usr/local/jenkins/findbugs/${findbugs_old_version}",
     }
   }
+  #define findbugs_old symlinking
+  define build_slaves::symlink_findbugs_old ($findbugs_old_version = $title) {
+    file {"/home/jenkins/tools/findbugs/${findbugs_old_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/findbugs/${findbugs_old_version}",
+    }
+  }
   #define findbugs symlinking
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
     file {"/home/jenkins/tools/findbugs/${findbugs_version}":
@@ -72,7 +79,7 @@ class build_slaves::jenkins (
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
     file {"/home/jenkins/tools/jiracli/${jiracli_version}":
       ensure => link,
-      target => "/usr/local/jenkins/jiracli/${jiracli_version}",
+      target => "/usr/local/asfpackages/jiracli/${jiracli_version}",
     }
   }
   #define maven old symlinking (deprecated, remove soon)
@@ -226,14 +233,14 @@ class build_slaves::jenkins (
 
   # populate /home/jenkins/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
-  file {'/usr/local/jenkins/jiracli/':
+  file {'/usr/local/asfpackages/jiracli/':
     ensure  => directory,
     owner   => 'jenkins',
     group   => 'jenkins',
     require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
-  file {'/usr/local/jenkins/forrest/':
+  file {'/usr/local/asfpackages/forrest/':
     ensure  => directory,
     owner   => 'jenkins',
     group   => 'jenkins',
@@ -259,7 +266,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_findbugs     { $findbugs: }
   file { '/home/jenkins/tools/findbugs/latest':
     ensure => link,
-    target => '/usr/local/jenkins/findbugs/findbugs-2.0.3',
+    target => '/usr/local/asfpackages/findbugs/findbugs-3.0.1',
   }
 
   # forrest symlinks - populate array, make all symlinks, make latest symlink
