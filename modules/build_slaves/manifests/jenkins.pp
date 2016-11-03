@@ -12,7 +12,8 @@ class build_slaves::jenkins (
   $ant_old = ['apache-ant-1.9.4'],
   $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
   $clover = ['clover-ant-4.1.2'],
-  $findbugs = ['findbugs-2.0.3'],
+  $findbugs_old = ['findbugs-2.0.3'],
+  $findbugs = ['findbugs-3.0.1],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
@@ -46,11 +47,18 @@ class build_slaves::jenkins (
       target => "/usr/local/asfpackages/ant/${ant_version}",
     }
   }
+  #define findbugs_old symlinking
+  define build_slaves::symlink_findbugs_old ($findbugs_old_version = $title) {
+    file {"/home/jenkins/tools/findbugs/${findbugs_old_version}":
+      ensure => link,
+      target => "/usr/local/jenkins/findbugs/${findbugs_old_version}",
+    }
+  }
   #define findbugs symlinking
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
     file {"/home/jenkins/tools/findbugs/${findbugs_version}":
       ensure => link,
-      target => "/usr/local/jenkins/findbugs/${findbugs_version}",
+      target => "/usr/local/asfpackages/findbugs/${findbugs_version}",
     }
   }
   #define forrest symlinking
