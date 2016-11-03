@@ -65,7 +65,7 @@ class build_slaves::jenkins (
   define build_slaves::symlink_forrest ($forrest_version = $title) {
     file {"/home/jenkins/tools/forrest/${forrest_version}":
       ensure => link,
-      target => "/usr/local/jenkins/forrest/${forrest_version}",
+      target => "/usr/local/asfpackages/forrest/${forrest_version}",
     }
   }
   #define jiracli symlinking
