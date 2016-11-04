@@ -262,7 +262,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_jiracli      { $jiracli: }
   file { '/home/jenkins/tools/jiracli/latest':
     ensure => link,
-    target => '/usr/local/jenkins/jiracli/jira-cli-2.1.0',
+    target => '/usr/local/asfpackages/jiracli/jira-cli-2.1.0',
   }
 
   # maven old symlinks - populate array, make all symlinks, make latest symlink
