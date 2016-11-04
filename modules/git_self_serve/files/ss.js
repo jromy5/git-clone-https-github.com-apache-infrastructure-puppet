@@ -335,7 +335,9 @@ renderForm = function(json, state) {
 			value: pmc
 		}, pmc));
 	}
-	reponamediv = mk('div');
+	reponamediv = mk('div', {
+		style: "position:relative;overflow: auto;border-bottom: 1px solid #CCC; padding-bottom: 6px; margin-bottom: 6px;"
+	});
 	reponametext = mk('div', {
 		style: "float: left; width: 150px; font-weight: bold;"
 	}, "Repository name: ");
