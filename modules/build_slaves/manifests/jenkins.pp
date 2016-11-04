@@ -9,8 +9,7 @@ class build_slaves::jenkins (
   $jenkins_pub_key  = '',
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
-  $ant_old = ['apache-ant-1.9.4'],
-  $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
+  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs_old = ['findbugs-2.0.3'],
   $findbugs = ['findbugs-3.0.1'],
@@ -18,8 +17,8 @@ class build_slaves::jenkins (
   $jiracli = ['jira-cli-2.1.0'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'],
-  $java_jenkins = ['ibm-1.4-32', 'ibm-1.4-64', 'ibm-1.5-32', 'ibm-1.5-64', 'ibm-1.6-32', 'ibm-1.6-64', 'harmony-1.5-64', 'jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'],
-  $java_asfpackages = ['jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'ibm-java-x86_64-60', 'ibm-java-x86_64-80'],
+  $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'],
+  $java_asfpackages = ['jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'ibm-java-x86_64-60', 'ibm-java-x86_64-70', 'ibm-java-x86_64-80'],
 ) {
 
   require stdlib
@@ -31,13 +30,6 @@ class build_slaves::jenkins (
       ensure => directory,
       owner  => 'jenkins',
       group  => 'jenkins',
-    }
-  }
-  #define ant old symlinking
-  define build_slaves::symlink_ant_old ($ant_old_version = $title) {
-    file {"/home/jenkins/tools/ant/${ant_old_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/ant/${ant_old_version}",
     }
   }
   #define ant symlinking
@@ -306,7 +298,7 @@ class build_slaves::jenkins (
   }
   file { '/home/jenkins/tools/java/latest1.4':
     ensure => link,
-    target => '/usr/local/jenkins/java/j2sdk1.4.2_19',
+    target => '/usr/local/asfpackages/java/j2sdk1.4.2_19',
   }
   file { '/home/jenkins/tools/java/latest1.5':
     ensure => link,
