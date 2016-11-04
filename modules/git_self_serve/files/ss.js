@@ -255,10 +255,8 @@ submitForm = function(form) {
 		alert("Notification list needs to be an apache.org mailing list!");
 		return false;
 	}
-	mirror = get('mirror').checked;
-	github = get('github').checked;
 	ghnotify = get('ghnotify').value;
-	if (github && !ghnotify.match(/.+@.+\.apache\.org/i)) {
+	if (!ghnotify.match(/.+@.+\.apache\.org/i)) {
 		alert("GitHub notification list needs to be an apache.org mailing list!");
 		return false;
 	}
@@ -270,8 +268,6 @@ submitForm = function(form) {
 			name: reponame,
 			description: description,
 			notify: notify,
-			mirror: mirror,
-			github: github,
 			ghnotify: ghnotify
 		}, null, null);
 		get('confirm').innerHTML = '';
@@ -388,36 +384,6 @@ renderForm = function(json, state) {
 			style: "width: 400px;",
 			placeholder: "dev@foo.apache.org",
 			id: "notify"
-		}))
-	]);
-	app(form, d);
-	d = mk('div', {
-		style: "width: 100%; position: relative; overflow: auto; border-bottom: 1px solid #CCC; padding-bottom: 6px; margin-bottom: 6px;"
-	}, [
-		mk('div', {
-			style: "width: 200px; float: left;"
-		}, mk('b', null, "Mirror to github:")), mk('div', {
-			style: "width: 450px; float: left;"
-		}, mk('input', {
-			type: 'checkbox',
-			checked: null,
-			id: 'mirror',
-			value: 'true'
-		}))
-	]);
-	app(form, d);
-	d = mk('div', {
-		style: "width: 100%; position: relative; overflow: auto; border-bottom: 1px solid #CCC; padding-bottom: 6px; margin-bottom: 6px;"
-	}, [
-		mk('div', {
-			style: "width: 200px; float: left;"
-		}, mk('b', null, "Enable GitHub integrations:")), mk('div', {
-			style: "width: 450px; float: left;"
-		}, mk('input', {
-			type: 'checkbox',
-			checked: null,
-			id: 'github',
-			value: 'true'
 		}))
 	]);
 	app(form, d);
