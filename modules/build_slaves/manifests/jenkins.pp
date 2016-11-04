@@ -237,9 +237,6 @@ class build_slaves::jenkins (
     ensure => latest,
   }
 
-  # ant_old symlinks - populate array, make all symlinks
-  build_slaves::symlink_ant_old          { $ant_old: }
-
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
   file { '/home/jenkins/tools/ant/latest':
