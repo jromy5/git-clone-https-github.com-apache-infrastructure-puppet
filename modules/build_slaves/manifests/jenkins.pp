@@ -255,7 +255,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_forrest      { $forrest: }
   file { '/home/jenkins/tools/forrest/latest':
     ensure => link,
-    target => '/usr/local/jenkins/forrest/apache-forrest-0.9',
+    target => '/usr/local/asfpackages/forrest/apache-forrest-0.9',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
