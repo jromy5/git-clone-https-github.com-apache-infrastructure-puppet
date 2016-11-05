@@ -99,8 +99,8 @@ function handle(r)
                 notify = post.notify,
                 timestamp = os.time(),
                 requester = r.user or 'nobody',
-                mirror = (post.mirror and #post.mirror > 0) and true or false,
-                github = (post.github and #post.github > 0) and true or false,
+                mirror = true,
+                github = true,
                 ghnotify = (post.ghnotify and post.ghnotify:match(".+@.+")) and post.ghnotify or post.notify
             }
             -- add to JSON
@@ -120,7 +120,7 @@ function handle(r)
             -- send message to hipchat
             hipchat(r, ("<b>New git repo request:</b> %s has requested %s, notifications to: %s. %s %s"):format(
                     r.user, rname, post.notify, req.mirror and "This will be mirrored on git.a.o." or "",
-                    req.github and "This will have GitHub integrations enabled." or ""))
+                    "This will have GitHub integrations enabled."))
         end
         return apache2.OK
     end
