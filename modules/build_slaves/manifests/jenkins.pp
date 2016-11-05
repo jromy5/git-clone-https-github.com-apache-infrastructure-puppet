@@ -7,6 +7,8 @@ class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
+  $gsr_user,
+  $gsr_pw,
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
   $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7'],
@@ -185,6 +187,17 @@ class build_slaves::jenkins (
     mode    => '0640',
     content => template('build_slaves/npmrc.erb')
   }
+
+    if $facts['fqdn'] == 'asf920.gq1.ygridcore.net' {
+      file { '/home/jenkins/.git-credentials':
+        ensure  => present,
+        path    => '/home/jenkins/.git-credentials',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        mode    => '0640',
+        content => template('build_slaves/git-credentials.erb')
+      }
+    }
 
   file { '/etc/security/limits.d/jenkins.conf':
     ensure  => file,
