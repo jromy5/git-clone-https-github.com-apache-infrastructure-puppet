@@ -197,6 +197,15 @@ class build_slaves::jenkins (
         mode    => '0640',
         content => template('build_slaves/git-credentials.erb')
       }
+
+      file { '/home/jenkins/.gitconfig':
+        ensure  => present,
+        path    => '/home/jenkins/.gitconfig',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        mode    => '0640',
+        source  => 'puppet:///modules/build_slaves/gitconfig',
+      }
     }
 
   file { '/etc/security/limits.d/jenkins.conf':
