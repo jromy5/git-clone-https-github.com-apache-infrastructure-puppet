@@ -287,7 +287,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b128
   - asf-build-jdk9-ea-b132
   - asf-build-jdk9-ea-b139
-  - asf-build-jigsaw-jdk9
+  - asf-build-jigsaw-jdk9-ea-b142
   - asf-build-jira-cli-2.1.0
 
 build_slaves::distro_packages:
@@ -411,7 +411,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk1.8.0-102
   - asf-build-jdk9-ea-b132
   - asf-build-jdk9-ea-b139
-  - asf-build-jigsaw-jdk9
+  - asf-build-jigsaw-jdk9-ea-b142
 
 buildbot_slave::bb_basepackages:
   - buildbot-slave
