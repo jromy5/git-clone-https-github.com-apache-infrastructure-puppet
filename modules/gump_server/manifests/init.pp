@@ -139,4 +139,11 @@ class gump_server {
     creates => "/usr/bin/nuget.exe",
     path    => ['/usr/bin', '/bin', '/usr/sbin'],
   }
+
+  exec { "Install certs in Mono's truststore":
+    command => 'mozroots --import --sync --machine --url "http://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt" && touch /root/mozroots-synced',
+    creates => "/root/mozroots-synced",
+    path    => ['/usr/bin', '/bin', '/usr/sbin'],
+    require => Package['mono-mcs'],
+  }
 }
