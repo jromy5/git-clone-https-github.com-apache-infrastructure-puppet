@@ -1,0 +1,6 @@
+---
+classes:
+  - build_slaves::jenkins
+
+build_slaves::jenkins::npmrc_password: ''
+build_slaves::jenkins::nexus_password: ''
