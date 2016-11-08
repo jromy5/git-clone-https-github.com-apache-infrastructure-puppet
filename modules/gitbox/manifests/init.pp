@@ -65,6 +65,18 @@ file {
     source => 'puppet:///modules/gitbox/gitconfig';
   }
 
+## GitWeb modern CSS
+file {
+  '/usr/share/gitweb':
+    ensure => directory,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0750';
+  '/usr/share/gitweb/gitweb.css':
+    ensure => present,
+    source => 'puppet:///modules/gitbox/htdocs/gitweb.css';
+}
+
 
 ## Unless declared otherwise the default behaviour is to enable these modules
 apache::mod { 'authnz_ldap': }
@@ -99,7 +111,7 @@ apache::vhost {
 
 apache::vhost {
   'gitbox-ssl':
-    priority        => '98',
+    priority        => '25',
     vhost_name      => '*',
     servername      => 'gitbox.apache.org',
     port            => '443',
