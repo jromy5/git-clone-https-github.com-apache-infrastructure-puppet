@@ -1887,7 +1887,7 @@ svn-role = rw
 @zest = rw
 
 [/zookeeper]
-@zookeeper = ro
+@zookeeper = r
 
 [/zookeeper/site]
 @zookeeper = rw
