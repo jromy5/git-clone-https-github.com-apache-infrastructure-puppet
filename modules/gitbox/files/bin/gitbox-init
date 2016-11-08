@@ -1,0 +1,187 @@
+#!/usr/bin/env python
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to you under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import optparse as op
+import os
+import re
+import subprocess as sp
+import sys
+import tempfile
+import textwrap
+import urlparse
+
+
+__usage__ = "%prog [OPTIONS] GIT_DIR"
+
+REF_RE = re.compile("refs/remotes/([^@]+)")
+
+
+def options():
+    return [
+        op.make_option('-d', '--description', metavar="DESC", dest='desc',
+            help="A short project description. ie, 'Apache Jackrabbit'"),
+        op.make_option('-c', '--commit', metavar="COMMIT", dest='commit',
+            help="Commits email address. ie, 'commits@foo.apache.org'")
+    ]
+
+
+def main():
+    parser = op.OptionParser(usage=__usage__, option_list=options())
+    opts, args = parser.parse_args()
+
+    if len(args) == 0:
+        parser.error("Missing required GIT_DIR arguments.")
+    if len(args) > 1:
+        parser.error("Unknown arguments: %s" % ", ".join(args[2:]))
+
+    git_dir = args[0]
+    os.putenv("GIT_DIR", git_dir)
+
+    if os.path.exists(git_dir):
+        error("Git directory exists: %s" % git_dir)
+
+    init_git(git_dir, opts.desc)
+    configure_asfgit(git_dir, opts.commit)
+
+
+def init_git(git_dir, desc):
+    log("Initializing Git repository.")
+    git("init", "--bare", git_dir)
+
+    if desc is None:
+        error("No repository description provided.")
+    save(os.path.join(git_dir, "description"), desc)
+
+
+
+def configure_asfgit(git_dir, commit):
+    asfgit = os.getenv("ASFGIT_ADMIN") or "/x1/gitbox"
+    if not os.path.exists(asfgit):
+        log("WARNING: asfgit-admin directory not found.")
+        log("WARNING: Skipping hosting configuration.")
+        return
+
+    if commit is None:
+        error("No commit email provided.")
+
+    log("Installing hook symlinks.")
+    for name in ("pre-receive", "post-receive"):
+        src = os.path.abspath(os.path.join(asfgit, "hooks", name))
+        dst = os.path.join(git_dir, "hooks", name)
+        if not os.path.exists(src):
+            error("Missing pre-receive hook: %s" % name)
+        if os.path.exists(dst):
+            os.unlink(dst)
+        os.symlink(src, dst)
+
+    log("Initializaing hosting configuration")
+
+    cfgfile = os.path.join(asfgit, "conf", "gitconfig")
+    dstfile = os.path.join(git_dir, "config")
+
+    # Make sure it hasn't already been initialized
+    try:
+        sp.check_call(["git", "config", "hooks.asfgit.debug"])
+        added = True
+    except sp.CalledProcessError:
+        added = False
+
+    if not added:
+        # Get base config
+        if not os.path.exists(cfgfile):
+            error("Missing default git configuration: %s" % cfgfile)
+        with open(cfgfile) as handle:
+            config = handle.read()
+        git_repo = os.path.basename(git_dir)
+        config = config % {"git_repo": git_repo, "commit": commit}
+
+        # Append the config data to the git config
+        # and let the user review it.
+        if not os.path.exists(dstfile):
+            error("Missing destination git config: %s" % dstfile)
+        with open(dstfile, "a") as handle:
+            handle.write(config)
+
+    # Boot the user's editor to review the conifg.
+    #run_editor(filename=dstfile)
+
+    # Final steps
+    git_repo = os.path.basename(git_dir)
+    log(textwrap.dedent("""\
+
+
+        To finish the hosting configuration you need to set permissions on
+        %(git_repo)s and move it to the repository hosting directory and 
+        run the following:
+
+          $ sudo chown -R www-data:www-data %(git_repo)s
+          $ sudo mv %(git_repo)s $(REPOS)/%(git_repo)s
+
+        At the time of this writing, $(REPOS) should be:
+
+          /x1/repos/asf/
+
+        """ % {"git_repo": git_repo}))
+
+
+def run_editor(filename=None, initial=""):
+    editor = os.getenv("EDITOR", "nano")
+    if filename is None:
+        with tempfile.NamedTemporaryFile(delete=False) as tf:
+            fname = tf.name
+            tf.write(initial)
+    else:
+        fname = filename
+    try:
+        if sp.call([editor, fname]) != 0:
+            return None
+        with open(fname) as handle:
+            return handle.read()
+    finally:
+        if filename is None:
+            os.remove(fname)
+
+
+def git(cmd, *args, **kwargs):
+    cmd = ["git", cmd] + list(args)
+    if kwargs.pop("capture", False):
+        return run(cmd, stderr=sp.STDOUT)
+    sp.check_call(cmd)
+
+
+def run(cmd, *args, **kwargs):
+    if isinstance(cmd, list):
+        return sp.check_output(cmd, **kwargs)
+    else:
+        return sp.check_output([cmd] + list(args), **kwargs)
+
+
+def save(fname, contents):
+    with open(fname, "w") as handle:
+        handle.write(contents)
+
+
+def log(mesg):
+    sys.stderr.write("%s\n" % mesg)
+
+
+def error(mesg, exit_code=1):
+    sys.stderr.write("ERROR: %s\n" % mesg)
+    sys.exit(exit_code)
+
+
+if __name__ == '__main__':
+    main()
