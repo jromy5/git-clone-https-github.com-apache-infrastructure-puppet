@@ -1,4 +1,4 @@
-our $projectroot = "/x1/git/repos/asf";
+our $projectroot = "/x1/repos/asf";
 our $site_name = "ASF Git Repos";
 our $site_header = "<h1>ASF Git Repos</h1>";
 
