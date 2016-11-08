@@ -341,6 +341,7 @@ build_slaves::distro_packages:
   - liblzo2-dev
   - liblua5.2-dev
   - libmono-system-web4.0-cil
+  - libperl-dev
   - libqt4-dev
   - libsasl2-dev
   - libsnappy-dev
@@ -382,6 +383,7 @@ build_slaves::distro_packages:
   - sharutils
   - shellcheck
   - sloccount
+  - swig
   - tmux
   - unzip
   - virtualenvwrapper
