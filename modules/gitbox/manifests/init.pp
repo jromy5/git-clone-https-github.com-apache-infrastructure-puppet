@@ -86,7 +86,12 @@ file {
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0750';
-  '/usr/share/gitweb/gitweb.css':
+  '/usr/share/gitweb/static':
+    ensure => directory,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0750';
+  '/usr/share/gitweb/static/gitweb.css':
     ensure => present,
     owner  => 'www-data',
     group  => 'www-data',
