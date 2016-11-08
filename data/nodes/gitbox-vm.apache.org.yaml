@@ -26,7 +26,6 @@ datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/a
 base::gempackages:
   - 'r10k'
   - 'puppet-lint'
-  - 'gitweb'
 
 logrotate::rule:
   apache2:
