@@ -1,4 +1,4 @@
-#/etc/puppet/modules/gitserver_asf/manifests/init.pp
+#/etc/puppet/modules/gitbox/manifests/init.pp
 
 class gitbox (
 
@@ -50,6 +50,20 @@ file {
     source => 'puppet:///modules/gitbox/gitconf/config';
 }
 
+## Sync log and broken dir
+file {
+  '/x1/gitbox/broken':
+    ensure  => directory,
+    require => Package[$packages],
+    owner   => 'www-data',
+    group   => 'www-data',
+    mode    => '0750';
+  '/x1/gitbox/sync.log':
+    ensure => present,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0750';
+
 file {
   '/etc/gitweb':
     ensure  => directory,
@@ -74,6 +88,9 @@ file {
     mode   => '0750';
   '/usr/share/gitweb/gitweb.css':
     ensure => present,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0750',
     source => 'puppet:///modules/gitbox/htdocs/gitweb.css';
 }
 
