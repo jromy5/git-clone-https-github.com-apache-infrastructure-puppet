@@ -1,0 +1,36 @@
+#!/usr/local/bin/python
+
+import os
+import subprocess as sp
+import sys
+
+
+def is_executable(path):
+    return os.path.exists(path) and os.access(path, os.X_OK)
+
+
+def run_hook(hook, stdin):
+    pipe = sp.Popen(hook, stdin=sp.PIPE, stderr=sp.STDOUT)
+    pipe.communicate(input=stdin)
+    if pipe.returncode != 0:
+        print "Error running hook: %s" % hook
+
+
+def main():
+    # Perhaps we should fork here to let clients disconnect
+    # without waiting for the post-receive hooks to run.
+    ADMIN_DIR = os.environ.get("ASFGIT_ADMIN")
+    if not ADMIN_DIR:
+        print "Invalid server configuration."
+        exit(1)
+    HOOKS_DIR = os.path.join(ADMIN_DIR, "hooks", "post-receive.d")
+    stdin = sys.stdin.read()
+    for hook in os.listdir(HOOKS_DIR):
+        hook = os.path.join(HOOKS_DIR, hook)
+        if not is_executable(hook):
+            continue
+        run_hook(hook, stdin)
+
+
+if __name__ == '__main__':
+    main()
