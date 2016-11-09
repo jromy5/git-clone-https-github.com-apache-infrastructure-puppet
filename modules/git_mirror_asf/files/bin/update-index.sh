@@ -136,6 +136,7 @@ EOT
           <tr>
             <td>
               <a href="$g"><img title="Go to Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
+              <a href="https://svn.apache.org/viewvc/$svnurl"><img title="View Subversion repository" src="/images/icon_viewvc.png" height="16" width="16"/></a>
             </td>
             <td><a name="$n">$d</a></td>
             <td>$b</td>
