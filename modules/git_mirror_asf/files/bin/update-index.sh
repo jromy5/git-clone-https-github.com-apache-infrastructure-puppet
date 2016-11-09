@@ -97,6 +97,7 @@ cat <<EOT >index.new
     <table style="font-size: 11pt; padding: 1px !important;">
       <thead>
         <tr style="background: linear-gradient(to bottom, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%);">
+          <th>Origin</th>
           <th>Git Mirror</th>
           <th>Description</th>
           <th>Git Clone URL</th>
@@ -115,6 +116,9 @@ for d in *.git; do
   if test -n "$g"; then
     cat <<EOT >>index.new
           <tr>
+            <td>
+              <a href="$g"><img title="Go to canonical Git repository" src="/images/icon_commit.png" height="16" width="16"/></a>
+            </td>
             <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
@@ -122,7 +126,6 @@ for d in *.git; do
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="$g"><img title="Go to canonical Git repository" src="/images/icon_commit.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
@@ -131,6 +134,9 @@ EOT
     g=https://svn.apache.org/repos/asf/$svnurl
     cat <<EOT >>index.new
           <tr>
+            <td>
+              <a href="$g"><img title="Go to Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
+            </td>
             <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
@@ -138,7 +144,6 @@ EOT
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="$g"><img title="Go to Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
