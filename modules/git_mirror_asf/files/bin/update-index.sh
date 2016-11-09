@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Updates the http://git.apache.org/ web page and http://git.apache.org/index.json
+# Updates the http://git.apache.org/ web page, index.json and index.txt
 
 cd /x1/git/mirrors
 
@@ -146,6 +146,7 @@ EOT
   cat <<EOT >>index.json.new
 "$n": "$g",
 EOT
+  echo "git://git.apache.org/$d" >>index.txt.new
 done
 
 cat <<EOT >>index.new
@@ -167,3 +168,4 @@ echo "}" >>index.json.new
 
 mv -f index.new index.html
 mv -f index.json.new index.json
+mv -f index.txt.new index.txt
