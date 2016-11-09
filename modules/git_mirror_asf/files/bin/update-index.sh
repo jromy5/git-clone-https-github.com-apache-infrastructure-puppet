@@ -127,7 +127,7 @@ for d in *.git; do
           </tr>
 EOT
   else
-    svnurl=`git config svn-remote.svn.fetch | sed "s/trunk.*:.*//"`
+    svnurl=`git config svn-remote.svn.fetch | sed "s/\(trunk\|site\).*:.*//"`
     g=https://svn.apache.org/repos/asf/$svnurl
     cat <<EOT >>index.new
           <tr>
