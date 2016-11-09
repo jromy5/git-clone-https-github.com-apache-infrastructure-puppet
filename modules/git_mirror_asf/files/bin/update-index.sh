@@ -115,7 +115,7 @@ for d in *.git; do
   if test -n "$g"; then
     cat <<EOT >>index.new
           <tr>
-            <td>$d</td>
+            <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
               <a href="git://git.apache.org/$d">git://git.apache.org/$d</a>
@@ -131,7 +131,7 @@ EOT
     g=https://svn.apache.org/repos/asf/$svnurl
     cat <<EOT >>index.new
           <tr>
-            <td>$d</td>
+            <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
               <a href="git://git.apache.org/$d">git://git.apache.org/$d</a>
