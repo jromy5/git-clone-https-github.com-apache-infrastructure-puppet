@@ -105,6 +105,21 @@ class buildbot_slave (
       owner  => $username,
       group  => $groupname;
 
+    "/home/${username}/.m2":
+      ensure  => directory,
+      require => User[$username],
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0755';
+
+    "/home/${username}/.m2/settings.xml":
+      require => File["/home/${username}/.m2"],
+      path    => "/home/${username}/.m2/settings.xml",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('buildbot_slave/m2_settings.erb');
+
     "/home/${username}/slave":
       ensure  => directory,
       owner   => $username,
