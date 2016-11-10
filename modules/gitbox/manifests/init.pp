@@ -22,6 +22,7 @@ file { '/x1':
   group  => 'www-data',
   mode   => '0750',
 }
+
 file { '/x1/repos':
   ensure  => directory,
   owner   => 'root',
@@ -63,6 +64,7 @@ file {
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0750';
+}
 
 file {
   '/etc/gitweb':
@@ -142,7 +144,7 @@ apache::vhost {
     ssl_cert        => '/etc/ssl/certs/wildcard.apache.org.crt',
     ssl_chain       => '/etc/ssl/certs/wildcard.apache.org.chain',
     ssl_key         => '/etc/ssl/private/wildcard.apache.org.key',
-    serveraliases   => [gitbox-vm.apache.org'],
+    serveraliases   => ['gitbox-vm.apache.org'],
     custom_fragment => $custom_fragment_443,
     error_log_file  => 'gitbox-ssl_error.log',
     directories     => [
