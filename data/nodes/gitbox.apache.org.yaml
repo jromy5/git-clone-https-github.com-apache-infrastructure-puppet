@@ -104,7 +104,7 @@ gitbox::custom_fragment_443: |
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
       SetEnv GIT_HTTP_EXPORT_ALL
       <Location /repos/asf>
-          SetEnv GIT_PROJECT_ROOT /x1/repos/
+          SetEnv GIT_PROJECT_ROOT /x1/repos/asf
           SetEnv GITWEB_CONFIG /x1/gitbox/conf/httpd/gitweb.asf.pl
       </Location>
       <Location /logs/asf/>
