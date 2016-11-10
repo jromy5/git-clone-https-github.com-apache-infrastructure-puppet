@@ -17,8 +17,10 @@ class buildbot_slave (
   $slave_password,
   $gsr_user,
   $gsr_pw,
+  $nexus_password = '',
+  $npmrc_password = '',
 
-  $bb_basepackages   = [],
+  $bb_basepackages = [],
 
 ){
 
