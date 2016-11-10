@@ -144,6 +144,7 @@ td, th {
   position: relative;
   top: 7px;
   margin-right: 5px;
+  width: 202px !important;
 }
 
 /* Page Footer
