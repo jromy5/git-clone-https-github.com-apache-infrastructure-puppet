@@ -13,13 +13,29 @@ class gump_server {
     mysql-server,
     mysql-client,
     python-mysqldb,
-    mono-mcs,
     'g++',
     mailutils,
     libexpat1-dev,
     curl,
   ]
 
+  package { 'mono-mcs':
+    ensure => absent
+  } ->
+  apt::key { 'mono-project':
+    key => '3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF'
+  } ->
+  apt::source { 'mono-project':
+    location => 'http://download.mono-project.com/repo/debian',
+    repos    => 'main',
+    release  => 'wheezy',
+  } ->
+  package { [
+    'mono-devel',
+    'ca-certificates-mono'
+    ]:
+    ensure => installed
+  } ->
   package { $packages: ensure => installed }
 
   user { 'gump':
@@ -129,12 +145,5 @@ class gump_server {
     command => 'curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/bin/nuget.exe && chmod 755 /usr/bin/nuget.exe',
     creates => '/usr/bin/nuget.exe',
     path    => ['/usr/bin', '/bin', '/usr/sbin'],
-  }
-
-  exec { "Install certs in Mono's truststore":
-    command => 'mozroots --import --sync --machine --url "http://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt" && touch /root/mozroots-synced',
-    creates => '/root/mozroots-synced',
-    path    => ['/usr/bin', '/bin', '/usr/sbin'],
-    require => Package['mono-mcs'],
   }
 }
