@@ -35,8 +35,9 @@ apache::serveradmin:        'infrastructure@apache.org'
 datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
 
 base::gempackages:
-  - 'r10k'
+  - 'highlight'
   - 'puppet-lint'
+  - 'r10k'
 
 logrotate::rule:
   apache2:
