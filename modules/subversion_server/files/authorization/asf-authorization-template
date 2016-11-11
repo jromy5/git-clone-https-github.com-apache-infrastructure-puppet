@@ -1158,6 +1158,7 @@ ea = rw
 
 [/incubator/xap]
 * = r
+@svnadmins = rw
 
 [/incubator/xmlbeanscxx]
 * = r
