@@ -44,3 +44,10 @@ postgresql::server::pg_hba_rule:
     user: 'jira'
     address: '37.48.69.242/32'
     auth_method: 'md5'
+  jirasecurity:
+    description: 'jira security instance'
+    type: 'host'
+    database: 'jirasecurity'
+    user: 'jirasecurity'
+    address: '10.10.5.2/32'
+    auth_method: 'md5'
