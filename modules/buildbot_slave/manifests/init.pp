@@ -17,29 +17,14 @@ class buildbot_slave (
   $slave_password,
   $gsr_user,
   $gsr_pw,
+  $nexus_password = '',
+  $npmrc_password = '',
+
+  $bb_basepackages = [],
 
 ){
 
-  # install required packages:
-
-  $bb_basepackages = [
-    'buildbot-slave',
-    'ant',
-    'zip',
-    'unzip',
-    'cmake',
-    'doxygen',
-    'maven',
-    'autoconf',
-    'automake',
-    'rake',
-    'ruby-dev',
-    'python3-pip',
-    'python3-dev',
-    'python3-markdown',
-    'libpam0g-dev',
-    'junit4',
-  ]
+  include buildbot_slave::buildbot
 
   # install gradle PPA and gradle 2.x
 
@@ -48,6 +33,10 @@ class buildbot_slave (
   } ->
   package { 'gradle':
     ensure => latest,
+  }
+
+  python::pip { 'Flask':
+    pkgname => 'Flask';
   }
 
   # merge required packages from hiera for slaves
@@ -115,6 +104,21 @@ class buildbot_slave (
       mode   => '0644',
       owner  => $username,
       group  => $groupname;
+
+    "/home/${username}/.m2":
+      ensure  => directory,
+      require => User[$username],
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0755';
+
+    "/home/${username}/.m2/settings.xml":
+      require => File["/home/${username}/.m2"],
+      path    => "/home/${username}/.m2/settings.xml",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('buildbot_slave/m2_settings.erb');
 
     "/home/${username}/slave":
       ensure  => directory,

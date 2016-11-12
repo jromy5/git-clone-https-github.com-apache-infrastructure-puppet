@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<workspace basedir="/srv/gump/public/workspace"
+           pkgdir="/srv/gump/packages"
+           version="0.4" name="vmgump-test">
+  <sysproperty name="build.sysclasspath" value="only"/>
+  <sysproperty name="java.awt.headless" value="true"/>
+  <profile href="testbase/profile.xml"/>
+</workspace>

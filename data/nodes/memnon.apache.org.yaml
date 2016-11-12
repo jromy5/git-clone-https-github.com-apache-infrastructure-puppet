@@ -14,15 +14,15 @@ apache::default_vhost:      false
 apache::docroot:            '/x1/archive.apache.org'
 
 apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
+apache::mod::event::maxclients: '800'
 apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxrequestworkers: '800'
 apache::mod::event::maxsparethreads: '200'
-apache::mod::event::minsparethreads: '100'
-apache::mod::event::serverlimit: '5'
+apache::mod::event::minsparethreads: '50'
+apache::mod::event::serverlimit: '4'
 apache::mod::event::startservers: '2'
-apache::mod::event::threadlimit: '300'
-apache::mod::event::threadsperchild: '100'
+apache::mod::event::threadlimit: '800'
+apache::mod::event::threadsperchild: '200'
 
 apache::mod::status::allow_from:
   - all
@@ -63,7 +63,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       # BW limiter
       LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
-      LuaScope server 5 10
+      LuaScope thread
       LuaCodeCache stat
       IndexOptions FoldersFirst FancyIndexing
       
@@ -83,6 +83,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       # BW limiter
       LuaHookAccessChecker /etc/lua/scripts/bandwidth.lua bw_check
-      LuaScope server 5 10
+      LuaScope thread
       LuaCodeCache stat
       IndexOptions FoldersFirst FancyIndexing

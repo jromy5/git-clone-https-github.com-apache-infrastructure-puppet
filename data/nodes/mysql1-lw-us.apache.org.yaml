@@ -1,7 +1,9 @@
 ---
 classes:
   - datadog_agent::integrations::mysql
+  - mysql_asf::backup
   - mysql::server
+  - zmanda_asf::client
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
@@ -26,6 +28,10 @@ mysql::server::override_options:
 
 mysql::server::databases:
   crowd:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  roller:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'

@@ -214,8 +214,19 @@ class Blocky(Thread):
 						baddies[i] = time.time()
 						r = baddie['reason']
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
+						# Check if we already have such a ban in place using iptables -C
 						try:
-							print("Leniency time! Unbanning " + i)
+							subprocess.check_call([
+								"iptables",
+								"-C", "INPUT",
+								"-s", i,
+								"-j", "DROP",
+								"-m", "comment",
+								"--comment",
+								"Banned by Blocky"
+								])
+							# If we reach this point, the rule exists, and we can remove it
+							syslog.syslog(syslog.LOG_INFO, "Unbanning %s" % i)
 							subprocess.check_call([
 								"iptables",
 								"-D", "INPUT",
@@ -241,7 +252,8 @@ Blocky.
 
 						except Exception as err:
 							print(err)
-						del baddies[i]
+						if i in baddies:
+							del baddies[i]
 				time.sleep(180)
 				firstRun = False
 			except:

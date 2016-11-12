@@ -7,18 +7,19 @@ class build_slaves::jenkins (
   $nexus_password   = '',
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
+  $gsr_user = '',
+  $gsr_pw = '',
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
-  $ant_old = ['apache-ant-1.9.4'],
-  $ant = ['apache-ant-1.8.4','apache-ant-1.9.7'],
-  $clover = ['clover-ant-4.1.1'],
-  $findbugs = ['findbugs-2.0.3'],
+  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7'],
+  $clover = ['clover-ant-4.1.2'],
+  $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'],
-  $java_jenkins = ['ibm-1.4-32', 'ibm-1.4-64', 'ibm-1.5-32', 'ibm-1.5-64', 'ibm-1.6-32', 'ibm-1.6-64', 'harmony-1.5-64', 'jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-32-unlimited-security','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.6.0_45-64','jdk1.7.0_04','jdk1.7.0_25-32','jdk1.7.0_25-64','jdk1.7.0-32','jdk1.7.0_55','jdk1.7.0-64','jdk1.8.0'],
-  $java_asfpackages = ['jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'ibm-java-x86_64-80'],
+  $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'],
+  $java_asfpackages = ['jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'jigsaw-jdk-9-ea-b142', 'ibm-java-x86_64-60', 'ibm-java-x86_64-70', 'ibm-java-x86_64-80'],
 ) {
 
   require stdlib
@@ -32,13 +33,6 @@ class build_slaves::jenkins (
       group  => 'jenkins',
     }
   }
-  #define ant old symlinking
-  define build_slaves::symlink_ant_old ($ant_old_version = $title) {
-    file {"/home/jenkins/tools/ant/${ant_old_version}":
-      ensure => link,
-      target => "/usr/local/jenkins/ant/${ant_old_version}",
-    }
-  }
   #define ant symlinking
   define build_slaves::symlink_ant ($ant_version = $title) {
     file {"/home/jenkins/tools/ant/${ant_version}":
@@ -50,21 +44,21 @@ class build_slaves::jenkins (
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
     file {"/home/jenkins/tools/findbugs/${findbugs_version}":
       ensure => link,
-      target => "/usr/local/jenkins/findbugs/${findbugs_version}",
+      target => "/usr/local/asfpackages/findbugs/${findbugs_version}",
     }
   }
   #define forrest symlinking
   define build_slaves::symlink_forrest ($forrest_version = $title) {
     file {"/home/jenkins/tools/forrest/${forrest_version}":
       ensure => link,
-      target => "/usr/local/jenkins/forrest/${forrest_version}",
+      target => "/usr/local/asfpackages/forrest/${forrest_version}",
     }
   }
   #define jiracli symlinking
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
     file {"/home/jenkins/tools/jiracli/${jiracli_version}":
       ensure => link,
-      target => "/usr/local/jenkins/jiracli/${jiracli_version}",
+      target => "/usr/local/asfpackages/jiracli/${jiracli_version}",
     }
   }
   #define maven old symlinking (deprecated, remove soon)
@@ -102,10 +96,6 @@ class build_slaves::jenkins (
   package { 'gradle':
     ensure => latest,
   }
-
-  apt::ppa { 'ppa:ubuntu-lxc/lxd-stable':
-    ensure => present,
-  }->
 
   package { 'golang':
     ensure => latest,
@@ -198,6 +188,26 @@ class build_slaves::jenkins (
     content => template('build_slaves/npmrc.erb')
   }
 
+    if ($::fqdn == 'asf920.gq1.ygridcore.net') or ($::fqdn == 'asf919.gq1.ygridcore.net'){
+      file { '/home/jenkins/.git-credentials':
+        ensure  => present,
+        path    => '/home/jenkins/.git-credentials',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        mode    => '0640',
+        content => template('build_slaves/git-credentials.erb')
+      }
+
+      file { '/home/jenkins/.gitconfig':
+        ensure  => present,
+        path    => '/home/jenkins/.gitconfig',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        mode    => '0640',
+        source  => 'puppet:///modules/build_slaves/gitconfig',
+      }
+    }
+
   file { '/etc/security/limits.d/jenkins.conf':
     ensure  => file,
     owner   => root,
@@ -222,14 +232,14 @@ class build_slaves::jenkins (
 
   # populate /home/jenkins/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
-  file {'/usr/local/jenkins/jiracli/':
+  file {'/usr/local/asfpackages/jiracli/':
     ensure  => directory,
     owner   => 'jenkins',
     group   => 'jenkins',
     require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
-  file {'/usr/local/jenkins/forrest/':
+  file {'/usr/local/asfpackages/forrest/':
     ensure  => directory,
     owner   => 'jenkins',
     group   => 'jenkins',
@@ -240,9 +250,6 @@ class build_slaves::jenkins (
   package { $jenkins_packages:
     ensure => latest,
   }
-
-  # ant_old symlinks - populate array, make all symlinks
-  build_slaves::symlink_ant_old          { $ant_old: }
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
@@ -255,21 +262,21 @@ class build_slaves::jenkins (
   build_slaves::symlink_findbugs     { $findbugs: }
   file { '/home/jenkins/tools/findbugs/latest':
     ensure => link,
-    target => '/usr/local/jenkins/findbugs/findbugs-2.0.3',
+    target => '/usr/local/asfpackages/findbugs/findbugs-3.0.1',
   }
 
   # forrest symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_forrest      { $forrest: }
   file { '/home/jenkins/tools/forrest/latest':
     ensure => link,
-    target => '/usr/local/jenkins/forrest/apache-forrest-0.9',
+    target => '/usr/local/asfpackages/forrest/apache-forrest-0.9',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
   build_slaves::symlink_jiracli      { $jiracli: }
   file { '/home/jenkins/tools/jiracli/latest':
     ensure => link,
-    target => '/usr/local/jenkins/jiracli/jira-cli-2.1.0',
+    target => '/usr/local/asfpackages/jiracli/jira-cli-2.1.0',
   }
 
   # maven old symlinks - populate array, make all symlinks, make latest symlink
@@ -302,15 +309,15 @@ class build_slaves::jenkins (
   }
   file { '/home/jenkins/tools/java/latest1.4':
     ensure => link,
-    target => '/usr/local/jenkins/java/j2sdk1.4.2_19',
+    target => '/usr/local/asfpackages/java/j2sdk1.4.2_19',
   }
   file { '/home/jenkins/tools/java/latest1.5':
     ensure => link,
-    target => '/usr/local/jenkins/java/jdk1.5.0_22-64',
+    target => '/usr/local/asfpackages/java/jdk1.5.0_22-64',
   }
   file { '/home/jenkins/tools/java/latest1.6':
     ensure => link,
-    target => '/usr/local/jenkins/java/jdk1.6.0_45-64',
+    target => '/usr/local/asfpackages/java/jdk1.6.0_45-64',
   }
   file { '/home/jenkins/tools/java/latest1.7':
     ensure => link,

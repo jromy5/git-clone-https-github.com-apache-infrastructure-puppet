@@ -3,6 +3,8 @@ classes:
   - apache
   - apache::mod::headers
   - apache::mod::userdir
+  - dell
+  - dell::openmanage
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client

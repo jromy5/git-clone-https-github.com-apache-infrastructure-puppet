@@ -1,5 +1,5 @@
----
-classes:
-  - dell
-  - dell::openmanage
+# ---
+# classes:
+  # - dell
+  # - dell::openmanage
 

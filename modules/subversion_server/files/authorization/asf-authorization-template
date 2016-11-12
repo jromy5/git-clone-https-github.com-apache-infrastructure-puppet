@@ -370,7 +370,7 @@ river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
-rya=afuchs,busbey,edwardyoon,elserj,venkatesh,swagner
+rya=adina,afuchs,busbey,caleb,dnrapp,edwardyoon,elserj,jbrown,mihalik,pujav65,roshanp,swagner,venkatesh
 s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamshon,jaesang,lukehan,mskim
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
@@ -429,7 +429,7 @@ tajo-pmc={reuse:pit-authorization:tajo-pmc}
 tamaya=anatole,aalmiray,dblevins,gpetracek,johndament,otaviojava,plexus,pottlinger,rmannibucau,rsandtner,struberg,wkeil
 tapestry={ldap:cn=tapestry,ou=groups,dc=apache,dc=org}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
-taverna=andy,djd,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,gnaylor,hainesr,ianwdunlop,jgarrido,redmitry,shoaibsufi,stain,stuzart
+taverna=andy,djd,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,gnaylor,hainesr,ianwdunlop,jgarrido,maanadev,rajanmaurya154,redmitry,sagar,shoaibsufi,stain,stuzart
 tcl={ldap:cn=tcl,ou=groups,dc=apache,dc=org}
 tcl-pmc={reuse:pit-authorization:tcl-pmc}
 tephra=anew,chtyim,gokul,poorna,jamestaylor,tdsilva,garyh,larsh,apurtell,gates,hsaputra
@@ -1158,6 +1158,7 @@ ea = rw
 
 [/incubator/xap]
 * = r
+@svnadmins = rw
 
 [/incubator/xmlbeanscxx]
 * = r
@@ -1505,6 +1506,9 @@ ea = rw
 
 [/opennlp]
 @opennlp = r
+
+[/opennlp/site]
+@opennlp = rw
 
 [/openoffice]
 @openoffice = rw
@@ -1884,6 +1888,9 @@ svn-role = rw
 @zest = rw
 
 [/zookeeper]
+@zookeeper = r
+
+[/zookeeper/site]
 @zookeeper = rw
 
 [/~~~]

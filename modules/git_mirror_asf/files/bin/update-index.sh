@@ -1,8 +1,10 @@
 #! /bin/sh
 #
-# Updates the http://git.apache.org/ web page
+# Updates the http://git.apache.org/ web page, index.json and index.txt
 
 cd /x1/git/mirrors
+
+echo "{" >index.json.new
 
 cat <<EOT >index.new
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -95,6 +97,7 @@ cat <<EOT >index.new
     <table style="font-size: 11pt; padding: 1px !important;">
       <thead>
         <tr style="background: linear-gradient(to bottom, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%);">
+          <th>Origin</th>
           <th>Git Mirror</th>
           <th>Description</th>
           <th>Git Clone URL</th>
@@ -113,33 +116,43 @@ for d in *.git; do
   if test -n "$g"; then
     cat <<EOT >>index.new
           <tr>
-            <td>$d</td>
+            <td>
+              <a href="$g"><img title="Go to canonical Git repository" src="/images/icon_commit.png" height="16" width="16"/></a>
+            </td>
+            <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
               <a href="git://git.apache.org/$d">git://git.apache.org/$d</a>
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="$g"><img title="Go to canonical repository" src="/images/icon_commit.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
   else
-    svnurl=`git config svn-remote.svn.fetch | sed "s/trunk.*:.*//"`
+    svnurl=`git config svn-remote.svn.fetch | sed "s/\(trunk\|site\).*:.*//"`
+    g=https://svn.apache.org/repos/asf/$svnurl
     cat <<EOT >>index.new
           <tr>
-            <td>$d</td>
+            <td>
+              <a href="$g"><img title="Go to Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
+              <a href="https://svn.apache.org/viewvc/$svnurl"><img title="View Subversion repository" src="/images/icon_viewvc.png" height="16" width="16"/></a>
+            </td>
+            <td><a name="$n">$d</a></td>
             <td>$b</td>
             <td>
               <a href="git://git.apache.org/$d">git://git.apache.org/$d</a>
             </td>
             <td>
               <a href="https://github.com/apache/$n"><img title="View on GitHub" src="/images/icon_github.png" height="16" width="16"/></a> &nbsp; 
-              <a href="https://svn.apache.org/repos/asf/$svnurl"><img title="View Subversion repository" src="/images/icon_subversion.png" height="16" width="16"/></a>
             </td>
           </tr>
 EOT
   fi
+  cat <<EOT >>index.json.new
+"$n": "$g",
+EOT
+  echo "git://git.apache.org/$d" >>index.txt.new
 done
 
 cat <<EOT >>index.new
@@ -151,11 +164,14 @@ cat <<EOT >>index.new
     </div> 
 
     <div id="copyright" class="container_16"> 
-      <p>Copyright &#169; 2010-2014 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
+      <p>Copyright &#169; 2010-2016 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
     </div> 
   </body> 
 </html>
 EOT
+sed -i '$s/,$//' index.json.new
+echo "}" >>index.json.new
 
 mv -f index.new index.html
-
+mv -f index.json.new index.json
+mv -f index.txt.new index.txt

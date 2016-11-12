@@ -6,6 +6,8 @@ classes:
   - apache::mod::rewrite
   - apache::mod::headers
   - blocky
+  - dell
+  - dell::openmanage
   - loggy
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts

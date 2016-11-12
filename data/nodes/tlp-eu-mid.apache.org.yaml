@@ -1532,6 +1532,9 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'jspwiki.apache.org'
+    serveraliases: 
+      - 'jspwiki.org'
+      - 'www.jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'infrastructure@apache.org'
@@ -2985,3 +2988,56 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xml-$1 [R=301,L]
+
+  infra:
+    vhost_name: '*'
+    port: 80
+    servername: 'infra.apache.org'
+    docroot: '/var/www/infra.apache.org/output'
+    manage_docroot: false
+    serveraliases:
+      - 'infra-test.apache.org'
+      - 'infra.*.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    directories:
+      -
+        path: '/var/www/infra.apache.org/output'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # Change to infra.a.o later on.
+      Redirect / https://infra-test.apache.org/
+
+
+  infra-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'infra.apache.org'
+    docroot: '/var/www/infra.apache.org/output'
+    manage_docroot: false
+    serveraliases:
+      - 'infra.*.apache.org'
+      - 'infra-test.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    directories:
+      -
+        path: '/var/www/infra.apache.org/output'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # Proxying will go here...
+      SSLProxyEngine on
+      ProxyPass /self-serve/reporeq/ https://reporeq.apache.org/
+      ProxyPass /self-serve/id/ https://id.apache.org/
+      ProxyPass /self-serve/acreq/ https://id.apache.org/acreq/
+      ## The proxypass below needs to be moved!
+      ProxyPass /self-serve/mlreq/ https://infra.apache.org/officers/mlreq/

@@ -1,0 +1,81 @@
+### This file is puppet managed, any changes will be lost. ###
+
+# XSS protection: sanitize all weblog and weblog entry content
+weblogAdminsUntrusted=true
+
+installation.type=manual
+
+## database.configurationType=jndi
+## database.jndi.name=java:comp/env/jdbc/rollerdb
+
+#database.jndi.name=jdbc/rollerdb
+#openjpa.ConnectionDriverName: com.mysql.jdbc.Driver
+
+database.configurationType=jdbc
+database.jdbc.driverClass=com.mysql.jdbc.Driver
+database.jdbc.connectionURL=<%= @jdbc_connection_url %>
+database.jdbc.username=<%= @jdbc_username %>
+database.jdbc.password=<%= @jdbc_password %>
+
+mail.configurationType=properties
+mail.hostname=localhost
+# mail.username=test
+# mail.password=test
+
+# Enables HTTPS for login page only
+# securelogin.enabled=false
+# Enable scheme enforcement?
+# Scheme enforcement ensures that specific URLs are viewed only via HTTPS
+# schemeenforcement.enabled=false
+# URL patterns that require HTTPS
+#schemeenforcement.https.urls=/roller-ui/menu.rol
+
+# Password security settings
+# passwds.encryption.enabled=true
+# passwds.encryption.algorithm=SHA
+
+mediafiles.storage.dir=<%= @data_dir %>/mediafiles
+uploads.dir=<%= @data_dir %>/uploads
+search.index.dir=<%= @data_dir %>/search-index
+planet.aggregator.cache.dir=<%= @data_dir %>/planetcache
+planet.aggregator.enabled=true
+
+# Tasks which are enabled. Only tasks listed here will be run.
+tasks.enabled=\
+ScheduledEntriesTask,\
+ResetHitCountsTask,\
+TurnoverReferersTask,\
+PingQueueTask
+
+#tasks.NewsletterTask.class=org.apache.roller.apacheblogs.tasks.NewsletterTask
+#tasks.NewsletterTask.startTime=immediate
+#tasks.NewsletterTask.interval=1440
+#tasks.NewsletterTask.leaseTime=10
+#tasks.NewsletterTask.postDrafts=true
+#tasks.NewsletterTask.maxPosts=3
+#tasks.NewsletterTask.jobs=<%= @tomcat_dir %>/lib/newsletter-jobs.json
+
+# Set of page models specifically for site-wide rendering
+rendering.siteModels=\
+org.apache.roller.weblogger.ui.rendering.model.SiteModel
+
+rendering.pageModels=\
+org.apache.roller.weblogger.ui.rendering.model.PageModel,\
+org.apache.roller.weblogger.ui.rendering.model.ConfigModel,\
+org.apache.roller.weblogger.ui.rendering.model.UtilitiesModel,\
+org.apache.roller.weblogger.ui.rendering.model.URLModel,\
+org.apache.roller.weblogger.ui.rendering.model.MessageModel,\
+org.apache.roller.weblogger.ui.rendering.model.CalendarModel,\
+org.apache.roller.weblogger.ui.rendering.model.MenuModel,\
+org.apache.roller.weblogger.ui.rendering.model.SiteModel
+
+# Add Akismet to list of comment validators
+comment.validator.akismet.apikey=<%= @akismet_apikey %>
+comment.validator.classnames=\
+org.apache.roller.weblogger.ui.rendering.plugins.comments.BlacklistCommentValidator,\
+org.apache.roller.weblogger.ui.rendering.plugins.comments.ExcessLinksCommentValidator,\
+org.apache.roller.weblogger.ui.rendering.plugins.comments.ExcessSizeCommentValidator,\
+org.apache.roller.weblogger.ui.rendering.plugins.comments.AkismetCommentValidator
+
+log4j.category.org.apache.roller=INFO
+

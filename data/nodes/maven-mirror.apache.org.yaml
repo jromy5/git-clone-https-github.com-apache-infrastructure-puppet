@@ -1,0 +1,27 @@
+---
+classes:
+  - fail2ban_asf::config
+  - maven_central_mirror_asf
+  - unattended_upgrades
+
+fail2ban::service_autorestart: true
+fail2ban::disable: false
+fail2ban::service_status: true
+
+fail2ban_asf::config::jails:
+  ssh:
+    filter: sshd
+    action:
+      - iptables-allports
+    logpath: /var/log/auth.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
+unattended_upgrades::update: 1
+unattended_upgrades::download: 1
+unattended_upgrades::upgrade: 1
+unattended_upgrades::autoclean: 7
+unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'
