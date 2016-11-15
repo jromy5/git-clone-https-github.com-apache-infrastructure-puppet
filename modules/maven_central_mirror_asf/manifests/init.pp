@@ -63,7 +63,7 @@ class maven_central_mirror_asf (
       minute  => 17;
     central_updates_sync:
       environment => 'MAILTO=root@apache.org', 
-      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/updates/ /x1/central/updates > /x1/log/central-updates-sync-`date +"\%Y-\%m-\%d`.log',
+      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/updates/ /x1/central/updates > /x1/log/central-updates-sync-`date +"\%Y-\%m-\%d"`.log',
       hour    => 21,
       minute  => 17;
   }
