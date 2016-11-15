@@ -57,12 +57,14 @@ class maven_central_mirror_asf (
 
   cron {
     central_data_sync:
-      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/data/ /x1/central/data > /x1/log/central-data-sync-`date +%Y-%m-%d`.log',
+      environment => 'MAILTO=root@apache.org', 
+      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/data/ /x1/central/data > /x1/log/central-data-sync-`date +"\%Y-\%m-\%d"`.log',
       hour    => 15,
       minute  => 17;
     central_updates_sync:
-      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/updates/ /x1/central/updates > /x1/log/central-updates-sync-`date +%Y-%m-%d`.log',
-      hour    => 19,
+      environment => 'MAILTO=root@apache.org', 
+      command => '/usr/local/bin/aws s3 sync --delete s3://repo-crawler/repos/central/updates/ /x1/central/updates > /x1/log/central-updates-sync-`date +"\%Y-\%m-\%d`.log',
+      hour    => 21,
       minute  => 17;
   }
 
