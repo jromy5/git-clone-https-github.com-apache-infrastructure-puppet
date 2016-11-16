@@ -65,6 +65,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 80
+    docroot: '/var/www/communitysurvey'
     servername: 'communitysurvey.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'communitysurvey.apache.org.http_access.log'
@@ -76,6 +77,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 443
+    docroot: '/var/www/communitysurvey'
     servername: 'communitysurvey.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'communitysurvey.apache.org.ssl.log'
