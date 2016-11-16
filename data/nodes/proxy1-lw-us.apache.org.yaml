@@ -2,6 +2,7 @@
 classes:
   - aardvark_asf # requires lua deps in basepackages
   - apache
+  - apache::mod::authnz_ldap
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
