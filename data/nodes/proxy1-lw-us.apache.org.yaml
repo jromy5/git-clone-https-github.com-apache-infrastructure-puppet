@@ -92,7 +92,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
-      <Location / >
+      </Location >
 
     
   issues-test:
