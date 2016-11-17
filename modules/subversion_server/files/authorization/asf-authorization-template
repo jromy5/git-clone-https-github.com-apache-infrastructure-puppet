@@ -195,7 +195,7 @@ giraph={ldap:cn=giraph,ou=groups,dc=apache,dc=org}
 giraph-pmc={reuse:pit-authorization:giraph-pmc}
 gora={ldap:cn=gora,ou=groups,dc=apache,dc=org}
 gora-pmc={reuse:pit-authorization:gora-pmc}
-gossip=busbey,dorian,ecapriolo,elserj,gdusbabek,ptgoetz
+gossip=dorian,ecapriolo,elserj,gdusbabek,ptgoetz
 gump={ldap:cn=gump,ou=groups,dc=apache,dc=org}
 #only here to ease LDAP migration
 gump-pmc={reuse:pit-authorization:gump-pmc}
@@ -370,7 +370,7 @@ river={ldap:cn=river,ou=groups,dc=apache,dc=org}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=groups,dc=apache,dc=org}
 roller-pmc={reuse:pit-authorization:roller-pmc}
-rya=adina,afuchs,busbey,caleb,dnrapp,edwardyoon,elserj,jbrown,mihalik,pujav65,roshanp,swagner,venkatesh
+rya=adina,afuchs,caleb,dnrapp,edwardyoon,elserj,jbrown,mihalik,pujav65,roshanp,swagner,venkatesh
 s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamshon,jaesang,lukehan,mskim
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
