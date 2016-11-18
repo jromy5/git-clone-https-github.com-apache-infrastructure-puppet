@@ -10,6 +10,8 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
+  - 'graphviz'
+  - 'graphviz-dev'
 
 python::python_pips:
   pelican:
