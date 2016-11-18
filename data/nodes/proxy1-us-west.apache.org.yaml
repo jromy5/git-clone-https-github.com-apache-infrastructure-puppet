@@ -15,6 +15,7 @@ classes:
   - vhosts_asf::modules
   - vhosts_asf::vhosts
 
+apache::logroot: '/x1/apache2'
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
