@@ -105,6 +105,10 @@ mod 'java',
   :tag => '1.3.0'
 
 
+mod 'letsencrypt',
+  :git => 'https://github.com/danzilio/puppet-letsencrypt',
+  :tag => 'v1.0.0'
+
 mod 'mailman3',
   :git => 'https://github.com/pctony/puppet-mailman3.git',
   :branch => 'asf_development'

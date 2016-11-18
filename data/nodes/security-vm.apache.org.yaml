@@ -1,10 +1,37 @@
 ---
 classes:
+  - apache
+  - apache::mod::php
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::ssl
   - jira_asf
+  - letsencrypt
   - oraclejava::install
 
+apache::default_vhost: false
+apache::mpm_module: 'event'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '750'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '3750'
+apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::minsparethreads:         '150'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '150'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
+base::basepackages:
+  - issues-data
+
 # jira_asf class variables.
-jira_asf::jira_version: 'software-7.2.4'
+jira_asf::jira_version: 'software-7.2.5'
 jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
@@ -14,5 +41,60 @@ jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
 jira_asf::jvm_max_size: '6144m'
 
+letsencrypt::email: 'root@apache.org'
+letsencrypt::certonly:
+  security-vm:
+    domains:
+      - security-vm.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
+
+vhosts_asf::vhosts::vhosts:
+  security-vm:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/issues-data'
+    servername: 'security-vm.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'security-vm.apache.org.http_access.log'
+    error_log_file: 'security-vm.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://security-vm.apache.org/
+  security-vm-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/security-vm.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/security-vm.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/security-vm.apache.org/chain.pem'
+    docroot: '/var/www/issues-data'
+    servername: 'security-vm.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'security-vm.apache.org.ssl_access.log'
+    error_log_file: 'security-vm.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # Proxy requests
+      ProxyPass /jira ajp://127.0.0.1:8009/jira
+
+      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
+      RewriteCond /etc/tomcat-jira-main.maint -f
+      RewriteCond %%{}{REQUEST_URI} !/jira/maintenance.html
+      RewriteRule ^/jira/(.*) /jira/maintenance.html
+
+      # Fix URLs in SOAP requests
+      <Location /jira/rpc/soap>
+        AddOutputFilterByType SUBSTITUTE text/xml
+        Substitute s!http://security-vm.apache.org/!https://security-vm.apache.org/!
+      </Location>
