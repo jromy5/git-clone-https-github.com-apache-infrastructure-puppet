@@ -120,6 +120,14 @@ class buildbot_slave (
       mode    => '0640',
       content => template('buildbot_slave/m2_settings.erb');
 
+    "/home/${username}/.m2/toolchains.xml":
+      require => File["/home/${username}/.m2"],
+      path    => "/home/${username}/.m2/toolchains.xml",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      source => 'puppet:///modules/buildbot_slave/toolchains.xml',
+
     "/home/${username}/slave":
       ensure  => directory,
       owner   => $username,
