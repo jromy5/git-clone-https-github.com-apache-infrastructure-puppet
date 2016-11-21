@@ -126,7 +126,7 @@ class buildbot_slave (
       owner   => $username,
       group   => $groupname,
       mode    => '0640',
-      source => 'puppet:///modules/buildbot_slave/toolchains.xml',
+      source => 'puppet:///modules/buildbot_slave/toolchains.xml';
 
     "/home/${username}/slave":
       ensure  => directory,
