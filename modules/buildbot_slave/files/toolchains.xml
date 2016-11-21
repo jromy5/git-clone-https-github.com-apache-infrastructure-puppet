@@ -8,7 +8,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/home/buildslave/tools/java/latest1.5/</jdkHome>
+      <jdkHome>/home/jenkins/tools/java/latest1.5/</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -18,7 +18,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/home/buildslave/tools/java/latest1.6/</jdkHome>
+      <jdkHome>/home/jenkins/tools/java/latest1.6/</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -28,7 +28,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/home/buildslave/tools/java/latest1.7/</jdkHome>
+      <jdkHome>/home/jenkins/tools/java/latest1.7/</jdkHome>
     </configuration>
   </toolchain>
   <toolchain>
@@ -38,7 +38,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/home/buildslave/tools/java/latest1.8/</jdkHome>
+      <jdkHome>/home/jenkins/tools/java/latest1.8/</jdkHome>
     </configuration>
   </toolchain>
 </toolchains>
