@@ -1,0 +1,112 @@
+---
+classes:
+  - aardvark_asf # requires lua deps in basepackages
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::ssl
+  - ssl::name::wildcard_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+  - loggy
+  - blocky
+
+apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:   '/etc/ssl/private/wildcard.apache.org.key'
+apache::mpm_module:        'event'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+apache::default_vhost: false
+
+apache::logroot: '/x1/log'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '750'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '3750'
+apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::minsparethreads:         '150'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '150'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
+base::basepackages:
+  - issues-data
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'mod-lua-asf'
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  communitysurvey:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/communitysurvey'
+    servername: 'communitysurvey.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'communitysurvey.apache.org.http_access.log'
+    error_log_file: 'communitysurvey.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://communitysurvey.apache.org
+
+  communitysurvey-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    docroot: '/var/www/communitysurvey'
+    servername: 'communitysurvey.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'communitysurvey.apache.org.ssl.log'
+    error_log_file: 'communitysurvey.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://www.surveymonkey.com/r/6T3HNTG
+
+      <Location / >
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location >
+
+
+fail2ban_asf::config::jails:
+  jira:
+    filter: asf-jira
+    action:
+      - iptables-allports
+    logpath: /usr/local/etc/aardvark/spammers.txt
+    findtime: 3600
+    maxretry: 1
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-jira:
+    filterfailregex: |
+      <HOST> spammed Aardvark
