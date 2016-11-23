@@ -1,10 +1,12 @@
 #! /bin/sh
 #
-# Updates the http://git.apache.org/ web page, index.json and index.txt
+# Updates the http://git.apache.org/ web page, index.json, index.txt, and
+# github-sync.json
 
 cd /x1/git/mirrors
 
 echo "{" >index.json.new
+echo "{" >github-sync.json.new
 
 cat <<EOT >index.new
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -152,6 +154,10 @@ EOT
   cat <<EOT >>index.json.new
 "$n": "$g",
 EOT
+# crossing-fingers that $b does not have JSON-breaking characters
+  cat <<EOT >>github-sync.json.new
+"$n": {"$g", "$b"},
+EOT
   echo "git://git.apache.org/$d" >>index.txt.new
 done
 
@@ -169,9 +175,13 @@ cat <<EOT >>index.new
   </body> 
 </html>
 EOT
+
 sed -i '$s/,$//' index.json.new
 echo "}" >>index.json.new
+sed -i '$s/,$//' github-sync.json.new
+echo "}" >>github-sync.json.new
 
 mv -f index.new index.html
 mv -f index.json.new index.json
 mv -f index.txt.new index.txt
+mv -f github-sync.json.new github-sync.json
