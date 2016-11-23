@@ -78,22 +78,24 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 443
+    ssl: true
     docroot: '/var/www/communitysurvey'
     servername: 'communitysurvey.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'communitysurvey.apache.org.ssl.log'
     error_log_file: 'communitysurvey.apache.org.error.log'
     custom_fragment: |
-      Redirect / https://www.surveymonkey.com/r/6T3HNTG
 
-      <Location / >
+      <Location />
         AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
-      </Location >
+
+        Redirect / https://www.surveymonkey.com/r/6T3HNTG
+      </Location>
 
 
 fail2ban_asf::config::jails:
