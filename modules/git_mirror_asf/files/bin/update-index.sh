@@ -114,6 +114,7 @@ for d in *.git; do
   b=`cat $d/description`
   GIT_DIR=/x1/git/mirrors/$d
   export GIT_DIR
+  giturl="git://git.apache.org/$d"
   g=`git config remote.origin.url`
   if test -n "$g"; then
     cat <<EOT >>index.new
@@ -156,9 +157,9 @@ EOT
 EOT
 # crossing-fingers that $b does not have JSON-breaking characters
   cat <<EOT >>github-sync.json.new
-"$n": {"$g", "$b"},
+"$n": {"url":"$giturl", "desc":"$b"},
 EOT
-  echo "git://git.apache.org/$d" >>index.txt.new
+  echo "$giturl" >>index.txt.new
 done
 
 cat <<EOT >>index.new
