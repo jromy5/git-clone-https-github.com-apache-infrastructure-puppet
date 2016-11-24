@@ -17,8 +17,6 @@
 #
 import hashlib, json, random, os, sys, time, subprocess
 import cgi, netaddr
-from time import gmtime, strftime
-
 
 xform = cgi.FieldStorage();
 
@@ -61,7 +59,7 @@ if 'repository' in data and 'name' in data['repository']:
         ##################
         with open("/x1/pushlogs/%s.txt" % reponame, "a") as f:
             f.write("[%s] %s -> %s (%s@apache.org / %s)\n" % (
-                strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+                time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                 before,
                 after,
                 asfid,
@@ -124,28 +122,13 @@ if 'repository' in data and 'name' in data['repository']:
             
                 # If we found the hook, prep to run it
                 if os.path.exists(hook):
-                  update = "%s %s %s\n" % (before, after, ref)
-                  cwd = os.getcwd()
-                  tries = 0
-                  # We'll try to deploy the mail 6 times
-                  while tries < 6:
-                    try:
-                      # First, make sure the repo is synced. This is managed by another call,
-                      # so we'll use `git cat-file` to check if the last commit has arrived
-                      try:
-                        subprocess.check_call(['git','cat-file','-e', after])
-                      except:
-                        raise Exception("Git repo not up to date yet, waiting for sync to kick in")
-                      # Commit has arrived, fire off the email hook
-                      os.chdir("/x1/repos/asf/" + reponame + ".git")
-                      process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
-                      process.communicate(input=update)
-                      log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
-                      break
-                    except Exception as err:
-                      log += "Something went wrong (%s), waiting 5 secs...\n" % err
-                      tries += 1
-                      time.sleep(5)
+                    update = "%s %s %s\n" % (before, after, ref)
+                    cwd = os.getcwd()
+                    # Fire off the email hook
+                    os.chdir("/x1/repos/asf/" + reponame + ".git")
+                    process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
+                    process.communicate(input=update)
+                    log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
                       
             except Exception as err:
                 log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
