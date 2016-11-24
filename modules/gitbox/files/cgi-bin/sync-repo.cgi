@@ -54,7 +54,7 @@ if 'repository' in data and 'name' in data['repository']:
         ########################
         # Get ASF ID of pusher #
         ########################
-        asfid = "unknown-peon" # We don't know how to fetch it yet
+        asfid = pusher # We don't know how to fetch it yet
         
         ##################
         # Write Push log #
