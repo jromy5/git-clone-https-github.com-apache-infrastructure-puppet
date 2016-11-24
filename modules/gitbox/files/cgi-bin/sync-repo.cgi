@@ -17,6 +17,7 @@
 #
 import hashlib, json, random, os, sys, time, subprocess
 import cgi, netaddr
+from time import gmtime, strftime
 
 
 xform = cgi.FieldStorage();
@@ -48,11 +49,25 @@ if 'repository' in data and 'name' in data['repository']:
     after = data['after']
     broken = False
     
+    # Unless asfgit is the pusher, we need to act on this.
     if pusher != 'asfgit' and os.path.exists("/x1/repos/asf/%s.git" % reponame):
         ########################
         # Get ASF ID of pusher #
         ########################
         asfid = "unknown-peon" # We don't know how to fetch it yet
+        
+        ##################
+        # Write Push log #
+        ##################
+        with open("/x1/pushlogs/%s.txt" % reponame, "a") as f:
+            f.write("[%s] %s -> %s (%s@apache.org / %s)\n" % (
+                strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+                before,
+                after,
+                asfid,
+                pusher
+                )
+            )
         
         #######################################
         # Check that we haven't missed a push #
