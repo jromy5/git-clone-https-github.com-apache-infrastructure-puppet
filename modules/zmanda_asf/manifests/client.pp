@@ -23,7 +23,6 @@ class zmanda_asf::client (
     'libglib2.0-0',
     'lib32z1',
     'lib32ncurses5',
-    'lib32bz2-1.0',
     'gettext',
     'xinetd',
     'libcroco3',
