@@ -33,65 +33,62 @@ class zmanda_asf::client (
     'update-inetd',
   ]
 
-  if $::lsbdistcodename == 'trusty' {
+  exec { '/usr/bin/dpkg --add-architecture i386':
+    command => '/usr/bin/dpkg --add-architecture i386 && apt-get update',
+    unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
+    before  => Package[$zmandapkgs],
+  }
 
-    exec { '/usr/bin/dpkg --add-architecture i386':
-      command => '/usr/bin/dpkg --add-architecture i386 && apt-get update',
-      unless  => '/bin/grep -q i386 /var/lib/dpkg/arch',
-      before  => Package[$zmandapkgs],
-    }
+  package { $zmandapkgs:
+    ensure  => 'installed',
+    require => Exec['/usr/bin/dpkg --add-architecture i386'],
+    before  => Exec['s3copy']
+  }
 
-    package { $zmandapkgs:
-      ensure  => 'installed',
-      require => Exec['/usr/bin/dpkg --add-architecture i386'],
-      before  => Exec['s3copy']
-    }
+  exec { 's3copy':
+    command => "/usr/local/bin/aws s3 cp ${s3_prefix}/${zmanda_pkg} /root",
+    unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+    require => Class['Awscli'],
+  } -> Exec['untar zmanda']
 
-    exec { 's3copy':
-      command => "/usr/local/bin/aws s3 cp ${s3_prefix}/${zmanda_pkg} /root",
-      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
-      require => Class['Awscli'],
-    } -> Exec['untar zmanda']
+  exec { 'untar zmanda':
+    command => "/bin/tar -xf /root/${zmanda_pkg} -C /root",
+    unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+  } -> Exec['install client']
 
-    exec { 'untar zmanda':
-      command => "/bin/tar -xf /root/${zmanda_pkg} -C /root",
-      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
-    } -> Exec['install client']
+  exec { 'install client':
+    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb',
+    unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
+  } -> Exec['install extensions']
 
-    exec { 'install client':
-      command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb',
-      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
-    } -> Exec['install extensions']
+  exec { 'install extensions':
+    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb',
+    unless  => '/usr/bin/dpkg-query -W amanda-enterprise-extensions-client',
+  } -> File['update amandahosts']
 
-    exec { 'install extensions':
-      command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb',
-      unless  => '/usr/bin/dpkg-query -W amanda-enterprise-extensions-client',
-    } -> File['update amandahosts']
+  file {'update amandahosts':
+    ensure  => present,
+    path    => '/var/lib/amanda/.amandahosts',
+    content => "${backupserver} amandabackup amdump",
+    owner   => 'amandabackup',
+    group   => 'disk',
+    mode    => '0600',
+  }
 
-    file {'update amandahosts':
-      ensure  => present,
-      path    => '/var/lib/amanda/.amandahosts',
-      content => "${backupserver} amandabackup amdump",
-      owner   => 'amandabackup',
-      group   => 'disk',
-      mode    => '0600',
-    }
+  file {'update amanda-client.conf':
+    ensure  => present,
+    path    => '/etc/amanda/amanda-client.conf',
+    content => template('zmanda_asf/client/amanda-client.conf.erb'),
+    owner   => 'amandabackup',
+    group   => 'disk',
+    mode    => '0600',
+  }
 
-    file {'update amanda-client.conf':
-      ensure  => present,
-      path    => '/etc/amanda/amanda-client.conf',
-      content => template('zmanda_asf/client/amanda-client.conf.erb'),
-      owner   => 'amandabackup',
-      group   => 'disk',
-      mode    => '0600',
-    }
-
-    file {"${sshdkeysdir}/amandabackup.pub":
-      content => hiera('zmanda_asf::amdump_public_key'),
-      owner   => 'amandabackup',
-      mode    => '0640',
-      require => Exec['install client'],
-    }
+  file {"${sshdkeysdir}/amandabackup.pub":
+    content => hiera('zmanda_asf::amdump_public_key'),
+    owner   => 'amandabackup',
+    mode    => '0640',
+    require => Exec['install client'],
   }
 
   service {'xinetd':
