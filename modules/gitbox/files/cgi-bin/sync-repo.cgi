@@ -136,4 +136,4 @@ if 'repository' in data and 'name' in data['repository']:
                 f.write(log)
                 f.close()
 
-print("Status: 200 Okay\r\nContent-Type: text/plain\r\n\r\nMessage received\r\n")
+print("Status: 204 Message received\r\n\r\n")
