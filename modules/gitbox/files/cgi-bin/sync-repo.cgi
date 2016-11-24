@@ -57,8 +57,8 @@ if 'repository' in data and 'name' in data['repository']:
         ##################
         # Write Push log #
         ##################
-        with open("/x1/pushlogs/%s.txt" % reponame, "a") as f:
-            f.write("[%s] %s -> %s (%s@apache.org / %s)\n" % (
+        open("/x1/pushlogs/%s.txt" % reponame, "a").write(
+            "[%s] %s -> %s (%s@apache.org / %s)\n" % (
                 time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                 before,
                 after,
@@ -96,9 +96,7 @@ if 'repository' in data and 'name' in data['repository']:
             with open("/x1/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
                 f.write("BROKEN AT %s\n" % time.strftime("%c"))
                 f.close()
-        with open("/x1/gitbox/sync.log", "a") as f:
-            f.write(log)
-            f.close()
+        open("/x1/gitbox/sync.log", "a").write(log)
         
         
         #####################################
@@ -132,8 +130,6 @@ if 'repository' in data and 'name' in data['repository']:
                       
             except Exception as err:
                 log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
-            with open("/x1/gitbox/sync.log", "a") as f:
-                f.write(log)
-                f.close()
+            open("/x1/gitbox/sync.log", "a").write(log)
 
 print("Status: 204 Message received\r\n\r\n")
