@@ -106,50 +106,51 @@ if 'repository' in data and 'name' in data['repository']:
         #####################################
         # Deploy commit mails via multimail #
         #####################################
-        log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-        try:
-            # Change to repo dir
-            os.chdir("/x1/repos/asf/%s.git" % reponame)
-            # set some vars
-            os.environ['NO_SYNC'] = 'yes'
-            os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
-            os.environ['GIT_COMMITTER_NAME'] = asfid
-            os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
-            os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
-            os.environ['PATH_INFO'] = reponame + '.git'
-            hook = "/x1/repos/asf/" + reponame + ".git"
-            if not hook.endswith('.git'): hook += '/.git'
-            hook += '/hooks/post-receive'
-        
-            # If we found the hook, prep to run it
-            if os.path.exists(hook):
-              update = "%s %s %s\n" % (before, after, ref)
-              cwd = os.getcwd()
-              tries = 0
-              # We'll try to deploy the mail 6 times
-              while tries < 6:
-                try:
-                  # First, make sure the repo is synced. This is managed by another call,
-                  # so we'll use `git cat-file` to check if the last commit has arrived
-                  try:
-                    subprocess.check_call(['git','cat-file','-e', after])
-                  except:
-                    raise Exception("Git repo not up to date yet, waiting for sync to kick in")
-                  # Commit has arrived, fire off the email hook
-                  os.chdir("/x1/repos/asf/" + reponame + ".git")
-                  process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
-                  process.communicate(input=update)
-                  log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
-                  break
-                except Exception as err:
-                  log += "Something went wrong (%s), waiting 5 secs...\n" % err
-                  tries += 1
-                  time.sleep(5)
-                  
-        except Exception as err:
-            log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
-        with open("/x1/gitbox/sync.log", "a") as f:
-            f.write(log)
-            f.close()
+        if not Broken: # only fire this off if the sync succeeded
+            log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
+            try:
+                # Change to repo dir
+                os.chdir("/x1/repos/asf/%s.git" % reponame)
+                # set some vars
+                os.environ['NO_SYNC'] = 'yes'
+                os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
+                os.environ['GIT_COMMITTER_NAME'] = asfid
+                os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
+                os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
+                os.environ['PATH_INFO'] = reponame + '.git'
+                hook = "/x1/repos/asf/" + reponame + ".git"
+                if not hook.endswith('.git'): hook += '/.git'
+                hook += '/hooks/post-receive'
+            
+                # If we found the hook, prep to run it
+                if os.path.exists(hook):
+                  update = "%s %s %s\n" % (before, after, ref)
+                  cwd = os.getcwd()
+                  tries = 0
+                  # We'll try to deploy the mail 6 times
+                  while tries < 6:
+                    try:
+                      # First, make sure the repo is synced. This is managed by another call,
+                      # so we'll use `git cat-file` to check if the last commit has arrived
+                      try:
+                        subprocess.check_call(['git','cat-file','-e', after])
+                      except:
+                        raise Exception("Git repo not up to date yet, waiting for sync to kick in")
+                      # Commit has arrived, fire off the email hook
+                      os.chdir("/x1/repos/asf/" + reponame + ".git")
+                      process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
+                      process.communicate(input=update)
+                      log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
+                      break
+                    except Exception as err:
+                      log += "Something went wrong (%s), waiting 5 secs...\n" % err
+                      tries += 1
+                      time.sleep(5)
+                      
+            except Exception as err:
+                log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
+            with open("/x1/gitbox/sync.log", "a") as f:
+                f.write(log)
+                f.close()
 
 print("Status: 200 Okay\r\nContent-Type: text/plain\r\n\r\nMessage received\r\n")
