@@ -104,31 +104,29 @@ if 'repository' in data and 'name' in data['repository']:
         #####################################
         if not Broken: # only fire this off if the sync succeeded
             log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-            try:
-                hook = "/x1/repos/asf/%s/hooks/post-receive" % reponame
-            
-                # If we found the hook, prep to run it
-                if os.path.exists(hook):
-                    
+            hook = "/x1/repos/asf/%s/hooks/post-receive" % reponame
+            # If we found the hook, prep to run it
+            if os.path.exists(hook):
+                # set some vars
+                os.environ['NO_SYNC'] = 'yes'
+                os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
+                os.environ['GIT_COMMITTER_NAME'] = asfid
+                os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
+                os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
+                os.environ['PATH_INFO'] = reponame + '.git'
+                update = "%s %s %s\n" % (before, after, ref)
+
+                try:                    
                     # Change to repo dir
                     os.chdir("/x1/repos/asf/%s.git" % reponame)
-                    
-                    # set some vars
-                    os.environ['NO_SYNC'] = 'yes'
-                    os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
-                    os.environ['GIT_COMMITTER_NAME'] = asfid
-                    os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
-                    os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
-                    os.environ['PATH_INFO'] = reponame + '.git'
-                    update = "%s %s %s\n" % (before, after, ref)
                     
                     # Fire off the email hook
                     process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
                     process.communicate(input=update)
                     log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
                       
-            except Exception as err:
-                log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
+                except Exception as err:
+                    log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
             open("/x1/gitbox/sync.log", "a").write(log)
 
 print("Status: 204 Message received\r\n\r\n")
