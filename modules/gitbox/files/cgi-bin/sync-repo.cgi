@@ -43,8 +43,30 @@ data = json.loads(jsin)
 if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name']
+    ref = data['ref']
+    before = data['before']
+    after = data['after']
+    broken = False
+    
     if pusher != 'asfgit' and os.path.exists("/x1/repos/asf/%s.git" % reponame):
-        log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, pusher)
+        ########################
+        # Get ASF ID of pusher #
+        ########################
+        asfid = "unknown-peon" # We don't know how to fetch it yet
+        
+        #######################################
+        # Check that we haven't missed a push #
+        #######################################
+        if before:
+            try:
+                subprocess.check_call(['git','cat-file','-e', before])
+            except:
+                pass # TODO: Add notification thing for infra or PMC
+        
+        ####################
+        # SYNC WITH GITHUB #
+        ####################
+        log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
         try:
             # Change to repo dir
             os.chdir("/x1/repos/asf/%s.git" % reponame)
@@ -56,6 +78,7 @@ if 'repository' in data and 'name' in data['repository']:
             except:
                 pass
         except Exception as err:
+            broken = True
             log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err)
             with open("/x1/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
                 f.write("BROKEN AT %s\n" % time.strftime("%c"))
@@ -63,6 +86,55 @@ if 'repository' in data and 'name' in data['repository']:
         with open("/x1/gitbox/sync.log", "a") as f:
             f.write(log)
             f.close()
-
+        
+        
+        #####################################
+        # Deploy commit mails via multimail #
+        #####################################
+        log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
+        try:
+            # Change to repo dir
+            os.chdir("/x1/repos/asf/%s.git" % reponame)
+            # set some vars
+            os.environ['NO_SYNC'] = 'yes'
+            os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
+            os.environ['GIT_COMMITTER_NAME'] = asfid
+            os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
+            os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
+            os.environ['PATH_INFO'] = reponame + '.git'
+            hook = "/x1/repos/asf/" + reponame + ".git"
+            if not hook.endswith('.git'): hook += '/.git'
+            hook += '/hooks/post-receive'
+        
+            # If we found the hook, prep to run it
+            if os.path.exists(hook):
+              update = "%s %s %s\n" % (before, after, ref)
+              cwd = os.getcwd()
+              tries = 0
+              # We'll try to deploy the mail 6 times
+              while tries < 6:
+                try:
+                  # First, make sure the repo is synced. This is managed by another call,
+                  # so we'll use `git cat-file` to check if the last commit has arrived
+                  try:
+                    subprocess.check_call(['git','cat-file','-e', after])
+                  except:
+                    raise Exception("Git repo not up to date yet, waiting for sync to kick in")
+                  # Commit has arrived, fire off the email hook
+                  os.chdir("/x1/repos/asf/" + reponame + ".git")
+                  process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
+                  process.communicate(input=update)
+                  log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
+                  break
+                except Exception as err:
+                  log += "Something went wrong (%s), waiting 5 secs...\n" % err
+                  tries += 1
+                  time.sleep(5)
+                  
+        except Exception as err:
+            log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
+        with open("/x1/gitbox/sync.log", "a") as f:
+            f.write(log)
+            f.close()
 
 print("Status: 200 Okay\r\nContent-Type: text/plain\r\n\r\nMessage received\r\n")
