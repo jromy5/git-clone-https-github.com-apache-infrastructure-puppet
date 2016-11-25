@@ -102,7 +102,7 @@ if 'repository' in data and 'name' in data['repository']:
         #####################################
         # Deploy commit mails via multimail #
         #####################################
-        if not Broken: # only fire this off if the sync succeeded
+        if not broken: # only fire this off if the sync succeeded
             log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
             hook = "/x1/repos/asf/%s/hooks/post-receive" % reponame
             # If we found the hook, prep to run it
