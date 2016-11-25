@@ -119,7 +119,8 @@ if 'repository' in data and 'name' in data['repository']:
                     'PATH_INFO': reponame + '.git',
                     'ASFGIT_ADMIN': '/x1/gitbox',
                     'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
-                    'WRITE_LOCK': '/x1/gitbox/write.lock'
+                    'WRITE_LOCK': '/x1/gitbox/write.lock',
+                    'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
                 }
                 update = "%s %s %s\n" % (before, after, ref)
 
