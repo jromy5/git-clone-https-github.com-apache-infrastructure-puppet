@@ -110,12 +110,14 @@ if 'repository' in data and 'name' in data['repository']:
             # If we found the hook, prep to run it
             if os.path.exists(hook):
                 # set some vars
-                os.environ['NO_SYNC'] = 'yes'
-                os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
-                os.environ['GIT_COMMITTER_NAME'] = asfid
-                os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
-                os.environ['GIT_PROJECT_ROOT'] = repopath
-                os.environ['PATH_INFO'] = reponame + '.git'
+                gitenv = {
+                    'NO_SYNC': 'yes',
+                    'WEB_HOST': 'https://gitbox.apache.org/',
+                    'GIT_COMMITTER_NAME': asfid,
+                    'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
+                    'GIT_PROJECT_ROOT': repopath,
+                    'PATH_INFO': reponame + '.git'
+                }
                 update = "%s %s %s\n" % (before, after, ref)
 
                 try:                    
@@ -123,7 +125,7 @@ if 'repository' in data and 'name' in data['repository']:
                     os.chdir(repopath)
                     
                     # Fire off the email hook
-                    process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
+                    process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=gitenv)
                     process.communicate(input=update)
                     log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
                       
