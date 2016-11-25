@@ -125,7 +125,7 @@ if 'repository' in data and 'name' in data['repository']:
                     os.chdir(repopath)
                     
                     # Fire off the email hook
-                    process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=gitenv)
+                    process = subprocess.Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=gitenv)
                     process.communicate(input=update)
                     log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
                       
