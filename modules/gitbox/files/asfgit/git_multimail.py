@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 # ASF PART GOES HERE
 NO_DEFAULT = object()
 import asfgit.util as util
@@ -14,7 +13,7 @@ def _repo_name():
         raise ValueError("Invalid PATH_INFO: %s" % os.environ["PATH_INFO"])
     path = path[0]
     if path[-4:] == ".git":
-        return ath[:-4]
+        return path[:-4]
     return path
 
 
