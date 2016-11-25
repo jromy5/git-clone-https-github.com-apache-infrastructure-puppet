@@ -45,10 +45,11 @@ if 'repository' in data and 'name' in data['repository']:
     ref = data['ref']
     before = data['before']
     after = data['after']
+    repopath = "/x1/repos/asf/%s.git" % reponame
     broken = False
     
     # Unless asfgit is the pusher, we need to act on this.
-    if pusher != 'asfgit' and os.path.exists("/x1/repos/asf/%s.git" % reponame):
+    if pusher != 'asfgit' and os.path.exists(repopath):
         ########################
         # Get ASF ID of pusher #
         ########################
@@ -72,6 +73,7 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         if before:
             try:
+                os.chdir(repopath)
                 subprocess.check_call(['git','cat-file','-e', before])
             except:
                 pass # TODO: Add notification thing for infra or PMC
@@ -82,7 +84,7 @@ if 'repository' in data and 'name' in data['repository']:
         log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
         try:
             # Change to repo dir
-            os.chdir("/x1/repos/asf/%s.git" % reponame)
+            os.chdir(repopath)
             # Run 'git fetch'
             out = subprocess.check_call(["git", "fetch"])
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
@@ -104,7 +106,7 @@ if 'repository' in data and 'name' in data['repository']:
         #####################################
         if not broken: # only fire this off if the sync succeeded
             log = "[%s] [%s.git]: Got a multimail call for %s.git, triggered by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-            hook = "/x1/repos/asf/%s/hooks/post-receive" % reponame
+            hook = "%s/hooks/post-receive" % repopath
             # If we found the hook, prep to run it
             if os.path.exists(hook):
                 # set some vars
@@ -112,13 +114,13 @@ if 'repository' in data and 'name' in data['repository']:
                 os.environ['WEB_HOST'] = "https://gitbox.apache.org/"
                 os.environ['GIT_COMMITTER_NAME'] = asfid
                 os.environ['GIT_COMMITTER_EMAIL'] = "%s@apache.org" % asfid
-                os.environ['GIT_PROJECT_ROOT'] = "/x1/repos/asf/" + reponame + ".git"
+                os.environ['GIT_PROJECT_ROOT'] = repopath
                 os.environ['PATH_INFO'] = reponame + '.git'
                 update = "%s %s %s\n" % (before, after, ref)
 
                 try:                    
                     # Change to repo dir
-                    os.chdir("/x1/repos/asf/%s.git" % reponame)
+                    os.chdir(repopath)
                     
                     # Fire off the email hook
                     process = Popen([hook], stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
