@@ -218,7 +218,7 @@ REFCHANGE_INTRO_TEMPLATE = """\
 This is an automated email from the ASF dual-hosted git repository.
 
 %(pusher)s pushed a change to %(refname_type)s %(short_refname)s
-in repository https://git-dual.apache.org/repos/asf/%(repo_shortname)s.git.
+in repository https://gitbox.apache.org/repos/asf/%(repo_shortname)s.git.
 
 """
 
@@ -349,7 +349,7 @@ REVISION_INTRO_TEMPLATE = """\
 This is an automated email from the ASF dual-hosted git repository.
 
 %(pusher)s pushed a commit to %(refname_type)s %(short_refname)s
-in repository https://git-dual.apache.org/repos/asf/%(repo_shortname)s.git
+in repository https://gitbox.apache.org/repos/asf/%(repo_shortname)s.git
 
 """
 
@@ -384,7 +384,7 @@ COMBINED_INTRO_TEMPLATE = """\
 This is an automated email from the ASF dual-hosted git repository.
 
 %(pusher)s pushed a commit to %(refname_type)s %(short_refname)s
-in repository https://git-dual.apache.org/repos/asf/%(repo_shortname)s.git
+in repository https://gitbox.apache.org/repos/asf/%(repo_shortname)s.git
 
 """
 
