@@ -115,9 +115,11 @@ if 'repository' in data and 'name' in data['repository']:
                     'WEB_HOST': 'https://gitbox.apache.org/',
                     'GIT_COMMITTER_NAME': asfid,
                     'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
-                    'GIT_PROJECT_ROOT': repopath,
+                    'GIT_PROJECT_ROOT': '/x1/repos/asf',
                     'PATH_INFO': reponame + '.git',
-                    'ASFGIT_ADMIN': '/x1/gitbox'
+                    'ASFGIT_ADMIN': '/x1/gitbox',
+                    'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
+                    'WRITE_LOCK': '/x1/gitbox/write.lock'
                 }
                 update = "%s %s %s\n" % (before, after, ref)
 
