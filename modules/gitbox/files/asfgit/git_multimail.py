@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-
+# -*- coding: utf-8 -*-
 # ASF PART GOES HERE
 NO_DEFAULT = object()
 import asfgit.util as util
@@ -14,8 +14,8 @@ def _repo_name():
         raise ValueError("Invalid PATH_INFO: %s" % os.environ["PATH_INFO"])
     path = path[0]
     if path[-4:] == ".git":
-        return util.decode(path[:-4])
-    return util.decode(path)
+        return ath[:-4]
+    return path
 
 
 def _git_config(key, default=NO_DEFAULT):
@@ -29,8 +29,8 @@ def _git_config(key, default=NO_DEFAULT):
 
 DEFAULT_SUBJECT = "%(repo)s git commit: %(subject)s"
 repo_name = _repo_name()
-repo_dir = os.path.join(util.environ("GIT_PROJECT_ROOT"), u"%s.git" % repo_name)
-committer = util.environ("GIT_COMMITTER_NAME")
+repo_dir = os.path.join(os.environ.get("GIT_PROJECT_ROOT"), "%s.git" % repo_name)
+committer = os.environ.get("GIT_COMMITTER_NAME")
 sendmail = _git_config("hooks.asfgit.sendmail").strip()
 recips = [str('"%s" <%s>' % (k, k) )for k in _git_config("hooks.asfgit.recips").split()]
 recips = filter(lambda x: len(x) > 5, recips)
