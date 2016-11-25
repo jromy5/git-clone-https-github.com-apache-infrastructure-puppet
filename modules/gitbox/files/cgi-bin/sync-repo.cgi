@@ -116,7 +116,8 @@ if 'repository' in data and 'name' in data['repository']:
                     'GIT_COMMITTER_NAME': asfid,
                     'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
                     'GIT_PROJECT_ROOT': repopath,
-                    'PATH_INFO': reponame + '.git'
+                    'PATH_INFO': reponame + '.git',
+                    'ASFGIT_ADMIN': '/x1/gitbox'
                 }
                 update = "%s %s %s\n" % (before, after, ref)
 
