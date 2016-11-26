@@ -1,0 +1,22 @@
+---
+classes:
+  - buildbot_slave
+  - loggy
+
+buildbot_slave::slave_name: 'bb_qnode4_ubuntu'
+buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
+  - 'tomcat7'
+  - 'libtool'
+  - 'libpcre3' 
+  - 'libpcre3-dev'
+  - 'graphviz'
+  - 'graphviz-dev'
+
+python::python_pips:
+  pelican:
+    ensure: present
+  markdown:
+    ensure: present
+  beautifulsoup4:
+    ensure: present

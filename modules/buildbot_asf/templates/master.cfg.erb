@@ -123,6 +123,19 @@ c['slaves'] = [BuildSlave("orcus_ubuntu", private.slave1Pwd,
                           max_builds=2,
                           ),
 
+# Quenda Hosted Slaves
+
+               BuildSlave("bb_qnode4_ubuntu", private.bb_qnode4_ubuntuPwd,
+                          notify_on_missing="infrastructure@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_qnode5_ubuntu", private.bb_qnode5_ubuntuPwd,
+                          notify_on_missing="infrastructure@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
               ]
 
 # to limit to two concurrent builds on a slave, use
