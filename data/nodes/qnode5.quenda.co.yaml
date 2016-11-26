@@ -5,8 +5,8 @@ classes:
 
 buildbot_slave::slave_name: 'bb_qnode5_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
-  - 'tomcat7'
+  - 'openjdk-9-jdk'
+  - 'tomcat8'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
