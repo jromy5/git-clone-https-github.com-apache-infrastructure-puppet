@@ -42,7 +42,7 @@ data = json.loads(jsin)
 
 tmpl_missed_webhook = """
 The repository %(reponame)s seems to have missed a webhook call.
-We received a push with %(old) as the parent commit, but this commit
+We received a push with %(before) as the parent commit, but this commit
 was not found in the repository.
 
 The exact error was:
