@@ -16,7 +16,7 @@ def main():
             rname = ref.name if hasattr(ref, 'name') else "unknown"
             send_json({
                 "repository": "git",
-                "server": "git-dual",
+                "server": "gitbox",
                 "project": cfg.repo_name,
                 "ref": rname,
                 "hash": "null",
@@ -36,10 +36,10 @@ def main():
             continue
         if ref.deleted():
             continue
-        for commit in ref.commits(num=5, reverse=True):
+        for commit in ref.commits(num=10, reverse=True):
             send_json({
                 "repository": "git",
-                "server": "git-dual",
+                "server": "gitbox",
                 "project": cfg.repo_name,
                 "ref": commit.ref.name,
                 "hash": commit.commit,
