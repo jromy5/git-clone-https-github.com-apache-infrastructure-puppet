@@ -64,6 +64,16 @@ With regards,
 gitbox.apache.org
 """
 
+
+tmpl_unknown_user = """
+The repository %(repository)s was pushed to by a user not known to the
+gitbox/MATT system. The GitHub ID was: %(pusher)s. This is not supposed
+to happen, please check that the MATT system is operating correctly.
+
+With regards,
+gitbox.apache.org
+"""
+
 if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name']
@@ -75,16 +85,33 @@ if 'repository' in data and 'name' in data['repository']:
     
     # Unless asfgit is the pusher, we need to act on this.
     if pusher != 'asfgit' and os.path.exists(repopath):
-        ########################
-        # Get ASF ID of pusher #
-        ########################
-        asfid = pusher # We don't know how to fetch it yet
         
         ##################
         # Open SQLite DB #
         ##################
         conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
         cursor = conn.cursor()
+        
+        
+        ########################
+        # Get ASF ID of pusher #
+        ########################
+        c.execute("SELECT asfid FROM ids WHERE githubid=?", (pusher, ))
+        row = c.fetchone()
+        # Found it, yay!
+        if row:
+            asfid = row[0]
+        # Didn't find it, time to notify!!
+        else:
+            asfid = "(unknown)"
+            # Send an email to users@infra.a.o with the bork
+            msg = MIMEText(tmpl_unknown_user % locals())
+            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % repository
+            msg['To'] = "<users@infra.apache.org>"
+            msg['From'] = "<gitbox@gitbox.apache.org>"
+            s = smtplib.SMTP('localhost')
+            s.sendmail(msg['From'], msg['To'], msg.as_string())
+        
         
         #######################################
         # Check that we haven't missed a push #
