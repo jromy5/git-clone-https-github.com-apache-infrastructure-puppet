@@ -16,7 +16,8 @@
 # limitations under the License.
 #
 import hashlib, json, random, os, sys, time, subprocess
-import cgi, netaddr
+import cgi, netaddr, smtp, sqlite3
+from email.mime.text import MIMEText
 
 xform = cgi.FieldStorage();
 
@@ -39,6 +40,30 @@ def getvalue(key):
 jsin = getvalue('payload')
 data = json.loads(jsin)
 
+tmpl_missed_webhook = """
+The repository %(repository)s seems to have missed a webhook call.
+We received a push with %(old) as the parent commit, but this commit
+was not found in the repository.
+
+The exact error was:
+%(errmsg)s
+
+With regards,
+gitbox.apache.org
+"""
+
+tmpl_sync_failed = """
+The repository %(repository)s seems to be failing to syncronize with
+GitHub's repository. This may be a split brain issue, and thus require
+manual intervention.
+
+The exact error was:
+%(errmsg)s
+
+With regards,
+gitbox.apache.org
+"""
+
 if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name']
@@ -56,8 +81,40 @@ if 'repository' in data and 'name' in data['repository']:
         asfid = pusher # We don't know how to fetch it yet
         
         ##################
-        # Write Push log #
+        # Open SQLite DB #
         ##################
+        conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
+        cursor = conn.cursor()
+        
+        #######################################
+        # Check that we haven't missed a push #
+        #######################################
+        if before:
+            try:
+                # First, check the db for pushes we have
+                c.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
+                foundOld = c.fetchone()
+                if not foundOld:
+                    raise Exception("Could not find previous push (??->%s) in push log!" % before)
+                # Then, be doubly sure by doing cat-file on the old rev
+                os.chdir(repopath)
+                subprocess.check_call(['git','cat-file','-e', before])
+            except Exception as errmsg:
+                # Send an email to users@infra.a.o with the bork
+                msg = MIMEText(tmpl_missed_webhook % locals())
+                msg['Subject'] = "gitbox repository %s: missed event/push!" % repository
+                msg['To'] = "<users@infra.apache.org>"
+                msg['From'] = "<gitbox@gitbox.apache.org>"
+                s = smtplib.SMTP('localhost')
+                s.sendmail(msg['From'], msg['To'], msg.as_string())
+        
+        ##################################
+        # Write Push log, text + sqlite3 #
+        ##################################
+        c.execute("""INSERT INTO pushlog
+                  (repository, asfid, githubid, ref, old, new, date)
+                  VALUES (?,?,?,?,?,now))""", (reponame, asfid, pusher, reduce, before, after, ))
+        
         open("/x1/pushlogs/%s.txt" % reponame, "a").write(
             "[%s] %s -> %s (%s@apache.org / %s)\n" % (
                 time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
@@ -68,15 +125,10 @@ if 'repository' in data and 'name' in data['repository']:
                 )
             )
         
-        #######################################
-        # Check that we haven't missed a push #
-        #######################################
-        if before:
-            try:
-                os.chdir(repopath)
-                subprocess.check_call(['git','cat-file','-e', before])
-            except:
-                pass # TODO: Add notification thing for infra or PMC
+        
+        # commit and close sqlite, no need for it below
+        conn.commit()
+        conn.close()
         
         ####################
         # SYNC WITH GITHUB #
@@ -86,18 +138,28 @@ if 'repository' in data and 'name' in data['repository']:
             # Change to repo dir
             os.chdir(repopath)
             # Run 'git fetch'
-            out = subprocess.check_call(["git", "fetch"])
+            out = subprocess.check_output(["git", "fetch"])
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
             try:
                 os.unlink("/x1/gitbox/broken/%s.txt" % cfg.repo_name)
             except:
                 pass
-        except Exception as err:
+        except subprocess.CalledProcessError as err:
             broken = True
-            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err)
+            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err.output)
             with open("/x1/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
                 f.write("BROKEN AT %s\n" % time.strftime("%c"))
                 f.close()
+            
+            # Send an email to users@infra.a.o with the bork
+            errmsg = err.output
+            msg = MIMEText(tmpl_sync_failed % locals())
+            msg['Subject'] = "gitbox repository %s: sync failed!" % repository
+            msg['To'] = "<users@infra.apache.org>"
+            msg['From'] = "<gitbox@gitbox.apache.org>"
+            s = smtplib.SMTP('localhost')
+            s.sendmail(msg['From'], msg['To'], msg.as_string())
+            
         open("/x1/gitbox/sync.log", "a").write(log)
         
         
