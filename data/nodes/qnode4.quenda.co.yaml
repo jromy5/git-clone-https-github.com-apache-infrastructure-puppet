@@ -2,6 +2,7 @@
 classes:
   - buildbot_slave
   - loggy
+  - buildbot_slave::rat
 
 buildbot_slave::slave_name: 'bb_qnode4_ubuntu'
 buildbot_slave::required_packages:
