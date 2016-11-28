@@ -64,8 +64,8 @@ file {
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0750';
-  '/x1/gitbox/db/gitbox.db':
-    ensure => present,
+  '/x1/gitbox/db':
+    ensure => directory,
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0750';
