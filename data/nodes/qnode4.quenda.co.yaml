@@ -1,8 +1,8 @@
 ---
 classes:
   - buildbot_slave
-  - loggy
   - buildbot_slave::rat
+  - loggy
 
 buildbot_slave::slave_name: 'bb_qnode4_ubuntu'
 buildbot_slave::required_packages:
@@ -20,8 +20,8 @@ python::python_pips:
   beautifulsoup4:
     ensure: present
 
-buildbot_slave::rat::project_name: 'OpenOffice'
-buildbot_slave::rat::src_dir: 'openoffice-nightly-rat'
+buildbot_slave::rat::project_name: 'odftoolkit-trunk'
+buildbot_slave::rat::src_dir: 'odftoolkit-trunk-rat'
 buildbot_slave::rat::build_dir: 'build'
 buildbot_slave::rat::report_file: 'rat-output.xml'
 buildbot_slave::rat::rat_excludes: 'main/rat-excludes
