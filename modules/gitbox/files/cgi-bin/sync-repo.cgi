@@ -106,7 +106,7 @@ if 'repository' in data and 'name' in data['repository']:
             asfid = "(unknown)"
             # Send an email to users@infra.a.o with the bork
             msg = MIMEText(tmpl_unknown_user % locals())
-            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % repository
+            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
             msg['To'] = "<users@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
             s = smtplib.SMTP('localhost')
@@ -129,7 +129,7 @@ if 'repository' in data and 'name' in data['repository']:
             except Exception as errmsg:
                 # Send an email to users@infra.a.o with the bork
                 msg = MIMEText(tmpl_missed_webhook % locals())
-                msg['Subject'] = "gitbox repository %s: missed event/push!" % repository
+                msg['Subject'] = "gitbox repository %s: missed event/push!" % reponame
                 msg['To'] = "<users@infra.apache.org>"
                 msg['From'] = "<gitbox@gitbox.apache.org>"
                 s = smtplib.SMTP('localhost')
