@@ -106,8 +106,7 @@ gitbox::custom_fragment_443: |
           SetEnv GIT_PROJECT_ROOT /x1/repos/asf
           SetEnv GITWEB_CONFIG /x1/gitbox/conf/httpd/gitweb.asf.pl
       </Location>
-      <Location /logs/asf/>
-          ForceType text/plain
-          OutputSed "s/http[0-9.]*/[redacted]/g"
-          SetOutputFilter sed
-      </Location> 
+      <Directory /x1/pushlogs>
+          require all granted
+      </Directory>
+      Alias /logs/ /x1/pushlogs/
