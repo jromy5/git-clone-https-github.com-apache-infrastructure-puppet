@@ -116,7 +116,7 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         # Check that we haven't missed a push #
         #######################################
-        if before:
+        if before and before != '0000000000000000000000000000000000000000':
             try:
                 # First, check the db for pushes we have
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
