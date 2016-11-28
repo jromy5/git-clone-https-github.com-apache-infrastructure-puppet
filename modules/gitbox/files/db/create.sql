@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS pushlog(
     old CHARACTER(40) NOT NULL,            -- Previous revision
     new CHARACTER(40) NOT NULL,            -- New (current revision)
     ref VARCHAR(200) NOT NULL,             -- branch/tag name
+    baseref VARCHAR(200),                  -- original branch/tag name if branching off. can be null.
     date DATETIME NOT NULL,                -- Time of push
     asfid VARCHAR(64) NOT NULL,            -- ASF ID of pusher
     githubid VARCHAR(64) -- this may change over time, so we keep a record

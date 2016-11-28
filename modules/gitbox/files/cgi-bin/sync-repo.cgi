@@ -79,6 +79,7 @@ if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name']
     ref = data['ref']
+    baseref = data['base_ref']
     before = data['before']
     after = data['after']
     repopath = "/x1/repos/asf/%s.git" % reponame
@@ -117,7 +118,8 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         # Check that we haven't missed a push #
         #######################################
-        if before and before != '0000000000000000000000000000000000000000':
+        emptybranch = '0'*40 # 40 0s means a new branch was made
+        if before and before != emptybranch:
             try:
                 # First, check the db for pushes we have
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
@@ -136,12 +138,16 @@ if 'repository' in data and 'name' in data['repository']:
                 s = smtplib.SMTP('localhost')
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
         
+        # If new branch, fetch the old ref from head_commit
+        if before and before == emptybranch and 'head_commit' in data:
+            before = data['head_commit']['id']
+        
         ##################################
         # Write Push log, text + sqlite3 #
         ##################################
         cursor.execute("""INSERT INTO pushlog
-                  (repository, asfid, githubid, ref, old, new, date)
-                  VALUES (?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, ref, before, after, ))
+                  (repository, asfid, githubid, baseref, ref, old, new, date)
+                  VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
         
         open("/x1/pushlogs/%s.txt" % reponame, "a").write(
             "[%s] %s -> %s (%s@apache.org / %s)\n" % (
