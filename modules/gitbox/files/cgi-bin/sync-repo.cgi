@@ -23,7 +23,8 @@ xform = cgi.FieldStorage();
 
 # Check that this is GitHub calling
 from netaddr import IPNetwork, IPAddress
-GitHubNetwork = IPNetwork("192.30.252.0/22") # TBD!
+GitHubNetwork = IPNetwork("192.30.252.0/22") # This is GitHub's current
+                                             # net block. May change!
 callerIP = IPAddress(os.environ['REMOTE_ADDR'])
 if not callerIP in GitHubNetwork:
     print("Status: 401 Unauthorized\r\nContent-Type: text/plain\r\n\r\nI don't know you!\r\n")
@@ -107,7 +108,7 @@ if 'repository' in data and 'name' in data['repository']:
             # Send an email to users@infra.a.o with the bork
             msg = MIMEText(tmpl_unknown_user % locals(), _charset = "utf-8")
             msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
-            msg['To'] = "<users@infra.apache.org>"
+            msg['To'] = "<team@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
@@ -116,7 +117,7 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         # Check that we haven't missed a push #
         #######################################
-        if before:
+        if before and before != '0000000000000000000000000000000000000000':
             try:
                 # First, check the db for pushes we have
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
@@ -130,7 +131,7 @@ if 'repository' in data and 'name' in data['repository']:
                 # Send an email to users@infra.a.o with the bork
                 msg = MIMEText(tmpl_missed_webhook % locals(), _charset = "utf-8")
                 msg['Subject'] = "gitbox repository %s: missed event/push!" % reponame
-                msg['To'] = "<users@infra.apache.org>"
+                msg['To'] = "<team@infra.apache.org>"
                 msg['From'] = "<gitbox@gitbox.apache.org>"
                 s = smtplib.SMTP('localhost')
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
@@ -182,7 +183,7 @@ if 'repository' in data and 'name' in data['repository']:
             errmsg = err.output
             msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
             msg['Subject'] = "gitbox repository %s: sync failed!" % repository
-            msg['To'] = "<users@infra.apache.org>"
+            msg['To'] = "<team@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
