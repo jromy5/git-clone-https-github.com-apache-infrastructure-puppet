@@ -41,7 +41,7 @@ jsin = getvalue('payload')
 data = json.loads(jsin)
 
 tmpl_missed_webhook = """
-The repository %(repository)s seems to have missed a webhook call.
+The repository %(reponame)s seems to have missed a webhook call.
 We received a push with %(old) as the parent commit, but this commit
 was not found in the repository.
 
@@ -53,7 +53,7 @@ gitbox.apache.org
 """
 
 tmpl_sync_failed = """
-The repository %(repository)s seems to be failing to syncronize with
+The repository %(reponame)s seems to be failing to syncronize with
 GitHub's repository. This may be a split brain issue, and thus require
 manual intervention.
 
@@ -66,7 +66,7 @@ gitbox.apache.org
 
 
 tmpl_unknown_user = """
-The repository %(repository)s was pushed to by a user not known to the
+The repository %(reponame)s was pushed to by a user not known to the
 gitbox/MATT system. The GitHub ID was: %(pusher)s. This is not supposed
 to happen, please check that the MATT system is operating correctly.
 
