@@ -140,7 +140,7 @@ if 'repository' in data and 'name' in data['repository']:
         ##################################
         cursor.execute("""INSERT INTO pushlog
                   (repository, asfid, githubid, ref, old, new, date)
-                  VALUES (?,?,?,?,?,now))""", (reponame, asfid, pusher, reduce, before, after, ))
+                  VALUES (?,?,?,?,?,now)""", (reponame, asfid, pusher, ref, before, after, ))
         
         open("/x1/pushlogs/%s.txt" % reponame, "a").write(
             "[%s] %s -> %s (%s@apache.org / %s)\n" % (
