@@ -96,8 +96,8 @@ if 'repository' in data and 'name' in data['repository']:
         ########################
         # Get ASF ID of pusher #
         ########################
-        c.execute("SELECT asfid FROM ids WHERE githubid=?", (pusher, ))
-        row = c.fetchone()
+        cursor.execute("SELECT asfid FROM ids WHERE githubid=?", (pusher, ))
+        row = cursor.fetchone()
         # Found it, yay!
         if row:
             asfid = row[0]
@@ -119,8 +119,8 @@ if 'repository' in data and 'name' in data['repository']:
         if before:
             try:
                 # First, check the db for pushes we have
-                c.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
-                foundOld = c.fetchone()
+                cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
+                foundOld = cursor.fetchone()
                 if not foundOld:
                     raise Exception("Could not find previous push (??->%s) in push log!" % before)
                 # Then, be doubly sure by doing cat-file on the old rev
@@ -138,7 +138,7 @@ if 'repository' in data and 'name' in data['repository']:
         ##################################
         # Write Push log, text + sqlite3 #
         ##################################
-        c.execute("""INSERT INTO pushlog
+        cursor.execute("""INSERT INTO pushlog
                   (repository, asfid, githubid, ref, old, new, date)
                   VALUES (?,?,?,?,?,now))""", (reponame, asfid, pusher, reduce, before, after, ))
         
