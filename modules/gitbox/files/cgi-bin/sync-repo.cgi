@@ -96,7 +96,7 @@ if 'repository' in data and 'name' in data['repository']:
         ########################
         # Get ASF ID of pusher #
         ########################
-        cursor.execute("SELECT asfid FROM ids WHERE githubid=?", (pusher, ))
+        cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
         row = cursor.fetchone()
         # Found it, yay!
         if row:
