@@ -128,7 +128,7 @@ if 'repository' in data and 'name' in data['repository']:
                 subprocess.check_call(['git','cat-file','-e', before])
             except Exception as errmsg:
                 # Send an email to users@infra.a.o with the bork
-                msg = MIMEText(tmpl_missed_webhook % locals())
+                msg = MIMEText(tmpl_missed_webhook % locals(), _charset = "utf-8")
                 msg['Subject'] = "gitbox repository %s: missed event/push!" % reponame
                 msg['To'] = "<users@infra.apache.org>"
                 msg['From'] = "<gitbox@gitbox.apache.org>"
