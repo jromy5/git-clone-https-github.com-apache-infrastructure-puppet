@@ -23,7 +23,8 @@ xform = cgi.FieldStorage();
 
 # Check that this is GitHub calling
 from netaddr import IPNetwork, IPAddress
-GitHubNetwork = IPNetwork("192.30.252.0/22") # TBD!
+GitHubNetwork = IPNetwork("192.30.252.0/22") # This is GitHub's current
+                                             # net block. May change!
 callerIP = IPAddress(os.environ['REMOTE_ADDR'])
 if not callerIP in GitHubNetwork:
     print("Status: 401 Unauthorized\r\nContent-Type: text/plain\r\n\r\nI don't know you!\r\n")
