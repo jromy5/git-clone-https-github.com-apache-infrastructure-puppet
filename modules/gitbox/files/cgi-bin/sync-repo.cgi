@@ -41,7 +41,7 @@ jsin = getvalue('payload')
 data = json.loads(jsin)
 
 tmpl_missed_webhook = """
-The repository %(repository)s seems to have missed a webhook call.
+The repository %(reponame)s seems to have missed a webhook call.
 We received a push with %(old) as the parent commit, but this commit
 was not found in the repository.
 
@@ -53,7 +53,7 @@ gitbox.apache.org
 """
 
 tmpl_sync_failed = """
-The repository %(repository)s seems to be failing to syncronize with
+The repository %(reponame)s seems to be failing to syncronize with
 GitHub's repository. This may be a split brain issue, and thus require
 manual intervention.
 
@@ -66,7 +66,7 @@ gitbox.apache.org
 
 
 tmpl_unknown_user = """
-The repository %(repository)s was pushed to by a user not known to the
+The repository %(reponame)s was pushed to by a user not known to the
 gitbox/MATT system. The GitHub ID was: %(pusher)s. This is not supposed
 to happen, please check that the MATT system is operating correctly.
 
@@ -106,7 +106,7 @@ if 'repository' in data and 'name' in data['repository']:
             asfid = "(unknown)"
             # Send an email to users@infra.a.o with the bork
             msg = MIMEText(tmpl_unknown_user % locals())
-            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % repository
+            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
             msg['To'] = "<users@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
             s = smtplib.SMTP('localhost')
@@ -129,7 +129,7 @@ if 'repository' in data and 'name' in data['repository']:
             except Exception as errmsg:
                 # Send an email to users@infra.a.o with the bork
                 msg = MIMEText(tmpl_missed_webhook % locals())
-                msg['Subject'] = "gitbox repository %s: missed event/push!" % repository
+                msg['Subject'] = "gitbox repository %s: missed event/push!" % reponame
                 msg['To'] = "<users@infra.apache.org>"
                 msg['From'] = "<gitbox@gitbox.apache.org>"
                 s = smtplib.SMTP('localhost')
