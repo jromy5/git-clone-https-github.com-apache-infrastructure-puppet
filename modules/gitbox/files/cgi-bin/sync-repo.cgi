@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 import hashlib, json, random, os, sys, time, subprocess
-import cgi, netaddr, SMTP, sqlite3
+import cgi, netaddr, smtplib, sqlite3
 from email.mime.text import MIMEText
 
 xform = cgi.FieldStorage();
