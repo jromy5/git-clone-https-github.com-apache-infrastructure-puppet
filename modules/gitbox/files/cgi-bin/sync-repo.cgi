@@ -105,7 +105,7 @@ if 'repository' in data and 'name' in data['repository']:
         else:
             asfid = "(unknown)"
             # Send an email to users@infra.a.o with the bork
-            msg = MIMEText(tmpl_unknown_user % locals())
+            msg = MIMEText(tmpl_unknown_user % locals(), _charset = "utf-8")
             msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
             msg['To'] = "<users@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
@@ -180,7 +180,7 @@ if 'repository' in data and 'name' in data['repository']:
             
             # Send an email to users@infra.a.o with the bork
             errmsg = err.output
-            msg = MIMEText(tmpl_sync_failed % locals())
+            msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
             msg['Subject'] = "gitbox repository %s: sync failed!" % repository
             msg['To'] = "<users@infra.apache.org>"
             msg['From'] = "<gitbox@gitbox.apache.org>"
