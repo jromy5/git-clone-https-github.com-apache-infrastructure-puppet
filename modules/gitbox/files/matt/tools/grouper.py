@@ -225,7 +225,7 @@ def getPMC(group):
         
           if "member" in result_attrs:
             for member in result_attrs["member"]:
-              m = re.match(r"uid=([^,]+)", member)
+              m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
               if m:
                 pmcmembers.append(m.group(1))
         
