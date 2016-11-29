@@ -144,7 +144,7 @@ vhosts_asf::vhosts::vhosts:
 
 vcsrepo:
   /var/www:
-    ensure: present
+    ensure: latest
     provider: 'svn'
     source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/home'
     before: 'Class[Apache]'
