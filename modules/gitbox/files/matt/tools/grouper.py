@@ -230,7 +230,7 @@ def getPMC(group):
                 pmcmembers.append(m.group(1))
         
         ldapClient.unbind_s()
-        pmcmembers = sorted(members) #alphasort
+        pmcmembers = sorted(pmcmembers) #alphasort
     except Exception as err:
         print("Could not fetch LDAP data: %s" % err)
         pmcmembers = None
