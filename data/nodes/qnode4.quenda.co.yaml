@@ -11,6 +11,7 @@ buildbot_slave::required_packages:
   - 'libpcre3-dev'
   - 'graphviz'
   - 'graphviz-dev'
+  - 'sqlite3'
 
 python::python_pips:
   pelican:
