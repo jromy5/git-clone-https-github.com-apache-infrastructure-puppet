@@ -43,6 +43,9 @@ class base (
   $awscli_profile = hiera_hash('awscli::profile', {})
   create_resources(awscli::profile, $awscli_profile)
 
+  $vcsrepo = hiera_hash('vcsrepo',{})
+  create_resources(vcsrepo, $vcsrepo)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
