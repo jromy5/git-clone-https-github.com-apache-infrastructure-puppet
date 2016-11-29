@@ -223,7 +223,7 @@ def getPMC(group):
           result_dn = result[0]
           result_attrs = result[1]
         
-          if "memberUid" in result_attrs:
+          if "member" in result_attrs:
             for member in result_attrs["member"]:
               m = re.match(r"uid=([^,]+)", member)
               if m:
