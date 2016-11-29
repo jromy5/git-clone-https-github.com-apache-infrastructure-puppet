@@ -147,5 +147,4 @@ vcsrepo:
     ensure: 'latest'
     provider: 'svn'
     source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/home'
-    revision: 'master'
     before: 'Class[Apache]'
