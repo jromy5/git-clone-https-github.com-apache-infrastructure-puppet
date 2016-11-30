@@ -23,6 +23,7 @@ base::basepackages:
   - htop
   - iotop
   - libnet-snmp-perl
+  - libpam-cap
   - libsnmp-perl
   - nload
   - screen
