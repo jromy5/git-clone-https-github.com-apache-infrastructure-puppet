@@ -28,10 +28,7 @@ LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 MATT_PROJECTS = {}
 ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
-MFA = None
-with open("../mfa.json", "r") as f:
-    MFA = json.load(f)
-    f.close()
+MFA = json.load(open("../mfa.json"))
 
 
 def getGitHubTeams():
