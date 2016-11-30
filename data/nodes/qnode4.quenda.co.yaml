@@ -13,6 +13,8 @@ buildbot_slave::required_packages:
   - 'graphviz-dev'
   - 'sqlite3'
 
+ldapclient::ldapservers: 'ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
+
 python::python_pips:
   pelican:
     ensure: present
