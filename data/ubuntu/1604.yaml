@@ -290,6 +290,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jigsaw-jdk9-ea-b142
   - asf-build-jira-cli-2.1.0
 
+# Not all build slaves. This is just for Jenkins slaves.
 build_slaves::distro_packages:
   - ant
   - asciidoc
@@ -433,6 +434,14 @@ buildbot_slave::bb_basepackages:
   - libpam0g-dev
   - junit4
   - virtualenvwrapper
+  - libapr1
+  - libapr1-dev
+  - libaprutil1
+  - libaprutil1-dev
+  - libserf-1-1
+  - libserf-dev
+  - libsqlite3-0
+  - libsqlite3-dev
 
 
 logrotate::rule:
