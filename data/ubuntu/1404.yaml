@@ -441,6 +441,7 @@ buildbot_slave::buildbot::buildbot_packages:
 
 buildbot_slave::bb_basepackages:
   - ant
+  - apache2-dev
   - autoconf
   - automake
   - buildbot-slave
@@ -457,6 +458,7 @@ buildbot_slave::bb_basepackages:
   - libsqlite3-0
   - libsqlite3-dev
   - maven
+  - pkg-config
   - python3-dev
   - python3-markdown
   - python3-pip
