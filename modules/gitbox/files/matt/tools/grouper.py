@@ -30,8 +30,8 @@ ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
 MFA = None
 with open("../mfa.json", "r") as f:
-   MFA = json.load(f)
-   f.close()
+    MFA = json.load(f)
+    f.close()
 
 
 def getGitHubTeams():
@@ -45,7 +45,7 @@ def getGitHubTeams():
         # Break if we've hit the end
         if len(data) == 0:
             break
-        
+
         for entry in data:
             # We are only interested in project teams
             m = re.match(r"^(.+)-committers$", entry['slug'])
@@ -114,7 +114,7 @@ def createGitHubTeam(project):
     if not project in MATT_PROJECTS:
         print(" - This project has not been cleared for MATT yet. Aborting team creation")
         return False
-    
+
     url = "https://api.github.com/orgs/apache/teams?access_token=%s" % ORG_READ_TOKEN
     data = json.dumps({'name': "%s committers" % project})
     r = requests.post(url, data=data, allow_redirects=True)
@@ -138,13 +138,13 @@ def removeGitHubTeamMember(teamID, login):
     print("- Removing %s from team #%s..." % (login, str(teamID)))
     url = "https://api.github.com/teams/%s/memberships/%s" % (teamID, login)
     r = requests.delete(url, headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
-    
+
     if r.status_code <= 204:
         print("- Removal done!")
     else:
         print("- Error occured while trying to remove member!")
         print(r.status_code)
-        
+
 def addGitHubTeamMember(teamID, login):
     """ Add a member to a team """
     if str(int(teamID)) != str(teamID):
@@ -185,19 +185,19 @@ def getCommitters(group):
     try:
         ldapClient = ldap.initialize(LDAP_URI)
         ldapClient.set_option(ldap.OPT_REFERRALS, 0)
-        
+
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-        
+
         results = ldapClient.search_s("cn=%s,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
-        
+
         for result in results:
-          result_dn = result[0]
-          result_attrs = result[1]
-        
-          if "memberUid" in result_attrs:
-            for member in result_attrs["memberUid"]:
-              committers.append(member)
-        
+            result_dn = result[0]
+            result_attrs = result[1]
+
+            if "memberUid" in result_attrs:
+                for member in result_attrs["memberUid"]:
+                    committers.append(member)
+
         ldapClient.unbind_s()
         committers = sorted(committers) #alphasort
     except Exception as err:
@@ -214,21 +214,21 @@ def getPMC(group):
     try:
         ldapClient = ldap.initialize(LDAP_URI)
         ldapClient.set_option(ldap.OPT_REFERRALS, 0)
-        
+
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-        
+
         results = ldapClient.search_s("cn=%s,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
-        
+
         for result in results:
-          result_dn = result[0]
-          result_attrs = result[1]
-        
-          if "member" in result_attrs:
-            for member in result_attrs["member"]:
-              m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
-              if m:
-                pmcmembers.append(m.group(1))
-        
+            result_dn = result[0]
+            result_attrs = result[1]
+
+            if "member" in result_attrs:
+                for member in result_attrs["member"]:
+                    m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    if m:
+                        pmcmembers.append(m.group(1))
+
         ldapClient.unbind_s()
         pmcmembers = sorted(pmcmembers) #alphasort
     except Exception as err:
@@ -243,7 +243,7 @@ def getPMC(group):
 ####################
 
 
-# Get a list of all asf/github IDs   
+# Get a list of all asf/github IDs
 conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
 cursor = conn.cursor()
 
@@ -274,7 +274,7 @@ ipmc = getPMC("incubator")
 # Process each project in the MATT test
 for project in MATT_PROJECTS:
     print("Processing GitHub team for " + project)
-    
+
     # Does the team exist?
     teamID = None
     for team in existingTeams:
@@ -289,7 +289,7 @@ for project in MATT_PROJECTS:
         if not teamID:
             print("Something went very wrong here, aborting!")
             break
-    
+
     # Make sure all $tlp-* repos are writeable by this team
     teamRepos = getGitHubTeamRepos(teamID)
     print ("Team is subbed to the following repos: " + ", ".join(teamRepos))
@@ -299,12 +299,12 @@ for project in MATT_PROJECTS:
         if p == project and not repo in teamRepos:
             print("Need to add " + repo + " repo to the team...")
             addGitHubTeamRepo(teamID, repo)
-    
+
     # Now get the current list of members on GitHub
     members = getGitHubTeamMembers(teamID)
     if teamID in existingTeams:
         print(existingTeams[teamID] + ": " + ", ".join(members))
-    
+
     # Now get the committer availids from LDAP
     ldap_team = getCommitters(project)
     if not ldap_team or len(ldap_team) == 0:
@@ -313,7 +313,7 @@ for project in MATT_PROJECTS:
     # If a podling, extend the committer list with the IPMC membership (mentors etc)
     if MATT_PROJECTS[project] == "podling":
         ldap_team.extend(ipmc)
-        
+
     # For each committer, IF THEY HAVE MFA, add them to a 'this is what it should look like' list
     hopefulTeam = []
     for committer in ldap_team:
@@ -330,24 +330,24 @@ for project in MATT_PROJECTS:
             print(githubID + " does not have MFA enabled, can't add to team")
         else:
             print(committer + " does not have a working MATT account yet, ignoring")
-        
+
     # If no team, assume something broke for now
     if len(hopefulTeam) == 0:
         print("No hopeful GitHub team could be constructed, assuming something's wrong and cycling to next project")
         continue
-    
+
     # Now, for each member in the team, find those that don't belong here.
     for member in members:
         if not member in hopefulTeam:
             print(member + " should not be a part of this team, removing...")
             removeGitHubTeamMember(teamID, member)
-    
+
     # Lastly, add those that should be here but aren't
     for member in hopefulTeam:
         if not member in members:
             print(member + " not found in GitHub team, adding...")
             addGitHubTeamMember(teamID, member)
-            
+
     print("Done with " + project + ", moving to next project...")
-          
+
 print("ALL DONE!")
