@@ -22,6 +22,9 @@ class base (
     ensure => purged,
   }
 
+  # hiera_hash+create_resources used to instantiate puppet "defines"
+  # via hiera/yaml, since there is no associated class.
+
   $hosts = hiera_hash('base::hosts', {})
   create_resources(host, $hosts)
 
@@ -45,6 +48,9 @@ class base (
 
   $vcsrepo = hiera_hash('vcsrepo',{})
   create_resources(vcsrepo, $vcsrepo)
+
+  $certonly = hiera_hash('letsencrypt::certonly',{})
+  create_resources(letsencrypt::certonly, $certonly)
 
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
