@@ -59,7 +59,11 @@
     -->
     <Service name="Catalina">
 
-        <Connector port="8080"
+<% if @connector_port_http != '' %>
+        <Connector port="<%= connector_port_http %>"
+<% if @connector_address_http != '' %>
+                   address="<%= connector_address_http %>"
+<% end %>
 
                    maxThreads="150"
                    minSpareThreads="25"
@@ -72,6 +76,7 @@
                    redirectPort="8443"
                    acceptCount="100"
                    disableUploadTimeout="true"/>
+<% end %>
 
         <!--
         ====================================================================================
@@ -119,7 +124,15 @@
          ====================================================================================
         -->
 
-        <Connector port="8009" redirectPort="8443" enableLookups="false" protocol="AJP/1.3" URIEncoding="UTF-8"/>
+<% if @connector_port_ajp != '' %>
+        <Connector port="<%= connector_port_ajp %>"
+<% if @connector_address_ajp != '' %>
+                   address="<%= connector_address_ajp %>"
+<% end %>
+                   redirectPort="8443"
+                   enableLookups="false"
+                   protocol="AJP/1.3"
+                   URIEncoding="UTF-8"/>
 
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">

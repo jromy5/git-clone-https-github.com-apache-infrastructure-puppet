@@ -17,7 +17,11 @@ class jira_asf (
   $pgsql_connector_version        = '',
   $parent_dir                     = '/x1/jira',
   $server_port                    = '',
-  $connector_port                 = '',
+  # Set the connector port to the empty string to disable the connector
+  $connector_port_http            = '8080',
+  $connector_address_http         = '',
+  $connector_port_ajp             = '8009',
+  $connector_address_ajp          = '',
   $context_path                   = '',
   $docroot                        = '',
   $server_alias                   = '',
