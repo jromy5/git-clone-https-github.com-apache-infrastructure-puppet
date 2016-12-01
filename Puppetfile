@@ -100,6 +100,11 @@ mod 'ldap',
   :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
 
 
+mod 'inifile',
+  :git => 'https://github.com/puppetlabs/puppetlabs-inifile',
+  :tag => '1.6.0'
+
+
 mod 'java',
   :git => 'https://github.com/puppetlabs/puppetlabs-java.git',
   :tag => '1.3.0'
