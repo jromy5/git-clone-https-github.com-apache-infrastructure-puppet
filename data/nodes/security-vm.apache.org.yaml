@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - vhosts_asf::modules
   - vhosts_asf::vhosts
   - jira_asf
   - letsencrypt
@@ -55,6 +56,10 @@ letsencrypt::certonly:
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
 
 vhosts_asf::vhosts::vhosts:
   security-vm:
