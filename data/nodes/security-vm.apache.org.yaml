@@ -42,6 +42,7 @@ jira_asf::jvm_min_size: '6144m'
 jira_asf::jvm_max_size: '6144m'
 
 letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
   security-vm:
     domains:
