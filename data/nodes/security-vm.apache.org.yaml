@@ -1,7 +1,6 @@
 ---
 classes:
   - apache
-  - apache::mod::php
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
