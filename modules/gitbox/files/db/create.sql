@@ -21,6 +21,7 @@
   > .read create.sql
 */
 
+-- ASF <-> GitHub ID lookup DB
 CREATE TABLE IF NOT EXISTS ids(
     asfid VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL, -- ASF ID
     githubid VARCHAR(64) UNIQUE NOT NULL,          -- GitHub ID
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS ids(
     updated DATETIME NOT NULL                      -- Last change time
 );
 
-
+-- Pushlog DB
 CREATE TABLE IF NOT EXISTS pushlog(
     id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Just an ID, bleh
     repository VARCHAR(100) NOT NULL,      -- repository name (sans .git)
@@ -41,6 +42,14 @@ CREATE TABLE IF NOT EXISTS pushlog(
     githubid VARCHAR(64) -- this may change over time, so we keep a record
                          -- of it for each push.
 );
+
+-- Web UI session DB
+CREATE TABLE IF NOT EXISTS sessions(
+    cookie   VARCHAR(40),                               -- Web UI cookie
+    asfid    VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL,   -- ASF ID coupled to session
+    githubid VARCHAR(64),                               -- GitHub ID of session
+    asfname  VARCHAR(100)                               -- Display name
+)
 
 CREATE INDEX IF NOT EXISTS I_GITHUBID ON ids (githubid);
 CREATE INDEX IF NOT EXISTS I_OLDREF ON pushlog (old);
