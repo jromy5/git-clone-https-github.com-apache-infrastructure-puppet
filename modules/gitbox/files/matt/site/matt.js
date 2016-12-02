@@ -150,17 +150,17 @@ function renderPage(json) {
         var fname = json.fullname.split(" ")[0]
         obj.innerHTML = "<h3>ASF Auth: Authed</h3>"
         obj.innerHTML += "<big>Welcome back, " + fname + "!</big><br/>"
-        obj.innerHTML += "<small style='color: #269;'><i>Not " + fname + "? <a href='api/auth.lua?logout=true'>Log out</a> then!</i></small><br/>"
+        obj.innerHTML += "<small style='color: #269;'><i>Not " + fname + "? <a href='oauth.cgi?logout=true'>Log out</a> then!</i></small><br/>"
         obj.setAttribute("class", "tc_good tc")
     } else {
-        obj.innerHTML = "<h3>ASF Auth: Not authed</h3>Start off by logging in with Apache OAuth to begin your account merge process.<br/><a href='api/auth.lua?redirect=apache' class='btn'>Start ASF Oauth</a>"
+        obj.innerHTML = "<h3>ASF Auth: Not authed</h3>Start off by logging in with Apache OAuth to begin your account merge process.<br/><a href='oauth.cgi?redirect=apache' class='btn'>Start ASF Oauth</a>"
     }
     
     // Step 2: GitHub Auth
     obj = document.getElementById('github')
     if (json.external && json.external.github) {
         obj.innerHTML = "<h3>GitHub: Authed</h3>"
-        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.external.github.username + "</kbd> on GitHub. (not the right account? <a href='api/auth.lua?unauth=github'>Reset your GitHub info then</a>.)"
+        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.external.github.username + "</kbd> on GitHub. (not the right account? <a href=oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)"
         obj.setAttribute("class", "tc_good tc")
         var extra = ""
         if (document.location.search.length > 1) {
