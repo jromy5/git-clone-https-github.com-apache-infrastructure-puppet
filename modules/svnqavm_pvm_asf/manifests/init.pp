@@ -33,26 +33,26 @@ class svnqavm_pvm_asf (
   }
 
   cron {
-    wayita-cron:
-      command => "/home/wayita/bin/wayita-cron.sh",
-      user    => "wayita",
+    'wayita-cron':
+      command => '/home/wayita/bin/wayita-cron.sh',
+      user    => 'wayita',
       hour    => 14,
       minute  => 23;
     # Run backport merges
-    backport-cron:
+    'backport-cron':
       command     => 'for i in 1.6.x 1.7.x 1.8.x 1.9.x ; do cd && cd src/svn/$i && $SVN up -q --non-interactive && YES=1 MAY_COMMIT=1 ../trunk/tools/dist/backport.pl; done',
-      user        => "svnsvn",
+      user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
-      environment => "SVN=/usr/local/svn-current/bin/svn";
+      environment => 'SVN=/usr/local/svn-current/bin/svn';
     # Log the revision of backport.pl in use.
     # (There's no log rotation since this will use about 2KB a year.)
-    backport-version-log:
-      command     => '(date +\%Y\%m\%d: ; ${SVNVERSION} src/svn/trunk/tools/dist/backport.pl) >> ~/live-version.log',
-      user        => "svnsvn",
+    'backport-version-log':
+      command     => "(date +\%Y\%m\%d: ; $::{SVNVERSION} src/svn/trunk/tools/dist/backport.pl) >> ~/live-version.log",
+      user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
-      environment => "SVNVERSION=/usr/local/svn-current/bin/svnversion";
+      environment => 'SVNVERSION=/usr/local/svn-current/bin/svnversion';
   }
 
 }
