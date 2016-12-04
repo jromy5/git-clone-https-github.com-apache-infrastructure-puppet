@@ -107,7 +107,6 @@ elif logout and logout == 'true':
     if account:
         account['cookie'] = "--"
         saveaccount(account)
-    end
     print("302 Found\r\nLocation: /\r\n\r\n")
 
 elif unauth and unauth == 'github':
@@ -115,7 +114,6 @@ elif unauth and unauth == 'github':
     if account:
         account['github'] = None
         saveaccount(account)
-    end
     print("302 Found\r\nLocation: /\r\n\r\n")
 
 
@@ -134,8 +132,6 @@ elif redirect:
         csec = m.group(2)
         redir = "https://github.com/login/oauth/authorize?client_id=%s&scope=default&?state=%s&redirect_uri=%s" % (cid, state, rurl)
         print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
-    end
-end
 
 
 code = getvalue("code")
