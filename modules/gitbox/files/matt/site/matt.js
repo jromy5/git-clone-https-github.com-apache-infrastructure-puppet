@@ -172,7 +172,7 @@ function renderPage(json) {
         }
     } else if (json.asfid) {
         obj.innerHTML = "<h3>GitHub: Not authed</h3>";
-        obj.innerHTML += "<br/>Just two steps to go! Please Log in with your GitHub account to complete your merge application and see which repositories you have access to.<br/><a href='api/auth.lua?redirect=github' class='btn'>Auth on GitHub</a>";
+        obj.innerHTML += "<br/>Just two steps to go! Please Log in with your GitHub account to complete your merge application and see which repositories you have access to.<br/><a href='oauth.cgi?redirect=github' class='btn'>Auth on GitHub</a>";
     }
     
     // Step 3: MFA
