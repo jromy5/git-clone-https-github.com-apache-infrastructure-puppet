@@ -130,7 +130,7 @@ class jira_asf (
       group   => 'jira',
       mode    => '0755',
       require => File[$install_dir];
-    "$jira_home/logos":
+    "${jira_home}/logos":
       ensure  => directory,
       owner   => 'jira',
       group   => 'jira',
