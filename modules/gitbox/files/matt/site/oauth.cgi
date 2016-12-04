@@ -47,7 +47,7 @@ def getvalue(key):
 def getaccount(uid = None):
     cookies = Cookie.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
     if "matt" in cookies:
-        cookie = cookies['matt']
+        cookie = cookies['matt'].value
         conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
         cursor = conn.cursor()
         cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE cookie=?", (cookie,))
@@ -140,8 +140,8 @@ def main():
         account = getaccount()
         if account:
             # MFA check
-            if account['github']:
-                gu = account['github']
+            if account['githubid']:
+                gu = account['githubid']
                 mfa = JSON.read(open("/x1/gitbox/matt/mfa.json", "r"))
                 mfastatus = 0
                 if gu in mfa['disabled']:
@@ -167,7 +167,7 @@ def main():
     elif unauth and unauth == 'github':
         account = getaccount()
         if account:
-            account['github'] = None
+            account['githubid'] = None
             saveaccount(account)
         print("Status: 302 Found\r\nLocation: /setup/\r\n\r\n")
     
@@ -258,10 +258,11 @@ def main():
                     oaccount['githubid'] = js['login']
                     oaccount['mfa'] = 1 if js['login'] in MFA['enabled'].keys() else 0
                     saveaccount(oaccount, True)
+                    updated = True
         
         # did stuff correctly!?
         if updated:
-            print("Status: 302 Found\r\nLocation: /setup/\r\n")
+            print("Status: 302 Found\r\nContent-Type: text/plain\r\nLocation: /setup/")
             # New cookie set??
             if ncookie:
                 print("Set-Cookie: matt=%s\r\n" % ncookie)
