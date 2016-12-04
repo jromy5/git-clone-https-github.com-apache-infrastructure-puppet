@@ -19,8 +19,17 @@
 # This is oauth.cgi - script for handling ASF and GitHub OAuth.
 
 import hashlib, json, random, os, sys, time, subprocess
-import cgi, sqlite3, hashlib, Cookie, urllib, urllib2
+import cgi, sqlite3, hashlib, Cookie, urllib, urllib2, ConfigParser
 
+# LDAP settings
+CONFIG = ConfigParser.ConfigParser()
+CONFIG.read("/x1/gitbox/matt/tools/grouper.cfg")
+
+LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
+LDAP_USER = CONFIG.get('ldap', 'user')
+LDAP_PASSWORD = CONFIG.get('ldap', 'password')
+
+# CGI
 xform = cgi.FieldStorage();
 
 """ Get a POST/GET value """
@@ -79,6 +88,21 @@ def saveaccount(acc):
         cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,displayname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
     conn.commit()
     
+""" Get LDAP groups a user belongs to """
+def ldap_groups(uid):
+    ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+    l = ldap.initialize(LDAP_SERVER)
+    # this search for all objectClasses that user is in.
+    # change this to suit your LDAP schema
+    search_filter= "(&(cn=*)(memberUid=%s))" % uid
+    try:
+        LDAP_BASE = "ou=groups,dc=apache,dc=org"
+        results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
+        print('%s groups: %s' % (uid, results) )
+        return results
+    except Exception as err:
+        pass
+    return []
 
 def main():    
     # Get some CGI vars
@@ -89,11 +113,13 @@ def main():
     code = getvalue("code")             # OAuth return code
     state = getvalue("state")           # OAuth return state
     key = getvalue("key")               # OAuth return key (github/asf)
+    repos = getvalue("repos")           # List repos??
     
     # These vals need to be valid to pass OAuth later on
     valid = False
     js = None
     isASF = False
+    doingOAuth = False
     
     # Load and return account info (including MFA status)
     if load and load == 'true':
@@ -150,8 +176,8 @@ def main():
     
     
     # GitHub OAuth callback
-    if code and state and key == 'github':
-        
+    elif code and state and key == 'github':
+        doingOAuth = True
         # get id & secret from file
         f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
         m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
@@ -173,6 +199,7 @@ def main():
         
     # ASF Oauth callback
     elif state and code and key == 'apache':
+        doingOAuth = True
         isASF = true
         req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
         response = req.urlopen().read()
@@ -227,10 +254,45 @@ def main():
         # didn't get email or name, bork!
         else:
             print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
-            
+    
+    
     # Backend borked, let the user know
-    else:
+    elif doingOAuth:
         print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
+
+    if repos:
+        # Try to get cache if <1 hour old
+        repolistfile = "/x1/gitbox/matt/repos.json"
+        mtime = os.stat(repolistfile).st_mtime
+        # File is too old, regenerate!
+        repos = []
+        if mtime < (time.time() - 3600):
+            # get id & secret from file
+            f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
+            m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
+            cid = m.group(1)
+            csec = m.group(2)
+            for n in range(0,100):
+                result = urllib2.urlopen("https://api.github.com/orgs/apache/repos?client_id=%s&client_secret=%s&page=%s" % (cid, csec, n)).read()
+                js = json.loads(result)
+                if json:
+                    if len(json) == 0:
+                        break
+                    for repo in json:
+                        repos.append(js[repo]['name'])
+                else:
+                    break
+            # Save file
+            json.dump(repos, open(repolistfile, "w"))
+        else:
+            repos = json.load(open(repolistfile))
+            
+        oaccount = getaccount()
+        if oaccount:
+            groups = ldap_groups(oaccount['asfid'])
+            
+            print("200 Okay\r\nContent-Type: application/json\r\n\r\n")
+            print(json.dumps(repos))
 
 if __name__ == '__main__':
     main()
