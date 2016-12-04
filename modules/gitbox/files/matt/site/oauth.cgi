@@ -23,12 +23,14 @@ import cgi, sqlite3, hashlib, Cookie, urllib, urllib2
 
 xform = cgi.FieldStorage();
 
+""" Get a POST/GET value """
 def getvalue(key):
     val = xform.getvalue(key)
     if val:
         return val
     else:
         return None
+    
 """ Get an account entry from the DB """
 def getaccount(uid = None):
     cookies = Cookie.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
@@ -77,151 +79,159 @@ def saveaccount(acc):
         cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,displayname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
     conn.commit()
     
+
+def main():    
+    # Get some CGI vars
+    load = getvalue("load")             # Fetch account info?
+    logout = getvalue("logout")         # Log out of MATT?
+    unauth = getvalue("unauth")         # Un-auth an account?
+    redirect = getvalue("redirect")     # Redirect to OAuth provider
+    code = getvalue("code")             # OAuth return code
+    state = getvalue("state")           # OAuth return state
+    key = getvalue("key")               # OAuth return key (github/asf)
     
-# Get some CGI vars
-load = getvalue("load")
-logout = getvalue("logout")
-unauth = getvalue("unauth")
-redirect = getvalue("redirect")
-
-if load and load == 'true':
-    account = getaccount()
-    if account:
-        # MFA check
-        if account['github']:
-            gu = account['github']
-            mfa = JSON.read(open("/x1/gitbox/matt/mfa.json", "r"))
-            mfastatus = 0
-            if gu in mfa['disabled']:
-                account['mfa'] = False
-
-            if gu in mfa['enabled']:
-                account['mfa'] = True
-
-        print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
-        print(json.dumps(account))
-    else:
-        print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n{}")
-elif logout and logout == 'true':
-    account = getaccount()
-    if account:
-        account['cookie'] = "--"
-        saveaccount(account)
-    print("302 Found\r\nLocation: /setup/\r\n\r\n")
-
-elif unauth and unauth == 'github':
-    account = getaccount()
-    if account:
-        account['github'] = None
-        saveaccount(account)
-    print("302 Found\r\nLocation: /setup/\r\n\r\n")
-
-
-
-elif redirect:
-    rootURL = "https://gitbox.apache.org/setup"
-    state = hashlib.sha1("%f-%s") % (time.time(), os.environ['REMOTE_ADDR']).hexdigest()
-    rurl = urllib.quote("%s/oauth.cgi?key=%s&state=%s" % (rootURL, redirect, state))
-    if redirect == "apache":
-        redir = "https://oauth.apache.org/?state=%s&redirect_uri=%s" % (state, rurl)
-        print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
-    elif redirect == "github":
+    # These vals need to be valid to pass OAuth later on
+    valid = False
+    js = None
+    isASF = False
+    
+    # Load and return account info (including MFA status)
+    if load and load == 'true':
+        account = getaccount()
+        if account:
+            # MFA check
+            if account['github']:
+                gu = account['github']
+                mfa = JSON.read(open("/x1/gitbox/matt/mfa.json", "r"))
+                mfastatus = 0
+                if gu in mfa['disabled']:
+                    account['mfa'] = False
+    
+                if gu in mfa['enabled']:
+                    account['mfa'] = True
+    
+            print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
+            print(json.dumps(account))
+        else:
+            print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n{}")
+    
+    # Logout
+    elif logout and logout == 'true':
+        account = getaccount()
+        if account:
+            account['cookie'] = "--"
+            saveaccount(account)
+        print("302 Found\r\nLocation: /setup/\r\n\r\n")
+    
+    # Unauth from GitHub
+    elif unauth and unauth == 'github':
+        account = getaccount()
+        if account:
+            account['github'] = None
+            saveaccount(account)
+        print("302 Found\r\nLocation: /setup/\r\n\r\n")
+    
+    # OAuth provider redirect
+    elif redirect:
+        rootURL = "https://gitbox.apache.org/setup"
+        state = hashlib.sha1("%f-%s") % (time.time(), os.environ['REMOTE_ADDR']).hexdigest()
+        rurl = urllib.quote("%s/oauth.cgi?key=%s&state=%s" % (rootURL, redirect, state))
+        if redirect == "apache":
+            redir = "https://oauth.apache.org/?state=%s&redirect_uri=%s" % (state, rurl)
+            print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
+        elif redirect == "github":
+            f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
+            m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
+            cid = m.group(1)
+            csec = m.group(2)
+            redir = "https://github.com/login/oauth/authorize?client_id=%s&scope=default&?state=%s&redirect_uri=%s" % (cid, state, rurl)
+            print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
+    
+    
+    
+    # GitHub OAuth callback
+    if code and state and key == 'github':
+        
+        # get id & secret from file
         f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
         m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
         cid = m.group(1)
         csec = m.group(2)
-        redir = "https://github.com/login/oauth/authorize?client_id=%s&scope=default&?state=%s&redirect_uri=%s" % (cid, state, rurl)
-        print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
-
-
-code = getvalue("code")
-state = getvalue("state")
-key = getvalue("key")
-
-# These vals need to be valid to pass OAuth later on
-valid = False
-js = None
-isASF = False
-
-""" GitHub OAuth callback """
-if code and state and key == 'github':
-    
-    # get id & secret from file
-    f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
-    m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
-    cid = m.group(1)
-    csec = m.group(2)
-    
-    # Construct OAuth backend check POST data
-    rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
-    
-    req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
-    response = req.urlopen().read()
-    token = re.match(r"(access_token=[a-f0-9]+)", response)
-    # If we got an access token, fetch user data
-    if token:
-        req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
+        
+        # Construct OAuth backend check POST data
+        rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
+        
+        req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
+        response = req.urlopen().read()
+        token = re.match(r"(access_token=[a-f0-9]+)", response)
+        # If we got an access token, fetch user data
+        if token:
+            req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
+            response = req.urlopen().read()
+            js = json.loads(response)
+            valid = True
+        
+    # ASF Oauth callback
+    elif state and code and key == 'apache':
+        isASF = true
+        req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
         response = req.urlopen().read()
         js = json.loads(response)
         valid = True
     
-# ASF Oauth callback
-elif state and code and key == 'apache':
-    isASF = true
-    req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
-    response = req.urlopen().read()
-    js = json.loads(response)
-    valid = True
-
-# Did we get something useful from the backend?
-if valid and js:
-    eml = js.get('email', None)
-    fname = js.get('fullname', None)
-    
-    # update info
-    updated = false
-    ncookie = None
-    if (eml and fname) or key == 'github':
-        oaccount = nil
-        # If tying an ASF account, make a session in the DB (if not already there)
-        if isASF:
-            cid = js.uid
-            ncookie = hashlib.sha1("%f-%s" % (time.time(), os.environ.get("REMOTE_ADDR"))).hexdigest()
-            # Does the user exist already?
-            oaccount = getaccount(cid)
+    # Did we get something useful from the backend?
+    if valid and js:
+        eml = js.get('email', None)
+        fname = js.get('fullname', None)
+        
+        # update info
+        updated = false
+        ncookie = None
+        if (eml and fname) or key == 'github':
+            oaccount = nil
+            # If tying an ASF account, make a session in the DB (if not already there)
+            if isASF:
+                cid = js.uid
+                ncookie = hashlib.sha1("%f-%s" % (time.time(), os.environ.get("REMOTE_ADDR"))).hexdigest()
+                # Does the user exist already?
+                oaccount = getaccount(cid)
+                
+                # If not seen before, make a new session
+                if not oaccount:
+                    saveaccount({
+                        'asfid': cid,
+                        'name': js.fullname,
+                        'githubid': None,
+                        'cookie': ncookie,
+                        
+                    })
+                # Otherwise, update the old session with new cookie
+                else:
+                    oaccount['cookie'] = ncookie
+                    saveaccount(oaccount)
+                updated = true
+            # GitHub linking
+            elif key == 'github':
+                oaccount = getaccount()
+                if oaccount:
+                    oaccount['githubid'] = js.login
+                    saveaccount(oaccount)
+        
+        # did stuff correctly!?
+        if updated:
+            print("302 Found\r\nLocation: /setup/\r\n")
+            # New cookie set??
+            if ncookie:
+                print("Set-Cookie: matt=%s\r\n" % ncookie)
+            print("\r\nMoved!")
+        # didn't get email or name, bork!
+        else:
+            print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
             
-            # If not seen before, make a new session
-            if not oaccount:
-                saveaccount({
-                    'asfid': cid,
-                    'name': js.fullname,
-                    'githubid': None,
-                    'cookie': ncookie,
-                    
-                })
-            # Otherwise, update the old session with new cookie
-            else:
-                oaccount['cookie'] = ncookie
-                saveaccount(oaccount)
-            updated = true
-        # GitHub linking
-        elif key == 'github':
-            oaccount = getaccount()
-            if oaccount:
-                oaccount['githubid'] = js.login
-                saveaccount(oaccount)
-    
-    # did stuff correctly!?
-    if updated:
-        print("302 Found\r\nLocation: /setup/\r\n")
-        # New cookie set??
-        if ncookie:
-            print("Set-Cookie: matt=%s\r\n" % ncookie)
-        print("\r\nMoved!")
-    # didn't get email or name, bork!
+    # Backend borked, let the user know
     else:
         print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
-        
-# Backend borked, let the user know
-else:
-    print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
+
+if __name__ == '__main__':
+    main()
+    
