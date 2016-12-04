@@ -47,7 +47,7 @@ def getaccount(uid = None):
         cookie = cookies['matt']
         conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT asfid,githubid,displayname FROM sessions WHERE cookie=?", (cookie,))
+        cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE cookie=?", (cookie,))
         row = cursor.fetchone()
         conn.close()
         if row:
@@ -62,7 +62,7 @@ def getaccount(uid = None):
     elif uid:
         conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT asfid,githubid,displayname,cookie FROM sessions WHERE asfid=?", (uid,))
+        cursor.execute("SELECT asfid,githubid,asfname,cookie FROM sessions WHERE asfid=?", (uid,))
         row = cursor.fetchone()
         conn.close()
         if row:
@@ -80,12 +80,12 @@ def getaccount(uid = None):
 def saveaccount(acc):
     conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT asfid,githubid,displayname FROM sessions WHERE asfid=?", (aco['asfid'],))
+    cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE asfid=?", (aco['asfid'],))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,displayname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
+        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
     else:
-        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,displayname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
+        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
     conn.commit()
     
 """ Get LDAP groups a user belongs to """
