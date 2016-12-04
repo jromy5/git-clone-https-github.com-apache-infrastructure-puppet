@@ -18,7 +18,7 @@
 
 # This is oauth.cgi - script for handling ASF and GitHub OAuth.
 
-import hashlib, json, random, os, sys, time, subprocess, re
+import hashlib, json, random, os, sys, time, subprocess, re, ldap
 import cgi, sqlite3, hashlib, Cookie, urllib, urllib2, ConfigParser
 
 # LDAP settings
