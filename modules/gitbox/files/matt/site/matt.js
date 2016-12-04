@@ -159,9 +159,9 @@ function renderPage(json) {
     // Step 2: GitHub Auth
     var extra = "";
     obj = document.getElementById('github');
-    if (json.external && json.github) {
+    if (json.external && json.githubid) {
         obj.innerHTML = "<h3>GitHub: Authed</h3>";
-        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.github + "</kbd> on GitHub. (not the right account? <a href=oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
+        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.githubid + "</kbd> on GitHub. (not the right account? <a href=oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
         obj.setAttribute("class", "tc_good tc");
         if (document.location.search.length > 1) {
             var m = document.location.search.match(/user=([-.a-z0-9]+)/i);
@@ -170,7 +170,7 @@ function renderPage(json) {
                 obj.innerHTML += "<i>Debug: matching against availid <kbd>" + m[1] + "</kbd>.</i><br/>";
             }
         }
-    } else if (json.uid) {
+    } else if (json.asfid) {
         obj.innerHTML = "<h3>GitHub: Not authed</h3>";
         obj.innerHTML += "<br/>Just two steps to go! Please Log in with your GitHub account to complete your merge application and see which repositories you have access to.<br/><a href='api/auth.lua?redirect=github' class='btn'>Auth on GitHub</a>";
     }
