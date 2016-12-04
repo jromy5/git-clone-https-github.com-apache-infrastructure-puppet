@@ -29,6 +29,9 @@ LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 
+# MFA
+MFA = json.load(open("../mfa.json"))
+
 # CGI
 xform = cgi.FieldStorage();
 
@@ -232,7 +235,7 @@ def main():
                         'name': js['fullname'],
                         'githubid': None,
                         'cookie': ncookie,
-                        
+                        'mfa': 0
                     })
                 # Otherwise, update the old session with new cookie
                 else:
@@ -244,6 +247,7 @@ def main():
                 oaccount = getaccount()
                 if oaccount:
                     oaccount['githubid'] = js['login']
+                    oaccount['mfa'] = 1 if js['login'] in MFA['enabled'].keys() else 0
                     saveaccount(oaccount)
         
         # did stuff correctly!?
