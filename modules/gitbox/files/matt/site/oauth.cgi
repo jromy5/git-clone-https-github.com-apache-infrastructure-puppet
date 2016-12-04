@@ -202,7 +202,7 @@ def main():
         rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
         
         req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
-        response = req.urlopen().read()
+        response = urllib2.urlopen(req).read()
         token = re.match(r"(access_token=[a-f0-9]+)", response)
         # If we got an access token, fetch user data
         if token:
