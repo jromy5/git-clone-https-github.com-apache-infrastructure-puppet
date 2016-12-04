@@ -80,15 +80,23 @@ def getaccount(uid = None):
     return None
 
 """ Save/update an account """
-def saveaccount(acc):
+def saveaccount(acc, ids = False):
     conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
     cursor = conn.cursor()
     cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE asfid=?", (acc['asfid'],))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['githubid'], acc['name'],acc['mfa'], acc['asfid'],))
+        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=? WHERE asfid=?", (acc['cookie'],acc['githubid'], acc['name'], acc['asfid'],))
+        # Update ASF<->GH link db??
+        if ids:
+            cursor.execute("SELECT * from ids WHERE asfid=?", (acc['asfid'],))
+            exists = cursor.fetchone()
+            if exists:
+                cursor.execute("UPDATE ids SET githubid=?,mfa=?,updated=DATETIME('now') WHERE asfid=?", (acc['githubid'], acc['mfa'], acc['asfid']))
+            else:
+                cursor.execute("INSERT INTO ids (asfid,githubid,mfa,updated) VALUES (?,?,?,DATETIME('now')", (acc['asfid'], acc['githubid'], acc['mfa'],))
     else:
-        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname,mfa) VALUES (?,?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name'], acc['mfa']))
+        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname) VALUES (?,?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name']))
     conn.commit()
     
 """ Get LDAP groups a user belongs to """
@@ -248,7 +256,7 @@ def main():
                 if oaccount:
                     oaccount['githubid'] = js['login']
                     oaccount['mfa'] = 1 if js['login'] in MFA['enabled'].keys() else 0
-                    saveaccount(oaccount)
+                    saveaccount(oaccount, True)
         
         # did stuff correctly!?
         if updated:
