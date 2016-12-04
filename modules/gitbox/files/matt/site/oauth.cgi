@@ -56,7 +56,7 @@ def getaccount(uid = None):
         if row:
             acc = {
                 'asfid':  row[0],
-                'github': row[1],
+                'githubid': row[1],
                 'mfa':    0,
                 'name':   row[2],
                 'cookie': cookie,
@@ -71,7 +71,7 @@ def getaccount(uid = None):
         if row:
             acc = {
                 'asfid':  row[0],
-                'github': row[1],
+                'githubid': row[1],
                 'mfa':    0,
                 'name':   row[2],
                 'cookie': row[3],
