@@ -219,8 +219,8 @@ def main():
         if (eml and fname) or key == 'github':
             oaccount = None
             # If tying an ASF account, make a session in the DB (if not already there)
-            if isASF:
-                cid = js.uid
+            if isASF and 'uid' in js:
+                cid = js['uid']
                 ncookie = hashlib.sha1("%f-%s" % (time.time(), os.environ.get("REMOTE_ADDR"))).hexdigest()
                 # Does the user exist already?
                 oaccount = getaccount(cid)
@@ -229,7 +229,7 @@ def main():
                 if not oaccount:
                     saveaccount({
                         'asfid': cid,
-                        'name': js.fullname,
+                        'name': js['fullname'],
                         'githubid': None,
                         'cookie': ncookie,
                         
@@ -243,7 +243,7 @@ def main():
             elif key == 'github':
                 oaccount = getaccount()
                 if oaccount:
-                    oaccount['githubid'] = js.login
+                    oaccount['githubid'] = js['login']
                     saveaccount(oaccount)
         
         # did stuff correctly!?
