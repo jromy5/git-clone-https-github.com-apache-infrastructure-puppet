@@ -199,7 +199,7 @@ function renderPage(json) {
         if (wa) {
             obj.innerHTML += "<p>You will have access to the following repositories:</p>";
             obj.innerHTML += "<ul id='repolist'><li>Loading repository list, hang on..!</li></ul>";
-            GetAsync("repos.cgi" + extra, null, renderRepos);
+            GetAsync("oauth.cgi?repos=true", null, renderRepos);
             
             
         } else {
