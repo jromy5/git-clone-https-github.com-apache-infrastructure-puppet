@@ -134,7 +134,7 @@ class whimsy_server (
   } ->
 
   service { 'board-agenda-websocket':
-    ensure => running,
+    ensure  => running,
     require => Vcsrepo['/x1/srv/whimsy']
   }
 
