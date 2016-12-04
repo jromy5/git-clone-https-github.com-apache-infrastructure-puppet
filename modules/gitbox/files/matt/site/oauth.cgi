@@ -91,15 +91,17 @@ def saveaccount(acc):
 """ Get LDAP groups a user belongs to """
 def ldap_groups(uid):
     ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
-    l = ldap.initialize(LDAP_SERVER)
+    l = ldap.initialize(LDAP_URI)
     # this search for all objectClasses that user is in.
     # change this to suit your LDAP schema
     search_filter= "(&(cn=*)(memberUid=%s))" % uid
     try:
+        groups = []
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
-        print('%s groups: %s' % (uid, results) )
-        return results
+        for res in results:
+            groups.append(res[1]['cn'][0])
+        return groups
     except Exception as err:
         pass
     return []
