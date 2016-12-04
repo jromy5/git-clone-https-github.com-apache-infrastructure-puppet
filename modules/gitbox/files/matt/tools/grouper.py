@@ -293,7 +293,7 @@ for project in MATT_PROJECTS:
     for repo in existingRepos:
         m = re.match(r"^([^-]+)-?", repo)
         p = m.group(1)
-        if p == project and not repo in teamRepos:
+        if p == project and not repo in teamRepos and os.path.exists("/x1/repos/asf/%s.git" % repo):
             print("Need to add " + repo + " repo to the team...")
             addGitHubTeamRepo(teamID, repo)
 
