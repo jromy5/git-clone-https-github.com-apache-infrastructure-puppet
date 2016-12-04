@@ -214,7 +214,7 @@ def main():
         fname = js.get('fullname', None)
         
         # update info
-        updated = false
+        updated = False
         ncookie = None
         if (eml and fname) or key == 'github':
             oaccount = nil
