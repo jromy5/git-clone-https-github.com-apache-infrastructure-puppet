@@ -80,7 +80,7 @@ def getaccount(uid = None):
 def saveaccount(acc):
     conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE asfid=?", (aco['asfid'],))
+    cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE asfid=?", (acc['asfid'],))
     exists = cursor.fetchone()
     if exists:
         cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
