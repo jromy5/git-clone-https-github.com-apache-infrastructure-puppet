@@ -279,24 +279,34 @@ def main():
     if repos:
         # Try to get cache if <1 hour old
         repolistfile = "/x1/gitbox/matt/repos.json"
-        mtime = os.stat(repolistfile).st_mtime
+        mtime = 0
+        try: # Catch in case enofile
+            sinfo = os.stat(repolistfile)
+            mtime = sinfo.st_mtime
+            if sinfo.st_size == 0:
+                mtime = 0
+        except:
+            pass
         # File is too old, regenerate!
         repos = []
         if mtime < (time.time() - 3600):
             # get id & secret from file
             f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
-            m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
-            cid = m.group(1)
-            csec = m.group(2)
+            m = f.split("|")
+            cid = m[0]
+            csec = m[1].strip()
             for n in range(0,100):
-                result = urllib2.urlopen("https://api.github.com/orgs/apache/repos?client_id=%s&client_secret=%s&page=%s" % (cid, csec, n)).read()
-                js = json.loads(result)
-                if json:
-                    if len(json) == 0:
+                try:
+                    result = urllib2.urlopen("https://api.github.com/orgs/apache/repos?client_id=%s&client_secret=%s&page=%u" % (cid, csec, n)).read()
+                    js = json.loads(result)
+                    if json:
+                        if len(js) == 0:
+                            break
+                        for repo in js:
+                            repos.append(repo['name'])
+                    else:
                         break
-                    for repo in json:
-                        repos.append(js[repo]['name'])
-                else:
+                except:
                     break
             # Save file
             json.dump(repos, open(repolistfile, "w"))
