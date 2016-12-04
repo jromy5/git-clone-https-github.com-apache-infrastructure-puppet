@@ -98,6 +98,7 @@ def saveaccount(acc, ids = False):
     else:
         cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname) VALUES (?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name']))
     conn.commit()
+    conn.close()
     
 """ Get LDAP groups a user belongs to """
 def ldap_groups(uid):
