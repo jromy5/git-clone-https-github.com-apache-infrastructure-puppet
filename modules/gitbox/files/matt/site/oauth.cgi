@@ -83,9 +83,9 @@ def saveaccount(acc):
     cursor.execute("SELECT asfid,githubid,asfname FROM sessions WHERE asfid=?", (acc['asfid'],))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
+        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,asfname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['githubid'], acc['name'],acc['mfa'], acc['asfid'],))
     else:
-        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
+        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['githubid'], acc['name'], acc['mfa']))
     conn.commit()
     
 """ Get LDAP groups a user belongs to """
