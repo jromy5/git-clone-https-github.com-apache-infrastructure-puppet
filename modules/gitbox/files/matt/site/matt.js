@@ -159,7 +159,7 @@ function renderPage(json) {
     // Step 2: GitHub Auth
     var extra = "";
     obj = document.getElementById('github');
-    if (json.external && json.githubid) {
+    if (json && json.githubid) {
         obj.innerHTML = "<h3>GitHub: Authed</h3>";
         obj.innerHTML += "<p>You are currently authed as <kbd>" + json.githubid + "</kbd> on GitHub. (not the right account? <a href=oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
         obj.setAttribute("class", "tc_good tc");
@@ -178,7 +178,7 @@ function renderPage(json) {
     // Step 3: MFA
     obj = document.getElementById('mfa');
 
-    if (json.external && json.github && json.mfa) {
+    if (json && json.github && json.mfa) {
         var mfa = json.mfa;
         var t = "Unknown, not part of the Apache organisation on GitHub yet.";
         var s = "???";
