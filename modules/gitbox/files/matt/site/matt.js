@@ -178,16 +178,16 @@ function renderPage(json) {
     // Step 3: MFA
     obj = document.getElementById('mfa');
 
-    if (json && json.github && json.mfa) {
+    if (json && json.githubid && json.mfa) {
         var mfa = json.mfa;
         var t = "Unknown, not part of the Apache organisation on GitHub yet.";
         var s = "???";
-        if (mfa  == 'enabled') {
+        if (mfa  === true) {
             t = "<b style='color: green;'>ENABLED</b>";
             s = "Write access granted";
             obj.setAttribute("class", "tc_good tc");
             wa = true;
-        } else if (mfa == 'disabled') {
+        } else if (mfa === false) {
             s = "Write access suspended";
             t = "<b style='color: red;'>DISABLED</b>";
             obj.setAttribute("class", "tc_bad tc");
