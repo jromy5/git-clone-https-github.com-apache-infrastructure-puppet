@@ -142,7 +142,7 @@ def main():
             # MFA check
             if account['githubid']:
                 gu = account['githubid']
-                mfa = JSON.read(open("/x1/gitbox/matt/mfa.json", "r"))
+                mfa = json.read(open("/x1/gitbox/matt/mfa.json", "r"))
                 mfastatus = 0
                 if gu in mfa['disabled']:
                     account['mfa'] = False
@@ -194,16 +194,16 @@ def main():
         doingOAuth = True
         # get id & secret from file
         f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
-        m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
-        cid = m.group(1)
-        csec = m.group(2)
+        m = f.split("|")
+        cid = m[0]
+        csec = m[1].strip()
         
         # Construct OAuth backend check POST data
         rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
         
         req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
         response = urllib2.urlopen(req).read()
-        token = re.match(r"(access_token=[a-f0-9]+)", response)
+        token = re.search(r"(access_token=[a-f0-9]+)", response)
         # If we got an access token, fetch user data
         if token:
             req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
