@@ -292,9 +292,17 @@ def main():
         oaccount = getaccount()
         if oaccount:
             groups = ldap_groups(oaccount['asfid'])
-            
+            canAccess = {}
             print("200 Okay\r\nContent-Type: application/json\r\n\r\n")
-            print(json.dumps(repos))
+            for group in groups:
+                for repo in repos:
+                    m = re.match(r"([^-]+)", repo)
+                    g = m.group(1)
+                    if g == group:
+                        if not group in canAccess:
+                            canAccess[group] = []
+                        canAccess[group].append(repo)
+            print(json.dumps(canAccess))
 
 if __name__ == '__main__':
     main()
