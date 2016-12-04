@@ -96,7 +96,7 @@ def saveaccount(acc, ids = False):
             else:
                 cursor.execute("INSERT INTO ids (asfid,githubid,mfa,updated) VALUES (?,?,?,DATETIME('now')", (acc['asfid'], acc['githubid'], acc['mfa'],))
     else:
-        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname) VALUES (?,?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name']))
+        cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname) VALUES (?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name']))
     conn.commit()
     
 """ Get LDAP groups a user belongs to """
@@ -249,7 +249,7 @@ def main():
                 else:
                     oaccount['cookie'] = ncookie
                     saveaccount(oaccount)
-                updated = true
+                updated = True
             # GitHub linking
             elif key == 'github':
                 oaccount = getaccount()
