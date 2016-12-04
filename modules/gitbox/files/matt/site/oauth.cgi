@@ -100,7 +100,7 @@ def ldap_groups(uid):
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
-            groups.append(res[1]['cn'][0])
+            groups.append(res[1]['cn'][0]) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
         return groups
     except Exception as err:
         pass
