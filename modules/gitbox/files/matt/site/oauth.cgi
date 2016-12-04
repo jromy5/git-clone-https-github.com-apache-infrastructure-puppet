@@ -162,7 +162,7 @@ def main():
     # OAuth provider redirect
     elif redirect:
         rootURL = "https://gitbox.apache.org/setup"
-        state = hashlib.sha1("%f-%s") % (time.time(), os.environ['REMOTE_ADDR']).hexdigest()
+        state = hashlib.sha1(("%f-%s") % (time.time(), os.environ['REMOTE_ADDR'])).hexdigest()
         rurl = urllib.quote("%s/oauth.cgi?key=%s&state=%s" % (rootURL, redirect, state))
         if redirect == "apache":
             redir = "https://oauth.apache.org/?state=%s&redirect_uri=%s" % (state, rurl)
