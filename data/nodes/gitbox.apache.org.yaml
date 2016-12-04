@@ -111,6 +111,9 @@ gitbox::custom_fragment_443: |
       </Directory>
       Alias /logs/ /x1/pushlogs/
       # MATT UI
+      <Directory /x1/gitbox/matt/site>
+        Require all granted
+      </Directory>
       Alias /setup/ /x1/gitbox/matt/site/
       <Location /setup/>
           AddHandler cgi-script .cgi
