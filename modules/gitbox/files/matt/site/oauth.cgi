@@ -149,7 +149,7 @@ def main():
         if account:
             account['cookie'] = "--"
             saveaccount(account)
-        print("302 Found\r\nLocation: /setup/\r\n\r\n")
+        print("Status: 302 Found\r\nLocation: /setup/\r\n\r\n")
     
     # Unauth from GitHub
     elif unauth and unauth == 'github':
@@ -157,7 +157,7 @@ def main():
         if account:
             account['github'] = None
             saveaccount(account)
-        print("302 Found\r\nLocation: /setup/\r\n\r\n")
+        print("Status: 302 Found\r\nLocation: /setup/\r\n\r\n")
     
     # OAuth provider redirect
     elif redirect:
@@ -166,14 +166,14 @@ def main():
         rurl = urllib.quote("%s/oauth.cgi?key=%s&state=%s" % (rootURL, redirect, state))
         if redirect == "apache":
             redir = "https://oauth.apache.org/?state=%s&redirect_uri=%s" % (state, rurl)
-            print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
+            print("Status: 302 Found\r\nLocation: %s\r\n\r\n" % redir)
         elif redirect == "github":
             f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
             m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
             cid = m.group(1)
             csec = m.group(2)
             redir = "https://github.com/login/oauth/authorize?client_id=%s&scope=default&?state=%s&redirect_uri=%s" % (cid, state, rurl)
-            print("302 Found\r\nLocation: %s\r\n\r\n" % redir)
+            print("Status: 302 Found\r\nLocation: %s\r\n\r\n" % redir)
     
     
     
@@ -248,19 +248,19 @@ def main():
         
         # did stuff correctly!?
         if updated:
-            print("302 Found\r\nLocation: /setup/\r\n")
+            print("Status: 302 Found\r\nLocation: /setup/\r\n")
             # New cookie set??
             if ncookie:
                 print("Set-Cookie: matt=%s\r\n" % ncookie)
             print("\r\nMoved!")
         # didn't get email or name, bork!
         else:
-            print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
+            print("Status: 302 Found\r\nLocation: /setup/error.html\r\n\r\n")
     
     
     # Backend borked, let the user know
     elif doingOAuth:
-        print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
+        print("Status: 302 Found\r\nLocation: /setup/error.html\r\n\r\n")
 
     if repos:
         # Try to get cache if <1 hour old
@@ -293,7 +293,7 @@ def main():
         if oaccount:
             groups = ldap_groups(oaccount['asfid'])
             canAccess = {}
-            print("200 Okay\r\nContent-Type: application/json\r\n\r\n")
+            print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
             for group in groups:
                 for repo in repos:
                     m = re.match(r"([^-]+)", repo)
