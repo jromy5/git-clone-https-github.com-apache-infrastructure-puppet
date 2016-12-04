@@ -217,7 +217,7 @@ def main():
         updated = False
         ncookie = None
         if (eml and fname) or key == 'github':
-            oaccount = nil
+            oaccount = None
             # If tying an ASF account, make a session in the DB (if not already there)
             if isASF:
                 cid = js.uid
