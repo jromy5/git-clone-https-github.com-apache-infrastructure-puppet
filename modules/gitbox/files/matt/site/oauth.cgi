@@ -202,7 +202,7 @@ def main():
     # ASF Oauth callback
     elif state and code and key == 'apache':
         doingOAuth = True
-        isASF = true
+        isASF = True
         req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
         response = req.urlopen().read()
         js = json.loads(response)
