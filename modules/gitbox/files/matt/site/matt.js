@@ -161,7 +161,7 @@ function renderPage(json) {
     obj = document.getElementById('github');
     if (json && json.githubid) {
         obj.innerHTML = "<h3>GitHub: Authed</h3>";
-        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.githubid + "</kbd> on GitHub. (not the right account? <a href=oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
+        obj.innerHTML += "<p>You are currently authed as <kbd>" + json.githubid + "</kbd> on GitHub. (not the right account? <a href='oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
         obj.setAttribute("class", "tc_good tc");
         if (document.location.search.length > 1) {
             var m = document.location.search.match(/user=([-.a-z0-9]+)/i);
