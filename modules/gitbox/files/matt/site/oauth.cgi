@@ -94,7 +94,7 @@ def saveaccount(acc, ids = False):
             if exists:
                 cursor.execute("UPDATE ids SET githubid=?,mfa=?,updated=DATETIME('now') WHERE asfid=?", (acc['githubid'], acc['mfa'], acc['asfid']))
             else:
-                cursor.execute("INSERT INTO ids (asfid,githubid,mfa,updated) VALUES (?,?,?,DATETIME('now')", (acc['asfid'], acc['githubid'], acc['mfa'],))
+                cursor.execute("INSERT INTO ids (asfid,githubid,mfa,updated) VALUES (?,?,?,DATETIME('now'))", (acc['asfid'], acc['githubid'], acc['mfa'],))
     else:
         cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,asfname) VALUES (?,?,?,?)", (acc['cookie'],acc['asfid'], acc['githubid'], acc['name']))
     conn.commit()
