@@ -142,7 +142,7 @@ def main():
             # MFA check
             if account['githubid']:
                 gu = account['githubid']
-                mfa = json.read(open("/x1/gitbox/matt/mfa.json", "r"))
+                mfa = json.load(open("/x1/gitbox/matt/mfa.json", "r"))
                 mfastatus = 0
                 if gu in mfa['disabled']:
                     account['mfa'] = False
