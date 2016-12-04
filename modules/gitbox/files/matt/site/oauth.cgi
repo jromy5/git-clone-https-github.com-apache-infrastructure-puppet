@@ -82,7 +82,7 @@ def saveaccount(acc):
 load = getvalue("load")
 logout = getvalue("logout")
 unauth = getvalue("unauth")
-redir = getvalue("redirect")
+redirect = getvalue("redirect")
 
 if load and load == 'true':
     account = getaccount()
