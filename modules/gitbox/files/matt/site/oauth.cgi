@@ -19,7 +19,7 @@
 # This is oauth.cgi - script for handling ASF and GitHub OAuth.
 
 import hashlib, json, random, os, sys, time, subprocess
-import cgi, sqlite3, hashlib, Cookie, urllib
+import cgi, sqlite3, hashlib, Cookie, urllib, urllib2
 
 xform = cgi.FieldStorage();
 
@@ -30,7 +30,7 @@ def getvalue(key):
     else:
         return None
 """ Get an account entry from the DB """
-def getaccount():
+def getaccount(uid = None):
     cookies = Cookie.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
     if "matt" in cookies:
         cookie = cookies['matt']
@@ -45,6 +45,22 @@ def getaccount():
                 'github': row[1],
                 'mfa':    0,
                 'name':   row[2],
+                'cookie': cookie,
+            }
+            return acc
+    elif uid:
+        conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT asfid,githubid,displayname,cookie FROM sessions WHERE asfid=?", (uid,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            acc = {
+                'asfid':  row[0],
+                'github': row[1],
+                'mfa':    0,
+                'name':   row[2],
+                'cookie': row[3],
             }
             return acc
     return None
@@ -56,7 +72,7 @@ def saveaccount(acc):
     cursor.execute("SELECT asfid,githubid,displayname FROM sessions WHERE asfid=?", (aco['asfid'],))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute("UPDATE sessions SET githubid=?,displayname=?,mfa=? WHERE asfid=?", (acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
+        cursor.execute("UPDATE sessions SET cookie=?,githubid=?,displayname=?,mfa=? WHERE asfid=?", (acc['cookie'],acc['github'], acc['name'],acc['mfa'], acc['asfid'],))
     else:
         cursor.execute("INSERT INTO sessions (cookie,asfid,githubid,displayname,mfa) VALUES (?,?,?,?,?)" % (acc['asfid'], acc['github'], acc['name'], acc['mfa']))
     conn.commit()
@@ -122,90 +138,94 @@ elif redirect:
 end
 
 
+code = getvalue("code")
+state = getvalue("state")
+key = getvalue("key")
 
-################################
-# THE REST BELOW IS NOT DONE!! #
-################################
+# These vals need to be valid to pass OAuth later on
+valid = False
+js = None
+isASF = False
 
-
-
-
- -- GitHub Auth callback
-if get.code and get.state and get.key == 'github' then
+""" GitHub OAuth callback """
+if code and state and key == 'github':
     
-    -- get id & secret from file
-    local f = io.open("/var/www/matt/tokens/appid.txt", "r")
-    local cid, csec = f:read("*a"):match("([a-f0-9]+)|([a-f0-9]+)")
-    f:close()
+    # get id & secret from file
+    f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
+    m = re.match(r"([a-f0-9]+)|([a-f0-9]+)", f)
+    cid = m.group(1)
+    csec = m.group(2)
     
-    r.args = r.args .. ("&client_id=%s&client_secret=%s"):format(cid, csec)
-    local result = https.request("https://github.com/login/oauth/access_token", r.args)
-    local token = result:match("(access_token=[a-f0-9]+)")
-    if token then
-        local result = https.request("https://api.github.com/user?" .. token)
-        valid, json = pcall(function() return JSON.decode(result) end)
-    end
+    # Construct OAuth backend check POST data
+    rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
     
--- ASF Oauth callback
-elseif get.state and get.code and get.key == 'apache' then
+    req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
+    response = req.urlopen().read()
+    token = re.match(r"(access_token=[a-f0-9]+)", response)
+    # If we got an access token, fetch user data
+    if token:
+        req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
+        response = req.urlopen().read()
+        js = json.loads(response)
+        valid = True
+    
+# ASF Oauth callback
+elif state and code and key == 'apache':
     isASF = true
-    local result = https.request("https://oauth.apache.org/token", r.args)
-    valid, json = pcall(function() return JSON.decode(result) end)
-end
+    req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
+    response = req.urlopen().read()
+    js = json.loads(response)
+    valid = True
 
-
-
--- Did we get something useful from the backend?
-if valid and json then
-    local eml = json.email
-    local fname = json.fullname
+# Did we get something useful from the backend?
+if valid and js:
+    eml = js.get('email', None)
+    fname = js.get('fullname', None)
     
-    -- update info
-    local updated = false
-    if (eml and fname) or get.key == 'github' then
-        local oaccount = nil
-        if isASF then
-            local cid = json.uid
-            -- Does the user exist already?
-            oaccount = login.get(r, cid)
-            if not oaccount then
-                login.update(r, cid, {
-                    fullname = json.fullname,
-                    email = json.email,
-                    uid = json.uid,
-                    external = {}
+    # update info
+    updated = false
+    ncookie = None
+    if (eml and fname) or key == 'github':
+        oaccount = nil
+        # If tying an ASF account, make a session in the DB (if not already there)
+        if isASF:
+            cid = js.uid
+            ncookie = hashlib.sha1("%f-%s" % (time.time(), os.environ.get("REMOTE_ADDR"))).hexdigest()
+            # Does the user exist already?
+            oaccount = getaccount(cid)
+            
+            # If not seen before, make a new session
+            if not oaccount:
+                saveaccount({
+                    'asfid': cid,
+                    'name': js.fullname,
+                    'githubid': None,
+                    'cookie': ncookie,
+                    
                 })
-            else
-                login.update(r, cid, oaccount.credentials)
-            end
+            # Otherwise, update the old session with new cookie
+            else:
+                oaccount['cookie'] = ncookie
+                saveaccount(oaccount)
             updated = true
-        elseif get.key == 'github' then
-            oaccount = login.get(r)
-            if oaccount then
-                oaccount.credentials.external.github = {
-                    username = json.login
-                }
-                login.update(r, oaccount.cid, oaccount.credentials)
-                updated = true
-            end
-        end
-    end
+        # GitHub linking
+        elif key == 'github':
+            oaccount = getaccount()
+            if oaccount:
+                oaccount['githubid'] = js.login
+                saveaccount(oaccount)
     
-    -- did stuff correctly!
-    if updated then
-        r.err_headers_out['Location'] = rootURL
-        r.status = 302
-        return 302
-    -- didn't get email or name, bork!
-    else
-        r.err_headers_out['Location'] = rootURL .. "error.html"
-        r.status = 302
-        return 302
-    end
--- Backend borked, let the user know
-else
-    r.err_headers_out['Location'] = rootURL .. "error.html"
-    r.status = 302
-    return 302
-end
-return apache2.OK
+    # did stuff correctly!?
+    if updated:
+        print("302 Found\r\nLocation: /setup/\r\n")
+        # New cookie set??
+        if ncookie:
+            print("Set-Cookie: matt=%s\r\n" % ncookie)
+        print("\r\nMoved!")
+    # didn't get email or name, bork!
+    else:
+        print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
+        
+# Backend borked, let the user know
+else:
+    print("302 Found\r\nLocation: /setup/error.html\r\n\r\n")
