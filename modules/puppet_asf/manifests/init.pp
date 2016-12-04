@@ -18,8 +18,8 @@ class puppet_asf (
         }
         16.04: {
           package { 'puppet':
-            ensure  => 'latest',
-            notify  => Service['puppet'],
+            ensure => 'latest',
+            notify => Service['puppet'],
           }
         }
       }
