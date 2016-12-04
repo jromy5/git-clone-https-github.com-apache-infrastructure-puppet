@@ -325,7 +325,9 @@ def main():
                     if g == group:
                         if not group in canAccess:
                             canAccess[group] = []
-                        canAccess[group].append(repo)
+                        # Check that gitbox handles this repo!
+                        if os.path.exists("/x1/repos/asf/%s.git" % repo):
+                            canAccess[group].append(repo)
             print(json.dumps(canAccess))
 
 if __name__ == '__main__':
