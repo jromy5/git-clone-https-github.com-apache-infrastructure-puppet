@@ -107,14 +107,14 @@ elif logout and logout == 'true':
     if account:
         account['cookie'] = "--"
         saveaccount(account)
-    print("302 Found\r\nLocation: /\r\n\r\n")
+    print("302 Found\r\nLocation: /setup/\r\n\r\n")
 
 elif unauth and unauth == 'github':
     account = getaccount()
     if account:
         account['github'] = None
         saveaccount(account)
-    print("302 Found\r\nLocation: /\r\n\r\n")
+    print("302 Found\r\nLocation: /setup/\r\n\r\n")
 
 
 
