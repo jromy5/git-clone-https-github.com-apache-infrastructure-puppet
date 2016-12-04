@@ -195,7 +195,7 @@ def main():
         # If we got an access token, fetch user data
         if token:
             req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
-            response = req.urlopen().read()
+            response = urllib2.urlopen(req).read()
             js = json.loads(response)
             valid = True
         
@@ -204,7 +204,7 @@ def main():
         doingOAuth = True
         isASF = True
         req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
-        response = req.urlopen().read()
+        response = urllib2.urlopen(req).read()
         js = json.loads(response)
         valid = True
     
