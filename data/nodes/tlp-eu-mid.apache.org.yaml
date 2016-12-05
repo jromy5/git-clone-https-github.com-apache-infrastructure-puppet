@@ -1937,6 +1937,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
+      Redirect permanent / http://geode.apache.org
 
   qi4j:
     vhost_name: '*'
