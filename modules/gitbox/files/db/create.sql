@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS sessions(
     asfid    VARCHAR(64) PRIMARY KEY UNIQUE NOT NULL,   -- ASF ID coupled to session
     githubid VARCHAR(64),                               -- GitHub ID of session
     asfname  VARCHAR(100)                               -- Display name
-)
+);
 
 CREATE INDEX IF NOT EXISTS I_GITHUBID ON ids (githubid);
 CREATE INDEX IF NOT EXISTS I_OLDREF ON pushlog (old);
