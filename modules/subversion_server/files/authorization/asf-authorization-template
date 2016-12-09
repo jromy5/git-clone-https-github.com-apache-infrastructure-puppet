@@ -837,7 +837,6 @@ ea = rw
 @attic-pmc = rw
 
 [/etch]
-@etch = rw
 @attic-pmc = rw
 
 [/excalibur]
