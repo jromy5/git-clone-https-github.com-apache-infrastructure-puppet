@@ -2,6 +2,19 @@
 
 class sonar_asf (
 
+  $group_present     = 'present',
+  $groupname         = 'sonar',
+  $groups            = [],
+  $shell             = '/bin/bash',
+  $user_present      = 'present',
+  $username          = 'sonar',
+  $service_ensure    = 'running',
+  $service_name      = 'sonar',
+
+  # override below in yaml
+  $sonar_version = '',
+  $parent_dir,
+
   $required_packages             = ['tomcat8'],
 ){
 
@@ -12,4 +25,73 @@ class sonar_asf (
   }
 
 # Sonar specific TBD
+
+  class { 'oraclejava::install':
+    ensure  => 'latest',
+    version => '8',
+}->
+
+  group {
+    $groupname:
+      ensure => $group_present,
+      system => true,
+  }->
+
+  user {
+    $username:
+      ensure     => $user_present,
+      system     => true,
+      name       => $username,
+      home       => "/home/${username}",
+      shell      => $shell,
+      gid        => $groupname,
+      groups     => $groups,
+      managehome => true,
+      require    => Group[$groupname],
+}->
+
+  $sonar_build        = "sonarqube-${sonar_version}"
+  $tarball            = "${sonar_build}.zip"
+  $download_dir       = '/tmp'
+  $downloaded_tarball = "${download_dir}/${tarball}"
+  $download_url       = "https://sonarsource.bintray.com/Distribution/sonarqube/${tarball}"
+  $install_dir        = "${parent_dir}/${sonar_build}"
+
+# download SonarQube
+  exec {
+    'download-sonarqube':
+      command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+      creates => $downloaded_tarball,
+      timeout => 1200,
+  }
+
+  file { $downloaded_tarball:
+    ensure  => file,
+    require => Exec['download-sonarqube'],
+  }
+
+# extract the download and move it
+  exec {
+    'extract-sonarqube':
+      command => "/usr/bin/unzip ${tarball} -d ${parent_dir}",
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${install_dir}/COPYING",
+      timeout => 1200,
+      require => [File[$downloaded_tarball],File[$parent_dir]],
+  }
+
+  file {
+    $parent_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    $install_dir:
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      require => Exec['extract-sonarqube'];
+  }
+
 }

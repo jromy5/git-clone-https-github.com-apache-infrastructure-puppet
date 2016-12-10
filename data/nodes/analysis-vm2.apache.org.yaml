@@ -1,3 +1,7 @@
 ---
 classes:
   - sonar_asf
+
+# sonar_asf class variables.
+sonar_asf::sonar_version: '5.6.3'
+sonar_asf::parent_dir: '/x1/sonar'
