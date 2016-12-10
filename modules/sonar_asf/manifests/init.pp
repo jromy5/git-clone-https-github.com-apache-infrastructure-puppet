@@ -48,7 +48,7 @@ class sonar_asf (
       groups     => $groups,
       managehome => true,
       require    => Group[$groupname],
-}->
+  }
 
   $sonar_build        = "sonarqube-${sonar_version}"
   $tarball            = "${sonar_build}.zip"
