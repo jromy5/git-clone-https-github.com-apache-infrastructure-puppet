@@ -12,3 +12,4 @@ class sonar_asf (
   }
 
 # Sonar specific TBD
+}
