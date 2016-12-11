@@ -60,6 +60,8 @@ vhosts_asf::vhosts::vhosts:
       ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
       custom_fragment: |
         RewriteEngine On
+        ProxyPass /analysis http://analysis-vm2.apache.org:8999/
+        ProxyPassReverse /analysis http://analysis-vm2.apache.org:8999/
         ProxyPass / http://127.0.0.1:8090/
         ProxyPassReverse / http://127.0.0.1:8090/
         RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
