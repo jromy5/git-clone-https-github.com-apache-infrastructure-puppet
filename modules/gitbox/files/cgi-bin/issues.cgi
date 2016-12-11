@@ -22,13 +22,12 @@ import hashlib, json, random, os, sys, time, subprocess
 import cgi, netaddr, smtplib, sqlite3, git
 from email.mime.text import MIMEText
 
-# CGI var getter func
-def getvalue(key):
-    val = xform.getvalue(key)
-    if val:
-        return val
-    else:
-        return None
+# Define some defaults and debug vars
+DEBUG_MAIL_TO = "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
+DEFAULT_SENDMAIL = True             # Should we default to sending an email to the list? (this is very rarely no)
+DEFAULT_JIRA_ENABLED = True         # Is JIRA bridge enabled by default?
+DEFAULT_JIRA_ACTION = "comment"     # Default JIRA action (comment/worklog)
+
 # CGI interface
 xform = cgi.FieldStorage();
 
@@ -42,12 +41,13 @@ if not callerIP in GitHubNetwork:
     sys.exit(0)
 
 
-
-# Define some defaults and debug vars
-DEBUG_MAIL_TO = "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
-DEFAULT_SENDMAIL = True             # Should we default to sending an email to the list? (this is very rarely no)
-DEFAULT_JIRA_ENABLED = True         # Is JIRA bridge enabled by default?
-DEFAULT_JIRA_ACTION = "comment"     # Default JIRA action (comment/worklog)
+### Helper functions ###
+def getvalue(key):
+    val = xform.getvalue(key)
+    if val:
+        return val
+    else:
+        return None
 
 def sendEmail(rcpt, subject, message):
     sender = "<git@git.apache.org>"
@@ -67,6 +67,7 @@ Apache Git Services
         smtpObj.sendmail(sender, receivers, msg)
     except SMTPException:
         raise Exception("Could not send email - SMTP server down??")
+
 
 ################################
 # Message formatting functions #
