@@ -1,0 +1,60 @@
+# This file is managed by Puppet. See module:sonar_asf/templates/sonar.properties.erb
+
+sonar.jdbc.username=<%= @sonar_jdbc_username %>
+sonar.jdbc.password=<%= @sonar_jdbc_password %>
+sonar.jdbc.url=<%= @sonar_jdbc_url %>
+sonar.jdbc.maxActive=40
+sonar.jdbc.maxIdle=10
+sonar.jdbc.minIdle=5
+sonar.jdbc.maxWait=10000
+
+sonar.web.context=<%= @sonar_web_context %>
+sonar.web.port=<%= @sonar_web_port %>
+sonar.web.javaOpts=-server -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true
+
+
+# Below are unchanged defaults. Move them above this line if you change the default setting.
+
+#----- Connection pool settings
+#sonar.jdbc.minEvictableIdleTimeMillis=600000
+#sonar.jdbc.timeBetweenEvictionRunsMillis=30000
+
+#sonar.web.javaAdditionalOpts=
+#sonar.web.host=0.0.0.0
+#sonar.web.http.maxThreads=50
+#sonar.web.http.minThreads=5
+#sonar.web.http.acceptCount=25
+#sonar.ajp.port=-1
+#sonar.ce.javaOpts=-Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true
+#sonar.ce.javaAdditionalOpts=
+#sonar.ce.workerCount=1
+#sonar.search.javaOpts=-Xmx1G -Xms256m -Xss256k -Djava.net.preferIPv4Stack=true \
+#  -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 \
+#  -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError
+#sonar.search.javaAdditionalOpts=
+#sonar.search.port=9001
+#sonar.search.host=127.0.0.1
+#sonar.updatecenter.activate=true
+#http.proxyHost=
+#http.proxyPort=
+#https.proxyHost=
+#https.proxyPort=
+#http.auth.ntlm.domain=
+#socksProxyHost=
+#socksProxyPort=
+#http.proxyUser=
+#http.proxyPassword=
+#sonar.log.level=INFO
+#sonar.path.logs=logs
+#sonar.log.rollingPolicy=time:yyyy-MM-dd
+#sonar.log.maxFiles=7
+#sonar.web.accessLogs.enable=true
+#sonar.web.accessLogs.pattern=%i{X-Forwarded-For} %l %u [%t] "%r" %s %b "%i{Referer}" "%i{User-Agent}"
+#sonar.web.accessLogs.pattern=combined
+#sonar.notifications.delay=60
+#sonar.path.data=data
+#sonar.path.temp=temp
+#sonar.web.dev=false
+#sonar.web.dev.sources=/path/to/server/sonar-web/src/main/webapp
+#sonar.search.httpPort=-1
+

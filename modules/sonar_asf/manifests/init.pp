@@ -14,6 +14,13 @@ class sonar_asf (
   # override below in yaml
   $sonar_version = '',
   $parent_dir,
+  $sonar_web_context = '',
+  $sonar_web_port = '',
+
+  # override below in eyaml
+  $sonar_jdbc_username = '',
+  $sonar_jdbc_password = '',
+  $sonar_jdbc_url = '',
 
   $required_packages             = ['tomcat8'],
 ){
