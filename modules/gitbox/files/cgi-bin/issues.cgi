@@ -179,7 +179,7 @@ def main():
     project = "infra" # Default to infra
     if m:
         project = m.group(1)
-    mailto = gconf.get('apache', 'dev') if gconf.has_section('apache') and gconf.has_option('apache', 'dev') else "dev@%s" % project
+    mailto = gconf.get('apache', 'dev') if gconf.has_section('apache') and gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
