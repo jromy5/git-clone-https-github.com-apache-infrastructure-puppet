@@ -91,8 +91,8 @@ class sonar_asf (
   file {
     $parent_dir:
       ensure => directory,
-      owner  => 'root',
-      group  => 'root',
+      owner  => 'sonar',
+      group  => 'sonar',
       mode   => '0755';
     $install_dir:
       ensure  => directory,
