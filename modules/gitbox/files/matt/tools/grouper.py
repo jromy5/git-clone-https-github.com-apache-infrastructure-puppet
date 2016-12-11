@@ -18,6 +18,10 @@
 import os, sys, re, ldap, elasticsearch, urllib2, json, requests, hashlib, ConfigParser
 from requests.auth import HTTPBasicAuth
 
+# Run `python grouper.py debug` to check teams but not add/remove users
+DEBUG_RUN = True if len(sys.argv) > 1 and sys.argv[1] == 'debug' else False
+if DEBUG_RUN:
+    print("Debug run active! Not modifying teams")
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("grouper.cfg") # Yeah, you're not getting this info...
 
@@ -343,13 +347,15 @@ for project in MATT_PROJECTS:
     for member in members:
         if not member in hopefulTeam:
             print(member + " should not be a part of this team, removing...")
-            removeGitHubTeamMember(teamID, member)
+            if not DEBUG_RUN:
+                removeGitHubTeamMember(teamID, member)
 
     # Lastly, add those that should be here but aren't
     for member in hopefulTeam:
         if not member in members:
             print(member + " not found in GitHub team, adding...")
-            addGitHubTeamMember(teamID, member)
+            if not DEBUG_RUN:
+                addGitHubTeamMember(teamID, member)
 
     print("Done with " + project + ", moving to next project...")
 
