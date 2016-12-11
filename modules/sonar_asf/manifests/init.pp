@@ -99,18 +99,28 @@ class sonar_asf (
       owner   => 'sonar',
       group   => 'sonar',
       require => Exec['extract-sonarqube'];
-    "${install_dir}/sonar.properties":
+    "${install_dir}/conf/sonar.properties":
       content => template('sonar_asf/sonar.properties.erb'),
       owner   => 'sonar',
       group   => 'sonar',
       mode    => '0644',
+      require => Exec['extract-sonarqube'],
       notify  => Service[$service_name];
-    "${install_dir}/wrapper.conf":
+    "${install_dir}/conf/wrapper.conf":
       content => template('sonar_asf/wrapper.conf.erb'),
       owner   => 'sonar',
       group   => 'sonar',
       mode    => '0644',
+      require => Exec['extract-sonarqube'],
       notify  => Service[$service_name];
+  }
+
+  service {
+    $service_name:
+      ensure     => $service_ensure,
+      enable     => true,
+      hasstatus  => false,
+      hasrestart => true,
   }
 
 }
