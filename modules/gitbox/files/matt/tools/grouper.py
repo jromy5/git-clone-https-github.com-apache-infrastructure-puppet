@@ -291,7 +291,7 @@ for project in MATT_PROJECTS:
     teamRepos = getGitHubTeamRepos(teamID)
     print ("Team is subbed to the following repos: " + ", ".join(teamRepos))
     for repo in existingRepos:
-        m = re.match(r"^([^-]+)-?", repo)
+        m = re.match(r"^(?incubator-)?([^-]+)-?", repo)
         p = m.group(1)
         if p == project and not repo in teamRepos and os.path.exists("/x1/repos/asf/%s.git" % repo):
             print("Need to add " + repo + " repo to the team...")
