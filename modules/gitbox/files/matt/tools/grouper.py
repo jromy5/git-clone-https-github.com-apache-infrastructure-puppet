@@ -176,6 +176,12 @@ def addGitHubTeamRepo(teamID, repo):
 
 def getCommitters(group):
     """ Gets the list of availids in a project committer group """
+    # First, check if there's a hardcoded member list for this group
+    # If so, read it and return that instead of trying LDAP
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
+        print("Found hardcoded member list for %s!" % group)
+        return CONFIG.get('group:%s' % group, 'members').split(' ')
+    
     print("Fetching LDAP committer list for %s" % group)
     committers = []
     # This might fail in case of ldap bork, if so we'll return nothing.
