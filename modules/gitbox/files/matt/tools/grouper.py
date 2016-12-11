@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, sys, re, ldap, urllib2, json, requests, hashlib, ConfigParser
+import os, sys, re, ldap, urllib2, json, requests, hashlib, ConfigParser, sqlite3
 from requests.auth import HTTPBasicAuth
 
 # Run `python grouper.py debug` to check teams but not add/remove users
