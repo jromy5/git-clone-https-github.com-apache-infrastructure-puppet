@@ -82,7 +82,7 @@ class sonar_asf (
     'extract-sonarqube':
       command => "/usr/bin/unzip ${tarball} -d ${parent_dir}",
       cwd     => $download_dir,
-      user    => 'root',
+      user    => 'sonar',
       creates => "${install_dir}/COPYING",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
