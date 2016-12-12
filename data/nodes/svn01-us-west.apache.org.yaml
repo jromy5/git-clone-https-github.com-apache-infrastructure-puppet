@@ -105,7 +105,7 @@ perl::module:
 # svn01 gets to talk directly to hermes to bypass spam filters
 # on commit messages (svnmailer)
 
-postfix::server::relayhost: 'hermes.apache.org'
+postfix::server::relayhost: 'hermes.apache.org:2025'
 
 snmp::snmpd_config:
   - 'disk /x1 10%'
