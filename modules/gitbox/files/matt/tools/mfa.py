@@ -26,7 +26,7 @@ MAX_PAGES = 1000
 
 
 def fetch_users(token, filter):
-    users = [ ]
+    users = set()
     for n in range(MAX_PAGES):
         url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=%s&page=%u" % (token, filter, n)
         response = urllib2.urlopen(url).read()
@@ -35,7 +35,7 @@ def fetch_users(token, filter):
             if len(js) == 0:
                 break
             for user in js:
-                users.append(user['login'])
+                users.add(user['login'])
     return users
 
 
@@ -44,19 +44,19 @@ def run():
     CONFIG.read("grouper.cfg")
     ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
+    # Fetch the two types of users
+    disabled = fetch_users(ORG_READ_TOKEN, '2fa_disabled')
+    all = fetch_users(ORG_READ_TOKEN, 'all')
+
     MFA = {
         'disabled': {},
         'enabled': {}
     }
-    
-    # Users with MFA disabled
-    for u in fetch_users(ORG_READ_TOKEN, '2fa_disabled'):
+    for u in disabled:
         MFA['disabled'][u] = True
-    
-    # Users with MFA enabled
-    for u in fetch_users(ORG_READ_TOKEN, '2fa_enabled'):
+    for u in all:
         MFA['enabled'][u] = True
-    
+
     json.dump(MFA, open("../mfa.json", "w"))
     print("All done!")
 
