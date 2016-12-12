@@ -146,7 +146,7 @@ def ticketComment(payload):
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
     email = {
-        'subject': "%(user) commented on #%(id)i: %(title)s" % fmt,
+        'subject': "%(user)s commented on #%(id)i: %(title)s" % fmt,
         'message': TMPL_GENERIC_COMMENT % fmt
     }
     return email
