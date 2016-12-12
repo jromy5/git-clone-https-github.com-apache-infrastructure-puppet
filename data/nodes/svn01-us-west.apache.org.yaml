@@ -102,6 +102,11 @@ perl::module:
     name: 'Net::LDAP'
     use_package : true
 
+# svn01 gets to talk directly to hermes to bypass spam filters
+# on commit messages (svnmailer)
+
+postfix::server::relayhost: 'hermes.apache.org'
+
 snmp::snmpd_config:
   - 'disk /x1 10%'
   - 'disk /x1/svn 10%'
