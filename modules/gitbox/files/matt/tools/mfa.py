@@ -18,7 +18,10 @@
 
 # This is mfa.py - cron job for updating the MFA status of people
 
-import json, urllib2, ConfigParser
+import json
+import urllib2
+import ConfigParser
+
 
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("grouper.cfg")
