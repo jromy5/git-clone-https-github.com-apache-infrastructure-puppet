@@ -39,14 +39,17 @@ def fetch_users(token, filter):
     return users
 
 
-def run():
-    CONFIG = ConfigParser.ConfigParser()
-    CONFIG.read("grouper.cfg")
-    ORG_READ_TOKEN = CONFIG.get('github', 'token')
-
+def gather_data(token):
     # Fetch the two types of users
-    disabled = fetch_users(ORG_READ_TOKEN, '2fa_disabled')
-    all = fetch_users(ORG_READ_TOKEN, 'all')
+    disabled = fetch_users(token, '2fa_disabled')
+    all = fetch_users(token, 'all')
+
+    return disabled, all.difference(disabled)
+
+
+def write_mfa_file(fname, token):
+    disabled, enabled = gather_data(token)
+    all = disabled.union(enabled)
 
     MFA = {
         'disabled': {},
@@ -57,9 +60,13 @@ def run():
     for u in all:
         MFA['enabled'][u] = True
 
-    json.dump(MFA, open("../mfa.json", "w"))
-    print("All done!")
+    json.dump(MFA, open(fname, 'w'))
 
 
 if __name__ == '__main__':
-    run()
+    CONFIG = ConfigParser.ConfigParser()
+    CONFIG.read("grouper.cfg")
+    ORG_READ_TOKEN = CONFIG.get('github', 'token')
+
+    write_mfa_file('../mfa.json', ORG_READ_TOKEN)
+    print("All done!")
