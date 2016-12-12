@@ -126,7 +126,7 @@ def issueClosed(payload):
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
     email = {
-        'subject': "GitHub %(type)s #(%id)i closed: %(title)s" % fmt,
+        'subject': "GitHub %(type)s #%(id)i closed: %(title)s" % fmt,
         'message': TMPL_NEW_TICKET % fmt
     }
     return email
