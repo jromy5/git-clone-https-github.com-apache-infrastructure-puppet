@@ -22,38 +22,40 @@ import json
 import urllib2
 import ConfigParser
 
+MAX_PAGES = 1000
+
+
+def fetch_users(token, filter):
+    users = [ ]
+    for n in range(MAX_PAGES):
+        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=%s&page=%u" % (token, filter, n)
+        response = urllib2.urlopen(url).read()
+        if response:
+            js = json.loads(response)
+            if len(js) == 0:
+                break
+            for user in js:
+                users.append(user['login'])
+    return users
+
 
 def run():
     CONFIG = ConfigParser.ConfigParser()
     CONFIG.read("grouper.cfg")
     ORG_READ_TOKEN = CONFIG.get('github', 'token')
-    
+
     MFA = {
         'disabled': {},
         'enabled': {}
     }
     
     # Users with MFA disabled
-    for n in range(0,1000):
-        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_disabled&page=%u" % (ORG_READ_TOKEN, n)
-        response = urllib2.urlopen(url).read()
-        if response:
-            js = json.loads(response)
-            if len(js) == 0:
-                break
-            for user in js:
-                MFA['disabled'][user['login']] = True
+    for u in fetch_users(ORG_READ_TOKEN, '2fa_disabled'):
+        MFA['disabled'][u] = True
     
     # Users with MFA enabled
-    for n in range(0,1000):
-        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_enabled&page=%u" % (ORG_READ_TOKEN, n)
-        response = urllib2.urlopen(url).read()
-        if response:
-            js = json.loads(response)
-            if len(js) == 0:
-                break
-            for user in js:
-                MFA['enabled'][user['login']] = True
+    for u in fetch_users(ORG_READ_TOKEN, '2fa_enabled'):
+        MFA['enabled'][u] = True
     
     json.dump(MFA, open("../mfa.json", "w"))
     print("All done!")
