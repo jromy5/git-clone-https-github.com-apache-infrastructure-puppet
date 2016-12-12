@@ -135,7 +135,7 @@ def issueClosed(payload):
 def ticketComment(payload):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
-    comment = obj['comment']
+    comment = payload['comment']
     # PR or issue??
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
