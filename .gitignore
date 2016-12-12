@@ -10,6 +10,7 @@ ssl/
 .pydevproject
 *.sw*
 .ruby-*
+*.pyc
 
 .bundle
 Gemfile.lock
