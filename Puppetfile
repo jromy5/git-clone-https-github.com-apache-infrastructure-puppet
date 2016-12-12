@@ -127,7 +127,7 @@ mod 'module_data',
 
 mod 'mysql',
   :git => 'https://github.com/puppetlabs/puppetlabs-mysql.git',
-  :tag => '3.1.0'
+  :tag => '3.10.0'
 
 
 mod 'nfs',
