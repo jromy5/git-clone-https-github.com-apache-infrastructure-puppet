@@ -12,6 +12,8 @@ sonar.web.context=<%= @sonar_web_context %>
 sonar.web.port=<%= @sonar_web_port %>
 sonar.web.javaOpts=-server -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true
 
+sonar.log.level=DEBUG
+
 
 # Below are unchanged defaults. Move them above this line if you change the default setting.
 
@@ -44,7 +46,6 @@ sonar.web.javaOpts=-server -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Dj
 #socksProxyPort=
 #http.proxyUser=
 #http.proxyPassword=
-#sonar.log.level=INFO
 #sonar.path.logs=logs
 #sonar.log.rollingPolicy=time:yyyy-MM-dd
 #sonar.log.maxFiles=7
