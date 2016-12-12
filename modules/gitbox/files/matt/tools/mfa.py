@@ -63,6 +63,17 @@ def write_mfa_file(fname, token):
     json.dump(MFA, open(fname, 'w'))
 
 
+def write_v2_file(fname, token):
+    disabled, enabled = gather_data(token)
+
+    MFA = {
+        'disabled': list(disabled),
+        'enabled': list(enabled),
+    }
+
+    json.dump(MFA, open(fname, 'w'))
+
+
 if __name__ == '__main__':
     CONFIG = ConfigParser.ConfigParser()
     CONFIG.read("grouper.cfg")
