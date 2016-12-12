@@ -23,36 +23,41 @@ import urllib2
 import ConfigParser
 
 
-CONFIG = ConfigParser.ConfigParser()
-CONFIG.read("grouper.cfg")
-ORG_READ_TOKEN = CONFIG.get('github', 'token')
+def run():
+    CONFIG = ConfigParser.ConfigParser()
+    CONFIG.read("grouper.cfg")
+    ORG_READ_TOKEN = CONFIG.get('github', 'token')
+    
+    MFA = {
+        'disabled': {},
+        'enabled': {}
+    }
+    
+    # Users with MFA disabled
+    for n in range(0,1000):
+        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_disabled&page=%u" % (ORG_READ_TOKEN, n)
+        response = urllib2.urlopen(url).read()
+        if response:
+            js = json.loads(response)
+            if len(js) == 0:
+                break
+            for user in js:
+                MFA['disabled'][user['login']] = True
+    
+    # Users with MFA enabled
+    for n in range(0,1000):
+        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_enabled&page=%u" % (ORG_READ_TOKEN, n)
+        response = urllib2.urlopen(url).read()
+        if response:
+            js = json.loads(response)
+            if len(js) == 0:
+                break
+            for user in js:
+                MFA['enabled'][user['login']] = True
+    
+    json.dump(MFA, open("../mfa.json", "w"))
+    print("All done!")
 
-MFA = {
-    'disabled': {},
-    'enabled': {}
-}
 
-# Users with MFA disabled
-for n in range(0,1000):
-    url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_disabled&page=%u" % (ORG_READ_TOKEN, n)
-    response = urllib2.urlopen(url).read()
-    if response:
-        js = json.loads(response)
-        if len(js) == 0:
-            break
-        for user in js:
-            MFA['disabled'][user['login']] = True
-
-# Users with MFA enabled
-for n in range(0,1000):
-    url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_enabled&page=%u" % (ORG_READ_TOKEN, n)
-    response = urllib2.urlopen(url).read()
-    if response:
-        js = json.loads(response)
-        if len(js) == 0:
-            break
-        for user in js:
-            MFA['enabled'][user['login']] = True
-
-json.dump(MFA, open("../mfa.json", "w"))
-print("All done!")
+if __name__ == '__main__':
+    run()
