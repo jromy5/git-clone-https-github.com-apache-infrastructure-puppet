@@ -68,7 +68,6 @@ Apache Git Services
     except smtplib.SMTPException:
         raise Exception("Could not send email - SMTP server down??")
 
-i
 ################################
 # Message formatting functions #
 ################################
