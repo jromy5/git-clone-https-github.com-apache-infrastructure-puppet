@@ -65,7 +65,7 @@ Apache Git Services
     try:
         smtpObj = smtplib.SMTP("localhost")
         smtpObj.sendmail(sender, receivers, msg)
-    except SMTPException:
+    except smtplib.SMTPException:
         raise Exception("Could not send email - SMTP server down??")
 
 i
