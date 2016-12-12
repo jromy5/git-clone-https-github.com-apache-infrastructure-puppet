@@ -5,14 +5,14 @@ classes:
   - mysql::server
   - zmanda_asf::client
 
-datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
+datadog_agent::integrations::mysql::host: "%{::ipaddress_ens3}"
 datadog_agent::integrations::mysql::user: 'datadog'
 
 
 mysql::server::override_options:
   mysqld:
     ft_min_word_len: 2
-    bind-address: "%{::ipaddress_eth1}"
+    bind-address: "%{::ipaddress_ens3}"
     server-id: 1
     binlog-format: 'mixed'
     log_bin: '/var/log/mysql/mysql-bin.log'
