@@ -19,7 +19,7 @@
 # This is issues.cgi: Handler for GitHub issues (and PRs)
 
 import hashlib, json, random, os, sys, time, subprocess
-import cgi, netaddr, smtplib, sqlite3, git
+import cgi, netaddr, smtplib, sqlite3, git, re
 from email.mime.text import MIMEText
 
 # Define some defaults and debug vars
@@ -176,7 +176,7 @@ def main():
         return "No configuration found for repository %s" % repo
     
     # Get recipient email address for mail coms
-    m = re.match(r"(?incubator-)([^-]+)", repo)
+    m = re.match(r"(?:incubator-)([^-]+)", repo)
     project = "infra" # Default to infra
     if m:
         project = m.group(1)
