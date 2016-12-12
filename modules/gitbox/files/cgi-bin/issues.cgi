@@ -68,7 +68,7 @@ Apache Git Services
     except SMTPException:
         raise Exception("Could not send email - SMTP server down??")
 
-
+i
 ################################
 # Message formatting functions #
 ################################
@@ -161,7 +161,7 @@ def main():
     
     # Now check if this repo is hosted on GitBox (if not, abort):
     if'repository' in data:
-        repo = data['repository']
+        repo = data['repository']['name']
         repopath = "/x1/repos/asf/%s.git" % repo
     else:
         return None
