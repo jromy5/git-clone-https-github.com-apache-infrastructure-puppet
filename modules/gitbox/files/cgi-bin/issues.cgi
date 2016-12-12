@@ -97,8 +97,8 @@ You can view it online at: %(link)s
 
 def issueOpened(payload):
     fmt = {}
-    fmt['user'] = payload['user']['login']
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
+    fmt['user'] = obj['user']['login']
     # PR or issue??
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
@@ -115,8 +115,8 @@ def issueOpened(payload):
 
 def issueClosed(payload):
     fmt = {}
-    fmt['user'] = payload['user']['login']
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
+    fmt['user'] = obj['user']['login']
     # PR or issue??
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
