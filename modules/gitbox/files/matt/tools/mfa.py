@@ -18,38 +18,66 @@
 
 # This is mfa.py - cron job for updating the MFA status of people
 
-import json, urllib2, ConfigParser
+import json
+import urllib2
+import ConfigParser
 
-CONFIG = ConfigParser.ConfigParser()
-CONFIG.read("grouper.cfg")
-ORG_READ_TOKEN = CONFIG.get('github', 'token')
+MAX_PAGES = 1000
 
-MFA = {
-    'disabled': {},
-    'enabled': {}
-}
 
-# Users with MFA disabled
-for n in range(0,1000):
-    url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_disabled&page=%u" % (ORG_READ_TOKEN, n)
-    response = urllib2.urlopen(url).read()
-    if response:
-        js = json.loads(response)
-        if len(js) == 0:
-            break
-        for user in js:
-            MFA['disabled'][user['login']] = True
+def fetch_users(token, filter, count=MAX_PAGES):
+    users = set()
+    for n in range(count):
+        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=%s&page=%u" % (token, filter, n)
+        response = urllib2.urlopen(url).read()
+        if response:
+            js = json.loads(response)
+            if len(js) == 0:
+                break
+            for user in js:
+                users.add(user['login'])
+    return users
 
-# Users with MFA enabled
-for n in range(0,1000):
-    url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=2fa_enabled&page=%u" % (ORG_READ_TOKEN, n)
-    response = urllib2.urlopen(url).read()
-    if response:
-        js = json.loads(response)
-        if len(js) == 0:
-            break
-        for user in js:
-            MFA['enabled'][user['login']] = True
 
-json.dump(MFA, open("../mfa.json", "w"))
-print("All done!")
+def gather_data(token):
+    # Fetch the two types of users
+    disabled = fetch_users(token, '2fa_disabled')
+    all = fetch_users(token, 'all')
+
+    return disabled, all.difference(disabled)
+
+
+def write_mfa_file(fname, token):
+    disabled, enabled = gather_data(token)
+    all = disabled.union(enabled)
+
+    MFA = {
+        'disabled': {},
+        'enabled': {}
+    }
+    for u in disabled:
+        MFA['disabled'][u] = True
+    for u in all:
+        MFA['enabled'][u] = True
+
+    json.dump(MFA, open(fname, 'w'))
+
+
+def write_v2_file(fname, token):
+    disabled, enabled = gather_data(token)
+
+    MFA = {
+        'disabled': list(disabled),
+        'enabled': list(enabled),
+    }
+
+    json.dump(MFA, open(fname, 'w'))
+
+
+if __name__ == '__main__':
+    CONFIG = ConfigParser.ConfigParser()
+    CONFIG.read("grouper.cfg")
+    ORG_READ_TOKEN = CONFIG.get('github', 'token')
+
+    write_mfa_file('../mfa.json', ORG_READ_TOKEN)
+    print("All done!")
