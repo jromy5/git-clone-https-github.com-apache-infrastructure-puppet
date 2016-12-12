@@ -6,6 +6,21 @@ wrapper.java.maxmemory=512
 # below are defaults. Move them above this line if you change the default value.
 
 #********************************************************************
+# Wrapper Java
+#********************************************************************
+wrapper.java.additional.1=-Djava.awt.headless=true
+# wrapper.java.additional.2=-Djavax.net.ssl.trustStore=/x1/sonar/jvm-sslcerts/cacerts
+
+wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperSimpleApp
+wrapper.java.classpath.1=../../lib/jsw/*.jar
+wrapper.java.classpath.2=../../lib/*.jar
+wrapper.java.library.path.1=./lib
+wrapper.app.parameter.1=org.sonar.application.App
+wrapper.java.initmemory=256
+# Xmx can't be set to a lower value because of compatibility with Java 6
+wrapper.java.maxmemory=512
+
+#********************************************************************
 # Wrapper Logs
 #********************************************************************
 
