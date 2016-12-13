@@ -11,6 +11,7 @@ sonar.jdbc.maxWait=10000
 sonar.web.context=<%= @sonar_web_context %>
 sonar.web.port=<%= @sonar_web_port %>
 sonar.web.javaOpts=-server -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true
+sonar.web.javaAdditionalOpts=-Djavax.net.ssl.trustStore=/x1/sonar/jvm-sslcerts/cacerts
 
 sonar.log.level=DEBUG
 
@@ -65,8 +66,8 @@ sonar.log.level=DEBUG
 #sonar.authenticator.class: org.sonar.plugins.ldap.LdapAuthenticator
 sonar.security.realm=LDAP
 #sonar.authenticator.ignoreStartupFailure: true
-sonar.authenticator.createUsers: false
-ldap.url: ldaps://ldap1-us-west.apache.org
+sonar.authenticator.createUsers: true
+ldap.url: ldaps://ldap1-lw-us.apache.org
 # ldap.baseDn: "ou=people,dc=apache,dc=org"
 ldap.user.baseDn: "ou=people,dc=apache,dc=org"
 # do NOT enable group setting below, we use local auth for groups
