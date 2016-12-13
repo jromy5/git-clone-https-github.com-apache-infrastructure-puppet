@@ -22,10 +22,15 @@ apache::serveradmin:        'users@infra.apache.org'
 
 cron:
   json1:
-    user: 'www-data'
-    minute: '1'
+    user: 'root'
+    minute: '0,30'
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
+  grouper:
+    user: 'root'
+    minute: '10,40'
+    hour: '*'
+    command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
 
 datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/asf'
 
