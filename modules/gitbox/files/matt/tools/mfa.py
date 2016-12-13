@@ -79,5 +79,5 @@ if __name__ == '__main__':
     CONFIG.read("grouper.cfg")
     ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
-    write_mfa_file('../mfa.json', ORG_READ_TOKEN)
+    write_v2_file('../mfa.json', ORG_READ_TOKEN)
     print("All done!")
