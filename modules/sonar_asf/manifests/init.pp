@@ -117,7 +117,7 @@ class sonar_asf (
       user    => 'sonar',
       creates => "${plugins_dir}/{ldapplugin}",
       timeout => 1200,
-      require => [File[$downloaded_ldap_plugin,File[$install_dir]],
+      require => [File[$downloaded_ldap_plugin],File[$install_dir]],
   }
 
   file {
