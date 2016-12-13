@@ -112,7 +112,7 @@ class sonar_asf (
 # move the download to the plugins dir
   exec {
     'move-ldapplugin':
-      command => "cp ${ldapplugin} ${plugins_dir}",
+      command => "/bin/cp ${ldapplugin} ${plugins_dir}",
       cwd     => $download_dir,
       user    => 'sonar',
       creates => "${plugins_dir}/{ldapplugin}",
