@@ -326,8 +326,8 @@ for project in MATT_PROJECTS:
     for committer in ldap_team:
         githubID = None
         for account in accounts:
-            # Check that we found a match WITH 2FA enabled (bool, so 1 means true)
-            if account[0].lower() == committer and account[2] == 1:
+            # Check that we found a match
+            if account[0].lower() == committer:
                 githubID = account[1]
         # Make sure we found the user and the latest MFA scan shows MFA enabled
         if githubID and githubID in MFA['enabled']:
