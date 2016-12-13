@@ -330,10 +330,10 @@ for project in MATT_PROJECTS:
             if account[0].lower() == committer and account[2] == 1:
                 githubID = account[1]
         # Make sure we found the user and the latest MFA scan shows MFA enabled
-        if githubID and githubID in MFA['enabled'].keys():
+        if githubID and githubID in MFA['enabled']:
             hopefulTeam.append(githubID)
         # If MFA was disabled again, we can't have 'em here.
-        elif githubID and githubID in MFA['disabled'].keys():
+        elif githubID and githubID in MFA['disabled']:
             print(githubID + " does not have MFA enabled, can't add to team")
         else:
             print(committer + " does not have a working MATT account yet, ignoring")

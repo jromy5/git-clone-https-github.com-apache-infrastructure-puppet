@@ -256,7 +256,7 @@ def main():
                 oaccount = getaccount()
                 if oaccount:
                     oaccount['githubid'] = js['login']
-                    oaccount['mfa'] = 1 if js['login'] in MFA['enabled'].keys() else 0
+                    oaccount['mfa'] = 1 if js['login'] in MFA['enabled'] else 0
                     saveaccount(oaccount, True)
                     updated = True
         
