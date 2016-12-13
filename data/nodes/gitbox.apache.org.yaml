@@ -23,12 +23,12 @@ apache::serveradmin:        'users@infra.apache.org'
 cron:
   json1:
     user: 'root'
-    minute: '0,30'
+    minute: [0,30]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
   grouper:
     user: 'root'
-    minute: '10,40'
+    minute: [10,40]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
 
