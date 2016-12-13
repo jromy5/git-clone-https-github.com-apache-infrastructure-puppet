@@ -265,7 +265,7 @@ allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.lis
 
 # turn that into a list of projects to run the manager for
 for repo in allrepos:
-    m = re.match(r"(?incubator-)([^-]+)", repo)
+    m = re.match(r"(?:incubator-)([^-]+)", repo)
     if m: #don't see why this would fail, but best to be sure
         project = m.group(1)
         if not project in MATT_PROJECTS and project != "infrastructure":
