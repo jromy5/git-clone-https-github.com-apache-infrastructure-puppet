@@ -58,3 +58,22 @@ sonar.log.level=DEBUG
 #sonar.web.dev.sources=/path/to/server/sonar-web/src/main/webapp
 #sonar.search.httpPort=-1
 
+#-------------------
+# Sonar LDAP Plugin
+#-------------------
+
+#sonar.authenticator.class: org.sonar.plugins.ldap.LdapAuthenticator
+sonar.security.realm=LDAP
+#sonar.authenticator.ignoreStartupFailure: true
+sonar.authenticator.createUsers: false
+ldap.url: ldaps://ldap1-us-west.apache.org
+# ldap.baseDn: "ou=people,dc=apache,dc=org"
+ldap.user.baseDn: "ou=people,dc=apache,dc=org"
+# do NOT enable group setting below, we use local auth for groups
+# ldap.group.baseDn: "ou=groups,dc=apache,dc=org"
+#ldap.bindDn:
+#ldap.bindPassword:
+ldap.loginAttribute: uid
+ldap.userObjectClass: inetOrgPerson
+ldap.authentication: simple
+
