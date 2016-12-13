@@ -145,6 +145,12 @@ class sonar_asf (
       mode    => '0644',
       require => Exec['extract-sonarqube'],
       notify  => Service[$service_name];
+    "/etc/systemd/services/sonar.service":
+      content => 'puppet:///modules/sonar_asf/sonar.service',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      notify  => Exec['systemctl-daemon-reload'];
   }
 
   service {
