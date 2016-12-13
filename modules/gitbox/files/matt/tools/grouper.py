@@ -261,7 +261,7 @@ conn.close()
 
 # get a list of all repos that are active on gitbox
 gitdir = '/x1/repos/asf'
-allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.listdir(dir))
+allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.listdir(gitdir))
 
 # turn that into a list of projects to run the manager for
 for repo in allrepos:
