@@ -16,6 +16,7 @@ class sonar_asf (
   $parent_dir,
   $sonar_web_context = '',
   $sonar_web_port = '',
+  $sonar_ldap_plugin_version = '',
 
   # override below in eyaml
   $sonar_jdbc_username = '',
@@ -86,6 +87,37 @@ class sonar_asf (
       creates => "${install_dir}/COPYING",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
+  }
+
+# Sonar LDAP plugin
+
+  $ldap_jar               = "${sonar_ldap_plugin_version}.jar"
+  $ldapplugin             = "sonar-ldap-plugin-${ldap_jar}"
+  $ldapplugin_url         = "https://sonarsource.bintray.com/Distribution/sonar-ldap-plugin/${ldapplugin}"
+  $downloaded_ldap_plugin = "${download_dir}/${ldapplugin}"
+  $plugins_dir            = "${install_dir}/extensions/plugins"
+
+  exec {
+    'download-ldapplugin':
+      command => "/usr/bin/wget -O ${ldapplugin} ${ldapplugin_url}",
+      creates => $downloaded_ldap_plugin,
+      timeout => 1200,
+  }
+
+  file { $downloaded_ldap_plugin:
+    ensure  => file,
+    require => Exec['download-ldapplugin'],
+  }
+
+# move the download to the plugins dir
+  exec {
+    'move-ldapplugin':
+      command => "cp ${ldapplugin} ${plugins_dir}",
+      cwd     => $download_dir,
+      user    => 'sonar',
+      creates => "${plugins_dir}/{ldapplugin}",
+      timeout => 1200,
+      require => [File[$downloaded_ldap_plugin,File[$install_dir]],
   }
 
   file {
