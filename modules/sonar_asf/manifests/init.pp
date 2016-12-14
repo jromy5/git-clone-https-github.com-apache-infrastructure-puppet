@@ -150,7 +150,7 @@ class sonar_asf (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      notify  => Exec['systemctl-daemon-reload'];
+      notify  => Service[$service_name];
   }
 
   service {
