@@ -1,0 +1,11 @@
+[Unit]
+Description=Sonar
+
+[Service]
+Type=forking
+ExecStart=/x1/sonar/sonarqube-5.6.3/bin/linux-x86-64/sonar.sh start
+ExecStop=/x1/sonar/sonarqube-5.6.3/bin/linux-x86-64/sonar.sh stop
+Restart=/x1/sonar/sonarqube-5.6.3/bin/linux-x86-64/sonar.sh restart
+
+[Install]
+WantedBy=multi-user.target
