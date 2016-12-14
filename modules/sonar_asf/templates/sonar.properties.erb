@@ -68,12 +68,9 @@ sonar.security.realm=LDAP
 #sonar.authenticator.ignoreStartupFailure: true
 sonar.authenticator.createUsers: true
 ldap.url: ldaps://ldap1-lw-us.apache.org
-# ldap.baseDn: "ou=people,dc=apache,dc=org"
 ldap.user.baseDn: "ou=people,dc=apache,dc=org"
-# do NOT enable group setting below, we use local auth for groups
-# ldap.group.baseDn: "ou=groups,dc=apache,dc=org"
-#ldap.bindDn:
-#ldap.bindPassword:
+ldap.group.baseDn: "dc=apache,dc=org"
+ldap.group.request=(&(objectClass=groupOfNames)(member={dn}))
 ldap.loginAttribute: uid
 ldap.userObjectClass: inetOrgPerson
 ldap.authentication: simple
