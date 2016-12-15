@@ -52,6 +52,11 @@ base::gempackages:
   - 'r10k'
   - 'puppet-lint'
 
+python::python_pips:
+  ezt:
+    ensure: present
+
+
 logrotate::rule:
   apache2:
     ensure: 'present'
