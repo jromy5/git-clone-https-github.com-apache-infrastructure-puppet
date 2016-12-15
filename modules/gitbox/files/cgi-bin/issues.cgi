@@ -29,6 +29,7 @@ import sqlite3
 import git
 import re
 import ezt
+import StringIO
 from email.mime.text import MIMEText
 
 # Define some defaults and debug vars
@@ -168,6 +169,20 @@ def reviewComment(payload):
     fmt['diff'] = obj['diff_hunk']
     return fmt
 
+def formatEmail(fmt):
+    subjects = {
+        'open':         "opened a new %(type)s",
+        'close':        "closed %(type)s",
+        'comment':      "commented on %(type)s",
+        'diffcomment':  "commented on a change in %(type)s"
+    }
+    fmt['action'] = subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']
+    subject = "[GitHub] %(user)s %(action)s #%()id)i: %(title)s" % fmt
+    template = ezt.Template('template.ezt')
+    fp = StringIO.StringIO()
+    output = template.generate(fp, fmt)
+    body = fp.getvalue()
+    print(body)
 
 
 # Main function
