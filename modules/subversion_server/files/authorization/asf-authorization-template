@@ -506,6 +506,7 @@ attic-pmc={reuse:pit-authorization:attic-pmc}
 comdev-pmc={reuse:pit-authorization:comdev-pmc}
 comdev={reuse:pit-authorization:comdev}
 concom={reuse:pit-authorization:concom}
+ea={reuse:pit-authorization:ea}
 infrastructure={reuse:pit-authorization:infrastructure}
 infrastructure-interest={reuse:pit-authorization:infrastructure-interest}
 infrastructure-root={reuse:pit-authorization:infrastructure-root}
