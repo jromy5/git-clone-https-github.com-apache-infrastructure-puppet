@@ -1,9 +1,9 @@
 [subject]
 URL: [link]
 
-[if-any path]
+[if-any filename]
     ##########
-    File path: [path]
+    File path: [filename]
     ##########
     [diff]
     
