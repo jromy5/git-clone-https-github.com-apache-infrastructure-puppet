@@ -1,0 +1,6 @@
+---
+classes:
+  - loggy
+
+base::basepackages:
+  - docker-engine
