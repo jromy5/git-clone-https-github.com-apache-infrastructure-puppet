@@ -248,6 +248,8 @@ def main():
         for el in ['filename','diff']:
             if not el in fmt:
                 fmt[el] = None
+        # Indent comment
+        fmt['text'] = "\n".join("   %s" % x for x in fmt['text'].split("\n"))
         # Go ahead and generate the template
         email = formatEmail(fmt)
     if email:
