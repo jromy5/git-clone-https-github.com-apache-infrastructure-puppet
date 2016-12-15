@@ -239,6 +239,10 @@ mod 'sysctl',
   :git => 'https://github.com/thias/puppet-sysctl.git',
   :tag => '1.0.2'
 
+mod 'systemd',
+  :git => 'https://github.com/camptocamp/puppet-systemd',
+  :tag => '0.4.0'
+
 mod 'tftp',
   :git => 'https://github.com/theforeman/puppet-tftp.git',
   :tag => '1.5.1'
