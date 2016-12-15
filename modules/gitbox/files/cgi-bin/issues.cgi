@@ -177,7 +177,7 @@ def formatEmail(fmt):
         'comment':      "commented on %(type)s",
         'diffcomment':  "commented on a change in %(type)s"
     }
-    fmt['action'] = subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']
+    fmt['action'] = (subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']) % fmt
     fmt['subject'] = "%(user)s %(action)s #%()id)i: %(title)s" % fmt
     template = ezt.Template('template.ezt')
     fp = StringIO.StringIO()
