@@ -244,6 +244,11 @@ def main():
 
     # Send email if applicable
     if fmt:
+        # EZT needs these to be defined
+        for el in ['filename','diff']:
+            if not el in fmt:
+                fmt[el] = None
+        # Go ahead and generate the template
         email = formatEmail(fmt)
     if email:
         sendEmail(mailto, email['subject'], email['message'])
