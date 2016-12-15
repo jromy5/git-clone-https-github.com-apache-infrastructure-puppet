@@ -147,7 +147,7 @@ class sonar_asf (
       notify  => Service[$service_name];
   }
 
-  ::systemd::unit_file { "/etc/systemd/services/sonar.service":
+  ::systemd::unit_file { "sonar.service":
       source => 'puppet:///modules/sonar_asf/sonar.service',
   }
 
