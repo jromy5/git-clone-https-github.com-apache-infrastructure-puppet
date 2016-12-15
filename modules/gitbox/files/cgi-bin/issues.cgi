@@ -115,11 +115,8 @@ def issueOpened(payload):
     fmt['text'] = obj['body']
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
-    email = {
-        'subject': "New GitHub %(type)s: %(title)s" % fmt,
-        'message': TMPL_NEW_TICKET % fmt
-    }
-    return email
+    fmt['action'] = 'open'
+    return fmt
 
 def issueClosed(payload):
     fmt = {}
@@ -133,11 +130,8 @@ def issueClosed(payload):
     fmt['text'] = obj['body']
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
-    email = {
-        'subject': "GitHub %(type)s #%(id)i closed: %(title)s" % fmt,
-        'message': TMPL_CLOSED_TICKET % fmt
-    }
-    return email
+    fmt['action'] = 'close'
+    return fmt
 
 
 def ticketComment(payload):
@@ -154,11 +148,26 @@ def ticketComment(payload):
     fmt['text'] = comment['body']
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
-    email = {
-        'subject': "%(user)s commented on #%(id)i: %(title)s" % fmt,
-        'message': TMPL_GENERIC_COMMENT % fmt
-    }
-    return email
+    fmt['action'] = "comment"
+    return fmt
+
+def reviewComment(payload):
+    fmt = {}
+    obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
+    comment = payload['comment']
+    # PR or issue??
+    fmt['type'] = 'issue'
+    if 'pull_request' in payload:
+        fmt['type'] = 'pull request'
+    fmt['user'] = comment['user']['login']
+    fmt['id'] = obj['number']
+    fmt['text'] = comment['body']
+    fmt['title'] = obj['title']
+    fmt['link'] = comment['html_url']
+    fmt['action'] = "diffcomment"
+    fmt['diff'] = obj['diff_hunk']
+    return fmt
+
 
 
 # Main function
@@ -194,14 +203,15 @@ def main():
         mailto = DEBUG_MAIL_TO
 
     # Now figure out what type of event we got
+    fmt = None
     email = None
     if 'action' in data:
         # Issue opened or reopened
         if data['action'] in ['opened', 'reopened']:
-            email = issueOpened(data)
+            fmt = issueOpened(data)
         # Issue closed
         elif data['action'] == 'closed':
-            email = issueClosed(data)
+            fmt = issueClosed(data)
         # Comment on issue or specific code (WIP)
         elif 'comment' in data:
             # File-specific comment
@@ -209,12 +219,16 @@ def main():
                 pass
             # Standard commit comment
             elif 'commit_id' in data['comment']:
-                pass
+                # Diff review
+                if 'diff_hunk' in data['comment']:
+                    fmt = reviewComment(data)
             # Generic comment
             else:
-                email = ticketComment(data)
+                fmt = ticketComment(data)
 
     # Send email if applicable
+    if fmt:
+        email = formatEmail(fmt)
     if email:
         sendEmail(mailto, email['subject'], email['message'])
 
