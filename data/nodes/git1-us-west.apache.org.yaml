@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::geoip
+  - apache::mod::perl
   - datadog_agent::integrations::http_check
   - gitserver_asf
   - gitserver_asf::role
@@ -113,7 +114,9 @@ gitserver_asf::custom_fragment_443: |
       <Directory /usr/lib/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
-          SetHandler cgi-script
+          SetHandler perl-script
+          PerlResponseHandler ModPerl::Registry
+          PerlOptions +ParseHeaders
       </Directory>
 
       AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
