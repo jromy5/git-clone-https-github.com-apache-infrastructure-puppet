@@ -1,7 +1,9 @@
 ---
 classes:
   - loggy
+  - buildbot_slave
 
+buildbot_slave::slave_name: 'bb_slave6_ubuntu'
 ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
 
 python::python_pips:
