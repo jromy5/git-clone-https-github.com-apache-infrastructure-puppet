@@ -244,6 +244,41 @@ def getPMC(group):
     return pmcmembers
 
 
+def getPodling(group):
+    """ Gets the list of availids in a podling using new schema """
+    print("Fetching LDAP podling list for %s" % group)
+    # First, check if there's a hardcoded member list for this group
+    # If so, read it and return that instead of trying LDAP
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
+        print("Found hardcoded member list for %s!" % group)
+        return CONFIG.get('group:%s' % group, 'members').split(' ')
+    pmcmembers = []
+    # This might fail in case of ldap bork, if so we'll return nothing.
+    try:
+        ldapClient = ldap.initialize(LDAP_URI)
+        ldapClient.set_option(ldap.OPT_REFERRALS, 0)
+
+        ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
+
+        results = ldapClient.search_s("cn=%s,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
+
+        for result in results:
+            result_dn = result[0]
+            result_attrs = result[1]
+
+            if "member" in result_attrs:
+                for member in result_attrs["member"]:
+                    m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    if m:
+                        pmcmembers.append(m.group(1))
+
+        ldapClient.unbind_s()
+        pmcmembers = sorted(pmcmembers) #alphasort
+    except Exception as err:
+        print("Could not fetch LDAP data: %s" % err)
+        pmcmembers = None
+    return pmcmembers
+
 
 ####################
 # MAIN STARTS HERE #
@@ -281,6 +316,7 @@ ipmc = getPMC("incubator")
 # Process each project in the MATT test
 for project in MATT_PROJECTS:
     print("Processing GitHub team for " + project)
+    ptype = MATT_PROJECTS[project]
 
     # Does the team exist?
     teamID = None
@@ -313,7 +349,7 @@ for project in MATT_PROJECTS:
         print(existingTeams[teamID] + ": " + ", ".join(members))
 
     # Now get the committer availids from LDAP
-    ldap_team = getCommitters(project)
+    ldap_team = getCommitters(project) if ptype == "tlp" else getPodling(project)
     if not ldap_team or len(ldap_team) == 0:
         print("LDAP Borked (no group data returned)? Trying next project instead")
         continue
