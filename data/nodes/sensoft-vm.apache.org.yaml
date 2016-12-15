@@ -2,5 +2,7 @@
 classes:
   - loggy
 
+ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+
 base::basepackages:
   - docker-engine
