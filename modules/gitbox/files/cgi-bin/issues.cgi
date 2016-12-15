@@ -235,12 +235,12 @@ def main():
         elif 'comment' in data:
             # File-specific comment
             if 'path' in data['comment']:
-                pass
-            # Standard commit comment
-            elif 'commit_id' in data['comment']:
                 # Diff review
                 if 'diff_hunk' in data['comment']:
                     fmt = reviewComment(data)
+            # Standard commit comment
+            elif 'commit_id' in data['comment']:
+                pass
             # Generic comment
             else:
                 fmt = ticketComment(data)
