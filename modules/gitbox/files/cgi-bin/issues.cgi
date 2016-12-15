@@ -128,7 +128,7 @@ def issueClosed(payload):
     if 'pull_request' in payload:
         fmt['type'] = 'pull request'
     fmt['id'] = obj['number']
-    fmt['text'] = obj['body']
+    fmt['text'] = "" # empty line when closing, so as to not confuse
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
