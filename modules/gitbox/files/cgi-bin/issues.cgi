@@ -178,12 +178,15 @@ def formatEmail(fmt):
         'diffcomment':  "commented on a change in %(type)s"
     }
     fmt['action'] = subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']
-    subject = "[GitHub] %(user)s %(action)s #%()id)i: %(title)s" % fmt
+    fmt['subject'] = "%(user)s %(action)s #%()id)i: %(title)s" % fmt
     template = ezt.Template('template.ezt')
     fp = StringIO.StringIO()
     output = template.generate(fp, fmt)
     body = fp.getvalue()
-    print(body)
+    return {
+        'subject': "[GitHub] %s" % fmt['subject'], # Append [GitHub] for mail filters
+        'message': body
+    }
 
 
 # Main function
