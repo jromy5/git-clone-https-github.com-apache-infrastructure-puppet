@@ -18,8 +18,20 @@
 
 # This is issues.cgi: Handler for GitHub issues (and PRs)
 
-import hashlib, json, random, os, sys, time, subprocess
-import cgi, netaddr, smtplib, sqlite3, git, re
+import hashlib
+import json
+import random
+import os
+import sys
+import time
+import subprocess
+import cgi
+import netaddr
+import smtplib
+import sqlite3
+import git
+import re
+import ezt
 from email.mime.text import MIMEText
 
 # Define some defaults and debug vars
