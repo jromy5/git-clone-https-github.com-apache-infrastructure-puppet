@@ -18,13 +18,10 @@
 
 # This is issues.cgi: Handler for GitHub issues (and PRs)
 
-import hashlib
 import json
-import random
 import os
 import sys
 import time
-import subprocess
 import cgi
 import netaddr
 import smtplib
@@ -169,7 +166,7 @@ def main():
     # Get JSON payload from GitHub
     jsin = getvalue('payload')
     data = json.loads(jsin)
-    
+
     # Now check if this repo is hosted on GitBox (if not, abort):
     if'repository' in data:
         repo = data['repository']['name']
@@ -178,14 +175,14 @@ def main():
         return None
     if not os.path.exists(repopath):
         return None
-    
+
     # Get configuration options for the repo
     configpath = os.path.join(repopath, "config")
     if os.path.exists(configpath):
         gconf = git.GitConfigParser(configpath, read_only = True)
     else:
         return "No configuration found for repository %s" % repo
-    
+
     # Get recipient email address for mail coms
     m = re.match(r"(?:incubator-)([^-]+)", repo)
     project = "infra" # Default to infra
@@ -195,7 +192,7 @@ def main():
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
-    
+
     # Now figure out what type of event we got
     email = None
     if 'action' in data:
@@ -216,11 +213,11 @@ def main():
             # Generic comment
             else:
                 email = ticketComment(data)
-    
+
     # Send email if applicable
     if email:
         sendEmail(mailto, email['subject'], email['message'])
-        
+
     # All done!
     return None
 
@@ -230,4 +227,3 @@ if __name__ == '__main__':
     # If error was returned, log it in issues.log
     if rv:
         open("/x1/gitbox/issues.log", "a").write(rv + "\r\n")
-    
