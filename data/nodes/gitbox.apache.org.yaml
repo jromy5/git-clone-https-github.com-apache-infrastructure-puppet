@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::geoip
+  - apache::mod::perl
   - datadog_agent::integrations::http_check
   - gitbox
   - blocky
@@ -34,6 +35,7 @@ cron:
 
 datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/asf'
 
+  
 base::gempackages:
   - 'r10k'
   - 'puppet-lint'
@@ -92,7 +94,9 @@ gitbox::custom_fragment_443: |
       <Directory /usr/lib/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
-          SetHandler cgi-script
+          SetHandler perl-script
+          PerlResponseHandler ModPerl::Registry
+          PerlOptions +ParseHeaders
       </Directory>
       AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
       AliasMatch ^/repos/(asf|svn)/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /x1/repos/$1/$2
