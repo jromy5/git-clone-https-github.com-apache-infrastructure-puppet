@@ -20,18 +20,18 @@ apache::default_vhost:      true
 apache::docroot:            '/x1/git/htdocs'
 apache::docroot_owner:      'git'
 
-## apache::mod::event::listenbacklog: '511'
-## apache::mod::event::maxclients: '250'
-## apache::mod::event::maxconnectionsperchild: '200000'
-## apache::mod::event::maxrequestworkers: '500'
-## apache::mod::event::maxsparethreads: '150'
-## apache::mod::event::minsparethreads: '150'
-## apache::mod::event::serverlimit: '10'
-## apache::mod::event::startservers: '5'
-## apache::mod::event::threadlimit: '250'
-## apache::mod::event::threadsperchild: '50'
+apache::mpm_module:         'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
 
-apache::mpm_module:         'prefork'
 apache::serveradmin:        'infrastructure@apache.org'
 
 datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
@@ -48,6 +48,8 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   sed:
     name: 'sed'
+  cgi:
+    name: 'cgi'
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
