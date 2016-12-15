@@ -18,8 +18,19 @@ apache::default_vhost:      true
 apache::docroot:            '/x1/gitbox/htdocs'
 apache::docroot_owner:      'git'
 
-apache::mpm_module:         'prefork'
 apache::serveradmin:        'users@infra.apache.org'
+
+apache::mpm_module:         'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '150'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
 
 cron:
   json1:
@@ -47,6 +58,8 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   sed:
     name: 'sed'
+  cgi:
+    name: 'cgi'
 
 gitbox::custom_fragment_80: |
       <Directory /x1/git/htdocs>
