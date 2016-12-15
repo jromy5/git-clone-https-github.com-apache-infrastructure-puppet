@@ -167,6 +167,7 @@ def reviewComment(payload):
     fmt['link'] = comment['html_url']
     fmt['action'] = "diffcomment"
     fmt['diff'] = obj['diff_hunk']
+    fmt['filename'] = comment['path']
     return fmt
 
 def formatEmail(fmt):
