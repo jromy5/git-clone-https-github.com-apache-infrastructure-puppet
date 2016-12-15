@@ -166,7 +166,7 @@ def reviewComment(payload):
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
     fmt['action'] = "diffcomment"
-    fmt['diff'] = obj['diff_hunk']
+    fmt['diff'] = comment['diff_hunk']
     fmt['filename'] = comment['path']
     return fmt
 
