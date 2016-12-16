@@ -112,7 +112,7 @@ file {
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0750',
-    source => 'puppet:///modules/gitbox/htdocs/gitweb.css';
+    source => 'puppet:///modules/gitbox/gitweb/gitweb.css';
 }
 
 
