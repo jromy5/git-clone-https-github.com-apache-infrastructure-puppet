@@ -64,7 +64,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyPreserveHost On
         RewriteRule "/analysis$" "/analysis/" [R]
         RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
-        ProxyPassReverse "/analysis" "https://builds.apache.org/analysis/"
+        ProxyPassReverse "/analysis/" "https://builds.apache.org/analysis/"
         ProxyPass / http://127.0.0.1:8090/
         ProxyPassReverse / http://127.0.0.1:8090/
         RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
