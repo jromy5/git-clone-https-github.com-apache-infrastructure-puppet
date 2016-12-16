@@ -2,6 +2,7 @@
 classes:
   - buildbot_slave
   - loggy
+  - rvm
 
 buildbot_slave::slave_name: 'bb_slave2_ubuntu'
 buildbot_slave::required_packages:
@@ -10,3 +11,11 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
+
+ruby_version: '2.3.1'
+
+rvm::system_rubies:
+  "ruby-%{hiera('ruby_version')}": {}
+
+rvm::system_users:
+  - buildslave
