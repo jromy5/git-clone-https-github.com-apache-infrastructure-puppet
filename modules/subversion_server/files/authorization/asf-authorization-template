@@ -196,6 +196,7 @@ giraph-pmc={reuse:pit-authorization:giraph-pmc}
 gora={ldap:cn=gora,ou=groups,dc=apache,dc=org}
 gora-pmc={reuse:pit-authorization:gora-pmc}
 gossip=dorian,ecapriolo,elserj,gdusbabek,ptgoetz
+griffin=hsaputra,kaspersor,umamahesh,lresende
 gump={ldap:cn=gump,ou=groups,dc=apache,dc=org}
 #only here to ease LDAP migration
 gump-pmc={reuse:pit-authorization:gump-pmc}
@@ -1009,6 +1010,10 @@ ea = rw
 
 [/incubator/graffito]
 * = r
+
+[/incubator/griffin]
+@griffin = rw
+@incubator = rw
 
 [/incubator/hdt]
 * = r
