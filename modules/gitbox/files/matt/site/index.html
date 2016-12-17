@@ -1,34 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=1080, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Apache M.A.T.T</title>
-
-    <!-- CSS -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitBox account linking utlity</title>
+    <link rel="stylesheet" href="https://infra-test.apache.org/theme/css/foundation.css">
+    <link rel="stylesheet" href="https://infra-test.apache.org/theme/css/app.css">
+    <style type="text/css">
+      .frontbox {
+        border-radius: 8%;
+        min-height: 250px;
+        border: 1px solid #999; background: #444; color: #EEE; padding: 6px; margin: 3px;
+      }
+      .frontbox:hover {
+        border-top: 4px solid #1583CC;
+        margin-top: 0px;
+        cursor: pointer;
+      }
+      .clickable {
+        height: 100%;
+        width: 30%;
+        position: absolute;     
+        z-index: 1;
+      }
+      .tc {
+          background: rgba(0,0,0,0.7), url(question.png);
+          background-position: center center;
+      }
+      
+      .tc_good {
+          background: url(checkmark.png);
+          background-position: center center;
+      }
+      
+      .tc_bad {
+          background: url(nogood.png);
+          background-position: center center;
+      }
+            
+      #spinner {
+           background-color: #FFFFFF;
+           border-radius: 10px;
+           border: 1px solid #666;
+           position: fixed;
+           top: calc(50% - 64px);
+           left: calc(50% - 64px);
+           width: 256px;
+           min-height: 128px;
+           z-index: 998;
+           text-align: left;
+           color: #000;
+           display: none;
+           padding: 10px;
+           font: sans-serif;
+           font-size: larger;
+           text-align: center;
+       }
+    </style>  </head>
+  <body style="background: #C9B191;" onload="loadUserData();">
+    <!-- Menu bar --->
+    <div class="row">
+      <div class="top-bar" style="padding: 0; margin-bottom: 10px; background: #222; border: 1px solid #DDD; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;">
+        <div class="hide-for-small-only">
+          <div class="top-bar-left">
+            <ul class="menu" style="background: #222; padding: 0px; line-height: 1; border-bottom-left-radius: 4px;">
+              <li class="notable-logo"><a href="/" target="_self" style="padding: 3px; padding-left: 7px;">
+                <img style="vertical-align: middle;" src='https://infra-test.apache.org/theme/images/feather.png' width='18'/><span style="font-size: 1.30rem; color: #1583CC; text-transform: uppercase;">Apache Infrastructure</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="callout">
+          <h3>Welcome to the GitBox Account Linking Utility!</h3>
+          <p>
+            Please merge your Apache and GitHub accounts in order to continue.
+          </p>
+          <div class="row">
+            <!-- ASF OAuth -->
+            <div class="large-4 medium-4 columns">
+              <div class="frontbox">
+                <h3 style="text-transform: capitalize; text-align: center;">
+                  <img src="featherglyph.svg" style="height: 40px; padding-right: 8px;"/>
+                  Apache Account:
+                </h3>
+                <p style="height: 110px; font-size: 0.9rem;" class="tc" id="asfauth">
+                </p>
+              </div>
+            </div>
+            <!-- GitHub OAuth -->
+            <div class="large-4 medium-4 columns">
+              <div class="frontbox">
+                <h3 style="text-transform: capitalize; text-align: center;">
+                  <img src="octocat.svg" style="height: 40px; padding-right: 8px;"/>
+                  GitHub Account:
+                </h3>
+                <p style="height: 110px; font-size: 0.9rem;" class="tc" id="github">
+                </p>
+              </div>
+            </div>
+            <!-- MFA -->
+            <div class="large-4 medium-4 columns">
+              <div class="frontbox">
+                <h3 style="text-transform: capitalize; text-align: center;">
+                  <img src="lock.svg" style="height: 40px; padding-right: 8px;"/>
+                  MFA Status:
+                </h3>
+                <p style="height: 110px; font-size: 0.9rem;" class="tc" id="mfa">
+                </p>
+              </div>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    </div>
     
-    <link href="matt.css" rel="stylesheet" media="all">
-  </head>
-  <body onload="loadUserData();">
-    <div id="header">
-      <h1>Welcome to Apache M.A.T.T.</h1>
-      <i>MERGE ALL THE THINGS!</i>
-    </div>
-    <div id="intro">
-      <p style="text-align: center;">Please satisfy the three verification steps below</p>
+    
+    <!-- news -->
+    <div class="row">
+      <div class="large-12 medium-12 columns">
+        <div class="callout" id="bread">
+                   
+        </div>
+      </div>
     </div>
     
-    <div id="tcholder">
-      <div class="tc" id="asfauth"></div>
-      <div class="tcplus"><font color='lime'>+</font></div>
-      <div class="tc" id="github"></div>
-      <div class="tcplus"><font color='lime'>+</font></div>
-      <div class="tc" id="mfa"></div>
-    </div>
-    <div id='bread'></div>
+    <!-- footer -->
+    <div class="row">
+      <div class="large-12 medium-12 columns">
+        <p style="font-style: italic; font-size: 0.8rem; text-align: center;">
+          Copyright 2016, <a href="https://www.apache.org/">The Apache Software Foundation</a>, Licensed under the Apache License, Version 2.0.<br/>
+          Apache and the Apache feather logo are trademarks of The Apache Software Foundation.
+        </p>
+      </div>
+    </div>    <script src="https://infra-test.apache.org/theme/js/vendor/jquery.js"></script>
+    <script src="https://infra-test.apache.org/theme/js/vendor/what-input.js"></script>
+    <script src="https://infra-test.apache.org/theme/js/vendor/foundation.js"></script>
+    <script src="https://infra-test.apache.org/theme/js/app.js"></script>
     <script src="matt.js"></script>
-
   </body>
 </html>

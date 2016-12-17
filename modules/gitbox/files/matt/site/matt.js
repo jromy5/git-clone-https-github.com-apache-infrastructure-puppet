@@ -152,19 +152,19 @@ function renderPage(json) {
     var obj = document.getElementById('asfauth');
     if (json && json.asfid && json.name) {
         var fname = json.name.split(" ")[0];
-        obj.innerHTML = "<h3>ASF Auth: Authed</h3>";
+        obj.innerHTML = "<h3 style='color: green;'>Authed</h3>";
         obj.innerHTML += "<big>Welcome back, " + fname + "!</big><br/>";
         obj.innerHTML += "<small style='color: #269;'><i>Not " + fname + "? <a href='oauth.cgi?logout=true'>Log out</a> then!</i></small><br/>";
         obj.setAttribute("class", "tc_good tc");
     } else {
-        obj.innerHTML = "<h3>ASF Auth: Not authed</h3>Start off by logging in with Apache OAuth to begin your account merge process.<br/><a href='oauth.cgi?redirect=apache' class='btn'>Start ASF Oauth</a>";
+        obj.innerHTML = "<h3 style='color: orange;'>Not authed yet</h3>Start off by logging in with Apache OAuth to begin your account merge process.<br/><a href='oauth.cgi?redirect=apache' class='btn'>Start ASF Oauth</a>";
     }
     
     // Step 2: GitHub Auth
     var extra = "";
     obj = document.getElementById('github');
     if (json && json.githubid) {
-        obj.innerHTML = "<h3>GitHub: Authed</h3>";
+        obj.innerHTML = "<h3 style='color: green;'>Authed</h3>";
         obj.innerHTML += "<p>You are currently authed as <kbd>" + json.githubid + "</kbd> on GitHub. (not the right account? <a href='oauth.cgi?unauth=github'>Reset your GitHub info then</a>.)";
         obj.setAttribute("class", "tc_good tc");
         if (document.location.search.length > 1) {
@@ -175,7 +175,7 @@ function renderPage(json) {
             }
         }
     } else if (json.asfid) {
-        obj.innerHTML = "<h3>GitHub: Not authed</h3>";
+        obj.innerHTML = "<h3 style='color: orange;'>Not authed yet</h3>";
         obj.innerHTML += "<br/>Just two steps to go! Please Log in with your GitHub account to complete your merge application and see which repositories you have access to.<br/><a href='oauth.cgi?redirect=github' class='btn'>Auth on GitHub</a>";
     }
     
@@ -187,16 +187,16 @@ function renderPage(json) {
         var t = "Unknown, not part of the Apache organisation on GitHub yet.";
         var s = "???";
         if (mfa  === true) {
-            t = "<b style='color: green;'>ENABLED</b>";
+            t = "<b style='color: green;'>MFA ENABLED</b>";
             s = "Write access granted";
             obj.setAttribute("class", "tc_good tc");
             wa = true;
         } else if (mfa === false) {
             s = "Write access suspended";
-            t = "<b style='color: red;'>DISABLED</b>";
+            t = "<b style='color: red;'>MFA DISABLED</b>";
             obj.setAttribute("class", "tc_bad tc");
         }
-        obj.innerHTML += "<h3>MFA: " + t + "</h3>" + s;
+        obj.innerHTML += "<h3>" + t + "</h3>" + s;
         
         
         obj = document.getElementById('bread');
