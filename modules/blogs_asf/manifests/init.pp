@@ -1,23 +1,7 @@
 #/etc/puppet/modules/blogs_asf/manifests/init.pp
 
 class blogs_asf (
-  $r_uid             = 8998,
-  $r_gid             = 8998,
-  $r_group_present   = 'present',
-  $r_groupname       = 'roblogs',
-  $t_uid             = 8997,
-  $t_gid             = 8997,
-  $t_group_present   = 'present',
-  $t_groupname       = 'tcblogs',
-  $groups            = [],
-  $service_ensure    = 'stopped',
-  $service_name      = 'roller',
-  $shell             = '/bin/bash',
-  $r_user_present    = 'present',
-  $r_username        = 'roblogs',
-  $t_user_present    = 'present',
-  $t_username        = 'tcblogs',
-  $required_packages = [],
+  $required_packages = ['tomcat8'],
 
 # override below in yaml
   $roller_version           = '',
@@ -28,9 +12,6 @@ class blogs_asf (
   $context_path             = '',
   $docroot                  = '',
   $parent_dir               = '',
-  $tomcat_version           = '',
-  $tomcat_minor             = '',
-  $tomcat_revision_number   = '',
 
 # override below in eyaml
 
@@ -60,54 +41,6 @@ class blogs_asf (
   $data_dir                 = "${parent_dir}/roller_data"
   $current_dir              = "${parent_dir}/current"
 
-# tomcat specific
-  $tomcat_release           = "${tomcat_version}.${tomcat_minor}.${tomcat_revision_number}"
-  $tomcat_build             = "apache-tomcat-${tomcat_release}"
-  $t_tarball                = "${tomcat_build}.tar.gz"
-  $downloaded_t_tarball     = "${download_dir}/${t_tarball}"
-  $download_t_url           = "https://dist.apache.org/repos/dist/release/tomcat/tomcat-${tomcat_version}/v${tomcat_release}/bin/${t_tarball}"
-  $tomcat_dir               = "${parent_dir}/${tomcat_build}"
-
-  user {
-    $r_username:
-      ensure     => $r_user_present,
-      name       => $r_username,
-      home       => "/home/${r_username}",
-      shell      => $shell,
-      uid        => $r_uid,
-      gid        => $r_groupname,
-      groups     => $groups,
-      managehome => true,
-      require    => Group[$r_groupname],
-  }
-
-  group {
-    $r_groupname:
-      ensure => $r_group_present,
-      name   => $r_groupname,
-      gid    => $r_gid,
-  }
-
-  user {
-    $t_username:
-      ensure     => $t_user_present,
-      name       => $t_username,
-      home       => "/home/${t_username}",
-      shell      => $shell,
-      uid        => $t_uid,
-      gid        => $t_groupname,
-      groups     => $groups,
-      managehome => true,
-      require    => Group[$t_groupname],
-  }
-
-  group {
-    $t_groupname:
-      ensure => $t_group_present,
-      name   => $t_groupname,
-      gid    => $t_gid,
-  }
-
 # download roller
   exec {
     'download-roller':
@@ -130,45 +63,6 @@ class blogs_asf (
       creates => "${install_dir}/NOTICE.txt",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  }
-
-  exec {
-    'chown-roller-dirs':
-      command => "/bin/chown -R ${r_username}:${r_username} ${install_dir}",
-      timeout => 1200,
-      require => [User[$r_username],Group[$r_username]],
-  }
-
-# download tomcat
-
-  exec {
-    'download-tomcat':
-      command => "/usr/bin/wget -O ${downloaded_t_tarball} ${download_t_url}",
-      creates => $downloaded_t_tarball,
-      timeout => 1200,
-  }
-
-  file { $downloaded_t_tarball:
-    ensure  => file,
-    require => Exec['download-tomcat'],
-  }
-
-# extract the download and move it
-  exec {
-    'extract-tomcat':
-      command => "/bin/tar -xvzf ${t_tarball} && mv ${tomcat_build} ${tomcat_dir}",
-      cwd     => $download_dir,
-      user    => 'root',
-      creates => "${tomcat_dir}/NOTICE",
-      timeout => 1200,
-      require => [File[$downloaded_t_tarball],File[$parent_dir]],
-  }
-
-  exec {
-    'chown-tomcat-dirs':
-      command => "/bin/chown -R ${t_username}:${t_groupname} ${tomcat_dir}",
-      timeout => 1200,
-      require => [User[$t_username],Group[$t_groupname]],
   }
 
   file {

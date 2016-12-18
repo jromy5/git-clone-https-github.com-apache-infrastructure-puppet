@@ -32,17 +32,14 @@ apache::mod::event::threadsperchild: '50'
 # blogs_asf class variables.
 blogs_asf::roller_version: '5.1'
 blogs_asf::roller_revision_number: '2'
-blogs_asf::mysql_connector_version: '5.1.11'
+blogs_asf::mysql_connector_version: '5.1.40'
 blogs_asf::parent_dir: '/usr/local/roller'
-blogs_asf::data_dir: '/usr/local/roller_data'
+blogs_asf::data_dir: '/usr/local/roller/roller_data'
 blogs_asf::server_port: '8008'
 blogs_asf::connector_port: '8080'
 blogs_asf::context_path: '/'
 blogs_asf::docroot: '/var/www'
 blogs_asf::server_alias: 'blogs-test.apache.org'
-blogs_asf::tomcat_version: '8'
-blogs_asf::tomcat_minor: '5'
-blogs_asf::tomcat_revision_number: '6'
 
 logrotate::rule:
   apache2:
