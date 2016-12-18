@@ -4,11 +4,11 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - letsencrypt
   - loggy
   - maven::maven    # can't find any reference regarding maven/mvn
   - oraclejava::install
   - postgresql::client
-  - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
 
@@ -26,6 +26,21 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  security-vm:
+    domains:
+      - idm-poc.apache.org
+      - syncope-vm2.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
@@ -55,7 +70,7 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'syncope-vm2.apache.org'
     serveraliases:
-#      - 'idm-poc.apache.org' # this must be set up
+      - 'idm-poc.apache.org' # this must be set up
     port: 80
     ssl: false
     docroot: '/var/www'
@@ -67,14 +82,14 @@ vhosts_asf::vhosts::vhosts:
     default_vhost: true
     servername: 'syncope-vm2.apache.org'
     serveraliases:
-#      - 'idm-poc.apache.org'  # this must be set up
+      - 'idm-poc.apache.org'  # this must be set up
     port: 443
     docroot: '/var/www'
     error_log_file: 'idm_error.log'
     ssl: true
-    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
-    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
-    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    ssl_cert: '/etc/letsencrypt/live/syncope-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/syncope-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/syncope-vm2.apache.org/chain.pem'
     custom_fragment: |
       RewriteEngine On
       ProxyPass / http://127.0.0.1:9080/
