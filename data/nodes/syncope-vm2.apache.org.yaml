@@ -34,8 +34,8 @@ letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
   security-vm:
     domains:
-      - idm-poc.apache.org
       - syncope-vm2.apache.org
+      - idm-poc.apache.org
     plugin: standalone
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
