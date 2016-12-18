@@ -2,6 +2,7 @@
 classes:
   - buildbot_slave
   - buildbot_slave::rat
+  - buildbot_slave::rvm
   - loggy
   - rvm
 

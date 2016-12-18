@@ -412,6 +412,7 @@ tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
 pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
+ea=missy
 
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
@@ -503,7 +504,7 @@ apsecmail = rw
 @svnadmins = rw
 @infrastructure-root = rw
 @virtualmgmt = rw
-ea = r
+@ea = r
 * =
 
 [/financials/Bills]
@@ -515,7 +516,7 @@ ea = r
 @svnadmins = rw
 @pmc-chairs = rw
 @staff = rw
-ea = rw
+@ea = rw
 sk = rw
 @infrastructure = rw
 whimsysvn = r
@@ -529,7 +530,7 @@ whimsysvn = r
 [/financials/Expenses]
 @member = rw
 @pmc-chairs = rw
-ea = rw
+@ea = rw
 # inherit from ^/financials
 
 [/financials/Invoices]
@@ -554,7 +555,7 @@ upayavira = r
 @legal = rw
 @svnadmins = rw
 whimsysvn = r
-ea = rw
+@ea = rw
 * =
 
 [/foundation/board]
@@ -656,7 +657,7 @@ acrequser = rw
 whimsysvn = r
 @member = rw
 @pmc-chairs = rw
-ea = rw
+@ea = rw
 
 [/infrastructure/trunk/tlpreq]
 mostarda = rw
@@ -710,7 +711,7 @@ svn = r
 @infrastructure-interest = rw
 @member = r
 @svnadmins = rw
-ea = r
+@ea = r
 # deny all access to everyone else.
 * =
 
@@ -1122,14 +1123,14 @@ openejb-tck = r
 [/travel-assistance]
 @member = rw
 @svnadmins = rw
-+ea = rw
++@ea = rw
 * =
 
 [/travel-assistance/past-recipients]
 @svnadmins = rw
 @tac-pmc = rw
 @board = rw
-ea = rw
+@ea = rw
 * =
 
 [/websites]
@@ -1204,7 +1205,7 @@ buildbot = rw
 
 [/websites/production/community]
 @comdev = rw
-ea = rw
+@ea = rw
 
 [/websites/production/creadur]
 @creadur = rw
@@ -1478,7 +1479,7 @@ buildbot = rw
 @apsite = rw
 @pmc-chairs = rw
 buildbot = rw
-ea = rw
+@ea = rw
 
 [/websites/production/xmlgraphics]
 @xmlgraphics = rw

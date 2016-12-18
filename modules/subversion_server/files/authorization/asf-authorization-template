@@ -211,6 +211,7 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
+horn=tjungblut,edwardyoon,dongjin,minho,jungin,paeng,chl501,bsikander,ks881115,zjaffee
 htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
 httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
@@ -506,6 +507,7 @@ attic-pmc={reuse:pit-authorization:attic-pmc}
 comdev-pmc={reuse:pit-authorization:comdev-pmc}
 comdev={reuse:pit-authorization:comdev}
 concom={reuse:pit-authorization:concom}
+ea={reuse:pit-authorization:ea}
 infrastructure={reuse:pit-authorization:infrastructure}
 infrastructure-interest={reuse:pit-authorization:infrastructure-interest}
 infrastructure-root={reuse:pit-authorization:infrastructure-root}
@@ -720,7 +722,7 @@ projects_role = rw
 
 [/comdev/site]
 @committers = rw
-ea = rw
+@ea = rw
 
 [/commons]
 @committers = rw
@@ -1016,6 +1018,9 @@ ea = rw
 [/incubator/heraldry]
 * = r
 
+[/incubator/horn]
+@horn = rw
+
 [/incubator/htrace]
 @htrace = rw
 
@@ -1178,7 +1183,7 @@ ea = rw
 [/infrastructure/financials]
 # Copy permissions from pit:/financials if needed
 @member = rw
-ea = rw
+@ea = rw
 
 [/infrastructure/site]
 @committers = rw

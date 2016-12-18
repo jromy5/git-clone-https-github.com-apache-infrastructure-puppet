@@ -116,9 +116,11 @@ gitserver_asf::custom_fragment_443: |
       <Directory /usr/lib/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
-          SetHandler perl-script
-          PerlResponseHandler ModPerl::Registry
-          PerlOptions +ParseHeaders
+          SetHandler cgi-script
+          #Uncomment the below once/if we get mod_perl to stop borking
+          #PerlResponseHandler ModPerl::Registry
+          #PerlOptions +ParseHeaders
+          #SetHandler perl-script
       </Directory>
 
       AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
