@@ -73,8 +73,8 @@ class blogs_asf (
       mode   => '0755';
     $data_dir:
       ensure  => directory,
-      owner   => tomcat8,
-      group   => tomcat8,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
       mode    => '0775',
       require => [File[$parent_dir],Package['tomcat8']];
     $current_dir:
