@@ -30,7 +30,7 @@ class blogs_asf (
 
 # roller specific
   $roller_release           = "${roller_version}.${roller_revision_number}"
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}-bin.jar"
   $mysql_connector_dest_dir = '/usr/share/tomcat8/lib'
   $roller_build             = "roller-release-${roller_release}"
   $r_tarball                = "${roller_build}-standard.tar.gz"
