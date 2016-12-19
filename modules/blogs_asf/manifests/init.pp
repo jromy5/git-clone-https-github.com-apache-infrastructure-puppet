@@ -89,5 +89,8 @@ class blogs_asf (
     "${mysql_connector_dest_dir}/${mysql_connector}":
       ensure => present,
       source => "puppet:///modules/blogs_asf/${mysql_connector}";
+    '/usr/share/tomcat8/lib/javax.mail.jar':
+      ensure => present,
+      source => 'puppet:///modules/blogs_asf/javax.mail.jar'
   }
 }
