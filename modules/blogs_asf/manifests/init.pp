@@ -85,12 +85,20 @@ class blogs_asf (
       require => File[$parent_dir];
     '/usr/share/tomcat8/lib/roller-custom.properties':
       content => template('blogs_asf/roller-custom.properties.erb'),
+      owner   => 'tomcat8',
+      group   => 'root',
       mode    => '0640';
     "${mysql_connector_dest_dir}/${mysql_connector}":
       ensure => present,
+      owner  => 'tomcat8',
+      group  => 'root',
+      mode   => '0644',
       source => "puppet:///modules/blogs_asf/${mysql_connector}";
     '/usr/share/tomcat8/lib/javax.mail.jar':
       ensure => present,
-      source => 'puppet:///modules/blogs_asf/javax.mail.jar'
+      owner  => 'tomcat8',
+      group  => 'root',
+      mode   => '0644',
+      source => 'puppet:///modules/blogs_asf/javax.mail.jar';
   }
 }
