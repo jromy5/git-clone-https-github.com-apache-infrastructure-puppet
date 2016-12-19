@@ -73,16 +73,17 @@ class blogs_asf (
       mode   => '0755';
     $data_dir:
       ensure => directory,
-      owner  => $t_username,
-      group  => $r_groupname,
+      owner  => tomcat8,
+      group  => tomcat8,
       mode   => '0775';
+      require => File[$parent_dir], Package['tomcat8'];
     $current_dir:
       ensure  => link,
       target  => $install_dir,
       owner   => 'root',
       group   => 'root',
       require => File[$parent_dir];
-    "${tomcat_dir}/lib/roller-custom.properties":
+    /usr/share/tomcat8/lib/roller-custom.properties:
       content => template('blogs_asf/roller-custom.properties.erb'),
       mode    => '0644';
   }
