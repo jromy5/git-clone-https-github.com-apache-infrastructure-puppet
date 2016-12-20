@@ -359,7 +359,7 @@ for project in MATT_PROJECTS:
         continue
     # If a podling, extend the committer list with the IPMC membership (mentors etc)
     if MATT_PROJECTS[project] == "podling":
-        ldap_team.extend(ipmc)
+        ldap_team.extend(uid for uid in ipmc if uid not in ldap_team)
 
     # For each committer, IF THEY HAVE MFA, add them to a 'this is what it should look like' list
     hopefulTeam = []
