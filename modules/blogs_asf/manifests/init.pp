@@ -65,6 +65,18 @@ class blogs_asf (
       require => [File[$downloaded_tarball],File[$parent_dir]],
   }
 
+# DEPLOY ROLLER
+
+  exec {
+    'deploy-roller':
+      command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war",
+      cwd     => $install_dir,
+      user    => 'root',
+      creates => '/var/lib/tomcat8/webapps/ROOT.war,
+      timeout => 1200,
+      require => [Package['tomcat8'],File[$parent_dir]],
+  }
+
   file {
     $parent_dir:
       ensure => directory,
