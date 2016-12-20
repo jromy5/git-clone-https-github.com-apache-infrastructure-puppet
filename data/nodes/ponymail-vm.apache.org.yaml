@@ -12,16 +12,16 @@ classes:
 
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '31g'
-elasticsearch::java_install: true
+elasticsearch::java_install: false
 elasticsearch::version: '1.7.0'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
-elasticsearch::datadir: '/elastic/db'
+elasticsearch::datadir: '/x1/elastic/db'
 elasticsearch::instances:
   pony:
     config:
       node.name: 'ponymail-vm'
-      path.data: '/elastic/db'
+      path.data: '/x1/elastic/db'
       network.host: '127.0.0.1'
       init_defaults:
         ES_HEAP_SIZE: '31g'
