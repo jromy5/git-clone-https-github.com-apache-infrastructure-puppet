@@ -103,8 +103,6 @@ drill={reuse:asf-authorization:drill}
 drill-pmc={ldap:cn=drill,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 empire-db={reuse:asf-authorization:empire-db}
 empire-db-pmc={ldap:cn=empire-db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-etch={reuse:asf-authorization:etch}
-etch-pmc={ldap:cn=etch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 falcon={reuse:asf-authorization:falcon}
 falcon-pmc={ldap:cn=falcon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 felix={reuse:asf-authorization:felix}
@@ -1239,7 +1237,7 @@ buildbot = rw
 @attic-pmc = rw
 
 [/websites/production/etch]
-@etch = rw
+@attic-pmc = rw
 
 [/websites/production/events]
 @concom = rw
