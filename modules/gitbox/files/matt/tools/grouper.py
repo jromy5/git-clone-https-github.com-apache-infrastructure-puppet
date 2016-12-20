@@ -18,6 +18,9 @@
 import os, sys, re, ldap, urllib2, json, requests, hashlib, ConfigParser, sqlite3
 from requests.auth import HTTPBasicAuth
 
+# LDAP Defs
+UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
+
 # Run `python grouper.py debug` to check teams but not add/remove users
 DEBUG_RUN = True if len(sys.argv) > 1 and sys.argv[1] == 'debug' else False
 if DEBUG_RUN:
@@ -232,7 +235,7 @@ def getPMC(group):
 
             if "member" in result_attrs:
                 for member in result_attrs["member"]:
-                    m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
                     if m:
                         pmcmembers.append(m.group(1))
 
@@ -252,7 +255,7 @@ def getPodling(group):
     if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
         print("Found hardcoded member list for %s!" % group)
         return CONFIG.get('group:%s' % group, 'members').split(' ')
-    pmcmembers = []
+    podlingmembers = []
     # This might fail in case of ldap bork, if so we'll return nothing.
     try:
         ldapClient = ldap.initialize(LDAP_URI)
@@ -260,24 +263,25 @@ def getPodling(group):
 
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
 
-        results = ldapClient.search_s("cn=%s,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
+        # This is using the new podling/etc LDAP groups defined by Sam
+        results = ldapClient.search_s("cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
 
         for result in results:
             result_dn = result[0]
             result_attrs = result[1]
-
+            # We are only interested in the member attribs here. owner == ppmc, but we don't care
             if "member" in result_attrs:
                 for member in result_attrs["member"]:
-                    m = re.match(r"uid=([^,]+)", member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
                     if m:
-                        pmcmembers.append(m.group(1))
+                        podlingmembers.append(m.group(1))
 
         ldapClient.unbind_s()
-        pmcmembers = sorted(pmcmembers) #alphasort
+        podlingmembers = sorted(podlingmembers) #alphasort
     except Exception as err:
         print("Could not fetch LDAP data: %s" % err)
-        pmcmembers = None
-    return pmcmembers
+        podlingmembers = None
+    return podlingmembers
 
 
 ####################

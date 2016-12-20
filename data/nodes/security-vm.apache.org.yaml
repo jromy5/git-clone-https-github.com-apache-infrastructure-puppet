@@ -57,6 +57,8 @@ letsencrypt::certonly:
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
+postfix::server::myorigin: 'apache.org'
+
 vhosts_asf::modules::modules:
   substitute:
     name: 'substitute'

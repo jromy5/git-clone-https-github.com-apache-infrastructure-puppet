@@ -172,7 +172,15 @@ def updatePending():
     for entry in xpending:
         repo = entry
         path = xpending[entry]
-        newURL = "%s%s.git" % (config.get("Servers", "gitroot"), repo)
+        trueRepo = repo
+        httproot = config.get("Servers", "gitroot")
+        # Check if non-default git root, if so find new http root
+        m = re.match(r"^\$([^/]+)/(.+)$", repo)
+        if m:
+            trueRepo = m.group(2)
+            groot = m.group(1)
+            httproot = config.get("Servers", groot) if config.has_option("Servers", groot) else httproot
+        newURL = "%s%s.git" % (httproot, trueRepo)
         
         # Check if we need to pull or clone:
         
@@ -242,7 +250,13 @@ def parseGitCommit(commit):
             for option in config.options("Tracking"):
                 path = option
                 repo = config.get("Tracking", option)
-                if 'project' in commit and repo == commit['project']:
+                trueRepo = repo
+                # Check if non-default git root, weed that out if so
+                m = re.match(r"^\$([^/]+)/(.+)$", repo)
+                if m:
+                    trueRepo = m.group(2)
+                    groot = m.group(1)
+                if 'project' in commit and trueRepo == commit['project']:
                     logging.info("Adding %s (%s) to the update queue" % (path, repo))
                     pending[repo] = path
                     

@@ -30,8 +30,8 @@ class blogs_asf (
 
 # roller specific
   $roller_release           = "${roller_version}.${roller_revision_number}"
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
-  $mysql_connector_dest_dir = "${current_dir}/roller/WEB-INF/lib"
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}-bin.jar"
+  $mysql_connector_dest_dir = '/usr/share/tomcat8/lib'
   $roller_build             = "roller-release-${roller_release}"
   $r_tarball                = "${roller_build}-standard.tar.gz"
   $download_dir             = '/tmp'
@@ -72,18 +72,33 @@ class blogs_asf (
       group  => 'root',
       mode   => '0755';
     $data_dir:
-      ensure => directory,
-      owner  => $t_username,
-      group  => $r_groupname,
-      mode   => '0775';
+      ensure  => directory,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      mode    => '0775',
+      require => [File[$parent_dir],Package['tomcat8']];
     $current_dir:
       ensure  => link,
       target  => $install_dir,
-      owner   => 'root',
+      owner   => 'tomcat8',
       group   => 'root',
       require => File[$parent_dir];
-    "${tomcat_dir}/lib/roller-custom.properties":
+    '/usr/share/tomcat8/lib/roller-custom.properties':
       content => template('blogs_asf/roller-custom.properties.erb'),
-      mode    => '0644';
+      owner   => 'tomcat8',
+      group   => 'root',
+      mode    => '0640';
+    "${mysql_connector_dest_dir}/${mysql_connector}":
+      ensure => present,
+      owner  => 'tomcat8',
+      group  => 'root',
+      mode   => '0644',
+      source => "puppet:///modules/blogs_asf/${mysql_connector}";
+    '/usr/share/tomcat8/lib/javax.mail.jar':
+      ensure => present,
+      owner  => 'tomcat8',
+      group  => 'root',
+      mode   => '0644',
+      source => 'puppet:///modules/blogs_asf/javax.mail.jar';
   }
 }
