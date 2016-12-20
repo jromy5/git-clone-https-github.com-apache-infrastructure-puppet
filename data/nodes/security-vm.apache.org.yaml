@@ -57,6 +57,7 @@ letsencrypt::certonly:
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
+postfix::server::home_mailbox 'Maildir/'
 postfix::server::inet_interfaces: 'all'
 postfix::server::myorigin: 'apache.org'
 
