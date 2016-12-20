@@ -92,6 +92,30 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/letsencrypt/live/syncope-vm2.apache.org/chain.pem'
     custom_fragment: |
       RewriteEngine On
-      ProxyPass / http://127.0.0.1:9080/
-      ProxyPassReverse / http://127.0.0.1:9080/
+      <Location "/syncope">
+        ProxyPass http://localhost:8080/syncope
+        ProxyPassReverse http://localhost:8080/syncope
+        ProxyHTMLExtended      On
+        ProxyHTMLURLMap /syncope /syncope
+      </location>
+      <Location "/syncope-console/wicket/websocket">
+        RewriteEngine On
+        RewriteRule /syncope-console/wicket/websocket ws://localhost:8080/syncope-console/wicket/websocket [P,L]
+        ProxyPass ws://localhost:8080/syncope-console/wicket/websocket
+        ProxyPassReverse ws://localhost:8080/syncope-console/wicket/websocket
+        ProxyHTMLExtended      On
+        ProxyHTMLURLMap /syncope-console/wicket/websocket /syncope-console/wicket/websocket
+      </Location>
+      <Location "/syncope-console">
+        ProxyPass http://localhost:8080/syncope-console
+        ProxyPassReverse http://localhost:8080/syncope-console
+        ProxyHTMLExtended      On
+        ProxyHTMLURLMap /syncope-console /syncope-console
+      </Location>
+      <Location "/syncope-enduser">
+        ProxyPass http://localhost:8080/syncope-enduser
+        ProxyPassReverse http://localhost:8080/syncope-enduser
+        ProxyHTMLExtended      On
+        ProxyHTMLURLMap /syncope-enduser /syncope-enduser
+      </Location>
 
