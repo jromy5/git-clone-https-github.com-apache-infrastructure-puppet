@@ -816,7 +816,7 @@ projects_role = rw
 @deltaspike = rw
 
 [/devicemap]
-@devicemap = rw
+@attic-pmc = rw
 
 [/directmemory]
 @attic-pmc = rw
