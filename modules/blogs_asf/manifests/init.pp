@@ -100,6 +100,11 @@ class blogs_asf (
       owner   => 'tomcat8',
       group   => 'root',
       mode    => '0640';
+    '/usr/share/tomcat8/lib/planet-custom.properties':
+      content => template('blogs_asf/planet-custom.properties.erb'),
+      owner   => 'tomcat8',
+      group   => 'root',
+      mode    => '0640';
     "${mysql_connector_dest_dir}/${mysql_connector}":
       ensure => present,
       owner  => 'tomcat8',

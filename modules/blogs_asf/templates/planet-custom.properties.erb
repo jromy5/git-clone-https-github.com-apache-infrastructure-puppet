@@ -1,0 +1,40 @@
+cache.dir=<%= @data_dir %>/planetcache
+installation.type=manual
+
+#database.configurationType=jndi
+#database.jndi.name=jdbc/rollerdb
+
+database.configurationType=jdbc
+database.jdbc.driverClass=com.mysql.jdbc.Driver
+database.jdbc.connectionURL=<%= @jdbc_connection_url %>
+database.jdbc.username=<%= @jdbc_username %>
+database.jdbc.password=<%= @jdbc_password %>
+
+mail.configurationType=properties
+mail.hostname=localhost
+# mail.username=test
+# mail.password=test
+# Enables HTTPS for login page only
+securelogin.enabled=false
+# Enable scheme enforcement?
+# Scheme enforcement ensures that specific URLs are viewed only via HTTPS
+schemeenforcement.enabled=false
+# URL patterns that require HTTPS
+# schemeenforcement.https.urls=/roller-ui/menu.rol
+# Password security settings
+# passwds.encryption.enabled=true
+# passwds.encryption.algorithm=SHA
+mediafiles.storage.dir=<%= @data_dir %>/mediafiles
+uploads.dir=<%= @data_dir %>/uploads
+
+planet.aggregator.cache.dir=<%= @data_dir %>/planetcache
+planet.aggregator.enabled=true
+
+# Tasks which are enabled. Only tasks listed here will be run.
+tasks.enabled=ScheduledEntriesTask,ResetHitCountsTask,\
+TurnoverReferersTask,PingQueueTask,RefreshRollerPlanetTask,SyncWebsitesTask
+# Set of page models specifically for site-wide rendering
+rendering.siteModels=\
+org.apache.roller.weblogger.ui.rendering.model.SiteModel,\
+org.apache.roller.weblogger.ui.rendering.model.PlanetModel
+
