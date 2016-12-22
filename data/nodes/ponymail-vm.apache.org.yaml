@@ -23,6 +23,9 @@ elasticsearch::instances:
     config:
       node.name: 'ponymail-vm'
       path.data: '/x1/elastic/db'
+      # This is a test node, we don't need multiple shards
+      index.number_of_shards: 1
+      index.number_of_replicas: 0
       network.host: '127.0.0.1'
       init_defaults:
         ES_HEAP_SIZE: '31g'
