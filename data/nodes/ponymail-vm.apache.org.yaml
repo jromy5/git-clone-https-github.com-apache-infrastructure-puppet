@@ -10,6 +10,17 @@ classes:
   - oraclejava::install
   - vhosts_asf::modules
   - vhosts_asf::vhosts
+  
+  
+apt::sources:
+  'elastic-5.x':
+    location: 'https://packages.elasticsearch.org/elasticsearch/1.7/debian'
+    release: 'stable'
+    repos: 'main'
+    key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+    key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
 
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '1g'
