@@ -12,9 +12,9 @@ classes:
   - vhosts_asf::vhosts
 
 elasticsearch::init_defaults:
-  ES_HEAP_SIZE: '31g'
+  ES_HEAP_SIZE: '1g'
 elasticsearch::java_install: false
-elasticsearch::version: '1.7.0'
+elasticsearch::version: '5.1.1'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::datadir: '/x1/elastic/db'
@@ -28,7 +28,7 @@ elasticsearch::instances:
       index.number_of_replicas: 0
       network.host: '127.0.0.1'
       init_defaults:
-        ES_HEAP_SIZE: '31g'
+        ES_HEAP_SIZE: '1g'
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
