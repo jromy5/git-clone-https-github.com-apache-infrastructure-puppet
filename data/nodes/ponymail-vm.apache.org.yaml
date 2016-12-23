@@ -10,15 +10,60 @@ classes:
   - oraclejava::install
   - vhosts_asf::modules
   - vhosts_asf::vhosts
-  
-  
+
 apt::sources:
+  'asf_internal':
+    location: 'https://packages.apache.org/asf_internal'
+    release: 'xenial'
+    repos: 'main'
+    key: '390EF70BB1EA12B2773962950EE62FB37A00258D'
+    key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
   'elastic-5.x':
     location: 'https://artifacts.elastic.co/packages/5.x/apt'
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
     key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
+  'docker-engine':
+    location: 'https://apt.dockerproject.org/repo'
+    release: 'ubuntu-xenial'
+    repos: 'main'
+    key: '58118E89F3A912897C070ADBF76221572C52609D'
+    key_server: 'hkp://p80.pool.sks-keyservers.net:80'
+    include_deb: true
+    include_src: false
+  'puppetlabs':
+    location: 'https://apt.puppetlabs.com'
+    release: 'xenial'
+    repos: 'main'
+    key: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
+    key_server: 'keyserver.ubuntu.com'
+    include_deb: true
+    include_src: false
+  'puppetdeps':
+    location: 'https://apt.puppetlabs.com'
+    release: 'xenial'
+    repos: 'dependencies'
+    key: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
+    key_server: 'keyserver.ubuntu.com'
+    include_deb: true
+    include_src: false
+  'vmware-tools':
+    location: 'http://packages.vmware.com/packages/ubuntu'
+    release: 'trusty'
+    repos: 'main'
+    key: '36E47E1CC4DCC5E8152D115CC0B5E0AB66FD4949'
+    key_server: 'pgp.mit.edu'
+    include_deb: true
+    include_src: false
+  'nodesource-6':
+    location: 'https://deb.nodesource.com/node_6.x'
+    release: 'xenial'
+    repos: 'main'
     include_deb: true
     include_src: false
 
