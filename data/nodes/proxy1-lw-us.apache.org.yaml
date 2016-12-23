@@ -62,6 +62,48 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
+  blogs-new:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'blogs-new.apache.org'
+    serveraliases:
+      - 'www.blogs-new.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'blogs-new.apache.org.http_access.log'
+    error_log_file:  'blogs-new.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://blogs-new.apache.org/
+
+  blogs-new-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'blogs-new.apache.org'
+    serveraliases:
+      - 'www.blogs-new.apache.org'
+    serveradmin: 'infrastructure@apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'blogs-new.apache.org.ssl_access.log'
+    error_log_file:  'blogs-new.apache.org.error.log'
+    custom_fragment: |
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+      Proxypass / http://10.10.3.8:8080/
+      ProxypassReverse / http://10.10.3.8:8080/
+      ProxypassReverse / http://10.10.3.8/
+      ProxypassReverse / https://10.10.3.8/
+      ProxypassReverse / https://10.10.3.8:8443/
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=503
+
   issues-test:
     vhost_name: '*'
     ensure: 'present'
