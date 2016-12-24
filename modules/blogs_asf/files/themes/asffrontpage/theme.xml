@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weblogtheme>
-    
+
     <id>asffrontpage</id>
     <name>ASF Frontpage Theme</name>
     <description>ASF - Adapted from Roller Weblogger Basic Theme</description>
@@ -8,7 +8,7 @@
 
     <!-- theme preview image -->
     <preview-image path="preview.png" />
-    
+
     <!-- stylesheet -->
     <stylesheet>
         <name>asf-custom.css</name>
@@ -20,7 +20,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </stylesheet>
-    
+
     <!-- templates -->
     <template action="weblog">
         <name>Weblog</name>
@@ -33,7 +33,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </template>
-    
+
     <template action="permalink">
         <name>permalink</name>
         <description>permalink</description>
@@ -45,7 +45,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </template>
-    
+
     <template action="search">
         <name>searchresults</name>
         <description>searchresults</description>
@@ -57,7 +57,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </template>
-    
+
     <template action="custom">
         <name>_day</name>
         <description>_day</description>
@@ -69,7 +69,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </template>
-    
+
     <template action="custom">
         <name>sidebar</name>
         <description>sidebar</description>
