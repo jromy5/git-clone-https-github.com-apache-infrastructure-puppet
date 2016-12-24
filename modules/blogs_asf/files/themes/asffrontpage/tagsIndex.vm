@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>$model.weblog.name: Entries tagged $model.tags</title>
+    #showAutodiscoveryLinks($model.weblog)
+    <link rel="stylesheet" type="text/css" media="all" href="$model.weblog.stylesheet">
+</head>
+<body>
+
+<div class="navigation">
+    <ul>
+        <li><a href="http://apache.org/foundation" title="About the Foundation">Foundation</a></li>
+        <li><a href="http://projects.apache.org" title="Apache Projects">Projects</a></li>
+
+        <li><a href="http://people.apache.org" title="Apache People">People</a></li>
+        <li><a href="http://apache.org/foundation/getinvolved.html" title="Get involved in Apache">Get Involved</a></li>
+        <li><a href="http://apache.org/foundation/sponsorship.html" title="Support the mission of Apache">Support Apache</a></li>
+        <li class="dlink"><a href="http://apache.org/dyn/closer.cgi" title="Download Apache projects">Download</a></li>
+    </ul>
+</div>
+
+<div id="header">
+    <h1>The Apache Software Foundation<br />
+    <a id="feather" href="http://apache.org"></a>
+    <span class="alt"><small><a href="http://blogs.apache.org">Blogging in Action</a>.</small></span></h1>
+    <hr class="grey" />
+</div>
+
+
+<div class="content_wrapper">
+  <div class="content">
+
+    #set($since = 365)
+    #set($maxResults = 20)
+
+    ## 1) SITE-WIDE entries (the default)
+    #set($pager = $site.getWeblogEntriesPager($since, $maxResults))
+
+    ## 2) PLANET-entries
+    ## set($pager = $planet.getAggregationPager($since, $maxResults))
+    ## The below pager code should work against either:
+
+    #if($pager.items.size() > 0)
+        #set($entryCount = $pager.items.size() - 1)
+        #set($startDate = $pager.items.get(0).pubTime)
+        #set($endDate = $entries.get($entryCount).pubTime)
+    #end
+    
+    <h2>Entries tagged $model.tags</h2>
+
+    #foreach($entry in $pager.items)
+        #if($velocityCount < $maxResults)
+
+            #if(!$entry.pinnedToMain)
+                <div class="dayBox">
+
+                      <div class="dayTitle">
+                          $utils.truncateNicely($utils.removeHTML($entry.title), 50, 50, "...")
+                      </div>
+
+                      <div class="entry">
+
+                            <p class="entryDescription">
+                                #if($entry.displayContent)
+                                     $utils.truncateNicely($utils.removeHTML($entry.displayContent), 340, 360, "...")
+                                #else ## planet entries don't have displayContent
+                                     $utils.truncateNicely($utils.removeHTML($entry.text), 340, 360, "...")
+                                #end
+
+                                [<a href="$utils.escapeHTML($entry.permalink)">Read more...</a>]
+                            </p>
+
+                            <p class="entryInfo">
+                               Posted at <a href="$entry.permalink">
+                                   $utils.formatDate($entry.pubTime, "hh:mma MMM dd, yyyy")</a>
+                               by $entry.creator.screenName in <span class="category">$entry.category.name</span>
+                            </p>
+
+                      </div>
+
+                </div>
+            #end
+
+        #end
+    #end
+
+    <div class="pagingcontrols">
+        #if($pager.nextLink)
+           <a href="$pager.nextLink">&lt; $pager.nextName</a>
+        #end
+        #if($pager.nextLink && $pager.prevLink)
+           &nbsp;|&nbsp;
+        #end
+        #if($pager.prevLink)
+           <a href="$pager.prevLink">$pager.prevName &gt;</a>
+        #end
+    </div>
+
+
+  </div>
+</div>
+
+<div class="rightbar_wrapper">
+  <div class="rightbar">
+    #includeTemplate($model.weblog "sidebar")
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
