@@ -117,5 +117,19 @@ class blogs_asf (
       group  => 'root',
       mode   => '0644',
       source => 'puppet:///modules/blogs_asf/javax.mail.jar';
+    '/var/lib/tomcat8/webapps/ROOT/themes/asf':
+      ensure  => directory,
+      recurse => true,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      source  => 'puppet:///modules/blogs_asf/themes/asf',
+      require => Exec['deploy-roller'];
+    '/var/lib/tomcat8/webapps/ROOT/themes/asffrontpage':
+      ensure  => directory,
+      recurse => true,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      source  => 'puppet:///modules/blogs_asf/themes/asffrontpage',
+      require => Exec['deploy-roller'];
   }
 }
