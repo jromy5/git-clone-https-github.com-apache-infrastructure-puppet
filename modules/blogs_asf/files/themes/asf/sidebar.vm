@@ -1,0 +1,57 @@
+## sidebar contents
+
+    <h2>Calendar</h2>
+    <div class="sidebar">
+    #showWeblogEntryCalendar($model.weblog "nil")
+    </div>
+
+    <h2>Search</h2>
+    <div class="sidebar">
+    #showWeblogSearchForm($model.weblog false)
+    </div>
+
+    <h2>Hot Blogs (today's hits)</h2>
+    <div class="sidebar">
+    <div class="hotblogs">
+    #set($hotblogs = $site.getHotWeblogs(86400000, 20))
+    <ul>
+        #foreach($blog in $hotblogs)
+        <li><a href="$url.site/$blog.subjectNameShort">$blog.subjectNameShort</a> | $blog.count</li>
+        #end
+    </ul>
+    </div>
+    </div>
+
+    <h2>Tag Cloud</h2>
+    <div class="sidebar">
+      #set($mytags = $model.weblog.getPopularTags(-1, 30))
+      #foreach ($tag in $mytags)
+       <a class="tag s${tag.intensity}" href="$url.tag($tag.name)" title="$tag.count">
+         $tag.name
+       </a>
+     #end
+    </div>
+
+    <h2> Categories</h2>
+    <div class="sidebar">
+        #set($rootCategory = $model.weblog.getWeblogCategory("nil"))
+        #showWeblogCategoryLinksList($rootCategory false false)
+    </div>
+
+    <h2>Feeds</h2>
+    <div class="sidebar">
+    #showAtomFeedsList($model.weblog)
+    </div>
+
+    <h2>Links</h2>
+    <div class="sidebar">
+    #set($rootFolder = $model.weblog.getBookmarkFolder("/"))
+    #showBookmarkLinksList($rootFolder false false) 
+    </div>
+
+    <h2>Navigation</h2>
+    <div class="sidebar">
+    #showPageMenu($model.weblog)
+    #showAuthorMenu(true)
+    </div>
+
