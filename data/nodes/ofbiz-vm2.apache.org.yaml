@@ -7,6 +7,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - letsencrypt
+  - oraclejava::install
   - vhosts_asf::vhosts
   - ofbiz_pvm_asf
 
@@ -43,6 +44,9 @@ letsencrypt::certonly:
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
 
 vhosts_asf::vhosts::vhosts:
 #  settings for the demo against OFBiz trunk
