@@ -32,9 +32,9 @@ letsencrypt::certonly:
   ofbiz-vm2:
     domains:
       - ofbiz-vm2.apache.org
-      - ofbiz-demo-trunk.apache.org #
-      - ofbiz-demo-stable.apache.org
-      - ofbiz-demo-old.apache.org
+      - demo-trunk.ofbiz.apache.org
+      - demo-stable.ofbiz.apache.org
+      - demo-old.ofbiz.apache.org
     plugin: standalone
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
@@ -47,19 +47,19 @@ logrotate::rule:
 vhosts_asf::vhosts::vhosts:
 #  settings for the demo against OFBiz trunk
   ofbiz-trunk-vm2-80:
-    vhost_name: 'ofbiz-demo-trunk.apache.org'
-    servername: 'ofbiz-demo-trunk.apache.org'
+    vhost_name: 'demo-trunk.ofbiz.apache.org'
+    servername: 'demo-trunk.ofbiz.apache.org'
     priority: '12'
     port: 80
     ssl: false
-    access_log_file: 'ofbiz-demo-trunk.apache.org.http_access.log'
+    access_log_file: 'demo-trunk.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-trunk_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://ofbiz-demo-trunk.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://demo-trunk.ofbiz.apache.org/$1
 
   ofbiz-trunk-vm2-443:
-    vhost_name: 'ofbiz-demo-trunk.apache.org'
-    servername: 'ofbiz-demo-trunk.apache.org'
+    vhost_name: 'demo-trunk.ofbiz.apache.org'
+    servername: 'demo-trunk.ofbiz.apache.org'
     port: 443
     access_log_file: 'ofbiz-ssl-trunk.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-trunk_error.log'
@@ -75,19 +75,19 @@ vhosts_asf::vhosts::vhosts:
 
 #  settings for the demo against the release of latest OFBiz release branch
   ofbiz-stable-vm2-80:
-    vhost_name: 'ofbiz-demo-stable.apache.org'
+    vhost_name: 'demo-stable.ofbiz.apache.org'
     priority: '12'
-    servername: 'ofbiz-demo-stable.apache.org'
+    servername: 'demo-stable.ofbiz.apache.org'
     port: 80
     ssl: false
-    access_log_file: 'ofbiz-demo-stable.apache.org.http_access.log'
+    access_log_file: 'demo-stable.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-stable_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://ofbiz-demo-stable.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://demo-stable.ofbiz.apache.org/$1
 
   ofbiz-stable-vm2-443:
-    vhost_name: 'ofbiz-demo-stable.apache.org'
-    servername: 'ofbiz-demo-stable.apache.org'
+    vhost_name: 'demo-stable.ofbiz.apache.org'
+    servername: 'demo-stable.ofbiz.apache.org'
     port: 443
     access_log_file: 'ofbiz-ssl-stable.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-stable_error.log'
@@ -103,19 +103,19 @@ vhosts_asf::vhosts::vhosts:
 
 #  settings for the demo against the release of latest -1 OFBiz release branch
   ofbiz-old-vm2-80:
-    vhost_name: 'ofbiz-demo-old.apache.org'
+    vhost_name: 'demo-old.ofbiz.apache.org'
     priority: '12'
-    servername: 'ofbiz-demo-old.apache.org'
+    servername: 'demo-old.ofbiz.apache.org'
     port: 80
     ssl: false
-    access_log_file: 'ofbiz-demo-old.apache.org.http_access.log'
+    access_log_file: 'demo-old.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-old_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://ofbiz-demo-old.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://demo-old.ofbiz.apache.org/$1
 
   ofbiz-old-vm2-443:
-    vhost_name: 'ofbiz-demo-old.apache.org'
-    servername: 'ofbiz-demo-old.apache.org'
+    vhost_name: 'demo-old.ofbiz.apache.org'
+    servername: 'demo-old.ofbiz.apache.org'
     port: 443
     access_log_file: 'ofbiz-ssl-old.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-old_error.log'
