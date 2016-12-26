@@ -15,9 +15,16 @@ class orthrus {
     }
   }
 
+  # require that apt::update run prior to attempting to install
+  # the orthrus package to prevent initial install race 
+  # conditions
+
   package { 'orthrus':
     ensure  => present,
-    require => $repo_resource,
+    require => [
+      $repo_resource,
+      Class['apt::update'],
+    ],
   }
 
   exec { 'setuid-ortpasswd':
