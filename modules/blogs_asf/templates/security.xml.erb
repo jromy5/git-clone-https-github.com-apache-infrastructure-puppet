@@ -65,9 +65,9 @@
         <authentication-provider ref="rememberMeAuthenticationProvider"/>
         <!-- Uncomment one of the three below, based on whether database, LDAP, or
              OpenID authentication is desired. -->
-        <authentication-provider user-service-ref="rollerUserService"/>
-        <!--authentication-provider ref="ldapAuthProvider"/>
-        <authentication-provider ref="openIDAuthProvider"/-->
+        <!--authentication-provider user-service-ref="rollerUserService"/-->
+        <authentication-provider ref="ldapAuthProvider"/>
+        <!--authentication-provider ref="openIDAuthProvider"/-->
     </authentication-manager>
 
     <beans:bean id="rollerUserService"
