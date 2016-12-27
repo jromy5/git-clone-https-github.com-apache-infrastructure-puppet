@@ -1,16 +1,15 @@
-# *** DO *NOT* CHANGE THE LIVE FILE.  Change it in SVN, and update.
+# This file is in the Git infrastructure-puppet repo at:
+# modules/subversion_server/files/authorization/asf-authorization-template
 
-# THEN: in the infrastructure-puppet repo, create a new branch from the deployment branch, make changes, push new branch
-# and then ask someone in Infrastructure to review + merge changes.
+# In the infrastructure-puppet repo, make a pull request against the repo on
+# github https://github.com/apache/infrastructure-puppet/ with your intended 
+# changes and then ping Infra in Hipchat to get someone to look at it.
 # INFRA have a workflow document:
 
 # https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
 
-# Note that it can take up to 40 minutes or so for the live file to be updated after Infra have merged the change
-
-#This file is in the Git infrastructure-puppet repo at:
-
-#modules/subversion_server/files/authorization/asf-authorization-template
+# Note that it can take up to 40 minutes or so for the live file to be updated
+# after Infra have merged the change
 
 # LDAP groups have two forms:
 # ==========================
