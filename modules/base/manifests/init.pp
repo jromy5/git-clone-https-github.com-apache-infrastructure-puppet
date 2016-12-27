@@ -52,6 +52,9 @@ class base (
   $certonly = hiera_hash('letsencrypt::certonly',{})
   create_resources(letsencrypt::certonly, $certonly)
 
+  $cacerts = hiera_hash('ca_cert::ca',{})
+  create_resources(ca_cert::ca, $cacerts)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
