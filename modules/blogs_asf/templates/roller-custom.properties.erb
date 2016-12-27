@@ -82,7 +82,7 @@ authentication.method=ldap
 
 # logging
 log4j.rootLogger=DEBUG, roller
-log4j.appender.roller.File=<%= @tomcat_dir %>/logs/roller.log
+log4j.appender.roller.File=/var/lib/tomcat8/logs/roller.log
 log4j.category.org.apache.roller=DEBUG
 log4j.logger.org.apache.roller=DEBUG
 log4j.logger.net.java.roller=DEBUG
