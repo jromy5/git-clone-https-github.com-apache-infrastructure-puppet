@@ -82,7 +82,7 @@ apt::sources:
     include:
       deb: true
       src: false
-    notify: Class['apt::update']
+    notify: Class[apt::update]
   'elasticsearch':
     location: 'https://packages.elastic.co/elasticsearch/2.x/debian'
     release: 'stable'
