@@ -3,8 +3,11 @@ classes:
   - default_pvm_asf
   - apache
   - apache::mod::proxy
+  - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - letsencrypt
+  - oraclejava::install
   - vhosts_asf::vhosts
   - ofbiz_pvm_asf
 
@@ -24,13 +27,115 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '50'
 apache::mod::event::threadsperchild: '5'
 
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  ofbiz-vm2:
+    domains:
+      - ofbiz-vm2.apache.org
+      - demo-trunk.ofbiz.apache.org
+      - demo-stable.ofbiz.apache.org
+      - demo-old.ofbiz.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
 logrotate::rule:
   apache2:
     ensure: 'present'
 
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
 vhosts_asf::vhosts::vhosts:
+#  settings for the demo against OFBiz trunk
+  ofbiz-trunk-vm2-80:
+    vhost_name: 'demo-trunk.ofbiz.apache.org'
+    servername: 'demo-trunk.ofbiz.apache.org'
+    priority: '12'
+    port: 80
+    ssl: false
+    access_log_file: 'demo-trunk.ofbiz.apache.org.http_access.log'
+    error_log_file: 'ofbiz-trunk_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://demo-trunk.ofbiz.apache.org/$1
+
+  ofbiz-trunk-vm2-443:
+    vhost_name: 'demo-trunk.ofbiz.apache.org'
+    servername: 'demo-trunk.ofbiz.apache.org'
+    port: 443
+    access_log_file: 'ofbiz-ssl-trunk.apache.org.http_access.log'
+    error_log_file: 'ofbiz-ssl-trunk_error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
+    custom_fragment:
+      ProxyRequests Off
+      ProxyPreserveHost On
+      ProxyPass / ajp://localhost:8009/
+      ProxyPassReverse / ajp://localhost:8009/
+
+#  settings for the demo against the release of latest OFBiz release branch
+  ofbiz-stable-vm2-80:
+    vhost_name: 'demo-stable.ofbiz.apache.org'
+    priority: '12'
+    servername: 'demo-stable.ofbiz.apache.org'
+    port: 80
+    ssl: false
+    access_log_file: 'demo-stable.ofbiz.apache.org.http_access.log'
+    error_log_file: 'ofbiz-stable_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://demo-stable.ofbiz.apache.org/$1
+
+  ofbiz-stable-vm2-443:
+    vhost_name: 'demo-stable.ofbiz.apache.org'
+    servername: 'demo-stable.ofbiz.apache.org'
+    port: 443
+    access_log_file: 'ofbiz-ssl-stable.apache.org.http_access.log'
+    error_log_file: 'ofbiz-ssl-stable_error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
+    custom_fragment:
+      ProxyRequests Off
+      ProxyPreserveHost On
+      ProxyPass / ajp://localhost:18009/
+      ProxyPassReverse / ajp://localhost:18009/
+
+#  settings for the demo against the release of latest -1 OFBiz release branch
+  ofbiz-old-vm2-80:
+    vhost_name: 'demo-old.ofbiz.apache.org'
+    priority: '12'
+    servername: 'demo-old.ofbiz.apache.org'
+    port: 80
+    ssl: false
+    access_log_file: 'demo-old.ofbiz.apache.org.http_access.log'
+    error_log_file: 'ofbiz-old_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://demo-old.ofbiz.apache.org/$1
+
+  ofbiz-old-vm2-443:
+    vhost_name: 'demo-old.ofbiz.apache.org'
+    servername: 'demo-old.ofbiz.apache.org'
+    port: 443
+    access_log_file: 'ofbiz-ssl-old.apache.org.http_access.log'
+    error_log_file: 'ofbiz-ssl-old_error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
+    custom_fragment:
+      ProxyRequests Off
+      ProxyPreserveHost On
+      ProxyPass / ajp://localhost:28009/
+      ProxyPassReverse / ajp://localhost:28009/
+
+#  settings for the big files site
   ofbiz-vm-bigfiles-80:
-    vhost_name: '*'
+    vhost_name: 'ofbiz-vm2.apache.org'
     servername: 'ofbiz-vm2.apache.org'
     serveraliases:
       - 'www.ofbiz-vm2.apache.org'
@@ -40,4 +145,22 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/ofbiz/big-files'
     docroot_owner: 'ofbizDemo'
     docroot_group: 'www-data'
-    error_log_file: 'ofbiz_error.log'
+    error_log_file: 'ofbiz-bigfiles_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://ofbiz-vm2.apache.org/$1
+
+  ofbiz-vm-bigfiles-443:
+    vhost_name: 'ofbiz-vm2.apache.org'
+    servername: 'ofbiz-vm2.apache.org'
+    serveraliases:
+      - 'www.ofbiz-vm2.apache.org'
+    port: 443
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
+    access_log_file: 'ofbiz-ssl-bigfiles.apache.org.http_access.log'
+    error_log_file: 'ofbiz-ssl-bigfiles_error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
