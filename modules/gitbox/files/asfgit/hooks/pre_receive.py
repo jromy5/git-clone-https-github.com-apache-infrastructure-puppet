@@ -1,7 +1,7 @@
 import datetime
 import os
 import sys
-
+import sqlite3
 
 import asfgit.auth as auth
 import asfgit.cfg as cfg
@@ -66,13 +66,14 @@ def main():
                     and ref.is_protected(cfg.protect):
                 util.abort(NO_MERGES % ref.name)
 
-    # Everything is kosher. Log each ref update and exit
-    log_fname = os.path.join(cfg.repo_dir, "ref-updates.log")
-    with open(log_fname, 'a') as log:
-        for ref in refs:
-            stamp = datetime.datetime.now().ctime()
-            oldsha = ref.oldsha[:10]
-            newsha = ref.newsha[:10]
-            mesgfmt = u"[%s] %s %s -> %s %s\n"
-            mesg = mesgfmt % (stamp, ref.name, oldsha, newsha, cfg.remote_user)
-            log.write(util.encode(mesg))
+    # Log pushlogs to sqlite3
+    conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
+    cursor = conn.cursor()
+    for ref in refs:
+        cursor.execute("""INSERT INTO pushlog
+                  (repository, asfid, githubid, baseref, ref, old, new, date)
+                  VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (cfg.repo_name, cfg.committer, 'asfgit', ref.name, ref.name, ref.oldsha, ref.newsha, ))
+    
+    # Save and close up shop
+    conn.commit()
+    conn.close()
