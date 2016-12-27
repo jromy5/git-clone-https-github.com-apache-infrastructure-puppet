@@ -110,7 +110,7 @@ vhosts_asf::vhosts::vhosts:
       # To be locked down eventually
       <Location /logstash>
           AllowMethods POST PUT HEAD
-          <If "%%{}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
+          <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
             Require all denied
           </If>
           ProxyPass http://10.91.102.214:9200/
