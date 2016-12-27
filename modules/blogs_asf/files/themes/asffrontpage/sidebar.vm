@@ -1,0 +1,38 @@
+## sidebar contents
+
+    <h2>Search blogs.apache.org</h2>
+    <div class="sidebar">
+        #showWeblogSearchForm($model.weblog false)
+    </div>
+
+    <h2>Today's active blogs</h2>
+    <div class="sidebar">
+    #set($hotblogs = $site.getHotWeblogs($since, $maxResults))
+    <ul>
+        #foreach($blog in $hotblogs)
+        <li><a href="$url.site/$blog.subjectNameShort">$blog.subjectNameShort</a> | $blog.count</li>
+        #end
+    </ul>
+    </div>
+
+    <h2>Popular blog tags</h2>
+    <div class="sidebar">
+    #set($sitetags = $site.getPopularTags(-1, 100))
+    #foreach ($tag in $sitetags)
+        #if ($tag.count > 4)
+            <a class="tag s${tag.intensity}" href="$url.tag($tag.name)" title="$tag.count">$tag.name</a>
+        #end
+    #end
+    </div>
+
+    <h2>Related sites</h2>
+    <div class="sidebar">
+        #set($rootFolder = $model.weblog.getBookmarkFolder("/"))
+        #showBookmarkLinksList($rootFolder false false)
+    </div>
+
+    <h2>Navigation</h2>
+    <div class="sidebar">
+        #showPageMenu($model.weblog)
+        #showAuthorMenu(true)
+    </div>

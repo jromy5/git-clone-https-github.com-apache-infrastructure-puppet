@@ -13,6 +13,15 @@ class dnsclient (
     ensure => installed,
   }
 
+  # Disable resolveconf since we manage its contents
+  # immediately notify our file block to recreate resolv.conf
+  # from erb template so we don't run without a resolv.conf
+  # due to puppet resource ordering
+
+  package { 'resolvconf':
+    ensure => 'purged',
+  } ~>
+
   file {
     '/etc/resolv.conf':
       content => template('dnsclient/resolv.conf.erb');
@@ -21,8 +30,4 @@ class dnsclient (
       mode    => '0750';
   }
 
-  # Disable resolveconf since we manage its contents
-  package { 'resolvconf':
-    ensure => 'purged',
-  }
 }

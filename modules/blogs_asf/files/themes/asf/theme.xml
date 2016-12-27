@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogtheme>
+
+    <id>asf</id>
+    <name>ASF Projects Theme</name>
+    <description>Default theme for ASF Projects to use, Modified Basic Theme.</description>
+    <author>Roller Weblogger</author>
+
+    <!-- theme preview image -->
+    <preview-image path="preview.png" />
+
+    <!-- stylesheet -->
+    <stylesheet>
+        <name>asf-custom.css</name>
+        <description>Stylesheet for ASF theme</description>
+        <link>asf-custom.css</link>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>asf-custom.css</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </stylesheet>
+
+    <!-- templates -->
+    <template action="weblog">
+        <name>Weblog</name>
+        <description>weblog</description>
+        <navbar>false</navbar>
+        <hidden>true</hidden>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>weblog.vm</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </template>
+
+    <template action="permalink">
+        <name>permalink</name>
+        <description>permalink</description>
+        <navbar>false</navbar>
+        <hidden>true</hidden>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>permalink.vm</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </template>
+
+    <template action="search">
+        <name>searchresults</name>
+        <description>searchresults</description>
+        <navbar>false</navbar>
+        <hidden>true</hidden>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>searchresults.vm</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </template>
+
+    <template action="custom">
+        <name>_day</name>
+        <description>_day</description>
+        <navbar>false</navbar>
+        <hidden>true</hidden>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>_day.vm</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </template>
+
+    <template action="custom">
+        <name>sidebar</name>
+        <description>sidebar</description>
+        <navbar>false</navbar>
+        <hidden>true</hidden>
+        <contentType>text/html</contentType>
+        <rendition>
+            <contentsFile>sidebar.vm</contentsFile>
+            <templateLanguage>velocity</templateLanguage>
+        </rendition>
+    </template>
+</weblogtheme>

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>$model.weblog.name: Entries tagged $model.tags</title>
+    #showAutodiscoveryLinks($model.weblog)
+    <link rel="stylesheet" type="text/css" media="all" href="$model.weblog.stylesheet">
+</head>
+<body>
+
+<!-- therealtheme -->
+<div class="navigation">
+		<ul>
+			<li><a href="http://apache.org/foundation" title="About the Foundation">Foundation</a></li>
+			<li><a href="http://projects.apache.org" title="Apache Projects">Projects</a></li>
+
+			<li><a href="http://people.apache.org" title="Apache People">People</a></li>
+			<li><a href="http://apache.org/foundation/getinvolved.html" title="Get involved in Apache">Get Involved</a></li>
+			<li><a href="http://apache.org/foundation/sponsorship.html" title="Support the mission of Apache">Support Apache</a></li>			
+			<li><a href="http://planet.apache.org" title="Committers and Projects feeds">Planet Apache</a></li>
+		</ul>
+	</div>
+      <div id="header">
+                          <h1>The Apache Software Foundation<br />
+  <span class="alt"><small>Blogging in Action.</small></span></h1>
+<!-- template:./apache-tomcat-6.0.18/webapps/ROOT/themes/asf/weblog.vm -->
+<!-- template:./themes/asf/weblog.vm -->
+
+<br /><br />
+<hr class="grey" />
+               </div>
+<div class="content_wrapper">
+  <div class="content">
+    <h2>Entries tagged $model.tags</h2>
+    
+        ## show next/previous paging controls
+        #set($pager = $model.getWeblogEntriesPager()) 
+        <div class="next-previous">
+            #showNextPrevEntriesControl($pager)
+        </div>
+
+        ## show entries
+        #showWeblogEntriesPager($pager)
+
+  </div>
+</div>
+
+<div class="rightbar_wrapper">
+  <div class="rightbar">
+    #includeTemplate($model.weblog "sidebar")
+  </div>
+</div>
+
+</body>
+</html>
+

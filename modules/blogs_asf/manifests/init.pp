@@ -4,21 +4,25 @@ class blogs_asf (
   $required_packages = ['tomcat8'],
 
 # override below in yaml
-  $roller_version           = '',
-  $roller_revision_number   = '',
-  $mysql_connector_version  = '',
-  $server_port              = '',
-  $connector_port           = '',
-  $context_path             = '',
-  $docroot                  = '',
-  $parent_dir               = '',
+  $roller_version          = '',
+  $roller_revision_number  = '',
+  $mysql_connector_version = '',
+  $server_port             = '',
+  $connector_port          = '',
+  $context_path            = '',
+  $docroot                 = '',
+  $parent_dir              = '',
 
 # override below in eyaml
 
-  $jdbc_connection_url = '',
-  $jdbc_username       = '',
-  $jdbc_password       = '',
-  $akismet_apikey      = '',
+  $jdbc_connection_url     = '',
+  $jdbc_username           = '',
+  $jdbc_password           = '',
+  $akismet_apikey          = '',
+
+  $roller_bind_passwd      = '',
+  $roller_bind_dn          = '',
+  $roller_ldap_url         = '',
 
 ){
 
@@ -41,20 +45,28 @@ class blogs_asf (
   $data_dir                 = "${parent_dir}/roller_data"
   $current_dir              = "${parent_dir}/current"
 
-# download roller
+# download roller if the tarball isn't already there
+
   exec {
     'download-roller':
       command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
       creates => $downloaded_tarball,
       timeout => 1200,
-  }
+  } ->
 
-  file { $downloaded_tarball:
-    ensure  => file,
-    require => Exec['download-roller'],
-  }
+# purge the default tomcat8 exploded ROOT.war if roller-ui isn't there
+# this won't run if roller's already been exploded
 
-# extract the download and move it
+  exec {
+    'purge-root':
+      command => '/bin/rm -rf /var/lib/tomcat8/webapps/ROOT',
+      onlyif  => '/usr/bin/test ! -d /var/lib/tomcat8/webapps/ROOT/roller-ui',
+  } ->
+
+# extract the download and move it to tomcat as ROOT.war
+# flag NOTICE.txt in the extracted download so we don't keep extracting 
+# if it's already there
+
   exec {
     'extract-roller':
       command => "/bin/tar -xvzf ${r_tarball} && mv ${roller_build} ${parent_dir}",
@@ -62,14 +74,15 @@ class blogs_asf (
       user    => 'root',
       creates => "${install_dir}/NOTICE.txt",
       timeout => 1200,
-      require => [File[$downloaded_tarball],File[$parent_dir]],
-  }
+      require => [Exec['download-roller'],File[$parent_dir]],
+  } ->
 
 # DEPLOY ROLLER
+# sleep 10 sec after cp to allow tomcat time to explode the war
 
   exec {
     'deploy-roller':
-      command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war",
+      command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
       cwd     => $install_dir,
       user    => 'root',
       creates => '/var/lib/tomcat8/webapps/ROOT.war',
@@ -77,12 +90,17 @@ class blogs_asf (
       require => [Package['tomcat8'],File[$parent_dir]],
   }
 
+# file resources have multiple dependencies to ensure the existence
+# of the downloaded source and exploded war file before deploying 
+# template artifacts
+
   file {
     $parent_dir:
       ensure => directory,
       owner  => 'root',
       group  => 'root',
-      mode   => '0755';
+      mode   => '0755',
+      before => Exec['download-roller'];
     $data_dir:
       ensure  => directory,
       owner   => 'tomcat8',
@@ -99,23 +117,59 @@ class blogs_asf (
       content => template('blogs_asf/roller-custom.properties.erb'),
       owner   => 'tomcat8',
       group   => 'root',
-      mode    => '0640';
+      mode    => '0640',
+      require => [File[$parent_dir],Package['tomcat8']];
     '/usr/share/tomcat8/lib/planet-custom.properties':
       content => template('blogs_asf/planet-custom.properties.erb'),
       owner   => 'tomcat8',
       group   => 'root',
-      mode    => '0640';
+      mode    => '0640',
+      require => [File[$parent_dir],Package['tomcat8']];
     "${mysql_connector_dest_dir}/${mysql_connector}":
-      ensure => present,
-      owner  => 'tomcat8',
-      group  => 'root',
-      mode   => '0644',
-      source => "puppet:///modules/blogs_asf/${mysql_connector}";
+      ensure  => present,
+      owner   => 'tomcat8',
+      group   => 'root',
+      mode    => '0644',
+      source  => "puppet:///modules/blogs_asf/${mysql_connector}",
+      require => [File[$parent_dir],Package['tomcat8']];
     '/usr/share/tomcat8/lib/javax.mail.jar':
-      ensure => present,
-      owner  => 'tomcat8',
-      group  => 'root',
-      mode   => '0644',
-      source => 'puppet:///modules/blogs_asf/javax.mail.jar';
+      ensure  => present,
+      owner   => 'tomcat8',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/blogs_asf/javax.mail.jar',
+      require => [File[$parent_dir],Package['tomcat8']];
+    '/var/lib/tomcat8/webapps/ROOT/themes/asf':
+      ensure  => directory,
+      recurse => true,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      source  => 'puppet:///modules/blogs_asf/themes/asf',
+      require => [
+        File[$parent_dir],
+        Package['tomcat8'],
+        Exec['deploy-roller'],
+      ];
+    '/var/lib/tomcat8/webapps/ROOT/themes/asffrontpage':
+      ensure  => directory,
+      recurse => true,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      source  => 'puppet:///modules/blogs_asf/themes/asffrontpage',
+      require => [
+        File[$parent_dir],
+        Package['tomcat8'],
+        Exec['deploy-roller'],
+      ];
+    '/var/lib/tomcat8/webapps/ROOT/WEB-INF/security.xml':
+      ensure  => present,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      content => template('blogs_asf/security.xml.erb'),
+      require => [
+        File[$parent_dir],
+        Package['tomcat8'],
+        Exec['deploy-roller'],
+      ];
   }
 }

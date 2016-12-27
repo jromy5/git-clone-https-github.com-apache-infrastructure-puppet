@@ -51,3 +51,10 @@ postgresql::server::pg_hba_rule:
     user: 'jirasecurity'
     address: '10.10.5.2/32'
     auth_method: 'md5'
+  iampoc:
+    description: 'iam-poc syncope instance'
+    type: 'host'
+    database: 'iampoc'
+    user: 'iampoc'
+    address: '62.210.60.227/32'
+    auth_method: 'md5'

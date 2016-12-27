@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>$model.weblog.name</title>
+    #showAutodiscoveryLinks($model.weblog)
+    <link rel="stylesheet" type="text/css" media="all" href="$model.weblog.stylesheet">
+</head>
+<body>
+
+<div class="navigation">
+    <ul>
+        <li><a href="./foundation" title="About the Foundation">Foundation</a></li>
+        <li><a href="http://projects.apache.org" title="Apache Projects">Projects</a></li>
+
+        <li><a href="http://people.apache.org" title="Apache People">People</a></li>
+        <li><a href="./foundation/getinvolved.html" title="Get involved in Apache">Get Involved</a></li>
+        <li><a href="./foundation/sponsorship.html" title="Support the mission of Apache">Support Apache</a></li>
+        <li class="dlink"><a href="./dyn/closer.cgi" title="Download Apache projects">Download</a></li>
+    </ul>
+</div>
+
+<div id="header">
+    <h1>The Apache Software Foundation<br />
+    <span class="alt"><small>Blogging in Action.</small></span></h1>
+    <hr class="grey" />
+</div>
+
+    <div class="content_wrapper">
+       <div class="content_search">
+
+            #set($since = 365)
+            #set($maxResults = 20)
+
+            ## We've got search results to display
+            #set($pager = $model.getWeblogEntriesPager())
+
+            <h2>Site-wide Search Results</h2>
+            <div class="next-previous">
+
+
+                <div id="searchAgain">
+                    <p>$text.get( "macro.weblog.searchdictionary", [$model.term, $model.term, $model.term] )</p>
+                    <p>$text.get( "macro.weblog.searchhits", [$model.hits])</p>
+                    <form method="get" action="$url.search" style="margin: 5px">
+
+                        <input type="text" id="q" name="q" size="20"
+                            maxlength="255" value="$model.term"
+                            style="padding-left: 1px" />
+
+                        #set( $cats = $model.weblog.getWeblogCategories("nil") )
+                        <select name="cat">
+                            <option value="">$text.get( "macro.searchresults.incategory" )</option>
+                            #foreach( $cat in $cats )
+                              <option #if($cat.name == $model.weblogCategory.name)selected="selected"#end>$cat.name</option>
+                            #end
+                        </select>
+
+                        <input type="submit" value="$text.get( "macro.weblog.searchagain" )" />
+                    </form>
+
+                    $text.get( "macro.weblog.searchgoogle", [$model.term, $url.absoluteSite, $url.site, ${website.handle}] )
+                </div>
+
+
+                #showNextPrevSearchControl($pager)
+
+            </div>
+            <br />
+            <br />
+
+            #set($map = $pager.getEntries())
+            #foreach($day in $map.keySet())
+                #set($entries = $map.get($day))
+                #foreach($entry in $entries)
+
+
+                    <div class="dayBox">
+
+                      <div class="dayTitle">
+                      $utils.truncateNicely($utils.removeHTML($entry.title), 50, 50, "...")
+                      </div>
+
+                      <div class="entry">
+
+                        <p class="entryDescription">
+                            #if($entry.displayContent)
+                                 $utils.truncateNicely($utils.removeHTML($entry.displayContent), 340, 360, "...")
+                            #else ## planet entries don't have displayContent
+                                 $utils.truncateNicely($utils.removeHTML($entry.text), 340, 360, "...")
+                            #end
+
+                            [<a href="$utils.escapeHTML($entry.permalink)">Read more...</a>]
+                        </p>
+
+                        <p class="entryInfo">
+                           Posted at <a href="$url.entry($entry.anchor)">
+                               $utils.formatDate($entry.pubTime, "hh:mma MMM dd, yyyy")</a>
+                           by $entry.creator.screenName in <span class="category">$entry.category.name</span>
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                #end
+            #end
+
+     </div>
+</div>
+
+
+<div class="rightbar_wrapper">
+  <div class="rightbar">
+    #includeTemplate($model.weblog "sidebar")
+  </div>
+</div>
+
+</body>
+</html>

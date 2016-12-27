@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  The ASF licenses this file to You
+  under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.  For additional information regarding
+  copyright in this work, please see the NOTICE file in the top level
+  directory of this distribution.
+-->
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http pattern="/images/**" security="none"/>
+    <http pattern="/scripts/**" security="none"/>
+    <http pattern="/styles/**" security="none"/>
+
+    <http auto-config="false" access-decision-manager-ref="accessDecisionManager">
+        <intercept-url pattern="/roller-ui/login-redirect**" access="admin,editor"/>
+        <intercept-url pattern="/roller-ui/profile**" access="admin,editor"/>
+        <intercept-url pattern="/roller-ui/createWeblog**" access="admin,editor"/>
+        <intercept-url pattern="/roller-ui/menu**" access="admin,editor"/>
+        <intercept-url pattern="/roller-ui/authoring/**" access="admin,editor"/>
+        <intercept-url pattern="/roller-ui/admin/**" access="admin"/>
+        <intercept-url pattern="/rewrite-status*" access="admin"/>
+
+        <form-login login-page="/roller-ui/login.rol"
+                    authentication-failure-url="/roller-ui/login.rol?error=true"
+                    login-processing-url="/roller_j_security_check"/>
+
+        <remember-me user-service-ref="rollerUserService"
+                     key="715F2448-3176-11DD-ABC6-9CD955D89593"/>
+
+        <custom-filter ref="openidAuthenticationProcessingFilter" position="OPENID_FILTER"/>
+    </http>
+
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="allowIfAllAbstainDecisions" value="false"/>
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:ref bean="roleVoter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+        <beans:property name="rolePrefix" value=""/>
+    </beans:bean>
+
+    <!-- Read users from Roller API -->
+    <authentication-manager alias='rollerAuthenticationManager'>
+        <authentication-provider ref="rememberMeAuthenticationProvider"/>
+        <!-- Uncomment one of the three below, based on whether database, LDAP, or
+             OpenID authentication is desired. -->
+        <!--authentication-provider user-service-ref="rollerUserService"/-->
+        <authentication-provider ref="ldapAuthProvider"/>
+        <!--authentication-provider ref="openIDAuthProvider"/-->
+    </authentication-manager>
+
+    <beans:bean id="rollerUserService"
+                class="org.apache.roller.weblogger.ui.core.security.RollerUserDetailsService"/>
+
+    <beans:bean id="rememberMeAuthenticationProvider"
+                class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <beans:property name="key" value="springRocks"/>
+    </beans:bean>
+
+    <beans:bean id = "openIDAuthProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="rollerUserService"/>
+    </beans:bean>
+
+    <beans:bean id="openidAuthenticationProcessingFilter"
+                class="org.apache.roller.weblogger.ui.core.filters.CustomOpenIDAuthenticationProcessingFilter">
+        <beans:property name="filterProcessesUrl" value="/roller_j_openid_security_check"/>
+        <beans:property name="authenticationManager" ref="rollerAuthenticationManager"/>
+        <beans:property name="authenticationSuccessHandler" ref="myAuthenticationSuccessHandler"/>
+        <beans:property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler"/>
+    </beans:bean>
+
+    <beans:bean id="myAuthenticationSuccessHandler"
+                class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/roller-ui/menu.rol"/>
+    </beans:bean>
+
+    <beans:bean id="myAuthenticationFailureHandler"
+                class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/roller-ui/login.rol?error=true"/>
+        <beans:property name="exceptionMappings">
+            <beans:props>
+                <beans:prop key="org.springframework.security.core.userdetails.UsernameNotFoundException">
+                    /roller-ui/register.rol
+                </beans:prop>
+                <beans:prop key="org.springframework.security.authentication.BadCredentialsException">
+                    /roller-ui/login.rol?error=true
+                </beans:prop>
+                <beans:prop key="org.springframework.security.core.AuthenticationException">
+                    /roller-ui/login.rol?error=true
+                </beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <!-- Uncomment & customize below beans if using LDAP -->
+    <beans:bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <beans:constructor-arg value="<%= @roller_ldap_url %>" />
+        <beans:property name="userDn" value="<%= @roller_bind_dn %>" />
+        <beans:property name="password" value="<%= @roller_bind_passwd %>" />
+    </beans:bean>
+
+    <beans:bean id="ldapAuthProvider"
+                class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+
+        <beans:constructor-arg>
+            <beans:bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <beans:constructor-arg ref="contextSource" />
+                <beans:property name="userSearch" ref="userSearch" />
+            </beans:bean>
+        </beans:constructor-arg>
+        <beans:constructor-arg>
+            <beans:bean
+                    class="org.apache.roller.weblogger.ui.core.security.AuthoritiesPopulator">
+                <beans:property name="defaultRole" value="editor" />
+            </beans:bean>
+        </beans:constructor-arg>
+    </beans:bean>
+
+    <beans:bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <beans:constructor-arg index="0" value="" />
+        <beans:constructor-arg index="1" value="(uid={0})" />
+        <beans:constructor-arg index="2" ref="contextSource" />
+        <beans:property name="searchSubtree" value="true" />
+    </beans:bean>
+
+</beans:beans>
