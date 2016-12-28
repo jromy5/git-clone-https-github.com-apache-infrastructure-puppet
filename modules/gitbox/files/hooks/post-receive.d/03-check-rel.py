@@ -39,9 +39,7 @@ def main():
     # Check individual refs and commits for all of
     # our various conditions. Track each ref update
     # so that we can log them if everything is ok.
-    refs = []
     for ref in git.stream_refs(sys.stdin):
-        refs.append(ref)
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
             refname = ref.name
             reponame = cfg.repo_name
