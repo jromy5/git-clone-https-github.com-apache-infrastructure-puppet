@@ -161,6 +161,13 @@ class blogs_asf (
         Package['tomcat8'],
         Exec['deploy-roller'],
       ];
+    '/var/lib/tomcat8/webapps/ROOT/images'
+      ensure  => directory,
+      recurse => true,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      source  => 'puppet:///modules/blogs_asf/images',
+      require => [Exec['deploy-roller']];
     '/var/lib/tomcat8/webapps/ROOT/WEB-INF/security.xml':
       ensure  => present,
       owner   => 'tomcat8',
