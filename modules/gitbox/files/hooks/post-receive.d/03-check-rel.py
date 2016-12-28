@@ -3,12 +3,10 @@
 import os
 import sys
 import smtplib
-from email.mime.text import MIMEText
+import email.mime.text
 
-import asfgit.auth as auth
 import asfgit.cfg as cfg
 import asfgit.git as git
-import asfgit.util as util
 
 TMPL_REWRITE = """
 Committer %(committer)s has made a rewind of %(refname)s in
@@ -29,7 +27,7 @@ GitBox.
 """
 
 def notify(msg, subject):
-    msg = MIMEText(msg, _charset = "utf-8")
+    msg = email.mime.text.MIMEText(msg, _charset = "utf-8")
     msg['Subject'] = subject
     msg['To'] = "<private@infra.apache.org>"
     msg['From'] = "<gitbox@gitbox.apache.org>"
