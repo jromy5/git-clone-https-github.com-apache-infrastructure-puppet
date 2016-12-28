@@ -39,12 +39,15 @@ def main():
     # Check individual refs and commits for all of
     # our various conditions. Track each ref update
     # so that we can log them if everything is ok.
+    tmplvars = {
+        'committer': cfg.committer,
+        'reponame': cfg.repo_name,
+        'refname': "??"
+    }
     for ref in git.stream_refs(sys.stdin):
+        tmplvars['refname'] = ref.name
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
-            refname = ref.name
-            reponame = cfg.repo_name
-            committer = cfg.committer
-            notify(TMPL_REWRITE % locals(), "GitBox: Rewinding attempted on %s in %s" % (ref.name, cfg.repo_name))
+            notify(TMPL_REWRITE % tmplvars, "GitBox: Rewinding attempted on %s in %s" % (ref.name, cfg.repo_name))
         if ref.is_tag():
             continue
         for commit in ref.commits():
@@ -53,7 +56,7 @@ def main():
                 refname = ref.name
                 reponame = cfg.repo_name
                 committer = cfg.committer
-                notify(TMPL_MERGE % locals(), "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
+                notify(TMPL_MERGE % tmplvars, "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
 
 if __name__ == '__main__':
     main()
