@@ -36,21 +36,25 @@ def notify(msg, subject):
     
 
 def main():
-    # Check individual refs and commits for all of
-    # our various conditions. Track each ref update
-    # so that we can log them if everything is ok.
+    # Set some vars for use in templating later
     tmplvars = {
         'committer': cfg.committer,
         'reponame': cfg.repo_name,
         'refname': "??"
     }
+    
+    # Check individual refs and commits for all of
+    # our various conditions. Track each ref update
+    # so that we can log them if everything is ok.
     for ref in git.stream_refs(sys.stdin):
         tmplvars['refname'] = ref.name
+        # If protected ref and rewinding is attempted:
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
             notify(TMPL_REWRITE % tmplvars, "GitBox: Rewinding attempted on %s in %s" % (ref.name, cfg.repo_name))
         if ref.is_tag():
             continue
         for commit in ref.commits():
+            # If protected ref and merge is attempted:
             if cfg.no_merges and commit.is_merge() \
                     and ref.is_protected(cfg.protect):
                 refname = ref.name
