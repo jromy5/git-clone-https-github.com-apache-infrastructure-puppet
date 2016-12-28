@@ -9,7 +9,7 @@ import asfgit.cfg as cfg
 import asfgit.git as git
 
 TMPL_REWRITE = """
-Committer %(committer)s has made a rewind of %(refname)s in
+Committer %(committer)s has made a %(what)s of %(refname)s in
 repository %(reponame)s on GitBox. This is strictly forbidden
 on this branch/tag, hence this notification.
 
@@ -17,14 +17,6 @@ With regards,
 GitBox.
 """
 
-TMPL_MERGE = """
-Committer %(committer)s has made a merge of %(refname)s in
-repository %(reponame)s on GitBox. This is strictly forbidden
-on this branch/tag, hence this notification.
-
-With regards,
-GitBox.
-"""
 
 def notify(msg, subject):
     msg = email.mime.text.MIMEText(msg, _charset = "utf-8")
@@ -40,7 +32,8 @@ def main():
     tmplvars = {
         'committer': cfg.committer,
         'reponame': cfg.repo_name,
-        'refname': "??"
+        'refname': "??",
+        'what': 'rewind'
     }
     
     # Check individual refs and commits for all of
@@ -50,17 +43,16 @@ def main():
         tmplvars['refname'] = ref.name
         # If protected ref and rewinding is attempted:
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
-            notify(TMPL_REWRITE % tmplvars, "GitBox: Rewinding attempted on %s in %s" % (ref.name, cfg.repo_name))
+            tmplvars['what'] = 'rewind'
+            notify(TMPL_REWRITE % tmplvars, "GitBox: Rewind attempted on %s in %s" % (ref.name, cfg.repo_name))
         if ref.is_tag():
             continue
         for commit in ref.commits():
             # If protected ref and merge is attempted:
             if cfg.no_merges and commit.is_merge() \
                     and ref.is_protected(cfg.protect):
-                refname = ref.name
-                reponame = cfg.repo_name
-                committer = cfg.committer
-                notify(TMPL_MERGE % tmplvars, "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
+                tmplvars['what'] = 'merge'
+                notify(TMPL_REWRITE % tmplvars, "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
 
 if __name__ == '__main__':
     main()
