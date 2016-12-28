@@ -54,3 +54,6 @@ def main():
                 reponame = cfg.repo_name
                 committer = cfg.committer
                 notify(TMPL_MERGE % locals(), "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
+
+if __name__ == '__main__':
+    main()
