@@ -1,7 +1,10 @@
+## $model here is a PageModel
+## $entry here is a WeblogEntryWrapper
+<!-- _day -->
 <div class="dayBox">
 
     <div class="dayTitle">
-       $utils.formatDate($day, "EEEE MMM dd, yyyy")
+      $utils.formatDate($day, $text.get("macro.weblog.date.toStringFormat"))
     </div>
 
     #foreach( $entry in $entries )
@@ -16,10 +19,10 @@
             #end
         </p>
         <p class="entryInfo">
-            Posted at <a href="$url.entry($entry.anchor)">$utils.formatDate($entry.pubTime, "hh:mma MMM dd, yyyy")</a>
+            Posted at <a href="$url.entry($entry.anchor)">$utils.formatDate($entry.pubTime, $text.get("macro.weblog.datetime.toStringFormat"))</a>
             by $entry.creator.screenName in <span class="category">$entry.category.name</span> &nbsp;|&nbsp;
             #if ($utils.isUserAuthorizedToAuthor($entry.website))
-                <a href="$url.editEntry($entry.anchor)">$text.get("macro.weblog.entrypermalink.edit")</a> &nbsp;|&nbsp;
+                <a href="$url.editEntry($entry.anchor)">$text.get("generic.edit")</a> &nbsp;|&nbsp;
             #end
             #set($commentCount = $entry.commentCount)
             #if($entry.commentsStillAllowed || $commentCount > 0)  
@@ -37,3 +40,4 @@
     #end
 
 </div>
+
