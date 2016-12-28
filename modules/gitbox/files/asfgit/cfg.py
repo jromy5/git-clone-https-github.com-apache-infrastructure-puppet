@@ -13,6 +13,19 @@ DEFAULT_PUBSUB_HOST = "wilderness.apache.org"
 DEFAULT_PUBSUB_PORT = "2069"
 DEFAULT_PUBSUB_PATH = "/json"
 
+# When debugging, we need a few values in the environment, in order to
+# populate the exported symbols from this module.
+DEBUG = False
+if DEBUG:
+  os.environ['PATH_INFO'] = 'debug'
+  os.environ['GIT_PROJECT_ROOT'] = 'debug'
+  os.environ['GIT_COMMITTER_NAME'] = 'debug'
+  os.environ['GIT_COMMITTER_EMAIL'] = 'debug'
+  os.environ['SCRIPT_NAME'] = 'debug'
+  os.environ['WEB_HOST'] = 'debug'
+  os.environ['WRITE_LOCK'] = 'debug'
+  os.environ['AUTH_FILE'] = 'debug'
+
 
 def _repo_name():
     path = filter(None, os.environ["PATH_INFO"].split("/"))
@@ -20,19 +33,23 @@ def _repo_name():
     if len(path) != 1:
         raise ValueError("Invalid PATH_INFO: %s" % os.environ["PATH_INFO"])
     path = path[0]
-    if path[-4:] == ".git":
+    if path.endswith('.git'):
         return util.decode(path[:-4])
     return util.decode(path)
 
 
+_all_config = dict(c.split('=')
+                   for c in run.git('config', '--list')[1].splitlines()
+                   if c.strip())
+
 def _git_config(key, default=NO_DEFAULT):
-    cmd = ["config", key]
-    try:
-        return run.git(*cmd)[1].strip()
-    except sp.CalledProcessError:
-        if default == NO_DEFAULT:
-            raise
+    if key not in _all_config:
+        if default is NO_DEFAULT:
+            # When debugging, this is a good default value to return.
+            #return '0'
+            raise KeyError(key)
         return default
+    return _all_config[key]
 
 
 repo_name = _repo_name()
