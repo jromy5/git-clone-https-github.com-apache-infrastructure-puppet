@@ -161,7 +161,7 @@ class blogs_asf (
         Package['tomcat8'],
         Exec['deploy-roller'],
       ];
-    '/var/lib/tomcat8/webapps/ROOT/images'
+    '/var/lib/tomcat8/webapps/ROOT/images':
       ensure  => directory,
       recurse => true,
       owner   => 'tomcat8',
