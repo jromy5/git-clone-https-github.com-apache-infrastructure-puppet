@@ -82,8 +82,19 @@ apt::sources:
     include:
       deb: true
       src: false
-    notify: Class[apt::update]
+    notify_update: true
   'elasticsearch':
+    location: 'https://packages.elastic.co/elasticsearch/2.x/debian'
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      server: 'pool.sks-keyservers.net'
+    include:
+      deb: true
+      src: false
+    ensure: absent
+  'elasticsearch-2.x':
     location: 'https://packages.elastic.co/elasticsearch/2.x/debian'
     release: 'stable'
     repos: 'main'
