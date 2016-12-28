@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# This script checks pushes for rewinding of refs or merging inside
+# protected branches, and notifies infra if it happens.
 
 import os
 import sys
