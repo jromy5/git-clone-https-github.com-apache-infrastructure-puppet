@@ -397,7 +397,6 @@ exec-officers={ldap:cn=exec-officers,ou=auth,ou=groups,dc=apache,dc=org}
 fundraising={ldap:cn=fundraising,ou=auth,ou=groups,dc=apache,dc=org}
 infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
-infrastructure-adminsearch={ldap:cn=infrastructure-adminsearch,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-root={ldap:cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org}
 legal=
 member={ldap:cn=member,ou=groups,dc=apache,dc=org}
