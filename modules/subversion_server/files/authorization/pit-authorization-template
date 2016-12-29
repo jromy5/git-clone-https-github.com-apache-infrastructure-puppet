@@ -596,19 +596,6 @@ whimsysvn = r
 acrequser = r
 @member = r
 
-[/infrastructure/apwiki]
-@infrastructure = rw
-@member = r
-* = r
-
-[/infrastructure/apwiki/trunk/config]
-@pmc-chairs = rw
-
-[/infrastructure/apworkflow]
-@infrastructure = rw
-@member = r
-* = r
-
 [/infrastructure/bugzilla]
 @infrastructure-interest = rw
 @infrastructure = rw
@@ -630,10 +617,6 @@ buildbot = r
 @committers = rw
 buildbot = r
 * =
-
-[/infrastructure/hudson]
-@infrastructure-interest = rw
-@infrastructure = rw
 
 [/infrastructure/qpsmtpd]
 @infrastructure = rw
@@ -673,12 +656,6 @@ acrequser = rw
 whimsysvn = r
 @member = rw
 @pmc-chairs = rw
-
-[/infrastructure/trunk/admin-search]
-@infrastructure-adminsearch = rw
-@member = r
-@svnadmins = rw
-* =
 
 [/infrastructure/trunk/auth]
 @infrastructure-root = rw
@@ -757,9 +734,6 @@ whimsysvn = r
 [/infrastructure/trunk/puppet]
 puppetsvn = r
 
-[/infrastructure/trunk/puppet/hosts/svn-qavm2]
-@subversion = rw
-
 [/infrastructure/trunk/qmail]
 smtpd = r
 @member = rw
@@ -783,29 +757,6 @@ puppetsvn = r
 @infrastructure-interest = rw
 @svnadmins = rw
 * =
-
-[/infrastructure/trunk/subversion/authorization]
-@member = rw
-@pmc-chairs = rw
-@svnadmins = rw
-@board = rw
-@exec-officers = rw
-whimsysvn = r
-svn = r
-# apsite needs access to asf-authorization-template
-apsiteread = r
-
-[/infrastructure/trunk/subversion/authorization/pit-authorization-template]
-# Reduce from 'rw' access that they have to the parent dir.
-@member = r
-@pmc-chairs = r
-apsiteread = r
-@jcp = rw
-# Restore inherited permissions
-@infrastructure = rw
-@svnadmins = rw
-@board = rw
-@exec-officers = rw
 
 [/infrastructure/trunk/tools]
 apsiteread = r
