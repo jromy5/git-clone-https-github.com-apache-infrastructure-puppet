@@ -23,3 +23,5 @@ Gemfile.lock
 # Ignore vim tep files
 *~
 
+# IntelliJ
+.idea
