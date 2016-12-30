@@ -93,7 +93,6 @@ class fisheye_asf (
   
 # extract the download and move it
   exec {
-  notify {downloaded zip ${downloaded_zip} and zip is ${zip}};
     'extract-fisheye':
       command => "unzip ${zip} && sudo mv fecru-${fisheye_version}/* ${parent_dir}", # lint:ignore:80chars
       cwd     => $download_dir,
