@@ -94,20 +94,14 @@ class fisheye_asf (
 # extract the download and move it
   exec {
     'extract-fisheye':
-      command => "/usr/bin/unzip ${zip} && sudo mv fecru-${fisheye_version}/* ${parent_dir}", # lint:ignore:80chars
+      # take out the hardcoded fecru bits   
+      command => "/usr/bin/unzip ${zip} && sudo mkdir ${parent_dir}/${fisheye_build} && sudo mv fecru-${fisheye_version}/* ${parent_dir}/${fisheye_build}", # lint:ignore:80chars
       cwd     => $download_dir,
       user    => 'root',
       timeout => 1200,
       require => [File[$downloaded_zip],File[$parent_dir]],
   }
 
-  exec {
-    'chown-fisheye-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
-      timeout => 1200,
-      require => [User[$username],Group[$username]],
-  }
-  
 file {
     $parent_dir:
       ensure => directory,

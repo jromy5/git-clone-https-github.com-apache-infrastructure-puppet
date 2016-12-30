@@ -1,24 +1,24 @@
 #!/bin/sh
 
 RUN_AS_USER=<%= @username %>
-CONFLUENCE_INSTALL=<%= @current_dir %>
+FISHEYE_INSTALL=<%= @current_dir %>
 
 start() {
-        echo "Starting Confluence: "
+        echo "Starting Fisheye: "
         umask 002
         if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "cd $CONFLUENCE_INSTALL/bin && ./startup.sh"
+          su - $RUN_AS_USER -c "cd $FISHEYE_INSTALL/bin && ./startup.sh"
         else
-          $CONFLUENCE_INSTALL/bin/startup.sh
+          $FISHEYE_INSTALL/bin/start.sh
         fi
         echo "done."
 }
 stop() {
-        echo "Shutting down Confluence: "
+        echo "Shutting down Fisheye: "
         if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "cd $CONFLUENCE_INSTALL/bin && ./shutdown.sh"
+          su - $RUN_AS_USER -c "cd $FISHEYE_INSTALL/bin && ./shutdown.sh"
         else
-          $CONFLUENCE_INSTALL/bin/shutdown.sh
+          $FISHEYE_INSTALL/bin/stop.sh
         fi
         echo "done."
 }

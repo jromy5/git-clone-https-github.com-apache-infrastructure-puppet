@@ -10,7 +10,6 @@ classes:
 
 # fisheye_asf class variables.
 fisheye_asf::fisheye_version: '4.2.1'
-fisheye_asf::mysql_connector_version: '5.1.11'
 fisheye_asf::parent_dir: '/usr/local/fisheye'
 fisheye_asf::server_port: '8008'
 fisheye_asf::connector_port: '8888'
