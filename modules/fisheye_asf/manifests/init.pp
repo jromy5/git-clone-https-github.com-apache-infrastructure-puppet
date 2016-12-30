@@ -14,7 +14,7 @@ class fisheye_asf (
 
   # override below in yaml
   $fisheye_version               = '',
-  $mysql_connector_version       = '',
+  #$mysql_connector_version       = '',
   $parent_dir,
   $server_port                   = '',
   $connector_port                = '',
@@ -35,7 +35,7 @@ class fisheye_asf (
   $hibernate_connection_username = '',
   $hibernate_connection_url      = '',
 
-  $required_packages             = ['graphviz' , 'graphviz-dev','unzip'],
+  $required_packages             = ['default-jre','unzip','wget'],
 ){
 
 # install required packages:
@@ -94,7 +94,7 @@ class fisheye_asf (
 # extract the download and move it
   exec {
     'extract-fisheye':
-      command => "unzip ${zip} && sudo mv fecru-${fisheye_version}/* ${parent_dir}", # lint:ignore:80chars
+      command => "/usr/bin/unzip ${zip} && sudo mv fecru-${fisheye_version}/* ${parent_dir}", # lint:ignore:80chars
       cwd     => $download_dir,
       user    => 'root',
       timeout => 1200,
@@ -106,7 +106,7 @@ class fisheye_asf (
       command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
       timeout => 1200,
       require => [User[$username],Group[$username]],
-  } 
+  }
   
 file {
     $parent_dir:
@@ -142,36 +142,4 @@ file {
       hasrestart => true,
       require    => Class['apache'],
   }
-
-# cron jobs
-
-  cron {
-    'create-intermediates-index':
-      user        => $username,
-      minute      => '*/30',
-      command     => "/home/${username}/create-intermediates-index.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'copy-intermediate-html':
-      user        => $username,
-      minute      => '*/10',
-      command     => "/home/${username}/copy-intermediate-html.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'remove-intermediates-daily':
-      user        => $username,
-      minute      => 05,
-      hour        => 07,
-      command     => "/home/${username}/remove-intermediates-daily.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'cleanup-tomcat-logs':
-      user        => $username,
-      minute      => 20,
-      hour        => 07,
-      command     => "/home/${username}/cleanup-tomcat-logs.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username],
-}
-
 }
