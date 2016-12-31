@@ -1,0 +1,9 @@
+---
+classes:
+  - fisheye_asf
+
+# fisheye_asf class variables.
+fisheye_asf::fisheye_version: '4.2.1'
+fisheye_asf::parent_dir: '/usr/local/fisheye'
+fisheye_asf::context_path: '/fisheye'
+
