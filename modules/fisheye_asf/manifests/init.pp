@@ -19,21 +19,6 @@ class fisheye_asf (
   $server_port                   = '',
   $connector_port                = '',
   $context_path                  = '',
-  $docroot                       = '',
-  $server_alias                  = '',
-  $heap_min_size                 = '',
-  $heap_max_size                 = '',
-  # Below setting replaces PermGen, uses native memory for class metadata.
-  # If not set resizes according to available native memory.
-  $maxmetaspacesize              = '',
-
-  # below are contained in eyaml
-  #$confluence_license_hash       = '',
-  #$confluence_license_message    = '',
-  #$confluence_setup_server_id    = '',
-  $hibernate_connection_password = '',
-  $hibernate_connection_username = '',
-  $hibernate_connection_url      = '',
 
   $required_packages             = ['default-jre','unzip','wget'],
 ){
@@ -45,8 +30,6 @@ class fisheye_asf (
   }
 
 # fisheye specific
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
-  #$mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
   $fisheye_build            = "fisheye-${fisheye_version}"
   $zip                      = "${fisheye_build}.zip"
   $download_dir             = '/tmp'
@@ -55,7 +38,6 @@ class fisheye_asf (
   $install_dir              = "${parent_dir}/${fisheye_build}"
   $fisheye_home             = "${parent_dir}/fisheye-data"
   $current_dir              = "${parent_dir}/current"
-  $intermediates_dir        = "${docroot}/intermediates"
 
   user {
     $username:
@@ -125,15 +107,5 @@ file {
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
-  }
-  
-
-  service {
-    $service_name:
-      ensure     => $service_ensure,
-      enable     => true,
-      hasstatus  => false,
-      hasrestart => true,
-      require    => Class['apache'],
-  }
+  }  
 }
