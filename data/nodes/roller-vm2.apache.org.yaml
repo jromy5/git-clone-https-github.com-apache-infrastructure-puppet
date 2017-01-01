@@ -40,8 +40,8 @@ blogs_asf::connector_port: '8080'
 blogs_asf::context_path: '/'
 blogs_asf::docroot: '/var/www'
 blogs_asf::server_alias: 'blogs-test.apache.org'
-blogs_asf::heap_min_size: '512',
-blogs_asf::heap_max_size: '756',
+blogs_asf::heap_min_size: '512'
+blogs_asf::heap_max_size: '756'
 blogs_asf::maxmetaspacesize: '512'
 
 logrotate::rule:
