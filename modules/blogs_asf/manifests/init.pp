@@ -12,6 +12,9 @@ class blogs_asf (
   $context_path            = '',
   $docroot                 = '',
   $parent_dir              = '',
+  $heap_min_size           = '',
+  $heap_max_size           = '',
+  $maxmetaspacesize        = '',
 
 # override below in eyaml
 
@@ -113,6 +116,9 @@ class blogs_asf (
       owner   => 'tomcat8',
       group   => 'root',
       require => File[$parent_dir];
+    '/usr/share/tomcat8/bin/setenv.sh':
+      content => template('blogs_asf/setenv.sh.erb'),
+      mode    => '0644';
     '/usr/share/tomcat8/lib/roller-custom.properties':
       content => template('blogs_asf/roller-custom.properties.erb'),
       owner   => 'tomcat8',

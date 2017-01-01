@@ -1,0 +1,10 @@
+# This file is managed by puppet. See modules/blogs_asf/templates/setenv.sh.erb
+
+# See the CATALINA_OPTS below for tuning the JVM arguments used to start Tomcat/Roller.
+
+echo ""
+echo "Server startup logs are located in /usr/lib/tomcat8/logs/catalina.out"
+
+CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMetaspaceSize=<%= @maxmetaspacesize %>m ${CATALINA_OPTS}"
+export CATALINA_OPTS
+
