@@ -118,6 +118,6 @@ file {
   }    
 
   ::systemd::unit_file { "fisheye.service":
-      source => 'puppet:///modules/fisheye/fisheye.service',
+      source => 'puppet:///modules/fisheye_asf/fisheye.service',
   }
 }
