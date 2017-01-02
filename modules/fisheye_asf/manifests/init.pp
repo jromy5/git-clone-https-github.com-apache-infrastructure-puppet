@@ -1,8 +1,6 @@
 #/etc/puppet/modules/fisheye_asf/manifests/init.pp
 
 class fisheye_asf (
-  $uid                           = 8999,
-  $gid                           = 8999,
   $group_present                 = 'present',
   $groupname                     = 'fisheye',
   $groups                        = [],
@@ -45,18 +43,17 @@ class fisheye_asf (
       name       => $username,
       home       => "/home/${username}",
       shell      => $shell,
-      uid        => $uid,
-      gid        => $groupname,
       groups     => $groups,
+      gid        => $groupname,
       managehome => true,
       require    => Group[$groupname],
+      system 	 => true,
   }
 
   group {
     $groupname:
       ensure => $group_present,
-      name   => $groupname,
-      gid    => $gid,
+      system => true,
   }
   
 # download standalone Fisheye
