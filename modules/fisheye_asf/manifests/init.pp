@@ -26,6 +26,11 @@ class fisheye_asf (
     $required_packages:
       ensure => 'present',
   }
+  
+  class { 'oraclejava::install':
+    ensure  => 'latest',
+    version => '8',
+}->
 
 # fisheye specific
   $fisheye_build            = "fisheye-${fisheye_version}"
