@@ -117,3 +117,7 @@ vhosts_asf::vhosts::vhosts:
       SSLProxyCheckPeerName off
       SSLProxyCheckPeerExpire off
       AddOutputFilterByType DEFLATE application/json
+      AddHandler      lua-script .lua
+      LuaScope        thread
+      LuaCodeCache    stat
+      AcceptPathInfo  On
