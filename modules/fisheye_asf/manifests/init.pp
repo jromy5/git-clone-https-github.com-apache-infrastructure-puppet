@@ -115,4 +115,8 @@ file {
       group   => 'root',
       require => File[$install_dir];
   }    
+
+  ::systemd::unit_file { "fisheye.service":
+      source => 'puppet:///modules/fisheye/fisheye.service',
+  }
 }
