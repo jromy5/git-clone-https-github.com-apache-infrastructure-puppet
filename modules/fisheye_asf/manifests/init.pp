@@ -18,7 +18,7 @@ class fisheye_asf (
   $connector_port                = '',
   $context_path                  = '',
 
-  $required_packages             = ['default-jre','unzip','wget'],
+  $required_packages             = ['unzip','wget','svn','git'],
 ){
 
 # install required packages:
@@ -104,5 +104,5 @@ file {
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
-  }  
+  }    
 }
