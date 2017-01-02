@@ -30,7 +30,17 @@ class fisheye_asf (
   class { 'oraclejava::install':
     ensure  => 'latest',
     version => '8',
-}->
+  }->
+
+  file { 'fisheye profile':
+    ensure  => 'present',
+    path    => "/home/${username}/.profile",
+    mode    => '0644',
+    owner   => $username,
+    group   => $groupname,
+    source  => 'puppet:///modules/fisheye_asf/home/profile',
+    require => User[$username],
+  }
 
 # fisheye specific
   $fisheye_build            = "fisheye-${fisheye_version}"
