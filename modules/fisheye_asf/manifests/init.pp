@@ -87,6 +87,7 @@ class fisheye_asf (
       command => "/usr/bin/unzip ${zip} && sudo mkdir ${parent_dir}/${fisheye_build} && sudo mv fecru-${fisheye_version}/* ${parent_dir}/${fisheye_build}", # lint:ignore:80chars
       cwd     => $download_dir,
       user    => 'root',
+      creates => "${install_dir}/README.html",
       timeout => 1200,
       require => [File[$downloaded_zip],File[$parent_dir]],
   }
