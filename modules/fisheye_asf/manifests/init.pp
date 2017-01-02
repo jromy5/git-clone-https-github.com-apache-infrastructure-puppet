@@ -18,7 +18,7 @@ class fisheye_asf (
   $connector_port                = '',
   $context_path                  = '',
 
-  $required_packages             = ['unzip','wget','svn','git'],
+  $required_packages             = ['unzip','wget'],
 ){
 
 # install required packages:
