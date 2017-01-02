@@ -32,6 +32,16 @@ class fisheye_asf (
     version => '8',
 }->
 
+  file { 'svnwc profile':
+    ensure  => 'present',
+    path    => "/home/${username}/.profile",
+    mode    => '0644',
+    owner   => $username,
+    group   => $groupname,
+    source  => 'puppet:///modules/fisheye_asf/home/profile',
+    require => User[$username],
+  }
+
 # fisheye specific
   $fisheye_build            = "fisheye-${fisheye_version}"
   $zip                      = "${fisheye_build}.zip"
