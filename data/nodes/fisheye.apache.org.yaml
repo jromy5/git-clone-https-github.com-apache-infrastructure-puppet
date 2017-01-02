@@ -41,8 +41,6 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     priority: '12'
     servername: 'fisheye.apache.org'
-    serveraliases:
-      - 'fisheye.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
@@ -54,8 +52,6 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     default_vhost: true
     servername: 'fisheye.apache.org'
-    serveraliases:  
-      - 'fisheye.apache.org'
     port: 443
     docroot: '/var/www'
     error_log_file: 'fisheye_error.log'
