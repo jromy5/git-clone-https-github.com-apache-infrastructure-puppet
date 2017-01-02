@@ -30,9 +30,9 @@ class fisheye_asf (
   class { 'oraclejava::install':
     ensure  => 'latest',
     version => '8',
-}->
+  }->
 
-  file { 'svnwc profile':
+  file { 'fisheye profile':
     ensure  => 'present',
     path    => "/home/${username}/.profile",
     mode    => '0644',
