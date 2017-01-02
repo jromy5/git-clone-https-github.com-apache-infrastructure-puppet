@@ -170,7 +170,8 @@ directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
-eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao,mw
+eagle={ldap:cn=eagle,ou=groups,dc=apache,dc=org}
+eagle-pmc={reuse:pit-authorization:eagle-pmc}
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
 falcon={ldap:cn=falcon,ou=groups,dc=apache,dc=org}
@@ -1004,7 +1005,7 @@ projects_role = rw
 [/incubator/droids]
 * = r
 
-[/incubator/eagle]
+[/eagle]
 @eagle = rw
 
 [/incubator/graffito]

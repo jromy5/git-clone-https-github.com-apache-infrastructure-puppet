@@ -101,6 +101,8 @@ directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 drill={reuse:asf-authorization:drill}
 drill-pmc={ldap:cn=drill,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+eagle={reuse:asf-authorization:eagle}
+eagle-pmc={ldap:cn=eagle,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 empire-db={reuse:asf-authorization:empire-db}
 empire-db-pmc={ldap:cn=empire-db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 falcon={reuse:asf-authorization:falcon}
