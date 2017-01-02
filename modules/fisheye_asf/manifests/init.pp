@@ -18,7 +18,7 @@ class fisheye_asf (
   $connector_port                = '',
   $context_path                  = '',
 
-  $required_packages             = ['default-jre','unzip','wget'],
+  $required_packages             = ['unzip','wget','svn','git'],
 ){
 
 # install required packages:
@@ -26,6 +26,11 @@ class fisheye_asf (
     $required_packages:
       ensure => 'present',
   }
+  
+  class { 'oraclejava::install':
+    ensure  => 'latest',
+    version => '8',
+}->
 
 # fisheye specific
   $fisheye_build            = "fisheye-${fisheye_version}"
@@ -104,5 +109,5 @@ file {
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
-  }  
+  }    
 }
