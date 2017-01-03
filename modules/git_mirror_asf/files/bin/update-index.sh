@@ -171,7 +171,7 @@ cat <<EOT >>index.new
     </div> 
 
     <div id="copyright" class="container_16"> 
-      <p>Copyright &#169; 2010-2016 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
+      <p>Copyright &#169; 2010-2017 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br/>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p> 
     </div> 
   </body> 
 </html>
