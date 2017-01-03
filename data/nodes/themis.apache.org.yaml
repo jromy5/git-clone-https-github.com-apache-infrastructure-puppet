@@ -621,6 +621,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'apachecon.com'
+      - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
   
@@ -633,6 +634,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'apachecon.com'
+      - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
