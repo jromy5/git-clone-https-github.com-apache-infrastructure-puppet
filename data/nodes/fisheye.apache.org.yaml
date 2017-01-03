@@ -1,12 +1,14 @@
 ---
 classes:
-  - fisheye_asf
-  - oraclejava::install
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
-  - vhosts_asf::vhosts
+  - fisheye_asf
+  - mysql_asf::backup
+  - mysql::server
+  - oraclejava::install
   - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
@@ -15,6 +17,27 @@ oraclejava::install::unlimited_jce: true
 fisheye_asf::fisheye_version: '4.2.1'
 fisheye_asf::parent_dir: '/usr/local/fisheye'
 fisheye_asf::context_path: '/fisheye'
+
+datadog_agent::integrations::mysql::host: "%{::ipaddress_ens3}"
+datadog_agent::integrations::mysql::user: 'datadog'
+
+mysql::server::override_options:
+  mysqld:
+    ft_min_word_len: 2
+    bind-address: "%{::ipaddress_ens3}"
+    server-id: 1
+    binlog-format: 'mixed'
+    log_bin: '/var/log/mysql/mysql-bin.log'
+    innodb_flush_log_at_trx_commit: '1'
+    sync_binlog: '1'
+    binlog-ignore-db: 'mysql'
+    expire-logs-days: '5'
+    character-set-server: 'utf8'
+    max_allowed_packet: '64M'
+    max_connections: '4096'
+  mysqldump:
+    max_allowed_packet: '64M'
+
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
