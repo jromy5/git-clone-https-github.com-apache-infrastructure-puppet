@@ -605,7 +605,34 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
+      
 
+  apachecon:
+    vhost_name: '*'
+    port: 80
+    servername: 'apachecon.com'
+    docroot: '/var/www/www.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+  
+  apachecon-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'apachecon.com'
+    docroot: '/var/www/www.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
+    ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
+    ssl_key: '/etc/ssl/private/apachecon.com.key'      
+  
   apachecon-archive:
     vhost_name: '*'
     port: 80
@@ -614,12 +641,10 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
-      - 'apachecon.com'
-      - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
 
-  apachecon-ssl:
+  apachecon-archive-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
@@ -628,8 +653,6 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
-      - 'apachecon.com'
-      - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
