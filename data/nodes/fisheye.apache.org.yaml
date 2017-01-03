@@ -38,6 +38,12 @@ mysql::server::override_options:
   mysqldump:
     max_allowed_packet: '64M'
 
+mysql::server::databases:
+  fisheye:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
