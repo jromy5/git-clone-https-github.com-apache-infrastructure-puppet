@@ -48,6 +48,14 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'infrastructure@apache.org'
 
+cron:
+  letsencrypt:
+    user: 'root'
+    minute: '0'
+    hour: '0'
+    weekday: '3'
+    command: '/usr/bin/certbot-auto renew > /var/logs/letsencrypt.log 2>&1'
+    
 base::hosts:
   svn.us.apache.org:
     ip: '10.41.0.6'
@@ -69,6 +77,14 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/wilderness'
     servername: 'wilderness.apache.org'
     directoryindex: 'index.lua index.html'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://wilderness.apache.org/$1
+  wilderness-ssl:
+    vhost_name: '*'
+    port: 443
+    docroot: '/var/www/wilderness'
+    servername: 'wilderness.apache.org'
+    directoryindex: 'index.lua index.html'
     options:
       - Indexes
       - FollowSymLinks
@@ -76,5 +92,9 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       AddHandler lua-script .lua
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/wilderness.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/wilderness.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/wilderness.apache.org/chain.pem
       
 
