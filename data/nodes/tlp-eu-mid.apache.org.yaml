@@ -611,7 +611,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'apachecon.com'
-    docroot: '/var/www/www.apachecon.com'
+    docroot: '/var/www/apachecon.com'
     manage_docroot: false
     serveraliases:
       - 'apachecon.com'
@@ -623,7 +623,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'apachecon.com'
-    docroot: '/var/www/www.apachecon.com'
+    docroot: '/var/www/apachecon.com'
     manage_docroot: false
     serveraliases:
       - 'apachecon.com'
