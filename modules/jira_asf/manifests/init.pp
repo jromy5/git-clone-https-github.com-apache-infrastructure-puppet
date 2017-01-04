@@ -177,7 +177,7 @@ class jira_asf (
     "${pgsql_connector_dest_dir}/${pgsql_connector}":
       ensure => present,
       source => "puppet:///modules/jira_asf/${pgsql_connector}";
-    $procmailrc
+    $procmailrc:
       content => template ('jira_asf/procmailrc.erb'),
       mode    => '0640',
       owner   => 'jira',
@@ -190,7 +190,7 @@ class jira_asf (
   }
 
   logrotate::rule { 'procmail-jira':
-    path         => '/home/${username}/Maildir/procmail.log',
+    path         => "/home/${username}/Maildir/procmail.log",
     rotate       => 6,
     rotate_every => 'month',
     missingok    => true,
