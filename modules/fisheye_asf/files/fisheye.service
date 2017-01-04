@@ -5,6 +5,8 @@ Description=Fisheye
 Type=forking
 ExecStart=/usr/local/fisheye/current/bin/start.sh
 ExecStop=/usr/local/fisheye/current/bin/stop.sh
+User=fisheye
+Group=fisheye
 
 [Install]
 WantedBy=multi-user.target
