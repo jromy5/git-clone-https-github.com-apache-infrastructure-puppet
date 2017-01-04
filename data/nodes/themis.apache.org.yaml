@@ -624,8 +624,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
-    ReWriteEngine on
-    RewriteRule   "^/c" "http://archive.apachecon.com/c/" [R=301,L]
+    custom_fragment: |
+		Redirect permanent /c http://archive.apachecon.com/c
   
   apachecon-ssl:
     vhost_name: '*'
@@ -642,8 +642,8 @@ vhosts_asf::vhosts::vhosts:
     ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
     ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
     ssl_key: '/etc/ssl/private/apachecon.com.key'
-    ReWriteEngine on
-    RewriteRule   "^/c" "http://archive.apachecon.com/c/" [R=301,L]
+    custom_fragment: |
+		Redirect permanent /c http://archive.apachecon.com/c
 
   apachecon-archive:
     vhost_name: '*'
