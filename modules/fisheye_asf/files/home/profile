@@ -23,4 +23,4 @@ fi
 
 FISHEYE_INST="/usr/local/fisheye/fisheye-data"
 export FISHEYE_INST
-FISHEYE_OPTS=-Xmx2048m -Xms512m -XX:MaxMetaspaceSize=512m
+FISHEYE_OPTS="-Xmx2048m -Xms512m -XX:MaxMetaspaceSize=512m"
