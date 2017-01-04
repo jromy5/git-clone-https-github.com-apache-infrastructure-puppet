@@ -135,6 +135,19 @@ file {
       ensure  => link,
       target  => '/usr/share/java/mysql-connector-java-5.1.38.jar',
       require => Package['libmysql-java'];
+    "${fisheye_home}/.subversion":
+      ensure  => directory,
+      owner   => 'fisheye',
+      group   => 'fisheye',
+      mode    => '0755',
+      require => [Package['subversion'],File[$fisheye_home]];
+    "${fisheye_home}/.subversion/servers":
+      ensure  => present,
+      owner   => 'fisheye',
+      group   => 'fisheye',
+      mode    => '0644',
+      source  => "puppet:///modules/fisheye_asf/home/subversion/servers",
+      require => [Package['subversion'],File[$fisheye_home]];
   }    
 
   ::systemd::unit_file { "fisheye.service":
