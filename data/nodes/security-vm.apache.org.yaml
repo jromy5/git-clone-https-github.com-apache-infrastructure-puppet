@@ -60,6 +60,7 @@ oraclejava::install::unlimited_jce: true
 
 postfix::server::home_mailbox: 'Maildir/'
 postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 postfix::server::myorigin: 'apache.org'
 
 vhosts_asf::modules::modules:
