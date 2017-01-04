@@ -97,7 +97,7 @@ class fisheye_asf (
     'copy-config':
       command => "/bin/cp ${install_dir}/config.xml ${fisheye_home}/config.xml",
       user    => 'fisheye',
-      creates => "{fisheye_home}/config.xml",
+      creates => "${fisheye_home}/config.xml",
       timeout => 600,
       require => [Exec['extract-fisheye'],File[$fisheye_home]],
   }
