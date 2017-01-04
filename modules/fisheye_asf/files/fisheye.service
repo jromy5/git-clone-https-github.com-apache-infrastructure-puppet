@@ -5,7 +5,7 @@ Description=Fisheye
 Type=forking
 ExecStart=/usr/local/fisheye/current/bin/start.sh
 ExecStop=/usr/local/fisheye/current/bin/stop.sh
-Restart=/usr/local/fisheye/current/bin/start.sh && sleep 10s && /usr/local/fisheye/current/bin/stop.sh
 
 [Install]
 WantedBy=multi-user.target
+Alias=fisheye.service
