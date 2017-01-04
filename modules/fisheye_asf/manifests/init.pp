@@ -121,7 +121,7 @@ file {
       group   => 'fisheye',
       mode    => '0755',
       require => File[$fisheye_home];
-    "${fisheye_home}/lib/mysql-connector-java-5.1.38.jar':
+    "${fisheye_home}/lib/mysql-connector-java-5.1.38.jar":
       ensure  => link,
       target  => '/usr/share/java/mysql-connector-java-5.1.38.jar',
       require => Package['libmysql-java'];
