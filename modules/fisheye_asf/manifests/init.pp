@@ -140,7 +140,7 @@ file {
       owner   => 'fisheye',
       group   => 'fisheye',
       mode    => '0755',
-      require => [Package['subversion'],User[$username];
+      require => [Package['subversion'],User[$username]];
     "/home/${username}/.subversion/servers":
       ensure  => present,
       owner   => 'fisheye',
