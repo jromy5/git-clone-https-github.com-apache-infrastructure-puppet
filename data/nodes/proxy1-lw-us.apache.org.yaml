@@ -108,6 +108,33 @@ vhosts_asf::vhosts::vhosts:
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=503
 
+  crowd:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'crowd.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'crowd.apache.org.http_access.log'
+    error_log_file: 'crowd.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://crowd.apache.org/
+
+  crowd-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'crowd.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'crowd.apache.org.http_access.log'
+    error_log_file: 'crowd.apache.org.error.log'
+    custom_fragment: |
+			RewriteEngine On
+			ProxyPass /crowd http://10.10.3.14:8095/crowd/
+			ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
+
   issues-test:
     vhost_name: '*'
     ensure: 'present'
