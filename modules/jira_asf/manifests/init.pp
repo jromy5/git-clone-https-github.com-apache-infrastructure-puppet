@@ -66,7 +66,7 @@ class jira_asf (
   $serverxml                = "${current_dir}/conf/server.xml"
   $setenv                   = "${current_dir}/bin/setenv.sh"
   $jira_properties          = "${current_dir}/atlassian-jira/WEB-INF/classes/jira-application.properties"
-  $procmailrc               = "/home/${username}/.procmailrc
+  $procmailrc               = "/home/${username}/.procmailrc"
 
   user {
     $username:
