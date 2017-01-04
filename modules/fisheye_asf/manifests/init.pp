@@ -18,7 +18,7 @@ class fisheye_asf (
   $connector_port                = '',
   $context_path                  = '',
 
-  $required_packages             = ['unzip','wget'],
+  $required_packages             = ['unzip','wget','libmysql-java'],
 ){
 
 # install required packages:
@@ -115,6 +115,16 @@ file {
       owner   => 'root',
       group   => 'root',
       require => File[$install_dir];
+    "${fisheye_home}/lib"
+      ensure  => directory,
+      owner   => 'fisheye',
+      group   => 'fisheye',
+      mode    => '0755',
+      require => File[$fisheye_home];
+    "${fisheye_home}/lib/mysql-connector-java-5.1.38.jar';
+      ensure  => link,
+      target  => '/usr/share/java/mysql-connector-java-5.1.38.jar',
+      require => Package['libmysql-java'];
   }    
 
   ::systemd::unit_file { "fisheye.service":
