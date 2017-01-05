@@ -60,7 +60,7 @@ def main():
 
 def send_json(data):
     try:
-        requests.post("http://%s:%u%s" %
+        requests.post("http://%s:%s%s" %
                       (cfg.gitpubsub_host, cfg.gitpubsub_port, cfg.gitpubsub_path),
                       data = json.dumps({"commit": data}))
     except:
