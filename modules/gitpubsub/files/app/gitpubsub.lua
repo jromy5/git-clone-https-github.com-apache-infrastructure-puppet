@@ -92,17 +92,25 @@ function checkJSON()
     local now = os.time()
     for k, child in pairs(waitingForJSON) do
         if child then
-            local rl, err = child.socket:receive("*l")
-            if rl then 
+            local howmuch = "*l" -- either one line or however much provided by content-length
+            if child['content-length'] then
+                howmuch = tonumber(child['content-length'] or 0) or 0
+            end
+            local rl, err = child.socket:receive(howmuch)
+            if rl then
+                local IP = child.socket.getpeername and child.socket:getpeername() or "?.?.?.?"
+                print(("Read data object of %u bytes (%s) from %s"):format(#rl, howmuch, IP))
                 local okay = false
                 if JSON then 
                     okay, js = pcall(function() return JSON.decode(rl) end)
                 end
                 if okay then
+                    print(("Object from %s is valid JSON, publishing"):format(IP))
                     table.insert(history, { timestamp = now, data = rl, uri = child.uri } )
                     child.socket:send(greeting .."X-Timestamp: " .. now .. "\r\n\r\nMessage sent!\r\n")
                     cwrite(writeTo, rl, child.uri)
                 else
+                    print(("Object from %s is NOT valid JSON, not publishing"):format(IP))
                     child.socket:send("HTTP/1.1 400 Bad request\r\n\r\nInvalid JSON data posted :(\r\n")
                 end
                 waitingForJSON[k] = nil
