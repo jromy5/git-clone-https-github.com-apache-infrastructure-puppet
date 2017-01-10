@@ -733,7 +733,7 @@ vhosts_asf::vhosts::vhosts:
       <Location />
         AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthName "PMC Members Only"
+        AuthName "ASF Committers"
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
