@@ -95,8 +95,6 @@ deltacloud-pmc={ldap:cn=deltacloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 deltaspike={reuse:asf-authorization:deltaspike}
 deltaspike-pmc={ldap:cn=deltaspike,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # depot={reuse:asf-authorization:# depot}
-devicemap={reuse:asf-authorization:devicemap}
-devicemap-pmc={ldap:cn=devicemap,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 drill={reuse:asf-authorization:drill}
@@ -1177,7 +1175,7 @@ buildbot = rw
 @deltaspike = rw
 
 [/websites/production/devicemap]
-@devicemap = rw
+@attic-pmc = rw
 
 [/websites/production/directory]
 @directory = rw

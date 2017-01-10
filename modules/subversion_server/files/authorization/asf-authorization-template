@@ -163,8 +163,6 @@ deltaspike={ldap:cn=deltaspike,ou=groups,dc=apache,dc=org}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
 db-derby={ldap:cn=db-derby,ou=auth,ou=groups,dc=apache,dc=org} 
-devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
-devicemap-pmc={reuse:pit-authorization:devicemap-pmc}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
 directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
