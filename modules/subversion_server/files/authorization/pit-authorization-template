@@ -22,6 +22,8 @@ any23={reuse:asf-authorization:any23}
 any23-pmc={ldap:cn=any23,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ant={reuse:asf-authorization:ant}
 ant-pmc={ldap:cn=ant,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+apex={reuse:asf-authorization:apex}
+apex-pmc={ldap:cn=apex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 apr={reuse:asf-authorization:apr}
 apr-pmc={ldap:cn=apr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 archiva={reuse:asf-authorization:archiva}
@@ -820,6 +822,9 @@ openejb-tck = r
 
 [/pmc/airavata]
 @airavata-pmc = rw
+
+[/pmc/apex]
+@apex-pmc = rw
 
 [/pmc/apr]
 @apr = rw

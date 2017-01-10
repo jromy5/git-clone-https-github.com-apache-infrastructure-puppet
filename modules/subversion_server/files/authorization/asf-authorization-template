@@ -83,6 +83,8 @@ any23={ldap:cn=any23,ou=groups,dc=apache,dc=org}
 any23-pmc={reuse:pit-authorization:any23-pmc}
 ant={ldap:cn=ant,ou=groups,dc=apache,dc=org}
 ant-pmc={reuse:pit-authorization:ant-pmc}
+apex={ldap:cn=apex,ou=groups,dc=apache,dc=org}
+apex-pmc={reuse:pit-authorization:apex-pmc}
 apr={ldap:cn=apr,ou=groups,dc=apache,dc=org}
 apr-pmc={reuse:pit-authorization:apr-pmc}
 archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
