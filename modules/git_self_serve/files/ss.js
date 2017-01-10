@@ -40,7 +40,7 @@ fetch = function(url, xstate, callback, snap) {
 	};
     // leave this line around, helps test when you're not really deployed.
     // also gives a clearer documentation of the API response from the lua script
-    // return callback({pmcs:['incubator','infrastructure','whimsy','flerp']}, undefined);
+    // return callback({pmcs:['incubator','infrastructure','whimsy','flerp','logging']}, undefined);
 };
 
 post = function(url, args, xstate, callback, snap) {
@@ -268,16 +268,20 @@ submitForm = function(form) {
     if (!sendRepoName) {
     	sendRepoName = '-';
 	}
+	else if(sendRepoName.startsWith('-')) {
+    	sendRepoName = sendRepoName.substring(1);
+	}
 	rc = get('confirm').getAttribute("data");
 	if (rc && rc === 'yes') {
-		post("ss.lua", {
-			create: "yes",
-			pmc: pmc,
-			name: sendRepoName,
-			description: description,
-			notify: notify,
-			ghnotify: ghnotify
-		}, null, null);
+		var payload = {
+            create: "yes",
+            pmc: pmc,
+            name: sendRepoName,
+            description: description,
+            notify: notify,
+            ghnotify: ghnotify
+        };
+		post("ss.lua", payload , null, null);
 		get('confirm').innerHTML = '';
 		get('confirm').setAttribute("data", "no");
 		alert("Request submitted! It may take up to an hour before the repository is created.");
