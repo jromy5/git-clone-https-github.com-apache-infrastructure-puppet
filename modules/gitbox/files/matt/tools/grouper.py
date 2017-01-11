@@ -188,7 +188,11 @@ def getCommitters(group):
     if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
         print("Found hardcoded member list for %s!" % group)
         return CONFIG.get('group:%s' % group, 'members').split(' ')
-    
+    # Also check if there's a hard coded LDAP base.
+    # If so, the list is usually different, so we'll use getStandardGroup for this.
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'ldap'):
+        lb = CONFIG.get('group:%s' % group, 'ldap')
+        return getStandardGroup(group, lb)
     print("Fetching LDAP committer list for %s" % group)
     committers = []
     # This might fail in case of ldap bork, if so we'll return nothing.
@@ -247,24 +251,28 @@ def getPMC(group):
     return pmcmembers
 
 
-def getPodling(group):
-    """ Gets the list of availids in a podling using new schema """
-    print("Fetching LDAP podling list for %s" % group)
+def getStandardGroup(group, ldap_base = None):
+    """ Gets the list of availids in a standard group (services, podlings) """
+    print("Fetching LDAP group list for %s" % group)
     # First, check if there's a hardcoded member list for this group
     # If so, read it and return that instead of trying LDAP
     if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
         print("Found hardcoded member list for %s!" % group)
         return CONFIG.get('group:%s' % group, 'members').split(' ')
-    podlingmembers = []
+    groupmembers = []
     # This might fail in case of ldap bork, if so we'll return nothing.
     try:
         ldapClient = ldap.initialize(LDAP_URI)
         ldapClient.set_option(ldap.OPT_REFERRALS, 0)
 
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
+        
+        # Default LDAP base if not specified
+        if not ldap_base:
+            ldap_base = "cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group
 
         # This is using the new podling/etc LDAP groups defined by Sam
-        results = ldapClient.search_s("cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
+        results = ldapClient.search_s(ldap_base, ldap.SCOPE_BASE)
 
         for result in results:
             result_dn = result[0]
@@ -274,14 +282,14 @@ def getPodling(group):
                 for member in result_attrs["member"]:
                     m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
                     if m:
-                        podlingmembers.append(m.group(1))
+                        groupmembers.append(m.group(1))
 
         ldapClient.unbind_s()
-        podlingmembers = sorted(podlingmembers) #alphasort
+        groupmembers = sorted(groupmembers) #alphasort
     except Exception as err:
         print("Could not fetch LDAP data: %s" % err)
-        podlingmembers = None
-    return podlingmembers
+        groupmembers = None
+    return groupmembers
 
 
 ####################
@@ -307,7 +315,7 @@ for repo in allrepos:
     m = re.match(r"(?:incubator-)?([^-]+)", repo)
     if m: #don't see why this would fail, but best to be sure
         project = m.group(1)
-        if not project in MATT_PROJECTS and project != "infrastructure":
+        if not project in MATT_PROJECTS:
             MATT_PROJECTS[project] = "tlp" if not re.match(r"incubator-", repo) else "podling" # distinguish between tlp and podling
 
 # Then, start off by getting all existing GitHub teams and repos - we'll need that later.
@@ -353,7 +361,7 @@ for project in MATT_PROJECTS:
         print(existingTeams[teamID] + ": " + ", ".join(members))
 
     # Now get the committer availids from LDAP
-    ldap_team = getCommitters(project) if ptype == "tlp" else getPodling(project)
+    ldap_team = getCommitters(project) if ptype == "tlp" else getStandardGroup(project)
     if not ldap_team or len(ldap_team) == 0:
         print("LDAP Borked (no group data returned)? Trying next project instead")
         continue
