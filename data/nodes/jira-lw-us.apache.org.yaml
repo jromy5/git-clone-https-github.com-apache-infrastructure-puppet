@@ -58,6 +58,7 @@ letsencrypt::certonly:
   issues:
     domains:
       - jira-lw-us.apache.org
+      - issues.apache.org
     plugin: standalone
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
@@ -94,9 +95,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    ssl_cert: '/etc/letsencrypt/live/issues.apache.org/cert.pem'
-    ssl_key:  '/etc/letsencrypt/live/issues.apache.org/privkey.pem'
-    ssl_chain: '/etc/letsencrypt/live/issues.apache.org/chain.pem'
+    ssl_cert: '/etc/letsencrypt/live/jira-lw-us.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/jira-lw-us.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/jira-lw-us.apache.org/chain.pem'
     docroot: '/var/www/issues-data'
     servername: 'jira-lw-us.apache.org'
     serveraliases:
@@ -122,7 +123,7 @@ vhosts_asf::vhosts::vhosts:
 
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
-      RewriteCond %%{}{REQUEST_URI} !/jira/maintenance.html
+      RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
       RewriteRule ^/jira/(.*) /jira/maintenance.html
 
       # Fix URLs in SOAP requests
