@@ -63,5 +63,5 @@ postgresql::server::pg_hba_rule:
     type: 'host'
     database: 'jira_main'
     user: 'jira'
-    address: '207.244.88.139/32'
+    address: '10.10.3.5/32'
     auth_method: 'md5'
