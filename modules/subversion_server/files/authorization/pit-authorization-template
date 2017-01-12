@@ -1411,7 +1411,7 @@ buildbot = rw
 @trafficserver = rw
 
 [/websites/production/treasurer]
-@tresurer = rw
+@treasurer = rw
 
 [/websites/production/turbine]
 @turbine = rw
