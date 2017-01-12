@@ -114,7 +114,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine on
 
       # Proxy requests
-      ProxyPass /jira ajp://10.10.3.5:8009/jira   retry=0 timeout=1800 max=400
+      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
       LuaScope thread
@@ -126,6 +126,7 @@ vhosts_asf::vhosts::vhosts:
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
       RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !86\.152\.77\.129
       RewriteRule ^/jira/(.*) /jira/maintenance.html
 
       # Fix URLs in SOAP requests
