@@ -75,6 +75,8 @@ postfix::server::myorigin: 'apache.org'
 vhosts_asf::modules::modules:
   substitute:
     name: 'substitute'
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   issues:
