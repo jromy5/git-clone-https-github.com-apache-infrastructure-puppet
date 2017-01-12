@@ -112,6 +112,13 @@ class buildbot_slave (
       group   => $groupname,
       mode    => '0755';
 
+    "/home/${username}/.gradle":
+      ensure  => directory,
+      require => User[$username],
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0755';
+
     "/home/${username}/.m2/settings.xml":
       require => File["/home/${username}/.m2"],
       path    => "/home/${username}/.m2/settings.xml",
@@ -127,6 +134,14 @@ class buildbot_slave (
       group   => $groupname,
       mode    => '0640',
       source  => 'puppet:///modules/buildbot_slave/toolchains.xml';
+
+    "/home/${username}/.gradle/gradle.properties":
+      require => File["/home/${username}/.gradle"],
+      path    => "/home/${username}/.gradle/gradle.properties",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('buildbot_slave/gradle_properties.erb');
 
     "/home/${username}/slave":
       ensure  => directory,

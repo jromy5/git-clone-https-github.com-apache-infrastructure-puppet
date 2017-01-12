@@ -83,6 +83,8 @@ any23={ldap:cn=any23,ou=groups,dc=apache,dc=org}
 any23-pmc={reuse:pit-authorization:any23-pmc}
 ant={ldap:cn=ant,ou=groups,dc=apache,dc=org}
 ant-pmc={reuse:pit-authorization:ant-pmc}
+apex={ldap:cn=apex,ou=groups,dc=apache,dc=org}
+apex-pmc={reuse:pit-authorization:apex-pmc}
 apr={ldap:cn=apr,ou=groups,dc=apache,dc=org}
 apr-pmc={reuse:pit-authorization:apr-pmc}
 archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
@@ -163,14 +165,13 @@ deltaspike={ldap:cn=deltaspike,ou=groups,dc=apache,dc=org}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
 db-derby={ldap:cn=db-derby,ou=auth,ou=groups,dc=apache,dc=org} 
-devicemap={ldap:cn=devicemap,ou=groups,dc=apache,dc=org}
-devicemap-pmc={reuse:pit-authorization:devicemap-pmc}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
 directory={ldap:cn=directory,ou=groups,dc=apache,dc=org}
 directory-pmc={reuse:pit-authorization:directory-pmc}
 drill={ldap:cn=drill,ou=groups,dc=apache,dc=org}
 drill-pmc={reuse:pit-authorization:drill-pmc}
-eagle=lukehan,jhyde,omalley,hsaputra,amareshwari,ptgoetz,cgupta,hdendukuri,arunmanoharan,yonzhang2012,hao,libsun,jilin,qingwzhao,mw
+eagle={ldap:cn=eagle,ou=groups,dc=apache,dc=org}
+eagle-pmc={reuse:pit-authorization:eagle-pmc}
 empire-db={ldap:cn=empire-db,ou=groups,dc=apache,dc=org}
 empire-db-pmc={reuse:pit-authorization:empire-db-pmc}
 falcon={ldap:cn=falcon,ou=groups,dc=apache,dc=org}
@@ -374,7 +375,7 @@ s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamsho
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
-senssoft=jpoore,lewismc,lmariano,cgimenez,aford,syork,fsun,mbeard,rfoley,kfinley
+senssoft=lewismc,lmariano,cgimenez,aford,poorejc,msbeard,rf,pykors,pramirez,mattmann
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry={ldap:cn=sentry,ou=groups,dc=apache,dc=org}
@@ -419,7 +420,7 @@ synapse={ldap:cn=synapse,ou=groups,dc=apache,dc=org}
 synapse-pmc={reuse:pit-authorization:synapse-pmc}
 syncope={ldap:cn=syncope,ou=groups,dc=apache,dc=org}
 syncope-pmc={reuse:pit-authorization:syncope-pmc}
-systemml=acs_s,ae2015,dbtsai,deron,dusenberrymw,freiss,holden,jkbradley,lresende,mboehm7,meng,niketanpansare,prithvi,pwendell,rbowen,reinwald,rxin,shirisht
+systemml=acs_s,ae2015,dbtsai,deron,dusenberrymw,freiss,holden,jkbradley,lresende,mboehm7,meng,niketanpansare,prithvi,pwendell,rbowen,reinwald,rxin,shirisht,hsaputra
 # There is no tac unix group; ensure tac is published on people.a.o
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=groups,dc=apache,dc=org}
@@ -1004,7 +1005,7 @@ projects_role = rw
 [/incubator/droids]
 * = r
 
-[/incubator/eagle]
+[/eagle]
 @eagle = rw
 
 [/incubator/graffito]

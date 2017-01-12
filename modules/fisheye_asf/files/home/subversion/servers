@@ -1,0 +1,7 @@
+# this file is managed by puppet, see modules/fisheye_asf/files/subsverion/servers/
+
+[groups]
+
+[global]
+http-timeout = 259200
+

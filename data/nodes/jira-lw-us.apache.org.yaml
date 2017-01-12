@@ -1,0 +1,137 @@
+---
+classes:
+  - aardvark_asf # requires lua deps in basepackages
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::ssl
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+  - jira_asf
+  - letsencrypt
+  - oraclejava::install
+  - zmanda_asf::client
+
+apache::default_vhost: false
+apache::mpm_module: 'event'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '750'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '3750'
+apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::minsparethreads:         '150'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '150'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
+base::basepackages:
+  - issues-data
+  - procmail
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+
+
+# jira_asf class variables.
+jira_asf::jira_version: '6.3.4'
+jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
+jira_asf::parent_dir: '/x1/jira'
+jira_asf::server_port: '8008'
+jira_asf::connector_port_http: ''
+jira_asf::connector_address_ajp: '127.0.0.1'
+jira_asf::context_path: '/jira'
+jira_asf::docroot: '/var/www'
+jira_asf::jvm_min_size: '6144m'
+jira_asf::jvm_max_size: '6144m'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  issues:
+    domains:
+      - jira-lw-us.apache.org
+      - issues.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
+postfix::server::home_mailbox: 'Maildir/'
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+postfix::server::myorigin: 'apache.org'
+
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  issues:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/issues-data'
+    servername: 'jira-lw-us.apache.org'
+    serveraliases:
+      - 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.http_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://issues.apache.org/
+  issues-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/jira-lw-us.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/jira-lw-us.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/jira-lw-us.apache.org/chain.pem'
+    docroot: '/var/www/issues-data'
+    servername: 'jira-lw-us.apache.org'
+    serveraliases:
+      - 'issues.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues.apache.org.ssl_access.log'
+    error_log_file: 'issues.apache.org.error.log'
+    custom_fragment: |
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # Proxy requests
+      ProxyPass /jira ajp://10.10.3.5:8009/jira   retry=0 timeout=1800 max=400
+
+      # Anti-spam for Aardvark
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+      <Location /jira/>
+        SetInputFilter AntiSpam
+      </Location>
+
+      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
+      RewriteCond /etc/tomcat-jira-main.maint -f
+      RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
+      RewriteRule ^/jira/(.*) /jira/maintenance.html
+
+      # Fix URLs in SOAP requests
+      <Location /jira/rpc/soap>
+        AddOutputFilterByType SUBSTITUTE text/xml
+        Substitute s!http://issues.apache.org/!https://issues.apache.org/!
+      </Location>
+
+

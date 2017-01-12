@@ -369,9 +369,8 @@ div#header
 
 /* Tag Cloud */
 
-.s1 {font-size:60%;}
-.s2 {font-size:80%;}
-.s3 {font-size:100%;}
-.s4 {font-size:120%;}
-.s5 {font-size:140%;}
-
+a.s1, a.s1:hover{font-size:60%;}
+a.s2, a.s2:hover{font-size:80%;}
+a.s3, a.s3:hover{font-size:100%;}
+a.s4, a.s4:hover{font-size:120%;}
+a.s5, a.s5:hover{font-size:140%;}

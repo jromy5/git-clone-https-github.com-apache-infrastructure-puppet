@@ -66,6 +66,7 @@ class jira_asf (
   $serverxml                = "${current_dir}/conf/server.xml"
   $setenv                   = "${current_dir}/bin/setenv.sh"
   $jira_properties          = "${current_dir}/atlassian-jira/WEB-INF/classes/jira-application.properties"
+  $procmailrc               = "/home/${username}/.procmailrc"
 
   user {
     $username:
@@ -176,11 +177,24 @@ class jira_asf (
     "${pgsql_connector_dest_dir}/${pgsql_connector}":
       ensure => present,
       source => "puppet:///modules/jira_asf/${pgsql_connector}";
+    $procmailrc:
+      content => template ('jira_asf/procmailrc.erb'),
+      mode    => '0640',
+      owner   => 'jira',
+      group   => 'jira',
     # "/etc/init.d/${service_name}":
       # mode    => '0755',
       # owner   => 'root',
       # group   => 'root',
       # content => template('jira_asf/jira-init-script.erb');
+  }
+
+  logrotate::rule { 'procmail-jira':
+    path         => "/home/${username}/Maildir/procmail.log",
+    rotate       => 6,
+    rotate_every => 'month',
+    missingok    => true,
+    compress     => true,
   }
 
   # service {

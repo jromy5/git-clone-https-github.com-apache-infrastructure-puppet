@@ -48,7 +48,7 @@ class svnqavm_pvm_asf (
     # Log the revision of backport.pl in use.
     # (There's no log rotation since this will use about 2KB a year.)
     'backport-version-log':
-      command     => "(date +\%Y\%m\%d: ; $::{SVNVERSION} src/svn/trunk/tools/dist/backport.pl) >> ~/live-version.log",
+      command     => '(date +\%Y\%m\%d: ; ${SVNVERSION} src/svn/trunk/tools/dist/backport.pl) >> ~/live-version.log',
       user        => 'svnsvn',
       hour        => 4,
       minute      => 0,

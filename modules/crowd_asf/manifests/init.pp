@@ -174,7 +174,6 @@ class crowd_asf (
       enable     => true,
       hasstatus  => false,
       hasrestart => true,
-      require    => Class['apache'],
   }
 
 # cron jobs

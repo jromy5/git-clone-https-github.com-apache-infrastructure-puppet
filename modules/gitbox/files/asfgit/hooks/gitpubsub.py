@@ -1,9 +1,9 @@
 #!/usr/local/bin/python
 
 import json
-import socket
 import sys
 import time
+import requests
 
 import asfgit.cfg as cfg
 import asfgit.git as git
@@ -60,22 +60,9 @@ def main():
 
 def send_json(data):
     try:
-        data = json.dumps({"commit": data}) + "\n\n"
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((cfg.gitpubsub_host, int(cfg.gitpubsub_port)))
-        request = "PUT %s HTTP/1.1\r\n\r\n%s" % (cfg.gitpubsub_path, data)
-        sock.sendall(request)
-        resp = []
-        while True:
-            resp.append(sock.recv(4096))
-            if len(resp[-1]) == 0:
-                break
-        resp = "".join(resp)
-        # Ignore the resp because gitpubsub returns
-        # garbage.
-        #if not resp.startswith("HTTP/1.1 OK"):
-        #    raise ValueError("Invalid server response: %r" % resp)
-        sock.close()
+        requests.post("http://%s:%s%s" %
+                      (cfg.gitpubsub_host, cfg.gitpubsub_port, cfg.gitpubsub_path),
+                      data = json.dumps({"commit": data}))
     except:
         log.exception()
 

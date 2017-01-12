@@ -62,34 +62,38 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
-  blogs-new:
+  blogs:
     vhost_name: '*'
     ensure: 'present'
     port: 80
-    servername: 'blogs-new.apache.org'
+    servername: 'blogs.apache.org'
     serveraliases:
+      - 'www.blogs.apache.org'
+      - 'blogs-new.apache.org'
       - 'www.blogs-new.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
-    access_log_file: 'blogs-new.apache.org.http_access.log'
-    error_log_file:  'blogs-new.apache.org.error.log'
+    access_log_file: 'blogs.apache.org.http_access.log'
+    error_log_file:  'blogs.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://blogs-new.apache.org/
+      Redirect permanent / https://blogs.apache.org/
 
-  blogs-new-ssl:
+  blogs-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'blogs-new.apache.org'
+    servername: 'blogs.apache.org'
     serveraliases:
+      - 'www.blogs.apache.org'
+      - 'blogs-new.apache.org'
       - 'www.blogs-new.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
-    access_log_file: 'blogs-new.apache.org.ssl_access.log'
-    error_log_file:  'blogs-new.apache.org.error.log'
+    access_log_file: 'blogs.apache.org.ssl_access.log'
+    error_log_file:  'blogs.apache.org.error.log'
     custom_fragment: |
       Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 
@@ -100,9 +104,36 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / https://10.10.3.8:8443/
 
       ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs-new.apache.org&code=503
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=blogs.apache.org&code=503
+
+  crowd:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/html'
+    servername: 'crowd.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'crowd.apache.org.http_access.log'
+    error_log_file: 'crowd.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://crowd.apache.org/
+
+  crowd-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    docroot: '/var/www/html'
+    servername: 'crowd.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'crowd.apache.org.http_access.log'
+    error_log_file: 'crowd.apache.org.error.log'
+    custom_fragment: |
+			RewriteEngine On
+			ProxyPass /crowd http://10.10.3.14:8095/crowd/
+			ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
 
   issues-test:
     vhost_name: '*'

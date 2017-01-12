@@ -7,20 +7,16 @@ import sys
 import asfgit.cfg as cfg
 import asfgit.git as git
 import asfgit.log as log
+import asfgit.util as util
 import subprocess, os, time
 
 def main():
     ghurl = "git@github:apache/%s.git" % cfg.repo_name
     os.chdir("/x1/repos/asf/%s.git" % cfg.repo_name)
     try:
-       subprocess.check_call(["git", "push", "--all", ghurl])
-       try:
-           os.unlink("/x1/gitbox/broken/%s.txt" % cfg.repo_name)
-       except:
-           pass
-    except Exception as err:
-       with open("/x1/git/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
-           f.write("BROKEN AT %s\n" % time.strftime("%c"))
-           f.close()
-       log.exception(err)
+       for ref in git.stream_refs(sys.stdin):
+          print("Syncing %s..." % ref.name)
+          subprocess.check_call(["git", "push", ghurl, "%s:%s" % (ref.newsha, ref.name)])
+    except subprocess.CalledProcessError as err:
+        util.abort("Could not sync with GitHub: %s" % err.output)
 

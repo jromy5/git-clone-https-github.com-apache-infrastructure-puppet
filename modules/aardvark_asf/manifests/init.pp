@@ -37,7 +37,7 @@ class aardvark_asf (
       group   => 'root',
       mode    => '0755',
       content => $aardvark_filter_content,
-      require => [ File[$aardvark], Package['mod-lua-asf'] ]
+      require => [ File[$aardvark]]
   }
 
 }

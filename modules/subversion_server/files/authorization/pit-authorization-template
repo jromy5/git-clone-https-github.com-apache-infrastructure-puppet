@@ -22,6 +22,8 @@ any23={reuse:asf-authorization:any23}
 any23-pmc={ldap:cn=any23,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ant={reuse:asf-authorization:ant}
 ant-pmc={ldap:cn=ant,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+apex={reuse:asf-authorization:apex}
+apex-pmc={ldap:cn=apex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 apr={reuse:asf-authorization:apr}
 apr-pmc={ldap:cn=apr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 archiva={reuse:asf-authorization:archiva}
@@ -95,12 +97,12 @@ deltacloud-pmc={ldap:cn=deltacloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 deltaspike={reuse:asf-authorization:deltaspike}
 deltaspike-pmc={ldap:cn=deltaspike,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # depot={reuse:asf-authorization:# depot}
-devicemap={reuse:asf-authorization:devicemap}
-devicemap-pmc={ldap:cn=devicemap,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 drill={reuse:asf-authorization:drill}
 drill-pmc={ldap:cn=drill,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+eagle={reuse:asf-authorization:eagle}
+eagle-pmc={ldap:cn=eagle,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 empire-db={reuse:asf-authorization:empire-db}
 empire-db-pmc={ldap:cn=empire-db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 falcon={reuse:asf-authorization:falcon}
@@ -397,7 +399,6 @@ exec-officers={ldap:cn=exec-officers,ou=auth,ou=groups,dc=apache,dc=org}
 fundraising={ldap:cn=fundraising,ou=auth,ou=groups,dc=apache,dc=org}
 infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
-infrastructure-adminsearch={ldap:cn=infrastructure-adminsearch,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-root={ldap:cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org}
 legal=
 member={ldap:cn=member,ou=groups,dc=apache,dc=org}
@@ -407,6 +408,7 @@ security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+treasurer=uli,kmcgrail
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
 pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
@@ -596,19 +598,6 @@ whimsysvn = r
 acrequser = r
 @member = r
 
-[/infrastructure/apwiki]
-@infrastructure = rw
-@member = r
-* = r
-
-[/infrastructure/apwiki/trunk/config]
-@pmc-chairs = rw
-
-[/infrastructure/apworkflow]
-@infrastructure = rw
-@member = r
-* = r
-
 [/infrastructure/bugzilla]
 @infrastructure-interest = rw
 @infrastructure = rw
@@ -630,10 +619,6 @@ buildbot = r
 @committers = rw
 buildbot = r
 * =
-
-[/infrastructure/hudson]
-@infrastructure-interest = rw
-@infrastructure = rw
 
 [/infrastructure/qpsmtpd]
 @infrastructure = rw
@@ -673,12 +658,6 @@ acrequser = rw
 whimsysvn = r
 @member = rw
 @pmc-chairs = rw
-
-[/infrastructure/trunk/admin-search]
-@infrastructure-adminsearch = rw
-@member = r
-@svnadmins = rw
-* =
 
 [/infrastructure/trunk/auth]
 @infrastructure-root = rw
@@ -757,9 +736,6 @@ whimsysvn = r
 [/infrastructure/trunk/puppet]
 puppetsvn = r
 
-[/infrastructure/trunk/puppet/hosts/svn-qavm2]
-@subversion = rw
-
 [/infrastructure/trunk/qmail]
 smtpd = r
 @member = rw
@@ -783,29 +759,6 @@ puppetsvn = r
 @infrastructure-interest = rw
 @svnadmins = rw
 * =
-
-[/infrastructure/trunk/subversion/authorization]
-@member = rw
-@pmc-chairs = rw
-@svnadmins = rw
-@board = rw
-@exec-officers = rw
-whimsysvn = r
-svn = r
-# apsite needs access to asf-authorization-template
-apsiteread = r
-
-[/infrastructure/trunk/subversion/authorization/pit-authorization-template]
-# Reduce from 'rw' access that they have to the parent dir.
-@member = r
-@pmc-chairs = r
-apsiteread = r
-@jcp = rw
-# Restore inherited permissions
-@infrastructure = rw
-@svnadmins = rw
-@board = rw
-@exec-officers = rw
 
 [/infrastructure/trunk/tools]
 apsiteread = r
@@ -870,6 +823,9 @@ openejb-tck = r
 
 [/pmc/airavata]
 @airavata-pmc = rw
+
+[/pmc/apex]
+@apex-pmc = rw
 
 [/pmc/apr]
 @apr = rw
@@ -1225,7 +1181,7 @@ buildbot = rw
 @deltaspike = rw
 
 [/websites/production/devicemap]
-@devicemap = rw
+@attic-pmc = rw
 
 [/websites/production/directory]
 @directory = rw
@@ -1455,7 +1411,7 @@ buildbot = rw
 @trafficserver = rw
 
 [/websites/production/treasurer]
-@incubator = rw
+@treasurer = rw
 
 [/websites/production/turbine]
 @turbine = rw

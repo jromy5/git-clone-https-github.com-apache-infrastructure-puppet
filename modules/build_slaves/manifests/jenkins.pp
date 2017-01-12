@@ -149,6 +149,14 @@ class build_slaves::jenkins (
     mode    => '0755'
   }
 
+  file { '/home/jenkins/.gradle':
+    ensure  => directory,
+    require => User['jenkins'],
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0755'
+  }
+
   file { '/home/jenkins/.m2/settings.xml':
     ensure  => present,
     require => File['/home/jenkins/.m2'],
@@ -177,6 +185,16 @@ class build_slaves::jenkins (
     group   => 'jenkins',
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
+  }
+
+  file { '/home/jenkins/.gradle/gradle.properties':
+    ensure  => present,
+    require => File['/home/jenkins/.gradle'],
+    path    => '/home/jenkins/.gradle/gradle.properties',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0640',
+    content => template('build_slaves/gradle_properties.erb')
   }
 
   file { '/home/jenkins/.npmrc':

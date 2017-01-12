@@ -1,0 +1,12 @@
+SHELL="/bin/sh"
+DEFAULT="$HOME/Maildir/"
+MAILDIR="$HOME/Maildir"
+VERBOSE=NO
+LOGFILE="$HOME/Maildir/procmail.log"
+
+:0
+* To:.*<jira@security-vm\.apache\.org>.*
+<%= @jira_home %>/import/mail
+
+:0
+./
