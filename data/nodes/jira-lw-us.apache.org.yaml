@@ -108,6 +108,10 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'issues.apache.org.ssl_access.log'
     error_log_file: 'issues.apache.org.error.log'
     custom_fragment: |
+      Redirect permanent /bugzilla https://bz.apache.org/bugzilla
+      Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
+      Redirect permanent /ooo https://bz.apache.org/ooo
+
       ProxyPreserveHost on
 
       # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
