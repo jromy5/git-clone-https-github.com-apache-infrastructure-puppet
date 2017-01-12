@@ -49,7 +49,7 @@ letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
   issues:
     domains:
-      - issues.apache.org
+      - jira-lw-us.apache.org
     plugin: standalone
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
@@ -73,22 +73,22 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     docroot: '/var/www/issues-data'
-    servername: 'issues.apache.org'
+    servername: 'jira-lw-us.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.http_access.log'
     error_log_file: 'issues.apache.org.error.log'
     custom_fragment: |
-      Redirect / https://issues.apache.org/
+      Redirect / https://jira-lw-us.apache.org/
   issues-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    ssl_cert: '/etc/letsencrypt/live/issues.apache.org/cert.pem'
-    ssl_key:  '/etc/letsencrypt/live/issues.apache.org/privkey.pem'
-    ssl_chain: '/etc/letsencrypt/live/issues.apache.org/chain.pem'
+    ssl_cert: '/etc/letsencrypt/live/jira-lw-us.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/jira-lw-us.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/jira-lw-us.apache.org/chain.pem'
     docroot: '/var/www/issues-data'
-    servername: 'issues.apache.org'
+    servername: 'jira-lw-us.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.ssl_access.log'
     error_log_file: 'issues.apache.org.error.log'
@@ -109,5 +109,5 @@ vhosts_asf::vhosts::vhosts:
       # Fix URLs in SOAP requests
       <Location /jira/rpc/soap>
         AddOutputFilterByType SUBSTITUTE text/xml
-        Substitute s!http://issues.apache.org/!https://issues.apache.org/!
+        Substitute s!http://jira-lw-us.apache.org/!https://jira-lw-us.apache.org/!
       </Location>
