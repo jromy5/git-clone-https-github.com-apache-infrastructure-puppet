@@ -95,7 +95,7 @@ vhosts_asf::vhosts::vhosts:
       <Location "/syncope">
         ProxyPass http://localhost:8080/syncope
         ProxyPassReverse http://localhost:8080/syncope
-        ProxyHTMLExtended      On
+        // ProxyHTMLExtended      On
         ProxyHTMLURLMap /syncope /syncope
       </location>
       <Location "/syncope-console/wicket/websocket">
@@ -103,7 +103,7 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule /syncope-console/wicket/websocket ws://localhost:8080/syncope-console/wicket/websocket [P,L]
         ProxyPass ws://localhost:8080/syncope-console/wicket/websocket
         ProxyPassReverse ws://localhost:8080/syncope-console/wicket/websocket
-        ProxyHTMLExtended      On
+        // ProxyHTMLExtended      On
         ProxyHTMLURLMap /syncope-console/wicket/websocket /syncope-console/wicket/websocket
       </Location>
       <Location "/syncope-console">
@@ -115,6 +115,6 @@ vhosts_asf::vhosts::vhosts:
       <Location "/syncope-enduser">
         ProxyPass http://localhost:8080/syncope-enduser
         ProxyPassReverse http://localhost:8080/syncope-enduser
-        ProxyHTMLExtended      On
+        // ProxyHTMLExtended      On
         ProxyHTMLURLMap /syncope-enduser /syncope-enduser
       </Location>
