@@ -83,6 +83,8 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     docroot: '/var/www/issues-data'
     servername: 'jira-lw-us.apache.org'
+    serveraliases:
+      - 'issues.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.http_access.log'
     error_log_file: 'issues.apache.org.error.log'
@@ -98,6 +100,8 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/letsencrypt/live/jira-lw-us.apache.org/chain.pem'
     docroot: '/var/www/issues-data'
     servername: 'jira-lw-us.apache.org'
+    serveraliases:
+      - 'issues.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.ssl_access.log'
     error_log_file: 'issues.apache.org.error.log'
