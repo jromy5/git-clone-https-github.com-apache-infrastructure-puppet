@@ -112,7 +112,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine on
 
       # Proxy requests
-      ProxyPass /jira ajp://10.10.3.161:8009/jira   retry=0 timeout=1800 max=400
+      ProxyPass /jira ajp://10.10.3.5:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
       LuaScope thread
