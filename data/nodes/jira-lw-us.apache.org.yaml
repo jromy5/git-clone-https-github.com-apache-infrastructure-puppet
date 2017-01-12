@@ -12,6 +12,7 @@ classes:
   - jira_asf
   - letsencrypt
   - oraclejava::install
+  - zmanda_asf::client
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
