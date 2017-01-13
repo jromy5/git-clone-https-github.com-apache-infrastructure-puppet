@@ -130,7 +130,7 @@ vhosts_asf::vhosts::vhosts:
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
       RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
-      RewriteCond %%{HIERA}{REMOTE_ADDR} !86\.152\.77\.129
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !127\.0\.0\.1
       RewriteRule ^/jira/(.*) /jira/maintenance.html
 
       # Fix URLs in SOAP requests
