@@ -247,6 +247,8 @@ ntp::interfaces:
     - eth0
     - lo
 
+postfix::server::daemon_directory:       '/usr/lib/postfix/sbin'
+postfix::server::shlib_directory:        '/usr/lib/postfix'
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
