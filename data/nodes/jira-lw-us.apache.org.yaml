@@ -134,6 +134,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{HIERA}{REMOTE_ADDR} !174\.56\.74\.156
       RewriteCond %%{HIERA}{REMOTE_ADDR} !140\.211\.11\.9
       RewriteCond %%{HIERA}{REMOTE_ADDR} !49\.183\.185\.118
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !138\.201\.63\.136
       RewriteRule ^/jira/(.*) /jira/maintenance.html
 
       # Fix URLs in SOAP requests
