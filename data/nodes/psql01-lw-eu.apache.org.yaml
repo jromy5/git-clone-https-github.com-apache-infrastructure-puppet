@@ -20,5 +20,7 @@ postgresql::server::config_entry:
     value: 8
   wal_keep_segments:
     value: 8
+  max_connections:
+    value: 1024
   hot_standby:
     value: 'on'
