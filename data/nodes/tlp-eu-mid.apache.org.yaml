@@ -83,7 +83,7 @@ apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
 apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 
 
-datadog_agent::integrations::apache::url: 'https://tlp-eu-mid.apache.org/server-status'
+datadog_agent::integrations::apache::url: 'https://tlp-eu-mid.apache.org/server-status-dd'
 
 
 ldapclient::ldapservers: 'ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://harmonia.apache.org:636'
@@ -482,9 +482,11 @@ vhosts_asf::vhosts::vhosts:
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
-      <Location "/server-status">
+      <Location "/server-status-dd">
         SetHandler server-status
       </Location>
+      
+      
 
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
@@ -492,6 +494,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
 
       Use BlockSvn
 

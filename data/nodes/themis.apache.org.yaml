@@ -86,8 +86,8 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 base::basepackages:
   - mod-lua-asf
 
-datadog_agent::integrations::http_check::url: 'https://themis.apache.org/server-status'
-datadog_agent::integrations::apache::url: 'https://themis.apache.org/server-status?auto'
+datadog_agent::integrations::http_check::url: 'https://themis.apache.org/server-status-dd'
+datadog_agent::integrations::apache::url: 'https://themis.apache.org/server-status-dd?auto'
 
 logrotate::rule:
   apache2:
@@ -489,7 +489,7 @@ vhosts_asf::vhosts::vhosts:
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
-      <Location "/server-status">
+      <Location "/server-status-dd">
         SetHandler server-status
       </Location>
 
@@ -499,6 +499,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
 
       Use BlockSvn
 
