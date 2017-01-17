@@ -495,7 +495,9 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
-
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
       Use BlockSvn
 
   apache-ssl:
@@ -607,7 +609,9 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
-
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
       Use BlockSvn
       
 
