@@ -7,11 +7,11 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - jira_asf
+  - oraclejava::install
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
-  - jira_asf
-  - letsencrypt
-  - oraclejava::install
   - zmanda_asf::client
 
 apache::default_vhost: false
@@ -52,18 +52,6 @@ jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
 jira_asf::jvm_max_size: '6144m'
 
-letsencrypt::email: 'root@apache.org'
-letsencrypt::manage_dependencies: false
-letsencrypt::certonly:
-  issues:
-    domains:
-      - jira-lw-us.apache.org
-      - issues.apache.org
-    plugin: standalone
-    manage_cron: true
-    cron_success_command: '/bin/systemctl reload apache2.service'
-    before: Class[Apache]
-
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
@@ -98,9 +86,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    ssl_cert: '/etc/letsencrypt/live/jira-lw-us.apache.org/cert.pem'
-    ssl_key:  '/etc/letsencrypt/live/jira-lw-us.apache.org/privkey.pem'
-    ssl_chain: '/etc/letsencrypt/live/jira-lw-us.apache.org/chain.pem'
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     docroot: '/var/www/issues-data'
     servername: 'jira-lw-us.apache.org'
     serveraliases:
