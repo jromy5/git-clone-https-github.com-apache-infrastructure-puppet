@@ -1,0 +1,14 @@
+[ldap]
+user:               cn=foo,ou=bar,dc=apache,dc=org
+password:           something
+
+[github]
+token:              abcdef1234567890
+
+# Example project with hardcoded member list, avoids LDAP
+[group:openwhisk]
+members:            humbedooh gstein pono
+
+# Example project with a different LDAP base for membership
+[group:infrastructure]
+ldap: cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org

@@ -28,6 +28,7 @@ CONFIG.read("/x1/gitbox/matt/tools/grouper.cfg")
 LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
+UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 
 # MFA
 MFA = json.load(open("../mfa.json"))
@@ -113,10 +114,52 @@ def ldap_groups(uid):
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
             groups.append(res[1]['cn'][0]) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
+        infra = getStandardGroup('infrastructure', 'cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org')
+        if infra and uid in infra:
+            groups.append('infrastructure')
         return groups
     except Exception as err:
         pass
     return []
+
+def getStandardGroup(group, ldap_base = None):
+    """ Gets the list of availids in a standard group (pmcs, services, podlings) """
+    # First, check if there's a hardcoded member list for this group
+    # If so, read it and return that instead of trying LDAP
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
+        return CONFIG.get('group:%s' % group, 'members').split(' ')
+    groupmembers = []
+    # This might fail in case of ldap bork, if so we'll return nothing.
+    try:
+        ldapClient = ldap.initialize(LDAP_URI)
+        ldapClient.set_option(ldap.OPT_REFERRALS, 0)
+
+        ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
+        
+        # Default LDAP base if not specified
+        if not ldap_base:
+            ldap_base = "cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group
+
+        # This is using the new podling/etc LDAP groups defined by Sam
+        results = ldapClient.search_s(ldap_base, ldap.SCOPE_BASE)
+
+        for result in results:
+            result_dn = result[0]
+            result_attrs = result[1]
+            # We are only interested in the member attribs here. owner == ppmc, but we don't care
+            if "member" in result_attrs:
+                for member in result_attrs["member"]:
+                    m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    if m:
+                        groupmembers.append(m.group(1))
+
+        ldapClient.unbind_s()
+        groupmembers = sorted(groupmembers) #alphasort
+    except Exception as err:
+        print(err)
+        groupmembers = None
+    return groupmembers
+
 
 def main():    
     # Get some CGI vars
