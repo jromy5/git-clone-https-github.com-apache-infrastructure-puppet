@@ -220,39 +220,8 @@ def getCommitters(group):
     return committers
 
 
-def getPMC(group):
-    """ Gets the list of availids in a project PMC group """
-    print("Fetching LDAP PMC list for %s" % group)
-    pmcmembers = []
-    # This might fail in case of ldap bork, if so we'll return nothing.
-    try:
-        ldapClient = ldap.initialize(LDAP_URI)
-        ldapClient.set_option(ldap.OPT_REFERRALS, 0)
-
-        ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-
-        results = ldapClient.search_s("cn=%s,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
-
-        for result in results:
-            result_dn = result[0]
-            result_attrs = result[1]
-
-            if "member" in result_attrs:
-                for member in result_attrs["member"]:
-                    m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
-                    if m:
-                        pmcmembers.append(m.group(1))
-
-        ldapClient.unbind_s()
-        pmcmembers = sorted(pmcmembers) #alphasort
-    except Exception as err:
-        print("Could not fetch LDAP data: %s" % err)
-        pmcmembers = None
-    return pmcmembers
-
-
 def getStandardGroup(group, ldap_base = None):
-    """ Gets the list of availids in a standard group (services, podlings) """
+    """ Gets the list of availids in a standard group (pmcs, services, podlings) """
     print("Fetching LDAP group list for %s" % group)
     # First, check if there's a hardcoded member list for this group
     # If so, read it and return that instead of trying LDAP
@@ -323,7 +292,7 @@ existingTeams = getGitHubTeams()
 existingRepos = getGitHubRepos()
 
 # pre-fetch IPMC list for podling extensions
-ipmc = getPMC("incubator")
+ipmc = getStandardGroup('incubator', 'cn=incubator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org')
 
 # Process each project in the MATT test
 for project in MATT_PROJECTS:
