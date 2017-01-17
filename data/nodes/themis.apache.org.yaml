@@ -601,7 +601,7 @@ vhosts_asf::vhosts::vhosts:
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
-      <Location "/server-status">
+      <Location "/server-status-dd">
         SetHandler server-status
       </Location>
 
@@ -611,6 +611,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
 
       Use BlockSvn
 
