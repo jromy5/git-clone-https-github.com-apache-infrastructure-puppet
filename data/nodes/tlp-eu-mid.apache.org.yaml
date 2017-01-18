@@ -69,6 +69,7 @@ apache::mod::event::threadsperchild:         '150'
 apache::mod::status::allow_from: 
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+apache::mod::status::status_path:            '/server-status-dd'
 
 apache::mpm_module:                          'event'
 apache::serveradmin:                         'infrastructure@apache.org'
@@ -1112,6 +1113,10 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
 
 
   httpd-ssl:
@@ -1272,6 +1277,10 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
       
   incubator:
     vhost_name: '*'
