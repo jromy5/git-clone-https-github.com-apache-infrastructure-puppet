@@ -137,7 +137,7 @@ mod 'nfs',
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
-  :tag => '3.2.0'
+  :tag => '4.2.0'
 
 
 mod 'oraclejava',
@@ -268,7 +268,8 @@ mod 'unattended_upgrades',
 
 
 mod 'vcsrepo',
-  :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
+  :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo',
+  :tag => '1.4.0'
 
 
 mod 'xinetd',
