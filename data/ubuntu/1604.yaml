@@ -243,10 +243,6 @@ ldapserver::install::ubuntu::1604::packages:
   - slapd
   - slapd-dbg
 
-ntp::interfaces:
-    - eth0
-    - lo
-
 postfix::server::daemon_directory:       '/usr/lib/postfix/sbin'
 postfix::server::shlib_directory:        '/usr/lib/postfix'
 postfix::server::myhostname:             "%{::fqdn}"

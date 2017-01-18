@@ -243,10 +243,6 @@ ldapserver::install::ubuntu::1404::packages:
   - slapd
   - slapd-dbg
 
-ntp::interfaces:
-    - eth0
-    - lo
-
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
