@@ -131,4 +131,12 @@ vhosts_asf::vhosts::vhosts:
         AddOutputFilterByType SUBSTITUTE text/xml
         Substitute s!http://issues.apache.org/!https://issues.apache.org/!
       </Location>
+      
+      # Bloodhound instance on bloodhound-vm.a.o - MEH!
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
+      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
 
