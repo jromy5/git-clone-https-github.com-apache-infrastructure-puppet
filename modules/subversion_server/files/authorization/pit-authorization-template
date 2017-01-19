@@ -22,6 +22,8 @@ any23={reuse:asf-authorization:any23}
 any23-pmc={ldap:cn=any23,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ant={reuse:asf-authorization:ant}
 ant-pmc={ldap:cn=ant,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+apex={reuse:asf-authorization:apex}
+apex-pmc={ldap:cn=apex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 apr={reuse:asf-authorization:apr}
 apr-pmc={ldap:cn=apr,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 archiva={reuse:asf-authorization:archiva}
@@ -406,6 +408,7 @@ security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+treasurer=uli,kmcgrail
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev, ea
 pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
@@ -820,6 +823,9 @@ openejb-tck = r
 
 [/pmc/airavata]
 @airavata-pmc = rw
+
+[/pmc/apex]
+@apex-pmc = rw
 
 [/pmc/apr]
 @apr = rw
@@ -1405,7 +1411,7 @@ buildbot = rw
 @trafficserver = rw
 
 [/websites/production/treasurer]
-@incubator = rw
+@treasurer = rw
 
 [/websites/production/turbine]
 @turbine = rw

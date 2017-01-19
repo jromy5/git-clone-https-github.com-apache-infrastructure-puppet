@@ -19,7 +19,8 @@ class buildbot_slave (
   $gsr_pw,
   $nexus_password = '',
   $npmrc_password = '',
-
+  $github_rsa     = '',
+  $github_rsa_pub = '',
   $bb_basepackages = [],
 
 ){
@@ -142,6 +143,37 @@ class buildbot_slave (
       group   => $groupname,
       mode    => '0640',
       content => template('buildbot_slave/gradle_properties.erb');
+
+    "/home/${username}/.ssh":
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0700',
+      require => User[$username];
+
+    "/home/${username}/.ssh/config":
+      require => File["/home/${username}/.ssh"],
+      path    => "/home/${username}/.ssh/config",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      source  => 'puppet:///modules/buildbot_slave/ssh/config';
+
+    "/home/${username}/.ssh/id_rsa_github":
+      require => File["/home/${username}/.ssh"],
+      path    => "/home/${username}/.ssh/id_rsa_github",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0600',
+      content => template('buildbot_slave/ssh/id_rsa_github.erb');
+
+    "/home/${username}/.ssh/id_rsa_github.pub":
+      require => File["/home/${username}/.ssh"],
+      path    => "/home/${username}/.ssh/id_rsa_github.pub",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0644',
+      content => template('buildbot_slave/ssh/id_rsa_github.pub.erb');
 
     "/home/${username}/slave":
       ensure  => directory,

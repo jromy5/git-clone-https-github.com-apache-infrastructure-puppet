@@ -2,9 +2,7 @@
 classes:
   - buildbot_slave
   - buildbot_slave::rat
-  - buildbot_slave::rvm
   - loggy
-  - rvm
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
 buildbot_slave::required_packages:
@@ -30,10 +28,3 @@ buildbot_slave::rat::build_dir: 'build'
 buildbot_slave::rat::report_file: 'rat-output.xml'
 buildbot_slave::rat::rat_excludes: 'rat-excludes.txt'
 
-ruby_version: '2.3.1'
-
-rvm::system_rubies:
-  "ruby-%{hiera('ruby_version')}": {}
-
-rvm::system_users:
-  - buildslave

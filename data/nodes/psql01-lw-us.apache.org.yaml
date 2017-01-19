@@ -1,8 +1,13 @@
 ---
 classes:
+  - datadog_agent::integrations::postgres
   - postgresql::server
   - postgresql_asf
   - postgresql_asf::backup
+  - zmanda_asf::client
+
+datadog_agent::integrations::postgres::host: 'localhost'
+datadog_agent::integrations::postgres::user: 'datadog'
 
 ## Postgresql master in LeaseWeb US ##
 
@@ -21,6 +26,8 @@ postgresql::server::config_entry:
     value: 8
   wal_keep_segments:
     value: 8
+  max_connections:
+    value: 1024
 
 postgresql::server::pg_hba_rule:
   replication:
@@ -57,4 +64,18 @@ postgresql::server::pg_hba_rule:
     database: 'iampoc'
     user: 'iampoc'
     address: '62.210.60.227/32'
+    auth_method: 'md5'
+  jira_main:
+    description: 'jira prod'
+    type: 'host'
+    database: 'jira_main'
+    user: 'jira'
+    address: '10.10.3.5/32'
+    auth_method: 'md5'
+  datadog:
+    description: 'datadog monitor'
+    type: 'host'
+    database: 'postgres'
+    user: 'datadog'
+    address: '127.0.0.1/32'
     auth_method: 'md5'

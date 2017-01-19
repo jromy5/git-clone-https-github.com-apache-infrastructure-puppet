@@ -137,7 +137,7 @@ mod 'nfs',
 
 mod 'ntp',
   :git => 'https://github.com/puppetlabs/puppetlabs-ntp',
-  :tag => '3.2.0'
+  :tag => '4.2.0'
 
 
 mod 'oraclejava',
@@ -155,8 +155,7 @@ mod 'pkgng',
 
 
 mod 'postfix',
-  :git => 'https://github.com/pctony/puppet-postfix',
-  :commit => '01583669afb0937c19397c7ca74c3147bb318f3d'
+  :git => 'https://github.com/clambertus/puppet-postfix'
 
 
 mod 'postgresql',
@@ -269,7 +268,8 @@ mod 'unattended_upgrades',
 
 
 mod 'vcsrepo',
-  :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
+  :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo',
+  :tag => '1.4.0'
 
 
 mod 'xinetd',

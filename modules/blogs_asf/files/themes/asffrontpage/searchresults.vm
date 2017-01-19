@@ -47,8 +47,7 @@
                         <input type="text" id="q" name="q" size="20"
                             maxlength="255" value="$model.term"
                             style="padding-left: 1px" />
-
-                        #set( $cats = $model.weblog.getWeblogCategories("nil") )
+                        #set( $cats = $model.weblog.getWeblogCategories() )
                         <select name="cat">
                             <option value="">$text.get( "macro.searchresults.incategory" )</option>
                             #foreach( $cat in $cats )
@@ -56,7 +55,7 @@
                             #end
                         </select>
 
-                        <input type="submit" value="$text.get( "macro.weblog.searchagain" )" />
+                        <input type="submit" value="$text.get( "macro.weblog.searchbutton" )" />
                     </form>
 
                     $text.get( "macro.weblog.searchgoogle", [$model.term, $url.absoluteSite, $url.site, ${website.handle}] )

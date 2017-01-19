@@ -4,9 +4,9 @@ MAILDIR="$HOME/Maildir"
 VERBOSE=NO
 LOGFILE="$HOME/Maildir/procmail.log"
 
-:0
-* To:.*<jira@security-vm\.apache\.org>.*
+:0:
+* To:.*<jira@<%= @hostname %>\.apache\.org>.*
 <%= @jira_home %>/import/mail
 
-:0
+:0:
 ./

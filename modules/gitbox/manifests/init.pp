@@ -6,8 +6,12 @@ class gitbox (
   $custom_fragment_443 = '',
   $packages            = ['gitweb', 'libnet-github-perl',
                           'libnet-ldap-perl', 'swaks',
-                          'python-ldap'],
+                          'python-ldap', 'python-twisted'],
 
+# override below in eyaml
+
+$pbcsUser = '',
+$pbcsPwd  = ''
 
 ) {
 
@@ -40,7 +44,14 @@ class gitbox (
     mode    => '0750';
   }
   
-  
+  file { '/x1/gitbox/hooks/post-receive.d/private.py':
+      ensure  => 'present',
+      owner   => 'root',
+      group   => 'www-data',
+      mode    => '0640',
+      content => template('gitbox/private.py.erb');
+  }
+
   file {
     '/var/www/.ssh':
       ensure => directory,

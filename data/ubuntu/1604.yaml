@@ -243,10 +243,8 @@ ldapserver::install::ubuntu::1604::packages:
   - slapd
   - slapd-dbg
 
-ntp::interfaces:
-    - eth0
-    - lo
-
+postfix::server::daemon_directory:       '/usr/lib/postfix/sbin'
+postfix::server::shlib_directory:        '/usr/lib/postfix'
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
@@ -394,10 +392,6 @@ build_slaves::distro_packages:
   - libtool
   - libxml-xpath-perl
   - libz-dev
-  - linux-headers-4.4.0-34
-  - linux-headers-4.4.0-34-generic
-  - linux-image-4.4.0-34-generic
-  - linux-image-4.4.0-34-lowlatency
   - lua5.2
   - docker-engine
   - mingw-w64

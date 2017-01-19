@@ -83,6 +83,8 @@ any23={ldap:cn=any23,ou=groups,dc=apache,dc=org}
 any23-pmc={reuse:pit-authorization:any23-pmc}
 ant={ldap:cn=ant,ou=groups,dc=apache,dc=org}
 ant-pmc={reuse:pit-authorization:ant-pmc}
+apex={ldap:cn=apex,ou=groups,dc=apache,dc=org}
+apex-pmc={reuse:pit-authorization:apex-pmc}
 apr={ldap:cn=apr,ou=groups,dc=apache,dc=org}
 apr-pmc={reuse:pit-authorization:apr-pmc}
 archiva={ldap:cn=archiva,ou=groups,dc=apache,dc=org}
@@ -373,7 +375,7 @@ s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamsho
 samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
 samza={ldap:cn=samza,ou=groups,dc=apache,dc=org}
 samza-pmc={reuse:pit-authorization:samza-pmc}
-senssoft=jpoore,lewismc,lmariano,cgimenez,aford,poorejc,msbeard,rf,pykors
+senssoft=lewismc,lmariano,cgimenez,aford,poorejc,msbeard,rf,pykors,pramirez,mattmann
 santuario={ldap:cn=santuario,ou=groups,dc=apache,dc=org}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry={ldap:cn=sentry,ou=groups,dc=apache,dc=org}

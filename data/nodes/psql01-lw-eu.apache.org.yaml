@@ -1,9 +1,14 @@
 ---
 classes:
+  - datadog_agent::integrations::postgres
   - postgresql::server
   - postgresql_asf
 
+datadog_agent::integrations::postgres::host: 'localhost'
+datadog_agent::integrations::postgres::user: 'datadog'
+
 ## Postgresql replication target in LeaseWeb EU ##
+## Master: psql01-lw-us ## 
 
 postgresql::server::listen_addresses: '*'
 postgresql::server::encoding: 'UTF-8'
@@ -20,5 +25,7 @@ postgresql::server::config_entry:
     value: 8
   wal_keep_segments:
     value: 8
+  max_connections:
+    value: 1024
   hot_standby:
     value: 'on'
