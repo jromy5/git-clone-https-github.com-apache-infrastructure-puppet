@@ -215,7 +215,7 @@ vhosts_asf::vhosts::vhosts:
       <Location />
         AuthLDAPUrl "ldaps://snappy5.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
-        AuthName "PMC Members Only"
+        AuthName "ASF Committers"
         AuthType Basic
         AuthBasicProvider ldap
         <RequireAny>
