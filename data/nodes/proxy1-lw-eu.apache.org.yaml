@@ -97,6 +97,42 @@ vhosts_asf::vhosts::vhosts:
         Redirect / https://www.surveymonkey.com/r/6T3HNTG
       </Location>
 
+  lists:
+    vhost_name: '*'
+    port: 80
+    servername: 'lists.apache.org'
+    default_vhost: true
+    docroot: '/var/www/html'
+    manage_docroot: false
+    options:
+      - 'FollowSymLinks'
+      - 'MultiViews'
+    access_log_file: 'lists_access.log'
+    error_log_file: 'lists_error.log'
+    custom_fragment: |
+      Redirect permanent / https://lists.apache.org/
+      
+  lists-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'lists.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    manage_docroot: false
+    access_log_file: 'lists-ssl_access.log'
+    error_log_file: 'lists-ssl_error.log'
+    custom_fragment: |
+      ProxyPreserveHost On
+      SSLProxyEngine On
+      SSLProxyVerify none
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerName off
+      SSLProxyCheckPeerExpire off
+      ProxyPass / https://cust-asf.ponee.io/
+      ProxyPassReverse / https://cust-asf.ponee.io/
+      AddOutputFilterByType DEFLATE application/json
 
 fail2ban_asf::config::jails:
   jira:
