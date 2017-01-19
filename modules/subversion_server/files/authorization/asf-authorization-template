@@ -105,6 +105,7 @@ bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
 blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
+board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
 bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 brooklyn={ldap:cn=brooklyn,ou=groups,dc=apache,dc=org}
 brooklyn-pmc={reuse:pit-authorization:brooklyn-pmc}
@@ -632,6 +633,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/bloodhound]
 @committers = rw
+
+[/board]
+@board = rw
 
 [/bookkeeper/site]
 @bookkeeper = rw
