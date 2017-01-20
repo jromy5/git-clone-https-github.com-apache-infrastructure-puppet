@@ -636,6 +636,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 
 [/board]
 @board = rw
+buildbot = rw
 
 [/bookkeeper/site]
 @bookkeeper = rw
