@@ -1,0 +1,84 @@
+--
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - vhosts_asf::vhosts
+  - postgresql::server
+  - postgresql_asf
+
+python::python_pips:
+  Django:
+    ensure: present
+
+Django_version: '1.3.7'
+python_version: '2.7'
+
+apache::keepalive: 'On'
+apache::keepalive_timeout: '15'
+apache::timeout: 600
+apache::mpm_module: 'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+postgresql::server::listen_addresses: '*'
+postgresql::server::encoding: 'UTF-8'
+postgresql::server::locale: 'en_US.UTF-8'
+postgresql::server::datadir: '/x1/postgresql/9.3/main'
+postgresql::server::needs_initdb: true
+
+postgresql::server::config_entry:
+  wal_level:
+    value: 'hot_standby'
+  max_wal_senders:
+    value: 3
+  checkpoint_segments:
+    value: 8
+  wal_keep_segments:
+    value: 8
+  max_connections:
+    value: 1024
+  hot_standby:
+    value: 'on'
+
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  tac-vm2-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'tac-vm2.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'tac-vm2_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://tac-vm2.apache.org/$1
+    
+  tac-vm2-443:
+    vhost_name: '*'
+    default_vhost: true
+    servername: 'tac-vm2.apache.org'
+    port: 443
+    docroot: '/var/www'
+    error_log_file: 'tac-vm2_error.log'
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8060/
+      ProxyPassReverse / http://127.0.0.1:8060/
+
