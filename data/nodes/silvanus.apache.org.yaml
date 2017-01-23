@@ -1,0 +1,15 @@
+---
+classes:
+  - buildbot_slave
+  - loggy
+
+buildbot_slave::slave_name: 'silvanus_ubuntu'
+buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
+  - 'tomcat7'
+  - 'libtool'
+  - 'libpcre3' 
+  - 'libpcre3-dev'
+  - 'graphviz'
+  - 'graphviz-dev'
+
