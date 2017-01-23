@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::github
   - loggy
 
 buildbot_slave::slave_name: 'bb_1604_test_ubuntu'
