@@ -52,12 +52,12 @@ jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
 jira_asf::jvm_max_size: '6144m'
 
-apache::logroot: '/x1/apache/'
+apache::logroot: '/x1/log'
 
 logrotate::rule:
   apache2:
     ensure: 'present'
-    path: '/x1/apache/*.log'
+    path: '/x1/log/*.log'
     delaycompress: true
     ifempty: false
     rotate: 52
