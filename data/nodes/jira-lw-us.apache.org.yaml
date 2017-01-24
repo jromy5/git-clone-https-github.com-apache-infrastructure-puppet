@@ -52,6 +52,16 @@ jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
 jira_asf::jvm_max_size: '6144m'
 
+apache::logroot: '/x1/apache/'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/x1/apache/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
