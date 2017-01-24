@@ -5,7 +5,7 @@ class buildbot_slave::github (
   $github_rsa     = '',
   $github_rsa_pub = '',
 
-) {
+) inherits buildbot_slave {
 
   file {
 
