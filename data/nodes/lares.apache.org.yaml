@@ -1,0 +1,9 @@
+---
+classes:
+  - buildbot_slave
+  - loggy
+
+buildbot_slave::slave_name: 'lares_ubuntu'
+buildbot_slave::required_packages:
+  - 'openjdk-7-jdk'
+
