@@ -4,6 +4,19 @@ classes:
   - buildbot_slave
 
 buildbot_slave::slave_name: 'bb_slave6_ubuntu'
+buildbot_slave::required_packages:
+  - 'build-essential'
+  - 'libapr1-dev'
+  - 'libaprutil1-dbd-sqlite3'
+  - 'libaprutil1-dev'
+  - 'libaprutil1-ldap'
+  - 'liblua5.3-dev'
+  - 'libpcre3-dev'
+  - 'libpcre2-dev'
+  - 'libssl-dev'
+  - 'libxml2-dev'
+  - 'zlib1g-dev'
+
 ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
 
 python::python_pips:
