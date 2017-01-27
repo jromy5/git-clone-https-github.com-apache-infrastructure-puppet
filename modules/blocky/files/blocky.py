@@ -179,7 +179,7 @@ class Blocky(Thread):
 					i = baddie['ip']
 					ta = baddie['target']
 					if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
-						r = baddie['reason']
+						r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						try:
 							# Check if we already have such a ban in place using iptables -C
@@ -212,7 +212,7 @@ class Blocky(Thread):
 						baddies[i] = time.time()
 					elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 						baddies[i] = time.time()
-						r = baddie['reason']
+						r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
 						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						# Check if we already have such a ban in place using iptables -C
 						try:
@@ -251,13 +251,13 @@ Blocky.
 							smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
 
 						except Exception as err:
-							print(err)
+							pass
 						if i in baddies:
 							del baddies[i]
 				time.sleep(180)
 				firstRun = False
-			except:
-				pass
+			except Exception as err:
+				syslog.syslog(syslog.LOG_INFO, "Error while running ban check: %s" % err)
 
 
 
