@@ -9,7 +9,7 @@ classes:
 datadog_agent::integrations::postgres::host: 'localhost'
 datadog_agent::integrations::postgres::user: 'datadog'
 
-## Postgresql master in LeaseWeb US ##
+## Postgresql master in db-ec2-vi.apache.org ##
 
 postgresql::server::listen_addresses: "*"
 postgresql::server::encoding: 'UTF-8'
