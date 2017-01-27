@@ -1,8 +1,88 @@
-SHELL="/bin/sh"
-DEFAULT="$HOME/Maildir/"
-MAILDIR="$HOME/Maildir"
-VERBOSE=NO
-LOGFILE="$HOME/Maildir/procmail.log"
+MAILDIR=${HOME}/Maildir
+DEFAULT=${MAILDIR}/INBOX/
+BULK=${MAILDIR}/bulk/
+SPAM=${MAILDIR}/spam/
+
+PROCMAILDIR=${HOME}/.procmail
+LOGFILE=${HOME}/procmail.log
+BACKUP=$MAILDIR/backup
+TODAY=`date +%Y-%m`/
+SHELL=/bin/bash
+
+
+:0c:backup.lock
+$BACKUP/$TODAY
+
+# It seems jira@apache.org is subscribed to some dev lists, which creates a mail loop. JIRA detects this (and avoids the loop) by checking for this header, but doesn't delete the email.
+# Filter out such mails here so JIRA doesn't repeatedly find and check them.
+:0
+* ^X-JIRA-FingerPrint:\ 30527f35849b9dde25b450d4833f0394
+${BULK}
+
+:0
+* ^From:.*mailer-daemon@
+${BULK}
+
+:0
+* ^Auto-Submitted:.auto-
+${BULK}
+
+:0
+* ^Content-Type:\ multipart/report;\ report-type=delivery-status
+${BULK}
+
+:0
+* ^Subject:\ Delivery\ Status\ Notification
+${BULK}
+
+:0
+* ^Subject:\ Undeliverable
+${BULK}
+
+:0
+* ^Subject: Returned Mail:
+${BULK}
+
+:0
+* ^From:\ System\ Administrator
+${BULK}
+
+:0
+* ^Subject:\ Out\ Of\ Office\ Re
+${BULK}
+
+:0
+* ^Subject:\ Abwesend:
+${BULK}
+
+:0
+* ^From.*cticorporativo@fibertel.com.ar
+${BULK}
+
+:0
+* ^From.*noreply@boxbe.com
+${BULK}
+
+:0
+* ^From.*postmaster@blackrock.com
+${BULK}
+
+:0
+* ^Precedence:\ auto_reply
+${BULK}
+
+:0
+* ^Subject:.*Abwesenheitsnotiz
+${BULK}
+
+:0
+* ^Subject:.*autoreply|\
+  ^Subject:.*Account\ signup
+${BULK}
+
+:0
+* ! ^Subject:.*\[jira\]
+${SPAM}
 
 :0:
 * To:.*<jira@<%= @hostname %>\.apache\.org>.*
@@ -10,3 +90,17 @@ LOGFILE="$HOME/Maildir/procmail.log"
 
 :0:
 ./
+
+#:0Bw
+#* ! Old.comment,\ sent\ by\ email
+#{
+#:0fbw:lock
+#* ^Date:.\/.*
+#| (echo ; \
+#echo "   [[ Old comment, sent by email on $MATCH ]]" ; \
+#echo ; \
+#cat -)
+#VERBOSE=off
+#}
+
+
