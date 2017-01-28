@@ -2,8 +2,27 @@
 classes:
   - buildbot_slave
   - loggy
+  - tomcat
 
 buildbot_slave::slave_name: 'orcus_ubuntu'
 buildbot_slave::required_packages:
   - 'openjdk-7-jdk'
 
+tomcat::install:
+  '/opt/tomcat7':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-7/v7.0.75/bin/apache-tomcat-7.0.75.tar.gz'
+  '/opt/tomcat8':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-8/v8.5.11/bin/apache-tomcat-8.5.11.tar.gz'
+  '/opt/tomcat9':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.tar.gz'
+
+tomcat::service:
+  '/opt/tomcat7':
+    catalina_base: '/opt/tomcat7'
+    service_ensure: 'stopped'
+  '/opt/tomcat8':
+    catalina_base: '/opt/tomcat8'
+    service_ensure: 'stopped'
+  '/opt/tomcat9':
+    catalina_base: '/opt/tomcat9'
+    service_ensure: 'stopped'

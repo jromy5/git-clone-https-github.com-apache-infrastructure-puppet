@@ -261,7 +261,7 @@ mod 'timezone',
 
 mod 'tomcat',
   :git => 'https://github.com/puppetlabs/puppetlabs-tomcat.git',
-  :tag => '1.2.0'
+  :tag => '1.6.1'
 
 
 mod 'ulimit',

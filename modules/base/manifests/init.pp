@@ -55,6 +55,21 @@ class base (
   $cacerts = hiera_hash('ca_cert::ca',{})
   create_resources(ca_cert::ca, $cacerts)
 
+  $tcinstance = hiera_hash('tomcat::instance',{})
+  create_resources(tomcat::instance, $tcinstance)
+
+  $tcservice = hiera_hash('tomcat::service',{})
+  create_resources(tomcat::service, $tcservice)
+
+  $tcwar = hiera_hash('tomcat::war', {})
+  create_resources(tomcat::war, $tcwar)
+
+  $tcconfig = hiera_hash('tomcat::config',{})
+  create_resources(tomcat::config, $tcconfig)
+
+  $tcinstall = hiera_hash('tomcat::install',{})
+  create_resources(tomcat::install, $tcinstall)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
