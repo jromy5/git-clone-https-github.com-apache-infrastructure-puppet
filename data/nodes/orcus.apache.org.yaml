@@ -11,10 +11,22 @@ buildbot_slave::required_packages:
 tomcat::install:
   '/opt/tomcat7':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-7/v7.0.75/bin/apache-tomcat-7.0.75.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat7'
+    group: 'tomcat7'
   '/opt/tomcat8':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-8/v8.5.11/bin/apache-tomcat-8.5.11.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat8'
+    group: 'tomcat8'
   '/opt/tomcat9':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat9'
+    group: 'tomcat9'
 
 tomcat::service:
   '/opt/tomcat7':
