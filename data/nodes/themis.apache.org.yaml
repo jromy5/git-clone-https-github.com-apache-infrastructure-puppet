@@ -797,7 +797,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://couchdb.apache.org/
+      Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html
 
   deltaspike:
     vhost_name: '*'
