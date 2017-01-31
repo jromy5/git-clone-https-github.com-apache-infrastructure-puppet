@@ -363,6 +363,7 @@ qpid={ldap:cn=qpid,ou=groups,dc=apache,dc=org}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
 edgent=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
 ranger=alok,bganesan,bosco,coheigea,ddas,dillidorai,gates,gautam,humbedooh,jghoman,kminder,lmccay,madhan,omalley,rmani,sneethir,sradia,vel
+ratis=jing9,szetetszwo,enis,aengineer,arp,cnauroth,jghoman,mayank_bansal,xyao,liuml07,umamahesh,jitendra,devaraj,gtCarrera9,hanishakoneru,xiaobingo,cliang
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
 reef={ldap:cn=reef,ou=groups,dc=apache,dc=org}
@@ -1102,6 +1103,9 @@ projects_role = rw
 
 [/incubator/ranger]
 @ranger = rw
+
+[/incubator/ratis]
+@ratis = rw
 
 [/incubator/rya]
 @rya = rw
