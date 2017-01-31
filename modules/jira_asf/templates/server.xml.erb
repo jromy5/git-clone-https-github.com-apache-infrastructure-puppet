@@ -60,9 +60,9 @@
     <Service name="Catalina">
 
 <% if @connector_port_http != '' %>
-        <Connector port="<%= connector_port_http %>"
+        <Connector port="<%= @connector_port_http %>"
 <% if @connector_address_http != '' %>
-                   address="<%= connector_address_http %>"
+                   address="<%= @connector_address_http %>"
 <% end %>
 
                    maxThreads="150"
@@ -125,9 +125,9 @@
         -->
 
 <% if @connector_port_ajp != '' %>
-        <Connector port="<%= connector_port_ajp %>"
+        <Connector port="<%= @connector_port_ajp %>"
 <% if @connector_address_ajp != '' %>
-                   address="<%= connector_address_ajp %>"
+                   address="<%= @connector_address_ajp %>"
 <% end %>
                    redirectPort="8443"
                    enableLookups="false"
