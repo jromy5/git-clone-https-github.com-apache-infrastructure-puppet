@@ -169,4 +169,4 @@
 ^(serf/trunk)/(.*)
 ^(serf/branches/1.[3-9].x)/(.*)
 ^(board/site)/(.*)
-^(httpd/trunk)/(.*)
+^(httpd/httpd/trunk)/(.*)
