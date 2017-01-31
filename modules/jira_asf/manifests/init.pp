@@ -177,6 +177,19 @@ class jira_asf (
     "${pgsql_connector_dest_dir}/${pgsql_connector}":
       ensure => present,
       source => "puppet:///modules/jira_asf/${pgsql_connector}";
+    "${install_dir}/atlassian-jira/WEB-INF/classes/com/atlassian/jira/notification/NotificationRecipient.class":
+      ensure  => present,
+      source  => 'puppet:///modules/jira_asf/NotificationRecipient.class',
+      owner   => 'jira',
+      group   => 'jira',
+      require => File[$install_dir];
+    "${install_dir}/atlassian-jira/WEB-INF/classes/templates/email":
+      ensure  => present,
+      source  => 'puppet:///modules/jira_asf/email-templates',
+      owner   => 'jira',
+      group   => 'jira',
+      recurse => true,
+      require => File[$install_dir];
     $procmailrc:
       content => template ('jira_asf/procmailrc.erb'),
       mode    => '0640',
