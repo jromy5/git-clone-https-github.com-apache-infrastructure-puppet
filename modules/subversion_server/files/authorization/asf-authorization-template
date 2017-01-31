@@ -1104,9 +1104,6 @@ projects_role = rw
 [/incubator/ranger]
 @ranger = rw
 
-[/incubator/ratis]
-@ratis = rw
-
 [/incubator/rya]
 @rya = rw
 
