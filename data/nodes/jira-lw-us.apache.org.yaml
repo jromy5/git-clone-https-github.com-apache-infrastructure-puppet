@@ -7,6 +7,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - blocky
   - jira_asf
   - oraclejava::install
   - ssl::name::wildcard_apache_org
