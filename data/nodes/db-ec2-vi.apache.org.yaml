@@ -1,5 +1,5 @@
 ---
- classes:
+classes:
   - postgresql::server
   - postgresql_asf
   - postgresql_asf::backup
@@ -7,7 +7,6 @@
 
 ## Postgresql master in db-ec2-vi.apache.org ##
 
-postgresql::server::datadir: '/tmp/kitchen/hiera'
 postgresql::server::listen_addresses: "*"
 postgresql::server::encoding: 'UTF-8'
 postgresql::server::locale: 'en_US.UTF-8'
