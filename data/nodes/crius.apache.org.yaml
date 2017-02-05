@@ -34,6 +34,18 @@ logrotate::rule:
     ensure: 'present'
 
 vhosts_asf::vhosts::vhosts:
+  analysis-80:
+    vhost_name: '*'
+    priority: '14'
+    servername: 'analysis.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'analysis.apache.org.error.log'
+    access_log_file: 'analysis.apache.org.access.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://builds.apache.org/analysis/$1
+
   crius-80:
     vhost_name: '*'
     priority: '12'
