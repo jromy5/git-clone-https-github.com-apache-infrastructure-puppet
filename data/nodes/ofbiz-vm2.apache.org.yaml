@@ -76,7 +76,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
     ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
-    custom_fragment:
+    custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:8009/
@@ -110,7 +110,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
     ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
-    custom_fragment:
+    custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:18009/
@@ -144,7 +144,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
     ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
-    custom_fragment:
+    custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:28009/
