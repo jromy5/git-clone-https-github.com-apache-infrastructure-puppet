@@ -55,40 +55,6 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'doesntreallyexist.apache.org.ssl_access.log'
     error_log_file:  'doesntreallyexist.apache.org.error.log'
 
-  analysis:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'analysis.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'analysis.apache.org.http_access.log'
-    error_log_file:  'analysis.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://analysis.apache.org/
-
-  analysis-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'analysis.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'analysis.apache.org.ssl_access.log'
-    error_log_file:  'analysis.apache.org.error.log'
-    custom_fragment: |
-      Proxypass / http://analysis-vm.apache.org/
-      ProxypassReverse / http://analysis-vm.apache.org/
-      ProxyPreserveHost On
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=analysis.apache.org&code=503
-
   blogs:
     vhost_name: '*'
     ensure: 'present'
