@@ -54,6 +54,9 @@ vhosts_asf::vhosts::vhosts:
     servername: 'demo-trunk.ofbiz.apache.org'
     priority: '12'
     port: 80
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     ssl: false
     access_log_file: 'demo-trunk.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-trunk_error.log'
@@ -64,6 +67,9 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: 'demo-trunk.ofbiz.apache.org'
     servername: 'demo-trunk.ofbiz.apache.org'
     port: 443
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     access_log_file: 'ofbiz-ssl-trunk.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-trunk_error.log'
     ssl: true
@@ -82,6 +88,9 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'demo-stable.ofbiz.apache.org'
     port: 80
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     ssl: false
     access_log_file: 'demo-stable.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-stable_error.log'
@@ -92,6 +101,9 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: 'demo-stable.ofbiz.apache.org'
     servername: 'demo-stable.ofbiz.apache.org'
     port: 443
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     access_log_file: 'ofbiz-ssl-stable.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-stable_error.log'
     ssl: true
@@ -110,6 +122,9 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'demo-old.ofbiz.apache.org'
     port: 80
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     ssl: false
     access_log_file: 'demo-old.ofbiz.apache.org.http_access.log'
     error_log_file: 'ofbiz-old_error.log'
@@ -120,6 +135,9 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: 'demo-old.ofbiz.apache.org'
     servername: 'demo-old.ofbiz.apache.org'
     port: 443
+    docroot: '/var/www/ofbiz/big-files'
+    docroot_owner: 'ofbizDemo'
+    docroot_group: 'www-data'
     access_log_file: 'ofbiz-ssl-old.apache.org.http_access.log'
     error_log_file: 'ofbiz-ssl-old_error.log'
     ssl: true
