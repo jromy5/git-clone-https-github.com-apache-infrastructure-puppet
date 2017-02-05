@@ -1,0 +1,13 @@
+[Unit]
+Description=jira
+
+[Service]
+User=jira
+Group=jira
+Type=forking
+ExecStart=/x1/jira/current/bin/start-jira.sh
+ExecStop=/x1/jira/current/bin/stop-jira.sh
+
+[Install]
+WantedBy=multi-user.target
+Alias=jira.service

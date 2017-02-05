@@ -195,11 +195,6 @@ class jira_asf (
       mode    => '0640',
       owner   => 'jira',
       group   => 'jira',
-    # "/etc/init.d/${service_name}":
-      # mode    => '0755',
-      # owner   => 'root',
-      # group   => 'root',
-      # content => template('jira_asf/jira-init-script.erb');
   }
 
   logrotate::rule { 'procmail-jira':
@@ -210,13 +205,8 @@ class jira_asf (
     compress     => true,
   }
 
-  # service {
-    # $service_name:
-      # ensure     => $service_ensure,
-      # enable     => true,
-      # hasstatus  => false,
-      # hasrestart => true,
-      # require    => Class['apache'],
-  # }
+  ::systemd::unit_file { "jira.service":
+      source => 'puppet:///modules/jira_asf/jira.service',
+  }
 
 }
