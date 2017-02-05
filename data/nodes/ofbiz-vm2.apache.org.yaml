@@ -7,7 +7,6 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - letsencrypt
-  - oraclejava::install
   - vhosts_asf::vhosts
   - ofbiz_pvm_asf
 
