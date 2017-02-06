@@ -1,11 +1,8 @@
 ---
 classes:
-  - datadog_agent::integrations::postgres
   - postgresql::server
   - postgresql_asf
 
-datadog_agent::integrations::postgres::host: 'localhost'
-datadog_agent::integrations::postgres::user: 'datadog'
 
 ## Postgresql replication target in db-ec2-or.apache.org ##
 ## Master: db-ec2-vi.apache.org ## 
