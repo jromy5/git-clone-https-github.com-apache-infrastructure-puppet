@@ -1,13 +1,9 @@
 ---
 classes:
-  - datadog_agent::integrations::postgres
   - postgresql::server
   - postgresql_asf
   - postgresql_asf::backup
   - zmanda_asf::client
-
-datadog_agent::integrations::postgres::host: 'localhost'
-datadog_agent::integrations::postgres::user: 'datadog'
 
 ## Postgresql master in db-ec2-vi.apache.org ##
 
@@ -37,4 +33,3 @@ postgresql::server::pg_hba_rule:
     user: 'rep'
     address: '35.160.14.137/32'
     auth_method: 'md5'
- auth_method: 'md5'
