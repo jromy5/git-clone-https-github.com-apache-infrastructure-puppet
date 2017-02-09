@@ -124,7 +124,7 @@ def getGitHubTeamRepos(teamID):
 
 def createGitHubTeam(project):
     """ Given a project, try to create it as a GitHub team"""
-    print("- Trying to create %s as a GitHub team..." % project)
+    logging.info("- Trying to create %s as a GitHub team..." % project)
     # Make sure we only allow the ones with permission to use MATT
     if not project in MATT_PROJECTS:
         logging.error(" - This project has not been cleared for MATT yet. Aborting team creation")
@@ -338,7 +338,7 @@ for project in MATT_PROJECTS:
     # Now get the current list of members on GitHub
     members = getGitHubTeamMembers(teamID)
     if teamID in existingTeams:
-        print(existingTeams[teamID] + ": " + ", ".join(members))
+        logging.info(existingTeams[teamID] + ": " + ", ".join(members))
 
     # Now get the committer availids from LDAP
     ldap_team = getCommitters(project) if ptype == "tlp" else getStandardGroup(project)
@@ -370,7 +370,7 @@ for project in MATT_PROJECTS:
 
     # If no team, assume something broke for now
     if len(hopefulTeam) == 0:
-        print("No hopeful GitHub team could be constructed, assuming something's wrong and cycling to next project")
+        logging.warning("No hopeful GitHub team could be constructed, assuming something's wrong and cycling to next project")
         continue
 
     # Now, for each member in the team, find those that don't belong here.
