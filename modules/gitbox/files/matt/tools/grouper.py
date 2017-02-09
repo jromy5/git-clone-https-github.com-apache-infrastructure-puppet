@@ -15,8 +15,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, sys, re, ldap, urllib2, json, requests, hashlib, ConfigParser, sqlite3
-from requests.auth import HTTPBasicAuth
+import os
+import sys
+import re
+import ldap
+import urllib2
+import json
+import requests
+import hashlib
+import ConfigParser
+import sqlite3
 import logging
 
 logging.basicConfig(filename='grouper.log', format='[%(asctime)s]: %(message)s', level=logging.INFO)
