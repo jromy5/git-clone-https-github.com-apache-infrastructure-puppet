@@ -17,11 +17,11 @@ base::basepackages:
   - 'lua5.2-sec'
 
 apache::default_vhost: false
-apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
-apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
-apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+apache::default_ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 
-apache::mpm_module:         'event'
+apache::mpm_module: 'event'
 
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '500'
@@ -153,5 +153,7 @@ vcsrepo:
   /var/www:
     ensure: latest
     provider: 'svn'
+    user: 'www-data'
+    group: 'www-data'
     source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/home'
     before: 'Class[Apache]'
