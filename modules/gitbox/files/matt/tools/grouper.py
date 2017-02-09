@@ -233,7 +233,7 @@ def getCommitters(group):
 
 def getStandardGroup(group, ldap_base = None):
     """ Gets the list of availids in a standard group (pmcs, services, podlings) """
-    print("Fetching LDAP group list for %s" % group)
+    logging.info("Fetching LDAP group list for %s" % group)
     # First, check if there's a hardcoded member list for this group
     # If so, read it and return that instead of trying LDAP
     if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
