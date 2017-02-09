@@ -46,6 +46,7 @@ LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 MATT_PROJECTS = {}
 ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
+logging.info("Preloading 2FA JSON index...")
 MFA = json.load(open("../mfa.json"))
 
 
@@ -278,6 +279,7 @@ def getStandardGroup(group, ldap_base = None):
 
 
 # Get a list of all asf/github IDs
+logging.info("Loading all ASF<->GitHub links from gitbox.db")
 conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
 cursor = conn.cursor()
 
@@ -285,6 +287,7 @@ cursor.execute("SELECT asfid,githubid,mfa FROM ids")
 accounts = cursor.fetchall()
 
 conn.close()
+logging.info("Found %u account links!" % len(accounts))
 
 # get a list of all repos that are active on gitbox
 gitdir = '/x1/repos/asf'
