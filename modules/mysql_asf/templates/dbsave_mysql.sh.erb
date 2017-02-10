@@ -15,7 +15,7 @@ DUMPROOT='/x1/db_dump/mysql'
 DUMPROOT=<%= @dumproot %>
 LOCKFILE='/tmp/mysql.dump.lock'
 MYSQL=$(which mysql)
-PASS=$(cd /root/ ; cat .my.cnf | grep -i pa | sed 's/password=//g' | sed "s/'//g")
+PASS=$(cd /root/ ; cat .my.cnf | grep -i -m 1 pa | sed 's/password=//g' | sed "s/'//g")
 PORT='3306'
 ALLDBS=`echo "SHOW DATABASES;" | ${MYSQL} -u ${DBUSER} | egrep -v "^(Database|information_schema|performance_schema)" 2>&1`;
 DBLISTFILE="/tmp/mysql.dump.list"
