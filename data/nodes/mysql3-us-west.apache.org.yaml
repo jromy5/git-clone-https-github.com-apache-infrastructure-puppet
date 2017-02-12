@@ -22,11 +22,13 @@ mysql::server::override_options:
     expire-logs-days: '5'
     character-set-server: 'utf8'
     max_allowed_packet: '64M'
-    max_connections: '4096'
+    max_connections: '1024'
     performance_schema: 'ON'
     innodb_buffer_pool_size: '2048M'
     innodb_log_file_size: '512M'
     binlog_cache_size: '128M'
+    query_cache_size: '32M'
+    query_cache_limit: '4M'
   mysqldump:
     max_allowed_packet: '64M'
 
