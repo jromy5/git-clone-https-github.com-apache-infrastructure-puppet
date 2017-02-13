@@ -33,3 +33,10 @@ postgresql::server::pg_hba_rule:
     user: 'rep'
     address: '35.160.14.137/32'
     auth_method: 'md5'
+  tacvm:
+    description: 'TacvmDB'
+    type: 'hostssl'
+    database: 'tac_app'
+    user: 'tac_app'
+    address: '34.197.152.122/32'
+    auth_method: 'md5'
