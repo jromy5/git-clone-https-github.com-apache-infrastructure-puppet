@@ -22,7 +22,11 @@ tomcat::install:
     group: 'tomcat7'
 
 tomcat::service:
-  '/opt/tomcat7':
+  'tomcat7':
     catalina_base: '/opt/tomcat7'
     service_ensure: 'stopped'
+    use_init: false
+    user: 'tomcat7'
+    group: 'tomcat7'
+
 
