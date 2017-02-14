@@ -1385,7 +1385,7 @@ buildbot = rw
 @steve = rw
 
 [/websites/production/stratos]
-@stratos = rw
+@attic-pmc = rw
 
 [/websites/production/streams]
 @incubator = rw
