@@ -296,8 +296,6 @@ steve={reuse:asf-authorization:steve}
 steve-pmc={ldap:cn=steve,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 storm={reuse:asf-authorization:storm}
 storm-pmc={ldap:cn=storm,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-stratos={reuse:asf-authorization:stratos}
-stratos-pmc={ldap:cn=stratos,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 struts={reuse:asf-authorization:struts}
 struts-pmc={ldap:cn=struts,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 subversion={reuse:asf-authorization:subversion}
