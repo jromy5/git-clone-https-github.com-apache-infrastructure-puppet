@@ -92,7 +92,6 @@ cxf={reuse:asf-authorization:cxf}
 cxf-pmc={ldap:cn=cxf,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 db={reuse:asf-authorization:db}
 db-pmc={ldap:cn=db,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-db-site={reuse:asf-authorization:db-site}
 deltacloud={reuse:asf-authorization:deltacloud}
 deltacloud-pmc={ldap:cn=deltacloud,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 deltaspike={reuse:asf-authorization:deltaspike}
