@@ -147,7 +147,6 @@ ignite-pmc={ldap:cn=ignite,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 # imperius={reuse:asf-authorization:# imperius}
 incubator={reuse:asf-authorization:incubator}
 incubator-pmc={ldap:cn=incubator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-incubator-site={reuse:asf-authorization:incubator-site}
 isis={reuse:asf-authorization:isis}
 isis-pmc={ldap:cn=isis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jackrabbit={reuse:asf-authorization:jackrabbit}

@@ -225,7 +225,6 @@ impala=abehm,brock,casey,cws,dhecht,dtsirogiannis,henry,ishaan,jbapple,jrussell,
 # imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
 incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
-incubator-site={ldap:cn=incubator-site,ou=groups,dc=apache,dc=org}
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
 jackrabbit={ldap:cn=jackrabbit,ou=groups,dc=apache,dc=org}
@@ -1092,7 +1091,6 @@ projects_role = rw
 [/incubator/public]
 @committers= rw
 @apsite = rw
-@incubator-site = rw
 
 [/incubator/edgent]
 @edgent = rw
