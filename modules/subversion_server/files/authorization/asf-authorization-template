@@ -156,7 +156,6 @@ cxf-pmc={reuse:pit-authorization:cxf-pmc}
 datafu=cestella,evion,eyal,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
 db={ldap:cn=db,ou=groups,dc=apache,dc=org}
 db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
-db-site={ldap:cn=db-site,ou=groups,dc=apache,dc=org}
 db-torque={ldap:cn=db-torque,ou=auth,ou=groups,dc=apache,dc=org}
 db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org} 
 db-pmc={reuse:pit-authorization:db-pmc}
@@ -807,7 +806,6 @@ projects_role = rw
 
 [/db/site]
 @db = rw
-@db-site = rw
 @db-jdo = rw
 
 [/db/torque]
