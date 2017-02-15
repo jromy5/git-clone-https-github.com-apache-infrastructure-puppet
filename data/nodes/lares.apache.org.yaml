@@ -7,3 +7,8 @@ buildbot_slave::slave_name: 'lares_ubuntu'
 buildbot_slave::required_packages:
   - 'openjdk-7-jdk'
 
+buildbot_slave::rat::project_name: 'Lucy'
+buildbot_slave::rat::src_dir: 'lucy-trunk-rat'
+buildbot_slave::rat::build_dir: 'build'
+buildbot_slave::rat::report_file: 'rat-output.xml'
+buildbot_slave::rat::rat_excludes: 'devel/conf/rat-excludes'
