@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::rat
   - loggy
 
 buildbot_slave::slave_name: 'lares_ubuntu'
