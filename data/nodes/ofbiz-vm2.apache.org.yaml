@@ -164,20 +164,3 @@ vhosts_asf::vhosts::vhosts:
     docroot_group: 'www-data'
     error_log_file: 'ofbiz-bigfiles_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://ofbiz-vm2.apache.org/$1
-
-  ofbiz-vm-bigfiles-443:
-    vhost_name: 'ofbiz-vm2.apache.org'
-    servername: 'ofbiz-vm2.apache.org'
-    serveraliases:
-      - 'www.ofbiz-vm2.apache.org'
-    port: 443
-    docroot: '/var/www/ofbiz/big-files'
-    docroot_owner: 'ofbizDemo'
-    docroot_group: 'www-data'
-    access_log_file: 'ofbiz-ssl-bigfiles.apache.org.http_access.log'
-    error_log_file: 'ofbiz-ssl-bigfiles_error.log'
-    ssl: true
-    ssl_cert: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/cert.pem'
-    ssl_key:  '/etc/letsencrypt/live/ofbiz-vm2.apache.org/privkey.pem'
-    ssl_chain: '/etc/letsencrypt/live/ofbiz-vm2.apache.org/chain.pem'
