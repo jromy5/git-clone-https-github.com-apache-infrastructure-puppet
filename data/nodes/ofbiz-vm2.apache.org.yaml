@@ -164,4 +164,3 @@ vhosts_asf::vhosts::vhosts:
     docroot_group: 'www-data'
     error_log_file: 'ofbiz-bigfiles_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://ofbiz-vm2.apache.org/$1
