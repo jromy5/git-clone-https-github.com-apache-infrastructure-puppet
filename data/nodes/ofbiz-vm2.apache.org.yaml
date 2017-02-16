@@ -26,6 +26,14 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '50'
 apache::mod::event::threadsperchild: '5'
 
+base::hosts:
+  demo-trunk.ofbiz.apache.org:
+    ip: '10.20.2.166'
+  demo-stable.ofbiz.apache.org:
+    ip: '10.20.2.166'
+  demo-old.ofbiz.apache.org:
+    ip: '10.20.2.166'
+
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
