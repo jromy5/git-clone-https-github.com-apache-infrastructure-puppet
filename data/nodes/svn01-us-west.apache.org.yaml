@@ -292,7 +292,10 @@ vhosts_asf::vhosts::vhosts:
       Redirect temp /viewcvs.cgi http://svn.apache.org/viewvc
       Redirect temp /viewcvs    http://svn.apache.org/viewvc
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
+      # Rewrite /r123456 to viewvc
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
+      # Rewrite git-svn-id URLs to viewvc (/repos/asf/foo/trunk@123456)
+      RewriteRule ^/repos/asf/[^@]+@(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # The main repository
       
       
@@ -384,7 +387,12 @@ vhosts_asf::vhosts::vhosts:
       LimitXMLRequestBody 10000000
       RewriteEngine On
       ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
+      
+      # Rewrite /r123456 to viewvc
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
+      # Rewrite git-svn-id URLs to viewvc (/repos/asf/foo/trunk@123456)
+      RewriteRule ^/repos/asf/[^@]+@(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
+      
       # The main repository
       
       
