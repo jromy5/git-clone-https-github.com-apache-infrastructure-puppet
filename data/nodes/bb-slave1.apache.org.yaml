@@ -2,7 +2,6 @@
 classes:
   - buildbot_slave
   - buildbot_slave::github
-  - buildbot_slave::rat
   - loggy
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
@@ -22,10 +21,4 @@ python::python_pips:
     ensure: present
   beautifulsoup4:
     ensure: present
-
-buildbot_slave::rat::project_name: 'JMeter'
-buildbot_slave::rat::src_dir: 'jmeter-nightly'
-buildbot_slave::rat::build_dir: 'build'
-buildbot_slave::rat::report_file: 'rat-output.xml'
-buildbot_slave::rat::rat_excludes: 'rat-excludes.txt'
 

@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::rat
   - buildbot_slave::github
   - loggy
 
@@ -11,3 +12,9 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
+
+buildbot_slave::rat::project_name: 'JMeter'
+buildbot_slave::rat::src_dir: 'jmeter-nightly'
+buildbot_slave::rat::build_dir: 'build'
+buildbot_slave::rat::report_file: 'rat-output.xml'
+buildbot_slave::rat::rat_excludes: 'rat-excludes.txt'
