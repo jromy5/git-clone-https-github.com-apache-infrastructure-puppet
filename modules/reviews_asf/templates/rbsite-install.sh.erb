@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# run rb-site install to create a reviewboard based on parameters
+# from puppet/yaml
+
+# pull in our vars from yaml/eyaml
+
+RBHOME="<%= @rbhome -%>"
+DBTYPE="<%= @dbtype -%>"
+DBUSER="<%= @dbuser -%>"
+DBPASS="<%= @dbpass -%>"
+DBNAME="<%= @dbname -%>"
+DBHOST="<%= @dbhost -%>"
+
+RBSITE="/usr/local/bin/rb-site"
+
+FLAGFILE="$RBHOME/.installed"
+
+# test for existence of flag file
+# exit if it exists; we are already installed
+
+if [ -f $FLAGFILE ];
+then
+  echo "ReviewBoard is already installed on this host!"
+  exit 0;
+fi
+
+$RBSITE install $RBHOME       \
+  --db-host="$DBHOST"         \
+  --db-user="$DBUSER"         \
+  --db-name="$DBNAME"         \
+  --db-pass="$DBPASS"         \
+  --db-type="$DBTYPE"         \
+  --noinput                   \
+  --opt-out-support-data && touch $FLAGFILE
+
+if [ -f $FLAGFILE ];
+then
+  echo "ReviewBoard successfully installed in $RBHOME."
+  exit 0;
+fi
+

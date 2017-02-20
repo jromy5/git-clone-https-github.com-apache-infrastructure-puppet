@@ -19,7 +19,7 @@ mysql::server::override_options:
     innodb_flush_log_at_trx_commit: '1'
     sync_binlog: '1'
     binlog-ignore-db: 'mysql'
-    expire-logs-days: '5'
+    expire-logs-days: '2'
     character-set-server: 'utf8'
     max_allowed_packet: '64M'
     max_connections: '1024'
@@ -46,6 +46,10 @@ mysql::server::databases:
     charset: 'utf8'
     collate: 'utf8_bin'
   asfbuildbot:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  reviewboard:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
