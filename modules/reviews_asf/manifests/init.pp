@@ -11,8 +11,6 @@ class reviews_asf  (
   $rbhost     = 'reviews.apache.org',
   $rbuser     = 'reviewboard',
   $rbgroup    = 'reviewboard',
-  $rbuid      = '20000',
-  $rbgid      = '20000',
 ) {
 
   user {
@@ -21,15 +19,14 @@ class reviews_asf  (
       name       => $rbuser,
       home       => "/home/${rbuser}",
       managehome => true,
-      uid        => $rbuid,
-      gid        => $rbgid,
+      system     => true,
       require    => Group[$rbgroup],
   }
 
   group {
     $rbgroup:
-      name => $rbgroup,
-      gid  => $rbgid,
+      name   => $rbgroup,
+      system => true,
   }
 
   exec { 'rbsite-install':
