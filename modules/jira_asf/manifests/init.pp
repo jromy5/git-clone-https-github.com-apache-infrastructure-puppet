@@ -205,7 +205,7 @@ class jira_asf (
     compress     => true,
   }
 
-  ::systemd::unit_file { "jira.service":
+  ::systemd::unit_file { 'jira.service':
       source => 'puppet:///modules/jira_asf/jira.service',
   }
 

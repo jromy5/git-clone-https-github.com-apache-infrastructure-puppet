@@ -146,11 +146,11 @@ file {
       owner   => 'fisheye',
       group   => 'fisheye',
       mode    => '0644',
-      source  => "puppet:///modules/fisheye_asf/home/subversion/servers",
+      source  => 'puppet:///modules/fisheye_asf/home/subversion/servers',
       require => [Package['subversion'],File["/home/${username}/.subversion"]];
   }
 
-  ::systemd::unit_file { "fisheye.service":
+  ::systemd::unit_file { 'fisheye.service':
       source => 'puppet:///modules/fisheye_asf/fisheye.service',
   }
 }
