@@ -65,7 +65,7 @@ class fisheye_asf (
       ensure => $group_present,
       system => true,
   }
-  
+
 # download standalone Fisheye
   exec {
     'download-fisheye':
@@ -78,12 +78,12 @@ class fisheye_asf (
     ensure  => file,
     require => Exec['download-fisheye'],
   }
-  
-  
+
+
 # extract the download and move it
   exec {
     'extract-fisheye':
-      # take out the hardcoded fecru bits   
+      # take out the hardcoded fecru bits
       command => "/usr/bin/unzip ${zip} && sudo mkdir ${parent_dir}/${fisheye_build} && sudo mv fecru-${fisheye_version}/* ${parent_dir}/${fisheye_build}", # lint:ignore:140chars
       cwd     => $download_dir,
       user    => 'root',
@@ -101,7 +101,7 @@ class fisheye_asf (
       timeout => 600,
       require => [Exec['extract-fisheye'],File[$fisheye_home]],
   }
- 
+
 file {
     $parent_dir:
       ensure => directory,
@@ -148,7 +148,7 @@ file {
       mode    => '0644',
       source  => "puppet:///modules/fisheye_asf/home/subversion/servers",
       require => [Package['subversion'],File["/home/${username}/.subversion"]];
-  }    
+  }
 
   ::systemd::unit_file { "fisheye.service":
       source => 'puppet:///modules/fisheye_asf/fisheye.service',

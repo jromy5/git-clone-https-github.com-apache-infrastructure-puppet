@@ -19,14 +19,14 @@ $pbcsPwd  = ''
     $packages:
       ensure => installed,
   }
-  
+
   file { '/x1':
     ensure => directory,
     owner  => 'root',
     group  => 'www-data',
     mode   => '0750',
   }
-  
+
   file { '/x1/repos':
     ensure  => directory,
     owner   => 'root',
@@ -34,7 +34,7 @@ $pbcsPwd  = ''
     mode    => '0750',
     require => File['/x1'],
   }
-  
+
   file { '/x1/gitbox':
     source  => 'puppet:///modules/gitbox',
     recurse => true,
@@ -43,7 +43,7 @@ $pbcsPwd  = ''
     checksum => 'md5',
     mode    => '0750';
   }
-  
+
   file { '/x1/gitbox/hooks/post-receive.d/private.py':
       ensure  => 'present',
       owner   => 'root',
@@ -62,7 +62,7 @@ $pbcsPwd  = ''
       ensure => present,
       source => 'puppet:///modules/gitbox/gitconf/config';
   }
-  
+
   ## Sync log and broken dir
   file {
     '/x1/gitbox/broken':
@@ -82,7 +82,7 @@ $pbcsPwd  = ''
       group  => 'www-data',
       mode   => '0750';
   }
-  
+
   ## MATT dir
   file {
     '/x1/gitbox/matt':
@@ -91,7 +91,7 @@ $pbcsPwd  = ''
       group  => 'www-data',
       mode   => '0750';
   }
-  
+
   file {
     '/etc/gitweb':
       ensure  => directory,
@@ -106,7 +106,7 @@ $pbcsPwd  = ''
       ensure => present,
       source => 'puppet:///modules/gitbox/gitconfig';
   }
-  
+
   ## GitWeb modern CSS
   file {
     '/usr/share/gitweb':
@@ -126,13 +126,13 @@ $pbcsPwd  = ''
       mode   => '0750',
       source => 'puppet:///modules/gitbox/gitweb/gitweb.css';
   }
-  
-  
+
+
   ## Unless declared otherwise the default behaviour is to enable these modules
   apache::mod { 'authnz_ldap': }
   apache::mod { 'ldap': }
   apache::mod { 'rewrite': }
-  
+
   apache::vhost {
     'gitbox-80':
       priority        => '99',
@@ -159,7 +159,7 @@ $pbcsPwd  = ''
         },
       ],
   }
-  
+
   apache::vhost {
     'gitbox-ssl':
       priority        => '25',
