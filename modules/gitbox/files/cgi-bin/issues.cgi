@@ -33,7 +33,7 @@ import StringIO
 from email.mime.text import MIMEText
 
 # Define some defaults and debug vars
-DEBUG_MAIL_TO = "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
+DEBUG_MAIL_TO = None # "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
 DEFAULT_SENDMAIL = True             # Should we default to sending an email to the list? (this is very rarely no)
 DEFAULT_JIRA_ENABLED = True         # Is JIRA bridge enabled by default?
 DEFAULT_JIRA_ACTION = "comment"     # Default JIRA action (comment/worklog)
