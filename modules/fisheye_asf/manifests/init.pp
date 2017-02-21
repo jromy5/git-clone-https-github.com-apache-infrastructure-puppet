@@ -57,7 +57,7 @@ class fisheye_asf (
       gid        => $groupname,
       managehome => true,
       require    => Group[$groupname],
-      system 	 => true,
+      system     => true,
   }
 
   group {

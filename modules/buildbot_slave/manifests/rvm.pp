@@ -12,8 +12,8 @@ class buildbot_slave::rvm ( ) {
   define buildbot_slave::ruby::symlink ($binary = $title, $ruby = '') {
     $version = split($ruby, '-')
     file { "/usr/local/bin/${binary}${version[1]}" :
-      ensure  => link,
-      target  => "/usr/local/rvm/wrappers/${ruby}/${binary}",
+      ensure => link,
+      target => "/usr/local/rvm/wrappers/${ruby}/${binary}",
     }
   }
 

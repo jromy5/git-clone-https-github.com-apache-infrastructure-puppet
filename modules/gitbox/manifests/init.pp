@@ -36,12 +36,12 @@ $pbcsPwd  = ''
   }
 
   file { '/x1/gitbox':
-    source  => 'puppet:///modules/gitbox',
-    recurse => true,
-    owner   => 'root',
-    group   => 'www-data',
+    source   => 'puppet:///modules/gitbox',
+    recurse  => true,
+    owner    => 'root',
+    group    => 'www-data',
     checksum => 'md5',
-    mode    => '0750';
+    mode     => '0750';
   }
 
   file { '/x1/gitbox/hooks/post-receive.d/private.py':
