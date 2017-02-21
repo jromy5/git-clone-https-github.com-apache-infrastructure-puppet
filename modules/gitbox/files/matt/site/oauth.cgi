@@ -107,7 +107,7 @@ def ldap_groups(uid):
     l = ldap.initialize(LDAP_URI)
     # this search for all objectClasses that user is in.
     # change this to suit your LDAP schema
-    search_filter= "(&(cn=*)(memberUid=%s))" % uid
+    search_filter= "(|(member=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" % (uid, uid)
     try:
         groups = []
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
@@ -363,7 +363,7 @@ def main():
             print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
             for group in groups:
                 for repo in repos:
-                    m = re.match(r"([^-]+)", repo)
+                    m = re.match(r"(?:incubator-)?([^-]+)", repo)
                     g = m.group(1)
                     if g == group:
                         if not group in canAccess:
