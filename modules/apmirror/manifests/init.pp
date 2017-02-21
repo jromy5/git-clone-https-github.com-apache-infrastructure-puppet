@@ -98,7 +98,7 @@ class apmirror (
     user    => $svnwc_user,
     group   => $svnwc_group,
     creates => '/var/www/www.apache.org/content',
-    require => [ Package['subversion'], User[$svnwc_user], Group[$groupname], Class['apache'] ], # lint:ignore:80chars
+    require => [ Package['subversion'], User[$svnwc_user], Group[$groupname], Class['apache'] ],
   }
 
   file { 'writable_mirrors':
@@ -120,6 +120,6 @@ class apmirror (
     # increase to this incase the host takes a while to execute the
     # mirror list priming
     timeout => 600,
-    require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ], # lint:ignore:80chars
+    require => [ File['mirmon.state'], Exec['create mirmon.mlist'], Exec['apache.org co'], File['writable_mirrors'] ],
   }
 }

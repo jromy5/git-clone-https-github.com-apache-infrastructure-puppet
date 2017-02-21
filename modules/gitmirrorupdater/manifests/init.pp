@@ -33,7 +33,7 @@ class gitmirrorupdater (
       'svn2gitupdate.py',
       'svn2gitupdate.cfg'
     ]:
-    site             => 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate', # lint:ignore:80chars
+    site             => 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/git/svn2gitupdate',
     cwd              => '/usr/local/etc/svn2gitupdate',
     require_resource => File['/usr/local/etc/svn2gitupdate'],
     user             => 'git',

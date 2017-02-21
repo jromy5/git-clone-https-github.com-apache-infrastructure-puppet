@@ -148,7 +148,7 @@ $pbcsPwd  = ''
       directories     => [
         {
           path           => '/x1/gitbox/htdocs',
-          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
+          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
           allow_override => ['All'],
           addhandlers    => [
             {
@@ -178,7 +178,7 @@ $pbcsPwd  = ''
       directories     => [
           {
             path           => '/x1/gitbox/htdocs',
-            options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
+            options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
             allow_override => ['All'],
             addhandlers    => [
               {

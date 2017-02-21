@@ -49,14 +49,14 @@ define bugzilla::project (
   $db_port           = 0,
   $db_sock           = '',
   $db_user           = 'bugzilla',
-  $defaultquery      = 'resolution=---&emailassigned_to1=1&emailassigned_to2=1&emailreporter2=1&emailcc2=1&emailqa_contact2=1&emaillongdesc3=1&order=Importance&long_desc_type=substring', # lint:ignore:80chars
+  $defaultquery      = 'resolution=---&emailassigned_to1=1&emailassigned_to2=1&emailreporter2=1&emailcc2=1&emailqa_contact2=1&emaillongdesc3=1&order=Importance&long_desc_type=substring', # lint:ignore:140chars
   $diffpath          = '/usr/bin',
   $index_html        = false,
   $install_root      = '/var/www',
   $interdiffbin      = '/usr/bin/interdiff',
   $maintainer        = '',
   $mta               = 'Sendmail',
-  $mybugstemplate    = 'buglist.cgi?resolution=---&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailtype1=exact&amp;email1=%userid%', # lint:ignore:80chars
+  $mybugstemplate    = 'buglist.cgi?resolution=---&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailtype1=exact&amp;email1=%userid%',
   $site_wide_secret  = undef,
   $smtp_server       = 'localhost',
   $svn_url           = 'https://svn.apache.org/viewvc?view=rev&rev=',
@@ -111,7 +111,7 @@ define bugzilla::project (
   }
 
   cron { "daily_update_of_${name}_graphs":
-    command     => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v 'Use of uninitialized.*line 31'", # lint:ignore:80chars
+    command     => "(cd ${docroot} ; ./collectstats.pl) 2>&1 | grep -v 'Use of uninitialized.*line 31'",
     minute      => 5,
     hour        => 0,
     environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings

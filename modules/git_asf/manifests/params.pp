@@ -13,7 +13,7 @@ class git_asf::params (
 ) {
 
   validate_bool($enable_daemon)
-  validate_string($daemon_user, $daemon_basepath, $daemon_directory, $daemon_options) # lint:ignore:80chars
+  validate_string($daemon_user, $daemon_basepath, $daemon_directory, $daemon_options)
   validate_array($client_packages, $daemon_packages)
 
 }

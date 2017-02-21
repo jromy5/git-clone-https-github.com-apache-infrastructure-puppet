@@ -32,7 +32,7 @@ class whimsy_server::cronjobs (
 
   cron { 'public_icla':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_icla_info.rb public/icla-info.json public/icla-info_noid.json > logs/public-icla-info 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_icla_info.rb public/icla-info.json public/icla-info_noid.json > logs/public-icla-info 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => '*/15'
   }
@@ -46,7 +46,7 @@ class whimsy_server::cronjobs (
 
   cron { 'public_ldap_committees':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_committees.rb public/public_ldap_committees.json > logs/public-ldap-committees 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_committees.rb public/public_ldap_committees.json > logs/public-ldap-committees 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => [2, 17, 32, 47]
   }
@@ -67,28 +67,28 @@ class whimsy_server::cronjobs (
 
   cron { 'public_nonldap_groups':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_nonldap_groups.rb public/public_nonldap_groups.json > logs/public-nonldap-groups 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_nonldap_groups.rb public/public_nonldap_groups.json > logs/public-nonldap-groups 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => [8, 23, 38, 53]
   }
 
   cron { 'public_ldap_authgroups':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_authgroups.rb public/public_ldap_authgroups.json > logs/public-ldap-authgroups 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_authgroups.rb public/public_ldap_authgroups.json > logs/public-ldap-authgroups 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => [10, 25, 40, 55]
   }
 
   cron { 'public_ldap_services':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_services.rb public/public_ldap_services.json > logs/public-ldap-services 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_services.rb public/public_ldap_services.json > logs/public-ldap-services 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => 40
   }
 
   cron { 'public_podlings':
     ensure  => present,
-    command => "(cd /srv/whimsy/www; ${ruby} roster/public_podlings.rb public/public_podling_status.json public/public_podlings.json > logs/public-podlings 2>&1)",
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_podlings.rb public/public_podling_status.json public/public_podlings.json > logs/public-podlings 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => 45
   }

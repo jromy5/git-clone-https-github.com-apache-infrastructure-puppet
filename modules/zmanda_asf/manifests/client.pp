@@ -56,12 +56,12 @@ class zmanda_asf::client (
   } -> Exec['install client']
 
   exec { 'install client':
-    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb',
+    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64.deb', # lint:ignore:140chars
     unless  => '/usr/bin/dpkg-query -W amanda-enterprise-backup-client',
   } -> Exec['install extensions']
 
   exec { 'install extensions':
-    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb',
+    command => '/usr/bin/dpkg --force-confold -i /root/amanda-enterprise-backup-client_3.3.9-1Ubuntu1404_amd64/amanda-enterprise-extensions-client_3.3.9-1Ubuntu1404_amd64.deb', # lint:ignore:140chars
     unless  => '/usr/bin/dpkg-query -W amanda-enterprise-extensions-client',
   } -> File['update amandahosts']
 

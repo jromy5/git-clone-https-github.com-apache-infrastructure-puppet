@@ -9,25 +9,25 @@ class rbldnsd::master::setup (
     'rbldnsd-sorbs-datafeed':
       ensure  => present,
       require => File[$rbldistdir],
-      command => "/usr/bin/rsync -az rsync://rsync.sorbs.net ${rbldistdir}/sorbs/ > /dev/null", # lint:ignore:80chars
+      command => "/usr/bin/rsync -az rsync://rsync.sorbs.net ${rbldistdir}/sorbs/ > /dev/null",
       hour    => '*',
       minute  => '15';
     'rbldnsd-spamhaus-sbl-datafeed':
       ensure  => present,
       require => File[$rbldistdir],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/sbl ${rbldistdir}/sbl/ > /dev/null", # lint:ignore:80chars
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/sbl ${rbldistdir}/sbl/ > /dev/null",
       hour    => '*',
       minute  => '20';
     'rbldnsd-spamhaus-xbl-datafeed':
       ensure  => present,
       require => File[$rbldistdir],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/xbl ${rbldistdir}/xbl/ > /dev/null", # lint:ignore:80chars
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/xbl ${rbldistdir}/xbl/ > /dev/null",
       hour    => '*',
       minute  => '25';
     'rbldnsd-spamhaus-pbl-datafeed':
       ensure  => present,
       require => File[$rbldistdir],
-      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/pbl ${rbldistdir}/pbl/ > /dev/null", # lint:ignore:80chars
+      command => "/usr/bin/rsync -az rsync://rsync1.spamhaus.org/rbldnsd/pbl ${rbldistdir}/pbl/ > /dev/null",
       hour    => '*',
       minute  => '30',
   }

@@ -45,7 +45,7 @@ class cwiki_asf (
   }
 
 # confluence specific
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
   $mysql_connector_dest_dir = '/x1/cwiki/current/confluence/WEB-INF/lib'
   $confluence_build         = "atlassian-confluence-${confluence_version}"
   $tarball                  = "${confluence_build}.tar.gz"
@@ -93,7 +93,7 @@ class cwiki_asf (
 # extract the download and move it
   exec {
     'extract-confluence':
-      command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${tarball} && mv ${confluence_build} ${parent_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
@@ -103,7 +103,7 @@ class cwiki_asf (
 
   exec {
     'chown-confluence-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
+      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
       timeout => 1200,
       require => [User[$username],Group[$username]],
   }

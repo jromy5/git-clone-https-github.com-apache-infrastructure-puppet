@@ -45,7 +45,7 @@ class crowd_asf (
   }
 
 # crowd specific
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar" # lint:ignore:80chars
+  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
   $mysql_connector_dest_dir = '/x1/crowd/current/crowd/WEB-INF/lib'
   $crowd_build              = "atlassian-crowd-${crowd_version}"
   $tarball                  = "${crowd_build}.tar.gz"
@@ -93,7 +93,7 @@ class crowd_asf (
 # extract the download and move it
   exec {
     'extract-crowd':
-      command => "/bin/tar -xvzf ${tarball} && mv ${crowd_build} ${parent_dir}", # lint:ignore:80chars
+      command => "/bin/tar -xvzf ${tarball} && mv ${crowd_build} ${parent_dir}",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
@@ -103,7 +103,7 @@ class crowd_asf (
 
   exec {
     'chown-crowd-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work", # lint:ignore:80chars
+      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
       timeout => 1200,
       require => [User[$username],Group[$username]],
   }

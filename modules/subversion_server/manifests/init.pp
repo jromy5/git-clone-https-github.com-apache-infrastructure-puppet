@@ -588,16 +588,16 @@ class subversion_server (
       minute  => '*/3',
       hour    => '*',
       user    => 'www-data',
-      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null'; # lint:ignore:80chars
+      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
     'generate-dist-auth':
       minute  => '15',
       hour    => '*',
       user    => 'www-data',
-      command => 'cd /x1/svn/authorization/templates ; ./generate-dist-authorization > asf-dist-authorization.t && mv asf-dist-authorization.t ../asf-dist-authorization'; # lint:ignore:80chars
+      command => 'cd /x1/svn/authorization/templates ; ./generate-dist-authorization > asf-dist-authorization.t && mv asf-dist-authorization.t ../asf-dist-authorization'; # lint:ignore:140chars
     'generate-asf-auth':
       minute  => '*/3',
       hour    => '*',
-      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl ldap_change > /dev/null'; # lint:ignore:80chars
+      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl ldap_change > /dev/null';
     'svn-create-dump':
       monthday => '1',
       minute   => '15',

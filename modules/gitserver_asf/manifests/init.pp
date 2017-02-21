@@ -43,7 +43,7 @@ file {
 
 cron {
   'asfgit-admin update svn authors':
-    command     => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt', # lint:ignore:80chars
+    command     => '/x1/git/asfgit-admin/asf/bin/asfgit-svn-authors && cp /x1/git/repos/svn/authors.txt /x1/git/asfgit-admin/asf/site/htdocs/authors.txt', # lint:ignore:140chars
     environment => 'PATH=/usr/bin/:/bin/',
     user        => 'root',
     minute      => '5',
@@ -69,7 +69,7 @@ apache::vhost {
     directories     => [
       {
         path           => '/x1/git/htdocs',
-        options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
+        options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
         allow_override => ['All'],
         addhandlers    => [
           {
@@ -98,7 +98,7 @@ apache::vhost {
     directories     => [
         {
           path           => '/x1/git/htdocs',
-          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'], # lint:ignore:80chars
+          options        => ['Indexes', 'FollowSymLinks', 'MultiViews', 'ExecCGI'],
           allow_override => ['All'],
           addhandlers    => [
             {

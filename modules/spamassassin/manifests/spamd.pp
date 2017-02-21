@@ -13,7 +13,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   $dns_available         = 'yes',
   $helperhomedir         = '',
   $install_folder        = '/etc/spamassassin',
-  $kam_update            = '/usr/bin/curl http://www.pccc.com/downloads/SpamAssassin/contrib/KAM.cf -o /etc/spamassassin/KAM.cf && /usr/bin/spamassassin --lint && /usr/sbin/service spamassassin restart', # lint:ignore:80chars
+  $kam_update            = '/usr/bin/curl http://www.pccc.com/downloads/SpamAssassin/contrib/KAM.cf -o /etc/spamassassin/KAM.cf && /usr/bin/spamassassin --lint && /usr/sbin/service spamassassin restart', # lint:ignore:14chars
   $listenip              = '127.0.0.1',
   $local                 = false,
   $max_amavis_procs      = '25',
@@ -31,7 +31,7 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   $report_safe           = 1,
   $required_hits         = '10.0',
   $roundrobin            = false,
-  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload', # lint:ignore:80chars
+  $sa_update             = '/usr/bin/sa-update && /etc/init.d/spamassassin reload',
   $service_enable        = true,
   $service_ensure        = running,
   $skip_rbl_checks       = false,

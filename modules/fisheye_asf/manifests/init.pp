@@ -84,7 +84,7 @@ class fisheye_asf (
   exec {
     'extract-fisheye':
       # take out the hardcoded fecru bits   
-      command => "/usr/bin/unzip ${zip} && sudo mkdir ${parent_dir}/${fisheye_build} && sudo mv fecru-${fisheye_version}/* ${parent_dir}/${fisheye_build}", # lint:ignore:80chars
+      command => "/usr/bin/unzip ${zip} && sudo mkdir ${parent_dir}/${fisheye_build} && sudo mv fecru-${fisheye_version}/* ${parent_dir}/${fisheye_build}", # lint:ignore:140chars
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/README.html",
