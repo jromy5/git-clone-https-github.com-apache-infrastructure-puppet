@@ -30,4 +30,4 @@ class buildbot_slave::github (
   }
 
 }
- 
+
