@@ -42,5 +42,6 @@ if [ $? -eq 0 ]; then
   fi
   rm -f $TEMP_FILE
 fi
+source /x1/svn/hooks/pre-commit-sha1
 
 exit 0
