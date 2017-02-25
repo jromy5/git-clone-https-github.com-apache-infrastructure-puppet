@@ -131,9 +131,9 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'crowd.apache.org.http_access.log'
     error_log_file: 'crowd.apache.org.error.log'
     custom_fragment: |
-			RewriteEngine On
-			ProxyPass /crowd http://10.10.3.14:8095/crowd/
-			ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
+      RewriteEngine On
+      ProxyPass /crowd http://10.10.3.14:8095/crowd/
+      ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
 
   issues-test:
     vhost_name: '*'
