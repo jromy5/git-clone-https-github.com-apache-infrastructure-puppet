@@ -4,7 +4,10 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - apache::mod::ssl
   - vhosts_asf::vhosts
+  - ssl::name::wildcard_apache_org
+
 
 python::python_pips:
   Django:
@@ -28,6 +31,9 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+
 
 logrotate::rule:
   apache2:
