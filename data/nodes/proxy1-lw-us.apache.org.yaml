@@ -167,11 +167,12 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /jira ajp://10.10.3.161:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
-      # LuaScope thread
-      # LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
-      # <Location /jira/>
-      # SetInputFilter AntiSpam
-      # </Location>
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+
+      <LocationMatch "^/jira/(?!secure/admin/)(.*)">
+        SetInputFilter AntiSpam
+      </Location>
 
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
