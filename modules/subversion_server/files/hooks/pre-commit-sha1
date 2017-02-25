@@ -18,10 +18,10 @@
 # under the License.
 #
 #
-# $Id$
+# $Id: reject-known-sha1-collisions.sh 1784378 2017-02-25 13:16:10Z stsp $
 #
-# Prevents some SHA-1 collisions to be commited
-# Test fo the 320 byte prefix found on https://shattered.io/
+# Prevents some SHA-1 collisions to be committed
+# Test for the 320 byte prefix found on https://shattered.io/
 # If the files are committed in the same transaction, svnlook
 # will error out itself due to the apparent corruption in the
 # candidate revision
@@ -29,17 +29,18 @@
 REPOS="$1"
 TXN="$2"
 SVNLOOK=/usr/bin/svnlook
+# GNU coreutils versions of these tools are required:
+SHA1SUM=/usr/bin/sha1sum
+HEAD=/usr/bin/head
 
 $SVNLOOK changed -t "$TXN" "$REPOS"
 if [ $? -ne 0 ]; then
-  echo $FILES >&2
   echo "svnlook failed, possible SHA-1 collision" >&2
   exit 2
 fi
 
-FILES=`$SVNLOOK changed -t "$TXN" "$REPOS" | /usr/bin/grep -Ev '^D ' | /usr/bin/awk '{print $2}'`
-for FILE in $FILES; do
-  PREFIX=`$SVNLOOK cat -t "$TXN" "$REPOS" "$FILE" | head -c320 | /usr/bin/sha1sum | cut -c-40`
+$SVNLOOK changed -t "$TXN" "$REPOS" | /usr/bin/grep -Ev '^D ' | /usr/bin/sed -e 's/^.   //' | /usr/bin/grep -v '/$' | while read FILE; do
+  PREFIX=`$SVNLOOK cat -t "$TXN" "$REPOS" "$FILE" | $HEAD -c320 | $SHA1SUM | cut -c-40`
   if [ "$PREFIX" == 'f92d74e3874587aaf443d1db961d4e26dde13e9c' ]; then
         echo "known SHA-1 collision rejected" >&2
         exit 3
