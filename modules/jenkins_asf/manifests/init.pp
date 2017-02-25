@@ -27,7 +27,7 @@ class jenkins_asf (
   }
 
 
-http://mirrors.jenkins.io/war-stable/2.32.2/jenkins.war
+# http://mirrors.jenkins.io/war-stable/2.32.2/jenkins.war
 
 # jenkins specific
   $download_dir             = '/tmp'
@@ -84,4 +84,4 @@ file {
       group   => 'root',
       require => File[$install_dir];
   }
-
+}
