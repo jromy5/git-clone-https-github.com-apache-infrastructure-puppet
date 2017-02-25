@@ -5,8 +5,6 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - vhosts_asf::vhosts
-  - postgresql::server
-  - postgresql_asf
 
 python::python_pips:
   Django:
@@ -30,27 +28,6 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
-
-postgresql::server::listen_addresses: '*'
-postgresql::server::encoding: 'UTF-8'
-postgresql::server::locale: 'en_US.UTF-8'
-postgresql::server::datadir: '/x1/postgresql/9.3/main'
-postgresql::server::needs_initdb: true
-
-postgresql::server::config_entry:
-  wal_level:
-    value: 'hot_standby'
-  max_wal_senders:
-    value: 3
-  checkpoint_segments:
-    value: 8
-  wal_keep_segments:
-    value: 8
-  max_connections:
-    value: 1024
-  hot_standby:
-    value: 'on'
-
 
 logrotate::rule:
   apache2:
@@ -82,4 +59,3 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://127.0.0.1:8060/
       ProxyPassReverse / http://127.0.0.1:8060/
-
