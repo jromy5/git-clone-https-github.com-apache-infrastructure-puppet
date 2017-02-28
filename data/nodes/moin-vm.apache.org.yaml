@@ -7,6 +7,7 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - zmanda_asf::client
+  - blocky
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
