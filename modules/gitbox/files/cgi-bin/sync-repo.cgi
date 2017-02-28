@@ -125,7 +125,11 @@ if 'repository' in data and 'name' in data['repository']:
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
                 foundOld = cursor.fetchone()
                 if not foundOld:
-                    raise Exception("Could not find previous push (??->%s) in push log!" % before)
+                    # See if we've ever gotten any push logs for this repo, or if this is a first
+                    cursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
+                    foundAny = cursor.fetchone()
+                    if foundAny:
+                        raise Exception("Could not find previous push (??->%s) in push log!" % before)
                 # Then, be doubly sure by doing cat-file on the old rev
                 os.chdir(repopath)
                 subprocess.check_call(['git','cat-file','-e', before])
