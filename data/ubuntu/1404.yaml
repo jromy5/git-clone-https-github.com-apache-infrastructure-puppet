@@ -382,6 +382,8 @@ build_slaves::distro_packages:
   - lib32bz2-1.0
   - lib32ncurses5
   - lib32z1
+  - libaio1
+  - libaio-dev
   - libapr1-dev
   - libbit-vector-perl
   - libboost-dev
