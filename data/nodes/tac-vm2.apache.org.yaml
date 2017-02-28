@@ -1,4 +1,4 @@
---
+---
 classes:
   - apache
   - apache::mod::proxy
