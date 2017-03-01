@@ -123,3 +123,9 @@ vhosts_asf::vhosts::vhosts:
         sethandler: 'none'
         options: 'none'
         custom_fragment: 'AddType text/plain .html .htm .shtml .php .php3 .php4 .php5 .pl .py .cgi .phtml .phtm'
+
+cron:
+  update-git-clones:
+    user: 'reviewboard'
+    minute: '*/30'
+    command: '/home/reviewboard/update_git_clones.sh > /dev/null 2>&1'
