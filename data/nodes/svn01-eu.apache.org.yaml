@@ -1,0 +1,19 @@
+---
+classes:
+  - apache2
+  - blocky
+  - loggy
+  - perl
+  - rootbin_asf
+  - subversion_server
+  - zmanda_asf::client
+  
+perl::module:
+  net_ldap:
+    name: 'Net::LDAP'
+    use_package : true
+
+subversion_server::packages:
+  - 'viewvc'
+
+subversion_server::svn_master_hostname: 'svn01-eu.apache.org'
