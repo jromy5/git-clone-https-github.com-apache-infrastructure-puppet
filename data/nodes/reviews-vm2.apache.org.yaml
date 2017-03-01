@@ -46,6 +46,7 @@ python::python_pips:
   django-storage-swift:
     ensure: present
 
+postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 
 vhosts_asf::vhosts::vhosts:
