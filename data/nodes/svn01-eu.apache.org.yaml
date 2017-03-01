@@ -1,6 +1,6 @@
 ---
 classes:
-  - apache2
+  - apache
   - blocky
   - loggy
   - perl
