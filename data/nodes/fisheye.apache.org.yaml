@@ -3,6 +3,8 @@ classes:
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - loggy
+  - blocky
   - fisheye_asf
   - mysql_asf::backup
   - mysql::server
