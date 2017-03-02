@@ -31,6 +31,8 @@ import re
 import ezt
 import StringIO
 from email.mime.text import MIMEText
+import requests
+import base64
 
 # Define some defaults and debug vars
 DEBUG_MAIL_TO = None # "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
@@ -188,6 +190,36 @@ def formatEmail(fmt):
         'message': body
     }
 
+def updateTicket(ticket, name, txt, worklog):
+    auth = open("/x1/jirauser.txt").read().strip()
+    auth = str(base64.encodestring(bytes(auth))).strip()
+    
+    # Post comment or worklog entry!
+    headers = {"Content-type": "application/json",
+                 "Accept": "*/*",
+                 "Authorization": "Basic %s" % auth
+                 }
+    try:
+        where = 'comment'
+        data = {
+            'body': txt
+        }
+        if worklog:
+            where = 'worklog'
+            data = {
+                'timeSpent': "10m",
+                'comment': txt
+            }
+        
+        rv = requests.post("https://issues.apache.org/jira/rest/api/latest/issue/%s/%s" % (ticket, where),headers=headers, json = data)
+        if rv.status_code == 200 or rv.status_code == 201:
+            return "Updated JIRA Ticket %s" % ticket
+        else:
+            return rv.txt
+    except:
+        pass # Not much to do just yet
+    
+
 
 # Main function
 def main():
@@ -258,6 +290,16 @@ def main():
     if email:
         sendEmail(mailto, email['subject'], email['message'])
 
+    # Now do JIRA if need be
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_section('apache') and gconf.has_option('apache', 'jira') else None
+    
+    if jiraopt and fmt:
+        if 'title' in fmt:
+            m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
+            if m:
+                ticket = m.group(1)
+                worklog = True if jiraopt == 'worklog' else False
+                return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
 
