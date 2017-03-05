@@ -5,9 +5,9 @@
   <setupType>custom</setupType>
   <buildNumber>5982</buildNumber>
   <properties>
-    <property name="crowd.license.message"><%= @crowd_license_message %></property>
+    <property name="crowd.license.message"><%= @crowd_license_message -%></property>
     <property name="attachments.dir">${crowdHome}/attachments</property>
-    <property name="crowd.setup.server.id"><%= @crowd_setup_server_id %></property>
+    <property name="crowd.setup.server.id"><%= @crowd_setup_server_id -%></property>
     <property name="crowd.webapp.context.path">/crowd</property>
     <property name="email.configured">true</property>
     <property name="hibernate.c3p0.acquire_increment">1</property>
@@ -18,9 +18,9 @@
     <property name="hibernate.c3p0.timeout">30</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.isolation">2</property>
-    <property name="hibernate.connection.password"><%= @hibernate_connection_password %></property>
-    <property name="hibernate.connection.url"><%= @hibernate_connection_url %></property>
-    <property name="hibernate.connection.username"><%= @hibernate_connection_username %></property>
+    <property name="hibernate.connection.password"><%= @hibernate_connection_password -%></property>
+    <property name="hibernate.connection.url"><%= @hibernate_connection_url -%></property>
+    <property name="hibernate.connection.username"><%= @hibernate_connection_username -%></property>
     <property name="hibernate.database.lower_non_ascii_supported">true</property>
     <property name="hibernate.dialect">com.atlassian.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.setup">true</property>
