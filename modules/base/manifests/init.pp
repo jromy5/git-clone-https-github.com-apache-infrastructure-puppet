@@ -5,6 +5,7 @@ class base (
   $gempackages    = [],
   $purgedpackages = [],
   $pkgprovider    = '',
+  $rsync_secrets  = '',
 ) {
 
   $packages = hiera_array('base::basepackages', [])
@@ -36,6 +37,9 @@ class base (
 
   $crons = hiera_hash('cron', {})
   create_resources(cron, $crons)
+
+  $files = hiera_hash('file', {})
+  create_resources(file, $files)
 
   $rsync_modules = hiera_hash('rsync::server::module', {})
   create_resources(rsync::server::module, $rsync_modules)
