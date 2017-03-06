@@ -27,6 +27,3 @@ tomcat::service:
     service_ensure: 'stopped'
     use_init: false
     user: 'tomcat7'
-    group: 'tomcat7'
-
-
