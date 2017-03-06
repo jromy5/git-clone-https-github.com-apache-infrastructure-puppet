@@ -63,7 +63,7 @@ class whimsy_server (
   vcsrepo { '/x1/srv/whimsy':
     ensure   => latest,
     provider => git,
-    source   => 'https://git-dual.apache.org/repos/asf/whimsy.git',
+    source   => 'https://gitbox.apache.org/repos/asf/whimsy.git',
     before   => Apache::Vhost[whimsy-vm-80]
   } ~>
 
