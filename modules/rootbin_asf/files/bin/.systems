@@ -47,7 +47,6 @@
   'bb-vm1' => { os => 'ubuntu 10.04.1 lts', dc => 'osuosl',  classes => [qw(erebusvm  ci  bb)] },
   'bb-vm2' => { os => 'ubuntu 12.04 lts', dc => 'osuosl',  classes => [qw(nyxvm  ci  bb)] },
   'bb-vm3' => { os => 'ubuntu 10.04.4 lts', dc => 'osuosl',  classes => [qw(eirenevm  ci  bb)] },
-  'bb-win7' => { os => 'windows 7', dc => 'osuosl',  classes => [qw(erebusvm  ci)] },
   'bloodhound-vm' => { os => '
 ', dc => 'osuosl',  classes => [qw(nyxvm)] },
   'bloodhound-vm2' => { os => '
