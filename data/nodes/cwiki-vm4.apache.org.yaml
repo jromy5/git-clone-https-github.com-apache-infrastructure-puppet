@@ -7,6 +7,7 @@ classes:
   - cwiki_asf
   - blocky
   - loggy
+  - datadog_agent::integrations::apache
   - ssl::name::cwiki_apache_org 
   - vhosts_asf::vhosts
   - zmanda_asf::client
@@ -44,9 +45,11 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
+datadog_agent::integrations::apache::url: 'https://cwiki-vm4.apache.org/server-status?auto'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
-
+ 
 vhosts_asf::vhosts::vhosts:
   cwiki-vm4-80:
     vhost_name: '*'
