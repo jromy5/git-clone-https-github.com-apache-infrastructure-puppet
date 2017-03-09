@@ -67,7 +67,7 @@ vhosts_asf::vhosts::vhosts:
         SetHandler server-status
         Require local
       </Location>
-      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://cwiki.apache.org/$1
 
   cwiki-vm4-443:
       vhost_name: '*'
