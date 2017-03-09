@@ -79,6 +79,7 @@ vhosts_asf::vhosts::vhosts:
       ssl_key: '/etc/ssl/private/cwiki.apache.org.key'
       custom_fragment: |
         RewriteEngine On
+        ProxyPass /server-status !
         ProxyPass /intermediates !
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
