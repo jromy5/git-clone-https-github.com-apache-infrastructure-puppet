@@ -123,9 +123,6 @@ vhosts_asf::vhosts::vhosts:
       # Anti-spam for Aardvark
       LuaScope thread
       LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
-      <Location /jira/>
-        SetInputFilter AntiSpam
-      </Location>
 
       <LocationMatch "^/jira/(?!secure/admin/)(.*)">
         SetInputFilter AntiSpam
