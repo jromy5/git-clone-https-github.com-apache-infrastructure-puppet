@@ -62,10 +62,10 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'cwiki_error.log'
     custom_fragment: |
-    <Location "/server-status">
+      <Location "/server-status">
         SetHandler server-status
         Require local
-    </Location>
+      </Location>
       RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
 
   cwiki-vm4-443:
