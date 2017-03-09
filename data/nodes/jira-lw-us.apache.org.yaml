@@ -127,6 +127,10 @@ vhosts_asf::vhosts::vhosts:
         SetInputFilter AntiSpam
       </Location>
 
+      <LocationMatch "^/jira/(?!secure/admin/)(.*)">
+        SetInputFilter AntiSpam
+      </Location>
+
       # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
       RewriteCond /etc/tomcat-jira-main.maint -f
       RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
