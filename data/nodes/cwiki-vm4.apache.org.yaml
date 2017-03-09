@@ -45,7 +45,13 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-datadog_agent::integrations::apache::url: 'https://localhost/server-status?auto'
+base::hosts:
+  localhost:
+    ip: '127.0.0.1'
+    host_aliases:
+      - 'cwiki-internal.apache.org'
+
+datadog_agent::integrations::apache::url: 'https://cwiki-internal.apache.org/server-status?auto'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
@@ -63,6 +69,11 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'cwiki_error.log'
     custom_fragment: |
       RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
+    <Location "/server-status">
+        SetHandler server-status
+        Require local
+    </Location>
+
 
   cwiki-vm4-443:
       vhost_name: '*'
@@ -87,3 +98,8 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule ^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L,END]
         RewriteCond %%{}{QUERY_STRING} file: [NC]
         RewriteRule viewdefaultdecorator - [F,END]
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
+
