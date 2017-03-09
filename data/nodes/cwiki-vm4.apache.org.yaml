@@ -28,8 +28,6 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
-apache::mod::status::allow_from:
-  - all
 
 # cwiki_asf class variables.
 cwiki_asf::confluence_version: '5.8.4'
