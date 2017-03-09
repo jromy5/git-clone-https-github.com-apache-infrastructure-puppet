@@ -62,13 +62,11 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'cwiki_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
-      ProxyPass /server-status ! 
-      RewriteCond $1 !(server-status)
     <Location "/server-status">
         SetHandler server-status
         Require local
     </Location>
+      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
 
   cwiki-vm4-443:
       vhost_name: '*'
