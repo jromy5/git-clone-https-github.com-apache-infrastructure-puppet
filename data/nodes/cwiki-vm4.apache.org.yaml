@@ -45,7 +45,7 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-datadog_agent::integrations::apache::url: 'https://cwiki-vm4.apache.org/server-status?auto'
+datadog_agent::integrations::apache::url: 'https://cwiki.apache.org/server-status?auto'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
