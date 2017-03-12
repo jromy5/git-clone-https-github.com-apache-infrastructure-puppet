@@ -132,7 +132,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'crowd.apache.org.error.log'
     custom_fragment: |
       RewriteEngine On
-      RewriteCond %{}{REQUEST_URI} ^/$
+      RewriteCond %%{}{REQUEST_URI} ^/$
       RewriteRule ^(.*)$ https://crowd.apache.org/crowd/
       ProxyPass /crowd http://10.10.3.14:8095/crowd/
       ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
