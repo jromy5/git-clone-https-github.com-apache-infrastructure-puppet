@@ -3,6 +3,9 @@ classes:
   - crowd_asf
   - oraclejava::install
 
+base::basepackages:
+  - libmysql-java
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 

@@ -14,15 +14,15 @@ class crowd_asf (
 
   # override below in yaml
   $crowd_version                 = '',
-  $mysql_connector_version       = '',
-  $parent_dir,
+  $mysql_connector_path          = '/usr/share/java/mysql-connector-java.jar',
+  $parent_dir                    = '',
   $server_port                   = '',
   $connector_port                = '',
   $context_path                  = '',
   $docroot                       = '',
   $server_alias                  = '',
-  $heap_min_size                 = '',
-  $heap_max_size                 = '',
+  $heap_min_size                 = '2048',
+  $heap_max_size                 = '2048',
   # Below setting replaces PermGen, uses native memory for class metadata.
   # If not set resizes according to available native memory.
   $maxmetaspacesize              = '',
@@ -45,8 +45,7 @@ class crowd_asf (
   }
 
 # crowd specific
-  $mysql_connector          = "mysql-connector-java-${mysql_connector_version}.jar"
-  $mysql_connector_dest_dir = '/x1/crowd/current/crowd/WEB-INF/lib'
+  $mysql_connector_dest_dir = '/x1/crowd/current/apache-tomcat/lib'
   $crowd_build              = "atlassian-crowd-${crowd_version}"
   $tarball                  = "${crowd_build}.tar.gz"
   $download_dir             = '/tmp'
@@ -97,15 +96,16 @@ class crowd_asf (
       cwd     => $download_dir,
       user    => 'root',
       creates => "${install_dir}/NOTICE",
+      onlyif  => "/usr/bin/test ! -d ${install_dir}",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  }
+  } ->
 
   exec {
     'chown-crowd-dirs':
-      command => "/bin/chown -R ${username}:${username} ${install_dir}/logs ${install_dir}/temp ${install_dir}/work",
+      command => "/bin/chown -R ${username}:${groupname} ${install_dir}",
       timeout => 1200,
-      require => [User[$username],Group[$username]],
+      require => [User[$username],Group[$groupname]],
   }
 
   exec {
@@ -115,47 +115,51 @@ class crowd_asf (
   }
 
   file {
-    $parent_dir:
+    '/x1':
       ensure => directory,
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
+    $parent_dir:
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      require => File['/x1'];
     $crowd_home:
       ensure  => directory,
       owner   => 'crowd',
       group   => 'crowd',
       mode    => '0755',
-      require => File[$install_dir];
+      require => File[$parent_dir];
     $install_dir:
       ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      require => Exec['extract-crowd'];
+      owner   => $username,
+      group   => $groupname,
+      require => [ Exec['extract-crowd'], File[$crowd_home] ];
     $current_dir:
       ensure  => link,
       target  => $install_dir,
       owner   => 'root',
       group   => 'root',
-      require => File[$install_dir];
+      require => File[$parent_dir];
     "${install_dir}/crowd-webapp/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
       mode    => '0644';
-    "${install_dir}/conf/server.xml":
-      content => template('crowd_asf/server.xml.erb'),
-      mode    => '0644';
-    "${install_dir}/bin/setenv.sh":
+    # "${install_dir}/apache-tomcat/conf/server.xml":
+    #   content => template('crowd_asf/server.xml.erb'),
+    #   mode    => '0644';
+    "${install_dir}/apache-tomcat/bin/setenv.sh":
       content => template('crowd_asf/setenv.sh.erb'),
       mode    => '0644';
-    "${crowd_home}/crowd.cfg.xml":
-      content => template('crowd_asf/crowd.cfg.xml.erb'),
-      owner   => 'crowd',
-      group   => 'crowd',
-      mode    => '0644',
-      require => Exec['check_cfg_exists'],
-      notify  => Service[$service_name];
-    "${mysql_connector_dest_dir}/${mysql_connector}":
-      ensure => present,
-      source => "puppet:///modules/crowd_asf/${mysql_connector}";
+    # "${crowd_home}/crowd.cfg.xml":
+    # content => template('crowd_asf/crowd.cfg.xml.erb'),
+    # owner   => 'crowd',
+    # group   => 'crowd',
+    # mode    => '0644';
+    "${mysql_connector_dest_dir}/mysql-connector-java.jar":
+      ensure => link,
+      target => $mysql_connector_path;
     "/etc/init.d/${service_name}":
       mode    => '0755',
       owner   => 'root',
@@ -168,12 +172,8 @@ class crowd_asf (
       mode    => '0755';
   }
 
-  service {
-    $service_name:
-      ensure     => $service_ensure,
-      enable     => true,
-      hasstatus  => false,
-      hasrestart => true,
+  ::systemd::unit_file { 'crowd.service':
+      source => 'puppet:///modules/crowd_asf/crowd.service',
   }
 
 # cron jobs
@@ -186,6 +186,6 @@ class crowd_asf (
       command     => "/home/${username}/cleanup-tomcat-logs.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username],
-}
+  }
 
 }
