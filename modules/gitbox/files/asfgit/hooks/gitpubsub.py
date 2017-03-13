@@ -34,7 +34,8 @@ def main():
                 "files": []
             })
             continue
-        if ref.deleted():
+        if ref.deleted() or ref.created():
+            rname = ref.name if hasattr(ref, 'name') else "unknown"
             send_json({
                 "repository": "git",
                 "server": "gitbox",
@@ -43,7 +44,7 @@ def main():
                 "type": "tag" if ref.is_tag else "branch",
                 "from": ref.oldsha if not ref.created else None,
                 "to": ref.newsha if not ref.deleted else None,
-                "action": "created" if ref.created else "deleted" if ref.deleted else "updated",
+                "action": "created" if ref.created() else "deleted" if ref.deleted() else "updated",
                 "actor": cfg.committer,
                 "date": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
             }, "push")    
