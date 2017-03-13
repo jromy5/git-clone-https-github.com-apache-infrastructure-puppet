@@ -256,6 +256,8 @@ portals={reuse:asf-authorization:portals}
 portals-pmc={ldap:cn=portals,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 qpid={reuse:asf-authorization:qpid}
 qpid-pmc={ldap:cn=qpid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+ranger={reuse:asf-authorization:ranger}
+ranger-pmc={ldap:cn=ranger,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 rave={reuse:asf-authorization:rave}
 rave-pmc={ldap:cn=rave,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 reef={reuse:asf-authorization:reef}
@@ -970,6 +972,9 @@ openejb-tck = r
 [/pmc/portals]
 @portals-pmc = rw
 
+[/pmc/ranger]
+@ranger-pmc = rw
+
 [/pmc/rave]
 @rave = rw
 
@@ -1335,6 +1340,9 @@ buildbot = rw
 
 [/websites/production/rat]
 @creadur = rw
+
+[/websites/production/ranger]
+@ranger = rw
 
 [/websites/production/rave]
 @rave = rw

@@ -360,7 +360,8 @@ portals-pmc={reuse:pit-authorization:portals-pmc}
 qpid={ldap:cn=qpid,ou=groups,dc=apache,dc=org}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
 edgent=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
-ranger=alok,bganesan,bosco,coheigea,ddas,dillidorai,gates,gautam,humbedooh,jghoman,kminder,lmccay,madhan,omalley,rmani,sneethir,sradia,vel
+ranger={ldap:cn=ranger,ou=groups,dc=apache,dc=org}
+ranger-pmc={reuse:pit-authorization:ranger-pmc}
 ratis=jing9,szetszwo,enis,aengineer,arp,cnauroth,jghoman,mayank,xyao,liuml07,umamahesh,jitendra,ddas,gtcarrera9,hanishakoneru,xiaobingo,cliang
 rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
 rave-pmc={reuse:pit-authorization:rave-pmc}
@@ -1097,6 +1098,7 @@ projects_role = rw
 
 [/incubator/ranger]
 @ranger = rw
+@commiters = rw
 
 [/incubator/rya]
 @rya = rw
