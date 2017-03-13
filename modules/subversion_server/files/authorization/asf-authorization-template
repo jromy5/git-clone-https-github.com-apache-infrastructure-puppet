@@ -537,7 +537,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 * = r
 
 [/activemq/activemq-dotnet]
-@activemq = rw
+@activemq = r
 
 [/activemq/activemq-website]
 @activemq = rw
