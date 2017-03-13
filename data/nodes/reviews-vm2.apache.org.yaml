@@ -49,6 +49,8 @@ python::python_pips:
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+postfix::server::myhostname: 'reviews.apache.org'
+postfix::server::mydestination: 'reviews.apache.org, reviews-vm2.apache.org, localhost.apache.org, localhost'
 
 vhosts_asf::vhosts::vhosts:
   reviews_http:
