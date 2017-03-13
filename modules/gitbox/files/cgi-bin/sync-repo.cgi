@@ -77,11 +77,11 @@ gitbox.apache.org
 
 if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
-    pusher = data['pusher']['name']
+    pusher = data['pusher']['name'] if 'pusher' in data else data['sender']['login']
     ref = data['ref']
-    baseref = data['base_ref']
-    before = data['before']
-    after = data['after']
+    baseref = data['base_ref'] if 'base_ref' in data else data['master_branch']
+    before = data['before'] if 'before' in data else '0'*40
+    after = data['after'] if 'after' in data else '0'*40
     repopath = "/x1/repos/asf/%s.git" % reponame
     broken = False
     
@@ -126,8 +126,9 @@ if 'repository' in data and 'name' in data['repository']:
                 foundOld = cursor.fetchone()
                 if not foundOld:
                     # See if we've ever gotten any push logs for this repo, or if this is a first
-                    cursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
-                    foundAny = cursor.fetchone()
+                    tcursor = conn.cursor() # make a temp cursor, try fetching one row
+                    tcursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
+                    foundAny = tcursor.fetchone()
                     if foundAny:
                         raise Exception("Could not find previous push (??->%s) in push log!" % before)
                 # Then, be doubly sure by doing cat-file on the old rev

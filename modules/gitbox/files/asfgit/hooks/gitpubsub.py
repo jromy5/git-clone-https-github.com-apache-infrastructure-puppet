@@ -35,7 +35,18 @@ def main():
             })
             continue
         if ref.deleted():
-            continue
+            send_json({
+                "repository": "git",
+                "server": "gitbox",
+                "project": cfg.repo_name,
+                "ref": rname,
+                "type": "tag" if ref.is_tag else "branch",
+                "from": ref.oldsha if not ref.created else None,
+                "to": ref.newsha if not ref.deleted else None,
+                "action": "created" if ref.created else "deleted" if ref.deleted else "updated",
+                "actor": cfg.committer,
+                "date": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
+            }, "push")    
         for commit in ref.commits(num=10, reverse=True):
             send_json({
                 "repository": "git",
@@ -58,11 +69,11 @@ def main():
             })
 
 
-def send_json(data):
+def send_json(data, key = "commit"):
     try:
         requests.post("http://%s:%s%s" %
                       (cfg.gitpubsub_host, cfg.gitpubsub_port, cfg.gitpubsub_path),
-                      data = json.dumps({"commit": data}))
+                      data = json.dumps({key: data}))
     except:
         log.exception()
 
