@@ -2,6 +2,8 @@
 classes:
   - oraclejava::install
 
+ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
