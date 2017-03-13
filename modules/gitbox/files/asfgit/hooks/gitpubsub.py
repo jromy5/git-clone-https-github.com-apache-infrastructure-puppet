@@ -41,7 +41,7 @@ def main():
                 "server": "gitbox",
                 "project": cfg.repo_name,
                 "ref": rname,
-                "type": "tag" if ref.is_tag else "branch",
+                "type": "tag" if ref.is_tag() else "branch",
                 "from": ref.oldsha if not ref.created() else None,
                 "to": ref.newsha if not ref.deleted() else None,
                 "action": "created" if ref.created() else "deleted" if ref.deleted() else "updated",
