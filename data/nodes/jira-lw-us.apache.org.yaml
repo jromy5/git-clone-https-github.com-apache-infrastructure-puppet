@@ -8,6 +8,8 @@ classes:
   - apache::mod::rewrite
   - apache::mod::ssl
   - blocky
+  - datadog_agent::integrations::apache
+  - datadog_agent::integrations::http_check
   - jira_asf
   - oraclejava::install
   - ssl::name::wildcard_apache_org
