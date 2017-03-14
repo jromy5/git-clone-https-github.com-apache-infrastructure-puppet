@@ -6,7 +6,7 @@ import os
 import sys
 import smtplib
 import email.mime.text
-
+sys.path.append(os.environ["ASFGIT_ADMIN"])
 import asfgit.cfg as cfg
 import asfgit.git as git
 
