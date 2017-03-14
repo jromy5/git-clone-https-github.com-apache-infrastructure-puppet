@@ -32,9 +32,6 @@ contact users@infra.apache.org!
 """
 
 def main():
-    # WIP: FOR NOW, ABORT EVERYTHING!
-    if True:
-        util.abort(NOT_AUTHORIZED)
 
     # Check if commits are enabled.
     for lockname in cfg.write_locks:
