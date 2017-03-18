@@ -2,6 +2,7 @@
 classes:
   - aardvark_asf # requires lua deps in basepackages
   - apache
+  - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
@@ -101,6 +102,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     servername: 'helpinfrahelpyou.apache.org'
     serveraliases:
       - 'infrahelp.apache.org'
