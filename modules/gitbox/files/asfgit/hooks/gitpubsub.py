@@ -75,4 +75,3 @@ def send_json(data, key = "commit"):
                       data = json.dumps({key: data}))
     except:
         log.exception()
-
