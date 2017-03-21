@@ -334,6 +334,7 @@ spamassassin::spamd::whitelist_from:
   - 'isporders@symantec.com'
   - 'carledi@ar.ibm.com'
   - 'altmann@us.ibm.com'
+  - 'jira@apache.org'
 
 spamassassin::spamd::whitelist_to:
   - '*-reject-*@apache.org'
