@@ -36,7 +36,7 @@ def main():
                 "date": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                 "authored": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                 "author": cfg.committer,
-                "email": commit.author_email,
+                "email": cfg.remote_user,
                 "committer": cfg.committer,
                 "commited": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                 "ref_names": "",
