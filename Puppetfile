@@ -91,8 +91,8 @@ mod 'iptables',
 
 
 mod 'logrotate',
-  :git    => 'https://github.com/stumped2/puppet-logrotate.git',
-  :branch => 'fix_conf_security'
+  :git    => 'https://github.com/yo61/puppet-logrotate',
+  :tag    => 'v1.4.0'
 
 
 mod 'ldap',

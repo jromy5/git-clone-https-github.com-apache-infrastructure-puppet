@@ -510,6 +510,10 @@ buildbot_slave::bb_basepackages:
   - unzip
   - zip
 
+logrotate::conf:
+  '/etc/logrotate.conf':
+    su_user: 'root'
+    su_group: 'syslog'
 
 logrotate::rule:
   apache2:

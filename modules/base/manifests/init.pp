@@ -35,6 +35,9 @@ class base (
   $logrotate_rule = hiera_hash('logrotate::rule', {})
   create_resources(logrotate::rule, $logrotate_rule)
 
+  $logrotate_conf = hiera_hash('logrotate::conf', {})
+  create_resources(logrotate::conf, $logrotate_conf)
+
   $crons = hiera_hash('cron', {})
   create_resources(cron, $crons)
 
