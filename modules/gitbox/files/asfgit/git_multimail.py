@@ -1,4 +1,4 @@
-e#! /usr/bin/env python
+#! /usr/bin/env python
 # ASF PART GOES HERE
 NO_DEFAULT = object()
 import asfgit.util as util
