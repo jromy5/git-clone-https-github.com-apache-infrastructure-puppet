@@ -40,8 +40,6 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   sed:
     name: 'sed'
-  cgi:
-    name: 'cgi'
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
