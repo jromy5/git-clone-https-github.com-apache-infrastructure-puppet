@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+e#! /usr/bin/env python
 # ASF PART GOES HERE
 NO_DEFAULT = object()
 import asfgit.util as util
@@ -1862,7 +1862,7 @@ class OtherReferenceChange(ReferenceChange):
             refname=refname, short_refname=refname,
             old=old, new=new, rev=rev,
             )
-        self.recipients = environment.get_refchange_recipients(self)
+        self.recipients = recips
 
 
 class Mailer(object):
