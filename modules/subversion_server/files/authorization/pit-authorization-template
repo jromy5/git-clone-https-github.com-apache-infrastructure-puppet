@@ -957,6 +957,9 @@ openejb-tck = r
 [/pmc/myfaces]
 @myfaces = rw
 
+[/pmc/nifi]
+@nifi-pmc = rw
+
 [/pmc/ofbiz]
 @ofbiz-pmc = rw
 
