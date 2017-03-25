@@ -2,6 +2,7 @@
 classes:
   - aardvark_asf
   - apache
+  - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
@@ -45,8 +46,8 @@ jira_asf::jira_version: '6.3.15'
 jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
-jira_asf::connector_port_http: '8888'
-jira_asf::connector_port_ajp: ''
+jira_asf::connector_port_http: ''
+jira_asf::connector_address_ajp: '127.0.0.1'
 jira_asf::context_path: '/jira'
 jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
@@ -78,7 +79,7 @@ rsync::server::gid:           'nogroup'
 rsync::server::module:
   jira:
     path: '/x1/jira/'
-    hosts_allow: '10.10.3.5'
+    hosts_allow: '10.10.3.242'
     auth_users: 'apb-jira'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
