@@ -727,6 +727,7 @@ whimsysvn = r
 
 [/infrastructure/trunk/projects/reference]
 @infrastructure = rw
+* =
 
 # Historic, PHP version of modules.apache.org site.
 [/infrastructure/trunk/projects/modules.a.o]
