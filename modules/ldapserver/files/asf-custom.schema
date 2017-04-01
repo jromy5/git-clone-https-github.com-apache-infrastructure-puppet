@@ -110,12 +110,21 @@ attributetype ( 1.3.6.1.4.1.18060.2.0.13
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
  )
 
+# asf-committer-email
+attributetype ( 1.3.6.1.4.1.18060.2.0.14
+        NAME 'asf-committer-email'
+        DESC 'This is the official availid@apache.org committer email address'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE
+ )
+
 # asf-committer
 objectclass ( 1.3.6.1.4.1.18060.2.0
         NAME 'asf-committer'
         DESC 'An OC that will allow us to add specific ASF attributes to users'
         AUXILIARY
-        MAY ( asf-sascore $ asf-icla-legalname $ asf-icla-publicname $ asf-icla-email $ asf-icla-file $ asf-pgpKeyFingerprint $ asf-banned $ asf-altEmail $ asf-personalURL $ asf-noforwardfile $ log-access-host $ log-access-vhost $ githubUsername )
+        MAY ( asf-sascore $ asf-icla-legalname $ asf-icla-publicname $ asf-icla-email $ asf-icla-file $ asf-pgpKeyFingerprint $ asf-banned $ asf-altEmail $ asf-personalURL $ asf-noforwardfile $ log-access-host $ log-access-vhost $ githubUsername $ asf-committer-email )
  )
 
 
