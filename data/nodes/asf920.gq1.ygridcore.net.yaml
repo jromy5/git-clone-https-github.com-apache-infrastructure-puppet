@@ -1,3 +1,9 @@
 ---
 classes:
   - build_slaves::jenkins
+
+python::python_pips:
+  pelican:
+    ensure: present
+  Sphinx:
+    ensure: present
