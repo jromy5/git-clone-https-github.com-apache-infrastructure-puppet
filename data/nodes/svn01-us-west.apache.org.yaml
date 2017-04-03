@@ -242,7 +242,10 @@ vhosts_asf::vhosts::vhosts:
         LimitRequestBody 400000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/joshua/>
-        LimitRequestBody 5000000000
+        LimitRequestBody 500000000
+      </LocationMatch>
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/gearpump/>
+        LimitRequestBody 350000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/nutch/>
         LimitRequestBody 350000000
