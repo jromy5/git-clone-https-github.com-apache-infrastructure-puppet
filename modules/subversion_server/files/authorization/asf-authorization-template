@@ -522,7 +522,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @svnadmins = rw
 
 [/abdera]
-@abdera=rw
+@attic-pmc=rw
 
 [/accumulo/README]
 @accumulo = rw
