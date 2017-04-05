@@ -65,14 +65,6 @@ def clone_git(git_url, git_dir, desc):
     log("Initializing Git repository.")
     git("clone", "--mirror", git_url, git_dir)
 
-    try:
-      if not sp.check_output(["git", "ls-remote", git_url, "master"]):
-        log("Moving trunk to master")
-        git("symbolic-ref", "HEAD", "refs/heads/master")
-        git("branch", "-m", "trunk", "master")
-    except sp.CalledProcessError:
-      error("Unable to rename branch trunk to master. If this is a new and empty GitHub repo, disregard this message.")
-
     if desc is None:
         desc = run_editor(initial="Project description, ie 'Apache Jackrabbit'")
     if desc is None:
