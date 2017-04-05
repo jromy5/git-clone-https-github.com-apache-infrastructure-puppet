@@ -124,7 +124,7 @@ def issueOpened(payload):
 def issueClosed(payload):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
-    fmt['user'] = obj['user']['login']
+    fmt['user'] = obj['sender']['login'] if 'sender' in obj else obj['user']['login']
     # PR or issue??
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
