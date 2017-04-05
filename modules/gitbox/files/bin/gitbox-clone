@@ -71,7 +71,7 @@ def clone_git(git_url, git_dir, desc):
         git("symbolic-ref", "HEAD", "refs/heads/master")
         git("branch", "-m", "trunk", "master")
     except sp.CalledProcessError:
-      error("Unable to rename branch trunk to master")
+      error("Unable to rename branch trunk to master. If this is a new and empty GitHub repo, disregard this message.")
 
     if desc is None:
         desc = run_editor(initial="Project description, ie 'Apache Jackrabbit'")
