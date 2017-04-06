@@ -39,6 +39,8 @@ base::basepackages:
   - 'lua5.2-socket'
   - 'lua5.2-sec'
   - 'mod-lua-asf'
+  - 'nodejs'
+  - 'npm'
   
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
@@ -68,52 +70,6 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
-  etherpad-lite:
-    vhost_name: '*'
-    port: 80
-    servername: 'pad.apache.org'
-    default_vhost: true
-    docroot: '/var/www/etherpad-lite/'
-    manage_docroot: false
-    access_log_file: 'etherpad-lite_access.log'
-    error_log_file: 'etherpad-lite_error.log'
-    custom_fragment: |
-      AcceptPathInfo On
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      DirectoryIndex index.lua
-      FallbackResource /index.lua
-      
-      
-  etherpad-lite-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'pad.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    docroot: '/var/www/etherpad-lite/'
-    manage_docroot: false
-    access_log_file: 'etherpad-lite-ssl_access.log'
-    error_log_file: 'etherpad-lite-ssl_error.log'
-    custom_fragment: |
-      AcceptPathInfo On
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      DirectoryIndex index.lua
-      FallbackResource /index.lua
-      # committers-only pads:
-      <Location /p/>
-          AuthType Basic
-          AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthBasicProvider ldap
-          require valid-user
-      </Location>
-
   paste:
     vhost_name: '*'
     port: 80
