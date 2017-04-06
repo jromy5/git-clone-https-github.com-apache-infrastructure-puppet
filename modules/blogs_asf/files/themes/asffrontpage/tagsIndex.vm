@@ -10,13 +10,13 @@
 
 <div class="navigation">
     <ul>
-        <li><a href="http://apache.org/foundation" title="About the Foundation">Foundation</a></li>
-        <li><a href="http://projects.apache.org" title="Apache Projects">Projects</a></li>
-
-        <li><a href="http://people.apache.org" title="Apache People">People</a></li>
-        <li><a href="http://apache.org/foundation/getinvolved.html" title="Get involved in Apache">Get Involved</a></li>
-        <li><a href="http://apache.org/foundation/sponsorship.html" title="Support the mission of Apache">Support Apache</a></li>
-        <li class="dlink"><a href="http://apache.org/dyn/closer.cgi" title="Download Apache projects">Download</a></li>
+        <li><a href="https://apache.org/foundation" title="About the Foundation">Foundation</a></li>
+        <li><a href="https://projects.apache.org" title="Apache Projects">Projects</a></li>
+        <li><a href="https://home.apache.org" title="Apache People">People</a></li>
+        <li><a href="https://apache.org/foundation/getinvolved.html" title="Get involved in Apache">Get Involved</a></li>
+        <li><a href="https://apache.org/foundation/sponsorship.html" title="Support the mission of Apache">Support Apache</a></li>
+        <li><a href="http://planet.apache.org" title="Committers and Projects feeds">Planet Apache</a></li>
+        <li class="dlink"><a href="https://apache.org/dyn/closer.cgi" title="Download Apache projects">Download</a></li>
     </ul>
 </div>
 
