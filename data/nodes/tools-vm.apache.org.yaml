@@ -114,7 +114,6 @@ vhosts_asf::vhosts::vhosts:
           require valid-user
       </Location>
 
-vhosts_asf::vhosts::vhosts:
   paste:
     vhost_name: '*'
     port: 80
