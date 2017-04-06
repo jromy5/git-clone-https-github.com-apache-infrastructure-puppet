@@ -60,6 +60,8 @@ mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
 
+mod 'etherpad_lite',
+  :git => 'https://github.com/cthistle/puppet-etherpad_lite.git'
 
 mod 'fail2ban',
   :git => 'https://github.com/stumped2/puppet-fail2ban',
@@ -187,12 +189,7 @@ mod 'puppetlabs_yum',
 mod 'puppet-ca_cert',
   :git => 'https://github.com/pcfens/puppet-ca_cert',
   :tag => 'v1.6.0'
-
   
-mod 'puppet-etherpad_lite',
-  :git => 'https://github.com/cthistle/puppet-etherpad_lite.git'
-
-
 mod 'python',
   :git => 'https://github.com/stankevich/puppet-python.git',
   :tag => '1.9.4'
