@@ -10,7 +10,7 @@ classes:
   - loggy
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
-  - vhosts_asf::vhosts  
+  - vhosts_asf::vhosts
   - zmanda_asf::client
 
 apache::default_vhost: false
@@ -31,7 +31,7 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
-  
+
 base::basepackages:
   - 'lua5.2'
   - 'liblua5.2-dev'
@@ -39,9 +39,7 @@ base::basepackages:
   - 'lua5.2-socket'
   - 'lua5.2-sec'
   - 'mod-lua-asf'
-  - 'nodejs' 
-  - 'npm'
-
+  
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
 elasticsearch::java_install: true
@@ -63,30 +61,7 @@ httpd_modules::dev_package:
 
 logrotate::rule:
   apache2:
-   ensure: 'present'
-
-vcsrepo:
-  /var/www/paste:
-    ensure: latest
-    provider: 'svn'
-    user: 'www-data'
-    group: 'www-data'
-    source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/paste/tools-vm/'
-    before: 'Class[Apache]'
-  /var/www/shorten:
-    ensure: latest
-    provider: 'svn'
-    user: 'www-data'
-    group: 'www-data'
-    source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/shorten/tools-vm/'
-    before: 'Class[Apache]'
-  /var/www/oauth:
-    ensure: latest
-    provider: 'svn'
-    user: 'www-data'
-    group: 'www-data'
-    source: 'https://svn.apache.org/repos/infra/infrastructure/trunk/projects/oauth/'
-    before: 'Class[Apache]'
+    ensure: 'present'
 
 vhosts_asf::modules::modules:
   lua:
@@ -139,6 +114,7 @@ vhosts_asf::vhosts::vhosts:
           require valid-user
       </Location>
 
+vhosts_asf::vhosts::vhosts:
   paste:
     vhost_name: '*'
     port: 80
@@ -273,7 +249,6 @@ vhosts_asf::vhosts::vhosts:
 
   reporeq-ssl:
     vhost_name: '*'
-
     ensure: 'present'
     port: 443
     ssl: true
@@ -342,4 +317,4 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
-      </Location>
+      </Location> 
