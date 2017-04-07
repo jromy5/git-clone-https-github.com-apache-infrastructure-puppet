@@ -153,3 +153,15 @@ gitbox::custom_fragment_443: |
           Options +ExecCGI
           AddHandler cgi-script .cgi
       </Location>
+      <LocationMatch "^/setup/newrepo.*">
+          AuthType Basic
+          AuthName "ASF Committers"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-attribute gidNumber=5000
+          Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+          Require valid-user
+      </LocationMatch>
+
