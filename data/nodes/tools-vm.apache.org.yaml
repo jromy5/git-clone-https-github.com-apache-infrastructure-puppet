@@ -71,21 +71,16 @@ vhosts_asf::modules::modules:
 vhosts_asf::vhosts::vhosts:
   etherpad-lite:
     vhost_name: '*'
+    ensure: 'present'
     port: 80
     servername: 'pad.apache.org'
-    default_vhost: true
-    docroot: '/var/www/etherpad-lite/'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/etherpad-lite'
     manage_docroot: false
-    access_log_file: 'etherpad-lite_access.log'
-    error_log_file: 'etherpad-lite_error.log'
+    access_log_file: 'pad.apache.org.http_access.log'
+    error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
-      AcceptPathInfo On
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      DirectoryIndex index.lua
-      FallbackResource /index.lua
-      
+      Redirect permanent / https://pad.apache.org/
       
   etherpad-lite-ssl:
     vhost_name: '*'
@@ -94,27 +89,20 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'pad.apache.org'
     serveradmin: 'webmaster@apache.org'
-    docroot: '/var/www/etherpad-lite/'
     manage_docroot: false
-    access_log_file: 'etherpad-lite-ssl_access.log'
-    error_log_file: 'etherpad-lite-ssl_error.log'
+    docroot: '/var/www/etherpad-lite'
+    access_log_file: 'pad.apache.org.ssl_access.log'
+    error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
-      AcceptPathInfo On
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      DirectoryIndex index.lua
-      FallbackResource /index.lua
-      # committers-only pads:
-      <Location /p/>
-          AuthType Basic
-          AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute uid
-          AuthBasicProvider ldap
-          require valid-user
+      <Location />
+        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
       </Location>
-      
+
       ProxyPass / http://localhost:9001/
       ProxyPassReverse / http://localhost:9001/
       ProxyPreserveHost On
