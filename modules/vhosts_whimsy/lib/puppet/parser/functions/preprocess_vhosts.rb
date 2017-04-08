@@ -77,6 +77,13 @@ module Puppet::Parser::Functions
             path = '^' + url
           end
 
+          test = 'ldap-group'
+          group = auth['group']
+          if auth['group'].is_a? Array
+            test = 'ldap-filter'
+            group = "|#{group.map {|group| "(#{group})"}.join}".inspect
+          end
+
           section directive, path, %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
@@ -84,7 +91,7 @@ module Puppet::Parser::Functions
             AuthLDAPUrl #{@ldap.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
             AuthLDAPGroupAttributeIsDN #{isdn}
-            Require ldap-group #{auth['group']}
+            Require #{test} #{group}
           }
         end
       end
