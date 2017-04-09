@@ -161,7 +161,9 @@ vhosts_whimsy::vhosts::vhosts:
       - /voter/
 
     - name: ASF Secretarial Team
-      group: cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+      group:
+      - cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+      - cn=apldap,ou=groups,ou=services,dc=apache,dc=org
       attribute: member
       locations:
       - /secretary/
