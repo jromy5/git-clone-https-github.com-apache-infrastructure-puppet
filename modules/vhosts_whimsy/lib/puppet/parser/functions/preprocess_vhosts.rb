@@ -79,7 +79,7 @@ module Puppet::Parser::Functions
 
           # build require statements for each group
           groups = Array(auth['group']).map do |group|
-            "Require-ldap-group #{group}"
+            "Require ldap-group #{group}"
           end
 
           # concatenate require statements
