@@ -159,8 +159,6 @@ db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
 db-torque={ldap:cn=db-torque,ou=auth,ou=groups,dc=apache,dc=org}
 db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org} 
 db-pmc={reuse:pit-authorization:db-pmc}
-deltacloud={ldap:cn=deltacloud,ou=groups,dc=apache,dc=org}
-deltacloud-pmc={reuse:pit-authorization:deltacloud-pmc}
 deltaspike={ldap:cn=deltaspike,ou=groups,dc=apache,dc=org}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
@@ -809,9 +807,6 @@ projects_role = rw
 [/db/torque]
 @db = rw
 @db-torque = rw
-
-[/deltacloud]
-@attic-pmc = rw
 
 [/deltaspike]
 @deltaspike = rw
