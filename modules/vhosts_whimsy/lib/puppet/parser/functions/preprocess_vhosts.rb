@@ -43,7 +43,7 @@ module Puppet::Parser::Functions
 
       if content
         path = Regexp.escape(path)
-        content.strip!.gsub! /^\s*/, '  '
+        content.strip!.gsub! /^#{content[/^\s+/]}/, '  '
         @fragment[/\n<#{tag} #{path}>\n.*?()<\/#{tag}>/m, 1] = content + "\n"
       end
     end
@@ -77,13 +77,19 @@ module Puppet::Parser::Functions
             path = '^' + url
           end
 
-          test = 'ldap-group'
-          group = auth['group']
-          if auth['group'].is_a? Array
-            test = 'ldap-filter'
-            group = "|#{group.map {|group| "(#{group})"}.join}".inspect
+          # build require statements for each group
+          groups = Array(auth['group']).map do |group|
+            "Require-ldap-group #{group}"
           end
 
+          # concatenate require statements
+          if groups.length == 1
+            test = groups.first
+          else
+            test = "<RequireAny>\n    #{groups.join("\n    ")}\n  </RequireAny>"
+          end
+
+          # emit auth section
           section directive, path, %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
@@ -91,7 +97,7 @@ module Puppet::Parser::Functions
             AuthLDAPUrl #{@ldap.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
             AuthLDAPGroupAttributeIsDN #{isdn}
-            Require #{test} #{group}
+            #{test}
           }
         end
       end
