@@ -1041,7 +1041,7 @@ projects_role = rw
 @lucene-connectors = rw
 
 [/incubator/log4cxx]
-@log4cxx = rw
+* = r
 
 [/incubator/lokahi]
 * = r
