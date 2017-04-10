@@ -2,9 +2,9 @@
 classes:
   - elasticsearch
   - ldapserver
+  - oraclejava::install
   
 
-elasticsearch::es_heap_size: '31G'
 elasticsearch::init_defaults:
   DATA_DIR: '/elastic/db/'
 elasticsearch::jvm_options:
@@ -29,4 +29,7 @@ elasticsearch::instances:
       init_defaults:
         DATA_DIR: '/elastic/db/'
       jvm_options: '-Xms31g -Xmx31g'
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
 

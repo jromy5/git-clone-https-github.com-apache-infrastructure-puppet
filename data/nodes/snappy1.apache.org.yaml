@@ -9,6 +9,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - datadog_agent::integrations::elasticsearch
+  - oraclejava::install
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
@@ -77,6 +78,9 @@ apache::mod::event::threadsperchild: '50'
 logrotate::rule:
   apache2:
     ensure: 'present'
+    
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
 
 vhosts_asf::vhosts::vhosts:
   logsearch-ssl:
