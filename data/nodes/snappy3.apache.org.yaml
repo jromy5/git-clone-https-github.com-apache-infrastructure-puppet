@@ -24,7 +24,6 @@ elasticsearch::instances:
         - 10.91.102.216
         - 10.91.102.217
         - 10.91.102.218
-    jvm_options: '-Xms31g -Xmx31g'
       
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
