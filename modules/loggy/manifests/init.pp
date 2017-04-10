@@ -15,7 +15,7 @@ class loggy (
 
   python::pip {
     'elasticsearch' :
-      ensure => '1.6.0';
+      ensure => '5.3.0';
     'python-inotify==0.6-test' :
       ensure  => present,
       require => Package['gcc'];
