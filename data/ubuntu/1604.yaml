@@ -105,7 +105,7 @@ apt::sources:
       deb: true
       src: false
   'elasticsearch-5.x':
-    location: 'https://packages.elastic.co/elasticsearch/5.x/debian'
+    location: 'https://artifacts.elastic.co/packages/5.x/apt'
     release: 'stable'
     repos: 'main'
     key:
