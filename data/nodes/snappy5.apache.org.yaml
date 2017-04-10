@@ -27,6 +27,6 @@ elasticsearch::instances:
         - 10.91.102.217
         - 10.91.102.218
       init_defaults:
-        ES_HEAP_SIZE: '31g'
+        jvm_options: '-Xms31g -Xmx31g'
         DATA_DIR: '/elastic/db/'
 
