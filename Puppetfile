@@ -53,7 +53,7 @@ mod 'docker',
 
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch',
-  :tag => '0.15.1'
+  :tag => '5.1.0'
 
 
 mod 'epel',
