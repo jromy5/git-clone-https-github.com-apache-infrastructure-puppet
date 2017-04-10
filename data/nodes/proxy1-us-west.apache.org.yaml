@@ -492,47 +492,6 @@ vhosts_asf::vhosts::vhosts:
         Header edit Set-Cookie (^.*$) "$1; Secure"
       </Location>
 
-  pad:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'pad.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'pad.apache.org.http_access.log'
-    error_log_file: 'pad.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://pad.apache.org/
-
-  pad-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'pad.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'pad.apache.org.ssl_access.log'
-    error_log_file: 'pad.apache.org.error.log'
-    custom_fragment: |
-      <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPRemoteUserAttribute uid
-        AuthName "ASF Committers"
-        AuthType Basic
-        AuthBasicProvider ldap
-        Require valid-user
-      </Location>
-
-      ProxyPass / http://whimsy-vm.apache.org:9001/
-      ProxyPassReverse / http://whimsy-vm.apache.org:9001/
-      ProxyPreserveHost On
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=503
-
   paste:
     vhost_name: '*'
     ensure: 'present'
