@@ -143,7 +143,7 @@ vhosts_asf::vhosts::vhosts:
           AcceptPathInfo On
           DirectoryIndex index.html
       </Location>
-      <Location /k4/>
+      <Location ^/((app|ui|bundles|api)/.*)$>
           AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root Only"
@@ -151,5 +151,5 @@ vhosts_asf::vhosts::vhosts:
           AuthBasicProvider ldap
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-          ProxyPass http://127.0.0.1:5602/
+          ProxyPass http://127.0.0.1:5602/$1
       </Location>
