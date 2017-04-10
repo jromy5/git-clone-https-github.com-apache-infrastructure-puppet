@@ -146,7 +146,7 @@ vhosts_asf::vhosts::vhosts:
           AcceptPathInfo On
           DirectoryIndex index.html
       </Location>
-      <LocationMatch ^/((app|ui|bundles|api)/.*)$>
+      <LocationMatch ^/((app|ui|bundles|api|plugins)/.*)$>
           AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root Only"
