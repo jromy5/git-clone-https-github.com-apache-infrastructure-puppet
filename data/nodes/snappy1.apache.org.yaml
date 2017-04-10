@@ -53,7 +53,7 @@ elasticsearch::instances:
         - 10.91.102.216
         - 10.91.102.217
         - 10.91.102.218
-      jvm_options: '-Xms31g -Xmx31g'
+    jvm_options: '-Xms31g -Xmx31g'
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
