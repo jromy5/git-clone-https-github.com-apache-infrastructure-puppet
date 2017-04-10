@@ -4,8 +4,10 @@ classes:
 
 elasticsearch::es_heap_size: '31G'
 elasticsearch::init_defaults:
-  ES_HEAP_SIZE: '31g'
   DATA_DIR: '/elastic/db/'
+elasticsearch::jvm_options:
+  - '-Xms31g'
+  - '-Xmx31g'
 elasticsearch::java_install: true
 elasticsearch::version: '5.3.0'
 elasticsearch::ensure: 'present'

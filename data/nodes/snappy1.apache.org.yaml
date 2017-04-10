@@ -30,9 +30,11 @@ vhosts_asf::modules::modules:
 datadog_agent::integrations::elasticsearch::url: 'http://10.91.102.202:9200'
 
 elasticsearch::init_defaults:
-  ES_HEAP_SIZE: '31g'
   DATA_DIR: '/elastic/db/'
   CONF_FILE: '/etc/elaticsearch/asful/elasticsearch.asful.yaml'
+elasticsearch::jvm_options:
+  - '-Xms31g'
+  - '-Xmx31g'
 elasticsearch::java_install: true
 elasticsearch::version: '5.3.0'
 elasticsearch::ensure: 'present'
