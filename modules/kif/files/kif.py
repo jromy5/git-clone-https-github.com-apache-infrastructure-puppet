@@ -187,7 +187,7 @@ def checkTriggers(id, alist, triggers):
 def scanForTriggers():
     procs = getprocs() # get all current processes
     runlist = set()
-    killlist = set()
+    killlist = {}
     errs = []
     if 'rules' in config:
 
@@ -206,12 +206,28 @@ def scanForTriggers():
                             pids.append(xpid)
                     elif isinstance(procid, list):
                         if cmdline == procid:
-                            pids.append(xpid)
+                            addit = False
+                            if not ('ignore' in rule):
+                                addit = True
+                            elif isinstance(rule['ignore'], str) and " ".join(cmdline) != rule['ignore']:
+                                addit = True
+                            elif isinstance(rule['ignore'], list) and cmdline != rule['ignore']:
+                                addit = True
+                            if addit:
+                                pids.append(xpid)
             if 'uid' in rule:
                 for xpid, cmdline in procs.iteritems():
                     uid = getuser(xpid)
                     if uid == rule['uid']:
-                        pids.append(xpid)
+                        addit = False
+                        if not ('ignore' in rule):
+                            addit = True
+                        elif isinstance(rule['ignore'], str) and " ".join(cmdline) != rule['ignore']:
+                            addit = True
+                        elif isinstance(rule['ignore'], list) and cmdline != rule['ignore']:
+                            addit = True
+                        if addit:
+                            pids.append(xpid)
 
             # If proc is running, analyze it
             analysis = {}
@@ -240,7 +256,10 @@ def scanForTriggers():
                         if 'runlist' in rule and len(rule['runlist']) > 0:
                             runlist.update(set(rule['runlist']))
                         if 'kill' in rule and rule['kill'] == True:
-                            killlist.update([pid])
+                            sig = 9
+                            if 'killwith' in rule:
+                                sig = int(rule['killwith'])
+                            killlist[pid] = sig
                         errs.append(err)
             if len(pids) > 0:
                 # If combined trigger test, run it now
@@ -250,7 +269,11 @@ def scanForTriggers():
                         if 'runlist' in rule and len(rule['runlist']) > 0:
                             runlist.update(set(rule['runlist']))
                         if 'kill' in rule and rule['kill'] == True:
-                            killlist.update(set(pids))
+                            sig = 9
+                            if 'killwith' in rule:
+                                sig = int(rule['killwith'])
+                            for ypid in pids:
+                                killlist[pid] = sig
                         errs.append(err)
             else:
                 print("No matching processes found")
@@ -303,11 +326,11 @@ def main():
                 msgrl += "(failed!: <kbd>%s</kbd>)" % e.output
                 bads += 1
             msgrl += "\n"
-        for pid in killlist:
-            print("- KILL PID %s" % pid)
-            msgrl += "- KILL PID %i" % pid
+        for pid, sig in killlist.iteritems():
+            print("- KILL PID %u with sig %u" % (pid, sig))
+            msgrl += "- KILL PID %u with sig %u" % (pid, sig)
             if not args.debug:
-                os.kill(pid, 9)
+                os.kill(pid, sig)
             else:
                 print(" (disabled due to --debug flag)")
                 msgrl += " (disabled due to --debug flag)"
