@@ -23,7 +23,7 @@ c['db_url'] = private.mysqlConnection
 
 from buildbot.buildslave import BuildSlave
 
-c['slaves'] = [BuildSlave("orcus_ubuntu", private.slave1Pwd,
+c['slaves'] = [BuildSlave("orcus_ubuntu", private.orcus_ubuntuPwd,
                           notify_on_missing="infrastructure@apache.org",
                           missing_timeout=300,
 			  max_builds=2,
