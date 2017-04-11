@@ -45,7 +45,7 @@ class kif (
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => template('kif/kif.yaml.erb')
+      content => template('kif/kif.yaml.erb')
     } ->
 
     service { $service_name:
