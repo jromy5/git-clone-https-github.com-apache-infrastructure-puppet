@@ -1,6 +1,7 @@
 ---
 classes: 
   - loggy
+  - kif
   - mx_asf
   - postfix_asf
   - ssl::name::wildcard_apache_org
