@@ -213,6 +213,14 @@ def scanForTriggers():
                                 addit = True
                             elif isinstance(rule['ignore'], list) and cmdline != rule['ignore']:
                                 addit = True
+                            if 'ignorepidfile' in rule:
+                                try:
+                                    ppid = int(open(rule['ignorepidfile']).read())
+                                    if ppid == xpid:
+                                        print("Ignoring %u, matches pid file %s!" % (ppid, rule['ignorepidfile']))
+                                        addit = False
+                                except Exception as err:
+                                    print(err)
                             if addit:
                                 pids.append(xpid)
             if 'uid' in rule:
@@ -226,6 +234,14 @@ def scanForTriggers():
                             addit = True
                         elif isinstance(rule['ignore'], list) and cmdline != rule['ignore']:
                             addit = True
+                        if 'ignorepidfile' in rule:
+                            try:
+                                ppid = int(open(rule['ignorepidfile']).read())
+                                if ppid == xpid:
+                                    print("Ignoring %u, matches pid file %s!" % (ppid, rule['ignorepidfile']))
+                                    addit = False
+                            except Exception as err:
+                                print(err)
                         if addit:
                             pids.append(xpid)
 
