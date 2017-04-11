@@ -426,7 +426,7 @@ def print(*pargs, **pkwargs):
         __builtin__.print(*pargs)
 
 if 'logging' in config and 'logfile' in config['logging']:
-    logging.basicConfig(filename=config['logging']['logfile'], format='[%(asctime)s]: %(message)s', level=logging.INFO)
+    logging.basicConfig(filename=config['logging']['logfile'], format='%(asctime)s [pylog] [KIF] %(message)s', level=logging.INFO)
 
 
 ## Daemon class
