@@ -1,0 +1,82 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          kif
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: kif
+# Description:       start kif daemon
+#### END INIT INFO
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+kif_user=${kif_user-"root"}
+kif_group=${kif_group-"root"}
+kif_pidfile=${kif_pidfile-"/var/run/kif.pid"}
+kif_config=${kif_config-"/usr/local/etc/kif/kif.yaml"}
+kif_logfile=${kif_logfile-"/var/log/kif.log"}
+kif_appdir=${kif_appdir-"/usr/local/etc/kif"}
+pidfile="${kif_pidfile}"
+
+RETVAL=0
+ 
+start() {
+    if [ -f $kif_pidfile ]; then
+      # pid file exists, check is proc is running
+      PID=`cat $kif_pidfile`
+      if kill -0 $PID >/dev/null 2>&1; then
+        echo 'kif is already running'
+        return 1
+      else
+        # kif was killed but not cleaned up
+        echo 'kif was not stopped cleanly, cleaning up'
+        rm -f $kif_pidfile
+      fi
+    fi
+
+    echo "Starting kif daemon: "
+    cd $kif_appdir
+    python2.7 kif.py --daemonize
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+ 
+stop() {
+    echo "Stopping kif daemon: "
+    cd $kif_appdir
+    python2.7 kif.py --stop
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        PID=`cat $kif_pidfile`
+        if ps -p $PID > /dev/null
+        then
+            echo "Kif is running, yay!"
+            exit 0
+        else
+            echo "Kif ain't running :("
+            exit 3
+        fi;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+esac
+
+exit $RETVAL
