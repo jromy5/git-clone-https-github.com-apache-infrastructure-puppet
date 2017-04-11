@@ -218,3 +218,8 @@ vhosts_whimsy::vhosts::vhosts:
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
+      
+      # We now have local custom error pages
+      ErrorDocument 401 /401.html
+      ErrorDocument 404 /404.html
+      ErrorDocument 500 /500.html
