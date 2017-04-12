@@ -73,6 +73,10 @@ def getage(pid):
     proc = psutil.Process(pid)
     return proc.create_time()
 
+def getstate(pid):
+    proc = psutil.Process(pid)
+    return proc.status()
+
 def getcons(pid, lan = False):
     proc = psutil.Process(pid)
     if not lan:
@@ -101,10 +105,11 @@ def getprocs():
 
 
 
-
 def checkTriggers(id, alist, triggers):
-    for trigger, value in triggers.iteritems():
-        print("Checking against trigger %s" % trigger)
+    if len(triggers) > 0:
+        print("  - Checking triggers:")
+    for trigger, value in triggers.items():
+        print("    - Checking against trigger %s" % trigger)
 
         # maxmemory: Process can max use N amount of memory or it triggers
         if trigger == 'maxmemory':
@@ -120,40 +125,40 @@ def checkTriggers(id, alist, triggers):
                 maxmem = int(value.replace('gb','')) * gb
                 cmem = alist['memory_bytes']
                 cvar = ' bytes'
-            lstr = "Process '%s' is using %u%s memory, max allowed is %u%s" % (id, cmem+0.5, cvar, maxmem+0.5, cvar)
+            lstr = "      - Process '%s' is using %u%s memory, max allowed is %u%s" % (id, cmem+0.5, cvar, maxmem+0.5, cvar)
             print(lstr)
             if cmem > maxmem:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
 
         # maxfds: maximum number of file descriptors
         if trigger == 'maxfds':
             maxfds = int(value)
             cfds = alist['fds']
-            lstr = "Process '%s' is using %u FDs, max allowed is %u" % (id, cfds, value)
+            lstr = "      - Process '%s' is using %u FDs, max allowed is %u" % (id, cfds, value)
             print(lstr)
             if cfds > maxfds:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
 
         # maxconns: maximum number of open connections
         if trigger == 'maxconns':
             maxconns = int(value)
             ccons = alist['connections']
-            lstr = "Process '%s' is using %u connections, max allowed is %u" % (id, ccons, value)
+            lstr = "      - Process '%s' is using %u connections, max allowed is %u" % (id, ccons, value)
             print(lstr)
             if ccons > maxconns:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
 
         # maxlocalconns: maximum number of open connections in local network
         if trigger == 'maxlocalconns':
             maxconns = int(value)
             ccons = alist['connections_local']
-            lstr ="Process '%s' is using %u LAN connections, max allowed is %u" % (id, ccons, value)
+            lstr ="      - Process '%s' is using %u LAN connections, max allowed is %u" % (id, ccons, value)
             print(lstr)
             if ccons > maxconns:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
             
         # maxage: maximum age of a process (NOT cpu time)
@@ -182,6 +187,15 @@ def checkTriggers(id, alist, triggers):
             if cage > maxage:
                 print("Trigger fired!")
                 return lstr
+        
+        # state: kill processes in a specific state (zombie etc)
+        if trigger == 'state':
+            cstate = alist['process_state']
+            lstr ="Process '%s' is in state '%s'" % (id, cstate)
+            print(lstr)
+            if cstate == value:
+                print("Trigger fired!")
+                return lstr
     return None
 
 def scanForTriggers():
@@ -192,15 +206,14 @@ def scanForTriggers():
     if 'rules' in config:
 
         # For each rule..
-        for id, rule in config['rules'].iteritems():
-            print("Running rule %s" % id)
+        for id, rule in config['rules'].items():
+            print("- Running rule %s" % id)
             # Is this process running here?
             pids = []
             if 'procid' in rule:
                 procid = rule['procid']
-    
-                print("Checking for process %s" % procid)
-                for xpid, cmdline in procs.iteritems():
+                print("  - Checking for process %s" % procid)
+                for xpid, cmdline in procs.items():
                     addit = False
                     if isinstance(procid, str):
                         if " ".join(cmdline).find(rule['procid']) != -1:
@@ -226,7 +239,7 @@ def scanForTriggers():
                         if addit:
                             pids.append(xpid)
             if 'uid' in rule:
-                for xpid, cmdline in procs.iteritems():
+                for xpid, cmdline in procs.items():
                     uid = getuser(xpid)
                     if uid == rule['uid']:
                         addit = False
@@ -251,7 +264,7 @@ def scanForTriggers():
             analysis = {}
             for pid in pids:
                 proca = {}
-                print("Found process at PID %u" % pid)
+                print("  - Found process at PID %u" % pid)
 
                 # Get all relevant data from this PID
                 proca['memory_pct'] = getmempct(pid)
@@ -260,13 +273,17 @@ def scanForTriggers():
                 proca['connections'] = getcons(pid)
                 proca['connections_local'] = getcons(pid, True)
                 proca['process_age'] = time.time() - getage(pid)
+                proca['process_state'] = getstate(pid)
 
                 # If combining, combine into the analysis hash
                 if 'combine' in rule and rule['combine'] == True:
-                    for k, v in proca.iteritems():
-                        if not k in analysis:
+                    for k, v in proca.items():
+                        if not k in analysis and ( isinstance(v, int) or isinstance(v, float) ):
                             analysis[k] = 0
-                        analysis[k] += v
+                        if ( isinstance(v, int) or isinstance(v, float) ):
+                            analysis[k] += v
+                        else:
+                            analysis[k] = ''
                 else:
                     # If running a per-pid test, run it:
                     err = checkTriggers(id, proca, rule['triggers'])
@@ -294,7 +311,7 @@ def scanForTriggers():
                                 killlist[pid] = sig
                         errs.append(err)
             else:
-                print("No matching processes found")
+                print("  - No matching processes found")
     return errs, runlist, killlist
 
 
@@ -344,7 +361,7 @@ def main():
                 msgrl += "(failed!: <kbd>%s</kbd>)" % e.output
                 bads += 1
             msgrl += "\n"
-        for pid, sig in killlist.iteritems():
+        for pid, sig in killlist.items():
             print("- KILL PID %u with sig %u" % (pid, sig))
             msgrl += "- KILL PID %u with sig %u" % (pid, sig)
             if not args.debug:
@@ -359,7 +376,7 @@ def main():
         if 'notifications' in config and 'email' in config['notifications']:
             ecfg = config['notifications']['email']
             if 'rcpt' in ecfg and 'from' in ecfg:
-                subject = "[KIF] %s: triggered %u events" % (me, len(runlist))
+                subject = "[KIF] %s: triggered %u events" % (me, len(runlist) + len(killlist))
                 msg = """Hullo there,
 
     KIF has detectect the following issues on %s:
