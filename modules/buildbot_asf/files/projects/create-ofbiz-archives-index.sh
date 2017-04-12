@@ -45,9 +45,9 @@ echo '</ul>
     <h3>Archived 4.0 Builds (Discontinued)</h3>
 
 
-echo "</ul>
+    </ul>
 	</div>
-	<!-- column 2 -->" >> index.html
+	<!-- column 2 -->' >> index.html
 
 cat ../../body-btm-archive.inc >> index.html
 cat ../../footer.inc >> index.html
