@@ -1,5 +1,6 @@
 ---
-classes: 
+classes:
+  - kif
   - loggy
   - mx_asf
   - postfix_asf
