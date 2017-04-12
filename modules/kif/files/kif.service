@@ -4,11 +4,13 @@ Wants=basic.target
 After=basic.target network.target
 
 [Service]
-Type=forking
+Type=oneshot
+RemainAfterExit=yes
 WorkingDirectory=/usr/local/etc/kif
 ExecStart=/usr/bin/python kif.py --daemonize
 ExecStop=/usr/bin/python kif.py --stop
 KillMode=process
+Restart=no
 
 [Install]
 WantedBy=multi-user.target
