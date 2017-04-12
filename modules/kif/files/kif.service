@@ -7,8 +7,6 @@ After=basic.target network.target
 WorkingDirectory=/usr/local/etc/kif
 ExecStart=/usr/bin/python kif.py --daemonize
 KillMode=process
-Restart=on-failure
-RestartSec=60s
 
 [Install]
 WantedBy=multi-user.target
