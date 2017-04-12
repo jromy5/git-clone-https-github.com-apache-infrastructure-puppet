@@ -36,6 +36,11 @@ class kif (
       owner  => $username,
       group  => $group,
       source => "puppet:///modules/kif/kif.${::asfosname}";
+    '/etc/default/kif':
+      mode   => '0755',
+      owner  => $username,
+      group  => $group,
+      content => "";
     '/usr/local/etc/kif/kif.py':
       mode   => '0755',
       owner  => $username,
