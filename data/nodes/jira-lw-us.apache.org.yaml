@@ -17,6 +17,7 @@ classes:
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - zmanda_asf::client
+  - kif
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
