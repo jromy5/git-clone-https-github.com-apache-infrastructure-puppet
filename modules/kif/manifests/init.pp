@@ -41,6 +41,11 @@ class kif (
       owner  => $username,
       group  => $group,
       content => "";
+    '/lib/systemd/system/kif.service':
+      mode   => '0755',
+      owner  => $username,
+      group  => $group,
+      source => 'puppet:///modules/kif/kif.service';
     '/usr/local/etc/kif/kif.py':
       mode   => '0755',
       owner  => $username,
