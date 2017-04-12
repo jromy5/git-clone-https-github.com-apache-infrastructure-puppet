@@ -19,6 +19,8 @@ class loggy (
     'python-inotify==0.6-test' :
       ensure  => present,
       require => Package['gcc'];
+    'certifi' :
+      ensure  => present;
   } ->
 
   file {
