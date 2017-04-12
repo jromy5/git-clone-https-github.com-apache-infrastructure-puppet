@@ -55,6 +55,16 @@ rules:
             maxlocalconns:  400
         runlist:
             - 'service apache2 restart'
+    puppet_hang:
+        description:     'old hanging puppet processes'
+        procid: 'puppet agent'
+        triggers:
+            # Kill if process has been lingering for more than 48 hours
+            maxage:     2d
+        kill:           true
+        killwith:       9
+        # Ignore current puppet agent
+        ignorepid:     '/var/run/puppet/agent.pid'
 notifications:
     hipchat:
         room:  '2651110'
