@@ -36,7 +36,7 @@ find . -name "*rel12.04*.zip" -exec echo '<li><a href={} title={}>{} </a></li>' 
 
 echo '</ul>
 <ul>
-			<li><a href='/projects/ofbiz/snapshots' title='Download current 12.04 snapshots'>Download current 12.04 snapshots</a></li>
+			<li><a href="/projects/ofbiz/snapshots" title="Download current 12.04 snapshots">Download current 12.04 snapshots</a></li>
 		</ul>
 
     <h3>Archived 11.04 Builds  (Discontinued)</h3>
