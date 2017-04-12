@@ -38,13 +38,13 @@ def notifyEmail(fro, to, subject, msg):
     s = smtplib.SMTP('localhost')
     s.sendmail(fro, to, msg.as_string())
 
-def notifyHipchat(room, token, msg):
+def notifyHipchat(room, token, msg, notify = False):
     payload = {
             'room_id': room,
             'auth_token': token,
             'from': "Kif",
             'message_format': 'html',
-            'notify': '0',
+            'notify': '1' if notify else '0',
             'color':'yellow',
             'message': msg
         }
@@ -182,19 +182,19 @@ def checkTriggers(id, alist, triggers):
             else:
                 maxage = int(value)
                 cage = alist['process_age']
-            lstr ="Process '%s' is %u seconds old, max allowed is %u" % (id, cage,maxage)
+            lstr ="      - Process '%s' is %u seconds old, max allowed is %u" % (id, cage,maxage)
             print(lstr)
             if cage > maxage:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
         
         # state: kill processes in a specific state (zombie etc)
         if trigger == 'state':
             cstate = alist['process_state']
-            lstr ="Process '%s' is in state '%s'" % (id, cstate)
+            lstr ="      - Process '%s' is in state '%s'" % (id, cstate)
             print(lstr)
             if cstate == value:
-                print("Trigger fired!")
+                print("    - Trigger fired!")
                 return lstr
     return None
 
@@ -400,12 +400,12 @@ def main():
     </pre><br/>
     As a precaution, the following commands were run to fix issues:<br/>
     <pre>
-    %s
+%s
     </pre><br/>
     With regards and sighs,<br/>
     Your loyal KIF service.
                 """ % (me, msgerr, msgrl)
-                notifyHipchat(hcfg['room'], hcfg['token'], msg)
+                notifyHipchat(hcfg['room'], hcfg['token'], msg, hcfg['notify'] if 'notify' in hcfg else False)
 
     print("KIF run finished!")
 
