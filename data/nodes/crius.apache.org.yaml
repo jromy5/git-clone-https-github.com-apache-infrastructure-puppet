@@ -35,9 +35,11 @@ logrotate::rule:
   jenkins-tomcat:
     ensure: 'present'
     path: '/x1/jenkins/tools/tomcat/latest/logs/catalina.out'
-    delaycompress: true
-    ifempty: false
-    rotate: 52
+    copytruncate: true
+    compress: false
+    ifempty: true
+    rotate: 7
+    missingok: true
     rotate_every: 'day'
 
 vhosts_asf::vhosts::vhosts:
