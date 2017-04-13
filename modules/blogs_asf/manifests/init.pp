@@ -150,7 +150,7 @@ class blogs_asf (
       ensure  => present,
       owner   => 'tomcat8',
       group   => 'tomcat8',
-      content => template('blogs_asf/web.xml.web'),
+      content => template('blogs_asf/web.xml.erb'),
       require => [
         File[$parent_dir],
         Package['tomcat8'],
