@@ -43,6 +43,7 @@ blogs_asf::server_alias: 'blogs-test.apache.org'
 blogs_asf::heap_min_size: '512'
 blogs_asf::heap_max_size: '756'
 blogs_asf::maxmetaspacesize: '512'
+blogs_asf::session_timeout: '480'
 
 logrotate::rule:
   apache2:
