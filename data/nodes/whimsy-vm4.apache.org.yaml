@@ -111,10 +111,10 @@ vhosts_whimsy::vhosts::vhosts:
       - '+FollowSymLinks'
       - '+MultiViews'
       - '+ExecCGI'
-    # ssl: true
-    # ssl_cert: /etc/letsencrypt/live/whimsy3.apache.org/cert.pem
-    # ssl_key: /etc/letsencrypt/live/whimsy3.apache.org/privkey.pem
-    # ssl_chain: /etc/letsencrypt/live/whimsy3.apache.org/chain.pem
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/whimsy4.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/whimsy4.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/whimsy4.apache.org/chain.pem
 
     passenger:
     - /board/agenda
