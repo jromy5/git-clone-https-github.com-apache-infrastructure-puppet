@@ -42,7 +42,7 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-ruby_version: '2.3.1'
+ruby_version: '2.4.1'
 
 rvm::system_rubies:
   "ruby-%{hiera('ruby_version')}": {}
@@ -85,22 +85,24 @@ vhosts_whimsy::vhosts::vhosts:
     priority: '12'
     servername: 'whimsy.apache.org'
     serveraliases:
-      -  'whimsy3.apache.org'
-      -  'whimsy-vm3.apache.org'
+      -  'whimsy-test.apache.org'
+      -  'whimsy4.apache.org'
+      -  'whimsy-vm4.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
     error_log_file: 'whimsy_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://whimsy.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://whimsy4.apache.org/$1
 
   whimsy-vm-443:
     vhost_name: '*'
     default_vhost: true
     servername: 'whimsy.apache.org'
     serveraliases:
-      -  'whimsy3.apache.org'
-      -  'whimsy-vm3.apache.org'
+      -  'whimsy-test.apache.org'
+      -  'whimsy4.apache.org'
+      -  'whimsy-vm4.apache.org'
     port: 443
     docroot: '/x1/srv/whimsy/www'
     error_log_file: 'whimsy_error.log'
@@ -109,10 +111,10 @@ vhosts_whimsy::vhosts::vhosts:
       - '+FollowSymLinks'
       - '+MultiViews'
       - '+ExecCGI'
-    ssl: true
-    ssl_cert: /etc/letsencrypt/live/whimsy3.apache.org/cert.pem
-    ssl_key: /etc/letsencrypt/live/whimsy3.apache.org/privkey.pem
-    ssl_chain: /etc/letsencrypt/live/whimsy3.apache.org/chain.pem
+    # ssl: true
+    # ssl_cert: /etc/letsencrypt/live/whimsy3.apache.org/cert.pem
+    # ssl_key: /etc/letsencrypt/live/whimsy3.apache.org/privkey.pem
+    # ssl_chain: /etc/letsencrypt/live/whimsy3.apache.org/chain.pem
 
     passenger:
     - /board/agenda
@@ -159,9 +161,7 @@ vhosts_whimsy::vhosts::vhosts:
       - /voter/
 
     - name: ASF Secretarial Team
-      group:
-      - cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
-      - cn=apldap,ou=groups,ou=services,dc=apache,dc=org
+      group: cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
       attribute: member
       locations:
       - /secretary/
@@ -216,8 +216,3 @@ vhosts_whimsy::vhosts::vhosts:
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
-      
-      # We now have local custom error pages
-      ErrorDocument 401 /401.html
-      ErrorDocument 404 /404.html
-      ErrorDocument 500 /500.html
