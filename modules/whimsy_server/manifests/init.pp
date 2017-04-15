@@ -133,6 +133,10 @@ class whimsy_server (
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.conf'
   } ->
 
+  file { '/etc/systemd/system/whimsy-websocket.service' :
+    source => 'puppet:///modules/whimsy_server/board-agenda-websocket.service'
+  } ->
+
   service { 'board-agenda-websocket':
     ensure  => running,
     require => Vcsrepo['/x1/srv/whimsy']

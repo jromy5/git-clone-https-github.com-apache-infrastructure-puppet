@@ -1,0 +1,8 @@
+[Unit]
+Description=Whimsy Board Agenda WebSocket service
+
+[Service]
+Restart=always
+User=root
+Group=root
+ExecStart=/usr/local/bin/ruby2.4.1 /srv/whimsy/www/board/agenda/daemon/wss.rb
