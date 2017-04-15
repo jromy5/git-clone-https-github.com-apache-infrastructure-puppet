@@ -133,7 +133,7 @@ class whimsy_server (
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.conf'
   } ->
 
-  file { '/etc/systemd/system/whimsy-websocket.service' :
+  file { '/etc/systemd/system/board-agenda-websocket.service' :
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.service'
   } ->
 
