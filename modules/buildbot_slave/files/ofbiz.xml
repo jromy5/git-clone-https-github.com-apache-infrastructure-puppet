@@ -36,6 +36,7 @@
       <fileset dir="${src-dir}">
       <!-- <excludesfile name="${src-dir}/path/to/rat-ignore.txt"/> -->
         <exclude name=".buildbot-sourcedata"/>
+        <exclude name="framework/common/config/QRCodeUiLabels.xml"/>
       </fileset>
     </rat:report>
   </target>
