@@ -68,7 +68,7 @@ for repo in getGitHubRepos():
     js['clones'] = getClones(repo)
     js['views'] = getViews(repo)
     with open("/x1/gitbox/htdocs/stats/%s.json" % repo, "w") as f:
-        json.dump(js, f)
+        json.dump(js, f, indent = 4)
         f.close()
         
 print("All done!")
