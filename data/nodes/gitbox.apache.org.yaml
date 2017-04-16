@@ -44,6 +44,11 @@ cron:
     minute: [10,40]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
+  jsonstats:
+    user: 'root'
+    minute: [10]
+    hour: '0'
+    command: 'cd /x1/gitbox/matt/tools/ && python json-stats.py'
 
 datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/asf'
 
@@ -82,6 +87,17 @@ gitbox::custom_fragment_443: |
       SetEnv GIT_REPOS_ROOT /x1/repos
       <Location /repos/>
           SetEnv WEB_HOST https://gitbox.apache.org
+      </Location>
+      <Location /stats/>
+        AuthType Basic
+        AuthName "ASF Committers"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute memberUid
+        AuthLDAPGroupAttributeIsDN off
+        Require ldap-attribute gidNumber=5000
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+        Require valid-user
       </Location>
       RewriteEngine On
       <LocationMatch "^/repos/">
