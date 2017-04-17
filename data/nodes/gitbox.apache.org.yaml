@@ -119,7 +119,8 @@ gitbox::custom_fragment_443: |
       </LocationMatch>
       AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/repos/asf/$1.git/ref-updates.log
       # Handlers for Github web hooks
-      ScriptAliasMatch ^/([^/]+)\.cgi$ /x1/gitbox/cgi-bin/$1.cgi
+      ScriptAliasMatch ^/([^/]+)\.cgi.*$ /x1/gitbox/cgi-bin/$1.cgi
+      AcceptPathInfo On
       <Directory /x1/gitbox/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
