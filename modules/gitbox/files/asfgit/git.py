@@ -77,6 +77,8 @@ class RefUpdate(object):
                 return True
             if p.endswith("/") and self.name.startswith(p):
                 return True
+            if p.endswith("*") and self.name.startswith(p[:-1]):
+                return True
         return False
 
     def is_rewrite(self):
