@@ -65,8 +65,6 @@ committers={ldap:cn=committers,ou=groups,dc=apache,dc=org}
 # refers to them.
 
 ### marker for tlpreq to add new entries ###
-abdera={ldap:cn=abdera,ou=groups,dc=apache,dc=org}
-abdera-pmc={reuse:pit-authorization:abdera-pmc}
 ace={ldap:cn=ace,ou=groups,dc=apache,dc=org}
 ace-pmc={reuse:pit-authorization:ace-pmc}
 activemq={ldap:cn=activemq,ou=groups,dc=apache,dc=org}

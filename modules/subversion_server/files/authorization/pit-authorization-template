@@ -4,8 +4,6 @@
 committers={reuse:asf-authorization:committers}
 
 ### marker for tlpreq to add new entries ###
-abdera={reuse:asf-authorization:abdera}
-abdera-pmc={ldap:cn=abdera,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ace={reuse:asf-authorization:ace}
 ace-pmc={ldap:cn=ace,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 activemq={reuse:asf-authorization:activemq}
