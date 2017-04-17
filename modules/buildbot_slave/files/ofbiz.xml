@@ -34,9 +34,8 @@
     <rat:report xmlns:rat="antlib:org.apache.rat.anttasks"
       format="xml" reportFile="${src-dir}/../rat-output.xml">
       <fileset dir="${src-dir}">
-      <!-- <excludesfile name="${src-dir}/path/to/rat-ignore.txt"/> -->
+      <excludesfile name="${src-dir}/../rat-excludes.txt"/>
         <exclude name=".buildbot-sourcedata"/>
-        <exclude name="framework/common/config/QRCodeUiLabels.xml"/>
       </fileset>
     </rat:report>
   </target>
