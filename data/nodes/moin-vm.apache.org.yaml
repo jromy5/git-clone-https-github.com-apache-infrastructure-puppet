@@ -93,4 +93,3 @@ vhosts_asf::vhosts::vhosts:
         SetHandler server-status
         Require local
       </Location>
-      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://cwiki.apache.org/$1
