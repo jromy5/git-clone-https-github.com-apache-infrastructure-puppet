@@ -31,9 +31,6 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '800'
 apache::mod::event::threadsperchild: '200'
 
-apache::mod::status::allow_from:
-  - all
-
 apache::mpm_module:         'event'
 apache::serveradmin:        'users@infra.apache.org'
 
