@@ -3,12 +3,14 @@ classes:
   - apache
   - apache::mod::ssl
   - apache::mod::rewrite
+  - blocky
+  - datadog_agent::integrations::apache
+  - datadog_agent::integrations::http_check
+  - kif
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - zmanda_asf::client
-  - blocky
-  - kif
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
