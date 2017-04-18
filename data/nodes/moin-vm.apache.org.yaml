@@ -40,6 +40,8 @@ base::basepackages:
   - 'rsync'
   - 'libapache2-mod-wsgi'
 
+datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
