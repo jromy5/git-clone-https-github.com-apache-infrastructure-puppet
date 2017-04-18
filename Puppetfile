@@ -272,7 +272,7 @@ mod 'ulimit',
 
 
 mod 'unattended_upgrades',
-  :git => 'https://github.com/puppet-community/puppet-unattended_upgrades'
+  :git => 'https://github.com/puppet-community/puppet-unattended_upgrades',
   :tag => 'v2.2.0'
 
 
