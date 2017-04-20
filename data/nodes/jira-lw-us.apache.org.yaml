@@ -8,7 +8,10 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - apache::mod::status
   - blocky
+  - datadog_agent::integrations::apache
+  - datadog_agent::integrations::http_check
   - jira_asf
   - oraclejava::install
   - ssl::name::wildcard_apache_org
@@ -31,6 +34,10 @@ apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
 
+apache::mod::status::allow_from:
+      - 'All'
+apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 
 base::basepackages:
@@ -42,6 +49,8 @@ base::basepackages:
   - 'lua5.2-socket'
   - 'lua5.2-sec'
 
+datadog_agent::integrations::http_check::url: 'https://issues-test.apache.org/server-status'
+datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
 
 # jira_asf class variables.
 jira_asf::jira_version: '6.3.15'
@@ -153,7 +162,8 @@ vhosts_asf::vhosts::vhosts:
       # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
       RewriteEngine on
 
-      # Proxy requests
+      # Proxy requests to AJP backend but ignore server-status
+      ProxyPass /server-status !
       ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
