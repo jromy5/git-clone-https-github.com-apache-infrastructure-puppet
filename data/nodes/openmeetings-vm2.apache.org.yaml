@@ -1,5 +1,10 @@
 ---
 classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - letsencrypt
   - loggy
   - oraclejava::install
 
@@ -8,6 +13,55 @@ oraclejava::install::unlimited_jce: true
   
 base::basepackages:
   - 'imagemagick'
-  - 'sox'
+  - 'libfreetype6-dev'
+  - 'libgif-dev'
+  - 'libjpeg-dev'
   - 'libreoffice'
+  - 'sox'
   - 'x264'
+  - 'zlib1g-dev'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  openmeetings-vm2:
+    domains:
+      - openmeetings-vm2.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
+vhosts_asf::vhosts::vhosts:
+  openmeetings-vm2-80:
+    vhost_name: 'openmeetings-vm2.apache.org'
+    servername: 'openmeetings-vm2.apache.org'
+    priority: '12'
+    port: 80
+    docroot: '/var/www/'
+    docroot_owner: 'www-data'
+    docroot_group: 'www-data'
+    ssl: false
+    access_log_file: 'openmeetings-vm2.apache.org.http_access.log'
+    error_log_file: 'openmeetings-vm2-trunk_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://openmeetings-vm2.apache.org/$1
+
+  openmeetings-vm2-443:
+    vhost_name: 'openmeetings-vm2.apache.org'
+    servername: 'openmeetings-vm2.apache.org'
+    port: 443
+    docroot: '/var/www/'
+    docroot_owner: 'www-data'
+    docroot_group: 'www-data'
+    access_log_file: 'openmeetings-vm2.apache.org.http_access.log'
+    error_log_file: 'openmeetings-vm2-ssl-trunk_error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/openmeetings-vm2.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/openmeetings-vm2.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/openmeetings-vm2.apache.org/chain.pem'
+    custom_fragment: |
+      ProxyRequests Off
+      ProxyPreserveHost On
+      ProxyPass / http://localhost:5080/
+      ProxyPassReverse / http://localhost:5080/
