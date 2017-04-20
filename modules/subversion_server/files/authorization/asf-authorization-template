@@ -1577,6 +1577,14 @@ projects_role = rw
 @qpid = rw
 
 # moved to git:
+[/qpid/qpid-jms-amqp-0-x]
+* = r
+
+# moved to git:
+[/qpid/java]
+* = r
+
+# moved to git:
 [/qpid/dispatch]
 * = r
 
