@@ -1,0 +1,115 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::headers
+  - blocky
+  - loggy
+  - rsync::server
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
+  - zmanda_asf::client
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+  jenkins-tomcat:
+    ensure: 'present'
+    path: '/x1/jenkins/tools/tomcat/latest/logs/catalina.out'
+    copytruncate: true
+    compress: false
+    ifempty: true
+    rotate: 7
+    missingok: true
+    rotate_every: 'day'
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  jenkins:
+    path: '/x1/'
+    hosts_allow: '140.211.11.14'
+    auth_users: 'apb-jenkins'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+
+vhosts_asf::vhosts::vhosts:
+  analysis-80:
+    vhost_name: '*'
+    priority: '14'
+    servername: 'analysis-test.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'analysis.apache.org.error.log'
+    access_log_file: 'analysis.apache.org.access.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://builds-test.apache.org/analysis/$1
+
+  jenkins-master-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'builds-test.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'builds.apache.org.error.log'
+    access_log_file: 'builds.apache.org.access.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://builds-test.apache.org/$1
+
+  jenkins-master-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'builds-test.apache.org'
+      port: 443
+      docroot: '/var/www'
+      error_log_file: 'builds.apache.org.error.log'
+      access_log_file: 'builds.apache.org.access.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+      ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+      custom_fragment: |
+        RewriteEngine On
+        RequestHeader set X-Forwarded-Proto "https"
+        ProxyPreserveHost On
+        RewriteRule "/analysis$" "/analysis/" [R]
+        RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
+        ProxyPassReverse "/analysis/" "https://builds-test.apache.org/analysis/"
+        ProxyPass / http://127.0.0.1:8090/
+        ProxyPassReverse / http://127.0.0.1:8090/
+        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "X-PINGOTHER"
+        Header set Access-Control-Max-Age "1728000"
