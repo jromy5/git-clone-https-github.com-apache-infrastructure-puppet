@@ -27,14 +27,15 @@ letsencrypt::certonly:
   openmeetings-vm2:
     domains:
       - openmeetings-vm2.apache.org
+      - demo-openmeetings.apache.org
     plugin: standalone
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
 
 vhosts_asf::vhosts::vhosts:
-  openmeetings-vm2-80:
-    vhost_name: 'openmeetings-vm2.apache.org'
+  demo-openmeetings.apache.org-80:
+    vhost_name: 'demo-openmeetings.apache.org'
     servername: 'openmeetings-vm2.apache.org'
     priority: '12'
     port: 80
@@ -42,24 +43,24 @@ vhosts_asf::vhosts::vhosts:
     docroot_owner: 'www-data'
     docroot_group: 'www-data'
     ssl: false
-    access_log_file: 'openmeetings-vm2.apache.org.http_access.log'
-    error_log_file: 'openmeetings-vm2-trunk_error.log'
+    access_log_file: 'demo-openmeetings.apache.org.http_access.log'
+    error_log_file: 'demo-openmeetings-http-error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://openmeetings-vm2.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://demo-openmeetings.apache.org/$1
 
-  openmeetings-vm2-443:
-    vhost_name: 'openmeetings-vm2.apache.org'
+  demo-openmeetings.apache.org-443:
+    vhost_name: 'demo-openmeetings.apache.org'
     servername: 'openmeetings-vm2.apache.org'
     port: 443
     docroot: '/var/www/'
     docroot_owner: 'www-data'
     docroot_group: 'www-data'
-    access_log_file: 'openmeetings-vm2.apache.org.http_access.log'
-    error_log_file: 'openmeetings-vm2-ssl-trunk_error.log'
+    access_log_file: 'demo-openmeetings.apache.org.http_access.log'
+    error_log_file: 'demo-openmeetings.apache.org-ssl-error.log'
     ssl: true
-    ssl_cert: '/etc/letsencrypt/live/openmeetings-vm2.apache.org/cert.pem'
-    ssl_key:  '/etc/letsencrypt/live/openmeetings-vm2.apache.org/privkey.pem'
-    ssl_chain: '/etc/letsencrypt/live/openmeetings-vm2.apache.org/chain.pem'
+    ssl_cert: '/etc/letsencrypt/live/demo-openmeetings.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
