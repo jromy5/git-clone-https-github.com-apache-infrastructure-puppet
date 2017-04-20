@@ -10,7 +10,6 @@ classes:
   - python
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
-  - zmanda_asf::client
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
@@ -30,6 +29,11 @@ apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 apache::mod::wsgi::wsgi_python_path: '/x1/www'
 
 datadog_agent::integrations::apache::url: 'https://translate-vm.apache.org/server-status?auto'
+base::basepackages:
+  - build-essential
+  - libxml2-dev
+  - libxslt-dev
+  - zlib1g-dev
 
 file:
   '/x1':
@@ -59,6 +63,10 @@ python::dev: true
 python::virtualenv: true
 python::gunicorn: false
 python::manage_gunicorn: true
+
+python::python_pips:
+  Pootle:
+    ensure: present
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
