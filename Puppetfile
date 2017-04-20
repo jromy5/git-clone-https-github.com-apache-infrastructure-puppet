@@ -192,7 +192,7 @@ mod 'puppet-ca_cert',
   
 mod 'python',
   :git => 'https://github.com/stankevich/puppet-python.git',
-  :tag => '1.9.4'
+  :tag => '1.18.2'
 
 
 mod 'rsync',

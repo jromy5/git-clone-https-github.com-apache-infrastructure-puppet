@@ -34,6 +34,7 @@ base::basepackages:
   - libxml2-dev
   - libxslt-dev
   - zlib1g-dev
+  - libmysqlclient-dev
 
 file:
   '/x1':
@@ -62,10 +63,14 @@ python::pip: true
 python::dev: true
 python::virtualenv: true
 python::gunicorn: false
-python::manage_gunicorn: true
+python::manage_gunicorn: false
 
 python::python_pips:
   Pootle:
+    ensure: '2.5.1.3'
+  MySQL-python:
+    ensure: present
+  Djblets:
     ensure: present
 
 postfix::server::inet_interfaces: 'all'
