@@ -38,7 +38,7 @@ vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-80:
     vhost_name: 'demo-openmeetings.apache.org'
     ensure: 'present'
-    servername: 'openmeetings-vm2.apache.org'
+    servername: 'demo-openmeetings.apache.org'
     priority: '12'
     port: 80
     docroot: '/var/www/'
@@ -53,7 +53,7 @@ vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-443:
     vhost_name: 'demo-openmeetings.apache.org'
     ensure: 'present'
-    servername: 'openmeetings-vm2.apache.org'
+    servername: 'demo-openmeetings.apache.org'
     port: 443
     docroot: '/var/www/'
     docroot_owner: 'www-data'
