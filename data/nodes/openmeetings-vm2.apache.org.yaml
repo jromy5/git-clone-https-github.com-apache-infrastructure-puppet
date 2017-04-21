@@ -37,6 +37,7 @@ letsencrypt::certonly:
 vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-80:
     vhost_name: 'demo-openmeetings.apache.org'
+    ensure: 'present'
     servername: 'openmeetings-vm2.apache.org'
     priority: '12'
     port: 80
@@ -51,6 +52,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-openmeetings.apache.org-443:
     vhost_name: 'demo-openmeetings.apache.org'
+    ensure: 'present'
     servername: 'openmeetings-vm2.apache.org'
     port: 443
     docroot: '/var/www/'
