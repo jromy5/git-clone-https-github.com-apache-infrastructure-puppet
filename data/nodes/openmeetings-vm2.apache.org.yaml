@@ -39,17 +39,14 @@ vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-80:
     vhost_name: 'demo-openmeetings.apache.org'
     ensure: 'present'
-    servername: 'demo-openmeetings.apache.org'
-    priority: '12'
     port: 80
+    servername: 'demo-openmeetings.apache.org'
+    default_vhost: true
     docroot: '/var/www/'
-    docroot_owner: 'www-data'
-    docroot_group: 'www-data'
-    ssl: false
-    access_log_file: 'demo-openmeetings.apache.org.http_access.log'
-    error_log_file: 'demo-openmeetings-http-error.log'
+    access_log_file: 'demo-openmeetings_access.log'
+    error_log_file: 'demo-openmeetings_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://demo-openmeetings.apache.org/$1
+      Redirect permanent / https://demo-openmeetings.apache.org/
 
   demo-openmeetings.apache.org-443:
     vhost_name: 'demo-openmeetings.apache.org'
