@@ -61,7 +61,7 @@ rvm::rvm_gems:
      ensure: latest
 
 whimsy_server::apache_mailmap:
-  secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secmail/deliver.rb"
+  secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secretary/mail/deliver.rb"
   members: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
   board: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
 
@@ -120,7 +120,7 @@ vhosts_whimsy::vhosts::vhosts:
     - /board/agenda
     - /racktest
     - /roster
-    - /secmail
+    - /secretary/workbench
     - /test/icla
 
     authldap:
@@ -165,7 +165,6 @@ vhosts_whimsy::vhosts::vhosts:
       attribute: member
       locations:
       - /secretary/
-      - /secmail/
       - /board/publish_minutes
 
     custom_fragment: |
@@ -208,7 +207,7 @@ vhosts_whimsy::vhosts::vhosts:
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%(HTTP:Authorization)]
 
       # for secretary workbench
-      Alias /members/received /x1/srv/secretary/workbench/documents/received
+      RedirectMatch permanent ^/secmail /secretary/workbench
 
       RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
       RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
