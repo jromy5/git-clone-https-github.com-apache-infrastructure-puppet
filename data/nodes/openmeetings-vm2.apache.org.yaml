@@ -12,6 +12,7 @@ oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
   
 base::basepackages:
+  - 'ffmpeg'
   - 'imagemagick'
   - 'libfreetype6-dev'
   - 'libgif-dev'
