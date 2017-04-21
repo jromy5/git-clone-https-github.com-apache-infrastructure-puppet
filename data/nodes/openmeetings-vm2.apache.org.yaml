@@ -7,6 +7,7 @@ classes:
   - letsencrypt
   - loggy
   - oraclejava::install
+  - vhosts_asf::vhosts
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
