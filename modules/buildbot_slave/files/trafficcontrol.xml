@@ -32,7 +32,7 @@
     <rat:report xmlns:rat="antlib:org.apache.rat.anttasks"
       format="xml" reportFile="${src-dir}/../rat-output.xml">
       <fileset dir="${src-dir}">
-        <!-- <excludesfile name="${src-dir}/rat-excludes.txt"/> -->
+        <excludesfile name="${src-dir}/.rat-excludes"/>
         <exclude name=".buildbot-sourcedata"/>
       </fileset>
     </rat:report>
