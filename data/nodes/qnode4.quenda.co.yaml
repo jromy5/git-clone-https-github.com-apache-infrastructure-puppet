@@ -27,3 +27,4 @@ python::python_pips:
 
 buildbot_slave::rat::projects:
   - 'odftoolkit'
+  - 'trafficcontrol'
