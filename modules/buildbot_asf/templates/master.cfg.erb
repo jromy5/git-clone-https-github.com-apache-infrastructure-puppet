@@ -17,6 +17,9 @@ reload (private)
 
 c['db_url'] = private.mysqlConnection
 
+# If any slave will need to invoke RAT, this will help.
+from ratutil import gen_rat_antfile
+
 # the 'slaves' list defines the set of allowable buildslaves. Each element is
 # a tuple of bot-name and bot-password. These correspond to values given to
 # the buildslave's mktap invocation.
