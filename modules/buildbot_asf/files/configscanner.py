@@ -7,7 +7,7 @@
 ############################################################
 
 buildbotDir = "/x1/buildmaster/master1"
-blamelist = ["infrastructure@apache.org"]
+blamelist = ["users@infra.apache.org"]
 
 # SMTP Lib
 import smtplib
