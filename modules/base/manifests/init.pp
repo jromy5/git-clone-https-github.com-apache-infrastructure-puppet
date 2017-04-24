@@ -32,7 +32,7 @@ class base (
   }->
 
   exec { 'update-ca-certs':
-    command => "update-ca-certificates",
+    command => "/usr/sbin/update-ca-certificates",
   }
 
   # hiera_hash+create_resources used to instantiate puppet "defines"
