@@ -31,7 +31,7 @@ class base (
     group  => 'root',
   }->
 
-  exec { 'update-ca-certs',
+  exec { 'update-ca-certs':
     command => "update-ca-certificates",
   }
 
