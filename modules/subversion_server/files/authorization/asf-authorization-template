@@ -1846,7 +1846,7 @@ svn-role = rw
 @wicket = rw
 
 [/wink]
-@wink = rw
+@attic-pmc=rw
 
 [/wookie]
 @attic-pmc = rw
