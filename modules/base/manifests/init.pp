@@ -23,6 +23,18 @@ class base (
     ensure => purged,
   }
 
+  file { '/usr/local/share/ca-certificates/ssl.com.crt':
+    ensure => present,
+    mode   => '0644',
+    source => 'puppet:///modules/base/ssl.com.crt',
+    owner  => 'root',
+    group  => 'root',
+  }->
+
+  exec { 'update-ca-certs',
+    command => "update-ca-certificates",
+  }
+
   # hiera_hash+create_resources used to instantiate puppet "defines"
   # via hiera/yaml, since there is no associated class.
 
