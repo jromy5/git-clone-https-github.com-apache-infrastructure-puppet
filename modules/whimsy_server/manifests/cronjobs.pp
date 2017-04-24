@@ -100,6 +100,13 @@ class whimsy_server::cronjobs (
     minute  => 10
   }
 
+  cron { 'site-scan':
+    ensure  => present,
+    command => "(cd /srv/whimsy/tools; ${ruby} site-scan.rb > ../www/public/site-scan.json 2>&1)",
+    user    => $apache::user,
+    minute  => 55
+  }
+
   cron { 'letsencrypt_auto':
     ensure  => present,
     command => '/srv/git/letsencrypt/letsencrypt-auto renew > /srv/whimsy/www/logs/letsencrypt-auto 2>&1',
