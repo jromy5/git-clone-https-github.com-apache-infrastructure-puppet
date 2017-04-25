@@ -164,7 +164,7 @@ vhosts_asf::vhosts::vhosts:
 
       # Proxy requests to AJP backend but ignore server-status
       ProxyPass /server-status !
-      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
+      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=800
 
       # Anti-spam for Aardvark
       LuaScope thread
