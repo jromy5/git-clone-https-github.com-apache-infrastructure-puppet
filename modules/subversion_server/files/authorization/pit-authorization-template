@@ -559,6 +559,11 @@ whimsysvn = r
 whimsysvn = rw
 @accounting = rw
 
+[/foundation/President]
+@pmc-chairs = rw
+@exec-officers = rw
+@accounting = rw
+
 [/foundation/officers]
 @pmc-chairs = rw
 @exec-officers = rw
