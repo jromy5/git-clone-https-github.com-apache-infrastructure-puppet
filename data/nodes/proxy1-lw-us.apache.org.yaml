@@ -7,6 +7,8 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
+  - apache::mod::proxy_connect
+  - apache::mod::proxy_html
   - apache::mod::rewrite
   - apache::mod::ssl
   - ssl::name::wildcard_apache_org
@@ -137,6 +139,37 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^(.*)$ https://crowd.apache.org/crowd/
       ProxyPass / ajp://10.10.3.14:8099/
       ProxyPassReverse / ajp://10.10.3.14:8099/
+
+  donate:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'donate.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'donate.apache.org.http_access.log'
+    error_log_file:  'donate.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://donate.apache.org/
+
+  donate-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'donate.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'donate.apache.org.ssl_access.log'
+    error_log_file:  'donate.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / https://apache.giv.sh/
+      ProxypassReverse / https://apache.giv.sh/
+      ProxyHTMLEnable On
+      ProxyHTMLURLMap https://apache.giv.sh/ /
+
 
   repository:
     vhost_name: '*'
