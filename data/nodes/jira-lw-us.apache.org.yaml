@@ -74,6 +74,8 @@ logrotate::rule:
     ifempty: false
     rotate: 52
 
+kif::httpd_connections: 800
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 

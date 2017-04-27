@@ -6,6 +6,7 @@ class kif (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
+  $httpd_connections = 400,
   $hipchat_token,
 ){
   require python

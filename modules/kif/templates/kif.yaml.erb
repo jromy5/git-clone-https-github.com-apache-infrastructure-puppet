@@ -52,7 +52,7 @@ rules:
         # Use combine: true to combine the resource of multiple processes into one check.
         combine:            true
         triggers:
-            maxlocalconns:  400
+            maxlocalconns:  <%= @ httpd_connections %>
         runlist:
             - 'service apache2 restart'
 
