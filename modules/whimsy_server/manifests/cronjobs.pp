@@ -102,7 +102,7 @@ class whimsy_server::cronjobs (
 
   cron { 'site-scan':
     ensure  => present,
-    command => "(cd /srv/whimsy/tools; ${ruby} site-check.rb > ../www/public/site-scan.json 2>&1)",
+    command => "(cd /srv/whimsy/tools; ${ruby} site-scan.rb > ../www/public/site-scan.json 2>&1)",
     user    => $apache::user,
     minute  => 55
   }
