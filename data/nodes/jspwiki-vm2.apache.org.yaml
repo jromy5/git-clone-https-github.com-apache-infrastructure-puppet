@@ -1,0 +1,55 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::rpaf
+  - loggy
+  - tomcat
+  - vhosts_asf::vhosts
+  
+base::basepackages:
+    - 'mailutils'
+    - 'openjdk-9-jdk'
+
+tomcat::install:
+  '/opt/tomcat9':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M20/bin/apache-tomcat-9.0.0.M20.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat1'
+    group: 'tomcat1'
+
+vhosts_asf::vhosts::vhosts:
+  jspwiki-80:
+    vhost_name: 'jspwiki-wiki.apache.org'
+    ensure: 'present'
+    port: 80
+    servername: 'jspwiki-wiki.apache.org'
+    default_vhost: true
+    docroot: '/var/www/'
+    access_log_file: 'jpswiki-wiki_access.log'
+    error_log_file: 'jpswiki-wiki_error.log'
+    custom_fragment: |
+      Alias /robots.txt /var/www/robots.txt
+      # prevent these from being proxied first, then alias them 
+      ProxyPass /doc/robots.txt !
+      Alias /doc/robots.txt /var/www/robots.txt
+      ProxyPass /wiki/robots.txt !
+      Alias /wiki/robots.txt /var/www/robots.txt
+      ProxyPass /doc/favicon.ico !
+      Alias /doc/favicon.ico /var/www/favicon.ico
+      ProxyPass /wiki/favicon.ico !
+      Alias /wiki/favicon.ico /var/www/favicon.ico
+  
+      RPAFenable On
+      RPAFsethostname On
+      RPAFproxy_ips 140.211.11.74
+      RPAFheader X-Forwarded-For
+
+      # Since the frontending proxy still inserts "/wiki" and "/doc" in the requests, we strip it off again here (INFRA-5588).
+      ProxyPass /wiki ajp://localhost:8009
+      ProxyPassReverse /wiki ajp://localhost:8009
+
