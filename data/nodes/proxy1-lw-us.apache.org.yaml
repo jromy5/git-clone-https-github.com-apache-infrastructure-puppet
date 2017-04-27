@@ -166,6 +166,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file:  'donate.apache.org.error.log'
     custom_fragment: |
       Proxypass / https://apache.giv.sh/
+      SSLProxyEngine On
       ProxypassReverse / https://apache.giv.sh/
       ProxyHTMLEnable On
       ProxyHTMLURLMap https://apache.giv.sh/ /
