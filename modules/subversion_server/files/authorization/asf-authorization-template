@@ -1301,6 +1301,9 @@ projects_role = rw
 [/logging/log4php]
 @logging = r
 
+[/logging/log4net]
+@logging = r
+
 [/logging/sandbox]
 @committers = rw
 
