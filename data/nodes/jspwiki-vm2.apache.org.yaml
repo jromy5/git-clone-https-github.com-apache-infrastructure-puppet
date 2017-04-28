@@ -12,7 +12,7 @@ classes:
   
 base::basepackages:
     - 'mailutils'
-    - 'openjdk-9-jdk'
+    - 'openjdk-8-jdk'
 
 tomcat::install:
   '/opt/tomcat9':
