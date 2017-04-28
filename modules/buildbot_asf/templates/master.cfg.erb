@@ -68,17 +68,6 @@ c['slaves'] = [BuildSlave("orcus_ubuntu", private.orcus_ubuntuPwd,
                           max_builds=2,
                           ),
 
-# Cordova Specific Slaves
-
-                BuildSlave("cordova-osx-slave", private.slave34Pwd,
-                           notify_on_missing="dev@cordova.apache.org",
-                           missing_timeout=300,
-			   max_builds=1),
-                BuildSlave("cordova-windows-slave", private.slave36Pwd,
-                           notify_on_missing="dev@cordova.apache.org",
-                           missing_timeout=300,
-                           max_builds=1),
-
 # PhoenixNAP hosted Slaves
 
                BuildSlave("bb_slave1_ubuntu", private.bb_slave1_ubuntuPwd,
