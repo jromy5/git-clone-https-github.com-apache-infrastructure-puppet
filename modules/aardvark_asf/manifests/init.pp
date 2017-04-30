@@ -9,15 +9,14 @@
   # - 'lua5.2-cjson'
   # - 'lua5.2-socket'
   # - 'lua5.2-sec'
+  # - 'lua5.2-yaml'
   # - 'mod-lua-asf'
 
-class aardvark_asf (
-  # below are contained in eyaml
-  $aardvark_filter_content  = '',
-){
+class aardvark_asf (){
 
   $aardvark                 = '/usr/local/etc/aardvark'
   $aardvark_filter          = "${aardvark}/filter.lua"
+  $aardvark_ruleset         = "${aardvark}/ruleset.yaml"
 
   exec { 'check_aardvark':
     command => "/bin/mkdir -p ${aardvark}",
@@ -36,7 +35,14 @@ class aardvark_asf (
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      content => $aardvark_filter_content,
+      source => 'puppet:///modules/aardvark/filter.lua',
+      require => [ File[$aardvark]];
+    $aardvark_ruleset:
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source => 'puppet:///modules/aardvark/ruleset.yaml',
       require => [ File[$aardvark]]
   }
 
