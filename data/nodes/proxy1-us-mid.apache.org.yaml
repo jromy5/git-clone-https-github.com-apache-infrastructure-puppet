@@ -42,6 +42,8 @@ apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
  - 'issues-data'
+ - 'lua5.2'
+ - 'lua5.2-yaml'
  
 fail2ban_asf::config::jails:
   bz:
