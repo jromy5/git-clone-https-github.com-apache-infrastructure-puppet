@@ -1,0 +1,26 @@
+#####################
+# Aardvark rule-set #
+#####################
+
+# These automatically cause a ban
+spamurls:
+    - "/jira/rest/api/.+/issue/AAR%-%d+/comment"
+
+# Don't run spam check here...
+ignoreurls:
+    - AttachTemporaryFile
+    
+# Match any of these to banninate
+postmatches:
+    - "pid=12320120"
+    - "\n12320120\r?\n"
+    - "mobilestrikehacktools"
+    - "monsterlegendshackx"
+    
+# Match multiple of these to ban
+multimatch:
+    auxiliary:
+        - "p.?h.?o.?n.?e"
+        - "s.?u.?p.?p.?o.?r.?t"
+    required:
+        - "(1[-.%s]?%d%d%d[-.%s+]?%d%d%d[-.%s+]?%d%d%d%d)"
