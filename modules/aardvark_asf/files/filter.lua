@@ -14,7 +14,7 @@ local yamlRuleset = yaml.load(yamlData)
 function logspam(r)
    local f = io.open("/usr/local/etc/aardvark/spammers.txt", "a")
    if f then
-       f:write("[" .. os.date("%c", os.time()) .. "] " .. r.useragent_ip .. " spammed Aardvark (caught in filter)\n")
+       f:write("[" .. os.date("%c", os.time()) .. "] " .. r.useragent_ip .. " spammed Aardvark\n")
        f:close()
    end
 end
