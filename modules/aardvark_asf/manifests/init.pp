@@ -35,14 +35,14 @@ class aardvark_asf (){
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      source => 'puppet:///modules/aardvark/filter.lua',
+      source => 'puppet:///modules/aardvark_asf/filter.lua',
       require => [ File[$aardvark]];
     $aardvark_ruleset:
       ensure  => present,
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      source => 'puppet:///modules/aardvark/ruleset.yaml',
+      source => 'puppet:///modules/aardvark_asf/ruleset.yaml',
       require => [ File[$aardvark]]
   }
 
