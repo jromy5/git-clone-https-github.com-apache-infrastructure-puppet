@@ -37,7 +37,7 @@ letsencrypt::certonly:
 
 vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-80:
-    vhost_name: 'demo-openmeetings.apache.org'
+    vhost_name: '*'
     ensure: 'present'
     port: 80
     servername: 'demo-openmeetings.apache.org'
@@ -49,7 +49,7 @@ vhosts_asf::vhosts::vhosts:
       Redirect permanent / https://demo-openmeetings.apache.org/
 
   demo-openmeetings.apache.org-443:
-    vhost_name: 'demo-openmeetings.apache.org'
+    vhost_name: '*'
     ensure: 'present'
     servername: 'demo-openmeetings.apache.org'
     port: 443
@@ -63,7 +63,9 @@ vhosts_asf::vhosts::vhosts:
     ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
-      <Location /openmeetings>	
+      <Location /openmeetings>
+        Order allow,deny
+        Allow from all	
         ProxyPass http://localhost:5080/openmeetings
         ProxyPassReverse http://localhost:5080/openmeetings
         RewriteEngine On
@@ -72,18 +74,26 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule ^/(.*) http://localhost:5080/$1 [P]
       </Location>
       <Location /open>
+        Order allow,deny
+        Allow from all
         ProxyPass http://localhost:5080/open
         ProxyPassReverse http://localhost:5080/open
       </Location>
       <Location /send>
+        Order allow,deny
+        Allow from all
         ProxyPass http://localhost:5080/send
         ProxyPassReverse http://localhost:5080/send
       </Location>
       <Location /idle>
+        Order allow,deny
+        Allow from all
         ProxyPass http://localhost:5080/idle
         ProxyPassReverse http://localhost:5080/idle
       </Location>
       <Location /close>
+        Order allow,deny
+        Allow from all
         ProxyPass http://localhost:5080/close
         ProxyPassReverse http://localhost:5080/close
       </Location>
