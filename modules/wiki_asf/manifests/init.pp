@@ -52,6 +52,15 @@ class wiki_asf {
     '/etc/apache2/wiki-abusers/abuse-asis':
       source  => 'puppet:///modules/wiki_asf/abuse.asis',
       require => [Package['apache2'],File['/etc/apache2/wiki-abusers']];
+    '/usr/local/etc/wikitools':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0750';
+    '/usr/local/etc/wikitools/wiki-users.py':
+      ensure => present,
+      mode   => '0755',
+      source => 'puppet:///modules/wiki_asf/tools/wiki-users.py';
   }
 }
 
