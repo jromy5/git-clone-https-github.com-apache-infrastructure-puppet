@@ -64,36 +64,36 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
 <Location /openmeetings>
-	Order allow,deny
-	Allow from all	
-	ProxyPass http://localhost:5080/openmeetings
-	ProxyPassReverse http://localhost:5080/openmeetings
-	RewriteEngine On
-	RewriteCond %{HTTP:Upgrade} =WebSocket [NC,NV]
-	RewriteRule ^/(.*) ws://localhost:5080/$1 [P]
-	RewriteRule ^/(.*) http://localhost:5080/$1 [P]
+        Order allow,deny
+        Allow from all	
+        ProxyPass http://localhost:5080/openmeetings
+        ProxyPassReverse http://localhost:5080/openmeetings
+        RewriteEngine On
+        RewriteCond %{HTTP:Upgrade} =WebSocket [NC,NV]
+        RewriteRule ^/(.*) ws://localhost:5080/$1 [P]
+        RewriteRule ^/(.*) http://localhost:5080/$1 [P]
 </Location>
 <Location /open>
-	Order allow,deny
-	Allow from all
-	ProxyPass http://localhost:5080/open
-	ProxyPassReverse http://localhost:5080/open
+        Order allow,deny
+        Allow from all
+        ProxyPass http://localhost:5080/open
+        ProxyPassReverse http://localhost:5080/open
 </Location>
 <Location /send>
-	Order allow,deny
-	Allow from all
-	ProxyPass http://localhost:5080/send
-	ProxyPassReverse http://localhost:5080/send
+        Order allow,deny
+        Allow from all
+        ProxyPass http://localhost:5080/send
+        ProxyPassReverse http://localhost:5080/send
 </Location>
 <Location /idle>
-	Order allow,deny
-	Allow from all
-	ProxyPass http://localhost:5080/idle
-	ProxyPassReverse http://localhost:5080/idle
+        Order allow,deny
+        Allow from all
+        ProxyPass http://localhost:5080/idle
+        ProxyPassReverse http://localhost:5080/idle
 </Location>
 <Location /close>
-	Order allow,deny
-	Allow from all
-	ProxyPass http://localhost:5080/close
-	ProxyPassReverse http://localhost:5080/close
+        Order allow,deny
+        Allow from all
+        ProxyPass http://localhost:5080/close
+        ProxyPassReverse http://localhost:5080/close
 </Location>
