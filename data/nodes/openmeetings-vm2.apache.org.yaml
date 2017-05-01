@@ -63,27 +63,27 @@ vhosts_asf::vhosts::vhosts:
     ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
-<Location /openmeetings>	
+      <Location /openmeetings>	
         ProxyPass http://localhost:5080/openmeetings
         ProxyPassReverse http://localhost:5080/openmeetings
         RewriteEngine On
         RewriteCond %{HTTP:Upgrade} =WebSocket [NC,NV]
         RewriteRule ^/(.*) ws://localhost:5080/$1 [P]
         RewriteRule ^/(.*) http://localhost:5080/$1 [P]
-</Location>
-<Location /open>
+      </Location>
+      <Location /open>
         ProxyPass http://localhost:5080/open
         ProxyPassReverse http://localhost:5080/open
-</Location>
-<Location /send>
+      </Location>
+      <Location /send>
         ProxyPass http://localhost:5080/send
         ProxyPassReverse http://localhost:5080/send
-</Location>
-<Location /idle>
+      </Location>
+      <Location /idle>
         ProxyPass http://localhost:5080/idle
         ProxyPassReverse http://localhost:5080/idle
-</Location>
-<Location /close>
+      </Location>
+      <Location /close>
         ProxyPass http://localhost:5080/close
         ProxyPassReverse http://localhost:5080/close
-</Location>
+      </Location>
