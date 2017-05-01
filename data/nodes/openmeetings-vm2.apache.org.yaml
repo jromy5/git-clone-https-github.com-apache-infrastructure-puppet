@@ -63,9 +63,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
-<Location /openmeetings>
-        Order allow,deny
-        Allow from all	
+<Location /openmeetings>	
         ProxyPass http://localhost:5080/openmeetings
         ProxyPassReverse http://localhost:5080/openmeetings
         RewriteEngine On
@@ -74,26 +72,18 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule ^/(.*) http://localhost:5080/$1 [P]
 </Location>
 <Location /open>
-        Order allow,deny
-        Allow from all
         ProxyPass http://localhost:5080/open
         ProxyPassReverse http://localhost:5080/open
 </Location>
 <Location /send>
-        Order allow,deny
-        Allow from all
         ProxyPass http://localhost:5080/send
         ProxyPassReverse http://localhost:5080/send
 </Location>
 <Location /idle>
-        Order allow,deny
-        Allow from all
         ProxyPass http://localhost:5080/idle
         ProxyPassReverse http://localhost:5080/idle
 </Location>
 <Location /close>
-        Order allow,deny
-        Allow from all
         ProxyPass http://localhost:5080/close
         ProxyPassReverse http://localhost:5080/close
 </Location>
