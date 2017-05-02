@@ -184,7 +184,7 @@ function renderPage(json) {
 
     if (json && json.githubid && typeof(json.mfa) == 'boolean') {
         var mfa = json.mfa;
-        var t = "Unknown, not part of the Apache organisation on GitHub yet.";
+        var t = "User not a member of the ASF GitHub organisation. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org.";
         var s = "???";
         if (mfa  === true) {
             t = "<b style='color: green;'>MFA ENABLED</b>";
