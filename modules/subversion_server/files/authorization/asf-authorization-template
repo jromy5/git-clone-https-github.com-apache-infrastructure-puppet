@@ -1501,7 +1501,7 @@ projects_role = rw
 @openjpa-pmc=rw
 
 [/openmeetings]
-@openmeetings = rw
+* = r
 
 [/opennlp]
 @opennlp = r
