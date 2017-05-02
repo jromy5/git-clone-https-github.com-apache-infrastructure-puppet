@@ -1282,6 +1282,20 @@ vhosts_asf::vhosts::vhosts:
           SetHandler lua-script
       </Location>
       
+ modssl:
+    vhost_name: '*'
+    port: 80
+    servername: 'modssl.com'
+    docroot: '/var/www/httpd.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'modssl.net'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://httpd.apache.org/docs/current/ssl/
+
   incubator:
     vhost_name: '*'
     priority: 98
