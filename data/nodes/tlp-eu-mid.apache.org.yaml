@@ -1282,7 +1282,7 @@ vhosts_asf::vhosts::vhosts:
           SetHandler lua-script
       </Location>
       
- modssl:
+  modssl:
     vhost_name: '*'
     port: 80
     servername: 'modssl.com'
