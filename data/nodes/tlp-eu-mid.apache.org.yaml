@@ -1290,6 +1290,8 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'modssl.net'
+      - 'www.modssl.com'
+      - 'www.modssl.net'
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
