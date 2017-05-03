@@ -17,6 +17,7 @@ class aardvark_asf (){
   $aardvark                 = '/usr/local/etc/aardvark'
   $aardvark_filter          = "${aardvark}/filter.lua"
   $aardvark_ruleset         = "${aardvark}/ruleset.yaml"
+  $aardvark_debug           = "${aardvark}/debug"
 
   exec { 'check_aardvark':
     command => "/bin/mkdir -p ${aardvark}",
@@ -29,6 +30,11 @@ class aardvark_asf (){
       ensure => directory,
       owner  => 'root',
       group  => 'root',
+      mode   => '0755';
+    $aardvark_debug:
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
       mode   => '0755';
     $aardvark_filter:
       ensure  => present,
