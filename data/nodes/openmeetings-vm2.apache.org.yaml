@@ -69,8 +69,8 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
       RewriteEngine On
-      RewriteCond %{HTTP:Connection} Upgrade [NC]
-      RewriteCond %{HTTP:Upgrade} websocket [NC]
+      RewriteCond %%{}{HTTP:Connection} Upgrade [NC]
+      RewriteCond %%{}{HTTP:Upgrade} websocket [NC]
       RewriteRule /(.*) ws://localhost:5080/$1 [P,L]
 
       <Location /openmeetings>
