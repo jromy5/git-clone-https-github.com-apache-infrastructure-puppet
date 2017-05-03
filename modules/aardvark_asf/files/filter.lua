@@ -56,6 +56,7 @@ function input_filter(r)
    -- for each bucket..
    while bucket do
       local caught = false -- bool for whether we caught anything
+      local triggered = false
       
       -- Look for data in POST we don't like
       for k, v in pairs(yamlRuleset.postmatches or {}) do
@@ -72,15 +73,19 @@ function input_filter(r)
       for k, v in pairs(mm.required or {}) do
          if bucket:lower():match(v) then
             reqcounter = reqcounter + 1
-            badbody = badbody .. "<!-- begin bucket -->\n" .. bucket .. "<!-- end bucket -->\n"
+            triggered = true
          end
       end
       -- then, auxiliary ones
       for k, v in pairs(mm.auxiliary or {}) do
          if bucket:lower():match(v) then
             auxcounter = auxcounter + 1
-            badbody = badbody .. "<!-- begin bucket -->\n" .. bucket .. "<!-- end bucket -->\n"
+            triggered = true
          end
+      end
+      
+      if triggered then
+         badbody = badbody .. "<!-- begin bucket -->\n" .. bucket .. "\n<!-- end bucket -->\n"
       end
       
       -- Now, require all req ones and at least one aux (or none if no aux)
