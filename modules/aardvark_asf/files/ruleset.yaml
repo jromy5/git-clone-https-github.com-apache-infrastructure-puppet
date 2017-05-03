@@ -23,4 +23,4 @@ multimatch:
         - "p.?h.?o.?n.?e"
         - "s.?u.?p.?p.?o.?r.?t"
     required:
-        - "(1[-.%s]?%d%d%d[-.%s+]?%d%d%d[-.%s+]?%d%d%d%d)"
+        - "(1[-.%s]+%d%d%d[-.%s]+%d%d%d[-.%s]+%d%d%d%d)"
