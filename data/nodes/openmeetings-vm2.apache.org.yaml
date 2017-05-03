@@ -7,6 +7,7 @@ classes:
   - letsencrypt
   - loggy
   - oraclejava::install
+  - vhosts_asf::modules
   - vhosts_asf::vhosts
 
 oraclejava::install::version: '8'
@@ -34,6 +35,10 @@ letsencrypt::certonly:
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
+
+vhosts_asf::modules::modules:
+  proxy_wstunnel:
+    name: 'proxy_wstunnel'
 
 vhosts_asf::vhosts::vhosts:
   demo-openmeetings.apache.org-80:
@@ -63,37 +68,35 @@ vhosts_asf::vhosts::vhosts:
     ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
     custom_fragment: |
+      RewriteEngine On
+      RewriteCond %{HTTP:Connection} Upgrade [NC]
+      RewriteCond %{HTTP:Upgrade} websocket [NC]
+      RewriteRule /(.*) ws://localhost:5080/$1 [P,L]
+
       <Location /openmeetings>
-        Order allow,deny
-        Allow from all	
+        Require all granted      
         ProxyPass http://localhost:5080/openmeetings
         ProxyPassReverse http://localhost:5080/openmeetings
         RewriteEngine On
-        RewriteCond %{HTTP:Upgrade} =WebSocket [NC,NV]
-        RewriteRule ^/(.*) ws://localhost:5080/$1 [P]
         RewriteRule ^/(.*) http://localhost:5080/$1 [P]
       </Location>
       <Location /open>
-        Order allow,deny
-        Allow from all
+        Require all granted
         ProxyPass http://localhost:5080/open
         ProxyPassReverse http://localhost:5080/open
       </Location>
       <Location /send>
-        Order allow,deny
-        Allow from all
+        Require all granted
         ProxyPass http://localhost:5080/send
         ProxyPassReverse http://localhost:5080/send
       </Location>
       <Location /idle>
-        Order allow,deny
-        Allow from all
+        Require all granted
         ProxyPass http://localhost:5080/idle
         ProxyPassReverse http://localhost:5080/idle
       </Location>
       <Location /close>
-        Order allow,deny
-        Allow from all
+        Require all granted
         ProxyPass http://localhost:5080/close
         ProxyPassReverse http://localhost:5080/close
       </Location>
