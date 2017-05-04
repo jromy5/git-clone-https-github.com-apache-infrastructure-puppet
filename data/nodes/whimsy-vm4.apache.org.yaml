@@ -61,7 +61,7 @@ rvm::rvm_gems:
      ensure: latest
 
 whimsy_server::apache_mailmap:
-  secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secretary/mail/deliver.rb"
+  secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secretary/workbench/deliver.rb"
   members: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
   board: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
 
@@ -162,7 +162,9 @@ vhosts_whimsy::vhosts::vhosts:
       - /voter/
 
     - name: ASF Secretarial Team
-      group: cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+      group:
+      - cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+      - cn=apldap,ou=groups,ou=services,dc=apache,dc=org
       attribute: member
       locations:
       - /secretary/
@@ -218,3 +220,8 @@ vhosts_whimsy::vhosts::vhosts:
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
 
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
+      
+      # We now have local custom error pages
+      ErrorDocument 401 /401.html
+      ErrorDocument 404 /404.html
+      ErrorDocument 500 /500.html
