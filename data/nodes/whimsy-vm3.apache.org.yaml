@@ -217,6 +217,7 @@ vhosts_whimsy::vhosts::vhosts:
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
 
+      SSLProxyEngine On
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
       
       # We now have local custom error pages
