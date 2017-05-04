@@ -78,6 +78,7 @@ vhosts_whimsy::modules::modules:
   - speling
   - remoteip
   - expires
+  - proxy_wstunnel
 
 vhosts_whimsy::vhosts::vhosts:
   whimsy-vm-80:
@@ -215,6 +216,8 @@ vhosts_whimsy::vhosts::vhosts:
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
+
+      ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
       
       # We now have local custom error pages
       ErrorDocument 401 /401.html
