@@ -78,7 +78,6 @@ vhosts_whimsy::modules::modules:
   - speling
   - remoteip
   - expires
-  - proxy
   - proxy_wstunnel
 
 vhosts_whimsy::vhosts::vhosts:
