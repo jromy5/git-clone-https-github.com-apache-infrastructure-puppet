@@ -6,7 +6,8 @@ class gitbox (
   $custom_fragment_443 = '',
   $packages            = ['gitweb', 'libnet-github-perl',
                           'libnet-ldap-perl', 'swaks',
-                          'python-ldap', 'python-twisted'],
+                          'python-ldap', 'python-twisted',
+                          'highlight'],
 
 # override below in eyaml
 
