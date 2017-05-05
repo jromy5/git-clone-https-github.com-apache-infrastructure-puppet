@@ -90,6 +90,12 @@ file {
       group   => $groupname,
       mode    => '0755',
       require => File[$parent_dir];
+    $tools_dir:
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0755',
+      require => File[$parent_dir];
     $install_dir:
       ensure  => directory,
       owner   => $username,
