@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::rpaf
+  - letsencrypt
   - loggy
   - tomcat
   - vhosts_asf::vhosts
@@ -13,6 +14,18 @@ classes:
 base::basepackages:
     - 'mailutils'
     - 'openjdk-8-jdk'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  jspwiki-vm2:
+    domains:
+      - jspwiki-wiki.apache.org
+      - jspwiki-vm2.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
 
 tomcat::install:
   '/opt/tomcat9':
@@ -24,7 +37,7 @@ tomcat::install:
 
 vhosts_asf::vhosts::vhosts:
   jspwiki-80:
-    vhost_name: 'jspwiki-wiki.apache.org'
+    vhost_name: '*'
     ensure: 'present'
     port: 80
     servername: 'jspwiki-wiki.apache.org'
@@ -33,23 +46,33 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'jpswiki-wiki_access.log'
     error_log_file: 'jpswiki-wiki_error.log'
     custom_fragment: |
+      Redirect permanent / https://jspwiki-wiki.apache.org/    
+
+  jspwiki-443:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    servername: 'jspwiki-wiki.apache.org'
+    ssl: true
+    docroot: '/var/www/'
+    access_log_file: 'jpswiki-wiki_access-ssl.log'
+    error_log_file: 'jpswiki-wiki_error-ssl.log'
+    ssl_cert: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/jspwiki-wiki.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/chain.pem'
+    custom_fragment: |
       Alias /robots.txt /var/www/robots.txt
       # prevent these from being proxied first, then alias them 
-      ProxyPass /doc/robots.txt !
-      Alias /doc/robots.txt /var/www/robots.txt
       ProxyPass /wiki/robots.txt !
       Alias /wiki/robots.txt /var/www/robots.txt
-      ProxyPass /doc/favicon.ico !
-      Alias /doc/favicon.ico /var/www/favicon.ico
       ProxyPass /wiki/favicon.ico !
       Alias /wiki/favicon.ico /var/www/favicon.ico
   
       RPAFenable On
       RPAFsethostname On
-      RPAFproxy_ips 140.211.11.74
+      RPAFproxy_ips 209.188.14.138
       RPAFheader X-Forwarded-For
 
       # Since the frontending proxy still inserts "/wiki" and "/doc" in the requests, we strip it off again here (INFRA-5588).
       ProxyPass /wiki ajp://localhost:8009
       ProxyPassReverse /wiki ajp://localhost:8009
-
