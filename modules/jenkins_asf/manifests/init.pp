@@ -75,7 +75,7 @@ class jenkins_asf (
       user    => 'root',
       creates => "${current_dir}/webapps/ROOT.war",
       timeout => 1200,
-      require => [File[$downloaded_tarball],File[$parent_dir]],
+      require => [File[$downloaded_war],File[$current_dir]],
   }
 
 file {
