@@ -12,10 +12,9 @@ class jenkins_asf (
 
   # override below in yaml
   $jenkins_version               = '',
+  $tomcat_version                = '',
   $parent_dir,
   $server_port                   = '',
-  $connector_port                = '',
-  $context_path                  = '',
 
   $required_packages             = ['unzip','wget'],
 ){
@@ -26,22 +25,20 @@ class jenkins_asf (
       ensure => 'present',
   }
 
-
-# http://mirrors.jenkins.io/war-stable/2.32.2/jenkins.war
-
 # jenkins specific
   $download_dir             = '/tmp'
   $downloaded_war           = "${download_dir}/jenkins.war"
   $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
-  $install_dir              = "${parent_dir}/${fisheye_build}"
+  $tools_dir                = "${parent_dir}/tools"
+  $install_dir              = "${parent_dir}/${tools_dir}/tomcat/apache-tomcat-${tomcat_version}"
   $jenkins_home             = "${parent_dir}/jenkins-home"
-  $current_dir              = "${parent_dir}/current"
+  $current_dir              = "${parent_dir}/${tools_dir}/tomcat/latest"
 
   user {
     $username:
       ensure     => $user_present,
       name       => $username,
-      home       => "/home/${username}",
+      home       => "/$(parent_dir}/${username}",
       shell      => $shell,
       groups     => $groups,
       gid        => $groupname,
@@ -58,7 +55,28 @@ class jenkins_asf (
 
 # download jenkins war
 
-# stuff goes here
+  exec {
+    'download-jenkins':
+      command => "/usr/bin/wget -O ${downloaded_war} ${download_url}",
+      creates => $downloaded_war,
+      timeout => 1200,
+  }
+
+  file { $downloaded_war:
+    ensure  => file,
+    require => Exec['download-jenkins'],
+}
+
+# Copy the war file into the tomcat webapps dir.
+  exec {
+    'cp-jenkins':
+      command => "cp ${downloaded_war} ${current_dir}/webapps/ROOT.war",
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${current_dir}/webapps/ROOT.war",
+      timeout => 1200,
+      require => [File[$downloaded_tarball],File[$parent_dir]],
+  }
 
 file {
     $parent_dir:
@@ -68,20 +86,20 @@ file {
       mode   => '0755';
     $jenkins_home:
       ensure  => directory,
-      owner   => 'fisheye',
-      group   => 'fisheye',
+      owner   => $username,
+      group   => $groupname,
       mode    => '0755',
-      require => File[$install_dir];
+      require => File[$parent_dir];
     $install_dir:
       ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      require => Exec['deploy-war'];
+      owner   => $username,
+      group   => $groupname,
+      require => File[$tools_dir];
     $current_dir:
       ensure  => link,
       target  => $install_dir,
-      owner   => 'root',
-      group   => 'root',
+      owner   => $username,
+      group   => $groupname,
       require => File[$install_dir];
   }
 }
