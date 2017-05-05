@@ -30,15 +30,15 @@ class jenkins_asf (
   $downloaded_war           = "${download_dir}/jenkins.war"
   $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
   $tools_dir                = '/tools'
-  $install_dir              = "${parent_dir}${tools_dir}/tomcat/apache-tomcat-${tomcat_version}"
-  $jenkins_home             = "${parent_dir}/jenkins-home"
-  $current_dir              = "${parent_dir}${tools_dir}/tomcat/latest"
+  $install_dir              = "${parent_dir}/${username}${tools_dir}/tomcat/apache-tomcat-${tomcat_version}"
+  $jenkins_home             = "${parent_dir}/${username}/jenkins-home"
+  $current_dir              = "${parent_dir}/${username}${tools_dir}/tomcat/latest"
 
   user {
     $username:
       ensure     => $user_present,
       name       => $username,
-      home       => "/$(parent_dir}/${username}",
+      home       => "$(parent_dir}/${username}",
       shell      => $shell,
       groups     => $groups,
       gid        => $groupname,
@@ -95,7 +95,7 @@ file {
       owner   => $username,
       group   => $groupname,
       mode    => '0755',
-      require => File[$parent_dir];
+      require => File[$jenkins_home];
     $install_dir:
       ensure  => directory,
       owner   => $username,

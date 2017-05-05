@@ -16,7 +16,7 @@ classes:
 # jenkins_asf class variables.
 
 jenkins_asf::jenkins_version: '2.46.2'
-jenkins_asf::parent_dir: '/x1/jenkins'
+jenkins_asf::parent_dir: '/x1'
 jenkins_asf::server_port: '8090'
 jenkins_asf::tomcat_version: '7.0.75'
 apache::keepalive:          'On'
