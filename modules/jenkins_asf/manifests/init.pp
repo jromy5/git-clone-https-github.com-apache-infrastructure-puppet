@@ -29,7 +29,7 @@ class jenkins_asf (
   $download_dir             = '/tmp'
   $downloaded_war           = "${download_dir}/jenkins.war"
   $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
-  $tools_dir                = "${parent_dir}/tools"
+  $tools_dir                = 'tools'
   $install_dir              = "${parent_dir}/${tools_dir}/tomcat/apache-tomcat-${tomcat_version}"
   $jenkins_home             = "${parent_dir}/jenkins-home"
   $current_dir              = "${parent_dir}/${tools_dir}/tomcat/latest"
