@@ -70,7 +70,7 @@ class jenkins_asf (
 # Copy the war file into the tomcat webapps dir.
   exec {
     'cp-jenkins':
-      command => "cp ${downloaded_war} ${current_dir}/webapps/ROOT.war",
+      command => "/bin/cp ${downloaded_war} ${current_dir}/webapps/ROOT.war",
       cwd     => $download_dir,
       user    => 'root',
       creates => "${current_dir}/webapps/ROOT.war",
