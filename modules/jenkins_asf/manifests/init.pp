@@ -38,7 +38,7 @@ class jenkins_asf (
     $username:
       ensure     => $user_present,
       name       => $username,
-      home       => "$(parent_dir}/${username}",
+      home       => "${parent_dir}/${username}",
       shell      => $shell,
       groups     => $groups,
       gid        => $groupname,
