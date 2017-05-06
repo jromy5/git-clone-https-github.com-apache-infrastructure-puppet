@@ -139,7 +139,7 @@ def configure_asfgit(git_dir, commit):
 
         At the time of this writing, $(REPOS) should be:
 
-          /x1/git/repos/asf
+          /x1/repos/asf
 
         """ % {"git_repo": git_repo}))
 
