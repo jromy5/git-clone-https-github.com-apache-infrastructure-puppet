@@ -15,6 +15,9 @@ class jenkins_asf (
   $tomcat_version                = '',
   $parent_dir,
   $server_port                   = '',
+  $heap_min_size                 = '',
+  $heap_max_size                 = '',
+  $maxmetaspacesize              = '',
 
   $required_packages             = ['unzip','wget','tomcat8'],
 ){
@@ -94,5 +97,8 @@ file {
       owner   => $username,
       group   => $groupname,
       require => File[$parent_dir];
+    '/usr/share/tomcat8/bin/setenv.sh':
+      content => template('jenkins_asf/setenv.sh.erb'),
+      mode    => '0644';
   }
 }

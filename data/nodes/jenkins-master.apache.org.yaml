@@ -17,8 +17,11 @@ classes:
 
 jenkins_asf::jenkins_version: '2.46.2'
 jenkins_asf::parent_dir: '/x1'
-jenkins_asf::server_port: '8090'
-jenkins_asf::tomcat_version: '7.0.75'
+jenkins_asf::server_port: '8080'
+jenkins_asf::heap_min_size: '4096'
+jenkins_asf::heap_max_size: '8092'
+jenkins_asf::maxmetaspacesize: '8092'
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::timeout: 600
