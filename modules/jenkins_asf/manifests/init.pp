@@ -29,7 +29,6 @@ class jenkins_asf (
   $download_dir             = '/tmp'
   $downloaded_war           = "${download_dir}/jenkins.war"
   $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
-  $tools_dir                = '/tools'
   $install_dir              = "${parent_dir}/${username}"
   $jenkins_home             = "${parent_dir}/${username}/jenkins-home"
 
@@ -90,12 +89,6 @@ file {
       group   => $groupname,
       mode    => '0755',
       require => File[$parent_dir];
-    $tools_dir:
-      ensure  => directory,
-      owner   => $username,
-      group   => $groupname,
-      mode    => '0755',
-      require => File[$jenkins_home];
     $install_dir:
       ensure  => directory,
       owner   => $username,
