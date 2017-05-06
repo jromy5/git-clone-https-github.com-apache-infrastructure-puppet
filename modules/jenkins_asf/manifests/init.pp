@@ -100,6 +100,6 @@ file {
       ensure  => directory,
       owner   => $username,
       group   => $groupname,
-      require => File[$tools_dir];
+      require => File[$parent_dir];
   }
 }
