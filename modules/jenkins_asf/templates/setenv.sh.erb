@@ -1,9 +1,8 @@
 ## This file is dervied from a puppet template - modules/jenkins_asf/templates/setenv.sh.erb
 
 CATALINA_OPTS="-DJENKINS_HOME=/x1/jenkins/jenkins-home/ ${CATALINA_OPTS}"
-CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMetaspaceSize=<%= @maxmetaspacesize %>m -XX:+UseG1GC ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMetaspaceSize=<%= @maxmetaspacesize %>m ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dgroovy.use.classvalue=true -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/x1/jenkins/dumps ${CATALINA_OPTS}"
-CATALINA_OPTS="
 # CATALINA_OPTS="-Djavax.net.ssl.trustStore=/x1/jenkins/jvm-sslcerts/cacerts"
 # JAVA_HOME=/usr/lib/jvm/jdk1.8.0_112
 export CATALINA_OPTS
