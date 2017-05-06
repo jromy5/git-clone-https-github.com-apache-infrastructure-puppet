@@ -16,7 +16,7 @@ class jenkins_asf (
   $parent_dir,
   $server_port                   = '',
 
-  $required_packages             = ['unzip','wget'],
+  $required_packages             = ['unzip','wget','tomcat8'],
 ){
 
 # install required packages:
@@ -30,9 +30,8 @@ class jenkins_asf (
   $downloaded_war           = "${download_dir}/jenkins.war"
   $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
   $tools_dir                = '/tools'
-  $install_dir              = "${parent_dir}/${username}${tools_dir}/tomcat/apache-tomcat-${tomcat_version}"
+  $install_dir              = "${parent_dir}/${username}"
   $jenkins_home             = "${parent_dir}/${username}/jenkins-home"
-  $current_dir              = "${parent_dir}/${username}${tools_dir}/tomcat/latest"
 
   user {
     $username:
@@ -67,16 +66,17 @@ class jenkins_asf (
     require => Exec['download-jenkins'],
 }
 
-# Copy the war file into the tomcat webapps dir.
+# Copy the war file into the tomcat webapps dir and deploy.
+
   exec {
-    'cp-jenkins':
-      command => "/bin/cp ${downloaded_war} ${current_dir}/webapps/ROOT.war",
-      cwd     => $download_dir,
+    'deploy-jenkins':
+      command => "/bin/cp ${downloaded_war} /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
+      cwd     => $install_dir,
       user    => 'root',
-      creates => "${current_dir}/webapps/ROOT.war",
+      creates => '/var/lib/tomcat8/webapps/ROOT.war',
       timeout => 1200,
-      require => [File[$downloaded_war],File[$current_dir]],
-  }
+      require => [Package['tomcat8'],File[$parent_dir]],
+}
 
 file {
     $parent_dir:
@@ -101,11 +101,5 @@ file {
       owner   => $username,
       group   => $groupname,
       require => File[$tools_dir];
-    $current_dir:
-      ensure  => link,
-      target  => $install_dir,
-      owner   => $username,
-      group   => $groupname,
-      require => File[$install_dir];
   }
 }
