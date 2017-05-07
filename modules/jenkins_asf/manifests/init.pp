@@ -19,7 +19,7 @@ class jenkins_asf (
   $heap_max_size                 = '',
   $maxmetaspacesize              = '',
 
-  $required_packages             = ['unzip','wget','tomcat8'],
+  $required_packages             = ['unzip','wget'],
 ){
 
 # install required packages:
@@ -29,11 +29,23 @@ class jenkins_asf (
   }
 
 # jenkins specific
-  $download_dir             = '/tmp'
-  $downloaded_war           = "${download_dir}/jenkins.war"
-  $download_url             = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
-  $install_dir              = "${parent_dir}/${username}"
-  $jenkins_home             = "${parent_dir}/${username}/jenkins-home"
+
+  $download_dir     = '/tmp'
+  $downloaded_war   = "${download_dir}/jenkins.war"
+  $download_url     = "http://mirrors.jenkins.io/war-stable/${jenkins_version}/jenkins.war"
+  $install_dir      = "${parent_dir}/${username}"
+  $jenkins_home     = "${parent_dir}/${username}/jenkins-home"
+  $tools_dir        = "${install_dir}/tools"
+
+# tomcat (9) specific
+
+  $downloaded_tarball = "${download_dir}/${tarball}"
+  $t_download_url     = "http://www-us.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
+  $tomcat_dir         = "${tools_dir}/tomcat"
+  $current_dir        = "${tomcat_dir}/current"
+  $tomcat_build       = "apache-tomcat-${tomcat_version}"
+  $tarball            = "${tomcat_build}.tar.gz"
+  $catalina_base      = "${tomcat_dir}/${tomcat_build}"
 
   user {
     $username:
@@ -97,6 +109,12 @@ file {
       owner   => $username,
       group   => $groupname,
       require => File[$parent_dir];
+    $current_dir:
+      ensure  => link,
+      target  => $catalina_base,
+      owner   => 'root',
+      group   => 'root',
+      require => File[$catalina_base];
     '/usr/share/tomcat8/bin/setenv.sh':
       content => template('jenkins_asf/setenv.sh.erb'),
       mode    => '0644';
