@@ -63,16 +63,15 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Alias /robots.txt /var/www/robots.txt
       # prevent these from being proxied first, then alias them 
-      ProxyPass /wiki/robots.txt !
-      Alias /wiki/robots.txt /var/www/robots.txt
-      ProxyPass /wiki/favicon.ico !
-      Alias /wiki/favicon.ico /var/www/favicon.ico
+      ProxyPass /robots.txt !
+      Alias /robots.txt /var/www/robots.txt
+      ProxyPass /favicon.ico !
+      Alias /favicon.ico /var/www/favicon.ico
   
       RPAFenable On
       RPAFsethostname On
       RPAFproxy_ips 209.188.14.138
       RPAFheader X-Forwarded-For
 
-      # Since the frontending proxy still inserts "/wiki" and "/doc" in the requests, we strip it off again here (INFRA-5588).
-      ProxyPass /wiki ajp://localhost:8009
-      ProxyPassReverse /wiki ajp://localhost:8009
+      ProxyPass / ajp://localhost:8009/
+      ProxyPassReverse / ajp://localhost:8009/
