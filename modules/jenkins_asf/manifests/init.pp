@@ -40,7 +40,7 @@ class jenkins_asf (
 # tomcat (9) specific
 
   $downloaded_tarball = "${download_dir}/${tarball}"
-  $t_download_url     = "http://www-us.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
+  $t_download_url     = "https://www-eu.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
   $tomcat_dir         = "${tools_dir}/tomcat"
   $current_dir        = "${tomcat_dir}/current"
   $tomcat_build       = "apache-tomcat-${tomcat_version}"
