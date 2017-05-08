@@ -5,6 +5,7 @@ classes:
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::headers
+  - apache::mod::ssl
   - blocky
   - loggy
   - jenkins_asf
@@ -95,7 +96,7 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'builds-test.apache.org'
     port: 80
-    ssl: false
+    ssl: true
     docroot: '/var/www'
     error_log_file: 'builds.apache.org.error.log'
     access_log_file: 'builds.apache.org.access.log'
