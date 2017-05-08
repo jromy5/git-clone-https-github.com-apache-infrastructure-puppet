@@ -12,6 +12,10 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
+  - oraclejava::install
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
 
 # jenkins_asf class variables.
 
