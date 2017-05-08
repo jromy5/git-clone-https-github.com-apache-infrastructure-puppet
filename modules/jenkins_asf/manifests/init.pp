@@ -149,7 +149,7 @@ file {
       target  => $catalina_base,
       owner   => 'root',
       group   => 'root',
-      require => File[$catalina_base];
+      require => Exec['extract-tomcat'];
     "${current_dir}/bin/setenv.sh":
       content => template('jenkins_asf/setenv.sh.erb'),
       mode    => '0644';
