@@ -85,7 +85,7 @@ class jenkins_asf (
 # download
 
   exec {
-    'download_tomcat':
+    'download-tomcat':
       command => "/usr/bin/wget -O ${downloaded_tarball} ${t_download_url}",
       creates => $downloaded_tarball,
       timeout => 1200,
