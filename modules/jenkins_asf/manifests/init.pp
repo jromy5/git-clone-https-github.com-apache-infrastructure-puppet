@@ -124,7 +124,7 @@ class jenkins_asf (
       user    => 'root',
       creates => "${tomcat_build}/webapps/ROOT.war",
       timeout => 1200,
-      require => [File[$parent_dir],File[$downloaded_war],File[$extract-tomcat]],
+      require => [File[$parent_dir],File[$downloaded_war],File[$tomcat_dir]],
 }
 
 file {
