@@ -120,7 +120,7 @@ class jenkins_asf (
 
   exec {
     'chgrp-tomcat-files':
-      command => "/bin/chgrp ${username} ${catalina_base}/bin ${catalina_base}/bin/*.sh",
+      command => "/bin/chgrp ${username} ${catalina_base}/bin ${catalina_base}/bin/*.sh ${catalina.out}/*.jar",
       timeout => 1200,
       require => [User[$username],Group[$username],Exec['extract-tomcat']],
 }
