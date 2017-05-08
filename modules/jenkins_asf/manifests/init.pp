@@ -39,13 +39,14 @@ class jenkins_asf (
 
 # tomcat (9) specific
 
-  $downloaded_tarball = "${download_dir}/${tarball}"
-  $t_download_url     = "https://www-eu.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
   $tomcat_dir         = "${tools_dir}/tomcat"
   $current_dir        = "${tomcat_dir}/current"
   $tomcat_build       = "apache-tomcat-${tomcat_version}"
   $tarball            = "${tomcat_build}.tar.gz"
   $catalina_base      = "${tomcat_dir}/${tomcat_build}"
+
+  $downloaded_tarball = "${download_dir}/${tarball}"
+  $t_download_url     = "https://www-eu.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
 
   user {
     $username:
@@ -78,7 +79,7 @@ class jenkins_asf (
   file { $downloaded_war:
     ensure  => file,
     require => Exec['download-jenkins'],
-}
+  }
 
 # download and extract Tomcat
 
@@ -94,7 +95,7 @@ class jenkins_asf (
   file { $downloaded_tarball:
     ensure  => file,
     require => Exec['download-tomcat'],
-}
+  }
 
 # extract into place
 
