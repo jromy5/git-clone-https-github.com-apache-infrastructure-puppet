@@ -110,9 +110,9 @@ class jenkins_asf (
 
   exec {
     'chown-tomcat-dirs':
-      command => "/bin/chown -R ${username}:${username} ${tomcat_dir}/logs ${tomcat_dir}/temp ${tomcat_dir}/work",
+      command => "/bin/chown -R ${username}:${username} ${catalina_base}/logs ${catalina_base}/temp ${catalina_base}/work",
       timeout => 1200,
-      require => [User[$username],Group[$username]],
+      require => [User[$username],Group[$username],Exec['extract-tomcat']],
 }
 
 # Copy the jenkins war file into the tomcat webapps dir and deploy.
