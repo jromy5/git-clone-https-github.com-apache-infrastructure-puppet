@@ -1,6 +1,5 @@
 ---
 classes:
-  - jenkins_asf
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
@@ -8,11 +7,12 @@ classes:
   - apache::mod::headers
   - blocky
   - loggy
+  - jenkins_asf
+  - oraclejava::install
   - rsync::server
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
-  - oraclejava::install
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
