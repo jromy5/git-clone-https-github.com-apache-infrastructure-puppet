@@ -81,9 +81,15 @@ cat <<EOT >index.new
       and the <a href="http://wiki.apache.org/general/GitAtApache">wiki page</a>
       for more information (including how to set up git svn dcommit support for
       Apache committers).
-
-      Some Apache projects now use Git as their primary SCM. For more information,
-      see <a href="https://git-wip-us.apache.org/">https://git-wip-us.apache.org</a>.
+      <br />
+      Many Apache projects now use Git as their primary SCM. Most are hosted
+      on <a href="https://git-wip-us.apache.org/">"Git WiP" system</a>. For 
+      more information and project listings for this, please see
+      <a href="https://git-wip-us.apache.org/">https://git-wip-us.apache.org</a>.
+      The rest use the still-in-development
+      <a href="https://gitbox.apache.org/">Github Dual Master</a>, for the
+      list of those projects and basic information, please see
+      <a href="https://gitbox.apache.org/">https://gitbox.apache.org</a>.
     </p>
     <p>
       Note that these Git mirrors are missing Subversion features like
@@ -91,7 +97,7 @@ cat <<EOT >index.new
       empty directories.
     </p>
     <p>
-      Please contact the infrastructure-dev@apache.org mailing list if
+      Please contact the users@infra.apache.org mailing list if
       you have comments or suggestions regarding this service. See the
       <a href="http://www.apache.org/dev/git.html#git-mirrors">documentation</a>
       for instructions on how to get another Apache codebase mirrored here.
