@@ -165,4 +165,10 @@ file {
       group   => $groupname,
       require => File[$tools_dir];
   }
+
+
+  ::systemd::unit_file { 'jenkins.service':
+    content => template('jenkins_asf/jenkins.service.erb'),
+  }
+
 }
