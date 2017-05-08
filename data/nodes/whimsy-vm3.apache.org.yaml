@@ -93,7 +93,7 @@ vhosts_whimsy::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'whimsy_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://whimsy.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://whimsy3.apache.org/$1
 
   whimsy-vm-443:
     vhost_name: '*'
