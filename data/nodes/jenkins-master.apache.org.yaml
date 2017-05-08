@@ -122,9 +122,9 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule "/analysis$" "/analysis/" [R]
         RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
         ProxyPassReverse "/analysis/" "https://builds-test.apache.org/analysis/"
-        ProxyPass / http://127.0.0.1:8090/
-        ProxyPassReverse / http://127.0.0.1:8090/
-        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8090/robots.txt [P,L]
+        ProxyPass / http://127.0.0.1:8080/
+        ProxyPassReverse / http://127.0.0.1:8080/
+        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
         Header set Access-Control-Allow-Origin "*"
         Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
         Header set Access-Control-Allow-Headers "X-PINGOTHER"
