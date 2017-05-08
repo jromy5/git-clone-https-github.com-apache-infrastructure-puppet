@@ -103,7 +103,7 @@ class jenkins_asf (
       command => "/bin/tar -xvzf ${tarball} && mv ${tomcat_build} ${tomcat_dir}",
       cwd     => $download_dir,
       user    => 'root',
-      creates => "${tomcat_dir}/NOTICE",
+      creates => "${catalina_base}/NOTICE",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$tools_dir]],
   }
@@ -119,10 +119,10 @@ class jenkins_asf (
 
   exec {
     'deploy-jenkins':
-      command => "/bin/cp ${downloaded_war} ${tomcat_build}/webapps/ROOT.war && sleep 10",
+      command => "/bin/cp ${downloaded_war} ${catalina_base}/webapps/ROOT.war && sleep 10",
       cwd     => $download_dir,
       user    => 'root',
-      creates => "${tomcat_build}/webapps/ROOT.war",
+      creates => "${catalina_base}/webapps/ROOT.war",
       timeout => 1200,
       require => [File[$parent_dir],File[$downloaded_war],File[$tomcat_dir]],
 }
