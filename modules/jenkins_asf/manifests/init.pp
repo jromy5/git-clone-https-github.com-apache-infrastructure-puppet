@@ -80,16 +80,51 @@ class jenkins_asf (
     require => Exec['download-jenkins'],
 }
 
-# Copy the war file into the tomcat webapps dir and deploy.
+# download and extract Tomcat
+
+# download
+
+  exec {
+    'download_tomcat':
+      command => "/usr/bin/wget -O ${downloaded_tarball} ${t_download_url}",
+      creates => $downloaded_tarball,
+      timeout => 1200,
+  }
+
+  file { $downloaded_tarball:
+    ensure  => file,
+    require => Exec['download-tomcat'],
+}
+
+# extract into place
+
+  exec {
+    'extract-tomcat':
+      command => "/bin/tar -xvzf ${tarball} && mv ${tomcat_build} ${tomcat_dir}",
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${tomcat_dir}/NOTICE",
+      timeout => 1200,
+      require => [File[$downloaded_tarball],File[$tools_dir]],
+  }
+
+  exec {
+    'chown-tomcat-dirs':
+      command => "/bin/chown -R ${username}:${username} ${tomcat_dir}/logs ${tomcat_dir}/temp ${tomcat_dir}/work",
+      timeout => 1200,
+      require => [User[$username],Group[$username]],
+}
+
+# Copy the jenkins war file into the tomcat webapps dir and deploy.
 
   exec {
     'deploy-jenkins':
-      command => "/bin/cp ${downloaded_war} /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
-      cwd     => $install_dir,
+      command => "/bin/cp ${downloaded_war} ${tomcat_build}/webapps/ROOT.war && sleep 10",
+      cwd     => $download_dir,
       user    => 'root',
-      creates => '/var/lib/tomcat8/webapps/ROOT.war',
+      creates => "${tomcat_build}/webapps/ROOT.war",
       timeout => 1200,
-      require => [Package['tomcat8'],File[$parent_dir]],
+      require => [File[$parent_dir],File[$downloaded_war],File[$extract_tomcat]],
 }
 
 file {
@@ -115,8 +150,13 @@ file {
       owner   => 'root',
       group   => 'root',
       require => File[$catalina_base];
-    '/usr/share/tomcat8/bin/setenv.sh':
+    "${current_dir}/bin/setenv.sh":
       content => template('jenkins_asf/setenv.sh.erb'),
       mode    => '0644';
+    $tools_dir:
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      require => File[$install_dir];
   }
 }
