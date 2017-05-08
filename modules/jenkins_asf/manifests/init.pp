@@ -158,5 +158,10 @@ file {
       owner   => $username,
       group   => $groupname,
       require => File[$install_dir];
+    $tomcat_dir:
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      require => File[$tools_dir];
   }
 }
