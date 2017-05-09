@@ -14,6 +14,7 @@ class jenkins_asf (
   $jenkins_version               = '',
   $tomcat_version                = '',
   $parent_dir,
+  $server_alias                  = '',
   $server_port                   = '',
   $connector_port                = '',
   $heap_min_size                 = '',
