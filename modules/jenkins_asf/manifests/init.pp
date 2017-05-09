@@ -15,6 +15,7 @@ class jenkins_asf (
   $tomcat_version                = '',
   $parent_dir,
   $server_port                   = '',
+  $connector_port                = '',
   $heap_min_size                 = '',
   $heap_max_size                 = '',
   $maxmetaspacesize              = '',
@@ -173,6 +174,9 @@ file {
       owner   => $username,
       group   => $groupname,
       require => File[$tools_dir];
+    "${current_dir}/conf/server.xml":
+      content => template('jenkins_asf/server.xml.erb'),
+      mode    => '0644';
   }
 
 
