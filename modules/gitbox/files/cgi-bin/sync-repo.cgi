@@ -79,7 +79,7 @@ if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name'] if 'pusher' in data else data['sender']['login']
     ref = data['ref']
-    baseref = data['base_ref'] if 'base_ref' in data else data['master_branch']
+    baseref = data['base_ref'] if 'base_ref' in data else data['master_branch'] if 'master_branch' in data else data['ref']
     before = data['before'] if 'before' in data else '0'*40
     after = data['after'] if 'after' in data else '0'*40
     repopath = "/x1/repos/asf/%s.git" % reponame

@@ -73,7 +73,7 @@ Subject: %s
 With regards,
 Apache Git Services
 """ % (sender, rcpt, subject, message)
-
+    msg = msg.encode('ascii', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
         smtpObj.sendmail(sender, receivers, msg)
