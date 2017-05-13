@@ -43,8 +43,8 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jspwiki-wiki.apache.org'
     default_vhost: true
     docroot: '/var/www/'
-    access_log_file: 'jpswiki-wiki_access.log'
-    error_log_file: 'jpswiki-wiki_error.log'
+    access_log_file: 'jspwiki-wiki_access.log'
+    error_log_file: 'jspwiki-wiki_error.log'
     custom_fragment: |
       Redirect permanent / https://jspwiki-wiki.apache.org/    
 
@@ -55,8 +55,8 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jspwiki-wiki.apache.org'
     ssl: true
     docroot: '/var/www/'
-    access_log_file: 'jpswiki-wiki_access-ssl.log'
-    error_log_file: 'jpswiki-wiki_error-ssl.log'
+    access_log_file: 'jspwiki-wiki_access-ssl.log'
+    error_log_file: 'jspwiki-wiki_error-ssl.log'
     ssl_cert: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/cert.pem'
     ssl_key:  '/etc/letsencrypt/live/jspwiki-wiki.apache.org/privkey.pem'
     ssl_chain: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/chain.pem'
