@@ -85,6 +85,10 @@ gitbox::custom_fragment_443: |
       SetEnv WRITE_LOCK /etc/nocommit
       SetEnv AUTH_FILE /x1/gitbox/conf/auth.cfg
       SetEnv GIT_REPOS_ROOT /x1/repos
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
       <Location /repos/>
           SetEnv WEB_HOST https://gitbox.apache.org
       </Location>
