@@ -59,7 +59,7 @@
 # to see if newuser is in the list
 
 [groups]
-committers={ldap:cn=committers,ou=groups,dc=apache,dc=org}
+committers={ldap:cn=committers,ou=groups,dc=apache,dc=org;attr=memberUid}
 
 # Don't remove group definitions from this file if pit-authorization-template
 # refers to them.
