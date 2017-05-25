@@ -35,8 +35,19 @@ UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 ORG_READ_TOKEN = CONFIG.get('github', 'token')
 HIPCHAT_TOKEN = CONFIG.get('hipchat', 'token')
 
-# Hardcoded repo limits
-PMCS = ['infrastructure', 'couchdb', 'trafficserver', 'whimsy', 'tika', 'nutch', 'openwhisk', 'cloudstack']
+# Figure out which PMCs/Podlings are allowed
+PMCS = {}
+gitdir = '/x1/repos/asf'
+allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.listdir(gitdir))
+
+# turn that into a list of projects to run the manager for
+for repo in allrepos:
+    m = re.match(r"(?:incubator-)?([^-.]+)(?:.*\.git)", repo)
+    if m: #don't see why this would fail, but best to be sure
+        project = m.group(1)
+        if not project in PMCS:
+            PMCS[project] = "tlp" if not re.match(r"incubator-", repo) else "podling" # distinguish between tlp and podling
+
 
 # CGI
 xform = cgi.FieldStorage();
@@ -59,17 +70,22 @@ def ldap_groups(uid):
     search_filter= "(|(member=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" % (uid, uid)
     try:
         groups = []
+        podlings = {}
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
-            groups.append(res[1]['cn'][0]) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
+            cn = res[1]['cn'][0]
+            if cn in PMCS:
+                groups.append(cn) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
+                if PMCS[cn] == "podling":
+                    podlings[cn] = True
         infra = getStandardGroup('infrastructure', 'cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org')
         if infra and uid in infra:
             groups.append('infrastructure')
-        return groups
+        return [groups, podlings]
     except Exception as err:
         pass
-    return []
+    return [[], {}]
 
 def getStandardGroup(group, ldap_base = None):
     """ Gets the list of availids in a standard group (pmcs, services, podlings) """
@@ -153,6 +169,19 @@ def main():
         
         # Check if allowed to create
         pmc = xform.getvalue("pmc")
+        xuid = os.environ['REMOTE_USER']
+        groups, podlings = ldap_groups(xuid)
+        
+        # Makle sure $uid is (P)PMC member
+        if not (pmc in groups):
+            print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
+            print(json.dumps({
+                        'created': False,
+                        'error': "You do not have access to create repos for this project!"
+                    }))
+            return
+        
+        # Make sure the project is on gitbox!
         if pmc in PMCS:
             
             # Repo name and title
@@ -165,7 +194,8 @@ def main():
             t = xform.getvalue("description")
             if t:
                 title = t
-                
+            if PMCS[pmc] == "podling":
+                reponame = "incubator-%s" % reponame
             # Email settings
             commitmail = "commits@%s.apache.org" % pmc
             ghmail = "dev@%s.apache.org" % pmc
@@ -233,12 +263,19 @@ def main():
                 'created': created
             }))
             return
+        else:
+            print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
+            print(json.dumps({
+                        'created': False,
+                        'error': "Project is not GitBox eligible yet!"
+                    }))
+            return
     if action and action == "pmcs":
-        groups = ldap_groups(os.environ['REMOTE_USER'])
-        groups = [group for group in groups if group in PMCS]
+        groups, podlings = ldap_groups(os.environ['REMOTE_USER'])
         print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
         print(json.dumps({
-            'pmcs': groups
+            'pmcs': groups,
+            'podlings': podlings
         }))
         return
     
