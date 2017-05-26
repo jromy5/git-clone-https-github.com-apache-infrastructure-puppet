@@ -51,6 +51,7 @@ MFA = json.load(open("../mfa.json"))
 
 # GH Mappings
 WRITERS = {}
+LINKS = {}
 
 def getGitHubTeams():
     """Fetches a list of all GitHub committer teams (projects only, not the parent org team or the admin teams)"""
@@ -400,8 +401,13 @@ for project in MATT_PROJECTS:
     logging.info("Done with " + project + ", moving to next project...")
 
 # Spit out JSON github map
+for account in accounts:
+    LINKS[account[0].lower()] = account[1]
 with open("/x1/gitbox/matt/site/ghmap.json", "w") as f:
-    json.dump(WRITERS, f)
+    json.dump({
+        'repos': WRITERS,
+        'map': LINKS
+    }, f)
     f.close()
 
 logging.info("ALL DONE WITH THIS RUN!")
