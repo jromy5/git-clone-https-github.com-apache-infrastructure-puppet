@@ -49,6 +49,8 @@ ORG_READ_TOKEN = CONFIG.get('github', 'token')
 logging.info("Preloading 2FA JSON index...")
 MFA = json.load(open("../mfa.json"))
 
+# GH Mappings
+WRITERS = {}
 
 def getGitHubTeams():
     """Fetches a list of all GitHub committer teams (projects only, not the parent org team or the admin teams)"""
@@ -391,7 +393,15 @@ for project in MATT_PROJECTS:
             logging.info(member + " not found in GitHub team, adding...")
             if not DEBUG_RUN:
                 addGitHubTeamMember(teamID, member)
-
+                
+    # Add writers to GH map
+    WRITERS[project] = hopefulTeam
+    
     logging.info("Done with " + project + ", moving to next project...")
+
+# Spit out JSON github map
+with open("/x1/gitbox/matt/site/ghmap.json", "w") as f:
+    json.dump(WRITERS, f)
+    f.close()
 
 logging.info("ALL DONE WITH THIS RUN!")
