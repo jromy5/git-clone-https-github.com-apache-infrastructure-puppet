@@ -319,6 +319,10 @@ class NodeThread(Thread):
                     mappings[entry] = js
                     
                 res = self.xes.indices.create(index = iname, body = {
+                        "settings" : {
+                            "number_of_shards": 5,
+                            "number_of_replicas": 0
+                        },
                         "mappings" : mappings
                     }
                 )
