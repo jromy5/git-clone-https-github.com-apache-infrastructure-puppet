@@ -315,8 +315,7 @@ class NodeThread(Thread):
                     }
                     for field in config.get('RawFields', entry).split(","):
                         x = field.strip()
-                        js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed"}
-                    
+                        js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed", "fields": { "keyword": { "type": "keyword" }}}
                     mappings[entry] = js
                     
                 res = self.xes.indices.create(index = iname, body = {
