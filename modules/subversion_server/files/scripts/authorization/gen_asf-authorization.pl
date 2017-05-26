@@ -93,7 +93,7 @@ sub rebuild {
             die "Uh-oh: found '@lines', expected one line; at '$_'" unless @lines == 1;
             $_ = $lines[0];
         }
-        if ( $_ !~ m/^#/ && $_ =~ m/{ldap:(cn=[^;]*);?(.*)}/ ) {
+        if ( $_ !~ m/^#/ && $_ =~ m/{ldap:(cn=[^;\s}]*);?([^\s}]*)}/ ) {
             my ( $dn, $opts ) = ( $1, $2 );
             chomp;
             my @groupdn = split( /,/, $dn );
