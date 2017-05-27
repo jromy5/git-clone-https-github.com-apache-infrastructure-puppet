@@ -161,6 +161,7 @@ class whimsy_server (
 
   $directories = [
     '/x1/srv/agenda',
+    '/x1/srv/cache',
     '/x1/srv/secretary',
     '/x1/srv/secretary/tlpreq',
     '/x1/srv/whimsy/www/board/minutes',
