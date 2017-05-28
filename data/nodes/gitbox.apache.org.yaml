@@ -45,6 +45,11 @@ cron:
     minute: [10,40]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
+  ghadd:
+    user: 'root'
+    minute: [0,10,20,30,40,50]
+    hour: '*'
+    command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
   jsonstats:
     user: 'root'
     minute: [10]
