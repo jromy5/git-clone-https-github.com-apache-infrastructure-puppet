@@ -56,6 +56,8 @@ logging.info("Preloading existing GH map...")
 MAP= {}
 try:
     MAP = json.load(open("../ghadd.json"))
+    for k in MAP:
+        MAP[k] = MAP[k].lower() # case sensitivity, bleh
 except:
     pass
 
@@ -104,7 +106,7 @@ def getGitHubTeamMembers(teamID):
         if len(data) == 0:
             break
         for member in data:
-            members.append(member['login'])
+            members.append(member['login'].lower())
     return sorted(members)
 
 def getCommitters():
@@ -126,7 +128,7 @@ def getCommitters():
                 m = UID_RE.match(result_dn)
                 asfid = m.group(1)
                 ghid = result_attrs['githubUsername'][0]
-                committers[asfid] = ghid
+                committers[asfid] = ghid.lower() # case!
 
         ldapClient.unbind_s()
     except Exception as err:
