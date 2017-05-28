@@ -60,16 +60,13 @@ except:
     pass
 
 
-def removeGitHubTeamMember(teamID, login):
-    """ Remove a team member from a team """
-    if str(int(teamID)) != str(teamID):
-        logging.warning("Bad Team ID passed!!")
-        return None
-    if login.lower() == 'humbedooh':
-        logging.info("Not removing Mr. Humbedooh just yet")
+def removeGitHubOrgMember(login):
+    """ Remove a team member from the apache org """
+    if login.lower() in ['humbedooh', 'asfbot', 'asfgit']:
+        logging.info("Not removing this account just yet")
         return
-    logging.info("- Removing %s from team #%s..." % (login, str(teamID)))
-    url = "https://api.github.com/teams/%s/memberships/%s" % (teamID, login)
+    logging.info("- Removing %s from organisation...")
+    url = "https://api.github.com/orgs/apache/members/%s" % login
     r = requests.delete(url, headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
 
     if r.status_code <= 204:
@@ -157,7 +154,7 @@ for member in current_team:
         logging.info("%s wasn't found in LDAP, removing!" % member)
         gh_removed += 1
         if not DEBUG_RUN:
-            removeGitHubTeamMember(TEAM_ID, member)
+            removeGitHubOrgMember(member)
 
 # Check for new users, add if missing
 for k in committers:
