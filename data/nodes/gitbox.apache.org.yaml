@@ -35,21 +35,25 @@ apache::mod::event::threadsperchild: '50'
 
 
 cron:
-  json1:
+  # MFA: Collate MFA status for org members
+  mfa:
     user: 'root'
-    minute: [0,30]
+    minute: [0,15,30,45]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
+  # Grouper: invite gitbox members to their repos/teams
   grouper:
     user: 'root'
     minute: [10,40]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
+  # GHAdd: Invite people to ASF GH Org based on LDAP
   ghadd:
     user: 'root'
     minute: [0,10,20,30,40,50]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
+  # JSONStats: collect traffic stats from GH
   jsonstats:
     user: 'root'
     minute: [10]
