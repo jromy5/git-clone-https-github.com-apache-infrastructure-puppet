@@ -99,7 +99,7 @@ def getGitHubTeamMembers(teamID):
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 100): # 100 would be 3000 repos, we have 750ish now...
+    for n in range(1, 200): # 200 would be 6000 members, we have 1300ish now...
         url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (teamID, ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
