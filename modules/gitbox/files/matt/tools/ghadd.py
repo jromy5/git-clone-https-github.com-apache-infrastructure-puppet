@@ -157,7 +157,6 @@ for member in current_team:
         logging.info("%s wasn't found in LDAP, removing!" % member)
         gh_removed += 1
         if not DEBUG_RUN:
-            pass
             removeGitHubTeamMember(TEAM_ID, member)
 
 # Check for new users, add if missing
@@ -169,7 +168,6 @@ for k in committers:
         if re.match(r"^[-a-zA-Z_0-9.]+", member):
             gh_added += 1
             if not DEBUG_RUN:
-                pass
                 addGitHubTeamMember(TEAM_ID, member)
         else:
             logging.info("Invalid GH username detected, ignoring this..")
