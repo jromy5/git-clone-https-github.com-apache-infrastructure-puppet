@@ -10,12 +10,13 @@ class build_slaves::jenkins (
   $gsr_user = '',
   $gsr_pw = '',
   $jenkins_packages = [],
-  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
+  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake'],
   $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
+  $jbake = ['jbake-2.5.1'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'], # lint:ignore:140chars
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'], # lint:ignore:140chars
@@ -52,6 +53,13 @@ class build_slaves::jenkins (
     file {"/home/jenkins/tools/forrest/${forrest_version}":
       ensure => link,
       target => "/usr/local/asfpackages/forrest/${forrest_version}",
+    }
+  }
+  #define jbake symlinking
+  define build_slaves::symlink_jbake ($jbake_version = $title) {
+    file {"/home/jenkins/tools/jbake/${jbake_version}":
+      ensure => link,
+      target => "/usr/local/asfpackages/jbake/${jbake_version}",
     }
   }
   #define jiracli symlinking
@@ -264,6 +272,13 @@ class build_slaves::jenkins (
     require => [ User['jenkins'], Package['asf-build-apache-forrest-0.9'] ],
     recurse => true,
   }
+  file {'/usr/local/asfpackages/jbake/':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => [ User['jenkins'], Package['asf-build-jbake-2.5.1'] ],
+    recurse => true,
+  }
 
   package { $jenkins_packages:
     ensure => latest,
@@ -288,6 +303,13 @@ class build_slaves::jenkins (
   file { '/home/jenkins/tools/forrest/latest':
     ensure => link,
     target => '/usr/local/asfpackages/forrest/apache-forrest-0.9',
+  }
+
+  # jbake symlinks - populate array, make all symlinks, make latest symlink
+  build_slaves::symlink_jbake      { $jbake: }
+  file { '/home/jenkins/tools/jbake/latest':
+    ensure => link,
+    target => '/usr/local/asfpackages/jbake/jbake-2.5.1',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
