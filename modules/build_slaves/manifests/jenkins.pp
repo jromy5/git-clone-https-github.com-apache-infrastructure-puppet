@@ -18,7 +18,7 @@ class build_slaves::jenkins (
   $jiracli = ['jira-cli-2.1.0'],
   $jbake = ['jbake-2.5.1'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
-  $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9'], # lint:ignore:140chars
+  $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9', 'apache-maven-3.5.0'], # lint:ignore:140chars
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'], # lint:ignore:140chars
   $java_asfpackages = ['jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk1.8.0_121', 'jdk-9-ea-b128', 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'jigsaw-jdk-9-ea-b156', 'ibm-java-x86_64-60', 'ibm-java-x86_64-70', 'ibm-java-x86_64-80'], # lint:ignore:140chars
 ) {
@@ -329,11 +329,11 @@ class build_slaves::jenkins (
   }
   file { '/home/jenkins/tools/maven/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.5.0',
   }
   file { '/home/jenkins/tools/maven/latest3':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.3.9',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.5.0',
   }
 
   # java symlinks - old java location, new java location, and latest symlinks

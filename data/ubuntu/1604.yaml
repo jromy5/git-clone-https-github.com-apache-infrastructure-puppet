@@ -320,6 +320,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-apache-maven-3.2.5
   - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
+  - asf-build-apache-maven-3.5.0
   - asf-build-clover-ant-4.1.2
   - asf-build-findbugs-2.0.3
   - asf-build-findbugs-3.0.1
@@ -453,6 +454,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.2.5
   - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
+  - asf-build-apache-maven-3.5.0
   - asf-build-ibm-java-x86-64-80
   - asf-build-jbake-2.5.1
   - asf-build-jdk1.5.0-22-32
