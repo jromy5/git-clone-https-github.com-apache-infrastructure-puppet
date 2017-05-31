@@ -372,7 +372,7 @@ for project in MATT_PROJECTS:
         elif githubID and githubID in MFA['disabled']:
             logging.warning(githubID + " does not have MFA enabled, can't add to team")
         elif githubID:
-            logging.error(githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled), borked JSON?!")
+            logging.error(githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled); likely: unaccepted org invite")
         else:
             logging.warning(committer + " does not seem to have linked ASF and GitHub ID at gitbox.a.o/setup yet (not found in gitbox.db), ignoring")
 
