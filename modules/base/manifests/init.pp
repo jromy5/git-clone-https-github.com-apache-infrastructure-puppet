@@ -33,6 +33,9 @@ class base (
 
   exec { 'update-ca-certs':
     command => '/usr/sbin/update-ca-certificates',
+  } ->
+  exec { 'update-apt':
+    command => '/usr/bin/apt-get update',
   }
 
   # hiera_hash+create_resources used to instantiate puppet "defines"
