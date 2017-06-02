@@ -61,7 +61,7 @@ class build_slaves::jenkins (
 #      ensure => link,
 #      target => "/usr/local/asfpackages/jbake/${jbake_version}",
 #    }
-  }
+#  }
   #define jiracli symlinking
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
     file {"/home/jenkins/tools/jiracli/${jiracli_version}":
