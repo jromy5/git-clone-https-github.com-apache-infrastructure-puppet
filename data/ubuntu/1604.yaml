@@ -327,6 +327,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-ibm-java-x86-64-70
   - asf-build-ibm-java-x86-64-80
   - asf-build-j2sdk1.4.2-19
+  - asf-build-jbake-2.5.1
   - asf-build-jdk1.5.0-22-32
   - asf-build-jdk1.5.0-22-64
   - asf-build-jdk1.6.0-20-32-unlimited-security
