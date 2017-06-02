@@ -10,7 +10,7 @@ class build_slaves::jenkins (
   $gsr_user = '',
   $gsr_pw = '',
   $jenkins_packages = [],
-  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake'],
+  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli'],
   $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
@@ -56,11 +56,11 @@ class build_slaves::jenkins (
     }
   }
   #define jbake symlinking
-  define build_slaves::symlink_jbake ($jbake_version = $title) {
-    file {"/home/jenkins/tools/jbake/${jbake_version}":
-      ensure => link,
-      target => "/usr/local/asfpackages/jbake/${jbake_version}",
-    }
+#  define build_slaves::symlink_jbake ($jbake_version = $title) {
+#    file {"/home/jenkins/tools/jbake/${jbake_version}":
+#      ensure => link,
+#      target => "/usr/local/asfpackages/jbake/${jbake_version}",
+#    }
   }
   #define jiracli symlinking
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
@@ -272,13 +272,13 @@ class build_slaves::jenkins (
     require => [ User['jenkins'], Package['asf-build-apache-forrest-0.9'] ],
     recurse => true,
   }
-  file {'/usr/local/asfpackages/jbake/':
-    ensure  => directory,
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    require => [ User['jenkins'], Package['asf-build-jbake-2.5.1'] ],
-    recurse => true,
-  }
+#  file {'/usr/local/asfpackages/jbake/':
+#    ensure  => directory,
+#    owner   => 'jenkins',
+#    group   => 'jenkins',
+#    require => [ User['jenkins'], Package['asf-build-jbake-2.5.1'] ],
+#    recurse => true,
+#  }
 
   package { $jenkins_packages:
     ensure => latest,
@@ -306,11 +306,11 @@ class build_slaves::jenkins (
   }
 
   # jbake symlinks - populate array, make all symlinks, make latest symlink
-  build_slaves::symlink_jbake      { $jbake: }
-  file { '/home/jenkins/tools/jbake/latest':
-    ensure => link,
-    target => '/usr/local/asfpackages/jbake/jbake-2.5.1',
-  }
+#  build_slaves::symlink_jbake      { $jbake: }
+#  file { '/home/jenkins/tools/jbake/latest':
+#    ensure => link,
+#    target => '/usr/local/asfpackages/jbake/jbake-2.5.1',
+#  }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
   build_slaves::symlink_jiracli      { $jiracli: }
