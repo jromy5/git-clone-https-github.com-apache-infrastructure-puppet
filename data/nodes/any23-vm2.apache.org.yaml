@@ -1,0 +1,60 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::proxy_ajp
+  - apache::mod::rewrite
+  - loggy
+  - tomcat
+  - vhosts_asf::vhosts
+
+base::basepackages:
+    - 'maven'
+    - 'openjdk-8-jdk'
+
+tomcat::install:
+  '/opt/tomcat9':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M21/bin/apache-tomcat-9.0.0.M21.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat1'
+    group: 'tomcat1'
+
+vhosts_asf::vhosts::vhosts:
+  any23-vm2.apache.org-80:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'any23-vm2.apache.org'
+    default_vhost: true
+    docroot: '/var/www/'
+    access_log_file: 'any23-vm2.apache.org_access.log'
+    error_log_file: 'any23-vm2.apache.org_error.log'
+    custom_fragment: |
+      RewriteEngine On
+      
+      ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+      <Directory "/usr/lib/cgi-bin">
+          AllowOverride None
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          Order allow,deny
+          Allow from all
+      </Directory>
+      
+      Alias /doc/ "/usr/share/doc/"
+      <Directory "/usr/share/doc/">
+          Options Indexes MultiViews FollowSymLinks
+          AllowOverride None
+          Order deny,allow
+          Deny from all
+          Allow from 127.0.0.0/255.0.0.0 ::1/128
+      </Directory>
+
+      <Proxy *>
+          Order deny,allow
+          Allow from all
+      </Proxy>
+
+      ProxyPass / ajp://localhost:8009/
+      ProxyPassReverse / ajp://localhost:8009/
