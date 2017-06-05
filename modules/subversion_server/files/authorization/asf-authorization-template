@@ -219,7 +219,7 @@ ignite-pmc={reuse:pit-authorization:ignite-pmc}
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
 impala=abehm,brock,casey,cws,dhecht,dtsirogiannis,henry,ishaan,jbapple,jrussell,jyu,kwho,lskuff,marcel,mgrund,mjacobs,sailesh,skye,tarasbob,tarmstrong,todd,tomwhite
 # imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
-incubator={ldap:cn=incubator,ou=groups,dc=apache,dc=org}
+incubator={ldap:cn=incubator,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 isis={ldap:cn=isis,ou=groups,dc=apache,dc=org}
 isis-pmc={reuse:pit-authorization:isis-pmc}
