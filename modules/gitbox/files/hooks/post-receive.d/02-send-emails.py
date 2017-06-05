@@ -35,6 +35,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         mailer = git_multimail.SendMailer(
+            os.environ,
             command=['/usr/local/sbin/sendmail', '-oi', '-t'],
             envelopesender='git@apache.org',
             )
