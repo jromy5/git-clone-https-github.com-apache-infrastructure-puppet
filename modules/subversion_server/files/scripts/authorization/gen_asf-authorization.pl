@@ -94,7 +94,7 @@ sub rebuild {
             $_ = $lines[0];
         }
         if ( $_ !~ m/^#/ && $_ =~ m/^([-\w]+)={ldap:(cn=[^;\s}]*);?([^\s}]*)}/ ) {
-            my ( $listname, $dn, $opts ) = ( $1, $2 );
+            my ( $listname, $dn, $opts ) = ( $1, $2, $3 );
             chomp;
             my @groupdn = split( /,/, $dn );
             my $groupname = shift(@groupdn);
