@@ -93,8 +93,8 @@ sub rebuild {
             die "Uh-oh: found '@lines', expected one line; at '$_'" unless @lines == 1;
             $_ = $lines[0];
         }
-        if ( $_ !~ m/^#/ && $_ =~ m/{ldap:(cn=[^;\s}]*);?([^\s}]*)}/ ) {
-            my ( $dn, $opts ) = ( $1, $2 );
+        if ( $_ !~ m/^#/ && $_ =~ m/^([-\w]+)={ldap:(cn=[^;\s}]*);?([^\s}]*)}/ ) {
+            my ( $listname, $dn, $opts ) = ( $1, $2, $3 );
             chomp;
             my @groupdn = split( /,/, $dn );
             my $groupname = shift(@groupdn);
@@ -105,11 +105,7 @@ sub rebuild {
             push( @dirtyOUwatchlist, "$groupbase" );
             ( my @memberlist ) = getMembers( $groupname, $groupbase, $attrs );
 
-            # Fix up for -pmc
-            if ( $groupdn[0] eq "ou=pmc" ) {
-                $groupname .= "-pmc";
-            }
-            push( @newauthzfile, "$groupname=" );
+            push( @newauthzfile, "$listname=" );
             foreach my $member (@memberlist) {
 
                 # shorten the full dn down to just the uid value.
