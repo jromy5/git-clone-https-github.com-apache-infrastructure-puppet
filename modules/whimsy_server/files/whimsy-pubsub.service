@@ -1,0 +1,8 @@
+[Unit]
+Description=Watches for and deploys updates to the whimsy repository
+
+[Service]
+Restart=always
+User=root
+Group=root
+ExecStart=/usr/local/bin/ruby2.4.1 /srv/whimsy/tools/pubsub.rb --puppet
