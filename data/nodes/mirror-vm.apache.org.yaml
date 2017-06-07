@@ -3,3 +3,15 @@ classes:
   - loggy
 
 postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
+logrotate::rule:
+  postfix:
+    name: 'postfix'
+    path: '/var/log/mail.log'
+    compress: false
+    rotate: 14
+    rotate_every: 'week'
+    create_mode: '0644'
+    missingok: true
+    ifempty: false
+    create: true
