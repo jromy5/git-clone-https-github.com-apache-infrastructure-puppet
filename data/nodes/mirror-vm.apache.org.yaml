@@ -5,7 +5,7 @@ classes:
 postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 
 logrotate::rule:
-  postfix:
+  postfix-override:
     name: 'postfix'
     path: '/var/log/mail.log'
     compress: false
