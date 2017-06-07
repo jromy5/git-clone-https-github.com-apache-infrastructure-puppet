@@ -137,7 +137,7 @@ class whimsy_server (
     source => 'puppet:///modules/whimsy_server/whimsy-pubsub.service'
   } ->
 
-  service { 'board-agenda-websocket':
+  service { 'whimsy-pubsub':
     ensure  => running,
     require => Vcsrepo['/x1/srv/whimsy']
   }
