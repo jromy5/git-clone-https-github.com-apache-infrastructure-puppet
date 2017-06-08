@@ -61,8 +61,7 @@ def rename_github_repo(token, old, new):
     
     # Headers - json payload + creds
     headers = {
-        'content-type': 'application/json',
-        'authorization': "%s:x-oauth-basic" % token
+        'content-type': 'application/json'
     }
     
     # Construct payload
@@ -72,7 +71,7 @@ def rename_github_repo(token, old, new):
     
     # Run the request
     print("  - Changing repository from %s to %s on GitHub..." % (old, new))
-    r = requests.patch(url, headers = headers, data = payload)
+    r = requests.patch(url, headers = headers, data = payload, auth = (token, 'x-oauth-basic'))
     if r.status_code == requests.codes.ok:
         print("  - Repository name changed!")
     else:
