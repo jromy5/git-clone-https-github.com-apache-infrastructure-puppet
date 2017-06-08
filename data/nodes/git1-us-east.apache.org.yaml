@@ -46,6 +46,10 @@ logrotate::rule:
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
+python::python_pips:
+  git:
+    ensure: present
+
 vhosts_asf::vhosts::vhosts:
   git:
     vhost_name: '*'
