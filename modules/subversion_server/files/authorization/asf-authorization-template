@@ -1685,6 +1685,10 @@ projects_role = rw
 @spamassassin = rw
 spamassassin_role = rw
 
+[/spamassassin/dns]
+@spamassassin = rw
+spamassassin_role = rw
+
 [/spamassassin/trunk/rules]
 @spamassassin = rw
 spamassassin_role = rw
