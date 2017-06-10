@@ -11,6 +11,7 @@ classes:
   - apache::mod::proxy_html
   - apache::mod::rewrite
   - apache::mod::ssl
+  - apache::mod::xml2enc
   - ssl::name::wildcard_apache_org
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::modules
