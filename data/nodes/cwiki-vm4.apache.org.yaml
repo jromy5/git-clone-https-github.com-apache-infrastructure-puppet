@@ -86,6 +86,7 @@ vhosts_asf::vhosts::vhosts:
       custom_fragment: |
         RewriteEngine On
         ProxyPass /intermediates !
+        ProxyPass /confluence//spaces/viewdefaultdecorator.action !
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
         ProxyPass /server-status !
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
