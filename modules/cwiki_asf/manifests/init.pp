@@ -14,6 +14,7 @@ class cwiki_asf (
 
   # override below in yaml
   $confluence_version            = '',
+  $conf_build_number             = '',
   $mysql_connector_version       = '',
   $parent_dir,
   $server_port                   = '',
