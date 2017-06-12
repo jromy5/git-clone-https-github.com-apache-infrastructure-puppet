@@ -130,7 +130,6 @@ vhosts_whimsy::vhosts::vhosts:
       attribute: memberUid
       locations:
       - /board/subscriptions
-      - /classic/roster/
       - /committers/
       - /test/icla/
       - /roster/
@@ -148,7 +147,6 @@ vhosts_whimsy::vhosts::vhosts:
       attribute: memberUid
       locations:
       - /board/agenda/
-      - /classic/board/agenda/
       - /fundraising/
       - /officers/
       - /treasurer/
@@ -211,9 +209,6 @@ vhosts_whimsy::vhosts::vhosts:
 
       # for secretary workbench
       RedirectMatch permanent ^/secmail /secretary/workbench
-
-      RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
-      RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
 
       RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
