@@ -72,6 +72,9 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP:Connection} Upgrade [NC]
       RewriteCond %%{}{HTTP:Upgrade} websocket [NC]
       RewriteRule /(.*) ws://localhost:5080/$1 [P,L]
+      RedirectMatch ^/$ https://demo-openmeetings.apache.org/openmeetings
+      ProxyPreserveHost On
+
 
       <Location /openmeetings>
         Require all granted      
