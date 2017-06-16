@@ -2,9 +2,8 @@
 
 
 class gitbox::roleaccount (
-  $role_account_username = '',
-  $role_account_password = '',
-  $role_account_token = '',
+  $rausername = '',
+  $rapassword = '',
 ) {
   file {
     '/x1/gitbox/auth/roleaccounts':
