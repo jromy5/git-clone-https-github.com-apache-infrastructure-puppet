@@ -45,6 +45,7 @@ def main():
     # Check committer's authorization for this
     # repository.
     authorized_committers = auth.authorized_committers(cfg.repo_name)
+    authorized_committers.add('git-site-role')
     if cfg.committer not in authorized_committers:
         util.abort(NOT_AUTHORIZED)
 
@@ -54,6 +55,9 @@ def main():
     refs = []
     for ref in git.stream_refs(sys.stdin):
         refs.append(ref)
+        # Site writer role
+        if ref.name.find("asf-site") == -1 and cfg.committer == "git-site-role":
+            util.abort(u"git-site-role can only write to asf-site branches!")
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
             util.abort(NO_REWRITES % ref.name)
         if ref.is_tag():
