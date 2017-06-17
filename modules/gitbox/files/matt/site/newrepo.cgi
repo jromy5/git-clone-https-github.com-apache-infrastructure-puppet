@@ -209,8 +209,8 @@ def main():
             # clean up variables
             reponame = re.sub(r"[^-a-zA-Z0-9]+", "", reponame)
             title = re.sub(r"[^-a-zA-Z0-9 .,]+", "", title)
-            commitmail = re.sub(r"[^-a-zA-Z0-9@]+", "", commitmail)
-            ghmail = re.sub(r"[^-a-zA-Z0-9@]+", "", ghmail)
+            commitmail = re.sub(r"[^-a-zA-Z0-9@.]+", "", commitmail)
+            ghmail = re.sub(r"[^-a-zA-Z0-9@.]+", "", ghmail)
             
             created = createRepo(reponame, title, pmc)
             if created:
