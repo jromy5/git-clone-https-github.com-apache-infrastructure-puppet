@@ -416,6 +416,7 @@ renderForm = function (json, state) {
         'id': 'pmc'
     }, options));
     
+    var ipdiv, iptext, ipselect;
     if (json.root) {
         ipdiv = mk('div', {
             style: divStyle
@@ -426,10 +427,12 @@ renderForm = function (json, state) {
         ipselect = mk('div', {
             style: inputDivStyle
         }, mk('input', {
+            type: 'checkbox',
             value: 'yes',
             id: 'ispodling',
-            checked: False
-        }, options));
+            checked: false,
+            onchange: "changePMC(get('pmc').value);"
+        }));
     }
 
     reponametext = mk('div', {
@@ -489,8 +492,8 @@ renderForm = function (json, state) {
     app(form, pmcdiv);
     
     if (json.root) {
-        app(ipdiv, pmctext);
-        app(ipdiv, pmcselect);
+        app(ipdiv, iptext);
+        app(ipdiv, ipselect);
         app(form, ipdiv);
     }
 

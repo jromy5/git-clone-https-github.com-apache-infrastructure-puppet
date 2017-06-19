@@ -76,6 +76,7 @@ def ldap_groups(uid):
         infra = getStandardGroup('infrastructure-root', 'cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org')
         if infra and uid in infra:
             groups.append('infrastructure')
+            search_filter= "(|(member=*)(member=uid=*,ou=people,dc=apache,dc=org))"
         
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
@@ -83,13 +84,12 @@ def ldap_groups(uid):
             cn = res[1]['cn'][0]
             if (cn in PMCS) or (uid in infra): # Either must be on gitbox or requester from infra-root
                 groups.append(cn) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
-                if PMCS[cn] == "podling":
+                if cn in PMCS and PMCS[cn] == "podling":
                     podlings[cn] = True
-        
-        return [groups, podlings, uid in infra]
+        return [sorted(groups), sorted(podlings), uid in infra]
     except Exception as err:
         pass
-    return [[], {}]
+    return [[], {}, False]
 
 def getStandardGroup(group, ldap_base = None):
     """ Gets the list of availids in a standard group (pmcs, services, podlings) """
