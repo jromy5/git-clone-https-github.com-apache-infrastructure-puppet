@@ -71,18 +71,22 @@ def ldap_groups(uid):
     try:
         groups = []
         podlings = {}
+        
+        # Is requester in infra-root??
+        infra = getStandardGroup('infrastructure-root', 'cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org')
+        if infra and uid in infra:
+            groups.append('infrastructure')
+        
         LDAP_BASE = "ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
             cn = res[1]['cn'][0]
-            if cn in PMCS:
+            if (cn in PMCS) or (uid in infra): # Either must be on gitbox or requester from infra-root
                 groups.append(cn) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
                 if PMCS[cn] == "podling":
                     podlings[cn] = True
-        infra = getStandardGroup('infrastructure', 'cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org')
-        if infra and uid in infra:
-            groups.append('infrastructure')
-        return [groups, podlings]
+        
+        return [groups, podlings, uid in infra]
     except Exception as err:
         pass
     return [[], {}]
@@ -170,10 +174,10 @@ def main():
         # Check if allowed to create
         pmc = xform.getvalue("pmc")
         xuid = os.environ['REMOTE_USER']
-        groups, podlings = ldap_groups(xuid)
+        groups, podlings, isRoot = ldap_groups(xuid)
         
         # Makle sure $uid is (P)PMC member
-        if not (pmc in groups):
+        if not (pmc in groups) and isRoot == False:
             print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
             print(json.dumps({
                         'created': False,
@@ -182,9 +186,10 @@ def main():
             return
         
         # Make sure the project is on gitbox!
-        if pmc in PMCS:
+        if (pmc in PMCS) or isRoot:
             
             # Repo name and title
+            isPodling = xform.getvalue("ispodling")
             repo = xform.getvalue("name")
             reponame = pmc
             title = "Apache %s" % pmc
@@ -194,7 +199,7 @@ def main():
             t = xform.getvalue("description")
             if t:
                 title = t
-            if PMCS[pmc] == "podling":
+            if isPodling or PMCS[pmc] == "podling":
                 reponame = "incubator-%s" % reponame
             # Email settings
             commitmail = "commits@%s.apache.org" % pmc
@@ -271,11 +276,12 @@ def main():
                     }))
             return
     if action and action == "pmcs":
-        groups, podlings = ldap_groups(os.environ['REMOTE_USER'])
+        groups, podlings, isroot = ldap_groups(os.environ['REMOTE_USER'])
         print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
         print(json.dumps({
             'pmcs': groups,
-            'podlings': podlings
+            'podlings': podlings,
+            'root': isroot
         }))
         return
     

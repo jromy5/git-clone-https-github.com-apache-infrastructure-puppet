@@ -265,6 +265,7 @@ submitForm = function (form) {
         alert("GitHub notification list needs to be an apache.org mailing list!");
         return false;
     }
+    ispodling = get('ispodling').value;
     reponame = get('reponame').value;
     var generatedName = get('generatedname').value;
     if (reponame.length === 0) {
@@ -287,7 +288,8 @@ submitForm = function (form) {
             name: sendRepoName,
             description: description,
             notify: notify,
-            ghnotify: ghnotify
+            ghnotify: ghnotify,
+            ispodling: ispodling
         };
         post("newrepo.cgi", payload, null, responseCallback);
         get('confirm').innerHTML = '';
@@ -327,7 +329,7 @@ changeName = function () {
         generatedName = '';
     }
     get('generatedname').value = get('pmc').value + generatedName + '.git';
-    if (podlings[get('pmc').value]) {
+    if (podlings[get('pmc').value] || get('ispodling').checked) {
         get('generatedname').value = 'incubator-' + get('generatedname').value;
     }
 };
@@ -363,10 +365,11 @@ changePMC = function (pmc) {
 
 changePodling = function () {
     var podling = get('podlingname').value;
+    get('ispodling').checked = true;
     get('notify').value = "commits@" + podling + ".incubator.apache.org";
     get('ghnotify').value = "dev@" + podling + ".incubator.apache.org";
     changeName();
-    return get('description').value = "Apache " + podling + " (Incubating)";
+    return (get('description').value = "Apache " + podling + " (Incubating)");
 };
 
 renderForm = function (json, state) {
@@ -412,6 +415,22 @@ renderForm = function (json, state) {
         style: 'width: 200px;',
         'id': 'pmc'
     }, options));
+    
+    if (json.root) {
+        ipdiv = mk('div', {
+            style: divStyle
+        });
+        iptext = mk('div', {
+            style: textdivStyle
+        }, "Project is a podling: ");
+        ipselect = mk('div', {
+            style: inputDivStyle
+        }, mk('input', {
+            value: 'yes',
+            id: 'ispodling',
+            checked: False
+        }, options));
+    }
 
     reponametext = mk('div', {
         style: textdivStyle
@@ -467,6 +486,13 @@ renderForm = function (json, state) {
 
     app(pmcdiv, pmctext);
     app(pmcdiv, pmcselect);
+    app(form, pmcdiv);
+    
+    if (json.root) {
+        app(ipdiv, pmctext);
+        app(ipdiv, pmcselect);
+        app(form, ipdiv);
+    }
 
     app(reponamediv, reponametext);
     app(reponamediv, reponameinput);
@@ -477,7 +503,7 @@ renderForm = function (json, state) {
     app(generateddiv, generatedtext);
     app(generateddiv, generatednameinput);
 
-    app(form, pmcdiv);
+    
 
     app(form, podlingnamediv);
 
