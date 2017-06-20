@@ -170,3 +170,4 @@
 ^(serf/branches/1.[3-9].x)/(.*)
 ^(board/site)/(.*)
 ^(httpd/httpd/trunk)/(.*)
+^(fundraising/site)/(.*)
