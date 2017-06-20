@@ -879,6 +879,9 @@ projects_role = rw
 @forrest = rw
 @cocoon = rw
 
+[/fundraising/site]
+buildbot = rw
+
 [/geronimo]
 @geronimo = rw
 
