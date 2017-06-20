@@ -880,6 +880,7 @@ projects_role = rw
 @cocoon = rw
 
 [/fundraising/site]
+@fundraising = rw
 buildbot = rw
 
 [/geronimo]
