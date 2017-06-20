@@ -256,7 +256,7 @@ def main():
                     msg['Reply-To'] = "private@infra.apache.org"
                     msg['To'] = "private@infra.apache.org"
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
-                    s.sendmail("private@infra.apache.org", msg.as_string())
+                    s.sendmail("git@apache.org", "private@infra.apache.org", msg.as_string())
                     s.quit()
                     
                     hipchat("New repository request for %s.git by %s failed! Check yer inbox for details." % (reponame, os.environ['REMOTE_USER']))
