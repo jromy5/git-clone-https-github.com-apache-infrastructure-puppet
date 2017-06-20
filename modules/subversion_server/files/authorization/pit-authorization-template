@@ -584,6 +584,10 @@ acrequser = r
 @fundraising = rw
 @infrastructure-root = rw
 
+[/fundraising/site]
+@infrastructure = rw
+buildbot = rw
+
 [/geronimo-tck]
 @jcp = rw
 @jcp-j2ee-nda = rw
