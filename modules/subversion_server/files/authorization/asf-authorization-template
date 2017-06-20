@@ -183,6 +183,7 @@ flume-pmc={reuse:pit-authorization:flume-pmc}
 fluo=billie,drew,elserj,cjnolet,ctubbsii,kturner,mwalch
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
 forrest-pmc={reuse:pit-authorization:forrest-pmc}
+fundraising={reuse:pit-authorization:fundraising}
 geronimo={ldap:cn=geronimo,ou=groups,dc=apache,dc=org}
 geronimo-pmc={reuse:pit-authorization:geronimo-pmc}
 giraph={ldap:cn=giraph,ou=groups,dc=apache,dc=org}
