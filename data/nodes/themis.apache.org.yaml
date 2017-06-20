@@ -33,6 +33,7 @@ classes:
   - rsync_mirror
   - ssl::name::wildcard_apache_org
   - ssl::name::apachecon_com
+  - ssl::name::archive_apachecon_com
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
