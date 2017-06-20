@@ -575,6 +575,15 @@ acrequser = r
 @pmc-chairs = rw
 @staff = rw
 
+[/fundraising]
+@accounting = rw
+@board = rw
+@audit = rw
+@ea = r
+@exec-officers = rw
+@fundraising = rw
+@infrastructure-root = rw
+
 [/geronimo-tck]
 @jcp = rw
 @jcp-j2ee-nda = rw
