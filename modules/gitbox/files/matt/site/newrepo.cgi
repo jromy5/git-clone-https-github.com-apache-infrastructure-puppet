@@ -199,7 +199,7 @@ def main():
             t = xform.getvalue("description")
             if t:
                 title = t
-            if isPodling or PMCS[pmc] == "podling":
+            if isPodling or (pmc in PMCS and PMCS[pmc] == "podling"):
                 reponame = "incubator-%s" % reponame
             # Email settings
             commitmail = "commits@%s.apache.org" % pmc
