@@ -265,7 +265,7 @@ submitForm = function (form) {
         alert("GitHub notification list needs to be an apache.org mailing list!");
         return false;
     }
-    ispodling = get('ispodling').value;
+    ispodling = get('ispodling').checked ? 'yes' : null;
     reponame = get('reponame').value;
     var generatedName = get('generatedname').value;
     if (reponame.length === 0) {
