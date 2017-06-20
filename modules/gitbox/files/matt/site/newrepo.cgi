@@ -237,7 +237,7 @@ def main():
                     msg['To'] = "users@infra.apache.org, private@%s.apache.org" % pmc
                     
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
-                    s.sendmail("private@infra.apache.org", "private@%s.apache.org" % pmc, msg.as_string())
+                    s.sendmail("git@apache.org", ["private@infra.apache.org", "private@%s.apache.org" % pmc], msg.as_string())
                     s.quit()
 
                     
