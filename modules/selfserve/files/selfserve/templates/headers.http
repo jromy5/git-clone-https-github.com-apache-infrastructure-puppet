@@ -1,0 +1,3 @@
+Content-Type: text/html; charset=UTF-8[if-any location]
+Location: [location][end][if-any status]
+Status: [status][end][newline]

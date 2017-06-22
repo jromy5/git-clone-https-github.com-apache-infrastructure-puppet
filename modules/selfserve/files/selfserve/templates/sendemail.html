@@ -1,0 +1,19 @@
+[define title]Apache Account Utility: Send Reset Password Email[end][#
+][define body]
+                        <!-- start of sendemail -->
+                        <form action="#" method="POST" >
+                            <p class="nobr" ><label>Apache User ID: </label><input type="text" name="availid" />@apache.org</p>
+                            <p><input type="submit" name="submit_sendmail" value="Send Email" /></p>
+                        </form>
+                        <!-- end of sendemail -->
+[end][define messagebox]
+    [if-any message][message][else]
+                        <h3>Enter your Apache User ID</h3>
+                        <p>Enter your Apache User ID and we will send a password reset email
+                           to your <em>availid</em>@apache.org address.
+                           The email will be encrypted to your public PGP key, if your profile identifies one.</p>
+                        <p>If the email doesn't arrive, email <i>root</i>@ for assistance.</p>
+    [end]
+[end][#
+
+][include "layout.html"]

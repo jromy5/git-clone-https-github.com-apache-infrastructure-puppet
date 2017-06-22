@@ -1,0 +1,16 @@
+[define title]Apache Account Utility[end][define body]
+                        <!-- start of index -->
+                        <form action="[script_name]/details/login" method="POST" >
+[# TODO: give focus to the first textbox ]
+                            <p><label>Apache User ID:</label><input type="text" name="availid" value="[availid]" tabindex="1" /></p>
+                            <p><label>Password:</label><input type="password" name="password" tabindex="2" /></p>
+                            <p><label>Change password?</label><input type="checkbox" name="changepw" [if-any changepw_is_checked]checked[end] tabindex="10"/></p>
+                            <p><input type="submit" name="login" value="Login" tabindex="100" /></p>
+                        </form>
+                        <p><a href="[script_name]/reset/enter">Forgot your password?</a></p>
+                        <!-- end of layout -->
+[end][define messagebox]
+                        <h3>[if-any message][message][else]Please Login[end]</h3>
+[end][#
+
+][include "layout.html"]

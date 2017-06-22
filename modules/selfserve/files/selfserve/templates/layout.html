@@ -1,0 +1,46 @@
+[define fullbody]
+[# this file uses 'format raw' because the variables were constructed
+   using 'define', so they're fully escaped. ]
+
+            <!-- start of layout -->
+            <div class="block" >
+                <form action="#" method="POST" >
+                [if-any toolbar]
+                    [format "raw"][toolbar][end]
+                [else]
+                    <!-- layout:toolbar -->
+                    <div class="column span-8 first append-1"><h2>Apache Account Utility</h2></div>
+                    <div class="column span-6 right">&nbsp;</div>
+                    <div class="column span-3 last right">&nbsp;</div>
+                [end]
+                </form>
+            </div>
+            <hr class="space col"/>
+            <div class="block content" >
+                <div class="column span-3">
+                    [if-any menu]
+                        [format "raw"][menu][end]
+                    [else]
+                        <!-- layout:menu -->
+                        <p>&nbsp;</p>
+                    [end]
+                </div>
+                <div class="column span-17 right ">
+                    <div class="left" >
+                        [if-any messagebox]
+                            [format "raw"][messagebox][end]
+                        [else]
+                            <!-- layout:messagebox -->
+                            <p>&nbsp;</p>
+                        [end]
+                    </div>
+                    <div class="right" >
+                        [format "raw"][body][end]
+                    </div>
+                </div>
+            </div>
+            <hr class="space col"/>
+            <!-- end of layout -->
+[end][#
+
+][include "base.html"]
