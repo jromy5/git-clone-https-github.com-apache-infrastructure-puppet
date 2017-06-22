@@ -12,7 +12,14 @@ class selfserve (
   $system_read_dn = '',
   $system_read_pw = '',
 
-) {
+ $required_packages = ['python-ldap'],
+){
+
+# install required packages:
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
 
   $install_dir = '/var/www/selfserve'
 
