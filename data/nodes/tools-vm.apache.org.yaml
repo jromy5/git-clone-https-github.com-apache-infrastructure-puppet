@@ -336,7 +336,7 @@ vhosts_asf::vhosts::vhosts:
     ssl: true
     servername: 'id-test.apache.org'
     serveradmin: 'users@infra.apache.org'
-    docroot: '/var/www/selfserve'
+    docroot: '/var/www/selfserve/app'
     manage_docroot: false
     access_log_file: 'id.apache.org.ssl_access.log'
     error_log_file: 'id.apache.org.ssl_error.log'
