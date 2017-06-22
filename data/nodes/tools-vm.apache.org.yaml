@@ -5,6 +5,7 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::rewrite
   - elasticsearch
   - etherpad_lite
   - etherpad_lite::site
