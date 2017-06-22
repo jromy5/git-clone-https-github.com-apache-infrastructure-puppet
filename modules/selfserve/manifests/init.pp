@@ -29,6 +29,9 @@ file {
       owner  => 'www-data',
       group  => 'lpadmin',
       mode   => '0740';
+    "${install_dir}/config":
+      ensure => directory,
+      mode   => '0755';
     "${install_dir}/login-as.sh":
       content => template('selfserve/login-as.sh.erb'),
       mode    => '0755';
