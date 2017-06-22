@@ -461,7 +461,7 @@ velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=groups,dc=apache,dc=org}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
 wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,wisebaldone,yurize,zdwang,stenyak,jblossom
-whimsy={ldap:cn=whimsy,ou=groups,dc=apache,dc=org}
+whimsy={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=groups,dc=apache,dc=org}
 wicket-pmc={reuse:pit-authorization:wicket-pmc}
