@@ -10,6 +10,7 @@ classes:
   - etherpad_lite::site
   - git_self_serve::tools
   - loggy
+  - selfserve
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
@@ -317,3 +318,45 @@ vhosts_asf::vhosts::vhosts:
         AuthBasicProvider ldap
         Require valid-user
       </Location> 
+  id:
+    vhost_name: '*'
+    port: 80
+    servername: 'id-test.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www/selfserve'
+    manage_docroot: false
+    access_log_file: 'id.apache.org.access.log'
+    error_log_file: 'id.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://id-test.apache.org/
+  id-ssl:
+   vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'id-test.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www/selfserve'
+    manage_docroot: false
+    access_log_file: 'id.apache.org.ssl_access.log'
+    error_log_file: 'id.apache.org.ssl_error.log'
+    custom_fragment: |
+      AddHandler cgi-script .py
+      RewriteEngine On
+      RewriteRule /\.subversion - [F,L]
+      RewriteCond %{REQUEST_URI} !^/img
+      RewriteCond %{REQUEST_URI} !^/style
+      RewriteCond %{REQUEST_URI} !^/favicon.ico
+      RewriteCond %{REQUEST_URI} !^/robots.txt
+      RewriteCond %{REQUEST_URI} !^/ss2x.py
+      Rewriterule ^(.*) /ss2.py/$1 [L]
+      <Directory /var/www/selfserve/app>
+        Options FollowSymLinks MultiViews ExecCGI
+        AllowOverride None
+        Order allow,deny
+        allow from all
+      </Directory>
+      <LocationMatch ^/ss2.py>
+        Options +ExecCGI -MultiViews +FollowSymLinks
+        Order allow,deny
+        Allow from all
+      </LocationMatch>
