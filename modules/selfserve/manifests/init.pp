@@ -12,7 +12,7 @@ class selfserve (
   $system_read_dn = '',
   $system_read_pw = '',
 
- $required_packages = ['python-ldap'],
+ $required_packages = ['python-ldap' , 'python-gnupg'],
 ){
 
 # install required packages:
