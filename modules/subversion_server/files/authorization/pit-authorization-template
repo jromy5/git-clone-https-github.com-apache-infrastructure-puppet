@@ -340,7 +340,7 @@ vxquery={reuse:asf-authorization:vxquery}
 vxquery-pmc={ldap:cn=vxquery,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wave={reuse:asf-authorization:wave}
 whimsy={reuse:asf-authorization:whimsy}
-whimsy-pmc={ldap:cn=whimsy,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+whimsy-pmc={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 wicket={reuse:asf-authorization:wicket}
 wicket-pmc={ldap:cn=wicket,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 wink={reuse:asf-authorization:wink}
