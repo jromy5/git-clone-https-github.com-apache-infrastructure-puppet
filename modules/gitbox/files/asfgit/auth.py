@@ -8,7 +8,8 @@ import asfgit.cfg as cfg
 import asfgit.log as log
 import asfgit.util as util
 
-GROUP_DN="cn=%(group)s,ou=groups,dc=apache,dc=org"
+GROUP_DN="cn=%(group)s,ou=groups,dc=apache,dc=org" # Old LDAP tree
+PGROUP_DN="cn=%(group)s,ou=project,ou=groups,dc=apache,dc=org" # New LDAP tree
 DN_RE=re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 SUBPROJECT_RE=re.compile("-.+$")
 
@@ -30,6 +31,7 @@ def authorized_committers(repo_name):
         # drop subproject name if present
         repo_name = SUBPROJECT_RE.sub("", repo_name)
         dn = GROUP_DN % {"group": repo_name}
+        pdn = PGROUP_DN % {"group": repo_name}
 
     # Individually granted access
     if parser.has_option("individuals", repo_name):
@@ -38,15 +40,29 @@ def authorized_committers(repo_name):
 
     # Add the committers listed in ldap for the project.
     lh = ldap.initialize("ldaps://ldap-lb-us.apache.org")
+    numldap = 0 # ldap entries fetched
     attrs = ["memberUid", "member"]
     try:
         for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
+            numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
             for dn in attrs.get("member", []):
                 writers.add(DN_RE.match(dn).group(1))
     except:
         log.exception()
+    
+    # In case of LDAP move (like whimsy), use the updated DN
+    if numldap == 0:
+        try:
+            for dn, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
+                numldap += 1
+                for availid in attrs.get("memberUid", []):
+                    writers.add(availid)
+                for dn in attrs.get("member", []):
+                    writers.add(DN_RE.match(dn).group(1))
+        except:
+            log.exception()
 
     # Add per-repository exceptions
     map(writers.add, cfg.extra_writers)
