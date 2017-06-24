@@ -353,6 +353,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REQUEST_URI} !^/robots.txt
       RewriteCond %%{}{REQUEST_URI} !^/ss2x.py
       Rewriterule ^(.*) /ss2.py/$1 [L]
+      RedirectMatch ^/acreq/(members|pmc-chairs) https://whimsy.apache.org/officers/acreq
       <Directory /var/www/selfserve/app>
         Options FollowSymLinks MultiViews ExecCGI
         AllowOverride None
