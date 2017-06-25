@@ -325,6 +325,8 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'id.apache.org'
+    serveraliases:
+      -  'selfserve.apache.org'
     serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/selfserve'
     manage_docroot: false
@@ -337,6 +339,8 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'id.apache.org'
+    serveraliases:
+      -  'selfserve.apache.org'
     serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/selfserve/app'
     manage_docroot: false
