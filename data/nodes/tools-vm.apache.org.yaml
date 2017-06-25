@@ -324,19 +324,19 @@ vhosts_asf::vhosts::vhosts:
   id:
     vhost_name: '*'
     port: 80
-    servername: 'id-test.apache.org'
+    servername: 'id.apache.org'
     serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/selfserve'
     manage_docroot: false
     access_log_file: 'id.apache.org.access.log'
     error_log_file: 'id.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://id-test.apache.org/
+      Redirect permanent / https://id.apache.org/
   id-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
-    servername: 'id-test.apache.org'
+    servername: 'id.apache.org'
     serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/selfserve/app'
     manage_docroot: false
