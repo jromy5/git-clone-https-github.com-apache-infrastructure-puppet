@@ -637,12 +637,6 @@ buildbot = r
 @infrastructure = rw
 @member = r
 
-[/infrastructure/selfserve]
-@infrastructure = rw
-#@infrastructure-interest = rw
-#@committers  = rw
-* = r
-
 [/infrastructure/trunk/acreq]
 acrequser = rw
 whimsysvn = r
