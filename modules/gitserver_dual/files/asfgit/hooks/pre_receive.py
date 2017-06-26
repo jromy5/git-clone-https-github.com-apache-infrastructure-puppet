@@ -28,7 +28,7 @@ Merges are not allowed on %s.
 
 SYNC_BROKEN = u"""\
 This repository is currently out of sync, please
-contact infrastructure@apache.org!
+contact users@infra.apache.org!
 """
 
 def main():

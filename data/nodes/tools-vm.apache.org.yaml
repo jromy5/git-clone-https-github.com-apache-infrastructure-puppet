@@ -298,7 +298,7 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/oauth/html'
     manage_docroot: false
     servername: 'oauth.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directoryindex: 'index.lua'
     options:
       - Indexes

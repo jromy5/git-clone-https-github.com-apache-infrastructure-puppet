@@ -116,7 +116,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'helpinfrahelpyou.apache.org'
     serveraliases:
       - 'infrahelp.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
     access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
@@ -135,7 +135,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'helpinfrahelpyou.apache.org'
     serveraliases:
       - 'infrahelp.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
     access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'

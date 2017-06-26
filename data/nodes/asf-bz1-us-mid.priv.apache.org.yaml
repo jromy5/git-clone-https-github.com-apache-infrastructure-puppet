@@ -50,7 +50,7 @@ vhosts_asf::vhosts::vhosts:
   bz-test:
     vhost_name: '*'
     port: 80
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     ip: "%{::ipaddress_eth1}"
     ip_based: true
     docroot: '/var/www/html'

@@ -1,6 +1,6 @@
 [user]
         name = buildbot
-        email = infrastructure@apache.org
+        email = users@infra.apache.org
 [push]
         default = nothing
 

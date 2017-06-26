@@ -54,7 +54,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jena-vm.apache.org'
     serveraliases:
       - 'jena-vm'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'jena-vm.apache.org.access.log'
     error_log_file: 'jena-vm.apache.org.error.log'
@@ -67,7 +67,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www.sparql.org'
       - 'sparql.net'
       - 'www.sparql.net'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'sparql.org.access.log'
     error_log_file: 'sparql.org.error.log'

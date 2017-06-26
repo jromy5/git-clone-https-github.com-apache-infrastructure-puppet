@@ -89,7 +89,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     servername: 'tapestry-app.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
     access_log_file: 'tapestry-app.apache.org.http_access.log'
@@ -102,7 +102,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     servername: 'tapestry-app.apache.org'
     docroot: '/var/www'
     log_level: 'warn'

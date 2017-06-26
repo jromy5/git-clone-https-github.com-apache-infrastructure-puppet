@@ -83,8 +83,8 @@ if js:
             msg = MIMEText("New repository %s has now had GitHub integration enabled!\n\nWith regards,\nApache Infrastructure." % (reponame))
             msg['Subject'] = 'Github integration set up: %s' % reponame
             msg['From'] = "git@apache.org"
-            msg['Reply-To'] = "infrastructure@apache.org"
-            msg['To'] = "infrastructure@apache.org, private@%s.apache.org" % item['pmc']
+            msg['Reply-To'] = "users@infra.apache.org"
+            msg['To'] = "users@infra.apache.org, private@%s.apache.org" % item['pmc']
 
             s = smtplib.SMTP(host='mail.apache.org', port=2025)
             s.send_message(msg)

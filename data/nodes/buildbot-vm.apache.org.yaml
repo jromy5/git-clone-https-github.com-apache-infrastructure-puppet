@@ -58,7 +58,7 @@ vhosts_asf::vhosts::vhosts:
   buildbot-vm-443:
      vhost_name: '*'
      default_vhost: true
-     serveradmin: 'infrastructure@apache.org'
+     serveradmin: 'users@infra.apache.org'
      servername: 'buildbot-vm.apache.org'
      serveraliases:
        - 'ci.apache.org'
