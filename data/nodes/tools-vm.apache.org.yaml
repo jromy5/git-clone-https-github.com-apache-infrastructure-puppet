@@ -327,7 +327,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'id.apache.org'
     serveraliases:
       -  'selfserve.apache.org'
-    serveradmin: 'users@infra.apache.org'
+    serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve'
     manage_docroot: false
     access_log_file: 'id.apache.org.access.log'
@@ -341,7 +341,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'id.apache.org'
     serveraliases:
       -  'selfserve.apache.org'
-    serveradmin: 'users@infra.apache.org'
+    serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve/app'
     manage_docroot: false
     access_log_file: 'id.apache.org.ssl_access.log'
