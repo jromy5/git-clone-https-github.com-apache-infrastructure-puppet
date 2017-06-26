@@ -62,7 +62,6 @@ apbackup::uid: 9997
 
 base::basepackages:
   - svnmailer
-  - gunicorn
 
 base::hosts:
   localhost:
@@ -105,6 +104,10 @@ perl::module:
     name: 'Net::LDAP'
     use_package : true
 
+python::python_pips:
+  gunicorn:
+    ensure: present
+    
 # svn01 gets to talk directly to hermes to bypass spam filters
 # on commit messages (svnmailer)
 
