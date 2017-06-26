@@ -232,6 +232,8 @@ openoffice-pmc={ldap:cn=openoffice,ou=pmc,ou=committees,ou=groups,dc=apache,dc=o
 openoffice-security={ldap:cn=openoffice-security,ou=auth,ou=groups,dc=apache,dc=org}
 openwebbeans={reuse:asf-authorization:openwebbeans}
 openwebbeans-pmc={ldap:cn=openwebbeans,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+# Note PPMC, not PMC here:
+openwhisk-ppmc={ldap:cn=openwhisk,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 orc={reuse:asf-authorization:orc}
 orc-pmc={ldap:cn=orc,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 parquet={reuse:asf-authorization:parquet}
@@ -919,6 +921,9 @@ openejb-tck = r
 
 [/pmc/incubator]
 @incubator-pmc = rw
+
+[/pmc/incubator/openwhisk]
+@openwhisk-ppmc = rw
 
 [/pmc/johnzon]
 @johnzon-pmc = rw
