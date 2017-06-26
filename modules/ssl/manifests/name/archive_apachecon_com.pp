@@ -3,11 +3,11 @@
 class ssl::name::archive_apachecon_com (
 
   $sslcertcontents     = '',
-  $sslcertname         = 'archive_apachecon.com.crt',
+  $sslcertname         = 'archive.apachecon.com.crt',
   $sslchaincontent     = '',
-  $sslchainname        = 'archive_apachecon.com.chain',
+  $sslchainname        = 'archive.apachecon.com.chain',
   $sslkeycontents      = '',
-  $sslkeyname          = 'archive_apachecon.com.key',
+  $sslkeyname          = 'archive.apachecon.com.key',
   $sslrootdir          = '/etc/ssl',
   $sslrootdirgroup     = 'root',
   $sslrootdirowner     = 'root',
