@@ -624,5 +624,4 @@ class subversion_server (
     onlyif => '! ps x | grep -q gunicorn',
   }
 
-
 }
