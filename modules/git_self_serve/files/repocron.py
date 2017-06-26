@@ -82,8 +82,8 @@ if js:
             msg = MIMEText("New repository %s was created, as requested by %s.\nYou may view it at: https://git-wip-us.apache.org/repos/asf/%s\n\nWith regards,\nApache Infrastructure." % (reponame, item['requester'], reponame))
             msg['Subject'] = 'New git repository created: %s' % reponame
             msg['From'] = "git@apache.org"
-            msg['Reply-To'] = "infrastructure@apache.org"
-            msg['To'] = "infrastructure@apache.org, private@%s.apache.org" % item['pmc']
+            msg['Reply-To'] = "users@infra.apache.org"
+            msg['To'] = "users@infra.apache.org, private@%s.apache.org" % item['pmc']
             
             s = smtplib.SMTP(host='mail.apache.org', port=2025)
             s.send_message(msg)

@@ -69,7 +69,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     servername: 'translate.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www'
     log_level: 'warn'
     access_log_file: 'translate.apache.org.http_access.log'

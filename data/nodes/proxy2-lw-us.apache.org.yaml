@@ -132,7 +132,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'blogs.apache.org'
     serveraliases:
       - 'www.blogs.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'blogs.apache.org.http_access.log'
     error_log_file: 'blogs.apache.org.error.log'
@@ -147,7 +147,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'blogs.apache.org'
     serveraliases:
       - 'www.blogs.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'blogs.apache.org.ssl_access.log'
     error_log_file: 'blogs.apache.org.error.log'
@@ -221,7 +221,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     servername: 'demo-old-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
@@ -236,7 +236,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'demo-old-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
@@ -258,7 +258,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     servername: 'demo-stable-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
@@ -273,7 +273,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'demo-stable-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
@@ -295,7 +295,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 80
     servername: 'demo-trunk-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'
@@ -310,7 +310,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'demo-trunk-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
     error_log_file: 'demo-x-ofbiz.apache.org.error.log'

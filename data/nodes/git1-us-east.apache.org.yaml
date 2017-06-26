@@ -55,7 +55,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'git.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     default_vhost: true
     docroot: '/x1/git/mirrors'
     docroot_owner: 'git'
@@ -67,7 +67,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'git.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     default_vhost: true
     docroot: '/x1/git/mirrors'
     docroot_owner: 'git'

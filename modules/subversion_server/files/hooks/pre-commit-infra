@@ -18,7 +18,7 @@ if [ -f $MAINTENANCE ]; then
 fi
 
 if [ ! -x $SVNAUTHZ_VALIDATE ]; then
-  echo "Tell infrastructure@apache.org they need to install svnauthz-validate" \
+  echo "Tell users@infra.apache.org they need to install svnauthz-validate" \
     > /dev/stderr
   exit 1
 fi

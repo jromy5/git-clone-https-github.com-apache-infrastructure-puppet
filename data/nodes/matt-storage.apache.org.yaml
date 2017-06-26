@@ -18,7 +18,7 @@ apache::docroot:            '/x1/git/htdocs'
 apache::docroot_owner:      'git'
 
 apache::mpm_module:         'prefork'
-apache::serveradmin:        'infrastructure@apache.org'
+apache::serveradmin:        'users@infra.apache.org'
 
 
 datadog_agent::integrations::http_check::url: 'https://git-dual.apache.org/repos/asf'

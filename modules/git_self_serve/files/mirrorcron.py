@@ -84,8 +84,8 @@ if js:
             msg = MIMEText("New repository %s was mirrored to git.a.o (and thus GitHub), as requested by %s.\nNew mirrors are available on GitHub no more than 24 hours later.\n\nWith regards,\nApache Infrastructure." % (reponame, item['requester']))
             msg['Subject'] = 'New git mirror created: %s' % reponame
             msg['From'] = "git@apache.org"
-            msg['Reply-To'] = "infrastructure@apache.org"
-            msg['To'] = "infrastructure@apache.org, private@%s.apache.org" % item['pmc']
+            msg['Reply-To'] = "users@infra.apache.org"
+            msg['To'] = "users@infra.apache.org, private@%s.apache.org" % item['pmc']
             
             s = smtplib.SMTP(host='mail.apache.org', port=2025)
             s.send_message(msg)
