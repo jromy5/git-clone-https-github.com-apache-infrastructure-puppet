@@ -73,7 +73,7 @@ apache::mod::status::apache_version:         '2.3' # Force module to use Allow f
 apache::mod::status::status_path:            '/server-status-dd'
 
 apache::mpm_module:                          'event'
-apache::serveradmin:                         'infrastructure@apache.org'
+apache::serveradmin:                         'users@infra.apache.org'
 
 
 apmirror::uid:                               '508'
