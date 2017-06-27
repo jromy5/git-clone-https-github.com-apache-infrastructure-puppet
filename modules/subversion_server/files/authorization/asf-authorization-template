@@ -233,7 +233,7 @@ jclouds={ldap:cn=jclouds,ou=groups,dc=apache,dc=org}
 jclouds-pmc={reuse:pit-authorization:jclouds-pmc}
 jena={ldap:cn=jena,ou=groups,dc=apache,dc=org}
 jena-pmc={reuse:pit-authorization:jena-pmc}
-jmeter={ldap:cn=jmeter,ou=groups,dc=apache,dc=org}
+jmeter={ldap:cn=jmeter,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
 johnzon={ldap:cn=johnzon,ou=groups,dc=apache,dc=org}
 johnzon-pmc={reuse:pit-authorization:johnzon-pmc}

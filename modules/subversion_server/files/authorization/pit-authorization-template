@@ -154,7 +154,7 @@ jclouds-pmc={ldap:cn=jclouds,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jena={reuse:asf-authorization:jena}
 jena-pmc={ldap:cn=jena,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jmeter={reuse:asf-authorization:jmeter}
-jmeter-pmc={ldap:cn=jmeter,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+jmeter-pmc={ldap:cn=jmeter,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 johnzon={reuse:asf-authorization:johnzon}
 johnzon-pmc={ldap:cn=johnzon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 jspwiki={reuse:asf-authorization:jspwiki}
