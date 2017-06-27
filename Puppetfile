@@ -37,8 +37,7 @@ mod 'datacat',
 
 
 mod 'datadog_agent',
-  :git => 'https://github.com/DataDog/puppet-datadog-agent',
-  :tag => '1.3.0'
+  :git => 'https://github.com/cthistle/puppet-datadog-agent'
 
 
 mod 'dell',
