@@ -128,6 +128,16 @@ $pbcsPwd  = ''
       source => 'puppet:///modules/gitbox/gitweb/gitweb.css';
   }
 
+  cron {
+    'backup-db':
+      user        => 'www-data',
+      minute      => '25',
+      command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup gitbox.db.$(date +%Y%m%d%H)\"",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => File['/x1/gitbox/db'];
+  }
+
+
 
   ## Unless declared otherwise the default behaviour is to enable these modules
   apache::mod { 'authnz_ldap': }
