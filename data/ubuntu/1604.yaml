@@ -15,7 +15,6 @@ classes:
   - unattended_upgrades
 
 base::basepackages:
-  - apt-transport-https
   - apt-file
   - bash
   - bc
