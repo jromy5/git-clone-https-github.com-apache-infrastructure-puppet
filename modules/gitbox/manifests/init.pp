@@ -81,6 +81,7 @@ $pbcsPwd  = ''
       ensure => directory,
       owner  => 'www-data',
       group  => 'www-data',
+      mode   => '0750';
     '/x1/gitbox/db/backups':
       ensure => directory,
       owner  => 'www-data',
