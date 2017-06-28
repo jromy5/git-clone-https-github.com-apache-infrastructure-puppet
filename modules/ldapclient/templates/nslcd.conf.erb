@@ -17,7 +17,7 @@ base dc=apache,dc=org
 
 # The DN to bind with for normal lookups.
 binddn cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org
-bindpw b1t3me
+bindpw <%= @nssbindpasswd %>
 
 # The DN used for password modifications by root.
 #rootpwmoddn cn=admin,dc=example,dc=com
