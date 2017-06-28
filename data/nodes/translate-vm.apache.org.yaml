@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::expires
   - apache::mod::ssl
+  - apache::mod::status
   - apache::mod::wsgi
   - datadog_agent::integrations::apache
   - datadog_agent::integrations::http_check
@@ -28,6 +29,9 @@ apache::mod::event::threadsperchild:         '150'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 apache::mod::wsgi::wsgi_python_path: '/x1/www'
+
+datadog_agent::integrations::http_check::url: 'http://localhost/server-status-dd'
+datadog_agent::integrations::apache::url: 'http://localhost/server-status-dd?auto'
 
 file:
   '/x1':
@@ -75,6 +79,10 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'translate.apache.org.http_access.log'
     error_log_file:  'translate.apache.org.error.log'
     custom_fragment: |
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
       Redirect permanent / https://translate.apache.org
 
   translate-ssl:
