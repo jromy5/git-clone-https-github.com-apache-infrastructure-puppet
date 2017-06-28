@@ -33,7 +33,7 @@ aurora-pmc={ldap:cn=aurora,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 avro={reuse:asf-authorization:avro}
 avro-pmc={ldap:cn=avro,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 axis={reuse:asf-authorization:axis}
-axis-pmc={ldap:cn=axis,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+axis-pmc={ldap:cn=axis,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 # awf={reuse:asf-authorization:# awf}
 bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
