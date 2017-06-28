@@ -153,6 +153,7 @@ ldapserver::modules:
   - back_mdb
   - syncprov
   - memberof
+  - accesslog
 ldapserver::sizelimit: 'unlimited'
 ldapserver::backend: 'mdb'
 ldapserver::database: 'mdb'
