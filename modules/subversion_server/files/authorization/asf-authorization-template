@@ -94,7 +94,7 @@ avro-pmc={reuse:pit-authorization:avro-pmc}
 attic={ldap:cn=attic,ou=groups,dc=apache,dc=org}
 aurora={ldap:cn=aurora,ou=groups,dc=apache,dc=org}
 aurora-pmc={reuse:pit-authorization:aurora-pmc}
-axis={ldap:cn=axis,ou=groups,dc=apache,dc=org}
+axis={ldap:cn=axis,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 axis-pmc={reuse:pit-authorization:axis-pmc}
 # awf=schildmeijer,jmeehan,nwhitehead,slemesle
 batchee=dblevins,gpetracek,jbonofre,jlmonteiro,olamy,rmannibucau,stephenc,struberg
