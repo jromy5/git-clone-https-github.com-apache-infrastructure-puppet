@@ -119,5 +119,5 @@ class ldapserver::install::ubuntu::1404 (
         age     => '1w',
         recurse => 1,
         matches => ['ldap.*'],
-  } 
+  }
 }
