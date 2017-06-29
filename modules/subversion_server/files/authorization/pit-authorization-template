@@ -642,7 +642,8 @@ buildbot = r
 [/infrastructure/trunk/acreq]
 acrequser = rw
 whimsysvn = r
-@exec-officers = rw
+@member = rw
+@pmc-chairs = rw
 
 [/infrastructure/trunk/mlreq]
 acrequser = rw
