@@ -623,7 +623,7 @@ class subversion_server (
     path   => '/usr/bin:/usr/sbin:/bin',
     user    => 'www-data',
     group   => 'www-data',
-    onlyif => '! ps x | grep -q gunicorn',
+    onlyif => 'test ! `ps x | grep -q gunicorn`',
   }
 
 }
