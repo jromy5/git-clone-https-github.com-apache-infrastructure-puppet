@@ -50,8 +50,11 @@ base::basepackages:
   - 'lua5.2-sec'
   - 'lua5.2-yaml'
 
-datadog_agent::integrations::http_check::url: 'https://issues-test.apache.org/server-status'
-datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
+datadog_agent::integrations::apache::url: 'https://issues.apache.org/server-status?auto'
+datadog_agent::integrations::http_check::content_match: 'Apache Server Status'
+datadog_agent::integrations::http_check::http_response_status_code: '200'
+datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
+datadog_agent::integrations::http_check::url: 'https://issues.apache.org/server-status'
 
 # Fail2ban for aardvark
 fail2ban_asf::config::jails:
