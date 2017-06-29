@@ -38,7 +38,10 @@ base::basepackages:
   - 'rsync'
   - 'libapache2-mod-wsgi'
 
-datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
+datadog_agent::integrations::http_check::url: 'https://wiki.apache.org/server-status'
+datadog_agent::integrations::http_check::http_response_status_code: '200'
+datadog_agent::integrations::http_check::content_match: 'Apache Server Status'
+datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
 
 logrotate::rule:
   apache2:
@@ -58,7 +61,7 @@ vhosts_asf::vhosts::vhosts:
     directoryindex: 'index.html'
     custom_fragment: |
       # Redir to https (fix name later)
-      Redirect / https://wiki.apache.org/
+      Redirect permanent / https://wiki.apache.org/$1
       
   wiki_https:
     vhost_name: '*'
