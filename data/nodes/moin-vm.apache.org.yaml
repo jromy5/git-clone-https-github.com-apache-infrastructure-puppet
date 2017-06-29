@@ -61,7 +61,7 @@ vhosts_asf::vhosts::vhosts:
     directoryindex: 'index.html'
     custom_fragment: |
       # Redir to https (fix name later)
-      Redirect permanent / https://wiki.apache.org/$1
+      Redirect / https://wiki.apache.org/
       
   wiki_https:
     vhost_name: '*'

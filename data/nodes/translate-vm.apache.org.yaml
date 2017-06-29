@@ -81,7 +81,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'translate.apache.org.http_access.log'
     error_log_file:  'translate.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://translate.apache.org/$1
+      Redirect permanent / https://translate.apache.org/
 
   translate-ssl:
     vhost_name: '*'
@@ -148,5 +148,5 @@ vhosts_asf::vhosts::vhosts:
      custom_fragment: |
        <Location "/server-status">
         SetHandler server-status
-        Require local
+        Require host translate-vm.apache.org
        </Location>
