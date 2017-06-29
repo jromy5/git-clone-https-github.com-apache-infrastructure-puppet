@@ -2,8 +2,8 @@ local JSON = require 'cjson'
 local http = require 'ssl.https'
 local ldap_host = "snappy5.apache.org"
 local aaa_domain = "apache.org"
-local aaa_binddn = "<%= @nssbinddn %>"
-local aaa_bindpw = "<%= @nssbindpasswd %>"
+local aaa_binddn = "<%= scope['ldapclient::nssbinddn'] %>"
+local aaa_bindpw = "<%= scope['ldapclient::nssbindpasswd'] %>"
 local aaa_base = "dc=apache,dc=org"
 local hct = "<%= @hipchattoken %>"
 
