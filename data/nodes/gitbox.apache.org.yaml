@@ -62,6 +62,9 @@ cron:
     command: 'cd /x1/gitbox/matt/tools/ && python json-stats.py'
 
 datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/asf'
+datadog_agent::integrations::http_check::content_match: 'Project'
+datadog_agent::integrations::http_check::http_response_status_code: '200'
+datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
 
   
 base::gempackages:

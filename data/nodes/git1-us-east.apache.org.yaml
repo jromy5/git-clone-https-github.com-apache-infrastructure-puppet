@@ -35,6 +35,9 @@ apache::mod::event::threadsperchild: '50'
 apache::mpm_module:         'event'
 
 datadog_agent::integrations::http_check::url: 'https://git.apache.org'
+datadog_agent::integrations::http_check::content_match: 'Apache Software Foundation'
+datadog_agent::integrations::http_check::http_response_status_code: '200'
+datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
 
 git_asf::daemon_user: 'nobody'
 git_asf::daemon_basepath: '/x1/git/mirrors'

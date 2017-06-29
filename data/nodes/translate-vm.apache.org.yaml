@@ -30,8 +30,11 @@ apache::mod::event::threadsperchild:         '150'
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 apache::mod::wsgi::wsgi_python_path: '/x1/www'
 
-datadog_agent::integrations::http_check::url: 'http://localhost/server-status-dd'
-datadog_agent::integrations::apache::url: 'http://localhost/server-status-dd?auto'
+datadog_agent::integrations::apache::url: 'https://translate-vm.apache.org/server-status?auto'
+datadog_agent::integrations::http_check::content_match: 'Apache Server Status'
+datadog_agent::integrations::http_check::http_response_status_code: '200'
+datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
+datadog_agent::integrations::http_check::url: 'https://translate-vm.apache.org/server-status'
 
 file:
   '/x1':
@@ -79,11 +82,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'translate.apache.org.http_access.log'
     error_log_file:  'translate.apache.org.error.log'
     custom_fragment: |
-      <Location "/server-status-dd">
-        SetHandler server-status
-        Require local
-      </Location>
-      RedirectMatch permanent ^((?!\/(server-status-dd)).*)$ https://translate.apache.org/$1
+      Redirect permanent / https://translate.apache.org/
 
   translate-ssl:
     vhost_name: '*'
@@ -147,3 +146,8 @@ vhosts_asf::vhosts::vhosts:
           - '+ExecCGI'
           - '+SymlinksIfOwnerMatch'
           - '-MultiViews'
+     custom_fragment: |
+       <Location "/server-status">
+        SetHandler server-status
+        Require host translate-vm.apache.org
+       </Location>
