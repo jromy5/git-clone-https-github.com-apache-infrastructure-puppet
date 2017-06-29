@@ -624,7 +624,7 @@ class subversion_server (
     user    => 'www-data',
     group   => 'www-data',
     cwd     =>  '/usr/lib/viewvc/cgi-bin/',
-    onlyif => 'test ! `ps ax | grep -q gunicorn`',
+    onlyif => 'test ! `ps ax | grep -q [g]unicorn`',
   }
 
 }
