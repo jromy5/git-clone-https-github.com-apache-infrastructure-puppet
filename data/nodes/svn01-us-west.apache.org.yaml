@@ -410,6 +410,7 @@ vhosts_asf::vhosts::vhosts:
       
       # ProxyPass to gunicorn
       ProxyPassMatch ^/viewvc/?(.*)$ http://localhost:8080/$1
+      Alias /vc-static /usr/share/viewvc/docroot/
       
       # Rewrite /r123456 to viewvc
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
