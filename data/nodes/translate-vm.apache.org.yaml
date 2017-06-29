@@ -146,8 +146,8 @@ vhosts_asf::vhosts::vhosts:
           - '+ExecCGI'
           - '+SymlinksIfOwnerMatch'
           - '-MultiViews'
-     custom_fragment: |
-       <Location "/server-status">
+    custom_fragment: |
+      <Location "/server-status">
         SetHandler server-status
         Require host translate-vm.apache.org
-       </Location>
+      </Location>
