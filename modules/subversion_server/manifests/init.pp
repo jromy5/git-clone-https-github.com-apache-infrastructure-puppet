@@ -621,6 +621,8 @@ class subversion_server (
   # -w 10 == 10 workers, we can up that if need be.
   exec { 'cd /usr/lib/viewvc/cgi-bin/ && gunicorn -w 10 -b 127.0.0.1:8080 -d viewvc-wsgi:application':
     path   => '/usr/bin:/usr/sbin:/bin',
+    user    => 'www-data',
+    group   => 'www-data',
     onlyif => '! ps x | grep -q gunicorn',
   }
 
