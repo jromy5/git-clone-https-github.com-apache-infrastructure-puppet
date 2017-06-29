@@ -11,7 +11,6 @@ classes:
   - apache::mod::status
   - blocky
   - datadog_agent::integrations::apache
-  - datadog_agent::integrations::http_check
   - jira_asf
   - oraclejava::install
   - rsync::server
@@ -49,10 +48,6 @@ base::basepackages:
   - 'lua5.2-sec'
 
 datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
-datadog_agent::integrations::http_check::content_match: 'Apache Server Status'
-datadog_agent::integrations::http_check::http_response_status_code: '200'
-datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
-datadog_agent::integrations::http_check::url: 'https://issues-test.apache.org/server-status'
 
 # jira_asf class variables.
 jira_asf::jira_version: 'software-7.3.3'

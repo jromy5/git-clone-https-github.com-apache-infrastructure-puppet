@@ -4,7 +4,6 @@ classes:
   - apache::mod::geoip
   - apache::mod::headers
   - apache::mod::perl
-  - datadog_agent::integrations::http_check
   - gitserver_asf
   - gitserver_asf::role
   - git_self_serve::create
@@ -26,11 +25,6 @@ apache::mod::prefork::maxrequestworkers: '120'
 apache::mod::prefork::startservers: '25'
 
 apache::serveradmin:        'users@infra.apache.org'
-
-datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
-datadog_agent::integrations::http_check::content_match: 'Project'
-datadog_agent::integrations::http_check::http_response_status_code: '200'
-datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
 
 base::gempackages:
   - 'highlight'

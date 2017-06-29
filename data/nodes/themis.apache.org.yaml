@@ -23,7 +23,6 @@ classes:
   - apmirror
   - blocky
   - datadog_agent::integrations::apache
-  - datadog_agent::integrations::http_check
   - dell
   - dell::openmanage
   - loggy
@@ -89,10 +88,6 @@ base::basepackages:
   - mod-lua-asf
 
 datadog_agent::integrations::apache::url: 'https://themis.apache.org/server-status-dd?auto'
-datadog_agent::integrations::http_check::content_match: 'Apache Server Status'
-datadog_agent::integrations::http_check::http_response_status_code: '200'
-datadog_agent::integrations::http_check::ignore_ssl_warning: 'true'
-datadog_agent::integrations::http_check::url: 'https://themis.apache.org/server-status-dd'
 
 logrotate::rule:
   apache2:
