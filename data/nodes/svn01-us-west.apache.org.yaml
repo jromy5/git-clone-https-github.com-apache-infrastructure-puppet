@@ -104,6 +104,10 @@ perl::module:
     name: 'Net::LDAP'
     use_package : true
 
+python::python_pips:
+  gunicorn:
+    ensure: present
+    
 # svn01 gets to talk directly to hermes to bypass spam filters
 # on commit messages (svnmailer)
 
@@ -140,8 +144,6 @@ vhosts_asf::modules::modules:
     name: 'authz_svn'
   svn_check_path:
     name: 'svn_check_path'
-  cgi:
-    name: 'cgi'
 
 vhosts_asf::vhosts::vhosts:
   dist:
@@ -300,14 +302,17 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine On
 
       Redirect temp /viewcvs.cgi http://svn.apache.org/viewvc
+      Redirect temp /viewvc.cgi http://svn.apache.org/viewvc
       Redirect temp /viewcvs    http://svn.apache.org/viewvc
-      ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
+      
+      # ProxyPass to gunicorn
+      ProxyPassMatch ^/viewvc/?(.*)$ http://localhost:8080/$1
+      
       # Rewrite /r123456 to viewvc
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # Rewrite git-svn-id URLs to viewvc (/repos/asf/foo/trunk@123456)
       RewriteRule ^/repos/asf/[^@]+@(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
       # The main repository
-      
       
       # tlp migrations
       
@@ -396,7 +401,14 @@ vhosts_asf::vhosts::vhosts:
       AddType  text/plain; charset=UTF-8  .rdf
       LimitXMLRequestBody 10000000
       RewriteEngine On
-      ScriptAlias /viewvc /usr/lib/viewvc/cgi-bin/viewvc.cgi
+      
+      # This is on port 80, might as well be on port 443 too!
+      Redirect temp /viewcvs.cgi https://svn.apache.org/viewvc
+      Redirect temp /viewvc.cgi https://svn.apache.org/viewvc
+      Redirect temp /viewcvs    https://svn.apache.org/viewvc
+      
+      # ProxyPass to gunicorn
+      ProxyPassMatch ^/viewvc/?(.*)$ http://localhost:8080/$1
       
       # Rewrite /r123456 to viewvc
       RewriteRule ^/r(\d+)$ /viewvc?view=revision&revision=$1 [R=302,L]
