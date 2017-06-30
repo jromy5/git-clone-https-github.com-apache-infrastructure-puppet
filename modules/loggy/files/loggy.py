@@ -320,8 +320,8 @@ class NodeThread(Thread):
                     
                 res = self.xes.indices.create(index = iname, body = {
                         "settings" : {
-                            "number_of_shards": 5,
-                            "number_of_replicas": 0
+                            "number_of_shards": 3,
+                            "number_of_replicas": 1
                         },
                         "mappings" : mappings
                     }
