@@ -32,7 +32,6 @@ datadog_agent::integrations::elasticsearch::url: 'http://10.90.21.11:9200'
 
 elasticsearch::init_defaults:
   DATA_DIR: '/elastic/db/'
-  CONF_FILE: '/etc/elaticsearch/asful/elasticsearch.asful.yaml'
 elasticsearch::jvm_options:
   - '-Xms31g'
   - '-Xmx31g'
