@@ -647,7 +647,7 @@ whimsysvn = r
 
 [/infrastructure/trunk/mlreq]
 acrequser = rw
-whimsysvn = r
+whimsysvn = rw
 @member = rw
 @pmc-chairs = rw
 @ea = rw
