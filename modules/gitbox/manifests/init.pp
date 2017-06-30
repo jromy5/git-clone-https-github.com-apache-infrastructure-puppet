@@ -137,7 +137,7 @@ $pbcsPwd  = ''
     'backup-db':
       user        => 'www-data',
       minute      => '25',
-      command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup backups/gitbox.db.$(date +%Y%m%d%H).bak\"",
+      command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup backups/gitbox.db.$(date +\\%Y\\%m\\%d\\%H).bak\"",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => File['/x1/gitbox/db'];
   }
