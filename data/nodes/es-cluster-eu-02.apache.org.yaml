@@ -66,29 +66,17 @@ oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
 vhosts_asf::vhosts::vhosts:
-  logsearch-ssl:
+  es-cluster-02-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'logsearch.apache.org'
-    serveraliases:
-      - 'snappy2.apache.org'
+    servername: 'es-cluster-eu-02.apache.org'
     serveradmin: 'webmaster@apache.org'
-    docroot: '/usr/local/etc/logproxy/kibana'
-    access_log_file: 'logsearch.apache.org.ssl_access.log'
-    error_log_file: 'logsearch.apache.org.error.log'
+    docroot: '/var/www/snappy/'
+    access_log_file: '/dev/null'
+    error_log_file: 'es-cluster-eu-02.apache.org.error.log'
     custom_fragment: |
-      Header set Access-Control-Allow-Origin "*"
-      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
-      Header set Access-Control-Allow-Headers "X-PINGOTHER"
-      Header set Access-Control-Max-Age "1728000"
-      Alias /json/ /var/www/html/json/
-      <Directory /var/www/html>
-        Require all granted
-        Options +Indexes
-      </Directory>
-      # To be locked down eventually
       <Location /logstash/%{}{loggy::route}/>
           AllowMethods POST PUT HEAD
           <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
@@ -96,4 +84,3 @@ vhosts_asf::vhosts::vhosts:
           </If>
           ProxyPass http://10.91.102.214:9200/
       </Location>
-

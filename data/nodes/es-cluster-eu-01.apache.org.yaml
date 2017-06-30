@@ -77,14 +77,30 @@ oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
 vhosts_asf::vhosts::vhosts:
-  logsearch-ssl:
+  es-cluster-01-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'logsearch.apache.org'
-    serveraliases:
-      - 'snappy1.apache.org'
+    servername: 'es-cluster-eu-01.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/snappy/'
+    access_log_file: '/dev/null'
+    error_log_file: 'es-cluster-eu-02.apache.org.error.log'
+    custom_fragment: |
+      <Location /logstash/%{}{loggy::route}/>
+          AllowMethods POST PUT HEAD
+          <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
+            Require all denied
+          </If>
+          ProxyPass http://10.90.21.11:9200/
+      </Location>
+  blocky-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'blocky.apache.org'
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www/snappy/'
     access_log_file: 'logsearch.apache.org.ssl_access.log'
@@ -99,14 +115,6 @@ vhosts_asf::vhosts::vhosts:
         Require all granted
         Options +Indexes
       </Directory>
-      # To be locked down eventually
-      <Location /logstash/%{}{loggy::route}/>
-          AllowMethods POST PUT HEAD
-          <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
-            Require all denied
-          </If>
-          ProxyPass http://10.90.21.11:9200/
-      </Location>
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
