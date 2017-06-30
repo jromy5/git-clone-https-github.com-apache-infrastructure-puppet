@@ -6,6 +6,7 @@ class loggy (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
+  $route          = '',
 ){
   require python
 
