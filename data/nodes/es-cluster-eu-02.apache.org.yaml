@@ -89,7 +89,7 @@ vhosts_asf::vhosts::vhosts:
         Options +Indexes
       </Directory>
       # To be locked down eventually
-      <Location /logstash>
+      <Location /logstash/%{}{loggy::route}/>
           AllowMethods POST PUT HEAD
           <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
             Require all denied
