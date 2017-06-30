@@ -15,8 +15,12 @@ def main():
     os.chdir("/x1/repos/asf/%s.git" % cfg.repo_name)
     try:
        for ref in git.stream_refs(sys.stdin):
-          print("Syncing %s..." % ref.name)
-          subprocess.check_call(["git", "push", ghurl, "%s:%s" % (ref.newsha, ref.name)])
+          if ref.is_rewrite():
+             print("Syncing %s (FORCED)..." % ref.name)
+             subprocess.check_call(["git", "push", "-f", ghurl, "%s:%s" % (ref.newsha, ref.name)])
+          else:
+             print("Syncing %s..." % ref.name)
+             subprocess.check_call(["git", "push", ghurl, "%s:%s" % (ref.newsha, ref.name)])
     except subprocess.CalledProcessError as err:
         util.abort("Could not sync with GitHub: %s" % err.output)
 
