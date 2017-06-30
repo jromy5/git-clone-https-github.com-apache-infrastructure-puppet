@@ -33,7 +33,10 @@ apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
 
-git_asf::daemon_user: 'nobody'
+# This needs write-access to temp objects, so needs git user
+# Which is okay, as only upload-pack is enabled (git fetch/pull)
+# Writing to the git repo is still not allowed.
+git_asf::daemon_user: 'git'
 git_asf::daemon_basepath: '/x1/git/mirrors'
 git_asf::daemon_directory: '/x1/git/mirrors'
 
