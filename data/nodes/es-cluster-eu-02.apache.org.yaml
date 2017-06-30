@@ -77,7 +77,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: '/dev/null'
     error_log_file: 'es-cluster-eu-02.apache.org.error.log'
     custom_fragment: |
-      <Location /logstash/%{loggy::route}/>
+      <Location /logstash/%{hiera(loggy::route)}/>
           AllowMethods POST PUT HEAD
           <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
             Require all denied
