@@ -647,7 +647,7 @@ whimsysvn = r
 
 [/infrastructure/trunk/mlreq]
 acrequser = rw
-whimsysvn = rw
+whimsysvn = r
 @member = rw
 @pmc-chairs = rw
 @ea = rw
@@ -659,7 +659,7 @@ mostarda = rw
 whimsysvn = rw
 
 [/infrastructure/trunk/subreq]
-whimsysvn = r
+whimsysvn = rw
 apezmlm = rw
 @member = rw
 
