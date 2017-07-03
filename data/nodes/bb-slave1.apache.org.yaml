@@ -6,13 +6,13 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
-  - 'tomcat7'
+  - 'graphviz'
+  - 'graphviz-dev'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'graphviz'
-  - 'graphviz-dev'
+  - 'openjdk-7-jdk'
+  - 'tomcat7'
 
 python::python_pips:
   pelican:

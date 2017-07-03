@@ -6,11 +6,11 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave2_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
-  - 'tomcat7'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
+  - 'openjdk-7-jdk'
+  - 'tomcat7'
   - 'wine'
 
 ruby_version: '2.3.1'
