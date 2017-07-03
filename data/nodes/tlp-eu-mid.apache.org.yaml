@@ -31,9 +31,6 @@ classes:
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
   - rootbin_asf
-  - rsync
-  - rsync::server
-  - rsync_mirror
   - tlp_vhosts::compat
   - vhosts_asf::custom_config
   - vhosts_asf::modules
@@ -108,10 +105,6 @@ svnwcsub::service_ensure:                    'running'
 svnwcsub::service_name:                      'svnwcsub'
 svnwcsub::shell:                             '/bin/bash'
 svnwcsub::username:                          'svnwc'
-
-rsync::package_ensure:                       'latest'
-rsync::server::use_xinetd:                   false
-rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
 
 apache::custom_config:
   svn:
