@@ -7,12 +7,18 @@ class postfix_asf (
   $dbfile = hiera_hash('postfix::dbfile', {})
   create_resources(postfix::dbfile, $dbfile)
 
+  exec { 'refresh_sender_access' :
+    command     => '/usr/sbin/postmap /etc/postfix/sender_access && /usr/sbin/postfix reload',
+    refreshonly => true,
+  }
+
   file {
     '/etc/postfix/sender_access':
       ensure => file,
       mode   => '0644',
       owner  => 'root',
       group  => 'root',
-      content => template('postfix_asf/sender_access.erb');
+      content => template('postfix_asf/sender_access.erb'),
+      notify => Exec['refresh_sender_access'];
     }
 }
