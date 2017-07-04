@@ -1,11 +1,11 @@
 # class git self serve for tools.
 class git_self_serve::tools (
 
-  $nssbinddn,
-  $nssbindpasswd,
   $hipchattoken,
 
 ) {
+
+  include ldapclient
 
   file {
     '/var/www/git-setup/':
