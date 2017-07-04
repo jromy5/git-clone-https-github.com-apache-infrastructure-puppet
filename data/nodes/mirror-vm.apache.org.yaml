@@ -3,7 +3,7 @@ classes:
   - loggy
 
 postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
-postfix::server::postfix_logrotate_compress: 'false'
-postfix::server::postfix_logrotate_delaycompress: 'false'
+postfix::server::postfix_logrotate_compress: false
+postfix::server::postfix_logrotate_delaycompress: false
 postfix::server::postfix_logrotate_rotate_every: 'week'
 
