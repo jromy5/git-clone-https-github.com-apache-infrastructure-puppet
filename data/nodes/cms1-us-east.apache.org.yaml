@@ -1,5 +1,0 @@
----
-classes: 
-  - ssl::name::wildcard_apache_org
-  - zfs_on_ubuntu
-
