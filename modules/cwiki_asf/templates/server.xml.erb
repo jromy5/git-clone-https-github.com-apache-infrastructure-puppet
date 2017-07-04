@@ -10,9 +10,9 @@
     <Service name="Tomcat-Standalone">
         <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="<%= @connector_port %>" minProcessors="5"
                    maxProcessors="75"
-                   enableLookups="false" redirectPort="8443" acceptCount="250" debug="0" connectionTimeout="20000"
+                   enableLookups="false" redirectPort="8443" acceptCount="250" connectionTimeout="20000"
                    maxThreads="500" minSpareThreads="25" maxSpareThreads="150"
-                   useURIValidationHack="false" URIEncoding="UTF-8"
+                   URIEncoding="UTF-8"
                    scheme="https" proxyName="<%= @server_alias %>"
                    proxyPort="443" secure="true"/>
 
