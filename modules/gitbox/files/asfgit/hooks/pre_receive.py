@@ -46,6 +46,7 @@ def main():
     # repository.
     authorized_committers = auth.authorized_committers(cfg.repo_name)
     authorized_committers.add('git-site-role')
+    authorized_committers.add('mergebot')
     if cfg.committer not in authorized_committers:
         util.abort(NOT_AUTHORIZED)
 
