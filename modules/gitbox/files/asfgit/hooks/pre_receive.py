@@ -49,6 +49,11 @@ def main():
     if cfg.committer not in authorized_committers:
         util.abort(NOT_AUTHORIZED)
 
+    # Mergebot can only commit from a.b.c.d
+    # 207.244.88.152 is mergebot-vm.apache.org for the Beam project
+    if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152"):
+        util.abort(u"mergebot only works from the mergebot VM, tut tut!")
+
     # Check individual refs and commits for all of
     # our various conditions. Track each ref update
     # so that we can log them if everything is ok.
