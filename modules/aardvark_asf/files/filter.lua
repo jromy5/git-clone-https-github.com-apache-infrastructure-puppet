@@ -57,6 +57,7 @@ function input_filter(r)
    while bucket do
       local caught = false -- bool for whether we caught anything
       local triggered = false
+      bucket = bucket:gsub("%+", " ")
       
       -- Look for data in POST we don't like
       for k, v in pairs(yamlRuleset.postmatches or {}) do
@@ -89,7 +90,7 @@ function input_filter(r)
       end
       
       -- Now, require all req ones and at least one aux (or none if no aux)
-      if reqcounter == #(mm.required or {}) and (auxcounter == 1 or #(mm.auxiliary or {}) == 0) then
+      if reqcounter >= #(mm.required or {}) and (auxcounter >= 1 or #(mm.auxiliary or {}) == 0) then
          caught = true
          logspam(r, badbody)
          return 500
