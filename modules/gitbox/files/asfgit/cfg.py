@@ -60,6 +60,7 @@ script_name = util.environ("SCRIPT_NAME")
 web_host = util.environ("WEB_HOST")
 write_locks = [util.environ("WRITE_LOCK"), os.path.join(repo_dir, "nocommit")]
 auth_file = util.environ("AUTH_FILE")
+ip = util.environ("REMOTE_ADDR")
 
 debug = _git_config("hooks.asfgit.debug") == "true"
 protect = _git_config("hooks.asfgit.protect").split()
