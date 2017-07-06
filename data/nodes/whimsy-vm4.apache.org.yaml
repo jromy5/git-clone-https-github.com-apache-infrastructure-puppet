@@ -210,8 +210,6 @@ vhosts_whimsy::vhosts::vhosts:
       # for secretary workbench
       RedirectMatch permanent ^/secmail /secretary/workbench
 
-      RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
-
       RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
 
       SSLProxyEngine On
