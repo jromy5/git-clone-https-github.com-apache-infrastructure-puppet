@@ -16,6 +16,10 @@ postmatches:
     - "\n12320120\r?\n"
     - "mobilestrikehacktools"
     - "monsterlegendshackx"
+    - "router customer service"
+    - "router customer support"
+    - "customer service number"
+    - "customer care phone"
     
 # Match multiple of these to ban
 multimatch:
