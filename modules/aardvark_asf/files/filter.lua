@@ -99,8 +99,7 @@ function input_filter(r)
       
       -- if nothing happened, pass through bucket
       if not caught then
-         coroutine.yield(bucket)
+         coroutine.yield(tmpbucket)
       end
-      yield tmpbucket -- change from bucket to tmpbucket at the bottom
    end
 end
