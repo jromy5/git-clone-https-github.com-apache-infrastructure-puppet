@@ -57,6 +57,7 @@ function input_filter(r)
    while bucket do
       local caught = false -- bool for whether we caught anything
       local triggered = false
+      local tmpbucket = bucket --add this
       bucket = bucket:gsub("%+", " ")
       
       -- Look for data in POST we don't like
@@ -100,5 +101,6 @@ function input_filter(r)
       if not caught then
          coroutine.yield(bucket)
       end
+      yield tmpbucket -- change from bucket to tmpbucket at the bottom
    end
 end
