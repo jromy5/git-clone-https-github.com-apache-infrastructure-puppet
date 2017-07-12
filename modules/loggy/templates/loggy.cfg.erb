@@ -7,16 +7,16 @@ paths:          /var/log/, /x1/log/
 
 # Primary and secondary JSON receiver.
 [ElasticSearch:Primary]
-host:   snappy1.apache.org
+host:   es-cluster-eu-01.apache.org
 port:   443
 ssl:    true
-prefix: logstash
+prefix: <%= @route %>/logstash
 
 [ElasticSearch:Backup]
-host: snappy2.apache.org
+host: es-cluster-eu-02.apache.org
 port:   443
 ssl:    true
-prefix: logstash
+prefix: <%= @route %>/logstash
 
 [RawFields]
 # Fields that, in each document type, should be treated as non-analyzed strings.

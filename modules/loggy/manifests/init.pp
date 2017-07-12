@@ -49,7 +49,7 @@ class loggy (
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => 'puppet:///modules/loggy/loggy.cfg';
+      content => template('loggy/loggy.cfg.erb');
     } ->
 
     service { $service_name:
