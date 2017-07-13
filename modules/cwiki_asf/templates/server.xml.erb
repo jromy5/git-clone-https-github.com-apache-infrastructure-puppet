@@ -6,7 +6,7 @@
 
 -->
 
-<Server port="<%= @server_port %>" shutdown="SHUTDOWN" debug="0">
+<Server port="<%= @server_port %>" shutdown="SHUTDOWN">
     <Service name="Tomcat-Standalone">
         <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="<%= @connector_port %>" minProcessors="5"
                    maxProcessors="75"
@@ -16,11 +16,11 @@
                    scheme="https" proxyName="<%= @server_alias %>"
                    proxyPort="443" secure="true"/>
 
-        <Engine name="Standalone" defaultHost="localhost" debug="0">
+        <Engine name="Standalone" defaultHost="localhost">
 
-            <Host name="localhost" debug="0" appBase="webapps" unpackWARs="true" autoDeploy="false">
+            <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false">
 
-                <Context path="<%= @context_path %>" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
+                <Context path="<%= @context_path %>" docBase="../confluence" reloadable="false" useHttpOnly="true">
                     <!-- Logger is deprecated in Tomcat 5.5. Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
                     <Manager pathname="" />
                 </Context>
