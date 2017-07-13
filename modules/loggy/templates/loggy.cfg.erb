@@ -10,13 +10,13 @@ paths:          /var/log/, /x1/log/
 host:   es-cluster-eu-01.apache.org
 port:   443
 ssl:    true
-prefix: <%= @route %>/logstash
+prefix: logstash/<%= @route %>
 
 [ElasticSearch:Backup]
 host: es-cluster-eu-02.apache.org
 port:   443
 ssl:    true
-prefix: <%= @route %>/logstash
+prefix: logstash/<%= @route %>
 
 [RawFields]
 # Fields that, in each document type, should be treated as non-analyzed strings.
