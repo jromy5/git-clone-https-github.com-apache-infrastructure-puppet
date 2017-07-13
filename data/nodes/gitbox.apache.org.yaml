@@ -185,8 +185,8 @@ gitbox::custom_fragment_443: |
       <Directory /x1/gitbox/matt/site>
         Require all granted
       </Directory>
-      Alias /setup/ /x1/gitbox/matt/site/
-      <Location /setup/>
+      Alias /setup /x1/gitbox/matt/site/
+      <Location /setup>
           Options +ExecCGI
           AddHandler cgi-script .cgi
       </Location>
