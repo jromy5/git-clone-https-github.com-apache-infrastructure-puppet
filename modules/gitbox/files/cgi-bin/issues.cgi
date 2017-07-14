@@ -298,8 +298,9 @@ def main():
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
             if m:
                 ticket = m.group(1)
-                worklog = True if jiraopt == 'worklog' else False
-                return updateTicket(ticket, fmt['user'], email['message'], worklog)
+                worklog = True if jiraopt.find('worklog') != -1 else False
+                if not (jiraopt.find("nocomment") != -1 and fmt['action'] == "comment"):
+                    return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
 
