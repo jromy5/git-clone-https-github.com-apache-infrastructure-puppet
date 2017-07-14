@@ -46,6 +46,7 @@ base::basepackages:
   - 'lua5.2-cjson'
   - 'lua5.2-socket'
   - 'lua5.2-sec'
+  - 'lua5.2-yaml'
 
 datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
 
