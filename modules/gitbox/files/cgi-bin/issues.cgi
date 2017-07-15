@@ -256,6 +256,7 @@ def main():
     # Now figure out what type of event we got
     fmt = None
     email = None
+    isComment = False
     if 'action' in data:
         # Issue opened or reopened
         if data['action'] in ['opened', 'reopened']:
@@ -270,12 +271,14 @@ def main():
                 # Diff review
                 if 'diff_hunk' in data['comment']:
                     fmt = reviewComment(data)
+                    isComment = True
             # Standard commit comment
             elif 'commit_id' in data['comment']:
-                pass
+                isComment = True
             # Generic comment
             else:
                 fmt = ticketComment(data)
+                isComment = True
 
     # Send email if applicable
     if fmt:
@@ -299,7 +302,7 @@ def main():
             if m:
                 ticket = m.group(1)
                 worklog = True if jiraopt.find('worklog') != -1 else False
-                if not (jiraopt.find("nocomment") != -1 and fmt['action'] == "comment"):
+                if not (jiraopt.find("nocomment") != -1 and isComment):
                     return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
