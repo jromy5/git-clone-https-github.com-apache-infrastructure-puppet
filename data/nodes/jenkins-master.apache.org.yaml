@@ -98,7 +98,7 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'builds-test.apache.org'
     port: 80
-    ssl: true
+    ssl: false
     docroot: '/var/www'
     error_log_file: 'builds.apache.org.error.log'
     access_log_file: 'builds.apache.org.access.log'
