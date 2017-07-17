@@ -12,6 +12,8 @@ classes:
   - oraclejava::install
   - rsync::server
   - ssl::name::wildcard_apache_org
+  - sysctl_asf
+  - ulimit_asf
   - vhosts_asf::vhosts
   - zmanda_asf::client
 
@@ -135,3 +137,21 @@ vhosts_asf::vhosts::vhosts:
         Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
         Header set Access-Control-Allow-Headers "X-PINGOTHER"
         Header set Access-Control-Max-Age "1728000"
+
+sysctl:
+  fs.nr_open:
+    value: 4194304
+  fs.file-max:
+    value: 4194304
+
+ulimit::rule:
+  all-hard-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'hard'
+    ulimit_item: 'nofile'
+    ulimit_value: '4194304'
+  all-soft-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'soft'
+    ulimit_item: 'nofile'
+    ulimit_value: '4194304'
