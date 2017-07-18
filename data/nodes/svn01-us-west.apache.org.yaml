@@ -188,11 +188,12 @@ vhosts_asf::vhosts::vhosts:
         AuthBasicProvider ldap
         AuthzSVNAccessFile /x1/svn/asf-dist-authorization
 
-        # Disallow PUTs (or anything, really) that are larger than 200M. If a PMC
-        # needs something larger, they can ask Infra to commit it via ra_local.
-        # If they will regularly commit artifacts larger than 200M, they can
-        # request a LocationMatch section (see below) to set a specific limit.
-        LimitRequestBody 200000000
+        # Disallow PUTs (or anything, really) that are larger than 350M. If a 
+        # PMC needs something larger, they can ask Infra to commit it via 
+        # ra_local. If they will regularly commit artifacts larger than 350M, 
+        # they can # request a LocationMatch section (see below) to set a 
+        # specific limit.
+        LimitRequestBody 350000000
 
         <LimitExcept GET OPTIONS PROPFIND REPORT>
           require valid-user
