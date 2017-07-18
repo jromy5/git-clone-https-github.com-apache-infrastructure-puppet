@@ -5,6 +5,7 @@ SVNADMINS="gmcdonald,humbedooh,jfarrell,cml,pono,christ"
 
 UNIXBASE="ou=groups,dc=apache,dc=org"
 BASE="ou=pmc,ou=committees,ou=groups,dc=apache,dc=org"
+PBASE="ou=project,ou=groups,dc=apache,dc=org"
 LDAPSEARCH="ldapsearch"
 
 XARGS="xargs"
@@ -29,12 +30,21 @@ cat <<EOF
 svnadmins=$SVNADMINS
 EOF
 
-# fill in [groups]
-for pmc in $pmcs incubator; do
+# fill in old style [groups]
+for pmc in $pmcs; do
   printf "%s=" "$pmc"
   $LDAPSEARCH -x -LLL -b "cn=$pmc,$UNIXBASE" 'cn=*' memberUid | $SED -ne 's/^memberUid: //p' | $XARGS | $SED -e 's/ /,/g'
   printf "%s-pmc=" "$pmc"
   $LDAPSEARCH -x -LLL -b "cn=$pmc,$BASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
+done
+
+# fill in new style [groups] 
+##FIXME: need to get list, but prime the list with the incubator for now
+for pmc in incubator; do
+  printf "%s=" "$pmc"   
+  $LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
+  printf "%s-pmc=" "$pmc"  
+  $LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' owner | $SED -ne 's/^owner: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
 done
 
 echo
