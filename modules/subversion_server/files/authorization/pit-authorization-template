@@ -114,7 +114,7 @@ flume-pmc={ldap:cn=flume,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 forrest={reuse:asf-authorization:forrest}
 forrest-pmc={ldap:cn=forrest,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 geronimo={reuse:asf-authorization:geronimo}
-geronimo-pmc={ldap:cn=geronimo,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+geronimo-pmc={ldap:cn=geronimo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 giraph={reuse:asf-authorization:giraph}
 giraph-pmc={ldap:cn=giraph,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 gora={reuse:asf-authorization:gora}
