@@ -10,8 +10,12 @@ LDAPSEARCH="ldapsearch"
 
 XARGS="xargs"
 SED="sed"
+TR="tr"
 
 pmcs=`$LDAPSEARCH -x -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
+
+projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
+
 committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: , :bookkeeper: , :camel: , :zookeeper:"
 
 # preamble
@@ -39,8 +43,7 @@ for pmc in $pmcs; do
 done
 
 # fill in new style [groups] 
-##FIXME: need to get list, but prime the list with the incubator for now
-for pmc in incubator; do
+for pmc in $projects incubator; do
   printf "%s=" "$pmc"   
   $LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | $XARGS | $SED -e 's/ /,/g'
   printf "%s-pmc=" "$pmc"  
@@ -50,7 +53,8 @@ done
 echo
 
 # fill in per-PMC sections
-for pmc in $pmcs; do
+all_projects=`echo "$pmcs $projects" | $TR ' ' '\n' | sort | uniq | $XARGS`
+for pmc in $all_projects; do
   echo
   echo "# $pmc"
   for path in "/dev/$pmc" "/release/$pmc"; do
