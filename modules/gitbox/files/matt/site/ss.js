@@ -265,7 +265,7 @@ submitForm = function (form) {
         alert("GitHub notification list needs to be an apache.org mailing list!");
         return false;
     }
-    ispodling = get('ispodling').checked ? 'yes' : null;
+    ispodling = (get('ispodling') && get('ispodling').checked) ? 'yes' : null;
     reponame = get('reponame').value;
     var generatedName = get('generatedname').value;
     if (reponame.length === 0) {
@@ -329,7 +329,7 @@ changeName = function () {
         generatedName = '';
     }
     get('generatedname').value = get('pmc').value + generatedName + '.git';
-    if (podlings[get('pmc').value] || get('ispodling').checked) {
+    if (podlings[get('pmc').value] || (get('ispodling') && get('ispodling').checked)) {
         get('generatedname').value = 'incubator-' + get('generatedname').value;
     }
 };
@@ -365,7 +365,9 @@ changePMC = function (pmc) {
 
 changePodling = function () {
     var podling = get('podlingname').value;
-    get('ispodling').checked = true;
+    if (get('ispodling')) {
+        get('ispodling').checked = true;
+    }
     get('notify').value = "commits@" + podling + ".incubator.apache.org";
     get('ghnotify').value = "dev@" + podling + ".incubator.apache.org";
     changeName();
