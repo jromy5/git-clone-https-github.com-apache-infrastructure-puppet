@@ -118,6 +118,6 @@ class ldapserver::install::ubuntu::1604 (
         path    => $backuppath,
         age     => '1w',
         recurse => 1,
-        matches => ['ldap.*'],
+        matches => ['ldap.*','accesslog.*'],
   }
 }
