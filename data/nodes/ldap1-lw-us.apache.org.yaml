@@ -2,3 +2,4 @@
 classes:
   - ldapserver
   - kif
+  - zmanda_asf::client
