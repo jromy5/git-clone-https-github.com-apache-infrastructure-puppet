@@ -10,12 +10,26 @@ local hct = "<%= @hipchattoken %>"
 -- Get a list of PMCs the user is a part of
 function getPMCs(r, uid)
     local groups = {}
-    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b %s -LLL "(|(memberUid=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, aaa_base, uid, uid)
+    
+    -- Podling ownership. Currenly, only 'incubator' should get added for reporeq.
+    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b "ou=project,ou=groups,dc=apache,dc=org" -LLL "(owner=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
+    local ldapdata = io.popen(ldapquery)
+    local data = ldapdata:read("*a")
+    for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=project,ou=groups,dc=apache,dc=org") do
+        if match and match == "incubator" then
+            table.insert(groups, match)
+        end
+    end
+    ldapdata:close()
+    
+    --PMC membership
+    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b "ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" -LLL "(member=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
     local ldapdata = io.popen(ldapquery)
     local data = ldapdata:read("*a")
     for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=pmc,ou=committees,ou=groups,dc=apache,dc=org") do
         table.insert(groups, match)
     end
+    ldapdata:close()
     return groups
 end
 
