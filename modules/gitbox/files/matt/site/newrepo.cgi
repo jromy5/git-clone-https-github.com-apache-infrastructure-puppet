@@ -67,18 +67,25 @@ def ldap_groups(uid):
     l = ldap.initialize(LDAP_URI)
     # this search for all objectClasses that user is in.
     # change this to suit your LDAP schema
-    search_filter= "(|(member=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" % (uid, uid)
+    search_filter= "(|(owner=%s)(owner=uid=%s,ou=people,dc=apache,dc=org))" % (uid, uid)
     try:
         groups = []
         podlings = {}
         
         # Is requester in infra-root??
-        infra = getStandardGroup('infrastructure-root', 'cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org')
+        infra = getStandardGroup('infrastructure-root', 'cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org', "member")
         if infra and uid in infra:
             groups.append('infrastructure')
-            search_filter= "(|(member=*)(member=uid=*,ou=people,dc=apache,dc=org))"
+            search_filter= "(|(owner=*)(owner=uid=*,ou=people,dc=apache,dc=org))"
         
-        LDAP_BASE = "ou=groups,dc=apache,dc=org"
+        # Is requester IPMC?
+        isIPMC = False
+        ipmc = getStandardGroup('incubator')
+        if ipmc and uid in ipmc:
+            isIPMC = True
+            
+        
+        LDAP_BASE = "ou=project,ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
             cn = res[1]['cn'][0]
@@ -86,12 +93,20 @@ def ldap_groups(uid):
                 groups.append(cn) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
                 if cn in PMCS and PMCS[cn] == "podling":
                     podlings[cn] = True
+        
+        # If in IPMC, add all approved podlings not there yet.
+        if isIPMC:
+            for cn in PMCS:
+                if PMCS[cn] == "podling" and cn not in groups:
+                    groups.append(cn)
+                    podlings[cn] =  True
+        
         return [sorted(groups), sorted(podlings), uid in infra]
     except Exception as err:
         pass
     return [[], {}, False]
 
-def getStandardGroup(group, ldap_base = None):
+def getStandardGroup(group, ldap_base = None, what = "owner"):
     """ Gets the list of availids in a standard group (pmcs, services, podlings) """
     # First, check if there's a hardcoded member list for this group
     # If so, read it and return that instead of trying LDAP
@@ -115,9 +130,8 @@ def getStandardGroup(group, ldap_base = None):
         for result in results:
             result_dn = result[0]
             result_attrs = result[1]
-            # We are only interested in the member attribs here. owner == ppmc, but we don't care
-            if "member" in result_attrs:
-                for member in result_attrs["member"]:
+            if what in result_attrs:
+                for member in result_attrs[what]:
                     m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
                     if m:
                         groupmembers.append(m.group(1))
