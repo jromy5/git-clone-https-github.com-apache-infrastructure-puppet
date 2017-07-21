@@ -105,6 +105,8 @@ falcon={reuse:asf-authorization:falcon}
 falcon-pmc={ldap:cn=falcon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 felix={reuse:asf-authorization:felix}
 felix-pmc={ldap:cn=felix,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+fineract={reuse:asf-authorization:fineract}
+fineract-pmc={ldap:cn=fineract,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 flex={reuse:asf-authorization:flex}
 flex-pmc={ldap:cn=flex,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 flink={reuse:asf-authorization:flink}
