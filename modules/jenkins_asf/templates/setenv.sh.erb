@@ -5,5 +5,7 @@ CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMeta
 CATALINA_OPTS="-Dgroovy.use.classvalue=true -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/x1/jenkins/dumps ${CATALINA_OPTS}"
 CATALINA_OPTS="-Djavax.net.ssl.trustStore=/x1/jenkins/jvm-sslcerts/cacerts ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dorg.jenkinsci.plugins.docker.workflow.client.DockerClient.CLIENT_TIMEOUT=30 ${CATALINA_OPTS}"
+CATALINA_OPTS="-Dhudson.scm.SubversionSCM.pollFromMaster=true -Dhudson.DNSMultiCast.disabled=true ${CATALINA_OPTS}"
+CATALINA_OPTS="-Dhudson.model.DirectoryBrowserSupport.CSP= ${CATALINA_OPTS} "
 JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export CATALINA_OPTS JAVA_HOME
