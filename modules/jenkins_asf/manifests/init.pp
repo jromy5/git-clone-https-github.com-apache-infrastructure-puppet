@@ -20,6 +20,8 @@ class jenkins_asf (
   $heap_min_size                 = '',
   $heap_max_size                 = '',
   $maxmetaspacesize              = '',
+  $tomcat_caching_allowed        = '',
+  $tomcat_caching_max_size       = '',
 
   $required_packages             = ['unzip','wget'],
 ){
@@ -177,6 +179,9 @@ file {
       require => File[$tools_dir];
     "${current_dir}/conf/server.xml":
       content => template('jenkins_asf/server.xml.erb'),
+      mode    => '0644';
+    "${current_dir}/conf/context.xml":
+      content => template('jenkins_asf/context.xml.erb'),
       mode    => '0644';
   }
 

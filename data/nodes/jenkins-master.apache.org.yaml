@@ -31,6 +31,8 @@ jenkins_asf::heap_min_size: '4096'
 jenkins_asf::heap_max_size: '8092'
 jenkins_asf::maxmetaspacesize: '8092'
 jenkins_asf::tomcat_version: '9.0.0.M20'
+jenkins_asf::tomcat_caching_allowed: 'true'
+jenkins_asf::tomcat_caching_max_size: '200000'
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
