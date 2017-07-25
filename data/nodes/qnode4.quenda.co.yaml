@@ -13,7 +13,7 @@ buildbot_slave::required_packages:
   - 'graphviz-dev'
   - 'sqlite3'
 
-ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
 
 python::python_pips:
   pelican:
