@@ -103,11 +103,13 @@ class ldapserver::install::ubuntu::1604 (
   cron {
     'backup-ldap':
       user    => 'root',
+      hour    => '1',
       minute  => '51',
       command => "/usr/sbin/slapcat -b dc=apache,dc=org > ${backuppath}/ldap.$(date +\\%Y\\%m\\%d\\%H\\%M).ldif",
       require => File[$backuppath];
     'backup-accesslog':
       user    => 'root',
+      hour    => '1',
       minute  => '50',
       command => "/usr/sbin/slapcat -b cn=accesslog > ${backuppath}/accesslog.$(date +\\%Y\\%m\\%d\\%H\\%M).ldif",
       require => File[$backuppath];
