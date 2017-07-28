@@ -172,6 +172,7 @@ vhosts_asf::vhosts::vhosts:
       ProxypassReverse / https://apache.giv.sh/
       ProxyHTMLEnable On
       ProxyHTMLURLMap https://apache.giv.sh/ /
+      RequestHeader unset Accept-Encoding
 
 
   repository:
