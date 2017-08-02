@@ -210,7 +210,7 @@ vhosts_whimsy::vhosts::vhosts:
       # for secretary workbench
       RedirectMatch permanent ^/secmail /secretary/workbench
 
-      RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
+      RedirectMatch permanent ^/officers/public_names /secretary/public-names
 
       SSLProxyEngine On
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
