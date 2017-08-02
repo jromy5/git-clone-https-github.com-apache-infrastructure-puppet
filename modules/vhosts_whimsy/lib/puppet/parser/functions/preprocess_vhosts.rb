@@ -43,7 +43,7 @@ module Puppet::Parser::Functions
 
       if content
         path = Regexp.escape(path)
-        content.strip!.gsub! /^\s*/, '  '
+        content = content[1..-2].gsub /^#{content[/^\s+/]}/, '  '
         @fragment[/\n<#{tag} #{path}>\n.*?()<\/#{tag}>/m, 1] = content + "\n"
       end
     end
