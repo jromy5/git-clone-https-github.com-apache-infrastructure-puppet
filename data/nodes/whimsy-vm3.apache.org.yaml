@@ -210,12 +210,12 @@ vhosts_whimsy::vhosts::vhosts:
       # for secretary workbench
       RedirectMatch permanent ^/secmail /secretary/workbench
 
-      RedirectMatch ^/classic/roster/committee$ https://whimsy.apache.org/classic/roster/committee/
-      RedirectMatch ^/classic/roster/committer$ https://whimsy.apache.org/classic/roster/committer/
+      RedirectMatch permanent ^/classic/roster/committee$ /classic/roster/committee/
+      RedirectMatch permanent ^/classic/roster/committer$ /classic/roster/committer/
 
-      RedirectMatch ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
+      RedirectMatch permanent ^/officers/mlreq(/.*)?$ https://infra.apache.org/officers/mlreq$1
 
-      RedirectMatch ^/officers/public_names https://whimsy.apache.org/secretary/public-names
+      RedirectMatch permanent ^/officers/public_names /secretary/public-names
 
       SSLProxyEngine On
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
