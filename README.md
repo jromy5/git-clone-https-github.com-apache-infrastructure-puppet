@@ -3,6 +3,10 @@ infra-puppet
 
 Apache Infrastructure Team - Puppet
 
+# Docs
+
+[Workflow Docs](https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo)
+
 
 ## Getting Started
 Install all of the dependencies
