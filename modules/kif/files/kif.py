@@ -405,7 +405,7 @@ def main():
     With regards and sighs,<br/>
     Your loyal KIF service.
                 """ % (me, msgerr, msgrl)
-                notifyHipchat(hcfg['room'], hcfg['token'], msg, hcfg['notify'] if 'notify' in hcfg else False)
+                notifyHipchat(hcfg['room'], hcfg['token'], msg, hcfg.get('notify', False))
 
     print("KIF run finished!")
 
