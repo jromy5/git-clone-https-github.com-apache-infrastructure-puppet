@@ -27,6 +27,15 @@ letsencrypt::certonly:
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+
+postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
 tomcat::install:
   '/opt/tomcat9':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M20/bin/apache-tomcat-9.0.0.M20.tar.gz'
