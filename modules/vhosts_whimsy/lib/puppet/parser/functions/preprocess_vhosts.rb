@@ -42,8 +42,18 @@ module Puppet::Parser::Functions
       end
 
       if content
+        # strip leading newlines
+        content = content.sub /\A\n+/, ''
+
+        # strip trailing whitespace
+        content = content.sub /\s+\z/, ''
+
+        # normalize indentation by changing all lines so that the first line
+        # is indented by exactly two spaces.
+        content = content.gsub /^#{content[/^\s+/]}/, '  '
+
+        # insert resulting content into fragment
         path = Regexp.escape(path)
-        content = content[1..-2].gsub /^#{content[/^\s+/]}/, '  '
         @fragment[/\n<#{tag} #{path}>\n.*?()<\/#{tag}>/m, 1] = content + "\n"
       end
     end

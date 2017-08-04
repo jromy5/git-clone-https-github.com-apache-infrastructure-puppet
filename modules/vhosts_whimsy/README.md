@@ -121,3 +121,8 @@ authldap
       AuthLDAPGroupAttributeIsDN off
       Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
     </LocationMatch>
+
+Test scaffolding
+================
+
+See https://github.com/apache/whimsy/blob/master/tools/vhosttest.rb
