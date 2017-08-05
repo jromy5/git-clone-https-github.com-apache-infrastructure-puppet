@@ -75,13 +75,15 @@ With regards,
 gitbox.apache.org
 """
 
+EMPTY_HASH = '0'*40
+
 if 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
     pusher = data['pusher']['name'] if 'pusher' in data else data['sender']['login']
     ref = data['ref']
     baseref = data['base_ref'] if 'base_ref' in data else data['master_branch'] if 'master_branch' in data else data['ref']
-    before = data['before'] if 'before' in data else '0'*40
-    after = data['after'] if 'after' in data else '0'*40
+    before = data['before'] if 'before' in data else EMPTY_HASH
+    after = data['after'] if 'after' in data else EMPTY_HASH
     repopath = "/x1/repos/asf/%s.git" % reponame
     broken = False
     
@@ -118,8 +120,7 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         # Check that we haven't missed a push #
         #######################################
-        emptybranch = '0'*40 # 40 0s means a new branch was made
-        if before and before != emptybranch:
+        if before and before != EMPTY_HASH:
             try:
                 # First, check the db for pushes we have
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
@@ -144,7 +145,7 @@ if 'repository' in data and 'name' in data['repository']:
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
         
         # If new branch, fetch the old ref from head_commit
-        if before and before == emptybranch and 'head_commit' in data:
+        if before and before == EMPTY_HASH and 'head_commit' in data:
             before = data['head_commit']['id']
         
         ##################################
@@ -224,6 +225,18 @@ if 'repository' in data and 'name' in data['repository']:
                     'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
                 }
                 update = "%s %s %s\n" % (before, after, ref)
+                
+                # If new branch, feed parent commit to the list to generate a diff
+                if after and after != EMPTY_HASH and before == EMPTY_HASH:
+                    try:
+                        os.chdir(repopath)
+                        # Run 'git rev-list --parents -n 1 <hash>'
+                        out = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1", after])
+                        # Fetch parent commit and add to the update list, hoping to get a diff between parent and head.
+                        parent_hash = out.split(" ")[1].strip()
+                        update += "%s %s %s" % (parent_hash, after, ref)
+                    except subprocess.CalledProcessError as err:
+                        log+= "Lookup of parent commit failed: %s" % err.output
 
                 try:                    
                     # Change to repo dir
