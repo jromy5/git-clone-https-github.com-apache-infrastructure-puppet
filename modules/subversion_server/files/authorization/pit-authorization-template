@@ -614,6 +614,8 @@ clr = rw
 whimsysvn = r
 acrequser = r
 @member = r
+# Allow hermes:apmail to check SVN status
+apezmlm = r
 
 [/infrastructure/bugzilla]
 @infrastructure-interest = rw
