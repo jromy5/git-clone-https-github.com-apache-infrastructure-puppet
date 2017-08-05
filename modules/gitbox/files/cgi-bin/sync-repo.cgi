@@ -224,20 +224,8 @@ if 'repository' in data and 'name' in data['repository']:
                     'WRITE_LOCK': '/x1/gitbox/write.lock',
                     'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
                 }
-                update = "%s %s %s\n" % (before, after, ref)
+                update = "%s %s %s\n" % (before if before != after else EMPTY_HASH, after, ref)
                 
-                # If new branch, feed parent commit to the list to generate a diff
-                if after and after != EMPTY_HASH and before == EMPTY_HASH:
-                    try:
-                        os.chdir(repopath)
-                        # Run 'git rev-list --parents -n 1 <hash>'
-                        out = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1", after])
-                        # Fetch parent commit and add to the update list, hoping to get a diff between parent and head.
-                        parent_hash = out.split(" ")[1].strip()
-                        update += "%s %s %s" % (parent_hash, after, ref)
-                    except subprocess.CalledProcessError as err:
-                        log+= "Lookup of parent commit failed: %s" % err.output
-
                 try:                    
                     # Change to repo dir
                     os.chdir(repopath)
