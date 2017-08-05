@@ -1,0 +1,4 @@
+The functionality provided by this file has moved to
+https://whimsy.apache.org/roster/committer/
+where you can search for committers by any of their registered email addresses
+
