@@ -1,6 +1,6 @@
 local JSON = require 'cjson'
 local http = require 'ssl.https'
-local ldap_host = "snappy5.apache.org"
+local ldap_host = "ldap1-lw-eu.apache.org"
 local aaa_domain = "apache.org"
 local aaa_binddn = "<%= scope['ldapclient::nssbinddn'] %>"
 local aaa_bindpw = "<%= scope['ldapclient::nssbindpasswd'] %>"
@@ -11,25 +11,21 @@ local hct = "<%= @hipchattoken %>"
 function getPMCs(r, uid)
     local groups = {}
     
-    -- Podling ownership. Currenly, only 'incubator' should get added for reporeq.
-    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b "ou=project,ou=groups,dc=apache,dc=org" -LLL "(owner=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
+    -- Fetch list of podlings
+    local rv = http.request("https://projects.apache.org/json/foundation/podlings.json")
+    podlings = JSON.decode(rv)
+    
+    -- PMCs, discard podlings for now (We'll fix that later).
+    local ldapquery = ([[ldapsearch -x -Z -H ldaps://%s:636 -D %s -w %s -b "ou=project,ou=groups,dc=apache,dc=org" -LLL "(owner=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
     local ldapdata = io.popen(ldapquery)
     local data = ldapdata:read("*a")
     for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=project,ou=groups,dc=apache,dc=org") do
-        if match and match == "incubator" then
+        if match and not podlings[match] then
             table.insert(groups, match)
         end
     end
     ldapdata:close()
     
-    --PMC membership
-    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b "ou=pmc,ou=committees,ou=groups,dc=apache,dc=org" -LLL "(member=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
-    local ldapdata = io.popen(ldapquery)
-    local data = ldapdata:read("*a")
-    for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=pmc,ou=committees,ou=groups,dc=apache,dc=org") do
-        table.insert(groups, match)
-    end
-    ldapdata:close()
     return groups
 end
 
