@@ -2202,6 +2202,19 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       RedirectMatch ^ https://subversion.apache.org/source-code
 
+  tinkerpop.com:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.tinkerpop.com'
+    docroot: '/var/www/tinkerpop.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'tinkerpop.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch permanent ^ http://tinkerpop.apache.org/
   tlp:
     vhost_name: '*'
     priority: 99
