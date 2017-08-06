@@ -663,6 +663,11 @@ whimsysvn = rw
 apezmlm = rw
 @member = rw
 
+[/infrastructure/trunk/unsubreq]
+whimsysvn = rw
+apezmlm = rw
+@member = rw
+
 [/infrastructure/trunk/cmsreq]
 acrequser = rw
 whimsysvn = r
