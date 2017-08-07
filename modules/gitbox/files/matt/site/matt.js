@@ -197,7 +197,7 @@ function renderPage(json) {
             obj.setAttribute("class", "tc_good tc");
             wa = true;
         } else if (mfa === false) {
-            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org.";
+            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org. Please allow 15 minutes for your MFA status to propagate.";
             t = "<b style='color: red;'>MFA DISABLED</b>";
             obj.setAttribute("class", "tc_bad tc");
         }
