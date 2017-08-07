@@ -177,8 +177,8 @@ if 'repository' in data and 'name' in data['repository']:
         try:
             # Change to repo dir
             os.chdir(repopath)
-            # Run 'git fetch'
-            out = subprocess.check_output(["git", "fetch"])
+            # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
+            out = subprocess.check_output(["git", "fetch", "--prune"])
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
             try:
                 os.unlink("/x1/gitbox/broken/%s.txt" % cfg.repo_name)
@@ -187,7 +187,7 @@ if 'repository' in data and 'name' in data['repository']:
         except subprocess.CalledProcessError as err:
             broken = True
             log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err.output)
-            with open("/x1/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
+            with open("/x1/gitbox/broken/%s.txt" % reponame, "w") as f:
                 f.write("BROKEN AT %s\n" % time.strftime("%c"))
                 f.close()
             
