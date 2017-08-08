@@ -116,8 +116,8 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'archiva-repository.apache.org.ssl_access.log'
     error_log_file: 'archiva-repository.apache.org.error.log'
     custom_fragment: |
-      ProxyPass / http://archiva-vm.apache.org/
-      ProxyPassReverse / http://archiva-vm.apache.org/
+      ProxyPass / http://archiva-vm2.apache.org/
+      ProxyPassReverse / http://archiva-vm2.apache.org/
       ProxyPreserveHost On
 
       ProxyErrorOverride On
