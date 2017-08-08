@@ -55,9 +55,12 @@ function handle(r)
     -- call to fetch list of PMCs a user belongs to?
     if get.action and get.action == 'pmcs' then
         local pmcs = getPMCs(r, r.user or 'nobody')
+        local rv = http.request('https://whimsy.apache.org/public/committee-info.json')
+        local pjson = JSON.decode(rv)
         r:puts(JSON.encode{
             okay = true,
-            pmcs =pmcs
+            pmcs = pmcs,
+            names = pjson
         })
         return apache2.OK
     end
