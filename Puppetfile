@@ -64,7 +64,7 @@ mod 'etherpad_lite',
   :git => 'https://github.com/cthistle/puppet-etherpad_lite.git'
 
 mod 'fail2ban',
-  :git => 'https://github.com/stumped2/puppet-fail2ban',
+  :git => 'https://github.com/clambertus/puppet-fail2ban',
   :branch => 'fix_actionsource'
 
 
@@ -88,7 +88,7 @@ mod 'gnupg',
   :tag => '1.2.1'
 
 mod 'iptables',
-  :git    => 'https://github.com/pctony/puppet-iptables.git',
+  :git    => 'https://github.com/clambertus/puppet-iptables.git',
   :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
 
 
@@ -98,7 +98,7 @@ mod 'logrotate',
 
 
 mod 'ldap',
-  :git    => 'https://github.com/pctony/puppet-ldap.git',
+  :git    => 'https://github.com/clambertus/puppet-ldap.git',
   :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
 
 
@@ -118,7 +118,7 @@ mod 'letsencrypt',
 
 
 mod 'mailman3',
-  :git => 'https://github.com/pctony/puppet-mailman3.git',
+  :git => 'https://github.com/clambertus/puppet-mailman3.git',
   :branch => 'asf_development'
 
 
@@ -196,12 +196,12 @@ mod 'python',
 
 
 mod 'rsync',
-  :git => 'https://github.com/stumped2/puppetlabs-rsync.git',
+  :git => 'https://github.com/clambertus/puppetlabs-rsync.git',
   :branch => 'add_logfile'
 
 
 mod 'rsyslog',
-  :git    => 'https://github.com/pctony/puppet-rsyslog.git',
+  :git    => 'https://github.com/clambertus/puppet-rsyslog.git',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
 
@@ -225,7 +225,7 @@ mod 'snmp',
 
 
 mod 'ssh',
-  :git    => 'https://github.com/pctony/puppet-ssh.git',
+  :git    => 'https://github.com/clambertus/puppet-ssh.git',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
 
 
