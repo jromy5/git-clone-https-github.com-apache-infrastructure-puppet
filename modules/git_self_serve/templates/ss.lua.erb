@@ -64,7 +64,7 @@ function handle(r)
         r:puts(JSON.encode{
             okay = true,
             pmcs = pmcs,
-            names = pjson
+            names = pjson.committees
         })
         return apache2.OK
     end
