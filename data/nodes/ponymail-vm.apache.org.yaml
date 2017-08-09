@@ -20,7 +20,7 @@ elasticsearch::instances:
   pony:
     config:
       node.name: 'ponymail-vm'
-      path.data: '/x1/elastic/db'
+      path.data: '/x1/elastic/db/pony'
       network.host: '127.0.0.1'
 
 apache::default_vhost: false
