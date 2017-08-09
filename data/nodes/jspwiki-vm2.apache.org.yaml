@@ -15,7 +15,7 @@ base::basepackages:
     - 'mailutils'
     - 'openjdk-8-jdk'
 
-letsencrypt::email: 'dev@jspwiki.@apache.org'
+letsencrypt::email: 'dev@jspwiki.apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
   jspwiki-vm2:
