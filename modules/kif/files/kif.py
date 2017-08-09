@@ -394,16 +394,14 @@ def main():
         if 'notifications' in config and 'hipchat' in config['notifications']:
             hcfg = config['notifications']['hipchat']
             if 'token' in hcfg and 'room' in hcfg:
-                msg = """KIF has detectect the following issues on %s:<br/>
+                msg = """Issues on %s:
     <pre>
     %s
-    </pre><br/>
-    As a precaution, the following commands were run to fix issues:<br/>
+    </pre>
+    The following commands were run:
     <pre>
 %s
-    </pre><br/>
-    With regards and sighs,<br/>
-    Your loyal KIF service.
+    </pre>
                 """ % (me, msgerr, msgrl)
                 notifyHipchat(hcfg['room'], hcfg['token'], msg, hcfg.get('notify', False))
 
