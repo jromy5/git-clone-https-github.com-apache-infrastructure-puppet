@@ -38,7 +38,7 @@ def getGitHubRepos():
     print("Fetching list of GitHub repos, hang on (this may take a while!)..")
     repos = {} # key/value with reponame: description
     for n in range(1, 100): # 100 would be 3000 repos, we have 750ish now...
-        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (ORG_READ_TOKEN, n)
+        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (ORG_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
         # Break if no more repos
