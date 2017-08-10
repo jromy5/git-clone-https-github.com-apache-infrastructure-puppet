@@ -25,10 +25,6 @@ class buildbot_slave (
 
   include buildbot_slave::buildbot
 
-  class { 'datadog_agent':
-    tags => ['roles:builds'],
-  }
-
   # install gradle PPA and gradle 2.x
 
   apt::ppa { 'ppa:cwchien/gradle':
