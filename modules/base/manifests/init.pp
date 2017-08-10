@@ -92,6 +92,9 @@ class base (
   $tcinstall = hiera_hash('tomcat::install',{})
   create_resources(tomcat::install, $tcinstall)
 
+  $venvs = hiera_hash('python::venv',{})
+  create_resources(python::virtualenv, $venvs)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
