@@ -366,6 +366,8 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b139
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
+  - asf-build-jdk9-b181
+  - asf-build-jdk9-b181-unlimited-security
   - asf-build-jira-cli-2.1.0
 
 # Not all build slaves. This is just for Jenkins slaves.
@@ -501,6 +503,8 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b139
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
+  - asf-build-jdk9-b181
+  - asf-build-jdk9-b181-unlimited-security
 
 buildbot_slave::bb_basepackages:
   - ant
