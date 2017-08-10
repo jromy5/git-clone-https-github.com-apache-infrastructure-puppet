@@ -324,6 +324,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-findbugs-2.0.3
   - asf-build-findbugs-3.0.1
   - asf-build-harmony-jdk-713673
+  - asf-build-ibm-java2-i386-50
   - asf-build-ibm-java-x86-64-70
   - asf-build-ibm-java-x86-64-80
   - asf-build-j2sdk1.4.2-19
@@ -464,6 +465,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.3.9
   - asf-build-apache-maven-3.5.0
   - asf-build-harmony-jdk-713673
+  - asf-build-ibm-java2-i386-50
   - asf-build-ibm-java-x86-64-80
   - asf-build-jdk1.5.0-22-32
   - asf-build-jdk1.5.0-22-64
