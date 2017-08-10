@@ -39,7 +39,6 @@ bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 bloodhound={reuse:asf-authorization:bloodhound}
 bloodhound-pmc={ldap:cn=bloodhound,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-blur={reuse:asf-authorization:blur}
 board={reuse:asf-authorization:board}
 bookkeeper={reuse:asf-authorization:bookkeeper}
 bookkeeper-pmc={ldap:cn=bookkeeper,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
@@ -1147,7 +1146,7 @@ buildbot = rw
 @aries = rw
 
 [/websites/production/blur]
-@blur = rw
+@incubator = rw
 
 [/websites/production/bval]
 @bval = rw

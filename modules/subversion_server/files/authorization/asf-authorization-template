@@ -102,7 +102,6 @@ bigtop={ldap:cn=bigtop,ou=groups,dc=apache,dc=org}
 bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=groups,dc=apache,dc=org}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
-blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
 board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
 bookkeeper={ldap:cn=bookkeeper,ou=groups,dc=apache,dc=org}
 brooklyn={ldap:cn=brooklyn,ou=groups,dc=apache,dc=org}
@@ -209,7 +208,6 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=groups,dc=apache,dc=org}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
-horn=tjungblut,edwardyoon,dongjin,minho,jungin,paeng,chl501,bsikander,ks881115,zjaffee
 htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
 httpcomponents={ldap:cn=httpcomponents,ou=groups,dc=apache,dc=org}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
@@ -996,7 +994,7 @@ buildbot = rw
 @incubator = rw
 
 [/incubator/blur]
-@blur = rw
+* = r
 
 [/incubator/callback]
 @incubator = rw
@@ -1024,7 +1022,7 @@ buildbot = rw
 * = r
 
 [/incubator/horn]
-@horn = rw
+* = r
 
 [/incubator/htrace]
 @htrace = rw
