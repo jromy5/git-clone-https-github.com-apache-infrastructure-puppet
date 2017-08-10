@@ -5,8 +5,6 @@ classes:
   - loggy
 
 buildbot_slave::slave_name: 'lares_ubuntu'
-buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
 
 buildbot_slave::rat::projects:
   - 'lucy'

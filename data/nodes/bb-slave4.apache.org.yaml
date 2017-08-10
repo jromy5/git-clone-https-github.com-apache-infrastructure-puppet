@@ -28,7 +28,6 @@ buildbot_slave::required_packages:
   - 'libxmu-headers'
   - 'libxpm-dev'
   - 'libxrandr-dev'
-  - 'openjdk-7-jdk'
   - 'orbit2'
   - 'pkg-config'
   - 'rpm'
