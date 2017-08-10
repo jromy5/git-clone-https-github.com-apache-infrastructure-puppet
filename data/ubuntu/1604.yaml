@@ -426,6 +426,7 @@ build_slaves::distro_packages:
   - mono-complete
   - nodejs
   - nsis
+  - openjdk-9-jdk
   - php-pear
   - php-dev
   - php7.0-cli
@@ -504,6 +505,7 @@ buildbot_slave::bb_basepackages:
   - libsqlite3-0
   - libsqlite3-dev
   - maven
+  - openjdk-9-jdk
   - pkg-config
   - python3-dev
   - python3-markdown
