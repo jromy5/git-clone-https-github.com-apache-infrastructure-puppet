@@ -73,7 +73,6 @@ cocoon={reuse:asf-authorization:cocoon}
 cocoon-pmc={ldap:cn=cocoon,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 commons={reuse:asf-authorization:commons}
 commons-pmc={ldap:cn=commons,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-commonsrdf={reuse:asf-authorization:commonsrdf}
 cordova={reuse:asf-authorization:cordova}
 cordova-pmc={ldap:cn=cordova,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 couchdb={reuse:asf-authorization:couchdb}
@@ -210,7 +209,6 @@ nifi={reuse:asf-authorization:nifi}
 nifi-pmc={ldap:cn=nifi,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 nutch={reuse:asf-authorization:nutch}
 nutch-pmc={ldap:cn=nutch,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-nuvem={reuse:asf-authorization:nuvem}
 ode={reuse:asf-authorization:ode}
 ode-pmc={ldap:cn=ode,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ofbiz={reuse:asf-authorization:ofbiz}
