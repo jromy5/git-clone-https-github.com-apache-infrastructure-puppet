@@ -39,7 +39,6 @@ bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bloodhound={reuse:asf-authorization:bloodhound}
 bloodhound-pmc={ldap:cn=bloodhound,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-board={reuse:asf-authorization:board}
 bookkeeper={reuse:asf-authorization:bookkeeper}
 bookkeeper-pmc={ldap:cn=bookkeeper,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 brooklyn={reuse:asf-authorization:brooklyn}
@@ -1396,9 +1395,6 @@ buildbot = rw
 
 [/websites/production/sis]
 @sis = rw
-
-[/websites/production/slider]
-@incubator = rw
 
 [/websites/production/slider]
 @incubator = rw
