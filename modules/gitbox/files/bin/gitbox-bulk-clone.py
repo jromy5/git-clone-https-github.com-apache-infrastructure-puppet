@@ -45,7 +45,12 @@ def getGitHubRepos():
         if len(data) == 0:
             break
         for repo in data:
-            repos[repo['name']] = repo['description'].replace("Mirror of ", "")
+            rname = repo['name']
+            if not repo['description']:
+                print("Warning: %s has no description set! " % rname)
+                repos[rname] = "Apache %s" % rname.split('-')[0]
+            else:
+                repos[rname] = repo['description'].replace("Mirror of ", "")
     return repos
 
 if len(sys.argv) < 2:
@@ -79,7 +84,7 @@ for repo in repos:
         # Otherwise, run gitbox-clone if not a dry run.
         else:
             print("Cloning %s (%s) to gitbox..." % (repourl, description))
-            if not 'dryrun' in sys.argv:
+            if 'dryrun' not in sys.argv:
                 try:
                     subprocess.check_output(['/x1/gitbox/bin/gitbox-clone', '-d', description, '-c', commitlist, repourl, location], shell = True)
                     print("Done cloning, chowning...")
