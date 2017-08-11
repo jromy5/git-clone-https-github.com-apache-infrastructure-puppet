@@ -24,6 +24,7 @@
 import os
 import sys
 import urllib2
+import requests
 import json
 import ConfigParser
 
@@ -52,6 +53,18 @@ def getGitHubRepos():
             else:
                 repos[rname] = repo['description'].replace("Mirror of ", "")
     return repos
+
+def rmWebhooks(repo):
+    """Checks for and removes stale web hooks"""
+    url = "https://api.github.com/repos/apache/%s/hooks?access_token=%s" % (repo, ORG_TOKEN)
+    response = urllib2.urlopen(url)
+    data = json.load(response)
+    for hook in response:
+        # Is this an old git-wip hook?
+        if 'git-wip' in hook['config']['url'] or 'git1-us-east' in hook['config']['url']:
+            print("Removing stale webhook %s (%s)" % (hook['url'], hook['config']['url']))
+            requests.delete("%s?access_token=%s" % (hook['url'], ORG_TOKEN))
+            
 
 if len(sys.argv) < 2:
     print("Usage: gitbox-bulk-clone.py $project [$commitlist] [dryrun]")
@@ -90,6 +103,7 @@ for repo in repos:
                     print("Done cloning, chowning...")
                     subprocess.check_output(['chown', '-R', 'www-data', location], shell = True)
                     print("Successfully cloned %s" % location)
+                    rmWebhooks(repo)
                 except subprocess.CalledProcessError as err:
                     print("FAILED! Output was:")
                     print(err.output)
