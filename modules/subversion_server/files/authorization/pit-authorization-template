@@ -1099,7 +1099,7 @@ openejb-tck = r
 [/travel-assistance]
 @member = rw
 @svnadmins = rw
-+@ea = rw
+@ea = rw
 * =
 
 [/travel-assistance/past-recipients]
