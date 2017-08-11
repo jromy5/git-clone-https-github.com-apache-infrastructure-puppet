@@ -9,7 +9,6 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'openjdk-7-jdk'
   - 'tomcat7'
   - 'wine'
 

@@ -35,7 +35,6 @@ buildbot_slave::required_packages:
   - 'libxpm-dev'
   - 'libxrandr-dev'
   - 'mesa-common-dev'
-  - 'openjdk-7-jdk'
   - 'orbit2'
   - 'pkg-config'
   - 'rpm'

@@ -325,8 +325,8 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-ibmjava2-142
   - asf-build-ibmjava2-amd64-142
   - asf-build-ibm-java2-i386-50
-  - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-i386-60
+  - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-x86-64-60
   - asf-build-ibm-java-x86-64-70
   - asf-build-ibm-java-x86-64-80
@@ -366,6 +366,8 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b139
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
+  - asf-build-jdk9-b181
+  - asf-build-jdk9-b181-unlimited-security
   - asf-build-jira-cli-2.1.0
 
 # Not all build slaves. This is just for Jenkins slaves.
@@ -482,6 +484,10 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.3.3
   - asf-build-apache-maven-3.3.9
   - asf-build-apache-maven-3.5.0
+  - asf-build-harmony-jdk-713673
+  - asf-build-ibm-java2-i386-50
+  - asf-build-ibm-java-i386-60
+  - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-x86-64-80
   - asf-build-jdk1.5.0-22-32
   - asf-build-jdk1.5.0-22-64
@@ -501,6 +507,8 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b139
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
+  - asf-build-jdk9-b181
+  - asf-build-jdk9-b181-unlimited-security
 
 buildbot_slave::bb_basepackages:
   - ant
@@ -521,6 +529,7 @@ buildbot_slave::bb_basepackages:
   - libsqlite3-0
   - libsqlite3-dev
   - maven
+  - openjdk-7-jdk
   - pkg-config
   - python3-dev
   - python3-markdown

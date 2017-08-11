@@ -5,8 +5,6 @@ classes:
   - tomcat
 
 buildbot_slave::slave_name: 'orcus_ubuntu'
-buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
 
 tomcat::install:
   '/opt/tomcat7':
