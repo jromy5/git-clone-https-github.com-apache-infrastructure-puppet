@@ -135,8 +135,6 @@ cocoon={ldap:cn=cocoon,ou=groups,dc=apache,dc=org}
 cocoon-pmc={reuse:pit-authorization:cocoon-pmc}
 commons={ldap:cn=commons,ou=groups,dc=apache,dc=org}
 commons-pmc={reuse:pit-authorization:commons-pmc}
-# Only used for http://people.apache.org/phonebook.html?podling=commonsrdf
-commonsrdf=lewismc,johndament,ggregory,wikier,stain,enridaga,britter
 cordova={ldap:cn=cordova,ou=groups,dc=apache,dc=org}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
 couchdb={ldap:cn=couchdb,ou=groups,dc=apache,dc=org}
@@ -182,7 +180,6 @@ flink={ldap:cn=flink,ou=groups,dc=apache,dc=org}
 flink-pmc={reuse:pit-authorization:flink-pmc}
 flume={ldap:cn=flume,ou=groups,dc=apache,dc=org}
 flume-pmc={reuse:pit-authorization:flume-pmc}
-fluo=billie,drew,elserj,cjnolet,ctubbsii,kturner,mwalch
 forrest={ldap:cn=forrest,ou=groups,dc=apache,dc=org}
 forrest-pmc={reuse:pit-authorization:forrest-pmc}
 fundraising={reuse:pit-authorization:fundraising}
@@ -292,7 +289,6 @@ mesos={ldap:cn=mesos,ou=groups,dc=apache,dc=org}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=groups,dc=apache,dc=org}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv,ddutta,discovery,reaperhulk,kirankom,rmerriman,prhodes,sirsean,smogg,dev_warlord,mperez,nickallen,lyle,rurcioli,leet,mmiklavcic,otto,kylerichardson,jmeyer,jonzeolla,mattf
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=groups,dc=apache,dc=org}
 mina-pmc={reuse:pit-authorization:mina-pmc}
@@ -407,7 +403,6 @@ steve-pmc={reuse:pit-authorization:steve-pmc}
 storm={ldap:cn=storm,ou=groups,dc=apache,dc=org}
 storm-pmc={reuse:pit-authorization:storm-pmc}
 #stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
-streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks,rdouglas
 struts={ldap:cn=struts,ou=groups,dc=apache,dc=org}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
@@ -1127,7 +1122,7 @@ buildbot = rw
 * = r
 
 [/incubator/streams/site]
-@streams = rw
+@incubator = rw
 
 [/systemml]
 @systemml = rw
