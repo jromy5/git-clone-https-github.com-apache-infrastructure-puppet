@@ -39,7 +39,6 @@ bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bloodhound={reuse:asf-authorization:bloodhound}
 bloodhound-pmc={ldap:cn=bloodhound,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-blur={reuse:asf-authorization:blur}
 board={reuse:asf-authorization:board}
 bookkeeper={reuse:asf-authorization:bookkeeper}
 bookkeeper-pmc={ldap:cn=bookkeeper,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
@@ -73,7 +72,6 @@ cocoon={reuse:asf-authorization:cocoon}
 cocoon-pmc={ldap:cn=cocoon,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 commons={reuse:asf-authorization:commons}
 commons-pmc={ldap:cn=commons,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-commonsrdf={reuse:asf-authorization:commonsrdf}
 cordova={reuse:asf-authorization:cordova}
 cordova-pmc={ldap:cn=cordova,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 couchdb={reuse:asf-authorization:couchdb}
@@ -210,7 +208,6 @@ nifi={reuse:asf-authorization:nifi}
 nifi-pmc={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nutch={reuse:asf-authorization:nutch}
 nutch-pmc={ldap:cn=nutch,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-nuvem={reuse:asf-authorization:nuvem}
 ode={reuse:asf-authorization:ode}
 ode-pmc={ldap:cn=ode,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 ofbiz={reuse:asf-authorization:ofbiz}
@@ -1147,7 +1144,7 @@ buildbot = rw
 @aries = rw
 
 [/websites/production/blur]
-@blur = rw
+@incubator = rw
 
 [/websites/production/bval]
 @bval = rw

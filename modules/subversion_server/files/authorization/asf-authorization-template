@@ -102,7 +102,6 @@ bigtop={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 bloodhound-pmc={reuse:pit-authorization:bloodhound-pmc}
-blur=amccurry,crohr,cutting,gagz,phunt,rgimmy,sleberkn,twilliams
 board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
 bookkeeper={ldap:cn=bookkeeper,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 brooklyn={ldap:cn=brooklyn,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -135,8 +134,6 @@ cocoon={ldap:cn=cocoon,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 cocoon-pmc={reuse:pit-authorization:cocoon-pmc}
 commons={ldap:cn=commons,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 commons-pmc={reuse:pit-authorization:commons-pmc}
-# Only used for http://people.apache.org/phonebook.html?podling=commonsrdf
-commonsrdf=lewismc,johndament,ggregory,wikier,stain,enridaga,britter
 cordova={ldap:cn=cordova,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 cordova-pmc={reuse:pit-authorization:cordova-pmc}
 couchdb={ldap:cn=couchdb,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -182,7 +179,6 @@ flink={ldap:cn=flink,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 flink-pmc={reuse:pit-authorization:flink-pmc}
 flume={ldap:cn=flume,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 flume-pmc={reuse:pit-authorization:flume-pmc}
-fluo=billie,drew,elserj,cjnolet,ctubbsii,kturner,mwalch
 forrest={ldap:cn=forrest,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 forrest-pmc={reuse:pit-authorization:forrest-pmc}
 fundraising={reuse:pit-authorization:fundraising}
@@ -209,7 +205,6 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
-horn=tjungblut,edwardyoon,dongjin,minho,jungin,paeng,chl501,bsikander,ks881115,zjaffee
 htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
 httpcomponents={ldap:cn=httpcomponents,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
@@ -292,7 +287,6 @@ mesos={ldap:cn=mesos,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-metron=billie,bjkolly,cporter,cestella,dbhirko,gvetticaden,jimbaker,jsirota,lmccay,mattmann,mbittmann,omalley,ptgoetz,sheetal_dolas,vinodkv,ddutta,discovery,reaperhulk,kirankom,rmerriman,prhodes,sirsean,smogg,dev_warlord,mperez,nickallen,lyle,rurcioli,leet,mmiklavcic,otto,kylerichardson,jmeyer,jonzeolla,mattf
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mina-pmc={reuse:pit-authorization:mina-pmc}
@@ -407,7 +401,6 @@ steve-pmc={reuse:pit-authorization:steve-pmc}
 storm={ldap:cn=storm,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 storm-pmc={reuse:pit-authorization:storm-pmc}
 #stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
-streams=ahart,ate,chansen,craigmcc,dpalmisano,jmsnell,lavender,letourneau,mfranklin,rbaxter85,dsullivan,sblackmon,rebanks,rdouglas
 struts={ldap:cn=struts,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
@@ -996,7 +989,7 @@ buildbot = rw
 @incubator = rw
 
 [/incubator/blur]
-@blur = rw
+* = r
 
 [/incubator/callback]
 @incubator = rw
@@ -1024,7 +1017,7 @@ buildbot = rw
 * = r
 
 [/incubator/horn]
-@horn = rw
+* = r
 
 [/incubator/htrace]
 @htrace = rw
@@ -1127,7 +1120,7 @@ buildbot = rw
 * = r
 
 [/incubator/streams/site]
-@streams = rw
+@incubator = rw
 
 [/systemml]
 @systemml = rw
