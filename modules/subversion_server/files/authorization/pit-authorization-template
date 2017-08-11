@@ -255,8 +255,6 @@ qpid={reuse:asf-authorization:qpid}
 qpid-pmc={ldap:cn=qpid,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ranger={reuse:asf-authorization:ranger}
 ranger-pmc={ldap:cn=ranger,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-rave={reuse:asf-authorization:rave}
-rave-pmc={ldap:cn=rave,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 reef={reuse:asf-authorization:reef}
 reef-pmc={ldap:cn=reef,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 river={reuse:asf-authorization:river}
@@ -344,8 +342,6 @@ whimsy={reuse:asf-authorization:whimsy}
 whimsy-pmc={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 wicket={reuse:asf-authorization:wicket}
 wicket-pmc={ldap:cn=wicket,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-wink={reuse:asf-authorization:wink}
-wink-pmc={ldap:cn=wink,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 ws={reuse:asf-authorization:ws}
 ws-pmc={ldap:cn=ws,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 xalan={reuse:asf-authorization:xalan}
@@ -1001,7 +997,7 @@ openejb-tck = r
 @ranger-pmc = rw
 
 [/pmc/rave]
-@rave = rw
+@attic-pmc = rw
 
 [/pmc/serf]
 @serf-pmc = rw
@@ -1370,7 +1366,7 @@ buildbot = rw
 @ranger = rw
 
 [/websites/production/rave]
-@rave = rw
+@attic-pmc = rw
 
 [/websites/production/river]
 @river = rw
@@ -1453,7 +1449,7 @@ buildbot = rw
 @wave = rw
 
 [/websites/production/wink]
-@wink = rw
+@attic-pmc = rw
 
 [/websites/production/wookie]
 @attic-pmc = rw
