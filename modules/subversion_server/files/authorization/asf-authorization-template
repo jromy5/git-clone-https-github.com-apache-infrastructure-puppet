@@ -355,8 +355,6 @@ edgent=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
 ranger={ldap:cn=ranger,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ranger-pmc={reuse:pit-authorization:ranger-pmc}
 ratis=jing9,szetszwo,enis,aengineer,arp,cnauroth,jghoman,mayank,xyao,liuml07,umamahesh,jitendra,ddas,gtcarrera9,hanishakoneru,xiaobingo,cliang
-rave={ldap:cn=rave,ou=groups,dc=apache,dc=org}
-rave-pmc={reuse:pit-authorization:rave-pmc}
 reef={ldap:cn=reef,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 reef-pmc={reuse:pit-authorization:reef-pmc}
 river={ldap:cn=river,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -460,8 +458,6 @@ whimsy={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 wicket-pmc={reuse:pit-authorization:wicket-pmc}
-wink={ldap:cn=wink,ou=groups,dc=apache,dc=org}
-wink-pmc={reuse:pit-authorization:wink-pmc}
 ws-pmc={reuse:pit-authorization:ws-pmc}
 ws={ldap:cn=ws,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 xalan={ldap:cn=xalan,ou=project,ou=groups,dc=apache,dc=org;attr=member}
