@@ -325,8 +325,8 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-ibmjava2-142
   - asf-build-ibmjava2-amd64-142
   - asf-build-ibm-java2-i386-50
-  - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-i386-60
+  - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-x86-64-60
   - asf-build-ibm-java-x86-64-70
   - asf-build-ibm-java-x86-64-80
@@ -486,6 +486,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-3.5.0
   - asf-build-harmony-jdk-713673
   - asf-build-ibm-java2-i386-50
+  - asf-build-ibm-java-i386-60
   - asf-build-ibm-java2-x86-64-50
   - asf-build-ibm-java-x86-64-80
   - asf-build-jdk1.5.0-22-32
