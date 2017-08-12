@@ -22,7 +22,6 @@ buildbot_slave::required_packages:
   - 'libhamcrest1.2-java'
   - 'libidl-dev'
   - 'liborbit2-dev'
-  - 'libssl-dev'
   - 'libxaw7-dev'
   - 'libxmu-dev'
   - 'libxmu-headers'

@@ -25,8 +25,6 @@ buildbot_slave::required_packages:
   - 'libhamcrest1.2-java'
   - 'libidl-dev'
   - 'liborbit2-dev'
-  - 'libpam0g-dev'
-  - 'libssl-dev'
   - 'libwww-perl'
   - 'libxaw7-dev'
   - 'libxml-parser-perl'

@@ -17,7 +17,6 @@ apache::default_ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
 
 base::basepackages:
   - patch
-  - libssl-dev
   - libmysqlclient-dev
   - cvs
   - git-core
