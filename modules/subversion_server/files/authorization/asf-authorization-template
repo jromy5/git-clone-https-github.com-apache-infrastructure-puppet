@@ -471,8 +471,6 @@ yetus={ldap:cn=yetus,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 yetus-pmc={reuse:pit-authorization:yetus-pmc}
 zeppelin={ldap:cn=zeppelin,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 zeppelin-pmc={reuse:pit-authorization:zeppelin-pmc}
-zest={ldap:cn=zest,ou=groups,dc=apache,dc=org}
-zest-pmc={reuse:pit-authorization:zest-pmc}
 zookeeper={ldap:cn=zookeeper,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
 
@@ -1886,9 +1884,6 @@ svn-role = rw
 [/xmlgraphics/site]
 @xmlgraphics-batik = rw
 @xmlgraphics-fop = rw
-
-[/zest]
-@zest = rw
 
 [/zookeeper]
 @zookeeper = r

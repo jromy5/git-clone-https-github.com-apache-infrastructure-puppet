@@ -355,8 +355,6 @@ yetus={reuse:asf-authorization:yetus}
 yetus-pmc={ldap:cn=yetus,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 zeppelin={reuse:asf-authorization:zeppelin}
 zeppelin-pmc={ldap:cn=zeppelin,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-zest={reuse:asf-authorization:zest}
-zest-pmc={ldap:cn=zest,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 zookeeper={reuse:asf-authorization:zookeeper}
 zookeeper-pmc={ldap:cn=zookeeper,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 
