@@ -212,7 +212,6 @@ ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
-# imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
 incubator={ldap:cn=incubator,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
 isis={ldap:cn=isis,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -235,7 +234,6 @@ jspwiki={ldap:cn=jspwiki,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 juddi-pmc={reuse:pit-authorization:juddi-pmc}
-# juice=amattheu,blautenb,dims,kwouters,vdkoogh,nlevitt,raul,wassa,werner
 karaf={ldap:cn=karaf,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
 knox={ldap:cn=knox,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -246,8 +244,6 @@ kylin={ldap:cn=kylin,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 kylin-pmc={reuse:pit-authorization:kylin-pmc}
 kafka={ldap:cn=kafka,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 kafka-pmc={reuse:pit-authorization:kafka-pmc}
-# kato=antelder,geirm,rdonkin,sgoyal,riccole,ccristal,monteith,spoole,simuvid
-# retired: kitty=jim,kevan,msacks,pidster,rjung,senaka,james_r_bray,peary,anovarini
 labs={ldap:cn=labs,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 labs-pmc={reuse:pit-authorization:labs-pmc}
 lens={ldap:cn=lens,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -258,7 +254,6 @@ logging-pmc={reuse:pit-authorization:logging-pmc}
 logging={ldap:cn=logging,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 lucene={ldap:cn=lucene,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 lucene-pmc={reuse:pit-authorization:lucene-pmc}
-# lucene-c=ehatcher,rooneg,pquerna
 lucene-connectors={ldap:cn=lucene-connectors,ou=auth,ou=groups,dc=apache,dc=org}
 # Note: 'lucene-lucy' is legacy lucene subproject, 'lucy' is newer podling project
 # Note: 'lucene-lucy' - the lucy podling just graduated.
@@ -281,7 +276,6 @@ mesos={ldap:cn=mesos,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mesos-pmc={reuse:pit-authorization:mesos-pmc}
 metamodel={ldap:cn=metamodel,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
-# Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mina-pmc={reuse:pit-authorization:mina-pmc}
 mrql={ldap:cn=mrql,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -300,7 +294,6 @@ olingo={ldap:cn=olingo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 olingo-pmc={reuse:pit-authorization:olingo-pmc}
 oltu={ldap:cn=oltu,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 oltu-pmc={reuse:pit-authorization:oltu-pmc}
-# now part of commons: ognl=apetrelli,grobmeier,javadrewd,jkuhnert,jochen,lukaszlenart,mcucchiara,olamy,simonetripodi,upayavira,leadpipe
 oodt={ldap:cn=oodt,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 oodt-pmc={reuse:pit-authorization:oodt-pmc}
 oozie={ldap:cn=oozie,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -324,7 +317,6 @@ pdfbox-pmc={reuse:pit-authorization:pdfbox-pmc}
 pig={ldap:cn=pig,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 pig-pmc={reuse:pit-authorization:pig-pmc}
 perl={ldap:cn=perl,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-# perl-docs: pereinar,
 perl-docs={ldap:cn=perl-docs,ou=auth,ou=groups,dc=apache,dc=org}
 perl-test={ldap:cn=perl-test,ou=auth,ou=groups,dc=apache,dc=org}
 phoenix={ldap:cn=phoenix,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -340,7 +332,6 @@ poi={ldap:cn=poi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 poi-pmc={reuse:pit-authorization:poi-pmc}
 portals={ldap:cn=portals,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 portals-pmc={reuse:pit-authorization:portals-pmc}
-# provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
 qpid={ldap:cn=qpid,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
 edgent={ldap:cn=edgent,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -376,7 +367,6 @@ slider={ldap:cn=slider,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling={ldap:cn=sling,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling-pmc={reuse:pit-authorization:sling-pmc}
 sling-emeritus={ldap:cn=sling-emeritus,ou=auth,ou=groups,dc=apache,dc=org}
-#socialsite=snoopdave,henning
 spamassassin={ldap:cn=spamassassin,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 spamassassin-pmc={reuse:pit-authorization:spamassassin-pmc}
 spark={ldap:cn=spark,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -389,7 +379,6 @@ steve={ldap:cn=steve,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 steve-pmc={reuse:pit-authorization:steve-pmc}
 storm={ldap:cn=storm,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 storm-pmc={reuse:pit-authorization:storm-pmc}
-#stonehenge=azeez,bendewey,cctrieloff,chintana,coar,danese,dkulp,drewbai,gdaniels,jim,kamaljit,mchampion,mlittle,mriou,nandana,pzf,ruwan,samisa,sanjiva,senaka,shankar
 struts={ldap:cn=struts,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
@@ -404,7 +393,6 @@ systemml={ldap:cn=systemml,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
-# tashi=clr,mriou,pzf,stroucki,mryan3,rgass
 tapestry={ldap:cn=tapestry,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
 taverna={ldap:cn=taverna,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -428,7 +416,6 @@ tomcat-pmc={reuse:pit-authorization:tomcat-pmc}
 toree={ldap:cn=toree,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 trafficserver={ldap:cn=trafficserver,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 trafficserver-pmc={reuse:pit-authorization:trafficserver-pmc}
-# trafficserver=akundu,andrewhsu,balajd,bcall,dianes,dima,ericb,georgep,jim,jplevyak,manjesh,mlibbey,mturk,pquerna,rayray,sjiang,vmamidi,zwoop
 turbine={ldap:cn=turbine,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 turbine-pmc={reuse:pit-authorization:turbine-pmc}
 twill={ldap:cn=twill,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -456,17 +443,12 @@ xerces-p={ldap:cn=xerces-p,ou=auth,ou=groups,dc=apache,dc=org}
 xerces-j={ldap:cn=xerces-j,ou=auth,ou=groups,dc=apache,dc=org}
 xerces-pmc={reuse:pit-authorization:xerces-pmc}
 xerces={ldap:cn=xerces,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-# xml cannot be enabled at present because it contains ids which are non-existent
-## xml={ldap:cn=xml,ou=groups,dc=apache,dc=org}
-# xml-pmc={reuse:pit-authorization:xml-pmc}
-# xml-axkit: jwalt,
 xml-axkit={ldap:cn=xml-axkit,ou=auth,ou=groups,dc=apache,dc=org}
 xml-commons={ldap:cn=xml-commons,ou=auth,ou=groups,dc=apache,dc=org}
 xmlgraphics-pmc={reuse:pit-authorization:xmlgraphics-pmc}
 xmlgraphics={ldap:cn=xmlgraphics,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 xmlgraphics-batik={ldap:cn=xmlgraphics-batik,ou=auth,ou=groups,dc=apache,dc=org}
 xmlgraphics-fop={ldap:cn=xmlgraphics-fop,ou=auth,ou=groups,dc=apache,dc=org}
-# yoko=adc,chirino,dain,dblevins,djencks,hogstrom,jgenender,trustin,geirm,rickmcguire,dmiddlem,enolan,cjodea,dpicco,andypiper,jsommer,adisakala,krab,dweir,bravi,ahj,pkosuru,lkuehne,mvescovi,apetrenko
 yetus={ldap:cn=yetus,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 yetus-pmc={reuse:pit-authorization:yetus-pmc}
 zeppelin={ldap:cn=zeppelin,ou=project,ou=groups,dc=apache,dc=org;attr=member}

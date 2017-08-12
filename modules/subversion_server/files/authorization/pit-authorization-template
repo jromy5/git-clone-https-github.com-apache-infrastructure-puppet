@@ -34,7 +34,6 @@ avro={reuse:asf-authorization:avro}
 avro-pmc={ldap:cn=avro,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 axis={reuse:asf-authorization:axis}
 axis-pmc={ldap:cn=axis,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# awf={reuse:asf-authorization:# awf}
 bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bloodhound={reuse:asf-authorization:bloodhound}
@@ -89,7 +88,6 @@ db={reuse:asf-authorization:db}
 db-pmc={ldap:cn=db,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 deltaspike={reuse:asf-authorization:deltaspike}
 deltaspike-pmc={ldap:cn=deltaspike,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# depot={reuse:asf-authorization:# depot}
 directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 drill={reuse:asf-authorization:drill}
@@ -139,7 +137,6 @@ httpd-pmc={ldap:cn=httpd,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 httpd-security-extra=jchampion
 ignite={reuse:asf-authorization:ignite}
 ignite-pmc={ldap:cn=ignite,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# imperius={reuse:asf-authorization:# imperius}
 incubator={reuse:asf-authorization:incubator}
 incubator-pmc={ldap:cn=incubator,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 isis={reuse:asf-authorization:isis}
@@ -160,7 +157,6 @@ jspwiki={reuse:asf-authorization:jspwiki}
 jspwiki-pmc={ldap:cn=jspwiki,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 juddi={reuse:asf-authorization:juddi}
 juddi-pmc={ldap:cn=juddi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# juice={reuse:asf-authorization:# juice}
 kafka={reuse:asf-authorization:kafka}
 kafka-pmc={ldap:cn=kafka,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 karaf={reuse:asf-authorization:karaf}
@@ -198,7 +194,6 @@ mesos={reuse:asf-authorization:mesos}
 mesos-pmc={ldap:cn=mesos,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 metamodel={reuse:asf-authorization:metamodel}
 metamodel-pmc={ldap:cn=metamodel,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={reuse:asf-authorization:mina}
 mina-pmc={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 myfaces={reuse:asf-authorization:myfaces}
@@ -300,7 +295,6 @@ syncope={reuse:asf-authorization:syncope}
 syncope-pmc={ldap:cn=syncope,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tajo={reuse:asf-authorization:tajo}
 tajo-pmc={ldap:cn=tajo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# tashi={reuse:asf-authorization:tashi}
 tapestry={reuse:asf-authorization:tapestry}
 tapestry-pmc={ldap:cn=tapestry,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 taverna={reuse:asf-authorization:taverna}
@@ -347,10 +341,8 @@ xalan={reuse:asf-authorization:xalan}
 xalan-pmc={ldap:cn=xalan,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 xerces={reuse:asf-authorization:xerces}
 xerces-pmc={ldap:cn=xerces,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# xml-pmc={ldap:cn=xml,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 xmlgraphics={reuse:asf-authorization:xmlgraphics}
 xmlgraphics-pmc={ldap:cn=xmlgraphics,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-# yoko={reuse:asf-authorization:# yoko}
 yetus={reuse:asf-authorization:yetus}
 yetus-pmc={ldap:cn=yetus,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 zeppelin={reuse:asf-authorization:zeppelin}
