@@ -34,7 +34,6 @@ buildbot_slave::required_packages:
   - 'libxrandr-dev'
   - 'mesa-common-dev'
   - 'orbit2'
-  - 'pkg-config'
   - 'rpm'
 
 buildbot_slave::cpan::cpan_modules:
