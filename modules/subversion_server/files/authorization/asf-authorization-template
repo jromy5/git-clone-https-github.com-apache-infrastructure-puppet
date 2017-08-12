@@ -97,7 +97,6 @@ aurora-pmc={reuse:pit-authorization:aurora-pmc}
 axis={ldap:cn=axis,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 axis-pmc={reuse:pit-authorization:axis-pmc}
 # awf=schildmeijer,jmeehan,nwhitehead,slemesle
-batchee=dblevins,gpetracek,jbonofre,jlmonteiro,olamy,rmannibucau,stephenc,struberg
 bigtop={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 bigtop-pmc={reuse:pit-authorization:bigtop-pmc}
 bloodhound={ldap:cn=bloodhound,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -148,7 +147,7 @@ curator={ldap:cn=curator,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 curator-pmc={reuse:pit-authorization:curator-pmc}
 cxf={ldap:cn=cxf,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 cxf-pmc={reuse:pit-authorization:cxf-pmc}
-datafu=cestella,evion,eyal,hashutosh,jianwang,jarcec,jghoman,jwills,mbastian,meng,mhayes,mitultiwari,rjurney,rvs,samshah,tdunning,wvaughan
+datafu={ldap:cn=datafu,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 db={ldap:cn=db,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
 db-torque={ldap:cn=db-torque,ou=auth,ou=groups,dc=apache,dc=org}
@@ -188,8 +187,7 @@ giraph={ldap:cn=giraph,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 giraph-pmc={reuse:pit-authorization:giraph-pmc}
 gora={ldap:cn=gora,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 gora-pmc={reuse:pit-authorization:gora-pmc}
-gossip=dorian,ecapriolo,elserj,gdusbabek,ptgoetz,cpancholi
-griffin=hsaputra,kaspersor,umamahesh,lresende,liangshao,guoyp,johnliu,alexlv,yosha,wenzhao
+griffin={ldap:cn=griffin,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 gump={ldap:cn=gump,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 #only here to ease LDAP migration
 gump-pmc={reuse:pit-authorization:gump-pmc}
@@ -197,7 +195,6 @@ hadoop-pmc={reuse:pit-authorization:hadoop-pmc}
 hadoop={ldap:cn=hadoop,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hama={ldap:cn=hama,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hama-pmc={reuse:pit-authorization:hama-pmc}
-hawq=adenissov,aelhelw,atri,bc,bhuvnesh2703,bosco,cjcjameson,cos,cwelton,dbbaskette,entong,foyzur,gates,gcaragea,godenyao,gregchase,hubertzhang,huor,iweng,jacksoncvm,jakob,jaoki,jda,jian,jyao,jz,lei_chang,lilima,litzell,mkiyama,mli,mnxn,msoliman,nalex,nhorn,odiachenko,omalley,rlei,rvs,schubert,shivram,ssa,thejas,tushar_pednekar,tzolov,vraghavan78,vvineet,wangzw,wlin,yjin,yozie,ztao1987
 hbase={ldap:cn=hbase,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hbase-pmc={reuse:pit-authorization:hbase-pmc}
 helix={ldap:cn=helix,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -205,7 +202,7 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
-htrace=rvs,jfarrell,todd,lewismc,apurtell,billie,stack,cmccabe,eclark,ndimiduk,leavitt,iwasakims,abe
+htrace={ldap:cn=htrace,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 httpcomponents={ldap:cn=httpcomponents,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -215,7 +212,6 @@ ignite-pmc={reuse:pit-authorization:ignite-pmc}
 #note httpd-pmc include rasmus, however no iCLA will be filed so the user cannot be added to svn auth
 # no ldap account: dgaudet,pcs,
 # httpd-emeritus=AndrewWilson,akosut,awm,bhyde,brianb,brianp,cliff,davidw,dreid,drtr,fanf,grisha,ianh,jgallacher,jwoolley,marc,nlehuen,randy,rbb,ridruejo,robh,rst,sameer,stas,stoddard,thommay
-impala=abehm,brock,casey,cws,dhecht,dtsirogiannis,henry,ishaan,jbapple,jrussell,jyu,kwho,lskuff,marcel,mgrund,mjacobs,sailesh,skye,tarasbob,tarmstrong,todd,tomwhite
 # imperius=stoddard,clr,kevan,fhanik,prabalig,jneeraj,ebengston,macsun,michaelknunez,dawood,xiping
 incubator={ldap:cn=incubator,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 incubator-pmc={reuse:pit-authorization:incubator-pmc}
@@ -234,12 +230,11 @@ jmeter={ldap:cn=jmeter,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 jmeter-pmc={reuse:pit-authorization:jmeter-pmc}
 johnzon={ldap:cn=johnzon,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 johnzon-pmc={reuse:pit-authorization:johnzon-pmc}
-joshua=hsaputra,lewismc,magicaltrout,mattmann,mjpost,tommaso,kellen,fhieber,thammegowda
+joshua={ldap:cn=joshua,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 jspwiki={ldap:cn=jspwiki,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 jspwiki-pmc={reuse:pit-authorization:jspwiki-pmc}
 juddi={ldap:cn=juddi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 juddi-pmc={reuse:pit-authorization:juddi-pmc}
-juneau=johndament,jochen,clr,stain,jamesbognar
 # juice=amattheu,blautenb,dims,kwouters,vdkoogh,nlevitt,raul,wassa,werner
 karaf={ldap:cn=karaf,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 karaf-pmc={reuse:pit-authorization:karaf-pmc}
@@ -261,7 +256,6 @@ libcloud={ldap:cn=libcloud,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 libcloud-pmc={reuse:pit-authorization:libcloud-pmc}
 logging-pmc={reuse:pit-authorization:logging-pmc}
 logging={ldap:cn=logging,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-log4cxx=grobmeier,sdeboy,fseydoux,chand,nickwilliams,tschoening,rhys,joseph,alexz
 lucene={ldap:cn=lucene,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 lucene-pmc={reuse:pit-authorization:lucene-pmc}
 # lucene-c=ehatcher,rooneg,pquerna
@@ -290,15 +284,14 @@ metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
 # Maven Emeritus: tcopeland,kaz,plynch,werken,geirm,smor,knielsen,kschrader,bwalding,epugh,akarasulu,jruiz,donaldp,proyal,joakime,jstrachan,jtolentino
 mina={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mina-pmc={reuse:pit-authorization:mina-pmc}
-mrql=edwardyoon,akarasulu,mnour,adc,antelder,fegaras,ugupta,maqsoodalam,johnshope,msw,kmensah,kasha
+mrql={ldap:cn=mrql,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 myfaces={ldap:cn=myfaces,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
-myriad=benh,danese,darinj,kensipe,lresende,me,mohit,smarella,swapnil,tdunning
+myriad={ldap:cn=myriad,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 nifi={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 nifi-pmc={reuse:pit-authorization:nifi-pmc}
 nutch={ldap:cn=nutch,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
-nuvem=antelder,chintana,dwoods,jfclere,johnp,jsdelfino,lresende,pzf,rfeng,sagara,senaka,sgoyal,shankar
 ode={ldap:cn=ode,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ode-pmc={reuse:pit-authorization:ode-pmc}
 ofbiz={ldap:cn=ofbiz,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -345,28 +338,26 @@ pivot={ldap:cn=pivot,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 pivot-pmc={reuse:pit-authorization:pivot-pmc}
 poi={ldap:cn=poi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 poi-pmc={reuse:pit-authorization:poi-pmc}
-ponymail=johndament,abayer,humbedooh,pctony,rbowen,ilgrosso,rubys,curcuru,jim,ucb
 portals={ldap:cn=portals,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 portals-pmc={reuse:pit-authorization:portals-pmc}
 # provisionr=rvs,tomwhite,mnour,asavu,esammer,ieugen,ak,cimi
 qpid={ldap:cn=qpid,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
-edgent=cazen,djd,dlaboss,home4slc,kathyssaunders,queeniema,vdogaru,wcmarsha
+edgent={ldap:cn=edgent,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ranger={ldap:cn=ranger,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ranger-pmc={reuse:pit-authorization:ranger-pmc}
-ratis=jing9,szetszwo,enis,aengineer,arp,cnauroth,jghoman,mayank,xyao,liuml07,umamahesh,jitendra,ddas,gtcarrera9,hanishakoneru,xiaobingo,cliang
 reef={ldap:cn=reef,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 reef-pmc={reuse:pit-authorization:reef-pmc}
 river={ldap:cn=river,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 roller-pmc={reuse:pit-authorization:roller-pmc}
-rya=adina,afuchs,caleb,dnrapp,edwardyoon,elserj,jbrown,mihalik,pujav65,roshanp,swagner,venkatesh
-s2graph=wikier,apurtell,hyunsik,venkatesh,bzz,lukehan,rain,elric,daewon,steamshon,jaesang,lukehan,mskim
-samoa=daijy,enis,gates,hashutosh,tdunning,abifet,arinto,gdfm,mmorel,nkourtellis,ovlaere
+rya={ldap:cn=rya,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+s2graph={ldap:cn=s2graph,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+samoa={ldap:cn=samoa,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samza={ldap:cn=samza,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samza-pmc={reuse:pit-authorization:samza-pmc}
-senssoft=lewismc,lmariano,cgimenez,aford,poorejc,msbeard,rf,pykors,pramirez,mattmann
+senssoft={ldap:cn=senssoft,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 santuario={ldap:cn=santuario,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry={ldap:cn=sentry,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -378,10 +369,10 @@ servicemix={ldap:cn=servicemix,ou=project,ou=groups,dc=apache,dc=org;attr=member
 servicemix-pmc={reuse:pit-authorization:servicemix-pmc}
 shiro={ldap:cn=shiro,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 shiro-pmc={reuse:pit-authorization:shiro-pmc}
-singa=daijy,dinhtta,gates,jinyang,kaiping,tankianlee,tdunning,thejas,wangsh,wangwei,zhaojing
+singa={ldap:cn=singa,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sis={ldap:cn=sis,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sis-pmc={reuse:pit-authorization:sis-pmc}
-slider=vinodkv,jbonofre,acmurthy,mahadev,ddas,stevel,billie,tedyu,elserj,smohanty,jmaron,gourksaha,yuliu
+slider={ldap:cn=slider,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling={ldap:cn=sling,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling-pmc={reuse:pit-authorization:sling-pmc}
 sling-emeritus={ldap:cn=sling-emeritus,ou=auth,ou=groups,dc=apache,dc=org}
@@ -408,19 +399,18 @@ synapse={ldap:cn=synapse,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 synapse-pmc={reuse:pit-authorization:synapse-pmc}
 syncope={ldap:cn=syncope,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 syncope-pmc={reuse:pit-authorization:syncope-pmc}
-systemml=acs_s,ae2015,dbtsai,deron,dusenberrymw,freiss,gweidner,holden,hsaputra,jkbradley,lresende,mboehm7,meng,nakul02,niketanpansare,prithvi,pwendell,rbowen,reinwald,rxin,shirisht
+systemml={ldap:cn=systemml,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 # There is no tac unix group; ensure tac is published on people.a.o
 tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
 # tashi=clr,mriou,pzf,stroucki,mryan3,rgass
-tamaya=anatole,aalmiray,dblevins,gpetracek,johndament,otaviojava,plexus,pottlinger,rmannibucau,rsandtner,struberg,wkeil
 tapestry={ldap:cn=tapestry,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tapestry-pmc={reuse:pit-authorization:tapestry-pmc}
-taverna=andy,djd,mpierce,smarru,suresh,alaninmcr,anenadic,brenninc,dkf,gnaylor,hainesr,ianwdunlop,jgarrido,maanadev,rajanmaurya154,redmitry,sagar,shoaibsufi,stain,stuzart
+taverna={ldap:cn=taverna,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tcl={ldap:cn=tcl,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tcl-pmc={reuse:pit-authorization:tcl-pmc}
-tephra=anew,chtyim,gokul,poorna,jamestaylor,tdsilva,garyh,larsh,apurtell,gates
+tephra={ldap:cn=tephra,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tez={ldap:cn=tez,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tez-pmc={reuse:pit-authorization:tez-pmc}
 thrift={ldap:cn=thrift,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -435,7 +425,7 @@ tomee={ldap:cn=tomee,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tomee-pmc={reuse:pit-authorization:tomee-pmc}
 tomcat={ldap:cn=tomcat,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tomcat-pmc={reuse:pit-authorization:tomcat-pmc}
-toree=cstubbs,hitesh,jodersky,julien,lbustelo,lresende,rxin,chipsenkbeil
+toree={ldap:cn=toree,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 trafficserver={ldap:cn=trafficserver,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 trafficserver-pmc={reuse:pit-authorization:trafficserver-pmc}
 # trafficserver=akundu,andrewhsu,balajd,bcall,dianes,dima,ericb,georgep,jim,jplevyak,manjesh,mlibbey,mturk,pquerna,rayray,sjiang,vmamidi,zwoop
@@ -453,7 +443,7 @@ velocity={ldap:cn=velocity,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
-wave=aadamchik,akaplanov,al,anorth,awatkins,ben,danield,dpeterson,josephg,hearnden,lennard,lindner,michael,ohler,purserj,roughley,sgala,soren,tad,upayavira,vjrj,vsiveton,weis,wisebaldone,yurize,zdwang,stenyak,jblossom
+wave={ldap:cn=wave,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1061,7 +1051,7 @@ buildbot = rw
 * = r
 
 [/incubator/nuvem]
-@nuvem = rw
+* = r
 
 [/incubator/odf]
 @incubator = rw
