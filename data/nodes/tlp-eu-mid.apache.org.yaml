@@ -1999,7 +1999,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.qi4j.org'
-    docroot: '/var/www/zest.apache.org'
+    docroot: '/var/www/polygene.apache.org'
     manage_docroot: false
     serveraliases:
       - 'qi4j.org'
@@ -2007,7 +2007,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://zest.apache.org/
+      Redirect permanent / http://polygene.apache.org/
 
   quetz:
     vhost_name: '*'
