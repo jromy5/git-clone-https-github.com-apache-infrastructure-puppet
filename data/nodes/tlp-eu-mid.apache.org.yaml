@@ -2003,6 +2003,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'qi4j.org'
+      - 'zest.apache.org'
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
