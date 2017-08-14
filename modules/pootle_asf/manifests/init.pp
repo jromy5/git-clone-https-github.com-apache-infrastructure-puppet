@@ -7,8 +7,6 @@ class pootle_asf (
   $pootle_dbhost    = '',              # eyaml
   $pootle_dbpass    = '',              # eyaml
   $pootle_secretkey = '',              # eyaml
-  $nssbinddn        = '',
-  $nssbindpasswd    = '',
 
 ) {
 
