@@ -39,3 +39,7 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  pootle:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'

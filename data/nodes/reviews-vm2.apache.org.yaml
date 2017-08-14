@@ -36,7 +36,7 @@ python::pip: true
 python::dev: true
 python::virtualenv: true
 python::gunicorn: false
-python::manage_gunicorn: true
+python::manage_gunicorn: false
 
 python::python_pips:
   mysql-python:

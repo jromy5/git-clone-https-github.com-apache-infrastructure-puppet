@@ -7,10 +7,11 @@ classes:
   - apache::mod::wsgi
   - datadog_agent::integrations::apache
   - loggy
+  - oraclejava::install
+  - pootle_asf
   - python
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
-  - zmanda_asf::client
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
@@ -27,23 +28,19 @@ apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
-apache::mod::wsgi::wsgi_python_path: '/x1/www'
+apache::mod::wsgi::wsgi_python_path: "%{pootle_venv}/lib/python2.7/site-packages"
+
+base::basepackages:
+  - build-essential
+  - libxml2-dev
+  - libxslt-dev
+  - zlib1g-dev
+  - libmysqlclient-dev
+  - libsasl2-dev
+  - libldap2-dev
+  - libssl-dev
 
 datadog_agent::integrations::apache::url: 'https://translate-vm.apache.org/server-status?auto'
-
-file:
-  '/x1':
-    ensure: directory
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
-  '/x1/www':
-    ensure: directory
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
-    require: File[/x1]
-    before: Class[Apache]
 
 logrotate::rule:
   apache2:
@@ -53,12 +50,38 @@ logrotate::rule:
     ifempty: false
     rotate: 52
 
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
 python::version: 'system'
 python::pip: true
 python::dev: true
 python::virtualenv: true
 python::gunicorn: false
-python::manage_gunicorn: true
+python::manage_gunicorn: false
+
+python::venv:
+  'pootle':
+    ensure: 'present'
+    version: 'system'
+    requirements: '/x1/www/pootle-requirements.txt'
+    owner: 'www-data'
+    group: 'www-data'
+    venv_dir: '%{pootle_venv}'
+
+file:
+  '/x1/www/pootle-requirements.txt':
+    ensure: present
+    path: '/x1/www/pootle-requirements.txt'
+    owner: 'www-data'
+    group: 'www-data'
+    content: |
+      Django==1.4.10
+      django-assets==0.8
+      Pootle==2.5.1.3
+      MySQL-python==1.2.3
+      django-auth-ldap==1.2.14
+      python-Levenshtein==0.12.0
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
@@ -92,6 +115,9 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'translate.apache.org.ssl_access.log'
     error_log_file: 'translate.apache.org.error.log'
+    setenv:
+      -
+        'POOTLE_SETTINGS /x1/www/pootle/settings.py'
     wsgi_daemon_process: 'pootle' 
     wsgi_daemon_process_options:
       processes: 2 
@@ -99,7 +125,8 @@ vhosts_asf::vhosts::vhosts:
       stack-size: 1048576 
       maximum-requests: 5000 
       inactivity-timeout: 900 
-      display-name: '%%{HIERA}{GROUP}'
+      display-name: '%%{}{GROUP}'
+      python-path: '%{pootle_venv}/lib/python2.7/site-packages'
     wsgi_process_group: 'pootle'
     wsgi_script_aliases:
       /:
@@ -116,7 +143,7 @@ vhosts_asf::vhosts::vhosts:
         path: '/x1/www/pootle/assets'
       -
         alias: '/export'
-        path: '/x1/www/po'
+        path: '%{pootle_poroot}'
       -
         alias: '/pootle/export'
         path: '/x1/www/po'
@@ -125,12 +152,12 @@ vhosts_asf::vhosts::vhosts:
         path: '/x1/www/xfer'
     directories:
       - 
-        path: '/x1/www'
+        path: '%{pootle_wwwroot}'
         require: 'all granted'
         expires_active: 'on'
         expires_by_type: "image/x-icon 'access plus 1 month'"
       -
-        path: '/x1/www/po'
+        path: '%{pootle_poroot}'
         require: 'all granted'
         expires_active: 'on'
         expires_by_type: "image/x-icon 'access plus 1 month'"
