@@ -90,7 +90,7 @@ for repo in repos:
         # Set defaults: github URL, repo description and local file path
         repourl = "https://github.com/apache/%s.git" % repo
         description = repos[repo]
-        location = "/x1/gitbox/repos/asf/%s.git" % repo
+        location = "/x1/repos/asf/%s.git" % repo
         # Skip if the repo is already on gitbox
         if os.path.exists(location):
             print("Skipping %s.git as it already exists on gitbox!" % repo)
