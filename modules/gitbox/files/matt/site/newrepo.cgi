@@ -292,9 +292,12 @@ def main():
     if action and action == "pmcs":
         groups, podlings, isroot = ldap_groups(os.environ['REMOTE_USER'])
         print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
+        podling_hash = {}
+        for pod in podlings:
+            podling_hash[pod] = True
         print(json.dumps({
             'pmcs': groups,
-            'podlings': podlings,
+            'podlings': podling_hash,
             'root': isroot
         }))
         return
