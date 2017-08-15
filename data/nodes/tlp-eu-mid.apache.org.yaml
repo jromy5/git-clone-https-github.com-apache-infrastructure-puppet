@@ -2010,15 +2010,14 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent / http://polygene.apache.org/
 
-  qi4j-ssl:
+  zest-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
-    servername: 'www.qi4j.org'
+    servername: 'www.zest.apache.org'
     docroot: '/var/www/polygene.apache.org'
     manage_docroot: false
     serveraliases:
-      - 'qi4j.org'
       - 'zest.apache.org'
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
