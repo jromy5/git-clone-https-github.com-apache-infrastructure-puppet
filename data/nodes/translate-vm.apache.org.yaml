@@ -28,7 +28,7 @@ apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
-apache::mod::wsgi::wsgi_python_path: "%{pootle_venv}/lib/python2.7/site-packages"
+apache::mod::wsgi::wsgi_python_path: "%{pootle_asf::pootle_venv}/lib/python2.7/site-packages"
 
 base::basepackages:
   - build-essential
@@ -67,7 +67,7 @@ python::venv:
     requirements: '/x1/www/pootle-requirements.txt'
     owner: 'www-data'
     group: 'www-data'
-    venv_dir: '%{pootle_venv}'
+    venv_dir: '%{pootle_asf::pootle_venv}'
 
 file:
   '/x1/www/pootle-requirements.txt':
@@ -126,7 +126,7 @@ vhosts_asf::vhosts::vhosts:
       maximum-requests: 5000 
       inactivity-timeout: 900 
       display-name: '%%{}{GROUP}'
-      python-path: '%{pootle_venv}/lib/python2.7/site-packages'
+      python-path: '%{pootle_asf::pootle_venv}/lib/python2.7/site-packages'
     wsgi_process_group: 'pootle'
     wsgi_script_aliases:
       /:
@@ -143,7 +143,7 @@ vhosts_asf::vhosts::vhosts:
         path: '/x1/www/pootle/assets'
       -
         alias: '/export'
-        path: '%{pootle_poroot}'
+        path: '%{pootle_asf::pootle_poroot}'
       -
         alias: '/pootle/export'
         path: '/x1/www/po'
@@ -152,12 +152,12 @@ vhosts_asf::vhosts::vhosts:
         path: '/x1/www/xfer'
     directories:
       - 
-        path: '%{pootle_wwwroot}'
+        path: '%{pootle_asf::pootle_wwwroot}'
         require: 'all granted'
         expires_active: 'on'
         expires_by_type: "image/x-icon 'access plus 1 month'"
       -
-        path: '%{pootle_poroot}'
+        path: '%{pootle_asf::pootle_poroot}'
         require: 'all granted'
         expires_active: 'on'
         expires_by_type: "image/x-icon 'access plus 1 month'"
