@@ -23,6 +23,7 @@ mysql::server::override_options:
     character-set-server: 'utf8'
     max_allowed_packet: '64M'
     max_connections: '4096'
+    skip_name_resolve: '1'
   mysqldump:
     max_allowed_packet: '64M'
 
