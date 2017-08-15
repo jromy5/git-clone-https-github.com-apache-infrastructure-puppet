@@ -2017,6 +2017,21 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent / http://polygene.apache.org/
 
+  zest-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.zest.apache.org'
+    docroot: '/var/www/polygene.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'zest.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://polygene.apache.org/
+
   quetz:
     vhost_name: '*'
     port: 80
