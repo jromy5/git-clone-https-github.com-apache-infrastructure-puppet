@@ -209,12 +209,3 @@ vhosts_asf::vhosts::vhosts:
       
       # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
       SSLProxyEngine On
-      
-      # Bloodhound instance on bloodhound-vm.a.o - MEH!
-      SSLProxyVerify none
-      SSLProxyCheckPeerCN off
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerExpire off
-      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
-      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
-
