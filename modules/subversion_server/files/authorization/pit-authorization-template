@@ -285,6 +285,8 @@ steve={reuse:asf-authorization:steve}
 steve-pmc={ldap:cn=steve,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 storm={reuse:asf-authorization:storm}
 storm-pmc={ldap:cn=storm,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+streams={reuse:asf-authorization:struts}
+streams-pmc={ldap:cn=streams,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 struts={reuse:asf-authorization:struts}
 struts-pmc={ldap:cn=struts,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 subversion={reuse:asf-authorization:subversion}
@@ -1401,7 +1403,7 @@ buildbot = rw
 @attic-pmc = rw
 
 [/websites/production/streams]
-@incubator = rw
+@streams = rw
 
 [/websites/production/struts]
 @struts = rw
