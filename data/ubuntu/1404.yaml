@@ -240,16 +240,10 @@ file:
     path: '/etc/dd-agent/conf.d/disk.yaml'
     owner: 'dd-agent'
     group: 'dd-agent'
+    notify: Service['datadog-agent']
     content: |
-      # This file is managed by Puppet in the base 1604.yaml
+      # This file is managed by Puppet in the base 1404.yaml
       # and will be overwritten automatically. 
-
-      init_config:
-
-      instances:
-       # The use_mount parameter will instruct the check to collect disk
-       # and fs metrics using mount points instead of volumes
-       - use_mount: yes
 
       init_config:
 
