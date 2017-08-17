@@ -241,9 +241,8 @@ file:
     owner: 'dd-agent'
     group: 'dd-agent'
     content: |
-      # This file is overwritten upon Agent upgrade.
-      # To make modifications to the check configuration, please copy this file
-      # to `disk.yaml` and make your changes on that file.
+      # This file is managed by Puppet in the base 1604.yaml
+      # and will be overwritten automatically. 
 
       init_config:
 
