@@ -240,7 +240,7 @@ file:
     path: '/etc/dd-agent/conf.d/disk.yaml'
     owner: 'dd-agent'
     group: 'dd-agent'
-    notify: Service['datadog-agent']
+    notify: Service[datadog-agent]
     content: |
       # This file is managed by Puppet in the base 1404.yaml
       # and will be overwritten automatically. 
