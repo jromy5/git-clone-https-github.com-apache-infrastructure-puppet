@@ -379,6 +379,8 @@ steve={ldap:cn=steve,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 steve-pmc={reuse:pit-authorization:steve-pmc}
 storm={ldap:cn=storm,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 storm-pmc={reuse:pit-authorization:storm-pmc}
+streams={ldap:cn=streams,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+streams-pmc={reuse:pit-authorization:streams-pmc}
 struts={ldap:cn=struts,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 struts-pmc={reuse:pit-authorization:struts-pmc}
 # Don't remove 'subversion'; pit and committers-index use it
