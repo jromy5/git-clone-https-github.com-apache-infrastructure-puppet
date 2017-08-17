@@ -234,6 +234,24 @@ fail2ban_asf::config::jails:
     bantime: 2
     enable: true
 
+file:
+  '/etc/dd-agent/conf.d/disk.yaml':
+    ensure: present
+    path: '/etc/dd-agent/conf.d/disk.yaml'
+    owner: 'dd-agent'
+    group: 'dd-agent'
+    content: |
+      # This file is overwritten upon Agent upgrade.
+      # To make modifications to the check configuration, please copy this file
+      # to `disk.yaml` and make your changes on that file.
+
+      init_config:
+
+      instances:
+       # The use_mount parameter will instruct the check to collect disk
+       # and fs metrics using mount points instead of volumes
+       - use_mount: yes
+
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
 
