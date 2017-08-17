@@ -240,10 +240,10 @@ file:
     path: '/etc/dd-agent/conf.d/disk.yaml'
     owner: 'dd-agent'
     group: 'dd-agent'
+    notify: Service[datadog-agent]
     content: |
-      # This file is overwritten upon Agent upgrade.
-      # To make modifications to the check configuration, please copy this file
-      # to `disk.yaml` and make your changes on that file.
+      # This file is managed by Puppet in the base 1404.yaml
+      # and will be overwritten automatically. 
 
       init_config:
 
