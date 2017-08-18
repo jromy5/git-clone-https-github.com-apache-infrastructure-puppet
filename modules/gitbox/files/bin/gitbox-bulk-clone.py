@@ -27,6 +27,7 @@ import urllib2
 import requests
 import json
 import ConfigParser
+import subprocess
 
 CONFIG_FILE = "/x1/gitbox/matt/tools/grouper.cfg" # config file with GH token in it
 
