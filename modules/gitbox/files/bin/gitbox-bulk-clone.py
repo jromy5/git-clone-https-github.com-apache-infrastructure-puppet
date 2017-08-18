@@ -100,16 +100,16 @@ for repo in repos:
             print("Cloning %s (%s) to gitbox..." % (repourl, description))
             if 'dryrun' not in sys.argv:
                 try:
-                    subprocess.check_output(['/x1/gitbox/bin/gitbox-clone', '-d', description, '-c', commitlist, repourl, location], shell = True)
+                    subprocess.check_output(['/usr/local/bin/python', '/x1/gitbox/bin/gitbox-clone', '-d', description, '-c', commitlist, repourl, location])
                     print("Done cloning, chowning...")
-                    subprocess.check_output(['chown', '-R', 'www-data', location], shell = True)
+                    subprocess.check_output(['/bin/chown', '-R', 'www-data', location])
                     print("Successfully cloned %s" % location)
                     rmWebhooks(repo)
                 except subprocess.CalledProcessError as err:
                     print("FAILED! Output was:")
                     print(err.output)
                     yn = input("Should we continue with other repos? (y/n): ")
-                    if yn.lower() == 'n':
+                    if yn.lower() == "n":
                         print("Aborting bulk clone!")
                         sys.exit(-1)                    
             else:
