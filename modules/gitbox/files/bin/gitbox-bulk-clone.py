@@ -60,7 +60,7 @@ def rmWebhooks(repo):
     url = "https://api.github.com/repos/apache/%s/hooks?access_token=%s" % (repo, ORG_TOKEN)
     response = urllib2.urlopen(url)
     data = json.load(response)
-    for hook in response:
+    for hook in data:
         # Is this an old git-wip hook?
         if 'git-wip' in hook['config']['url'] or 'git1-us-east' in hook['config']['url']:
             print("Removing stale webhook %s (%s)" % (hook['url'], hook['config']['url']))
