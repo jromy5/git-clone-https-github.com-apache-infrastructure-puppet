@@ -64,6 +64,7 @@ whimsy_server::apache_mailmap:
   secretary: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/www/secretary/workbench/deliver.rb"
   members: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
   board: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/deliver.rb"
+  travis: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/travis-relay.rb"
 
 whimsy_server::whimsysvn_mailmap:
   svnupdate: "/usr/local/bin/ruby%{hiera('ruby_version')} /x1/srv/whimsy/tools/svnupdate.rb"
