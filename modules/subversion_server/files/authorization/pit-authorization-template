@@ -36,6 +36,7 @@ axis={reuse:asf-authorization:axis}
 axis-pmc={ldap:cn=axis,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bigtop={reuse:asf-authorization:bigtop}
 bigtop-pmc={ldap:cn=bigtop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+beam-pmc={ldap:cn=beam,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bloodhound={reuse:asf-authorization:bloodhound}
 bloodhound-pmc={ldap:cn=bloodhound,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 bookkeeper={reuse:asf-authorization:bookkeeper}
@@ -843,6 +844,9 @@ openejb-tck = r
 
 [/pmc/attic]
 @attic-pmc = rw
+
+[/pmc/beam]
+@beam-pmc = rw
 
 [/pmc/bloodhound]
 @bloodhound-pmc = rw
