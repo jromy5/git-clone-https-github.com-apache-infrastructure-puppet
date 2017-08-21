@@ -956,9 +956,6 @@ buildbot = rw
 [/incubator/beam]
 @incubator = rw
 
-[/incubator/blur]
-* = r
-
 [/incubator/callback]
 @incubator = rw
 
@@ -982,9 +979,6 @@ buildbot = rw
 * = r
 
 [/incubator/heraldry]
-* = r
-
-[/incubator/horn]
 * = r
 
 [/incubator/htrace]
