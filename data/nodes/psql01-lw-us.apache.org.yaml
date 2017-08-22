@@ -79,3 +79,10 @@ postgresql::server::pg_hba_rule:
     user: 'datadog'
     address: '127.0.0.1/32'
     auth_method: 'md5'
+  puppetdb:
+    description: 'devops puppetdb'
+    type: 'host'
+    database: 'puppetdb'
+    user: 'puppetdb'
+    address: '140.211.11.135/32'
+    auth_method: 'md5'
