@@ -10,6 +10,7 @@ classes:
   - etherpad_lite
   - etherpad_lite::site
   - git_self_serve::tools
+  - jenkins_node_monitor
   - loggy
   - selfserve
   - ssl::name::wildcard_apache_org
@@ -44,6 +45,14 @@ base::basepackages:
   - 'lua5.2-sec'
   - 'mod-lua-asf'
   - 'nodejs'
+
+cron:
+  # JNM: Jenkins Node Monitor, check status of Jenkins nodes and pushes that to DataDog
+  jnm:
+    user: 'root'
+    minute: '*/10'
+    hour: '*'
+    command: 'cd /usr/local/etc/jenkins_node_monitor/ && python jnm.py > /dev/null 2>&1'
   
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
