@@ -4,8 +4,7 @@
 import ConfigParser
 from datadog import initialize, api
 from datadog.api.constants import CheckStatus
-import json
-import urllib
+import requests
 
 config = ConfigParser.ConfigParser()
 config.read("settings.cfg")
@@ -14,8 +13,7 @@ initialize(**options)
 
 url = "https://builds.apache.org/computer/api/json"
 check = 'jenkinsNode.status'
-response = urllib.urlopen(url)
-jenkinsNodes = json.loads(response.read())
+jenkinsNodes = requests.get(url).json()
 
 for node in jenkinsNodes["computer"]:
     if (node["offline"]==True):
