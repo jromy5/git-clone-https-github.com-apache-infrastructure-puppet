@@ -26,6 +26,7 @@ file {
       recurse => true,
       owner   => 'root',
       group   => 'root',
+      mode    => '0755',
       source  => 'puppet:///modules/selfserve_portal/selfserve-portal',
       require => Package['apache2'];
     "${install_base}/selfserve/":
