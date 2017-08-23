@@ -275,8 +275,10 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
+      AddHandler cgi-script .cgi
       FallbackResource /index.html
       <Location />
+        Options +ExecCGI
         AuthLDAPUrl "ldaps://ldap1-lw-us.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
@@ -285,6 +287,7 @@ vhosts_asf::vhosts::vhosts:
         <RequireAny>
           Require ip 140.211.11.23
           Require ip 54.84.58.65
+          Require ip 140.211.11.3
           Require valid-user
         </RequireAny>
       </Location>
