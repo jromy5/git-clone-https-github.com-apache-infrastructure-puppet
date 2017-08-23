@@ -422,6 +422,7 @@ vhosts_asf::vhosts::vhosts:
           # Hermes or valid chair/root
           Require ip 140.211.11.3
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          Require ldap-group cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
           # chairs not allowed yet, uncomment below to allow them.
           #Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
         </RequireAny>
