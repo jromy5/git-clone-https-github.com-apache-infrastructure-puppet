@@ -44,10 +44,10 @@ dlist = ['apache.org']
 for cmt in domains:
     info = domains[cmt]
     if not 'mail_list' in info or not ('@' in info['mail_list'] or ' ' in info['mail_list']):
-        part = info.get('mail_list', default = cmt)
+        part = info.get('mail_list', cmt)
         if part == 'infrastructure':
             part = 'infra' # TO-DO: Ask Sam how to change this
         dlist.append("%s.apache.org" % part)
 
-print("Status: 200\r\n\Content-Type: application/json\r\n\r\n")
+print("Status: 200\r\nContent-Type: application/json\r\n\r\n")
 print(json.dumps(sorted(dlist)))
