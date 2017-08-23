@@ -87,6 +87,7 @@ file:
       MySQL-python==1.2.3
       django-auth-ldap==1.2.14
       python-Levenshtein==0.12.0
+      python-memcached==1.58
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
