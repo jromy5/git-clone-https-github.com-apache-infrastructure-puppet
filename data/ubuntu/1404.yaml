@@ -251,8 +251,8 @@ file:
        # The use_mount parameter will instruct the check to collect disk
        # and fs metrics using mount points instead of volumes
        - use_mount: yes
-          excluded_filesystems:
-            - tracefs
+         excluded_filesystems:
+           - tracefs
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
