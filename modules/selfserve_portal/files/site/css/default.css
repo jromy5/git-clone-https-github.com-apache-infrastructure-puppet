@@ -185,15 +185,26 @@ label {
     margin: 0px -40px auto;
 }
 
+.right {
+    float: left;
+    margin: 20px auto;
+}
+
 .footer {
     color: #FFF;
     font-style: italic;
     font-size:  11px;
     padding-top: 20px;
+    width: 100%;
+    float: left;
+    text-align: center;
 }
 
 .footer a {
     color: #FFF !important;
+    float: left;
+    width: 100%;
+    text-align: center;
 }
 
 .bad:after {
