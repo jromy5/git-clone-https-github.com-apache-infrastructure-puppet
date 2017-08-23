@@ -7,6 +7,7 @@ classes:
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
+datadog_agent::integrations::mysql::replication: 1
 
 
 mysql::server::override_options:
