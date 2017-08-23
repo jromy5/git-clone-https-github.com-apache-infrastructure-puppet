@@ -1,0 +1,1 @@
+<%= @install_base %>/<%= @atlassian_cli %>/confluence.sh --action getspaceList --space @all --columns Key | python -c 'import json, sys; print(json.dumps(sys.stdin.read().replace("\"", "").split("\n")[2:-2]))' > <%= @deploy_dir %>/site/js/spacekeys.json

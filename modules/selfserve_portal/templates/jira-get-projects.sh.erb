@@ -1,0 +1,1 @@
+<%= @install_base %>/<%= @atlassian_cli %>/jira.sh --action getprojectList --project @all --columns Key | python -c 'import json, sys; print(json.dumps(sys.stdin.read().replace("\"", "").split("\n")))' > <%= @deploy_dir %>/site/js/keys.json

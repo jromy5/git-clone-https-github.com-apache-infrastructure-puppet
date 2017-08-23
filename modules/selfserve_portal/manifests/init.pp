@@ -52,6 +52,21 @@ file {
       owner  => 'root',
       group  => 'root',
       mode    => '0755';
+    "${install_base}/${atlassian_cli}/jira-get-workflows.sh":
+      content => template('selfserve_portal/jira-get-workflows.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
+    "${install_base}/${atlassian_cli}/jira-get-projects.sh":
+      content => template('selfserve_portal/jira-get-projects.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
+    "${install_base}/${atlassian_cli}/confluence-get-spaces.sh":
+      content => template('selfserve_portal/confluence-get-spaces.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
   }
 
 # cronjobs
@@ -61,6 +76,24 @@ file {
       user        => root,
       minute      => '30',
       command     => "${install_base}/${atlassian_cli}/jira-get-category.sh > /dev/null 2>&1",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+
+'jira-get-workflows':
+      user        => root,
+      minute      => '32',
+      command     => "${install_base}/${atlassian_cli}/jira-get-workflows.sh > /dev/null 2>&1",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+
+'jira-get-projects':
+      user        => root,
+      minute      => '34',
+      command     => "${install_base}/${atlassian_cli}/jira-get-projects.sh > /dev/null 2>&1",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+
+'confluence-get-spaces':
+      user        => root,
+      minute      => '36',
+      command     => "${install_base}/${atlassian_cli}/confluence-get-spaces.sh > /dev/null 2>&1",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 }
