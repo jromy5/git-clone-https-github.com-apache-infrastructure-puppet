@@ -337,8 +337,6 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'id.apache.org'
-    serveraliases:
-      -  'selfserve.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve'
     manage_docroot: false
@@ -351,8 +349,6 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'id.apache.org'
-    serveraliases:
-      -  'selfserve.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve/app'
     manage_docroot: false
@@ -382,3 +378,50 @@ vhosts_asf::vhosts::vhosts:
         Order allow,deny
         Allow from all
       </LocationMatch>
+  selfserve:
+    vhost_name: '*'
+    port: 80
+    servername: 'selfserve.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve-portal/site'
+    manage_docroot: false
+    access_log_file: 'selfserve.apache.org.access.log'
+    error_log_file: 'selfserve.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://selfserve.apache.org/
+  selfserve-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'selfserve.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve-portal/site'
+    manage_docroot: false
+    access_log_file: 'selfserve.apache.org.ssl_access.log'
+    error_log_file: 'selfserve.apache.org.ssl_error.log'
+    custom_fragment: |
+      AddHandler cgi-script .cgi
+      <Directory /var/www/selfserve-portal/site/cgi-bin>
+        Options ExecCGI
+        AllowOverride None
+        Require all granted
+      </Directory>
+      # Restrict access to jira,conf,mail,git to chairs + root.
+      <LocationMatch "^/(cgi-bin|mail|jira|confluence|git)">
+        Options +ExecCGI -MultiViews +FollowSymLinks
+        AuthLDAPUrl "ldaps://ldap1-lw-us.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthName "ASF Project Chairs Only!"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        <RequireAny>
+          # Hermes or valid chair/root
+          Require ip 140.211.11.3
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          # chairs not allowed yet, uncomment below to allow them.
+          #Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
+        </RequireAny>
+      </LocationMatch>
+      ErrorDocument 401 /401.html
+      ErrorDocument 403 /401.html
