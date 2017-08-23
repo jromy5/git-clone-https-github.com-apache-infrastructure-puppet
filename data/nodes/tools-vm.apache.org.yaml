@@ -401,6 +401,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'selfserve.apache.org.ssl_error.log'
     custom_fragment: |
       AddHandler cgi-script .cgi
+      AddHandler lua-script .lua
       <Directory /var/www/selfserve-portal/site/cgi-bin>
         Options ExecCGI
         AllowOverride None
@@ -423,5 +424,6 @@ vhosts_asf::vhosts::vhosts:
           #Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
         </RequireAny>
       </LocationMatch>
+      Alias /cgi-bin/ss.lua /var/www/git-setup/ss.lua
       ErrorDocument 401 /401.html
       ErrorDocument 403 /401.html
