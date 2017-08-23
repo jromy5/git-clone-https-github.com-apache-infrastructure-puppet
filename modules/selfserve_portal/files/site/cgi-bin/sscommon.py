@@ -25,8 +25,8 @@ import smtplib
 config = yaml.load(open(YAML_FILE))
 
 clipath = '/usr/local/etc/atlassian-cli-5.7.0'
-cwikijar = '%s/lib/confluence-cli-5.7.0.jar' % sscommon.clipath
-jirajar = '%s/lib/jira-cli-5.7.0.jar' % sscommon.clipath
+cwikijar = '%s/lib/confluence-cli-5.7.0.jar' % clipath
+jirajar = '%s/lib/jira-cli-5.7.0.jar' % clipath
 
 def email(rcpt, subject, message):
     sender = "ASF Self-Service Platform <selfserve@apache.org>"
