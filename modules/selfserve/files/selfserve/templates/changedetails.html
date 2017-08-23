@@ -41,7 +41,7 @@ function addattr(attr, v) {
 }
 </script>
 
-                        <form action="?session=[session]" method="POST" autocomplete="off" >
+                        <form action="?session=[session]" method="POST" autocomplete="off" id="form">
 [for attributes]
     [for attributes.values]
                                 <p><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="[attributes.values]" [attributes.editable] tabindex="1" /></p>
@@ -58,15 +58,14 @@ function addattr(attr, v) {
                                 <p><label>LDAP Distinguished Name: </label> [dn]</p>
                         </form>
 [end][define toolbar]
-        <div class="column span-8 first append-1"><h2>Apache Account Utility</h2></div>
-        <div class="column span-6 right"><h2>Welcome: [availid]</h2></div>
-        <div class="column span-3 last right"><h2><a href="[script_name]/details/logout/[session]">Logout</a></h2></div>
+        <div style="float: left;"><h2>Welcome, [availid].</h2></div>
+        <div style="float: right;"><h2><a href="[script_name]/details/logout/[session]">Logout</a></h2></div>
 [end][define menu]
                     <!-- change details:menu -->
-                    <p>&nbsp;</p>
+                    
                     <!-- logout button is already present above -->
 [end][define messagebox]
-	[if-any message]<h3>[message]</h3>[else]<h3>Please update your details,</h3><h3>and enter your password to confirm.</h3>[end]
+	[if-any message]<p>[message]</p>[else]<p>Please update your details, and enter your password to confirm.</p>[end]
 [end][#
 
 ][include "layout.html"]

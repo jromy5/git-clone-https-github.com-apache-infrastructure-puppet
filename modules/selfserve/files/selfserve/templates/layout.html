@@ -9,9 +9,6 @@
                     [format "raw"][toolbar][end]
                 [else]
                     <!-- layout:toolbar -->
-                    <div class="column span-8 first append-1"><h2>Apache Account Utility</h2></div>
-                    <div class="column span-6 right">&nbsp;</div>
-                    <div class="column span-3 last right">&nbsp;</div>
                 [end]
                 </form>
             </div>
@@ -25,18 +22,17 @@
                         <p>&nbsp;</p>
                     [end]
                 </div>
-                <div class="column span-17 right ">
-                    <div class="left" >
-                        [if-any messagebox]
-                            [format "raw"][messagebox][end]
-                        [else]
-                            <!-- layout:messagebox -->
-                            <p>&nbsp;</p>
-                        [end]
-                    </div>
-                    <div class="right" >
-                        [format "raw"][body][end]
-                    </div>
+            
+                <div class="left" >
+                    [if-any messagebox]
+                        [format "raw"][messagebox][end]
+                    [else]
+                        <!-- layout:messagebox -->
+                        <p>&nbsp;</p>
+                    [end]
+                </div>
+                <div class="right" >
+                    [format "raw"][body][end]
                 </div>
             </div>
             <hr class="space col"/>
