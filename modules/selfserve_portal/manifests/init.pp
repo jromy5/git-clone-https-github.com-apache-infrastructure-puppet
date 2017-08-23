@@ -44,5 +44,23 @@ file {
       owner  => 'root',
       group  => 'root',
       mode    => '0644';
+
+# Required scripts for cronjobs
+
+    "${install_base}/${atlassian_cli}/jira-get-category.sh":
+      content => template('selfserve_portal/jira-get-category.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
+  }
+
+# cronjobs
+
+ cron {
+'jira-get-category':
+      user        => root,
+      minute      => '30',
+      command     => "${install_base}/${atlassian_cli}/jira-get-category.sh > /dev/null 2>&1",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 }
