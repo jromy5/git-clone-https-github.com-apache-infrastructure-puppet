@@ -7,6 +7,7 @@ classes:
   - apache::mod::wsgi
   - datadog_agent::integrations::apache
   - loggy
+  - memcached
   - oraclejava::install
   - pootle_asf
   - python
@@ -49,6 +50,10 @@ logrotate::rule:
     delaycompress: true
     ifempty: false
     rotate: 52
+
+memcached::max_memory: '10%'
+memcached::listen_ip: '127.0.0.1'
+memcached::tcp_port: '11211'
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
