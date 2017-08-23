@@ -25,7 +25,6 @@ import requests
 import base64
 import subprocess
 import re
-import uuid
 import sscommon
 
 requser = os.environ['REMOTE_USER']
@@ -59,7 +58,7 @@ if not domain or not checkDomain(domain):
 
 # Get and validate list part
 listname = form.getvalue('list', None)
-if not listname or not re.match(r"^[-a-z]+$", listname):
+if not listname or not re.match(r"^[a-z]+$", listname):
     sscommon.buggo("Invalid list name specified!")
 
 # Get and validate mods
@@ -89,10 +88,7 @@ payload = {
     'mods': mods
 }
 
-uid = uuid.uuid4()
-with (open("/usr/local/etc/selfserve/queue/%s-%s-%s.json" % (uid, listname, domain), "w")) as f:
-    json.dump(payload, f)
-    f.close()
+json.dump(payload, open("/usr/local/etc/selfserve/queue/mailinglist-%s-%s.json" % (listname, domain), "w"))
 
 
 add = "This list has been marked as private. " if private else ""
