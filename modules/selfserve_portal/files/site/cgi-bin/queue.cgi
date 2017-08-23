@@ -28,7 +28,7 @@ xform = cgi.FieldStorage();
 
 # Remove a list object?
 rm = xform.getvalue('rm', None)
-if rm and re.match(r"^[.-a-z0-9]+$", rm):
+if rm and re.match(r"^[-.a-z0-9]+$", rm):
         if os.path.exists("/usr/local/etc/selfserve/queue/%s.json" % rm):
                 os.unlink("/usr/local/etc/selfserve/queue/%s.json" % rm)
         print("Status: 200\r\n\r\nObject removed from queue")
