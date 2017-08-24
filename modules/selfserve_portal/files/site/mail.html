@@ -11,10 +11,18 @@
     <link href="css/default.css" rel="stylesheet">    
     <script src="js/selfserve.js"></script>
   </head>
-  <body onload="loadForm('js/mailform.json?' + Math.random(), 'form');">
+  <body onload="loadForm('js/mailform.json?' + Math.random(), 'form');" style="width: 900px; margin: 0px auto;">
     <h1><img src="images/feather.png" style="height: 64px; vertical-align: middle; margin-right: 10px;"/>Create a new Mailing List</h1>
     <div id="form">
       
+    </div>
+    <div style="width: 100%;">
+      <form style="background: #FFD; width: 900px; font-size: 12px; margin: 20px auto;">
+          NB:
+          Reply-To headers will be set to the same list, except for commit and notification
+          lists, which will  defer to dev@$project for replies. For special configurations,
+          please file a JIRA ticket with Infra.
+      </form>
     </div>
   </body>
 </html>
