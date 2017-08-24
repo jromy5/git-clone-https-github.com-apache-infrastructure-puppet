@@ -39,7 +39,7 @@ file {
 
 # Alias file for archiver@mbox-vm.apache.org
     "/etc/mbox_alias":
-      content => "archiver: |python3 ${install_base}/tools/archive.py",
+      content => "archiver: \"|python3 ${install_base}/tools/archive.py\"",
       owner  => 'root',
       group  => 'root',
       mode    => '0755';
