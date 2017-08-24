@@ -16,7 +16,7 @@ ssh_asf::server_options:
     - '0.0.0.0'
     - '::'
   'Match Group *,!member,!disk,!asf999,!root-sudoers':
-    ForceCommand: '/bin/nologin'
+    ForceCommand: '/usr/sbin/nologin'
     X11Forwarding: 'no'
     AllowTCPForwarding: 'no'
     PermitTunnel: 'no'
