@@ -96,15 +96,14 @@ def main():
     if recipient:
         # Construct a path to the mbox file we'll archive this inside
         listname, fqdn = recipient.split('@', 1)
-        Y = time.strftime("%Y")
-        M = time.strftime("%m")
+        YM = time.strftime("%Y%m")
         adir = config['archivedir']
         dochmod = True
         if len(sys.argv) > 1 and sys.argv[1] == 'restricted':
             adir = config['restricteddir']
             dochmod = False
-        path = "%s/%s/%s/%s/%s.mbox" % (adir, fqdn, listname, Y, M)
-        dpath = "%s/%s/%s/%s" % (adir, fqdn, listname, Y)
+        path = "%s/%s/%s/%s.mbox" % (adir, fqdn, listname, YM)
+        dpath = "%s/%s/%s" % (adir, fqdn, listname)
         print("This is for %s, archiving under %s!" % (recipient, path))
         if not os.path.exists(dpath):
             print("Creating directory %s first" % dpath)
@@ -112,19 +111,17 @@ def main():
             # Since we're running as nobody, we need to...massage things for now
             # chmod fqdn, fqdn/list and fqdn/list/year as 0705
             if dochmod:
-                xpath = "%s/%s/" % (adir, fqdn)
-                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+                xpath = "%s/%s" % (adir, fqdn)
+                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)
                 xpath = "%s/%s/%s" % (adir, fqdn, listname)
-                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-                os.chmod(dpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-                
+                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)                
         with open(path, "ab") as f:
             # Write the body, escape lines starting with "From ..." as ">From ..."
             f.write(re.sub(b"\nFrom ", b"\n>From ", msgstring))
             # End with two blank lines
             f.write(b"\r\n\r\n")
             f.close()
-            os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
+            os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IROTH)
     else:
         print("Valid email received, but appears it's not for us. Nothing to do here.")
 
