@@ -8,6 +8,12 @@ class mboxer (
   $archive_dir    = '/x1/archives'
   $install_base  = '/usr/local/etc/mboxer'
 
+# Packages
+package {
+    'python3-yaml':
+      ensure => installed;
+}
+
 # apmail user/group
 user { 'apmail':
     ensure => present,
