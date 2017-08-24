@@ -62,7 +62,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.jirajar,
         '-v',
         '--server', 'https://issues.apache.org/jira',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'createProject',
         '--project', project,
