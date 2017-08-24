@@ -14,9 +14,9 @@
               },
               "list": {
                   "desc": "List name",
-                  "placeholder": "dev, users, commits, etc. a-z only.",
+                  "placeholder": "dev, users, commits, etc. [a-z0-9] and dashes only.",
                   "type": "text",
-                  "filter": "^[-a-z]+$",
+                  "filter": "^[a-z0-9]+(?:-[a-z0-9]+)?$",
                   "mandatory": true
               }
           }
