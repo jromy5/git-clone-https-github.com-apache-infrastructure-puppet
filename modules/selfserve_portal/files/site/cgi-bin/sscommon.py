@@ -33,7 +33,7 @@ def email(rcpt, subject, message):
     receivers = [rcpt]
     if isinstance(rcpt, list):
         receivers = rcpt
-    receivers.append('ASF Infrastructure <users@infra.apache.org>')
+    receivers.append('ASF Infrastructure <private@infra.apache.org>')
     msg = """From: %s
 To: %s
 Reply-To: ASF Infrastructure <users@infra.apache.org>
