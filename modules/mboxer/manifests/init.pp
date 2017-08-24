@@ -37,11 +37,10 @@ file {
       group  => 'apmail',
       mode   => '0750';
 
-# Alias file for archiver@mbox-vm.apache.org
-    "/etc/mbox_alias":
-      content => "archiver: \"|python3 ${install_base}/tools/archive.py\"",
-      owner  => 'root',
-      group  => 'root',
-      mode    => '0755';
-  }
+mailalias {
+    'archiver':
+      name => 'archiver',
+      ensure => present,
+      provider => aliases,
+      recipient => "|python3 ${install_base}/tools/archive.py";
 }
