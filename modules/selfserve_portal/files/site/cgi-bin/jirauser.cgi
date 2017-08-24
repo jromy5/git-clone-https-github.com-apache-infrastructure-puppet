@@ -38,7 +38,7 @@ def userExists(username):
                  }
     try:
         
-        rv = requests.get("https://issues.apache.org/jira/rest/api/latest/user?username=%s" % username)
+        rv = requests.get("https://issues.apache.org/jira/rest/api/latest/user?username=%s" % username, headers = headers)
         if rv.status_code == 200 or rv.status_code == 201:
             return True
         else:
