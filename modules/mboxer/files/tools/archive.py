@@ -95,7 +95,12 @@ def main():
     dpath = None
     if recipient:
         # Construct a path to the mbox file we'll archive this inside
-        listname, fqdn = recipient.split('@', 1)
+                
+        # validate listname and fqdn, just in case
+        listname, fqdn = recipient.lower().split('@', 1)
+        if not re.match(r"^[-.a-z0-9]+$", listname) or not re.match(r"^[-.a-z0-9]+$", fqdn):
+            print("Dirty listname or FQDN, bailing!")
+            sys.exit(0) # Bail quietly
         YM = time.strftime("%Y%m")
         adir = config['archivedir']
         dochmod = True
