@@ -28,7 +28,7 @@ import base64
 import sscommon
 
 def userExists(username):
-    auth = "%s:%s" % (sscommon.config['jira']['user'], sscommon.config['jira']['password'])
+    auth = "%s:%s" % (sscommon.config['jira']['username'], sscommon.config['jira']['password'])
     auth = str(base64.encodestring(bytes(auth))).strip()
     
     # Post comment or worklog entry!
