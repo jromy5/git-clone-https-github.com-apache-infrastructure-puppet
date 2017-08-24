@@ -89,6 +89,8 @@ def main():
             if m:
                 recipient = m.group(1)
                 break
+    path = None
+    dpath = None
     if recipient:
         # Construct a path to the mbox file we'll archive this inside
         listname, fqdn = recipient.split('@', 1)
