@@ -36,7 +36,7 @@ file {
       ensure => directory,
       owner  => 'nobody',
       group  => 'apmail',
-      mode   => '0750';
+      mode   => '0705';
     $root_dir:
       ensure => directory,
       owner  => 'nobody',
