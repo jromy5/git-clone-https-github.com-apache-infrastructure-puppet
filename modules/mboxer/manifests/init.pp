@@ -36,11 +36,12 @@ file {
       owner  => 'apmail',
       group  => 'apmail',
       mode   => '0750';
-
+  }
 mailalias {
     'archiver':
       name => 'archiver',
       ensure => present,
       provider => aliases,
       recipient => "|python3 ${install_base}/tools/archive.py";
+  }
 }
