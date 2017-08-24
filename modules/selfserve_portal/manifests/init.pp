@@ -67,6 +67,16 @@ file {
       owner  => 'root',
       group  => 'root',
       mode    => '0755';
+    "${install_base}/${atlassian_cli}/jira.sh":
+      content => template('selfserve_portal/jira.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
+    "${install_base}/${atlassian_cli}/confluence.sh":
+      content => template('selfserve_portal/confluence.sh.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode    => '0755';
   }
 
 # cronjobs

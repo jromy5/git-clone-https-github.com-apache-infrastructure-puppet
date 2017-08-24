@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SERVER=https://issues.apache.org/jira
+USER=<%= @jira_un %>
+PW=<%= @jira_pw %>
+
+java -jar `dirname $0`/lib/jira-cli-<%= @cliversion %>.jar --server $SERVER --user $USER --password $PW "$@"
+
