@@ -33,7 +33,7 @@ file {
 # mbox archive
     $archive_dir:
       ensure => directory,
-      owner  => 'apmail',
+      owner  => 'nobody',
       group  => 'apmail',
       mode   => '0750';
   }
