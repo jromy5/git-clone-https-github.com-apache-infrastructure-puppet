@@ -31,6 +31,7 @@ import os
 import io
 import sys
 import stat
+import fcntl
 
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
@@ -43,6 +44,18 @@ except:
         'restricteddir': '/x1/restricted',
         'dumpfile': '/x1/archives/bademails.txt'
     }
+
+def lock(fd):
+    """ Attempt to lock a file, wait 0.1 secs if failed. """
+    while True:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            break
+        except IOError as e:
+            if e.errno != errno.EAGAIN:
+                raise
+            else:
+                time.sleep(0.1)
 
 def main():
     input_stream = sys.stdin.buffer
@@ -121,11 +134,12 @@ def main():
                 xpath = "%s/%s/%s" % (adir, fqdn, listname)
                 os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)                
         with open(path, "ab") as f:
+            lock(f) # Lock the file
             # Write the body, escape lines starting with "From ..." as ">From ..."
             f.write(re.sub(b"\nFrom ", b"\n>From ", msgstring))
             # End with two blank lines
             f.write(b"\r\n\r\n")
-            f.close()
+            f.close() # Implicitly releases the lock
             os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IROTH)
     else:
         print("Valid email received, but appears it's not for us. Nothing to do here.")
