@@ -1,2 +1,3 @@
-archivedir:   '/x1/archives'
-dumpfile:     '/x1/archives/bademails.dat'
+archivedir:     '/x1/archives'
+dumpfile:       '/x1/restricted/bademails.dat'
+restricteddir:  '/x1/restricted'

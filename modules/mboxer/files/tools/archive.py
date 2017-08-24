@@ -40,6 +40,7 @@ except:
     print("Can't find config, using defaults (/x1/archives/)")
     config = {
         'archivedir': '/x1/archives',
+        'restricteddir': '/x1/restricted',
         'dumpfile': '/x1/archives/bademails.txt'
     }
 
@@ -97,20 +98,26 @@ def main():
         listname, fqdn = recipient.split('@', 1)
         Y = time.strftime("%Y")
         M = time.strftime("%m")
-        path = "%s/%s/%s/%s/%s.mbox" % (config['archivedir'], fqdn, listname, Y, M)
-        dpath = "%s/%s/%s/%s" % (config['archivedir'], fqdn, listname, Y)
+        adir = config['archivedir']
+        dochmod = True
+        if len(sys.argv) > 1 and sys.argv[1] == 'restricted':
+            adir = config['restricteddir']
+            dochmod = False
+        path = "%s/%s/%s/%s/%s.mbox" % (adir, fqdn, listname, Y, M)
+        dpath = "%s/%s/%s/%s" % (adir, fqdn, listname, Y)
         print("This is for %s, archiving under %s!" % (recipient, path))
         if not os.path.exists(dpath):
             print("Creating directory %s first" % dpath)
             os.makedirs(dpath)
             # Since we're running as nobody, we need to...massage things for now
             # chmod fqdn, fqdn/list and fqdn/list/year as 0705
-            xpath = "%s/%s/" % (config['archivedir'], fqdn)
-            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-            xpath = "%s/%s/%s" % (config['archivedir'], fqdn, listname)
-            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-            os.chmod(dpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-            
+            if dochmod:
+                xpath = "%s/%s/" % (adir, fqdn)
+                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+                xpath = "%s/%s/%s" % (adir, fqdn, listname)
+                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+                os.chmod(dpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+                
         with open(path, "ab") as f:
             # Write the body, escape lines starting with "From ..." as ">From ..."
             f.write(re.sub(b"\nFrom ", b"\n>From ", msgstring))
