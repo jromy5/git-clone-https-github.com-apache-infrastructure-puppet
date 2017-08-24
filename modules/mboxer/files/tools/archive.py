@@ -111,7 +111,7 @@ def main():
                 
         # validate listname and fqdn, just in case
         listname, fqdn = recipient.lower().split('@', 1)
-        if not re.match(r"^[-.a-z0-9]+$", listname) or not re.match(r"^[-.a-z0-9]+$", fqdn):
+        if not re.match(r"^[a-z0-9][-.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
             print("Dirty listname or FQDN, bailing!")
             sys.exit(0) # Bail quietly
         YM = time.strftime("%Y%m")
