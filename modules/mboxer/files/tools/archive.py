@@ -34,7 +34,7 @@ import sys
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
 try:
-    config = yaml.load(open("%s/sesttings.yml" % cpath))
+    config = yaml.load(open("%s/settings.yml" % cpath))
 except:
     print("Can't find config, using defaults (/x1/archives/)")
     config = {
