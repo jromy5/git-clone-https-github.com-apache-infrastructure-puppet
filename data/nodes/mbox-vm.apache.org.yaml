@@ -10,3 +10,13 @@ postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 postfix::server::myorigin: 'apache.org'
 postfix::server::mynetworks: '140.211.11.0/24'
 postfix::server::mail_user: 'apmail'
+
+ssh_asf::server_options:
+  ListenAddress:
+    - '0.0.0.0'
+    - '::'
+  'Match Group *,!member,!disk,!asf999,!root-sudoers':
+    ForceCommand: '/bin/nologin'
+    X11Forwarding: 'no'
+    AllowTCPForwarding: 'no'
+    PermitTunnel: 'no'
