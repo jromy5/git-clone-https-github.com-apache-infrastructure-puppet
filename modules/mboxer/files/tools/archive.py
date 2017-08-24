@@ -30,6 +30,7 @@ import yaml
 import os
 import io
 import sys
+import stat
 
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
@@ -98,22 +99,17 @@ def main():
         M = time.strftime("%m")
         path = "%s/%s/%s/%s/%s.mbox" % (config['archivedir'], fqdn, listname, Y, M)
         dpath = "%s/%s/%s/%s" % (config['archivedir'], fqdn, listname, Y)
-    if recipient and path:
         print("This is for %s, archiving under %s!" % (recipient, path))
-        fro = msg.get('return-path', "unknown@unknown").strip('<>')
-        fline = "From %s %s UTC\r\n" % (fro, time.strftime("%c", time.gmtime()))
-        
         if not os.path.exists(dpath):
             print("Creating directory %s first" % dpath)
             os.makedirs(dpath)
         with open(path, "ab") as f:
-            # Write From line so mbox knows what to do
-            f.write(bytes(fline, encoding = 'ascii'))
             # Write the body, escape lines starting with "From ..." as ">From ..."
             f.write(re.sub(b"\nFrom ", b"\n>From ", msgstring))
             # End with two blank lines
             f.write(b"\r\n\r\n")
             f.close()
+            os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
     else:
         print("Valid email received, but appears it's not for us. Nothing to do here.")
 
