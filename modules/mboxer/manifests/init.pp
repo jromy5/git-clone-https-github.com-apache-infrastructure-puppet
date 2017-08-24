@@ -35,7 +35,7 @@ file {
       ensure => directory,
       owner  => 'nobody',
       group  => 'apmail',
-      mode   => '0750';
+      mode   => '0755';
   }
 mailalias {
     'archiver':
