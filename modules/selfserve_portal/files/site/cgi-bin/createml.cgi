@@ -58,7 +58,7 @@ if not domain or not checkDomain(domain):
 
 # Get and validate list part
 listname = form.getvalue('list', None)
-if not listname or not re.match(r"^[a-z]+$", listname):
+if not listname or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", listname):
     sscommon.buggo("Invalid list name specified!")
 
 # Get and validate mods
