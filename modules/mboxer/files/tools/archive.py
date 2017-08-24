@@ -106,10 +106,10 @@ def main():
             # Since we're running as nobody, we need to...massage things for now
             # chmod fqdn, fqdn/list and fqdn/list/year as 0705
             xpath = "%s/%s/" % (config['archivedir'], fqdn)
-            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR, stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
             xpath = "%s/%s/%s" % (config['archivedir'], fqdn, listname)
-            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR, stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
-            os.chmod(dpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR, stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+            os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
+            os.chmod(dpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXOTH)
             
         with open(path, "ab") as f:
             # Write the body, escape lines starting with "From ..." as ">From ..."
