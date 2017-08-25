@@ -126,7 +126,7 @@ def main():
         print("This is for %s, archiving under %s!" % (recipient, path))
         if not os.path.exists(dpath):
             print("Creating directory %s first" % dpath)
-            os.makedirs(dpath)
+            os.makedirs(dpath, exist_ok = True)
             # Since we're running as nobody, we need to...massage things for now
             # chmod fqdn, fqdn/list and fqdn/list/year as 0705
             if dochmod:
