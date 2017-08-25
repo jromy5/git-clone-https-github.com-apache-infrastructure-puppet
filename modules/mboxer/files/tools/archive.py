@@ -32,6 +32,7 @@ import io
 import sys
 import stat
 import fcntl
+import errno
 
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
