@@ -1,6 +1,5 @@
 ---
 classes:
-  - datadog_agent::integrations::apache
   - zmanda_asf::client
   - mboxer
 
