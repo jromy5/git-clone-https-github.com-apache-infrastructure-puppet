@@ -32,6 +32,7 @@ import io
 import sys
 import stat
 import fcntl
+import errno
 
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
@@ -51,7 +52,7 @@ def lock(fd):
         try:
             fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             break
-        except IOError as e:
+        except BlockingIOError as e:
             if e.errno != errno.EAGAIN:
                 raise
             else:
@@ -146,3 +147,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
