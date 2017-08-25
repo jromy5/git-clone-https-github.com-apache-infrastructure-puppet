@@ -51,7 +51,7 @@ def lock(fd):
         try:
             fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             break
-        except IOError as e:
+        except BlockingIOError as e:
             if e.errno != errno.EAGAIN:
                 raise
             else:
@@ -146,4 +146,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
