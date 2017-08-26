@@ -2,6 +2,7 @@
 classes:
   - zmanda_asf::client
   - mboxer
+  - ssl::name::wildcard_apache_org
 
 postfix::server::home_mailbox: 'Maildir/'
 postfix::server::inet_interfaces: 'all'
