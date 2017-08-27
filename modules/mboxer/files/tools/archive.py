@@ -58,6 +58,18 @@ def lock(fd):
             else:
                 raise
 
+def dumpbad(what):
+    with open(config['dumpfile'], "ab") as f:
+        lock(f) # Lock the file
+        # The From ... line will always be there, or we couldn't have
+        # received the msg in the first place.
+        # Write the body, escape lines starting with "(>*)From ..." as ">(>*)From ..."
+        # First line must not get an extra LF prefix
+        f.write(re.sub(b"\n(>*)From ", b"\n>\\1From ", what))
+        # End with one blank line
+        f.write(b"\n")
+        f.close() # implicitly releases the lock
+
 def main():
     input_stream = sys.stdin.buffer
     
@@ -73,18 +85,7 @@ def main():
     # If email wasn't valid, dump it in the bademails file
     if msgstring and not msg:
         print("Invalid email received, dumping in %s!" % config['dumpfile'])
-        with open(config['dumpfile'], "ab") as f:
-            lock(f) # Lock the file
-            # Write From line so mbox knows what to do
-            fline = "From invalid@unknown %s\n" % time.strftime("%c", time.gmtime())
-            f.write(bytes(fline, encoding = 'ascii'))
-            # Write the body, escape lines starting with "(>*)From ..." as ">(>*)From ..."
-            # First line must not get an extra LF prefix
-            msgstring = re.sub(b"^(>*)From ", b">\\1From ", msgstring)
-            f.write(re.sub(b"\n(>*)From ", b"\n>\\1From ", msgstring))
-            # End with one blank line
-            f.write(b"\n")
-            f.close() # implicitly releases the lock
+        dumpbad(msgstring)
         sys.exit(0)
     
     # So, we got an email now - who is it for??
@@ -148,7 +149,12 @@ def main():
             f.close() # Implicitly releases the lock
             os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IROTH)
     else:
-        print("Valid email received, but appears it's not for us. Nothing to do here.")
+        # If we can't find a list for this, still valuable to print out what happened.
+        # We shouldn't be getting emails we can't find a valid list for!
+        sys.stderr.write("Valid email received, but appears it's not for us!\r\n")
+        sys.stderr.write("  From: %s\r\n  To: %s\r\n  Message-ID: %s\r\n\r\n" % (msg.get('from', "Unknown"), msg.get('to', "Unknown"), msg.get('message-id', "Unknown")))
+        dumpbad(msgstring)
+        sys.exit(-1)
 
 if __name__ == '__main__':
     main()
