@@ -148,7 +148,11 @@ def main():
             f.close() # Implicitly releases the lock
             os.chmod(path, stat.S_IWUSR | stat.S_IRUSR | stat.S_IROTH)
     else:
-        print("Valid email received, but appears it's not for us. Nothing to do here.")
+        # If we can't find a list for this, still valuable to print out what happened.
+        # We shouldn't be getting emails we can't find a valid list for!
+        sys.stderr.write("Valid email received, but appears it's not for us!\r\n")
+        sys.stderr.write("  From: %s\r\n  To: %s\r\n  Message-ID: %s\r\n\r\n" % (msg.get('from', "Unknown"), msg.get('to', "Unknown"), msg.get('message-id', "Unknown")))
+        sys.exit(-1)
 
 if __name__ == '__main__':
     main()
