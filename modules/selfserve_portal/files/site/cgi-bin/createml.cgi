@@ -98,7 +98,7 @@ for newlist in lists:
     json.dump(payload, open("/usr/local/etc/selfserve/queue/mailinglist-%s-%s.json" % (newlist, domain), "w"))
     
     add = "This list has been marked as private. " if payload['private'] else ""
-    sscommon.email("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (newlist, domain),
+    sscommon.sendemail("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (newlist, domain),
     """
     Hi there,
     As requested by %s@apache.org, a new mailing list have been queued for creation:
