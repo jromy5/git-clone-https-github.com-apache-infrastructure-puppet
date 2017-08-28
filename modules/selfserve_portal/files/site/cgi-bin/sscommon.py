@@ -21,6 +21,7 @@ import yaml
 import sys
 import requests
 import smtplib
+import email.utils
 
 config = yaml.load(open(YAML_FILE))
 
@@ -34,7 +35,9 @@ def email(rcpt, subject, message):
     if isinstance(rcpt, list):
         receivers = rcpt
     receivers.append('ASF Infrastructure <private@infra.apache.org>')
+    msgid = email.utils.make_msgid()
     msg = """From: %s
+Message-ID: %s
 To: %s
 Reply-To: ASF Infrastructure <users@infra.apache.org>
 Subject: %s
@@ -44,7 +47,7 @@ Subject: %s
 With regards,
 ASF Self-Service Platform, https://selfserve.apache.org
 For inquiries, please contact: users@infra.apache.org
-""" % (sender, ", ".join(receivers), subject, message)
+""" % (sender, msgid, ", ".join(receivers), subject, message)
     msg = msg.encode('ascii', errors='replace')
     smtpObj = smtplib.SMTP("mail.apache.org:2025")
     smtpObj.sendmail(sender, receivers, msg)
