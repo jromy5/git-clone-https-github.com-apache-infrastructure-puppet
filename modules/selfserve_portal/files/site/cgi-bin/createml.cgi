@@ -63,7 +63,7 @@ presets = form.getlist('preset')
 # Podlists == create the three default lists for new podlings
 if presets:
     for val in presets:
-        if not presets or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", presets):
+        if not presets or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", val):
             sscommon.buggo("Invalid list name specified!")
     lists = presets
 else:

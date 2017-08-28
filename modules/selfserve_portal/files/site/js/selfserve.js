@@ -60,7 +60,6 @@ post = function(url, args, xstate, callback, snap) {
     }
   }
   fdata = ar.join("&");
-  alert(fdata);
   xmlHttp.open("POST", url, true);
   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xmlHttp.send(fdata);
