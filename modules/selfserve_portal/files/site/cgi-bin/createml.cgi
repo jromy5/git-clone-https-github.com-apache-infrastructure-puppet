@@ -48,7 +48,7 @@ def checkDomain(dom):
     return True
 
     
-    
+
 form = cgi.FieldStorage();
 
 # Get and validate domain part
@@ -57,9 +57,15 @@ if not domain or not checkDomain(domain):
     sscommon.buggo("Invalid domain name!")
 
 # Get and validate list part
+lists = []
 listname = form.getvalue('list', None)
-if not listname or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", listname):
-    sscommon.buggo("Invalid list name specified!")
+# Podlists == create the three default lists for new podlings
+if listname == "podlists":
+    lists = ['private', 'dev', 'commits']
+else:
+    if not listname or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", listname):
+        sscommon.buggo("Invalid list name specified!")
+    lists = [listname]
 
 # Get and validate mods
 mods = form.getvalue('moderators', "").split("\n")
@@ -76,31 +82,31 @@ muopts = form.getvalue('muopts', 'mu')
 if not muopts in ['mu', 'Mu', 'mU']:
     sscommon.buggo("Invalid moderation setting requested!")
 
-# Write payload to file
-payload = {
-    'type': 'mailinglist',
-    'requester': requser,
-    'requested': int(time.time()),
-    'domain': domain,
-    'list': listname,
-    'muopts': muopts,
-    'private': True if private else False,
-    'mods': mods
-}
-
-json.dump(payload, open("/usr/local/etc/selfserve/queue/mailinglist-%s-%s.json" % (listname, domain), "w"))
-
-
-add = "This list has been marked as private. " if private else ""
-sscommon.email("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (listname, domain),
-"""
-Hi there,
-As requested by %s@apache.org, a new mailing list have been queued for creation:
-%s@%s
-
-%s
-This request will automatically be processed within 24 hours.
-""" % (requser, listname, domain, add))
-sscommon.hipchat("A new mailing list, <kbd>%s@%s</kbd>, has been queued for creation, as requested by %s@apache.org. %s" % (listname, domain, requser, add))
+for newlist in lists:
+    # Write payload to file
+    payload = {
+        'type': 'mailinglist',
+        'requester': requser,
+        'requested': int(time.time()),
+        'domain': domain,
+        'list': newlist,
+        'muopts': muopts,
+        'private': True if (private or newlist in ['private', 'security']) else False, # Force private for private+security@
+        'mods': mods
+    }
+    
+    json.dump(payload, open("/usr/local/etc/selfserve/queue/mailinglist-%s-%s.json" % (newlist, domain), "w"))
+    
+    add = "This list has been marked as private. " if payload['private'] else ""
+    sscommon.email("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (newlist, domain),
+    """
+    Hi there,
+    As requested by %s@apache.org, a new mailing list have been queued for creation:
+    %s@%s
+    
+    %s
+    This request will automatically be processed within 24 hours.
+    """ % (requser, newlist, domain, add))
+    sscommon.hipchat("A new mailing list, <kbd>%s@%s</kbd>, has been queued for creation, as requested by %s@apache.org. %s" % (newlist, domain, requser, add))
 print("Status: 201 Created\r\n\r\n<h2>Mailing List request received!</h2>Your request for a new mailing list has been received and will automatically be processed within 24 hours. We will notify your PMC when the list has been created.")
 
