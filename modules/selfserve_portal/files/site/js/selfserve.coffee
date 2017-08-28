@@ -38,10 +38,13 @@ post = (url, args, xstate, callback, snap) ->
     # Construct form data
     ar = []
     for k,v of args
-        if v and v != ""
+        if isArray(v)
+            for x in v
+                ar.push(k + "=" + encodeURIComponent(x))
+        else if v and v != ""
             ar.push(k + "=" + encodeURIComponent(v))
     fdata = ar.join("&")
-    
+    alert(fdata)
     
     # POST URL
     xmlHttp.open("POST", url, true);
@@ -257,6 +260,9 @@ checkPrivacy = (name) ->
     if name == 'true' and formData['list'] and not (formData['list'] in ['private', 'security'])
         return "Only private@ and security@ may be privately archived!"
     
+verifyListname = (name) ->
+    if name == "" and get('form_preset').value == ""
+        return "You must pick a list name or a preset!"
           
 verifyField = (e) ->
             key = e.target.getAttribute('id').split('_')[1...].join('_')
@@ -357,11 +363,29 @@ renderForm = (state, page) ->
                                         list.push(x)
                         else if isHash(options)
                             for el, val of options
-                                        sel = if (formData[key] and formData[key] == el) or (not formData[key] and el == field.default) then 'true' else null
+                                        sel = if (formData[key] and el == formData[key]) or (not formData[key] and el == field.default) then 'true' else null
                                         x = new HTML('option', { value: el, selected: sel}, val)
                                         list.push(x)
                                                 
                         box = new HTML('select', {id: "form_#{key}"}, list)
+            if field.type == 'multilist'
+                        list = []
+                        options = field.options
+                        if typeof options == "string" and urls[options]
+                                    options = urls[options]
+                        if isArray(options)
+                            for el in options
+                                        sel = if (formData[key] and el in formData[key]) or (not formData[key] and el == field.default) then 'true' else null
+                                        x = new HTML('option', { value: el, selected: sel}, el)
+                                        list.push(x)
+                        else if isHash(options)
+                            for el, val of options
+                                        sel = if (formData[key] and el in formData[key]) or (not formData[key] and el == field.default) then 'true' else null
+                                        x = new HTML('option', { value: el, selected: sel}, val)
+                                        list.push(x)
+                                                
+                        box = new HTML('select', {multiple: "multiple", id: "form_#{key}"}, list)
+                        
             idiv = new HTML('div', { style: { width: '50%', float: 'left'}}, box)
             if field.type == 'checkbox' and field.placeholder
                 idiv.inject(new HTML('span', { style: { display: 'inline-block'}}, field.placeholder))
@@ -426,6 +450,13 @@ changePage = (form, page, norender) ->
                                                 alert(rv)
                                                 return true
                         formData[key] = el.value
+                        if field.type == 'multilist'
+                            d = []
+                            for eo in el.options
+                                if eo.selected
+                                    d.push(eo.value)
+                            formData[key] = d
+                            
             if not norender
                         renderForm({file: form}, page)
 
