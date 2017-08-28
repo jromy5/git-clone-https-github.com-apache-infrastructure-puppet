@@ -44,7 +44,6 @@ post = (url, args, xstate, callback, snap) ->
         else if v and v != ""
             ar.push(k + "=" + encodeURIComponent(v))
     fdata = ar.join("&")
-    alert(fdata)
     
     # POST URL
     xmlHttp.open("POST", url, true);
