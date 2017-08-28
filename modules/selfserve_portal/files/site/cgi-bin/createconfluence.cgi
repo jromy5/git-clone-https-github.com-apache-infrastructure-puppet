@@ -130,7 +130,7 @@ try:
         ], stderr=subprocess.STDOUT)
 
     # All done!
-    sscommon.email("%s@apache.org" % requser, "New Confluence space created: %s" % space,
+    sscommon.sendemail("%s@apache.org" % requser, "New Confluence space created: %s" % space,
 """
 Hi there,
 As requested by %s@apache.org, a new Confluence space has been set up at:
