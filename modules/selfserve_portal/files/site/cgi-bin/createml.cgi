@@ -59,9 +59,13 @@ if not domain or not checkDomain(domain):
 # Get and validate list part
 lists = []
 listname = form.getvalue('list', None)
+presets = form.getlist('preset')
 # Podlists == create the three default lists for new podlings
-if listname == "podlists":
-    lists = ['private', 'dev', 'commits']
+if presets:
+    for val in presets:
+        if not presets or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", presets):
+            sscommon.buggo("Invalid list name specified!")
+    lists = presets
 else:
     if not listname or not re.match(r"^[a-z0-9]+(?:-[a-z0-9]+)?$", listname):
         sscommon.buggo("Invalid list name specified!")

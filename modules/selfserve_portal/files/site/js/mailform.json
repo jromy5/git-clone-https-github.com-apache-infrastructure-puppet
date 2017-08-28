@@ -9,15 +9,29 @@
               "domain": {
                   "desc": "Project domain",
                   "type": "list",
-                  "options": "cgi-bin/maildomains.cgi",
+                  "options": "cgi-bin/maildomains.cgi", 
                   "mandatory": true
               },
               "list": {
                   "desc": "List name",
                   "placeholder": "dev, users, commits, etc. [a-z0-9] and dashes only.",
                   "type": "text",
-                  "filter": "^[a-z0-9]+(?:-[a-z0-9]+)?$",
-                  "mandatory": true
+                  "filter": "^($|([a-z0-9]+(?:-[a-z0-9]+)?$))",
+                  "verifier": "verifyListname",
+                  "mandatory": false
+              },
+              "preset": {
+                  "desc": "OR select a preset bunch to make",
+                  "type": "multilist",
+                  "options": {
+                    "private": "private (will be PRIVATE)",
+                    "dev": "dev",
+                    "commits": "commits",
+                    "users": "users",
+                    "issues": "issues",
+                    "notifications": "notifications"
+                  },
+                  "mandatory": false
               }
           }
    }, {

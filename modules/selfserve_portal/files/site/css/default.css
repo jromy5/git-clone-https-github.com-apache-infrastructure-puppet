@@ -165,6 +165,16 @@ input:not([type]), input[type=text], input[type=password], textarea, select {
     max-width: 360px !important;
 }
 
+select[multiple=multiple] {
+    padding: 8px;
+    border: 2px solid #999;
+    background: #EEE;
+    border-radius: 2px;
+    width: 80%;
+    max-width: 360px !important;
+    height: 96px;
+}
+
 
 /* id.a.o stuff */
 label {
