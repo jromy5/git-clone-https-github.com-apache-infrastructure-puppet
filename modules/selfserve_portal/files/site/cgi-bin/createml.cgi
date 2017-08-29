@@ -26,6 +26,7 @@ import base64
 import subprocess
 import re
 import sscommon
+import fcntl
 
 requser = os.environ['REMOTE_USER']
 
@@ -34,6 +35,7 @@ def checkDomain(dom):
     rv = requests.get("https://whimsy.apache.org/public/committee-info.json")
     domains = rv.json()['committees']
     
+    # TODO this includes retired and graduated podlings
     rv = requests.get("https://whimsy.apache.org/public/public_podlings.json")
     domains.update(rv.json()['podling'])
     
@@ -78,6 +80,7 @@ for mod in mods:
         sscommon.buggo("Invalid administrator username!")
 
 # Get and validate private option
+# TODO currently this field serves no purpose and could be dropped.
 private = form.getvalue("private", False)
 if private and listname not in ['private', 'security']:
     sscommon.buggo("Only private@ and security@ can be private by default!")
@@ -98,14 +101,21 @@ for newlist in lists:
         'private': True if (private or newlist in ['private', 'security']) else False, # Force private for private+security@
         'mods': mods
     }
-    
-    json.dump(payload, open("/usr/local/etc/selfserve/queue/mailinglist-%s-%s.json" % (newlist, domain), "w"))
+
+    filename = "mailinglist-%s-%s.json" % (newlist, domain)
+    filepath = "/usr/local/etc/selfserve/queue/" + filename
+    # to properly guard against concurrent writes the file cannot be opened by more that one process at once
+    # use an external lock file. Create this under /tmp so they will be cleared up from time to time
+    lockfile = "/tmp/" + filename + '.lock'
+    with open(lockfile, "w") as lock, open(filepath, "w") as f:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        json.dump(payload, f)
     
     add = "This list has been marked as private. " if payload['private'] else ""
     sscommon.sendemail("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (newlist, domain),
     """
     Hi there,
-    As requested by %s@apache.org, a new mailing list have been queued for creation:
+    As requested by %s@apache.org, a new mailing list has been queued for creation:
     %s@%s
     
     %s
