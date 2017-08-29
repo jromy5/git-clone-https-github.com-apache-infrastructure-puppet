@@ -109,11 +109,7 @@ def main():
             if m:
                 recipient = m.group(1)
                 break
-    path = None
-    dpath = None
     if recipient:
-        # Construct a path to the mbox file we'll archive this inside
-                
         # validate listname and fqdn, just in case
         listname, fqdn = recipient.lower().split('@', 1)
         if not re.match(r"^[a-z0-9][-.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
@@ -125,19 +121,19 @@ def main():
         if len(sys.argv) > 1 and sys.argv[1] == 'restricted':
             adir = config['restricteddir']
             dochmod = False
-        path = "%s/%s/%s/%s.mbox" % (adir, fqdn, listname, YM)
-        dpath = "%s/%s/%s" % (adir, fqdn, listname)
+        # Construct a path to the mbox file
+        fqdnpath = os.path.join(adir, fqdn)
+        listpath = os.path.join(fqdnpath, listname)
+        path = os.path.join(listpath, "%s.mbox" % YM)
         print("This is for %s, archiving under %s!" % (recipient, path))
-        if not os.path.exists(dpath):
-            print("Creating directory %s first" % dpath)
-            os.makedirs(dpath, exist_ok = True)
+        if not os.path.exists(listpath):
+            print("Creating directory %s first" % listpath)
+            os.makedirs(listpath, exist_ok = True)
             # Since we're running as nobody, we need to...massage things for now
-            # chmod fqdn, fqdn/list and fqdn/list/year as 0705
+            # chmod fqdn and fqdn/list as 0705
             if dochmod:
-                xpath = "%s/%s" % (adir, fqdn)
-                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)
-                xpath = "%s/%s/%s" % (adir, fqdn, listname)
-                os.chmod(xpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)                
+                os.chmod(fqdnpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)
+                os.chmod(listpath, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IROTH | stat.S_IXOTH)
         with open(path, "ab") as f:
             lock(f) # Lock the file
             # Write the body, escape lines starting with "(>*)From ..." as ">(>*)From ..."
@@ -151,8 +147,9 @@ def main():
     else:
         # If we can't find a list for this, still valuable to print out what happened.
         # We shouldn't be getting emails we can't find a valid list for!
-        sys.stderr.write("Valid email received, but appears it's not for us!\r\n")
-        sys.stderr.write("  From: %s\r\n  To: %s\r\n  Message-ID: %s\r\n\r\n" % (msg.get('from', "Unknown"), msg.get('to', "Unknown"), msg.get('message-id', "Unknown")))
+        sys.stderr.write("Valid email received, but appears it's not for us!\n")
+        sys.stderr.write("  List-Post: %s\n  From: %s\n  To: %s\n  Message-ID: %s\n\n" % \
+            (msg.get('list-post', "Unknown"), msg.get('from', "Unknown"), msg.get('to', "Unknown"), msg.get('message-id', "Unknown")))
         dumpbad(msgstring)
         sys.exit(-1)
 
