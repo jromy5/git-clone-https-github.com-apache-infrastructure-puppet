@@ -781,6 +781,9 @@ projects_role = rw
 [/directory]
 @directory = rw
 
+[/directory/shared]
+* = r
+
 [/drill]
 @drill = rw
 
