@@ -114,6 +114,7 @@ def main():
         listname, fqdn = recipient.lower().split('@', 1)
         if not re.match(r"^[a-z0-9][-.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
             print("Dirty listname or FQDN, dumping in %s!" % config['dumpfile'])
+            dumpbad(msgstring)
             sys.exit(0) # Bail quietly
         YM = time.strftime("%Y%m", time.gmtime()) # Use UTC
         adir = config['archivedir']
