@@ -24,6 +24,7 @@
     - "colo/%{asfcolo}"
     - "%{::virtual}/%{::asfosname}/%{::asfosrelease}"
     - "oem/%{oem}"
+    - environment/%{::environment}
     - "common"
 
 :logger: console
