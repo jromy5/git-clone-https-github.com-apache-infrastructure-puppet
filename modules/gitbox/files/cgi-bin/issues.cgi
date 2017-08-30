@@ -218,9 +218,33 @@ def updateTicket(ticket, name, txt, worklog):
             return rv.txt
     except:
         pass # Not much to do just yet
+
+def remoteLink(ticket, url, prno):
+    auth = open("/x1/jirauser.txt").read().strip()
+    auth = str(base64.encodestring(bytes(auth))).strip()
     
-
-
+    # Post comment or worklog entry!
+    headers = {"Content-type": "application/json",
+                 "Accept": "*/*",
+                 "Authorization": "Basic %s" % auth
+                 }
+    try:
+        data = {
+            'url': url,
+            'title': "GitHub Pull Request #%s" % prno,
+            'icon': {
+                'url16x16': "https://github.com/favicon.ico"
+            }
+        }
+        
+        rv = requests.post("https://issues.apache.org/jira/rest/api/latest/issue/%s/remotelink" % ticket,headers=headers, json = data)
+        if rv.status_code == 200 or rv.status_code == 201:
+            return "Updated JIRA Ticket %s" % ticket
+        else:
+            return rv.txt
+    except:
+        pass # Not much to do just yet
+    
 # Main function
 def main():
     # Get JSON payload from GitHub
@@ -303,6 +327,7 @@ def main():
                 ticket = m.group(1)
                 worklog = True if jiraopt.find('worklog') != -1 else False
                 if not (jiraopt.find("nocomment") != -1 and isComment):
+                    remoteLink(ticket, fmt['link'], fmt['id']) # Make link to PR
                     return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
