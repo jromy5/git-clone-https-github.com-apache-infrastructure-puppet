@@ -37,12 +37,6 @@
    }, {
           "title": "Privacy settings",
           "fields": {
-              "private": {
-                  "desc": "Make list private",
-                  "placeholder": "Only visible to subscribers, archived privately.",
-                  "type": "checkbox",
-                  "verifier": "checkPrivacy"
-              },
               "muopts": {
                   "desc": "Moderation options",
                   "type": "list",
