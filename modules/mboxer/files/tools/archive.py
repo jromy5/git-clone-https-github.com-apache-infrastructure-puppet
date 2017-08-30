@@ -18,7 +18,7 @@
 """ 
 
 This script determines the intended ASF recipient of an email and
-archives the email in the correct mbox file. Does NOT discern
+archives the email in the correct mbox file. Does NOT differentiate
 between public and private email.
 
 """
@@ -86,7 +86,7 @@ def main():
     if msgstring and not msg:
         print("Invalid email received, dumping in %s!" % config['dumpfile'])
         dumpbad(msgstring)
-        sys.exit(0)
+        sys.exit(0) # Bail quietly
     
     # So, we got an email now - who is it for??
     
@@ -113,7 +113,7 @@ def main():
         # validate listname and fqdn, just in case
         listname, fqdn = recipient.lower().split('@', 1)
         if not re.match(r"^[a-z0-9][-.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
-            print("Dirty listname or FQDN, bailing!")
+            print("Dirty listname or FQDN, dumping in %s!" % config['dumpfile'])
             sys.exit(0) # Bail quietly
         YM = time.strftime("%Y%m", time.gmtime()) # Use UTC
         adir = config['archivedir']
@@ -137,8 +137,8 @@ def main():
         with open(path, "ab") as f:
             lock(f) # Lock the file
             # Write the body, escape lines starting with "(>*)From ..." as ">(>*)From ..."
-            # First line is a header line so must not be escaped
-            # Header lines cannot start with '>*From '
+            # First line is the From_ line so must not be escaped
+            # Actual message Header lines cannot start with '>*From '
             f.write(re.sub(b"\n(>*)From ", b"\n>\1From ", msgstring))
             # End with one blank line
             f.write(b"\n")
@@ -151,7 +151,7 @@ def main():
         sys.stderr.write("  List-Post: %s\n  From: %s\n  To: %s\n  Message-ID: %s\n\n" % \
             (msg.get('list-post', "Unknown"), msg.get('from', "Unknown"), msg.get('to', "Unknown"), msg.get('message-id', "Unknown")))
         dumpbad(msgstring)
-        sys.exit(-1)
+        sys.exit(-1) # exit with error (TODO is -1 correct?)
 
 if __name__ == '__main__':
     main()
