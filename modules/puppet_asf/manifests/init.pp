@@ -63,7 +63,7 @@ class puppet_asf (
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
-    content => "puppet:///modules/puppet_asf/puppet.${::hostname}.conf",
+    content => template("puppet_asf/puppet.${::hostname}.conf"),
    }
   }
   
