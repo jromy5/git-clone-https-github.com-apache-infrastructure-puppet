@@ -1,5 +1,4 @@
 ---
-environment: 'test'
 classes:
   - apache
   - apache::mod::proxy
@@ -13,6 +12,8 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
+
+puppet_asf::environment: 'test'
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
