@@ -55,7 +55,7 @@ class puppet_asf (
     enable     => true,
   }
 
-  if ${::hostname} == devops {
+  if $hostname == devops {
    file { $puppetconf :
     ensure  => present,
     require => Package['puppet'],
