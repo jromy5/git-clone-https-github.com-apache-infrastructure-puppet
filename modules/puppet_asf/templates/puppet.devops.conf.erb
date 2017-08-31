@@ -10,7 +10,7 @@ sslddir = /etc/puppet/ssl
      #trace = false
      #syslogfacility = daemon
     #rundir = /var/run/puppet
-    environment = production
+    environment = <%= @environment %>
     environmentpath = $confdir/environments
     disable_per_environment_manifest = true
     route_file = /etc/puppet/routes.yaml
