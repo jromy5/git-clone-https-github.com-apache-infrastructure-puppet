@@ -1,0 +1,15 @@
+[Unit]
+Description=Fisheye
+
+[Service]
+Type=forking
+ExecStart=/usr/local/fisheye/current/bin/start.sh
+ExecStop=/usr/local/fisheye/current/bin/stop.sh
+User=fisheye
+Group=fisheye
+Environment="FISHEYE_INST=/usr/local/fisheye/fisheye-data"
+Environment="FISHEYE_OPTS=-Xmx2048m -Xms512m -XX:MaxMetaspaceSize=2048m"
+
+[Install]
+WantedBy=multi-user.target
+Alias=fisheye.service
