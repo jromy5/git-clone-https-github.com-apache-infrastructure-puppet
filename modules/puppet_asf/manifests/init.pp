@@ -64,6 +64,7 @@ class puppet_asf (
     group   => 'puppet',
     mode    => '0755',
     content => "puppet:///modules/puppet_asf/puppet.${::hostname}.conf",
+   }
   }
   
   else {
