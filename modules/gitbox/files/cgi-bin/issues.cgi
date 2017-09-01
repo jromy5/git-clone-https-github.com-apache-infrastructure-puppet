@@ -229,14 +229,18 @@ def remoteLink(ticket, url, prno):
                  "Authorization": "Basic %s" % auth
                  }
     try:
+        urlid = url.split('#')[0] # Crop out anchor
         data = {
-            'url': url,
-            'title': "GitHub Pull Request #%s" % prno,
-            'icon': {
-                'url16x16': "https://github.com/favicon.ico"
+            'globalId': "github=%s" % urlid,
+            'object':
+                {
+                    'url': urlid,
+                    'title': "GitHub Pull Request #%s" % prno,
+                    'icon': {
+                        'url16x16': "https://github.com/favicon.ico"
+                    }
+                }
             }
-        }
-        
         rv = requests.post("https://issues.apache.org/jira/rest/api/latest/issue/%s/remotelink" % ticket,headers=headers, json = data)
         if rv.status_code == 200 or rv.status_code == 201:
             return "Updated JIRA Ticket %s" % ticket
