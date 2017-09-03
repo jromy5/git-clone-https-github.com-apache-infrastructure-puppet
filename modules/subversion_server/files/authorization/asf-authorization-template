@@ -928,7 +928,7 @@ buildbot = rw
 [/httpcomponents/core]
 * = r
 
-[httpcomponents/site]
+[/httpcomponents/site]
 @httpcomponents = rw
 
 [/httpd]
