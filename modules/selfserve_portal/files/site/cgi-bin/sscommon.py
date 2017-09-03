@@ -39,7 +39,7 @@ def sendemail(rcpt, subject, message):
     msg = """From: %s
 Message-ID: %s
 To: %s
-Reply-To: ASF Infrastructure <users@infra.apache.org>
+Reply-To: ASF Infrastructure <private@infra.apache.org>
 Subject: %s
 
 %s
