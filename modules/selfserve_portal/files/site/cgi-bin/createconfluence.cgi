@@ -53,7 +53,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'getUser',
         '--userId', admin,
@@ -70,7 +70,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'addSpace',
         '--space', space,
@@ -82,7 +82,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'addPermissions',
         '--space', space,
@@ -95,7 +95,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'addPermissions',
         '--space', space,
@@ -108,7 +108,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'addPermissions',
         '--space', space,
@@ -121,7 +121,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.cwikijar,
         '-v',
         '--server', 'https://cwiki.apache.org/confluence',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'removePermissions',
         '--space', space,
@@ -130,7 +130,7 @@ try:
         ], stderr=subprocess.STDOUT)
 
     # All done!
-    sscommon.email("%s@apache.org" % requser, "New Confluence space created: %s" % space,
+    sscommon.sendemail("%s@apache.org" % requser, "New Confluence space created: %s" % space,
 """
 Hi there,
 As requested by %s@apache.org, a new Confluence space has been set up at:

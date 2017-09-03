@@ -781,6 +781,9 @@ projects_role = rw
 [/directory]
 @directory = rw
 
+[/directory/shared]
+* = r
+
 [/drill]
 @drill = rw
 
@@ -924,6 +927,9 @@ buildbot = rw
 
 [/httpcomponents/core]
 * = r
+
+[/httpcomponents/site]
+@httpcomponents = rw
 
 [/httpd]
 @httpd = rw

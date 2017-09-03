@@ -7,7 +7,7 @@ import requests
 
 config = ConfigParser.ConfigParser()
 config.read("settings.cfg")
-options = {'api_key': config.get("datadog_agent", "api_key")}
+options = {'api_key': config.get("dd_agent", "api_key")}
 datadog.initialize(**options)
 
 url = "https://builds.apache.org/computer/api/json"

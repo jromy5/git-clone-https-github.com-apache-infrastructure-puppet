@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SERVER=https://cwiki.apache.org/confluence
+USER=<%= @jira_un %>
+PW=<%= @jira_pw %>
+
+java -jar `dirname $0`/lib/confluence-cli-<%= @cliversion %>.jar  --server $SERVER --user $USER --password $PW "$@"

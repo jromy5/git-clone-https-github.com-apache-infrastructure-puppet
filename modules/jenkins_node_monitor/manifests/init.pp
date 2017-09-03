@@ -4,6 +4,7 @@ class jenkins_node_monitor (
   $shell          = '/bin/bash',
   $username       = 'root',
   $group          = 'root',
+  $api_key        = '',
 ){
   require python
 

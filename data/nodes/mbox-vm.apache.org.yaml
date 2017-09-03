@@ -1,0 +1,25 @@
+---
+classes:
+  - zmanda_asf::client
+  - mboxer
+  - ssl::name::wildcard_apache_org
+
+postfix::server::home_mailbox: 'Maildir/'
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+postfix::server::myorigin: 'apache.org'
+postfix::server::mynetworks: '140.211.11.3/32'
+postfix::server::mail_user: 'apmail'
+postfix::server::smtpd_recipient_restrictions:
+  - 'permit_mynetworks'
+  - 'reject'
+
+ssh_asf::server_options:
+  ListenAddress:
+    - '0.0.0.0'
+    - '::'
+  'Match Group *,!member,!disk,!asf999,!root-sudoers':
+    ForceCommand: '/usr/sbin/nologin'
+    X11Forwarding: 'no'
+    AllowTCPForwarding: 'no'
+    PermitTunnel: 'no'

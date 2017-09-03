@@ -4,6 +4,7 @@ class puppet_asf (
   $puppetconf    = '/etc/puppet/puppet.conf',
   $enable_daemon = true,
   $daemon_opts   = '',
+  $environment   = 'production',
 ){
 
   case $::asfosname {
@@ -54,18 +55,28 @@ class puppet_asf (
     enable     => true,
   }
 
-  file { $puppetconf :
+  if $hostname == devops {
+   file { $puppetconf :
     ensure  => present,
     require => Package['puppet'],
     notify  => Service['puppet'],
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
-    source  => [
-      "puppet:///modules/puppet_asf/puppet.${::hostname}.conf",
-      "puppet:///modules/puppet_asf/${::asfosname}.puppet.conf",
-      'puppet:///modules/puppet_asf/puppet.conf',
-    ]
+    content => template("puppet_asf/puppet.${::hostname}.conf"),
+   }
+  }
+  
+  else {
+    file { $puppetconf :
+      ensure  => present,
+      require => Package['puppet'],
+      notify  => Service['puppet'],
+      owner   => 'root',
+      group   => 'puppet',
+      mode    => '0755',
+      content => template("puppet_asf/puppet.conf.erb"),
+    }
   }
 
 }

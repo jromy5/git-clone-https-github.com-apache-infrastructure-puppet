@@ -28,7 +28,7 @@ import base64
 import sscommon
 
 def userExists(username):
-    auth = "%s:%s" % (sscommon.config['jira']['user'], sscommon.config['jira']['password'])
+    auth = "%s:%s" % (sscommon.config['jira']['username'], sscommon.config['jira']['password'])
     auth = str(base64.encodestring(bytes(auth))).strip()
     
     # Post comment or worklog entry!
@@ -38,7 +38,7 @@ def userExists(username):
                  }
     try:
         
-        rv = requests.get("https://issues.apache.org/jira/rest/api/latest/user?username=%s" % username)
+        rv = requests.get("https://issues.apache.org/jira/rest/api/latest/user?username=%s" % username, headers = headers)
         if rv.status_code == 200 or rv.status_code == 201:
             return True
         else:

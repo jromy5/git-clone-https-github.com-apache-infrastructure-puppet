@@ -1,7 +1,7 @@
 infra-puppet
 ============
 
-Apache Infrastructure Team - Puppet
+Apache Infrastructure Team - Puppet Repository
 
 # Docs
 

@@ -62,7 +62,7 @@ try:
         '/usr/bin/java', '-jar', sscommon.jirajar,
         '-v',
         '--server', 'https://issues.apache.org/jira',
-        '--user', sscommon.config['jira']['user'],
+        '--user', sscommon.config['jira']['username'],
         '--password', sscommon.config['jira']['password'],
         '--action', 'createProject',
         '--project', project,
@@ -74,7 +74,7 @@ try:
         '--workflowScheme',  workflowscheme,
         '--notificationScheme', "Empty Scheme"
         ], stderr=subprocess.STDOUT)
-    sscommon.email("%s@apache.org" % requser, "New JIRA project created: %s" % project,
+    sscommon.sendemail("%s@apache.org" % requser, "New JIRA project created: %s" % project,
 """
 Hi there,
 As requested by %s@apache.org, a new JIRA project has been set up at:
