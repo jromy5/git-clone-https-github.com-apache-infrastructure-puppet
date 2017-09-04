@@ -63,3 +63,31 @@ vhosts_asf::modules::modules:
   lua:
     name: 'lua'
 
+vhosts_asf::vhosts::vhosts:
+  community-vm:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    ssl: false
+    servername: 'community-vm.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/community-vm/'
+    access_log_file: 'community-vm.access.log'
+    error_log_file: 'community-vm.error.log'
+    custom_fragment: |
+      # Put custom stuff here
+  community-vm-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/community-vm.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/community-vm.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/community-vm.apache.org/chain.pem
+    servername: 'community-vm.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/community-vm/'
+    access_log_file: 'community-vm.access.log'
+    error_log_file: 'community-vm.error.log'
+    custom_fragment: |
+      # Put custom stuf here
