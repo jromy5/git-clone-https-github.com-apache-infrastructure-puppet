@@ -22,6 +22,7 @@ import sys
 import requests
 import smtplib
 import email.utils
+import time
 
 config = yaml.load(open(YAML_FILE))
 
@@ -35,9 +36,12 @@ def sendemail(rcpt, subject, message):
     if isinstance(rcpt, list):
         receivers = rcpt
     receivers.append('ASF Infrastructure <private@infra.apache.org>')
+    # The headers below are not supplied by default by Python, add them!
     msgid = email.utils.make_msgid()
+    msgdate = email.utils.formatdate()
     msg = """From: %s
 Message-ID: %s
+Date: %s
 To: %s
 Reply-To: ASF Infrastructure <private@infra.apache.org>
 Subject: %s
@@ -47,7 +51,7 @@ Subject: %s
 With regards,
 ASF Self-Service Platform, https://selfserve.apache.org
 For inquiries, please contact: users@infra.apache.org
-""" % (sender, msgid, ", ".join(receivers), subject, message)
+""" % (sender, msgid, msgdate, ", ".join(receivers), subject, message)
     msg = msg.encode('ascii', errors='replace')
     smtpObj = smtplib.SMTP("mail.apache.org:2025")
     smtpObj.sendmail(sender, receivers, msg)
