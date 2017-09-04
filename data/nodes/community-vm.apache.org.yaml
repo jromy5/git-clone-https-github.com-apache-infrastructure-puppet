@@ -33,7 +33,6 @@ base::basepackages:
   - 'lua5.2-cjson'
   - 'lua5.2-socket'
   - 'lua5.2-sec'
-  - 'gunicorn'
 
 elasticsearch::jvm_options:
   - '-Xms1g'
