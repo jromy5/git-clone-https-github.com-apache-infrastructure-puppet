@@ -40,10 +40,10 @@ class kif (
       group  => $group,
       source => "puppet:///modules/kif/kif.${::asfosname}";
     '/etc/default/kif':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
-      content => "";
+      mode    => '0755',
+      owner   => $username,
+      group   => $group,
+      content => '';
     '/lib/systemd/system/kif.service':
       mode   => '0755',
       owner  => $username,
@@ -55,9 +55,9 @@ class kif (
       group  => $group,
       source => 'puppet:///modules/kif/kif.py';
     '/usr/local/etc/kif/kif.yaml':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
+      mode    => '0755',
+      owner   => $username,
+      group   => $group,
       content => template('kif/kif.yaml.erb')
     } ->
 
