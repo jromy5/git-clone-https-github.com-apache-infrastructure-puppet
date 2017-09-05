@@ -142,10 +142,10 @@ $pbcsPwd  = ''
       require     => File['/x1/gitbox/db'];
   }
 
-  tidy { "/x1/gitbox/db/backups":
-        age     => "1w",
+  tidy { '/x1/gitbox/db/backups':
+        age     => '1w',
         recurse => 1,
-        matches => ["*.bak"],
+        matches => ['*.bak'],
   }
 
 
