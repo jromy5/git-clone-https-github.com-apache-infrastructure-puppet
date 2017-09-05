@@ -12,6 +12,7 @@ class buildbot_slave::cpan (
   require stdlib
   require buildbot_slave
 
+  #define cpan modules
   define buildbot_slave::install_modules ($module = $title) {
     cpan { $module :
       ensure    => present,

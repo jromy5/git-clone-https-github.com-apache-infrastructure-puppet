@@ -27,13 +27,14 @@ require buildbot_slave
       require => [Group[$buildbot_slave::groupname]];
   }
 
+  # define buildbot slave project xml directories
   define buildbot_slave::rats ($project = $title) {
     file {"/home/buildslave/slave/rat-buildfiles//${project}.xml":
       ensure  => present,
       owner   => $buildbot_slave::username,
       group   => $buildbot_slave::groupname,
       mode    => '0640',
-      source  => "puppet:///modules/buildbot_slave/$project.xml",
+      source  => "puppet:///modules/buildbot_slave/${project.xml}",
       require => [Package['ant'],File['/home/buildslave/slave/rat-buildfiles'],Group[$buildbot_slave::groupname]];
     }
   }
