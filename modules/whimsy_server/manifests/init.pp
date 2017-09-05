@@ -40,7 +40,7 @@ class whimsy_server (
   ]
 
   exec { 'Add nodesource sources':
-    command => 'curl https://deb.nodesource.com/setup_5.x | bash -',
+    command => 'curl https://deb.nodesource.com/setup_8.x | bash -',
     creates => '/etc/apt/sources.list.d/nodesource.list',
     path    => ['/usr/bin', '/bin', '/usr/sbin']
   } ->
