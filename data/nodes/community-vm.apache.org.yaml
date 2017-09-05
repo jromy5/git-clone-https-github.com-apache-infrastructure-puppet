@@ -74,7 +74,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'community-vm.access.log'
     error_log_file: 'community-vm.error.log'
     custom_fragment: |
-      # Put custom stuff here
+      ProxyPass / http://127.0.0.1:8080/
   community-vm-ssl:
     vhost_name: '*'
     ensure: 'present'
@@ -89,4 +89,4 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'community-vm.access.log'
     error_log_file: 'community-vm.error.log'
     custom_fragment: |
-      # Put custom stuf here
+      ProxyPass / http://127.0.0.1:8080/
