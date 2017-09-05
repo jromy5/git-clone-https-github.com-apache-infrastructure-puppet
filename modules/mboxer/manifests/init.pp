@@ -20,7 +20,7 @@ user { 'apmail':
     ensure => present,
     home   => '/home/apmail'
   }
-  
+
 file {
 # Tools dir
     $install_base:
@@ -45,14 +45,14 @@ file {
   }
 mailalias {
     'archiver':
-      name => 'archiver',
-      ensure => present,
-      provider => aliases,
+      ensure    => present,
+      name      => 'archiver',
+      provider  => aliases,
       recipient => "|python3 ${install_base}/tools/archive.py";
     'restricted':
-      name => 'restricted',
-      ensure => present,
-      provider => aliases,
+      ensure    => present,
+      name      => 'restricted',
+      provider  => aliases,
       recipient => "|python3 ${install_base}/tools/archive.py restricted";
   }
 }
