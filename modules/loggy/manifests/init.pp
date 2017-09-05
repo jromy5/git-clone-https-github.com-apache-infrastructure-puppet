@@ -46,9 +46,9 @@ class loggy (
       group  => $group,
       source => 'puppet:///modules/loggy/loggy.py';
     '/usr/local/etc/loggy/loggy.cfg':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
+      mode    => '0755',
+      owner   => $username,
+      group   => $group,
       content => template('loggy/loggy.cfg.erb');
     } ->
 
