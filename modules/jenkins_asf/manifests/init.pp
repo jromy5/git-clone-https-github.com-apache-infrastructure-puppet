@@ -115,7 +115,7 @@ class jenkins_asf (
 
   exec {
     'chown-tomcat-dirs':
-      command => "/bin/chown -R ${username}:${username} ${catalina_base}/logs ${catalina_base}/temp ${catalina_base}/work ${catalina_base}/conf ${catalina_base}/webapps",
+      command => "/bin/chown -R ${username}:${username} ${catalina_base}/logs ${catalina_base}/temp ${catalina_base}/work ${catalina_base}/conf ${catalina_base}/webapps", # lint:ignore:140chars
       timeout => 1200,
       require => [User[$username],Group[$username],Exec['extract-tomcat']],
 }
@@ -124,7 +124,7 @@ class jenkins_asf (
 
   exec {
     'chgrp-tomcat-files':
-      command => "/bin/chgrp ${username} ${catalina_base}/bin ${catalina_base}/bin/*.sh ${catalina_base}/bin/*.jar ${catalina_base}/lib ${catalina_base}/lib/*.jar",
+      command => "/bin/chgrp ${username} ${catalina_base}/bin ${catalina_base}/bin/*.sh ${catalina_base}/bin/*.jar ${catalina_base}/lib ${catalina_base}/lib/*.jar", # lint:ignore:140chars
       timeout => 1200,
       require => [User[$username],Group[$username],Exec['extract-tomcat']],
 }
