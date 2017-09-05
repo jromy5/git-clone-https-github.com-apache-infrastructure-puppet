@@ -27,8 +27,8 @@ class jenkins_node_monitor (
     '/usr/local/etc/jenkins_node_monitor/settings.cfg':
       ensure  => present,
       content => template('jenkins_node_monitor/settings.cfg.erb'),
-      owner  => $username,
-      group  => $group,
+      owner   => $username,
+      group   => $group,
       mode    => '0644';
   }
 }
