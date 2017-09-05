@@ -1,3 +1,5 @@
+#/etc/puppet/modules/ooo_forums/manifests/init.pp
+
 class ooo_forums (
 
   # override below in yaml
