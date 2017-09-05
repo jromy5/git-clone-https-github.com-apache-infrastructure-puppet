@@ -16,6 +16,26 @@ class ssl::name::wildcard_openoffice_org (
   $sslrootdirumask     = '0755',
 ) {
 
+  if !defined(File["${sslrootdir}"]) {
+    file {
+      "${sslrootdir}":
+        ensure => directory,
+        group  => 'root',
+        owner  => 'root',
+        mode   => '0755';
+    "${sslrootdir}/certs":
+      ensure => directory,
+      group  => 'root',
+      owner  => 'root',
+      mode   => '0755';
+    "${sslrootdir}/private":
+      ensure => directory,
+      group  => 'root',
+      owner  => 'root',
+      mode   => '0700';
+    }
+  }
+
   file {
     "${sslrootdir}/certs/${sslcertname}":
       ensure  => present,
