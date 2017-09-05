@@ -151,10 +151,10 @@ class cwiki_asf (
       content => template('cwiki_asf/server.xml.erb'),
       mode    => '0644';
     "${install_dir}/conf/Standalone":
-      ensure  => directory,
-      owner   => 'confluence',
-      group   => 'confluence',
-      mode    => '0755';
+      ensure => directory,
+      owner  => 'confluence',
+      group  => 'confluence',
+      mode   => '0755';
     "${install_dir}/bin/setenv.sh":
       content => template('cwiki_asf/setenv.sh.erb'),
       mode    => '0644';
