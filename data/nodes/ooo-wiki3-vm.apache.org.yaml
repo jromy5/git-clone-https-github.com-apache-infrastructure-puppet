@@ -1,0 +1,61 @@
+---
+classes:
+  - apache
+  - apache::mod::rewrite
+  - ooo_mwiki
+  - ssl::name::wildcard_openoffice_org
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+# ooo_mwiki class variables.
+
+ooo_forums::mwiki_version: '1.29.1'
+ooo_forums::parent_dir: '/x1'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  ooo-mwiki3-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'ooo-wiki3-vm.apache.org'
+    serveraliases:
+      - 'wiki-test.openoffice.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'ooo_mwiki_error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://wiki-test.openoffice.org/$1
+
+  ooo-mwiki3-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'ooo-wiki3-vm.apache.org'
+      serveraliases:
+        - 'wiki-test.openoffice.org'
+      port: 443
+      docroot: '/var/www'
+      error_log_file: 'ooo_mwiki_error.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+      ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+      ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+
