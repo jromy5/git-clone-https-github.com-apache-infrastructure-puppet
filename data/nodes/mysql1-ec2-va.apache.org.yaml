@@ -5,6 +5,8 @@ classes:
   - mysql::server
   - zmanda_asf::client
 
+puppet_asf::daemon_opts: '--verbose --debug'
+
 datadog_agent::integrations::mysql::host: "%{::ipaddress_ens3}"
 datadog_agent::integrations::mysql::user: 'datadog'
 datadog_agent::integrations::mysql::replication: 1
