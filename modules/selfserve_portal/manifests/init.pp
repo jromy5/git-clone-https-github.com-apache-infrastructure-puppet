@@ -18,7 +18,7 @@ class selfserve_portal (
 
   $deploy_dir    = '/var/www/selfserve-portal'
   $install_base  = '/usr/local/etc/'
-  $atlassian_cli = "atlassian-cli-$cliversion"
+  $atlassian_cli = "atlassian-cli-${cliversion}"
 
 file {
     $deploy_dir:
@@ -41,47 +41,47 @@ file {
       mode   => '0755';
     "${install_base}/selfserve/selfserve.yaml":
       content => template('selfserve_portal/selfserve.yaml.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0644';
 
 # Required scripts for cronjobs
 
     "${install_base}/${atlassian_cli}/jira-get-category.sh":
       content => template('selfserve_portal/jira-get-category.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
     "${install_base}/${atlassian_cli}/jira-get-workflows.sh":
       content => template('selfserve_portal/jira-get-workflows.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
     "${install_base}/${atlassian_cli}/jira-get-projects.sh":
       content => template('selfserve_portal/jira-get-projects.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
     "${install_base}/${atlassian_cli}/confluence-get-spaces.sh":
       content => template('selfserve_portal/confluence-get-spaces.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
     "${install_base}/${atlassian_cli}/jira.sh":
       content => template('selfserve_portal/jira.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
     "${install_base}/${atlassian_cli}/confluence.sh":
       content => template('selfserve_portal/confluence.sh.erb'),
-      owner  => 'root',
-      group  => 'root',
+      owner   => 'root',
+      group   => 'root',
       mode    => '0755';
   }
 
 # cronjobs
 
- cron {
+  cron {
 'jira-get-category':
       user        => root,
       minute      => '30',
