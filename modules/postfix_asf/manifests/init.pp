@@ -14,11 +14,11 @@ class postfix_asf (
 
   file {
     '/etc/postfix/sender_access':
-      ensure => file,
-      mode   => '0644',
-      owner  => 'root',
-      group  => 'root',
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
       content => template('postfix_asf/sender_access.erb'),
-      notify => Exec['refresh_sender_access'];
+      notify  => Exec['refresh_sender_access'];
     }
 }
