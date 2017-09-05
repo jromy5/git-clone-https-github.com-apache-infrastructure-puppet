@@ -2,6 +2,7 @@
 
 include rvm
 
+# the buildvot slave rvm class
 class buildbot_slave::rvm ( ) {
 
   ############################################################
@@ -9,6 +10,7 @@ class buildbot_slave::rvm ( ) {
   ############################################################
   # stolen from whimsy_server module
 
+  # define ruby symlinks 
   define buildbot_slave::ruby::symlink ($binary = $title, $ruby = '') {
     $version = split($ruby, '-')
     file { "/usr/local/bin/${binary}${version[1]}" :
@@ -17,6 +19,7 @@ class buildbot_slave::rvm ( ) {
     }
   }
 
+  # define rvn symlinking
   define buildbot_slave::rvm::symlink ($ruby = $title) {
     $binaries = [erb, gem, irb, rake, rdoc, ri, ruby, testrb]
     buildbot_slave::ruby::symlink { $binaries: ruby => $ruby}
