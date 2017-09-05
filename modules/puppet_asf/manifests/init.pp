@@ -23,6 +23,8 @@ class puppet_asf (
             notify => Service['puppet'],
           }
         }
+        default: {
+        }
       }
 
       file { 'puppet_daemon_conf':
@@ -55,8 +57,8 @@ class puppet_asf (
     enable     => true,
   }
 
-  if $hostname == devops {
-   file { $puppetconf :
+  if $::hostname == devops {
+    file { $puppetconf :
     ensure  => present,
     require => Package['puppet'],
     notify  => Service['puppet'],
@@ -64,9 +66,9 @@ class puppet_asf (
     group   => 'puppet',
     mode    => '0755',
     content => template("puppet_asf/puppet.${::hostname}.conf"),
-   }
+    }
   }
-  
+
   else {
     file { $puppetconf :
       ensure  => present,
@@ -75,7 +77,7 @@ class puppet_asf (
       owner   => 'root',
       group   => 'puppet',
       mode    => '0755',
-      content => template("puppet_asf/puppet.conf.erb"),
+      content => template('puppet_asf/puppet.conf.erb'),
     }
   }
 
