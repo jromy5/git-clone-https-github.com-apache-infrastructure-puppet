@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 # Check asf- and pit- authorization-template for errors:
 # - references to @groupname must relate to an existing group name
 # - references to reuse:[asf|pit]-authorization must be present in the related file
@@ -43,15 +45,9 @@ if (scalar @unusedlist) {
 }
 
 if (scalar @unusedldap) {
-    print "The following LDAP groups don't appear to be used in the asf or pit auth files: ",join(' ', @unusedldap),"\n";
-    print "Note that the LDAP groups may still be required for other purposes\n";
+    print "The following LDAP groups don't appear to be used in the asf or pit auth files:\n",join(' ', @unusedldap),"\n";
 }
 
-# Check for TLPs without -pmc references (affects people.apache.org site generation)
-for(sort keys %$asfdefs) {
-	next if m!-site$! || $_ eq 'committers';
-	print "$_-pmc missing from ASF auth\n" unless $$asfdefs{$_} eq 'LIST' || defined $$pitrefs{"$_-pmc"};
-}
 print "Completed scans\n";
 
 sub process_file{
@@ -71,12 +67,16 @@ sub process_file{
         next if m!^#! || m!^\s*$!; # comment or empty
         next if m!^\[!; # directory header
         # committers={ldap:cn=committers,ou=groups,dc=apache,dc=org}
+        # ace-pmc={ldap:cn=ace,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
         if (m!^([^=]+)={ldap:cn=([^,]+),!) {
             my ($group, $cn)=($1,$2);
             my $error=0;
             if ($group =~ m!-pmc$!) {
                 $error=1 unless $group eq "$cn-pmc";
-                $error=1 unless m!,ou=pmc,ou=committees,!;
+                $error=1 unless m!cn=$cn,ou=project,ou=groups,dc=apache,dc=org;attr=owner!
+                    or m!,ou=pmc,ou=committees,!; # drop this last checke when tac&security are moved
+            } elsif ($group =~ m!-ppmc$!) {
+                $error=1 unless m!cn=$cn,ou=project,ou=groups,dc=apache,dc=org;attr=owner!;
             } else {
                 $error=1 unless $group eq $cn;                                
             }
