@@ -16,3 +16,4 @@ class ooo_forums (
     $required_packages:
       ensure => 'present',
   }
+}
