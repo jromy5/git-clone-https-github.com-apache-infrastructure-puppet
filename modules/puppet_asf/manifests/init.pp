@@ -65,7 +65,7 @@ class puppet_asf (
     owner   => 'root',
     group   => 'puppet',
     mode    => '0755',
-    content => template("puppet_asf/puppet.${::hostname}.conf"),
+    content => template("puppet_asf/puppet.${::hostname}.conf.erb"),
     }
   }
 
