@@ -253,6 +253,8 @@ file:
        - use_mount: yes
          excluded_filesystems:
            - tracefs
+           - none
+           - shm
 
 ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
