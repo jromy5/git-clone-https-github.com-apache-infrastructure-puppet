@@ -42,3 +42,39 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  forumaoo_es:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_fr:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_hu:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_it:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_ja:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_nl:
+    ensure: 'present'
+    charset: 'utf8'
+  collate: 'utf8_bin'
+    forumaoo_pl:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_vi:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  forumaoo_zh:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
