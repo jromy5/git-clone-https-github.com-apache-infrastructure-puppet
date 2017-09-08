@@ -24,8 +24,8 @@ apache::mod::event::threadsperchild: '50'
 
 # ooo_mwiki class variables.
 
-ooo_forums::mwiki_version: '1.29.1'
-ooo_forums::parent_dir: '/x1'
+ooo_mwiki::mwiki_version: '1.29.1'
+ooo_mwiki::parent_dir: '/x1'
 
 logrotate::rule:
   apache2:
