@@ -11,4 +11,4 @@ class wicket_pvm_asf (
     $required_packages:
       ensure => 'present',
   }
-
+}
