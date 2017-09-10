@@ -269,8 +269,8 @@ parser.add_argument('--stop', dest='kill', action='store_true',
 args = parser.parse_args()
 
 pidfile = "/var/run/blocky.pid"
-if args.pidfile and len(args.pidfile) > 2:
-	pidfile = args.pidfile
+if args.pidfile and len(args.pidfile[0]) > 2:
+	pidfile = args.pidfile[0]
 
 def main():
 
