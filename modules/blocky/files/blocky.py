@@ -24,13 +24,11 @@
 
 import os
 import sys
-import time, datetime
+import time
 import json
-import re
 from threading import Thread
-import random, atexit, signal, inspect
-from threading import Lock
-import subprocess, collections, argparse, grp, pwd, shutil
+import atexit, signal
+import subprocess, argparse, grp, pwd
 import ConfigParser
 import smtplib
 import socket
@@ -170,7 +168,6 @@ class Daemonize:
 class Blocky(Thread):
 	def run(self):
 		baddies = {}
-		firstRun = True
 		while True:
 			try:
 				js = json.loads(urllib.urlopen(config.get('aggregator','uri')).read())
@@ -180,7 +177,6 @@ class Blocky(Thread):
 					ta = baddie['target']
 					if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
 						r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
-						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						try:
 							# Check if we already have such a ban in place using iptables -C
 							try:
@@ -213,7 +209,6 @@ class Blocky(Thread):
 					elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 						baddies[i] = time.time()
 						r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
-						t = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
 						# Check if we already have such a ban in place using iptables -C
 						try:
 							subprocess.check_call([
@@ -255,7 +250,6 @@ Blocky.
 						if i in baddies:
 							del baddies[i]
 				time.sleep(180)
-				firstRun = False
 			except Exception as err:
 				syslog.syslog(syslog.LOG_INFO, "Error while running ban check: %s" % err)
 
@@ -263,15 +257,15 @@ Blocky.
 
 parser = argparse.ArgumentParser(description='Command line options.')
 parser.add_argument('--user', dest='user', type=str, nargs=1,
-				   help='Optional user to run Blocky as')
+					help='Optional user to run Blocky as')
 parser.add_argument('--group', dest='group', type=str, nargs=1,
-				   help='Optional group to run Blocky as')
+					help='Optional group to run Blocky as')
 parser.add_argument('--pidfile', dest='pidfile', type=str, nargs=1,
-				   help='Optional pid file location')
+					help='Optional pid file location')
 parser.add_argument('--daemonize', dest='daemon', action='store_true',
-				   help='Run as a daemon')
+					help='Run as a daemon')
 parser.add_argument('--stop', dest='kill', action='store_true',
-				   help='Kill the currently running Blocky process')
+					help='Kill the currently running Blocky process')
 args = parser.parse_args()
 
 pidfile = "/var/run/blocky.pid"
@@ -289,7 +283,6 @@ def main():
 		uid = pwd.getpwnam(args.user[0])[2]
 		os.setuid(uid)
 
-	global pending
 	blocky = Blocky()
 	blocky.start()
 
