@@ -1,2 +1,4 @@
 classes:
   - wintest
+
+puppet_asf::environment: 'windows'
