@@ -917,6 +917,9 @@ openejb-tck = r
 @httpd-pmc = rw
 @httpd-security-extra = rw
 
+[/pmc/ignite]
+@ignite-pmc = rw
+
 [/pmc/incubator]
 @incubator-pmc = rw
 
