@@ -258,21 +258,19 @@ def addLabel(ticket):
                  "Accept": "*/*",
                  "Authorization": "Basic %s" % auth
                  }
-    try:
-        data = {
-            "update": {
-                "labels": [
-                    {"add": "pull-request-available"}
-                ]
-            }
+    data = {
+        "update": {
+            "labels": [
+                {"add": "pull-request-available"}
+            ]
         }
-        rv = requests.put("https://issues.apache.org/jira/rest/api/latest/issue/%s" % ticket,headers=headers, json = data)
-        if rv.status_code == 200 or rv.status_code == 201:
-            return "Added PR label to Ticket %s" % ticket
-        else:
-            return rv.txt
-    except:
-        pass # bleh, can't really do much
+    }
+    rv = requests.put("https://issues.apache.org/jira/rest/api/latest/issue/%s" % ticket,headers=headers, json = data)
+    if rv.status_code == 200 or rv.status_code == 201:
+        return "Added PR label to Ticket %s\n" % ticket
+    else:
+        sys.stderr.write(rv.text)
+        return rv.text
     
 # Main function
 def main():
