@@ -16,4 +16,8 @@ class build_slaves (
     pkgname       => 'Flask';
   }
 
+  python::pip { 'docker-compose' :
+    pkgname       => 'docker-compose';
+  }
+
 }
