@@ -249,6 +249,31 @@ def remoteLink(ticket, url, prno):
     except:
         pass # Not much to do just yet
     
+def addLabel(ticket):
+    auth = open("/x1/jirauser.txt").read().strip()
+    auth = str(base64.encodestring(bytes(auth))).strip()
+    
+    # Post comment or worklog entry!
+    headers = {"Content-type": "application/json",
+                 "Accept": "*/*",
+                 "Authorization": "Basic %s" % auth
+                 }
+    try:
+        data = {
+            "update": {
+                "labels": [
+                    {"add": "pull-request-available"}
+                ]
+            }
+        }
+        rv = requests.put("https://issues.apache.org/jira/rest/api/latest/issue/%s" % ticket,headers=headers, json = data)
+        if rv.status_code == 200 or rv.status_code == 201:
+            return "Added PR label to Ticket %s" % ticket
+        else:
+            return rv.txt
+    except:
+        pass # bleh, can't really do much
+    
 # Main function
 def main():
     # Get JSON payload from GitHub
@@ -332,6 +357,7 @@ def main():
                 worklog = True if jiraopt.find('worklog') != -1 else False
                 if not (jiraopt.find("nocomment") != -1 and isComment):
                     remoteLink(ticket, fmt['link'], fmt['id']) # Make link to PR
+                    addLabel(ticket)
                     return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
