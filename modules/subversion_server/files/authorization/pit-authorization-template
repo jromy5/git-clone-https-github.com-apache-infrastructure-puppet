@@ -602,7 +602,7 @@ acrequser = r
 # Allow hermes:apmail to check SVN status
 apezmlm = r
 
-[/infrastructure/apmail/bin]
+[/infrastructure/apmail/trunk/bin]
 @infrastructure = rw
 # Allow hermes:apmail to commit .archives
 apezmlm = rw
