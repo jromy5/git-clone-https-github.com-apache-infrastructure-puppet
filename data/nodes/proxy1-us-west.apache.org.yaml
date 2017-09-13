@@ -47,6 +47,10 @@ base::basepackages:
 logrotate::rule:
   apache2:
     ensure: 'present'
+    path: '/x1/apache2/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
 
 vhosts_asf::modules::modules:
   substitute:
