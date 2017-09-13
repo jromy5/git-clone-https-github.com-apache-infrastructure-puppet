@@ -14,6 +14,9 @@ classes:
   - timezone
   - ulimit_asf
 
+windows_classes:
+  - wintest
+
 ## MODULES
 ## AMANDA
 amanda::client::remote_user: 'amandabackup'
