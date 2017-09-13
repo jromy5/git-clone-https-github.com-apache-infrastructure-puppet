@@ -368,6 +368,15 @@ class build_slaves::jenkins (
     target => '/usr/local/asfpackages/java/jdk1.8.0_144',
   }
 
+  cron {
+    'docker-cleanup':
+      hour        => '13',
+      command     => "/usr/bin/docker system prune",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+  }
+
+
+
   service { 'apache2':
     ensure => 'stopped',
   }
