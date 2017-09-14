@@ -140,7 +140,7 @@ def main():
             # Write the body, escape lines starting with "(>*)From ..." as ">(>*)From ..."
             # First line is the From_ line so must not be escaped
             # Actual message Header lines cannot start with '>*From '
-            f.write(re.sub(b"\n(>*)From ", b"\n>\1From ", msgstring))
+            f.write(re.sub(b"\n(>*)From ", b"\n>\\1From ", msgstring))
             # End with one blank line
             f.write(b"\n")
             f.close() # Implicitly releases the lock
