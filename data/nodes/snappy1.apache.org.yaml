@@ -12,7 +12,6 @@ classes:
   - oraclejava::install
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
-  - vhosts_asf::vhosts
 
 base::basepackages:
   - 'lua5.2'

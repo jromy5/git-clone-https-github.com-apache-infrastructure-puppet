@@ -12,7 +12,6 @@ classes:
   - ssl::name::wildcard_apache_org
   - oraclejava::install
   - vhosts_asf::modules
-  - vhosts_asf::vhosts
 
 vhosts_asf::modules::modules:
   allowmethods:
