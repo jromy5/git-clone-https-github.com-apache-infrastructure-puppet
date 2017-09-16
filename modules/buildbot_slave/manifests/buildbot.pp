@@ -106,5 +106,9 @@ class buildbot_slave::buildbot (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_144',
   }
+  file { '/home/buildslave/slave/tools/java/latest1.9':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/jdk-9-b181-unlimited-security',
+  }
 
 }
