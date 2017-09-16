@@ -367,6 +367,10 @@ class build_slaves::jenkins (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_144',
   }
+  file { '/home/jenkins/tools/java/latest1.9':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/jdk-9-b181-unlimited-security',
+  }
 
   cron {
     'docker-cleanup':
