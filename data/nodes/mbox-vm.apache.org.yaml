@@ -11,7 +11,7 @@ postfix::server::myorigin: 'apache.org'
 postfix::server::mynetworks: '140.211.11.3/32'
 postfix::server::mail_user: 'apmail'
 postfix::server::message_size_limit: '429496729'
-# TODO: postfix::server::mailbox_size_limit; '4294967295' when we can!!
+postfix::server::mailbox_size_limit: '4294967295'
 postfix::server::smtpd_recipient_restrictions:
   - 'permit_mynetworks'
   - 'reject'
