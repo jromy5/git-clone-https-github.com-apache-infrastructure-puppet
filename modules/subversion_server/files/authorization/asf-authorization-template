@@ -1437,6 +1437,9 @@ buildbot = rw
 [/myfaces/tobago]
 * = r
 
+[/myfaces/trinidad]
+* = r
+
 [/nifi]
 @nifi = rw
 
