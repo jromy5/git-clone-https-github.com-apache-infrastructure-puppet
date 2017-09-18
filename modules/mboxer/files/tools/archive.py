@@ -127,6 +127,8 @@ def main():
         listpath = os.path.join(fqdnpath, listname)
         path = os.path.join(listpath, "%s.mbox" % YM)
         print("This is for %s, archiving under %s!" % (recipient, path))
+        # Show some context in case the IO fails:
+        print("Return-Path: %s" % msg.get('Return-Path'))
         if not os.path.exists(listpath):
             print("Creating directory %s first" % listpath)
             os.makedirs(listpath, exist_ok = True)
