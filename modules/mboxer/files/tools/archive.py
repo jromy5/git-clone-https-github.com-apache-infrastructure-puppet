@@ -129,6 +129,7 @@ def main():
         print("This is for %s, archiving under %s!" % (recipient, path))
         # Show some context in case the IO fails:
         print("Return-Path: %s" % msg.get('Return-Path'))
+        print("Message-Id: %s" % msg.get('Message-Id'))
         if not os.path.exists(listpath):
             print("Creating directory %s first" % listpath)
             os.makedirs(listpath, exist_ok = True)
