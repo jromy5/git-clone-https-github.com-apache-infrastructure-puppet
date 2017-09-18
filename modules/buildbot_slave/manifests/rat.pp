@@ -10,7 +10,7 @@
 require stdlib
 require buildbot_slave
 
-  $build_version      = '0.12',
+  $build_version      = '0.12'
   $rat_build          = "apache-rat-${build_version}"
   $tarball            = "${rat_build}-bin.tar.gz"
   $download_dir       = '/tmp'
