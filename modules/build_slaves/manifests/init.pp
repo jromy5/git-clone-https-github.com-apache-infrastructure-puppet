@@ -9,7 +9,7 @@ class build_slaves (
 
   package {
     $distro_packages:
-      ensure => installed,
+      ensure => latest,
   }
 
   python::pip { 'Flask' :
