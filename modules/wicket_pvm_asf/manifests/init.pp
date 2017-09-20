@@ -2,7 +2,7 @@
 
 class wicket_pvm_asf (
 
-  $required_packages = ['tomcat8' , 'openjdk-8-jdk'],
+  $required_packages = ['tomcat8' , 'openjdk-8-jdk', 'docker-engine'],
 
   # override below in yaml
   $wicket_examples_version = '',
