@@ -6,11 +6,15 @@ classes:
 
 buildbot_slave::slave_name: 'bb_qnode4_ubuntu'
 buildbot_slave::required_packages:
+  - 'graphviz'
+  - 'graphviz-dev'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'graphviz'
-  - 'graphviz-dev'
+  - 'libserf-1-1'
+  - 'libserf-dev'
+  - 'libssl-dev'
+  - 'pkg-config'
   - 'sqlite3'
 
 ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
