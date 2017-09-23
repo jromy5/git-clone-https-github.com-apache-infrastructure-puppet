@@ -23,7 +23,7 @@ between public and private email.
 
 """
 
-import email
+import email.parser
 import time
 import re
 import yaml
@@ -76,9 +76,9 @@ def main():
     msgstring = input_stream.read()
     msg = None
     
-    # Try loading the email
+    # Try parsing the email headers
     try:
-        msg = email.message_from_bytes(msgstring)
+        msg = email.parser.BytesHeaderParser().parsebytes(msgstring)
     except Exception as err:
         print("STDIN parser exception: %s" % err)
     
