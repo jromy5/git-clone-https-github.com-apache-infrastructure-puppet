@@ -51,11 +51,6 @@ mod 'docker',
   :tag => 'v4.1.0'
 
 
-mod 'download_file_windows',
-  :git => 'https://github.com/voxpupuli/puppet-download_file.git',
-  :tag => 'v2.1.0'
-
-
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch',
   :tag => '5.3.1'
@@ -191,10 +186,6 @@ mod 'puppetlabs_yum',
   :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
 
 
-mod 'puppetlabs_powershell_windows',
-  :git => 'https://github.com/puppetlabs/puppetlabs-powershell',
-  :tag => 'v2.1.2'
-
 mod 'puppet-ca_cert',
   :git => 'https://github.com/pcfens/puppet-ca_cert',
   :tag => 'v1.6.0'
@@ -292,4 +283,16 @@ mod 'vcsrepo',
 
 mod 'xinetd',
   :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
+
+
+
+#Modules that are Windows specific
+
+mod 'download_file',
+  :git => 'https://github.com/voxpupuli/puppet-download_file.git',
+  :tag => 'v2.1.0' 
+
+mod 'puppetlabs-powershell',
+  :git => 'https://github.com/puppetlabs/puppetlabs-powershell',
+  :tag => 'v2.1.2'
 
