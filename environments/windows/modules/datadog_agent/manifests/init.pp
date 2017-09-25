@@ -6,7 +6,7 @@ class datadog_agent (
     ensure => 'directory',
   }
 
-  download_file_windows { "Download datadog agent" :
+  download_file { "Download datadog agent" :
     url                   => 'https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-latest.msi',
     destination_directory => 'c:\temp',
   }->
