@@ -51,6 +51,10 @@ mod 'docker',
   :tag => 'v4.1.0'
 
 
+mod 'download_file_windows',
+  :git => 'https://github.com/voxpupuli/puppet-download_file.git'
+
+
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch',
   :tag => '5.3.1'
@@ -184,6 +188,10 @@ mod 'puppet',
 mod 'puppetlabs_yum',
   :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
   :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
+
+
+mod 'puppetlabs_powershell_windows',
+  :git => 'https://github.com/puppetlabs/puppetlabs-powershell'
 
 
 mod 'puppet-ca_cert',
