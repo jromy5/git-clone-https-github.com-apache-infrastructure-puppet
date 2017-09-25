@@ -1,0 +1,26 @@
+---
+Rakefile:
+  unmanaged: true
+Gemfile:
+  optional:
+    ':development':
+      - gem: 'rspec-puppet'
+        platforms: ["mswin", "mingw", "x64_mingw"]
+        version: '< 2.6.0'
+.travis.yml:
+  unmanaged: true
+spec/spec_helper.rb:
+  unmanaged: true
+appveyor.yml:
+  test_script:
+    - 'bundle exec rspec spec/unit spec/integration -fd -b'
+MAINTAINERS.md:
+  maintainers:
+    - "Puppet Windows Team `windows |at| puppet |dot| com`"
+NOTICE:
+  copyright_holders:
+    - name: 'Josh Cooper, original author'
+      begin: 2013
+    - name: 'Puppet, Inc.'
+      begin: 2013
+      end: 'latest'

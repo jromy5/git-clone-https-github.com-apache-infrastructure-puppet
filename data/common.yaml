@@ -14,9 +14,10 @@ classes:
   - timezone
   - ulimit_asf
 
-windows_classes:
+classes_windows:
   - wintest
   - asf999_windows::create_user
+  - datadog_agent
 
 ## MODULES
 ## AMANDA
