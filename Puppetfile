@@ -294,5 +294,4 @@ mod 'download_file',
 
 mod 'puppetlabs-powershell',
   :git => 'https://github.com/puppetlabs/puppetlabs-powershell',
-  :tag => 'v2.1.2'
-
+  :tag => '2.1.2'
