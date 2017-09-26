@@ -1,6 +1,0 @@
-Host github
-  HostName github.com
-  User git
-  IdentityFile /var/www/.ssh/id_rsa.github
-  IdentitiesOnly yes
-
