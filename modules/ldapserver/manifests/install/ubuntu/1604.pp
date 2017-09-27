@@ -88,10 +88,11 @@ class ldapserver::install::ubuntu::1604 (
       group  => 'openldap',
       mode   => '0750';
     $backuppath:
-      ensure => directory,
-      owner  => 'openldap',
-      group  => 'openldap',
-      mode   => '0750';
+      ensure  => directory,
+      owner   => 'openldap',
+      group   => 'openldap',
+      mode    => '0750',
+      require => Package['slapd'];
   }
 
   service { 'slapd':
