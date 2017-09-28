@@ -23,6 +23,12 @@ rsync::server::module:
     auth_users: 'apb-allura'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  allura-vm2:
+    path: '/x1/backups/allura-vm2/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.238'
+    auth_users: 'apb-allura'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   analysis-vm:
     path: '/x1/backups/analysis-vm/./target/'
     hosts_allow: '127.0.0.1 140.211.11.128'
