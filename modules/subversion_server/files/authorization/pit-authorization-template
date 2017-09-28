@@ -1402,7 +1402,7 @@ buildbot = rw
 @incubator = rw
 
 [/websites/production/sling]
-@sling = rw
+* = r
 
 [/websites/production/sqoop]
 @sqoop = rw
