@@ -199,6 +199,16 @@ class cwiki_asf (
       group   => $groupname,
       content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
       mode    => '0755';
+    '/etc/apache2/solr_id_to_new.map.txt':
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/cwiki_asf/solr_id_to_new.map.txt',
+      mode   => '0644';
+    '/etc/apache2/solr_name_to_new.map.txt':
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/cwiki_asf/solr_name_to_new.map.txt',
+      mode   => '0644';
   }
 
   service {

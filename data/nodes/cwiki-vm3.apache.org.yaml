@@ -72,6 +72,16 @@ vhosts_asf::vhosts::vhosts:
       ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
       custom_fragment: |
         RewriteEngine On
+        # INFRA-14849
+        RewriteMap solr_id_to_new "txt:/etc/apache2/solr_id_to_new.map.txt"
+        RewriteMap solr_name_to_new "txt:/etc/apache2/solr_name_to_new.map.txt"
+        RewriteCond "${solr_name_to_new:$1}" !="" [NC]
+        RewriteRule "solr/(.*)" https://lucene.apache.org/solr/guide/6_6${solr_name_to_new:$1}? [R=301,NC,NE]
+        RewriteCond %%{}{QUERY_STRING} pageId=(\d+)
+        RewriteCond "${solr_id_to_new:%1}" !="" [NC]
+        RewriteRule ".*" https://lucene.apache.org/solr/guide/6_6${solr_id_to_new:%1}? [R=301,NC,NE]
+        RewriteRule "^solr(/?)" https://lucene.apache.org/solr/guide/ [R=301,NC,NE]
+        # cwiki
         ProxyPass /intermediates !
         ProxyPass /confluence//spaces/viewdefaultdecorator.action !
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
@@ -80,3 +90,4 @@ vhosts_asf::vhosts::vhosts:
         RewriteRule ^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L]
         RewriteCond %%{}{QUERY_STRING} file: [NC]
         RewriteRule viewdefaultdecorator - [F,END]
+
