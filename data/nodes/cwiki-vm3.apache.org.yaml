@@ -85,9 +85,10 @@ vhosts_asf::vhosts::vhosts:
         ProxyPass /intermediates !
         ProxyPass /confluence//spaces/viewdefaultdecorator.action !
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
+        ProxyPass /server-status !
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
-        RewriteCond $1 !(confluence|intermediates)
-        RewriteRule ^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L]
+        RewriteCond $1 !(confluence|intermediates|server-status)
+        RewriteRule ^/(.*) https://cwiki-test.apache.org/confluence/display/$1 [R=301,L,END]
         RewriteCond %%{}{QUERY_STRING} file: [NC]
         RewriteRule viewdefaultdecorator - [F,END]
 
