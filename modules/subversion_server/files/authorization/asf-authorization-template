@@ -278,7 +278,6 @@ metamodel={ldap:cn=metamodel,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 metamodel-pmc={reuse:pit-authorization:metamodel-pmc}
 mina={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mina-pmc={reuse:pit-authorization:mina-pmc}
-mrql={ldap:cn=mrql,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 myfaces={ldap:cn=myfaces,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 myfaces-pmc={reuse:pit-authorization:myfaces-pmc}
 myriad={ldap:cn=myriad,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1023,9 +1022,6 @@ buildbot = rw
 
 [/incubator/milagro]
 @incubator = rw
-
-[/incubator/mrql]
-@mrql= rw
 
 [/incubator/myriad]
 @myriad = rw
