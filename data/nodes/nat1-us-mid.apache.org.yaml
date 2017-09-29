@@ -34,14 +34,14 @@ firewall:
     proto: 'tcp'
     port: '22'
     source: '62.210.89.91'
-    destination: '192.168.3.4'
+    destination: '192.168.3.2'
 
   100-zmanda-dnat:
     chain: 'PREROUTING'
     jump: 'DNAT'
     table: 'nat'
     proto: 'tcp'
-    todest: '192.168.3.4:22'
+    todest: '192.168.3.2:22'
     iniface: 'eth0'
     dport: '22'
     source: '62.210.89.91'
