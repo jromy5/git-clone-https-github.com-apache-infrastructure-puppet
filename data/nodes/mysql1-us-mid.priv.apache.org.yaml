@@ -3,6 +3,7 @@ classes:
   - datadog_agent::integrations::mysql
   - mysql_asf::backup
   - mysql::server
+  - zmanda_asf::client
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
