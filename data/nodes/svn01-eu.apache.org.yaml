@@ -5,6 +5,7 @@ classes:
   - loggy
   - perl
   - rootbin_asf
+  - rsync::server
   - subversion_server
   - zmanda_asf::client
 
@@ -23,6 +24,27 @@ perl::module:
   net_ldap:
     name: 'Net::LDAP'
     use_package : true
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  svn:
+    path: '/x1/svn/'
+    hosts_allow: '209.188.14.144'
+    auth_users: 'apb-svn'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
 
 subversion_server::packages:
   - 'viewvc'
