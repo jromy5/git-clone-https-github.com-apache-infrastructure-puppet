@@ -23,4 +23,13 @@ class wicket_pvm_asf (
       require => Package['docker-engine'],
   }
 
+  docker::run { 'wicket-demo-8':
+    image           => 'apache-docker-wicket-docker.bintray.io/wicket-examples',
+    ports           => ['8080', '8080'],
+    restart_service => true,
+    privileged      => false,
+    pull_on_start   => true,
+    extra_parameters => [ '--restart=always' ],
+  }
+
 }
