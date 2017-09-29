@@ -95,7 +95,8 @@ def main():
     if msg.get('list-post'):
         header = msg.get('list-post')
         print(header)
-        m = re.match(r"<mailto:(.+@.*apache\.org)>", header)
+        # Only expecting apache.org or apachecon.com lists
+        m = re.match(r"<mailto:(.+@(.*apache\.org|apachecon\.com))>", header)
         if m:
             recipient = m.group(1)
     
@@ -112,8 +113,9 @@ def main():
     if recipient:
         # validate listname and fqdn, just in case
         listname, fqdn = recipient.lower().split('@', 1)
-        if not re.match(r"^[a-z0-9][-.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
-            print("Dirty listname or FQDN, dumping in %s!" % config['dumpfile'])
+        # Underscore needed for mod_ftp
+        if not re.match(r"^[a-z0-9][-_.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
+            print("Dirty listname or FQDN in '%s', dumping in %s!" % (recipient, config['dumpfile']))
             dumpbad(msgstring)
             sys.exit(0) # Bail quietly
         YM = time.strftime("%Y%m", time.gmtime()) # Use UTC
