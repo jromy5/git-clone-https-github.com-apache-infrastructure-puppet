@@ -96,9 +96,13 @@ def main():
         header = msg.get('list-post')
         print(header)
         # Only expecting apache.org or apachecon.com lists
-        m = re.match(r"<mailto:(.+@(.*apache\.org|apachecon\.com))>", header)
+        m = re.match(r"<mailto:(.+?@(.*apache\.org|apachecon\.com))>", header)
         if m:
             recipient = m.group(1)
+        else:
+            print("Unexpected list-post: %s" % header)
+    else:
+        print("Missing list-post: %s" % msg.get_unixfrom())
     
     # If no bueno, try Received headers
     if not recipient and msg.get('received'):
@@ -106,7 +110,8 @@ def main():
         headers = reversed(msg.get_all('received'))
         for header in headers:
             # Find the first (oldest) that mentions apache.org as recipient
-            m = re.search(r"for <(.+@.*apache\.org)>", header)
+            # Use non-greedy RE to avoid matching "for <mmm@apache.org> from <nnn@apache.org>;"
+            m = re.search(r"for <(.+?@.*?apache\.org)>", header)
             if m:
                 recipient = m.group(1)
                 break
