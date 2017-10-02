@@ -21,9 +21,11 @@ def _repo_name():
 def _git_config(key, default=NO_DEFAULT):
     cmd = ["config", key]
     try:
+        # If wiki edit, chdir to origin repo
         if os.environ.get("GIT_ORIGIN_REPO"):
             os.chdir(os.environ.get("GIT_ORIGIN_REPO"))
         x = run.git(*cmd)[1].strip()
+        # chdir back to wiki dir if needed
         if os.environ.get("GIT_WIKI_REPO"):
             os.chdir(os.environ["GIT_WIKI_REPO"])
         return x
