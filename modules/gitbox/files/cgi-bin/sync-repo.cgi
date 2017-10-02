@@ -86,11 +86,11 @@ if 'pages' in data:
     # If we don't have the wiki.git yet, clone it
     if not os.path.exists(wikipath):
         os.chdir("/x1/repos/wikis/")
-        subprocess.check_call(['git','clone', wikiurl, wikipath])
+        subprocess.check_output(['git','clone', wikiurl, wikipath])
     
     # chdir to wiki git, pull in changes
     os.chdir(wikipath)
-    subprocess.check_call(['git','pull'])
+    subprocess.check_output(['git','pull'])
     
     ########################
     # Get ASF ID of pusher #
@@ -110,31 +110,34 @@ if 'pages' in data:
     gitenv = {
         'NO_SYNC': 'yes',
         'WEB_HOST': 'https://gitbox.apache.org/',
-        'GIT_COMMITTER_NAME': 'asfid',
+        'GIT_COMMITTER_NAME': asfid,
         'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
         'GIT_PROJECT_ROOT': '/x1/repos/wikis',
         'GIT_ORIGIN_REPO': "/x1/repos/asf/%s.git" % repo,
-        'PATH_INFO': wikipath,
+        'GIT_WIKI_REPO': wikipath,
+        'PATH_INFO': repo+".wiki.git",
         'ASFGIT_ADMIN': '/x1/gitbox',
         'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
         'WRITE_LOCK': '/x1/gitbox/write.lock',
         'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
     }
-    after = data['pages']['sha']
-    before = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1"]).strip()
-    update = "%s %s refs/heads/master\n" % (before if before != after else EMPTY_HASH, after)
-    
-    # Fire off the multimail hook for the wiki
-    try:                    
-        hook = "/x1/gitbox/hooks/post-receive"
-        # Fire off the email hook
-        process = subprocess.Popen([hook], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=gitenv)
-        process.communicate(input=update)
-        log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
-          
-    except Exception as err:
-        log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
-    open("/x1/gitbox/sync.log", "a").write(log)
+    for page in data['pages']:
+        after = page['sha']
+        before = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1", after]).strip().split(' ')[1]
+        update = "%s %s refs/heads/master\n" % (before if before != after else EMPTY_HASH, after)
+        
+        # Fire off the multimail hook for the wiki
+        try:                    
+            hook = "/x1/gitbox/hooks/post-receive"
+            # Fire off the email hook
+            process = subprocess.Popen([hook], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=gitenv)
+            out, err = process.communicate(input=update)
+            log += out
+            log += "[%s] [%s]: Multimail deployed (%s -> %s)!\n" % (time.strftime("%c"), wikipath, before, after)
+              
+        except Exception as err:
+            log += "[%s] [%s]: Multimail hook failed: %s\n" % (time.strftime("%c"), wikipath, err)
+        open("/x1/gitbox/sync.log", "a").write(log)
     
     
 
