@@ -21,7 +21,11 @@ def _repo_name():
 def _git_config(key, default=NO_DEFAULT):
     cmd = ["config", key]
     try:
-        return run.git(*cmd)[1].strip()
+        if os.environ.get("GIT_ORIGIN_REPO"):
+            os.chdir(os.environ.get("GIT_ORIGIN_REPO"))
+        x = run.git(*cmd)[1].strip()
+        os.chdir(os.environ["PATH_INFO"])
+        return x
     except sp.CalledProcessError:
         if default == NO_DEFAULT:
             raise
