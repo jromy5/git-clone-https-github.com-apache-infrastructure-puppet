@@ -97,11 +97,14 @@ if 'pages' in data:
     ########################
     asfid = "unknown"
     pusher = data['sender']['login']
+    conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
+    cursor = conn.cursor()
     cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
     row = cursor.fetchone()
     # Found it, yay!
     if row:
         asfid = row[0]
+    conn.close()
     
     # Ready the hook env
     gitenv = {
