@@ -21,9 +21,11 @@ def _repo_name():
 def _git_config(key, default=NO_DEFAULT):
     cmd = ["config", key]
     try:
+        # If wiki edit, chdir to origin repo
         if os.environ.get("GIT_ORIGIN_REPO"):
             os.chdir(os.environ.get("GIT_ORIGIN_REPO"))
         x = run.git(*cmd)[1].strip()
+        # chdir back to wiki dir if needed
         if os.environ.get("GIT_WIKI_REPO"):
             os.chdir(os.environ["GIT_WIKI_REPO"])
         return x
@@ -3698,8 +3700,6 @@ def run_as_post_receive_hook(environment, mailer):
 
 def run_as_update_hook(environment, mailer, refname, oldrev, newrev, force_send=False):
     environment.check()
-    if os.environ.get('GIT_WIKI_REPO'):
-        force_send = True
     send_filter_regex, send_is_inclusion_filter = environment.get_ref_filter_regex(True)
     ref_filter_regex, is_inclusion_filter = environment.get_ref_filter_regex(False)
     if not include_ref(refname, ref_filter_regex, is_inclusion_filter):
@@ -4202,8 +4202,6 @@ def main(args):
         Config.add_config_parameters(options.c)
 
     config = Config('multimailhook')
-    if os.environ.get('GIT_WIKI_REPO'):
-        options.force_send = True
 
     environment = None
     try:
