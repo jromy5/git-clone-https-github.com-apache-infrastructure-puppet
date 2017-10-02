@@ -92,6 +92,17 @@ if 'pages' in data:
     os.chdir(wikipath)
     subprocess.check_call(['git','pull'])
     
+    ########################
+    # Get ASF ID of pusher #
+    ########################
+    asfid = "unknown"
+    pusher = data['sender']['login']
+    cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
+    row = cursor.fetchone()
+    # Found it, yay!
+    if row:
+        asfid = row[0]
+    
     # Ready the hook env
     gitenv = {
         'NO_SYNC': 'yes',
