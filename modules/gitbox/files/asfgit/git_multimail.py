@@ -24,7 +24,8 @@ def _git_config(key, default=NO_DEFAULT):
         if os.environ.get("GIT_ORIGIN_REPO"):
             os.chdir(os.environ.get("GIT_ORIGIN_REPO"))
         x = run.git(*cmd)[1].strip()
-        os.chdir(os.environ["GIT_WIKI_REPO"])
+        if os.environ.get("GIT_WIKI_REPO"):
+            os.chdir(os.environ["GIT_WIKI_REPO"])
         return x
     except sp.CalledProcessError:
         if default == NO_DEFAULT:
