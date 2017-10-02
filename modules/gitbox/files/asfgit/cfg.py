@@ -38,9 +38,13 @@ def _repo_name():
     return util.decode(path)
 
 
+if os.environ.get('GIT_ORIGIN_REPO'):
+  os.chdir(os.environ.get('GIT_ORIGIN_REPO'))
 _all_config = dict(c.split('=')
                    for c in run.git('config', '--list')[1].splitlines()
                    if c.strip())
+if os.environ.get('GIT_WIKI_REPO'):
+  os.chdir(os.environ.get('GIT_WIKI_REPO'))
 
 def _git_config(key, default=NO_DEFAULT):
     if key not in _all_config:
