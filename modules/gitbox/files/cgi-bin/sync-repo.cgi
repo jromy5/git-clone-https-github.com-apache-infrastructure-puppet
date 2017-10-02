@@ -86,11 +86,11 @@ if 'pages' in data:
     # If we don't have the wiki.git yet, clone it
     if not os.path.exists(wikipath):
         os.chdir("/x1/repos/wikis/")
-        subprocess.check_output(['git','clone', wikiurl, wikipath])
+        subprocess.check_output(['git','clone', '--mirror', wikiurl, wikipath])
     
     # chdir to wiki git, pull in changes
     os.chdir(wikipath)
-    subprocess.check_output(['git','pull'])
+    subprocess.check_output(['git','fetch'])
     
     ########################
     # Get ASF ID of pusher #
