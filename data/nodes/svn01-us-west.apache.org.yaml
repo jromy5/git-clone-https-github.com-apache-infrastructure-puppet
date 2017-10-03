@@ -14,6 +14,7 @@ classes:
   - httpd_modules
   - httpd_modules::mod_svn_check_path
   - blocky
+  - kif
   - loggy
   - nfs::server
   - nfs_asf::server
