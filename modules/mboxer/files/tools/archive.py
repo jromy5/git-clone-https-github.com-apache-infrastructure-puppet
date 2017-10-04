@@ -21,6 +21,13 @@ This script determines the intended ASF recipient of an email and
 archives the email in the correct mbox file. Does NOT differentiate
 between public and private email.
 
+Arguments (optional):
+    --lid abcd@xyz.apache.org - use this instead of parsing list-post
+
+    restricted - file the mail under the directory defined by the 'restricteddir' config item
+                 else, file it under the directory defined by the 'archivedir' config item
+
+   The above can be combined if required.
 """
 
 import email
@@ -33,6 +40,7 @@ import sys
 import stat
 import fcntl
 import errno
+import argparse
 
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
@@ -45,6 +53,18 @@ except:
         'restricteddir': '/x1/restricted',
         'dumpfile': '/x1/archives/bademails.txt'
     }
+
+# validate an email argument
+def valid_mail(m):
+    if re.match(r"^.+?@(.*apache\.org|apachecon\.com)$", m):
+        return m
+    else:
+        raise argparse.ArgumentTypeError("%r is not a valid ASF email address" % m)
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--lid", type=valid_mail, help="override list id")
+parser.add_argument("security", nargs='?') # e.g. restricted
+args = parser.parse_args()
 
 def lock(fd):
     """ Attempt to lock a file, wait 0.1 secs if failed. """
@@ -89,10 +109,12 @@ def main():
         sys.exit(0) # Bail quietly
     
     # So, we got an email now - who is it for??
-    
-    # Try List-Post first
-    recipient = None
-    if msg.get('list-post'):
+
+    # Have we got a list id override?
+    recipient = args.lid
+
+    # If not, try List-Post
+    if not recipient and msg.get('list-post'):
         header = msg.get('list-post')
         print(header)
         # Only expecting apache.org or apachecon.com lists
@@ -126,7 +148,7 @@ def main():
         YM = time.strftime("%Y%m", time.gmtime()) # Use UTC
         adir = config['archivedir']
         dochmod = True
-        if len(sys.argv) > 1 and sys.argv[1] == 'restricted':
+        if args.security == 'restricted':
             adir = config['restricteddir']
             dochmod = False
         # Construct a path to the mbox file
