@@ -193,6 +193,7 @@ apt::always_apt_update: true
 base::remove_os_install_user::osinstalluser:  'ubuntu'
 base::remove_os_install_user::osinstallgroup: 'ubuntu'
 
+datadog_agent::log_level: 'error'
 
 fail2ban::service_status: true
 
