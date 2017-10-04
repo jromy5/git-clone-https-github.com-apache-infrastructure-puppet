@@ -170,6 +170,14 @@ vhosts_whimsy::vhosts::vhosts:
       - /board/publish_minutes
 
     custom_fragment: |
+      # Allow access to bootstrapping files without authorization
+      <Directory /srv/whimsy/www/board/agenda>
+        Require expr %{REQUEST_URI} =~ m#^/board/agenda/stylesheets/app.css#
+        Require expr %{REQUEST_URI} =~ m#^/board/agenda/app.js#
+        Require expr %{REQUEST_URI} =~ m#^/board/agenda/[-\d]+/bootstrap.html#
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+      </Directory>
+
       RemoteIPHeader X-Forwarded-For
 
       SetEnv PATH /usr/local/rvm/wrappers/ruby-%{hiera('ruby_version')}:${PATH}
