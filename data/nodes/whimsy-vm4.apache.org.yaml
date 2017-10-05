@@ -147,10 +147,14 @@ vhosts_whimsy::vhosts::vhosts:
       group: cn=committers,ou=groups,dc=apache,dc=org
       attribute: memberUid
       locations:
-      - /board/agenda/
       - /fundraising/
       - /officers/
       - /treasurer/
+      - path: /board/agenda/
+        except: 
+        - app.js
+        - "[-\\d]+/bootstrap.html"
+        - stylesheets/app.css
 
     - name: ASF Members
       group: cn=member,ou=groups,dc=apache,dc=org
