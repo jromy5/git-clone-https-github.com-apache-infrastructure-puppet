@@ -122,6 +122,7 @@ snmp::snmpd_config:
   - 'disk /x1/svn/repos/infra 10%'
   - 'disk /x1/svn/repos/private 10%'
   - 'disk /x1/svn/repos/tck 10%'
+  - 'disk /x1/svn/repos/bigdata 10%'
   - 'rouser monitor authNoPriv'
   - 'smuxpeer .1.3.6.1.4.1.674.10892.1'
   - 'disk / 10000'
@@ -524,6 +525,31 @@ vhosts_asf::vhosts::vhosts:
 
       </Location>
 
+      # bigdata repo
+
+      <Location /repos/bigdata>
+        DAV svn
+        SVNPath /x1/svn/repos/bigdata
+        SVNCheckPathPrefix  /repos/bigdata
+        SetOutputFilter DEFLATE
+
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap file
+
+        AuthLDAPurl "ldaps://ldap3-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        #AuthzLDAPAuthoritative off
+
+        #Fall back to to using the local htpasswd file if LDAP fails.
+        AuthUserFile /x1/svn/asf-committers
+
+        AuthzSVNAccessFile /x1/svn/asf-authorization
+
+        Require valid-user
+        Satisfy any
+
+      </Location>
         
       # Needed for sync
       <Location /repos/asf-proxy-sync>
