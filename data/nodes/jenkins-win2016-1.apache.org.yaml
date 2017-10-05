@@ -1,2 +1,2 @@
-#classes_windows:
-#  - wintest
+classes_windows:
+  - jenkins_slave_windows
