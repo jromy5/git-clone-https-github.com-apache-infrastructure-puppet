@@ -79,7 +79,7 @@ class rsync_mirror (
     read_only       => 'yes',
     list            => 'yes',
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-    exclude         => ['/openoffice/4.1.0', '/openoffice/4.1.1/binaries',
+    exclude         => ['/openoffice/', '/openoffice/',
                         '/tmp/', '*.md5', '*.MD5', 'MD5SUM', 'SHA*SUM*',
                         '*.sha1', '*.sha', '*.sha256', '*.sha512', '*.asc',
                         '*.mds', '*.sha2', '*.sha3',
