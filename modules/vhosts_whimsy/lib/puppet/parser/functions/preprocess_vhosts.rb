@@ -78,7 +78,13 @@ module Puppet::Parser::Functions
       authldap.each do |auth|
         isdn = auth['idsn'] || (auth['attribute']=='memberUid' ? 'off' : 'on')
 
-        auth['locations'].each do |url|
+        auth['locations'].each do |location|
+          if location.is_a? Hash
+            url = location['path']
+	  else
+	    url = location
+	  end
+
           if url.end_with? '/'
             directive = 'Directory'
             path = @alias[url].chomp('/')
@@ -98,6 +104,19 @@ module Puppet::Parser::Functions
           else
             test = "<RequireAny>\n    #{groups.join("\n    ")}\n  </RequireAny>"
           end
+ 
+          # prepend any exceptions
+	  if location.is_a? Hash and location['except']
+	    exceptions = location['except'].map do |name|
+	      if name =~ /[\\+*\[\]]/
+	        "require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
+	      else
+	        "require expr %{REQUEST_URI} == '#{url}#{name}'"
+	      end
+	    end
+
+	    test = exceptions.push(test).join("\n  ")
+	  end
 
           # emit auth section
           section directive, path, %{
