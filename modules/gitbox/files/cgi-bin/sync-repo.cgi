@@ -254,7 +254,7 @@ elif 'repository' in data and 'name' in data['repository']:
             log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err.output)
             with open("/x1/gitbox/broken/%s.txt" % reponame, "w") as f:
                 f.write("BROKEN AT %s\n\nOutput:\n" % time.strftime("%c"))
-                f.write("Return code: %s\nText output:\n")
+                f.write("Return code: %s\nText output:\n" % err.returncode)
                 f.write(err.output)
                 f.close()
             
