@@ -114,17 +114,18 @@ def main():
     recipient = args.lid
 
     # If not, try List-Post
-    if not recipient and msg.get('list-post'):
-        header = msg.get('list-post')
-        print(header)
-        # Only expecting apache.org or apachecon.com lists
-        m = re.match(r"<mailto:(.+?@(.*apache\.org|apachecon\.com))>", header)
-        if m:
-            recipient = m.group(1)
-        else:
-            print("Unexpected list-post: %s" % header)
-    else:
-        print("Missing list-post: %s" % msg.get_unixfrom())
+    if not recipient:
+		if msg.get('list-post'):
+			header = msg.get('list-post')
+			print(header)
+			# Only expecting apache.org or apachecon.com lists
+			m = re.match(r"<mailto:(.+?@(.*apache\.org|apachecon\.com))>", header)
+			if m:
+				recipient = m.group(1)
+			else:
+				print("Unexpected list-post: %s" % header)
+		else:
+			print("Missing list-post: %s" % msg.get_unixfrom())
     
     # If no bueno, try Received headers
     if not recipient and msg.get('received'):
