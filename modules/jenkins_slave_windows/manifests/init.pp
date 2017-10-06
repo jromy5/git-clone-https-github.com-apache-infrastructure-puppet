@@ -32,7 +32,7 @@ class jenkins_slave_windows (
     ensure => directory,
   }
 
-  $java_jenkins.each |String $jdk| {
+  $java_jenkins.each |$jdk| {
     #### Download various build tools (..jenkins/tools/), unzip them, and symlink the latest versions
     download_file { "Download asf-build-${jdk} zip from bintray" :
       url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${jdk}.zip",
