@@ -217,6 +217,9 @@ vhosts_whimsy::vhosts::vhosts:
 
       RedirectMatch permanent ^/officers/public_names /secretary/public-names
 
+      # redirect obsolete mailing list request form to replacement application
+      RedirectMatch permanent ^/officers/mlreq https://selfserve.apache.org/mail.html
+
       SSLProxyEngine On
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
       
