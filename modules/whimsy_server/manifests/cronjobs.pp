@@ -109,7 +109,7 @@ class whimsy_server::cronjobs (
 
   cron { 'site-scan':
     ensure  => present,
-    command => "(cd /srv/whimsy/tools; ${ruby} site-scan.rb ../www/public/site-scan.json > ../www/logs/site-scan 2>&1)",
+    command => "(cd /srv/whimsy/tools; ${ruby} site-scan.rb ../www/public/site-scan.json ../www/public/pods-scan.json > ../www/logs/site-scan 2>&1)", # lint:ignore:140chars
     user    => $apache::user,
     minute  => 55
   }
