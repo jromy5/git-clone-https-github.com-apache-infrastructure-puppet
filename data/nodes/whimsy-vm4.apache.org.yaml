@@ -95,7 +95,8 @@ vhosts_whimsy::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'whimsy_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://whimsy4.apache.org/$1
+      RewriteEngine On
+      RewriteRule ^/?(.*) https://%%{}{HTTP_HOST}/$1 [R=permanent,L]
 
   whimsy-vm-443:
     vhost_name: '*'
