@@ -450,6 +450,7 @@ build_slaves::distro_packages:
   - mono-complete
   - nodejs
   - nsis
+  - openjdk-8-jdk
   - openjdk-9-jdk
   - php-pear
   - php-dev
