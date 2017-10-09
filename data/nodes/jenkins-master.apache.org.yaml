@@ -63,6 +63,8 @@ logrotate::rule:
     missingok: true
     rotate_every: 'day'
 
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
 rsync::package_ensure:        'latest'
 rsync::server::use_xinetd:    false
 rsync::server::gid:           'nogroup'
