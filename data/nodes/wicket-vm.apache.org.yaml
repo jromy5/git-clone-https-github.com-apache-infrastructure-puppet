@@ -2,4 +2,3 @@
 classes:
   - wicket_pvm_asf
 
-wicket_pvm_asf::wicket_examples_version: '8.0.0-SNAPSHOT'
