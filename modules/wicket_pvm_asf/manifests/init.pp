@@ -37,8 +37,7 @@ class wicket_pvm_asf (
 
   docker::run { 'wicket-demo-6':
     image           => 'apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-6',
-    ports           => ['8080'],
-    expose          => ['8086'],
+    ports           => ['8086:8080'],
     restart_service => true,
     privileged      => false,
     pull_on_start   => true,
@@ -47,8 +46,7 @@ class wicket_pvm_asf (
 
   docker::run { 'wicket-demo-7':
     image           => 'apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-7',
-    ports           => ['8080'],
-    expose          => ['8087'],
+    ports           => ['8087:8080'],
     restart_service => true,
     privileged      => false,
     pull_on_start   => true,
@@ -57,8 +55,7 @@ class wicket_pvm_asf (
 
   docker::run { 'wicket-demo-8':
     image           => 'apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-8',
-    ports           => ['8080'],
-    expose          => ['8088'],
+    ports           => ['8088:8080'],
     restart_service => true,
     privileged      => false,
     pull_on_start   => true,
