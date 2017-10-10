@@ -11,6 +11,8 @@ buildbot_slave::required_packages:
   - 'libpcre3-dev'
   - 'graphviz'
   - 'graphviz-dev'
+  - 'ruby2.0'
+  - 'ruby2.0-dev'
 
 tomcat::install:
   '/opt/tomcat7':

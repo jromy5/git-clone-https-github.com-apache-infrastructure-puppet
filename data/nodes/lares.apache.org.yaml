@@ -5,6 +5,9 @@ classes:
   - loggy
 
 buildbot_slave::slave_name: 'lares_ubuntu'
+buildbot_slave::required_packages:
+  - 'ruby2.0'
+  - 'ruby2.0-dev'
 
 buildbot_slave::rat::projects:
   - 'lucy'
