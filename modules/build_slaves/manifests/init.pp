@@ -17,7 +17,7 @@ class build_slaves (
   }
 
   python::pip { 'docker-compose' :
-    pkgname       => 'docker-compose';
+    pkgname       => 'docker-compose',
     ensure        => 'latest',
   }
 
