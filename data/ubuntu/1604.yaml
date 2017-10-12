@@ -300,7 +300,7 @@ postfix::server::submission:             'true'
 puppet::puppetconf:                      '/etc/puppet/puppet.conf'
 
 python::dev: true
-python::pip: true
+python::pip: 'latest'
 python::virtualenv: true
 
 snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
