@@ -375,7 +375,7 @@ class build_slaves::jenkins (
   cron {
     'docker-cleanup':
       hour        => '13',
-      command     => "/usr/bin/docker system prune",
+      command     => "/usr/bin/docker system prune -a -f",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
