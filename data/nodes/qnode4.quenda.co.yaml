@@ -11,8 +11,6 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'libserf-1-1'
-  - 'libserf-dev'
   - 'libssl-dev'
   - 'pkg-config'
   - 'sqlite3'
