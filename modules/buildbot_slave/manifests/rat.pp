@@ -25,6 +25,12 @@ require buildbot_slave
       group   => $buildbot_slave::groupname,
       mode    => '0755',
       require => [Group[$buildbot_slave::groupname]];
+    '/home/buildslave/rat-output.xsl':
+      ensure => 'present',
+      source => 'puppet:///modules/buildbot_slave/rat-output.xsl',
+      mode   => '0644',
+      owner  => $buildbot_slave::username,
+      group  => $buildbot_slave::groupname;
   }
 
   # define buildbot slave project xml directories
