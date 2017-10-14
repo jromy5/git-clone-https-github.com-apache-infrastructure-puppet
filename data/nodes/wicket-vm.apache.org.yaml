@@ -22,7 +22,7 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples6x_error.log'
     custom_fragment: |
-      ProxyPass /
+      ProxyPass / http://127.0.0.1:8086/
       ProxyPassReverse / http://127.0.0.1:8086/wicket-examples/
   examples7x-80:
     vhost_name: '*'
@@ -35,7 +35,7 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples7x_error.log'
     custom_fragment: |
-      ProxyPass /
+      ProxyPass / http://127.0.0.1:8087/
       ProxyPassReverse / http://127.0.0.1:8087/wicket-examples/
   examples8x-80:
     vhost_name: '*'
@@ -48,5 +48,5 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples8x_error.log'
     custom_fragment: |
-      ProxyPass /
+      ProxyPass / http://127.0.0.1:8088/
       ProxyPassReverse / http://127.0.0.1:8088/wicket-examples/
