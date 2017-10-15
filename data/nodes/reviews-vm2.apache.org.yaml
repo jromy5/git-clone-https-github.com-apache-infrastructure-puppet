@@ -135,7 +135,7 @@ vhosts_asf::vhosts::vhosts:
         Require all denied
       </Location>
       # Deny access to badly configured clients
-      <If "%{HTTP_HOST} == '209.188.14.164'">
+      <If "%%{}{HTTP_HOST} == '209.188.14.164'">
         Require all denied
       </If>
 
