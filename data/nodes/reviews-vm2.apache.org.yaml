@@ -130,9 +130,11 @@ vhosts_asf::vhosts::vhosts:
         options: 'none'
         custom_fragment: 'AddType text/plain .html .htm .shtml .php .php3 .php4 .php5 .phps .asp .pl .py .fcgi .cgi .phtml .phtm .pht .jsp .sh .rb'
     custom_fragment: |
+      # Deny access to cgi-bin (which isn't a thing!)
       <Location /cgi-bin/>
         Require all denied
       </Location>
+      # Deny access to badly configured clients
       <If "%{HTTP_HOST} == '209.188.14.164'">
         Require all denied
       </If>
