@@ -42,7 +42,6 @@ caption {color:blue;text-align:left;}
     </head>
     <body>
 	    <xsl:apply-templates/>
-	    <xsl:call-template name="generated"/>
     </body>
     </html>
 </xsl:template>
