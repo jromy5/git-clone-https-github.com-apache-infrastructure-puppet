@@ -1,6 +1,7 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::rat
   - loggy
   - tomcat
 
@@ -13,6 +14,9 @@ buildbot_slave::required_packages:
   - 'graphviz-dev'
   - 'ruby2.0'
   - 'ruby2.0-dev'
+
+buildbot_slave::rat::projects:
+  - 'tomcat'
 
 tomcat::install:
   '/opt/tomcat7':
