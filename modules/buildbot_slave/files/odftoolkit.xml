@@ -30,7 +30,10 @@
      Timestamp: ${DSTAMP} ${TSTAMP}
     </echo>
     <rat:report xmlns:rat="antlib:org.apache.rat.anttasks"
-      -s "../../../rat-output.xsl" reportFile="${src-dir}/../rat-output.html">
+    format="styled" reportFile="${src-dir}/../rat-output.html">
+      <stylesheet>
+        <file file="${src-dir}/../../../rat-output.xsl"/>
+      </stylesheet>
       <fileset dir="${src-dir}">
         <excludesfile name="${src-dir}/rat-excludes"/>
         <exclude name=".buildbot-sourcedata"/>
