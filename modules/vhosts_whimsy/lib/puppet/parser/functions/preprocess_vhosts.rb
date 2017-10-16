@@ -109,9 +109,9 @@ module Puppet::Parser::Functions
 	  if location.is_a? Hash and location['except']
 	    exceptions = location['except'].map do |name|
 	      if name =~ /[\\+*\[\]]/
-	        "require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
+	        "Require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
 	      else
-	        "require expr %{REQUEST_URI} == '#{url}#{name}'"
+	        "Require expr %{REQUEST_URI} == '#{url}#{name}'"
 	      end
 	    end
 
