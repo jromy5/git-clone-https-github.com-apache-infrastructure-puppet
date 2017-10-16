@@ -120,12 +120,6 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/root.html';
-    "/x1/${username}/master1/create-master-rat-list.sh":
-      ensure => 'present',
-      mode   => '0755',
-      owner  => $username,
-      group  => $groupname,
-      source => 'puppet:///modules/buildbot_asf/create-master-rat-list.sh';
     "/x1/${username}/master1/public_html/asf_logo_wide_2016.png":
       ensure => 'present',
       mode   => '0644',
@@ -153,18 +147,6 @@ class buildbot_asf (
       mode   => '0755',
       owner  => $username,
       group  => $groupname;
-    "/x1/${username}/master1/convert-xml-to-html.sh":
-      ensure => 'present',
-      mode   => '0755',
-      owner  => $username,
-      group  => $groupname,
-      source => 'puppet:///modules/buildbot_asf/convert-xml-to-html.sh';
-    "/x1/${username}/master1/convert-master-xml-to-html.sh":
-      ensure => 'present',
-      mode   => '0755',
-      owner  => $username,
-      group  => $groupname,
-      source => 'puppet:///modules/buildbot_asf/convert-master-xml-to-html.sh';
     "/x1/${username}/master1/create-master-index.sh":
       ensure => 'present',
       mode   => '0755',
@@ -211,18 +193,6 @@ class buildbot_asf (
 # cron jobs
 
   cron {
-    'convert-xml-to-html':
-      user        => $username,
-      minute      => '25',
-      command     => "/x1/${username}/master1/convert-xml-to-html.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
-    'convert-master-xml-to-html':
-      user        => $username,
-      minute      => '28',
-      command     => "/x1/${username}/master1/convert-master-xml-to-html.sh > /dev/null 2>&1",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
-      require     => User[$username];
     'create-master-index':
       user        => $username,
       minute      => 30,
