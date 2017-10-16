@@ -156,6 +156,7 @@ vhosts_whimsy::vhosts::vhosts:
         - app.js
         - "[-\\d]+/bootstrap.html"
         - stylesheets/app.css
+        - sw.js
 
     - name: ASF Members
       group: cn=member,ou=groups,dc=apache,dc=org
