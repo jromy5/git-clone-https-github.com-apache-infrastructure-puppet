@@ -12,8 +12,7 @@
     <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
      <style type="text/css">
-    <!--
-body {margin-top: 0px;font-size: 0.8em;background-color: #F9F7ED;}
+body {margin-top: 0px;font-size: 1em;background-color: #F9F7ED;}
 
 h1 {color:red;}
 h2 {color:blue;}
@@ -22,7 +21,8 @@ h4 {color:orange;}
 
 /* Table Design */
 
-table,tr,td {text-align:center;font-weight:bold;border:1px solid #000;}
+table {margin-left:auto;margin-right:auto;text-align:center;width:55%}
+tr,td {text-align:center;font-weight:bold;border:1px solid #000;}
 caption {color:blue;text-align:left;}
 .notes, .binaries, .archives, .standards {width:25%;}
 .notes {background:#D7EDEE;}
@@ -37,7 +37,6 @@ caption {color:blue;text-align:left;}
 .unknown {width:100%;background:#E92020;}
 .unknown-zero {color:#00CC00;}
 .center{text-align:center;margin:0 auto;}
--->
      </style>
     </head>
     <body>
@@ -49,8 +48,9 @@ caption {color:blue;text-align:left;}
 <xsl:template match="rat-report">
 
 	<h1>Rat Report</h1>
-	<p>This HTML version (yes, it is!) is generated from the RAT xml reports using Saxon9B. All the outputs required are displayed below, similar to the .txt version.
-           This is obviously a work in progress; and a prettier, easier to read and manage version will be available soon</p>
+	<p>This HTML version is generated using the --stylesheet (-s) option built into RAT. The stylesheet rat-output.xsl is available 
+           for Pull Requests at <a href="https://github.com/apache/infrastructure-puppet/blob/deployment/modules/buildbot_slave/files/rat-output.xsl"> 
+           on our Github Repos</a>.</p>
 <div class="center">
 <table id="rat-reports summary" cellspacing="0" summary="A snapshot summary of this rat report">
 <caption>
