@@ -37,6 +37,7 @@ caption {color:blue;text-align:left;}
 .unknown {width:100%;background:#E92020;}
 .unknown-zero {color:#00CC00;}
 .center{text-align:center;margin:0 auto;}
+.intro, .intro > a {color:#ccc;}
      </style>
     </head>
     <body>
@@ -48,9 +49,6 @@ caption {color:blue;text-align:left;}
 <xsl:template match="rat-report">
 
 	<h1>Rat Report</h1>
-	<p>This HTML version is generated using the --stylesheet (-s) option built into RAT. The stylesheet rat-output.xsl is available 
-           for Pull Requests at <a href="https://github.com/apache/infrastructure-puppet/blob/deployment/modules/buildbot_slave/files/rat-output.xsl"> 
-           on our Github Repos</a>.</p>
 <div class="center">
 <table id="rat-reports summary" cellspacing="0" summary="A snapshot summary of this rat report">
 <caption>
@@ -83,6 +81,10 @@ Table 1: A snapshot summary of this rat report.
 </table>
 </div>
 <hr />
+        <p class="intro center">This HTML version is generated using the --stylesheet (-s) option built into RAT. The stylesheet rat-output.xsl is available
+           for Pull Requests at <a href="https://github.com/apache/infrastructure-puppet/blob/deployment/modules/buildbot_slave/files/rat-output.xsl">
+           our Github Repos</a>.</p>
+  <xsl:text>  </xsl:text>
 	<h3>Unapproved Licenses:</h3>
 
 	<xsl:for-each select='descendant::resource[license-approval/@name="false"]'>
