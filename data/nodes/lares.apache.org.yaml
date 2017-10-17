@@ -12,3 +12,5 @@ buildbot_slave::required_packages:
 buildbot_slave::rat::projects:
   - 'lucy'
   - 'ofbiz'
+  - 'pdfbox'
+  - 'forrest'
