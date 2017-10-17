@@ -310,6 +310,7 @@ class NodeThread(Thread):
                         "properties": {
                             "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
                             "@node" : { "store": True, "type" : "string", "index": "not_analyzed"},
+                            "date" : { "store": True, "type" : "string", "index": "not_analyzed"},
                             "geo_location" : { "type": "geo_point", "geohash": True }
                         }
                     }
