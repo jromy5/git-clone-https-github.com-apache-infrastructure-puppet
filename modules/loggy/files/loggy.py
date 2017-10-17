@@ -321,6 +321,7 @@ class NodeThread(Thread):
                     
                 res = self.xes.indices.create(index = iname, body = {
                         "settings" : {
+                            "index.mapping.ignore_malformed": True,
                             "number_of_shards": 3,
                             "number_of_replicas": 1
                         },
