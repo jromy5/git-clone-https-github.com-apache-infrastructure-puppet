@@ -138,8 +138,8 @@ def issueClosed(payload):
     fmt['action'] = 'close'
     fmt['prdiff'] = None
     # If foreign diff, we have to pull it down here
-    if obj.get('repo') and obj[repo].get('head') and obj['repo']['head'].get('full_name') and obj.get('diff_url'):
-        if not obj['repo']['head']['full_name'].startswith("apache/"):
+    if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
+        if not obj['head']['repo']['full_name'].startswith("apache/"):
             txt = requests.get(obj['diff_url']).text
             fmt['prdiff'] = """
 As this is a foreign pull request (from a fork), the diff is supplied
