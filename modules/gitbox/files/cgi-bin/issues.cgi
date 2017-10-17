@@ -96,6 +96,8 @@ TMPL_CLOSED_TICKET = """
 GitHub user %(user)s closed #%(id)i: %(title)s
 
 You can view it online at: %(link)s
+
+%(diff)s
 """
 
 TMPL_GENERIC_COMMENT = """
@@ -134,6 +136,17 @@ def issueClosed(payload):
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
+    fmt['diff'] = ""
+    # If foreign diff, we have to pull it down here
+    if obj.get('repo') and obj[repo].get('head') and obj['repo']['head'].get('full_name') and obj.get('diff_url'):
+        if not obj['repo']['head']['full_name'].startswith("apache/"):
+            txt = requests.get(obj['diff_url']).text
+            fmt['diff'] = """
+As this is a foreign pull request (from a fork), the diff is supplied
+below (as it won't show otherwise due to GitHub magic):
+
+%s
+""" % txt
     return fmt
 
 
