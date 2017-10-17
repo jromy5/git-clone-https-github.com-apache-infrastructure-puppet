@@ -11,8 +11,15 @@ URL: [link]
     Review comment:
 [end][if-any text][text][end]
 
+[if-any prdiff]
+This is a PR merged from a forked repository.
+As GitHub hides the original diff on merge, it is displayed below for
+the sake of provenance:
 
- 
+[prdiff]
+    
+[end]
+
 ----------------------------------------------------------------
 This is an automated message from the Apache Git Service.
 To respond to the message, please log on GitHub and use the
