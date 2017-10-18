@@ -62,7 +62,7 @@ def getvalue(key):
         return None
 
 def sendEmail(rcpt, subject, message):
-    sender = "<git@git.apache.org>"
+    sender = "GitBox <git@apache.org>"
     receivers = [rcpt]
     msg = """From: %s
 To: %s
@@ -347,7 +347,7 @@ def main():
     # Send email if applicable
     if fmt:
         # EZT needs these to be defined
-        for el in ['filename','diff']:
+        for el in ['filename','diff', 'prdiff']:
             if not el in fmt:
                 fmt[el] = None
         # Indent comment
