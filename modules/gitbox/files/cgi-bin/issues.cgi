@@ -33,6 +33,7 @@ import StringIO
 from email.mime.text import MIMEText
 import requests
 import base64
+import email.utils
 
 # Define some defaults and debug vars
 DEBUG_MAIL_TO = None # "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
@@ -67,12 +68,13 @@ def sendEmail(rcpt, subject, message):
     msg = """From: %s
 To: %s
 Subject: %s
+Message-ID: %s
 
 %s
 
 With regards,
 Apache Git Services
-""" % (sender, rcpt, subject, message)
+""" % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), message)
     msg = msg.encode('ascii', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
