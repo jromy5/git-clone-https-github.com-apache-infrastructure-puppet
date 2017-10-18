@@ -115,11 +115,10 @@ def main():
 
     # If not, try List-Post
     if not recipient:
-        if msg.get('list-post'):
-            header = msg.get('list-post')
+        header = msg.get('list-post')
+        if header:
             print(header)
-            # Only expecting apache.org or apachecon.com lists
-            m = re.match(r"<mailto:(.+?@(.*apache\.org|apachecon\.com))>", header)
+            m = re.match(r"<mailto:(.+?@.*?)>", header)
             if m:
                 recipient = m.group(1)
             else:
@@ -127,22 +126,12 @@ def main():
         else:
             print("Missing list-post: %s" % msg.get_unixfrom())
     
-    # If no bueno, try Received headers
-    if not recipient and msg.get('received'):
-        # Get all headers, oldest first
-        headers = reversed(msg.get_all('received'))
-        for header in headers:
-            # Find the first (oldest) that mentions apache.org as recipient
-            # Use non-greedy RE to avoid matching "for <mmm@apache.org> from <nnn@apache.org>;"
-            m = re.search(r"for <(.+?@.*?apache\.org)>", header)
-            if m:
-                recipient = m.group(1)
-                break
     if recipient:
         # validate listname and fqdn, just in case
         listname, fqdn = recipient.lower().split('@', 1)
         # Underscore needed for mod_ftp
         if not re.match(r"^[a-z0-9][-_.a-z0-9]*$", listname) or not re.match(r"^[a-z0-9][-.a-z0-9]*$", fqdn):
+            # N.B. the parts are used as path name components so need to be safe for use
             print("Dirty listname or FQDN in '%s', dumping in %s!" % (recipient, config['dumpfile']))
             dumpbad(msgstring)
             sys.exit(0) # Bail quietly
