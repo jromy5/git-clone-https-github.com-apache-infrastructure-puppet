@@ -282,7 +282,8 @@ mod 'vcsrepo',
 
 
 mod 'xinetd',
-  :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
+  :git => 'https://github.com/puppetlabs/puppetlabs-xinetd',
+  :tag => '2.0.0'
 
 
 
