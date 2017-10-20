@@ -1486,6 +1486,9 @@ buildbot = rw
 [/opennlp/site]
 @opennlp = rw
 
+[bigdata:/opennlp]
+@opennlp = rw
+
 [/openoffice]
 @openoffice = rw
 
