@@ -143,6 +143,8 @@ ldapserver::slapd_peers:
   2: ldap1-lw-us.apache.org
   3: ldap1-lw-eu.apache.org
   4: devops.apache.org
+  5: ldap-us-ro.apache.org
+  6: ldap-eu-ro.apache.org
 
 ldapserver::schemas:
   - core
