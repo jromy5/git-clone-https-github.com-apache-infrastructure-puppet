@@ -1,6 +1,5 @@
 ---
 classes: 
-  - rbldnsd::master::setup
   - puppet_asf::master
   - datadog_asf::integrations::snmp
   - dell
