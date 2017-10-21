@@ -1367,6 +1367,15 @@ buildbot = rw
 [/maven/core-integration-testing]
 @maven = r
 
+[/maven/doxia/doxia]
+* = r
+
+[/maven/doxia/doxia-sitetools]
+* = r
+
+[/maven/enforcer]
+* = r
+
 [/maven/indexer]
 @maven = r
 
@@ -1376,8 +1385,17 @@ buildbot = rw
 [/maven/maven-3]
 @maven = r
 
+[/maven/jxr]
+* = r
+
 [/maven/plugin-testing]
 @maven = r
+
+[/maven/plugin-tools]
+* = r
+
+[/maven/release]
+* = r
 
 [/maven/sandbox]
 @committers  = rw
