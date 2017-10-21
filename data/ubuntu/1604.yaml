@@ -394,6 +394,7 @@ build_slaves::distro_packages:
   - erlang-dev
   - erlang-eunit
   - flex
+  - firefox
   - g++
   - g++-4.8-multilib
   - g++-multilib
