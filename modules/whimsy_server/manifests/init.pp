@@ -81,6 +81,7 @@ class whimsy_server (
   #                         Symlink Ruby                     #
   ############################################################
 
+  # define ruby symlinking
   define whimsy_server::ruby::symlink ($binary = $title, $ruby = '') {
     $version = split($ruby, '-')
     file { "/usr/local/bin/${binary}${version[1]}" :
@@ -90,6 +91,7 @@ class whimsy_server (
     }
   }
 
+  # define rvm symlinking
   define whimsy_server::rvm::symlink ($ruby = $title) {
     $binaries = [bundle, erb, gem, irb, rackup, rake, rdoc, ri, ruby, testrb]
     whimsy_server::ruby::symlink { $binaries: ruby => $ruby}
