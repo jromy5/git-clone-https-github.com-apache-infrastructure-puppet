@@ -360,7 +360,7 @@ def main():
         sendEmail(mailto, email['subject'], email['message'])
 
     # Now do JIRA if need be
-    jiraopt = gconf.get('apache', 'jira') if gconf.has_section('apache') and gconf.has_option('apache', 'jira') else None
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_section('apache') and gconf.has_option('apache', 'jira') else 'default'
     
     if jiraopt and fmt:
         if 'title' in fmt:
