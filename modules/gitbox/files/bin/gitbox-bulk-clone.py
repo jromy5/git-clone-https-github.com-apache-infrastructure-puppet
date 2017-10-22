@@ -62,9 +62,10 @@ def rmWebhooks(repo):
     data = json.load(response)
     for hook in data:
         # Is this an old git-wip hook?
-        if 'git-wip' in hook['config']['url'] or 'git1-us-east' in hook['config']['url']:
-            print("Removing stale webhook %s (%s)" % (hook['url'], hook['config']['url']))
-            requests.delete("%s?access_token=%s" % (hook['url'], ORG_TOKEN))
+        if 'config' in hook and hook['config'].get('url'):
+            if 'git-wip' in hook['config']['url'] or 'git1-us-east' in hook['config']['url']:
+                print("Removing stale webhook %s (%s)" % (hook['url'], hook['config']['url']))
+                requests.delete("%s?access_token=%s" % (hook['url'], ORG_TOKEN))
             
 
 if len(sys.argv) < 2:
