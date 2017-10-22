@@ -13,17 +13,17 @@ class build_slaves (
   }
 
   python::pip { 'Flask' :
-    pkgname       => 'Flask';
+    pkgname => 'Flask';
   }
 
   python::pip { 'docker-compose' :
-    pkgname       => 'docker-compose',
-    ensure        => 'latest',
+    ensure  => 'latest',
+    pkgname => 'docker-compose',
   }
 
   python::pip { 'pip' :
-    pkgname       => 'pip',
-    ensure        => 'latest',
+    ensure  => 'latest',
+    pkgname => 'pip',
   }
 
 }
