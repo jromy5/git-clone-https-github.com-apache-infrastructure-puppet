@@ -1670,10 +1670,6 @@ buildbot = rw
 @sis = rw
 
 [/sling]
-@sling = rw
-@sling-emeritus = rw
-
-[/sling/site]
 * = r
 
 [/spamassassin]
