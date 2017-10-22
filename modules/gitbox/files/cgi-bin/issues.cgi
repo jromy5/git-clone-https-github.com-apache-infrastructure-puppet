@@ -314,7 +314,7 @@ def main():
     project = "infra" # Default to infra
     if m:
         project = m.group(1)
-    mailto = gconf.get('apache', 'dev') if gconf.has_section('apache') and gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
+    mailto = gconf.get('apache', 'dev') if gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
@@ -360,7 +360,7 @@ def main():
         sendEmail(mailto, email['subject'], email['message'])
 
     # Now do JIRA if need be
-    jiraopt = gconf.get('apache', 'jira') if gconf.has_section('apache') and gconf.has_option('apache', 'jira') else 'default'
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'default'
     
     if jiraopt and fmt:
         if 'title' in fmt:
