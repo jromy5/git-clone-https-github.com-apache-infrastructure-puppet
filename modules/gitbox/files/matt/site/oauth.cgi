@@ -25,7 +25,7 @@ import cgi, sqlite3, hashlib, Cookie, urllib, urllib2, ConfigParser
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("/x1/gitbox/matt/tools/grouper.cfg")
 
-LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
+LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")

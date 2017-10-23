@@ -39,7 +39,7 @@ def authorized_committers(repo_name):
             writers.add(util.decode(person.strip()))
 
     # Add the committers listed in ldap for the project.
-    lh = ldap.initialize("ldaps://ldap-lb-us.apache.org")
+    lh = ldap.initialize("ldaps://ldap-us-ro.apache.org")
     numldap = 0 # ldap entries fetched
     attrs = ["memberUid", "member"]
     try:
