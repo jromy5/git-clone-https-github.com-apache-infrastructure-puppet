@@ -1368,13 +1368,13 @@ buildbot = rw
 @maven = r
 
 [/maven/doxia/doxia]
-* = r
+@maven = r
 
 [/maven/doxia/doxia-sitetools]
-* = r
+@maven  = r
 
 [/maven/enforcer]
-* = r
+@maven = r
 
 [/maven/indexer]
 @maven = r
@@ -1386,16 +1386,16 @@ buildbot = rw
 @maven = r
 
 [/maven/jxr]
-* = r
+@maven = r
 
 [/maven/plugin-testing]
 @maven = r
 
 [/maven/plugin-tools]
-* = r
+@maven = r
 
 [/maven/release]
-* = r
+@maven = r
 
 [/maven/sandbox]
 @committers  = rw
