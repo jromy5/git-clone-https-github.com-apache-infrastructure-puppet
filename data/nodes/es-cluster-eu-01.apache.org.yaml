@@ -120,7 +120,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteEngine On
       RewriteRule ^/?blocky.json /blocky/api/blocklist.lua
       <Location /blocky/>
-          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root Only"
           AuthType Basic
@@ -131,7 +131,7 @@ vhosts_asf::vhosts::vhosts:
           DirectoryIndex index.html
       </Location>
       <LocationMatch ^/((app|ui|bundles|api|plugins|es_admin|elasticsearch)/.*)$>
-          AuthLDAPUrl "ldaps://ldap1-eu-west.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
           AuthName "ASF Infrastructure-root/logging Only"
           AuthType Basic

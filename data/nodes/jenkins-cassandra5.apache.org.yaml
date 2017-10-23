@@ -5,4 +5,4 @@ classes:
 build_slaves::jenkins::npmrc_password: ''
 build_slaves::jenkins::nexus_password: ''
 
-ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+ldapclient::ldapservers: 'ldap-us-ro.apache.org'
