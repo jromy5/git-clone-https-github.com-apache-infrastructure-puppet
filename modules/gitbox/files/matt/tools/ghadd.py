@@ -44,7 +44,7 @@ CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("grouper.cfg") # Yeah, you're not getting this info...
 
 # LDAP setup
-LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
+LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 
