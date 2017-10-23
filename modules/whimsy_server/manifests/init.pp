@@ -37,6 +37,8 @@ class whimsy_server (
     nodejs,
     pdftk,
     procmail,
+
+    gnupg2,
   ]
 
   exec { 'Add nodesource sources':
