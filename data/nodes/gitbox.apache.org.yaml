@@ -105,7 +105,7 @@ gitbox::custom_fragment_443: |
         AuthType Basic
         AuthName "ASF Committers"
         AuthBasicProvider ldap
-        AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute memberUid
         AuthLDAPGroupAttributeIsDN off
         Require ldap-attribute gidNumber=5000
@@ -119,7 +119,7 @@ gitbox::custom_fragment_443: |
           AuthType Basic
           AuthName "ASF Committers"
           AuthBasicProvider file ldap
-          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
           # Fall back to auth file for role accounts
@@ -198,7 +198,7 @@ gitbox::custom_fragment_443: |
           AuthType Basic
           AuthName "ASF Committers"
           AuthBasicProvider ldap
-          AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
           Require ldap-attribute gidNumber=5000

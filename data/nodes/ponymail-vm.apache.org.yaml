@@ -51,7 +51,7 @@ base::basepackages:
 httpd_modules::dev_package:
   - 'apache2-dev'
 
-ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+ldapclient::ldapservers: 'ldap-us-ro.apache.org'
 
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false

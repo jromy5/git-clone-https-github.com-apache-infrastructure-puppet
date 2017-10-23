@@ -2,7 +2,7 @@
 classes:
   - oraclejava::install
 
-ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+ldapclient::ldapservers: 'ldap-us-ro.apache.org'
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true

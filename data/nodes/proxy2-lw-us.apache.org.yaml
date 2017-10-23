@@ -199,7 +199,7 @@ vhosts_asf::vhosts::vhosts:
 
         <Location /committers.lua>
           # Require LDAP authentication for /committers.lua
-          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthName "ASF Committers"
           AuthType Basic
@@ -354,7 +354,7 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost on
 
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthName "Root members only"
         AuthType Basic
         AuthBasicProvider ldap
@@ -597,7 +597,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -648,7 +648,7 @@ vhosts_asf::vhosts::vhosts:
 
       <Location /p>
         # Require LDAP authentication for /p[id], /post or /token
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -698,7 +698,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthName "ASF Committers"
         AuthBasicProvider ldap
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
         Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
@@ -757,7 +757,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthName "Infrastructure members only"
         AuthBasicProvider ldap
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
         Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
@@ -801,7 +801,7 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost On
 
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
