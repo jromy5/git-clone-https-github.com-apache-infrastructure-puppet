@@ -15,7 +15,6 @@ classes:
   - ulimit_asf
 
 classes_windows:
-  - wintest
   - asf999_windows::create_user
   - datadog_agent
 
