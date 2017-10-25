@@ -124,7 +124,7 @@ vhosts_whimsy::vhosts::vhosts:
     - /racktest
     - /roster
     - /secretary/workbench
-    - /test/icla
+    - /project/icla
 
     authldap:
     - name: ASF Committers
