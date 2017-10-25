@@ -14,9 +14,9 @@ classes:
   - timezone
   - ulimit_asf
 
-classes_windows:
-  - asf999_windows::create_user
-  - datadog_agent
+#classes_windows:
+#  - asf999_windows::create_user
+#  - datadog_agent
 
 ## MODULES
 ## AMANDA
@@ -71,10 +71,10 @@ asf999::create_user::keycontent: |
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
-asf999_windows::create_user::user: 'asf999_windows'
-asf999_windows::create_user::groups:
-  - 'Users'
-  - 'Administrators'
+#asf999_windows::create_user::user: 'asf999_windows'
+#asf999_windows::create_user::groups:
+#  - 'Users'
+#  - 'Administrators'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
