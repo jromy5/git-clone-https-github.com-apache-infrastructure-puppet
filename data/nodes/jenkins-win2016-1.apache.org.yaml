@@ -1,2 +1,2 @@
-classes_windows:
-  - jenkins_slave_windows
+#classes_windows:
+#  - jenkins_slave_windows
