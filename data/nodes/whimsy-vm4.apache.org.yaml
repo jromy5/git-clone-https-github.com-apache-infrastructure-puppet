@@ -133,7 +133,7 @@ vhosts_whimsy::vhosts::vhosts:
       locations:
       - /board/subscriptions
       - /committers/
-      - /test/icla/
+      - /project/icla/
       - /roster/
       - /test/roster/
 
