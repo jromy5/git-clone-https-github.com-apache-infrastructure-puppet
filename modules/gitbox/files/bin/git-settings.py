@@ -20,10 +20,10 @@
 # USAGE EXAMPLES:
 #
 # Export cordova settings from git-wip:
-#     python3 git-settings.py --dir /x1/git/repos/asf --export settings.json --glob cordova*
+#     python3 git-settings.py --dir /x1/git/repos/asf --export settings.json --glob "cordova*"
 #
 # Import cordova settings on gitbox:
-#     python3 git-settings.py --dir /x1/repos/asf --import /root/settings.json --glob cordova*
+#     python3 git-settings.py --dir /x1/repos/asf --import /root/settings.json --glob "cordova*"
 
 import os
 import sys
@@ -86,5 +86,5 @@ for repo in allrepos:
 if args.save:
     print("Saving exported settings to %s" % args.save)
     os.chdir(cdir)
-    json.dump(GIT_SETTINGS, open(args.save, "w"))
+    json.dump(GIT_SETTINGS, open(args.save, "w"), indent = 4)
     
