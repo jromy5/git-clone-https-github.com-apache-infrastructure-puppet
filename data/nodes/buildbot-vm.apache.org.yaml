@@ -72,6 +72,6 @@ vhosts_asf::vhosts::vhosts:
      ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
      custom_fragment: |
        RewriteEngine On
-       RewriteRule "/projects/flink/flink-docs-release-0.[4-9]/(.*)"  "/projects/flink/flink-docs-stable/"  [R]
+       RewriteRule "/projects/flink/flink-docs-release-0.[4-9]/?(.*)"  "/projects/flink/flink-docs-stable/"  [R]
        ProxyPass / http://127.0.0.1:8080/
        ProxyPassReverse / http://127.0.0.1:8080/
