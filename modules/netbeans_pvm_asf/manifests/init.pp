@@ -2,7 +2,7 @@
 
 class netbeans_pvm_asf (
 
-  $required_packages = ['subversion' , 'php7.0' , 'php7.0-cli' , 'php7.0-mysql'],
+  $required_packages = ['php7.0' , 'php7.0-cli' , 'php7.0-mysql'],
 
 ){
 
