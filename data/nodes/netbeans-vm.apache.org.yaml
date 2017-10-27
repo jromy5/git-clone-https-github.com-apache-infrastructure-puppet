@@ -3,7 +3,6 @@ classes:
   - apache
   - apache::mod::rewrite
   - netbeans_pvm_asf
-  - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
