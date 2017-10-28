@@ -37,7 +37,7 @@
         <file file="${src-dir}/../../../rat-output.xsl"/>
       </stylesheet>
       <fileset dir="${src-dir}">
-      <excludesfile name="${src-dir}/../rat-excludes.txt"/>
+      <excludesfile name="${src-dir}/rat-excludes.txt"/>
         <exclude name=".buildbot-sourcedata"/>
       </fileset>
     </rat:report>
