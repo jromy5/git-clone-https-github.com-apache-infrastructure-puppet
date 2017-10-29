@@ -365,11 +365,11 @@ class build_slaves::jenkins (
   }
   file { '/home/jenkins/tools/java/latest1.8':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_144',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_152',
   }
   file { '/home/jenkins/tools/java/latest1.9':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk-9-b181-unlimited-security',
+    target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
 
   cron {
