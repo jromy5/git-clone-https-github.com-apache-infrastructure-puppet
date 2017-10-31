@@ -24,8 +24,10 @@ between public and private email.
 Arguments (optional):
     --lid abcd@xyz.apache.org - use this instead of parsing list-post
 
-    restricted - file the mail under the directory defined by the 'restricteddir' config item
-                 else, file it under the directory defined by the 'archivedir' config item
+    <security-realm> (optional)
+    - restricted - file the mail under the directory defined by the 'restricteddir' config item
+    - private    - file the mail under the directory defined by the 'privatedir' config item
+    - anything else, file it under the directory defined by the 'archivedir' config item
 
    The above can be combined if required.
 """
@@ -63,7 +65,7 @@ def valid_mail(m):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--lid", type=valid_mail, help="override list id")
-parser.add_argument("security", nargs='?') # e.g. restricted
+parser.add_argument("security", nargs='?') # e.g. restricted, private or omitted
 args = parser.parse_args()
 
 def lock(fd):
@@ -141,6 +143,8 @@ def main():
         if args.security == 'restricted':
             adir = config['restricteddir']
             dochmod = False
+        elif args.security == 'private':
+            adir = config['privatedir']
         # Construct a path to the mbox file
         fqdnpath = os.path.join(adir, fqdn)
         listpath = os.path.join(fqdnpath, listname)
