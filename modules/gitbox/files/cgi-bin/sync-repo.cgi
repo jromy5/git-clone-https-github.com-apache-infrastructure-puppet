@@ -238,32 +238,37 @@ elif 'repository' in data and 'name' in data['repository']:
         # SYNC WITH GITHUB #
         ####################
         log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-        try:
-            # Change to repo dir
-            os.chdir(repopath)
-            # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
-            out = subprocess.check_output(["git", "fetch", "--prune"])
+    
+        # Change to repo dir
+        os.chdir(repopath)
+        # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
+        p = subprocess.Popen(["git", "fetch", "--prune"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        output,error = p.communicate()
+        rv = p.poll()
+        if not rv:
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
             try:
-                if os.path.exists("/x1/gitbox/broken/%s.txt" % cfg.repo_name):
-                    os.unlink("/x1/gitbox/broken/%s.txt" % cfg.repo_name)
+                if os.path.exists("/x1/gitbox/broken/%s.txt" % reponame):
+                    os.unlink("/x1/gitbox/broken/%s.txt" % reponame)
             except:
-                pass
-        except subprocess.CalledProcessError as err:
+                pass # Fail silently
+        else:
             broken = True
-            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err.output)
+            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, error)
             with open("/x1/gitbox/broken/%s.txt" % reponame, "w") as f:
                 f.write("BROKEN AT %s\n\nOutput:\n" % time.strftime("%c"))
-                f.write("Return code: %s\nText output:\n" % err.returncode)
-                f.write(err.output)
+                f.write("Return code: %s\nText output:\n" % rv)
+                f.write(error)
                 f.close()
             
             # Send an email to users@infra.a.o with the bork
             errmsg = err.output
             msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
-            msg['Subject'] = "gitbox repository %s: sync failed!" % repository
+            msg['Subject'] = "gitbox repository %s: sync failed!" % reponame
             msg['To'] = "<team@infra.apache.org>"
-            msg['From'] = "<gitbox@gitbox.apache.org>"
+            msg['From'] = "<gitbox@apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
             
