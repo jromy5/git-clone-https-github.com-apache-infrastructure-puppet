@@ -607,6 +607,9 @@ buildbot = rw
 [/bval]
 @bval = rw
 
+[/bval/(trunk|tags|branches)]
+@bval = r
+
 [/camel]
 * = r
 
