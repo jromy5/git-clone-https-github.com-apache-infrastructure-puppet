@@ -380,48 +380,6 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
       SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
 
-  modules:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    docroot: '/var/www/html'
-    servername: 'modules.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'modules.apache.org.http_access.log'
-    error_log_file: 'modules.apache.org.error.log'
-    custom_fragment: |
-      Redirect / https://modules.apache.org/
-
-  modules-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    docroot: '/var/www/html'
-    servername: 'modules.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'modules.apache.org.ssl_access.log'
-    error_log_file: 'modules.apache.org.error.log'
-    custom_fragment: |
-      ProxyPreserveHost on
-
-      # Need to use mod_rewrite for doing maintenance
-      RewriteEngine on
-
-      ProxyPass / http://192.168.0.55:10180/ retry=0 timeout=60
-      # To enable system maintenance, comment out the line above and uncomment the five lines below
-      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
-      # RewriteCond %%{}{REQUEST_URI} !/maintenance.html
-      # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.222\.166
-      # RewriteRule ^/(.*) /maintenance.html
-      # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.222\.166
-      # RewriteRule ^/(.*) http://192.168.0.55:10180/$1 [P]     
-
-      # Protect cookies - not sure this is needed yet
-      <Location / >
-        Header edit Set-Cookie (^.*$) "$1; Secure"
-      </Location>
-
   pad:
     vhost_name: '*'
     ensure: 'present'
