@@ -221,45 +221,6 @@ vhosts_asf::vhosts::vhosts:
           ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
         </Location>
 
-  inventory:
-    vhost_name: '*'
-    ensure: 'absent'
-    port: 80
-    docroot: '/var/www/html'
-    servername: 'inventory.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'inventory.apache.org.http_access.log'
-    error_log_file: 'inventory.apache.org.error.log'
-    custom_fragment: |
-      Redirect / https://inventory.apache.org/
-
-  inventory-ssl:
-    vhost_name: '*'
-    ensure: 'absent'
-    port: 443
-    ssl: true
-    docroot: '/var/www/html'
-    servername: 'inventory.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'inventory.apache.org.ssl_access.log'
-    error_log_file: 'inventory.apache.org.error.log'
-    custom_fragment: |
-      ProxyPreserveHost on
-
-      <Location />
-        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthName "Root members only"
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthLDAPGroupAttribute member
-        AuthLDAPGroupAttributeIsDN on
-        Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-
-        # Remove Authorization header to prevent passwords from being transmitted
-        RequestHeader unset Authorization
-        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
-      </Location>
-
   modules:
     vhost_name: '*'
     ensure: 'present'
