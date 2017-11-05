@@ -61,7 +61,7 @@ vhosts_asf::modules::modules:
 vhosts_asf::vhosts::vhosts:
   allura:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'forge-allura.apache.org'
     serveradmin: 'webmaster@apache.org'
@@ -73,7 +73,7 @@ vhosts_asf::vhosts::vhosts:
 
   allura-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'forge-allura.apache.org'
@@ -100,7 +100,7 @@ vhosts_asf::vhosts::vhosts:
 
   archiva-repository:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'archiva-repository.apache.org'
     serveradmin: 'webmaster@apache.org'
@@ -112,7 +112,7 @@ vhosts_asf::vhosts::vhosts:
 
   archiva-repository-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'archiva-repository.apache.org'
@@ -132,7 +132,7 @@ vhosts_asf::vhosts::vhosts:
 
   blogs:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'blogs.apache.org'
     serveraliases:
@@ -146,7 +146,7 @@ vhosts_asf::vhosts::vhosts:
 
   blogs-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'blogs.apache.org'
@@ -223,7 +223,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-old-ofbiz:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'demo-old-ofbiz.apache.org'
     serveradmin: 'users@infra.apache.org'
@@ -237,7 +237,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-old-ofbiz-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'demo-old-ofbiz.apache.org'
@@ -260,7 +260,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-stable-ofbiz:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'demo-stable-ofbiz.apache.org'
     serveradmin: 'users@infra.apache.org'
@@ -274,7 +274,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-stable-ofbiz-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'demo-stable-ofbiz.apache.org'
@@ -297,7 +297,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-trunk-ofbiz:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'demo-trunk-ofbiz.apache.org'
     serveradmin: 'users@infra.apache.org'
@@ -311,7 +311,7 @@ vhosts_asf::vhosts::vhosts:
 
   demo-trunk-ofbiz-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'demo-trunk-ofbiz.apache.org'
@@ -335,7 +335,7 @@ vhosts_asf::vhosts::vhosts:
 
   inventory:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     docroot: '/var/www/html'
     servername: 'inventory.apache.org'
@@ -347,7 +347,7 @@ vhosts_asf::vhosts::vhosts:
 
   inventory-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     docroot: '/var/www/html'
@@ -416,7 +416,7 @@ vhosts_asf::vhosts::vhosts:
 
   paste:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     docroot: '/var/www/html'
     servername: 'paste.apache.org'
@@ -428,7 +428,7 @@ vhosts_asf::vhosts::vhosts:
 
   paste-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     docroot: '/var/www/html'
@@ -521,7 +521,7 @@ vhosts_asf::vhosts::vhosts:
 
   reference:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     docroot: '/var/www/html'
     servername: 'reference.apache.org'
@@ -533,7 +533,7 @@ vhosts_asf::vhosts::vhosts:
 
   reference-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     docroot: '/var/www/html'
@@ -622,7 +622,7 @@ vhosts_asf::vhosts::vhosts:
 
   translate:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'translate.apache.org'
     serveraliases:
@@ -636,7 +636,7 @@ vhosts_asf::vhosts::vhosts:
 
   translate-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'translate.apache.org'
@@ -658,7 +658,7 @@ vhosts_asf::vhosts::vhosts:
 
   whimsy-old:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     servername: 'whimsy-old.apache.org'
     serveraliases:
@@ -676,7 +676,7 @@ vhosts_asf::vhosts::vhosts:
 
   whimsy-old-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     servername: 'whimsy-old.apache.org'
