@@ -30,6 +30,10 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+base::hosts:
+  archiva-vm2.apache.org:
+    ip: '10.41.0.16'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
