@@ -73,7 +73,7 @@ gitserver_asf::custom_fragment_443: |
                 AuthType Basic
                 AuthName "ASF Committers"
                 AuthBasicProvider file ldap
-                AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
                 # Fall back to auth file for role accounts
@@ -155,7 +155,7 @@ gitserver_asf::custom_fragment_443: |
           AuthType Basic
           AuthName "Git Infrastructure"
           AuthBasicProvider ldap
-          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
           Order allow,deny

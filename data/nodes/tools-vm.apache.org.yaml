@@ -112,7 +112,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -126,7 +126,7 @@ vhosts_asf::vhosts::vhosts:
           Options +ExecCGI
           AuthType Basic
           AuthName "Apache infrastructure team only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthBasicProvider ldap
           AuthLDAPGroupAttributeIsDN on
@@ -176,7 +176,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /p/>
           AuthType Basic
           AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
@@ -215,7 +215,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /new>
           AuthType Basic
           AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
@@ -254,7 +254,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /infra/>
           AuthType Basic
           AuthName "Apache infrastructure team only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthBasicProvider ldap
           AuthLDAPGroupAttributeIsDN on
@@ -294,7 +294,7 @@ vhosts_asf::vhosts::vhosts:
       FallbackResource /index.html
       <Location />
         Options +ExecCGI
-        AuthLDAPUrl "ldaps://ldap1-lw-us.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -341,7 +341,7 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       FallbackResource /index.lua
       <Location /auth>
-        AuthLDAPUrl "ldaps://ldap1-lw-us.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers only"
         AuthType Basic
@@ -425,7 +425,7 @@ vhosts_asf::vhosts::vhosts:
       # Restrict access to jira,conf,mail,git to chairs + root.
       <LocationMatch "^/(cgi-bin|mail|jira|confluence|git)">
         Options +ExecCGI -MultiViews +FollowSymLinks
-        AuthLDAPUrl "ldaps://ldap1-lw-us.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthName "ASF Project Chairs Only!"
         AuthType Basic
         AuthBasicProvider ldap

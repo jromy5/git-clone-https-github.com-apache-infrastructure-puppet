@@ -38,7 +38,7 @@ buildbot_slave::cpan::cpan_modules:
 - 'Test::Harness'
 - 'URI'
 
-ldapclient::ldapservers: 'ldaps://ldap1-lw-us.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
+ldapclient::ldapservers: 'ldap-us-ro.apache.org'
 
 python::python_pips:
   mkdocs:
