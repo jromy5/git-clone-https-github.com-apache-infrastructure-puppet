@@ -35,6 +35,39 @@ logrotate::rule:
     ensure: 'present'
 
 vhosts_asf::vhosts::vhosts:
+
+  archiva-repository:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.http_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      RedirectMatch permanent ^/(.*)$ https://archiva-repository.apache.org/$1
+
+  archiva-repository-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'archiva-repository.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'archiva-repository.apache.org.ssl_access.log'
+    error_log_file: 'archiva-repository.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://archiva-vm2.apache.org/
+      ProxyPassReverse / http://archiva-vm2.apache.org/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=archiva-repository.apache.org&code=503
+
   whimsy:
     vhost_name: '*'
     ensure: 'present'
