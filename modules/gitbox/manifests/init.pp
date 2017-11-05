@@ -25,14 +25,14 @@ $pbcsPwd  = ''
     ensure => directory,
     owner  => 'root',
     group  => 'www-data',
-    mode   => '0750',
+    mode   => '0755',
   }
 
   file { '/x1/repos':
     ensure  => directory,
     owner   => 'root',
     group   => 'www-data',
-    mode    => '0750',
+    mode    => '0755',
     require => File['/x1'],
   }
 
@@ -42,7 +42,7 @@ $pbcsPwd  = ''
     owner    => 'root',
     group    => 'www-data',
     checksum => 'md5',
-    mode     => '0750';
+    mode     => '0755';
   }
 
   file { '/x1/gitbox/hooks/post-receive.d/private.py':
@@ -71,12 +71,12 @@ $pbcsPwd  = ''
       require => Package[$packages],
       owner   => 'www-data',
       group   => 'www-data',
-      mode    => '0750';
+      mode    => '0755';
     '/x1/gitbox/sync.log':
       ensure => present,
       owner  => 'www-data',
       group  => 'www-data',
-      mode   => '0750';
+      mode   => '0755';
     '/x1/gitbox/db':
       ensure => directory,
       owner  => 'www-data',
@@ -95,7 +95,7 @@ $pbcsPwd  = ''
       ensure => directory,
       owner  => 'www-data',
       group  => 'www-data',
-      mode   => '0750';
+      mode   => '0755';
   }
 
   file {
