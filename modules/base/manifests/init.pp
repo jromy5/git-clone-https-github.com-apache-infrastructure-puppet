@@ -95,6 +95,9 @@ class base (
   $venvs = hiera_hash('python::venv',{})
   create_resources(python::virtualenv, $venvs)
 
+  $dbfile = hiera_hash('postfix::dbfile', {})
+  create_resources(postfix::dbfile, $dbfile)
+
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }
 }
