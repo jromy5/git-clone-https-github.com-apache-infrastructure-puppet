@@ -662,7 +662,7 @@ class Loggy(Thread):
                             
             
                 for x in json_pending:
-                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50:
+                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 500:
                         if not x in fp:
                             fp[x] = True
                             print("First push for " + x + "!")
@@ -693,7 +693,7 @@ class Loggy(Thread):
                     for x in json_pending:
                         if not x in last_push:
                             last_push[x] = time.time()
-                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50):
+                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 500):
                             if not x in fp:
                                 fp[x] = True
                                 syslog.syslog(syslog.LOG_INFO, "First push for " + x + "!")
