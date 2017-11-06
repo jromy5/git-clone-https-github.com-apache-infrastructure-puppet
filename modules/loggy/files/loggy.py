@@ -302,7 +302,7 @@ class NodeThread(Thread):
         sys.stderr.flush()
         if not iname in gotindex:
             gotindex[iname] = True
-            if not self.xes.indices.exists(iname):
+            if not self.xes.indices.exists(index=iname):
                 mappings = {}
                 for entry in config.options('RawFields'):
                     js = {
@@ -319,7 +319,7 @@ class NodeThread(Thread):
                         js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed", "fields": { "keyword": { "type": "keyword" }}}
                     mappings[entry] = js
                     
-                res = self.xes.indices.create(index = iname, body = {
+                res = self.xes.indices.create(index = iname, ignore=400, body = {
                         "settings" : {
                             "index.mapping.ignore_malformed": True,
                             "number_of_shards": 3,
