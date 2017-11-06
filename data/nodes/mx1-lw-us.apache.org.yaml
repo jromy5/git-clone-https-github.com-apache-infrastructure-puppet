@@ -3,7 +3,6 @@ classes:
   - kif
   - loggy
   - mx_asf
-  - postfix_asf
   - ssl::name::wildcard_apache_org
 
 postfix::server::inet_interfaces: 'all'
@@ -35,3 +34,4 @@ postfix::dbfile:
       stevenn@outerthought.org   REJECT      
       admin@hkug.org     REJECT
       2066044032@qq.com  REJECT
+      test@test.test  REJECT
