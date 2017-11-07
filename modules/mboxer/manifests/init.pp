@@ -69,27 +69,27 @@ mailalias {
       ensure    => present,
       name      => 'chairman',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid chairman@apache.org";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid chairman@apache.org private";
     'ea':
       ensure    => present,
       name      => 'ea',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid ea@apache.org";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid ea@apache.org private";
     'president':
       ensure    => present,
       name      => 'president',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid president@apache.org";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid president@apache.org private";
     'secretary':
       ensure    => present,
       name      => 'secretary',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid secretary@apache.org";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid secretary@apache.org private";
     'treasurer':
       ensure    => present,
       name      => 'treasurer',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid treasurer@apache.org";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid treasurer@apache.org private";
     'zztest':
       ensure    => present,
       name      => 'zztest',
