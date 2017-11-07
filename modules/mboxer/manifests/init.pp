@@ -6,6 +6,7 @@ class mboxer (
 ){
 
   $archive_dir    = '/x1/archives'
+  $private_dir    = '/x1/private'
   $root_dir    = '/x1/restricted'
   $install_base  = '/usr/local/etc/mboxer'
 
@@ -37,6 +38,11 @@ file {
       owner  => 'nobody',
       group  => 'apmail',
       mode   => '0705';
+    $private_dir:
+      ensure => directory,
+      owner  => 'nobody',
+      group  => 'apmail',
+      mode   => '0705';
     $root_dir:
       ensure => directory,
       owner  => 'nobody',
@@ -49,6 +55,11 @@ mailalias {
       name      => 'archiver',
       provider  => aliases,
       recipient => "|python3 ${install_base}/tools/archive.py";
+    'private':
+      ensure    => present,
+      name      => 'private',
+      provider  => aliases,
+      recipient => "|python3 ${install_base}/tools/archive.py private";
     'restricted':
       ensure    => present,
       name      => 'restricted',
