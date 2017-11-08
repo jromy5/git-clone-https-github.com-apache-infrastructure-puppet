@@ -1,0 +1,14 @@
+---
+classes:
+  - letsencrypt
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  drat:
+    domains:
+      - drat-vm.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: 'service apache2 reload'
+
