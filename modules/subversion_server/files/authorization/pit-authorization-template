@@ -256,6 +256,8 @@ river={reuse:asf-authorization:river}
 river-pmc={ldap:cn=river,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 roller={reuse:asf-authorization:roller}
 roller-pmc={ldap:cn=roller,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+royale={reuse:asf-authorization:royale}
+royale-pmc={ldap:cn=royale,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 samza={reuse:asf-authorization:samza}
 samza-pmc={ldap:cn=samza,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 santuario={reuse:asf-authorization:santuario}
@@ -1003,6 +1005,9 @@ openejb-tck = r
 
 [/pmc/rave]
 @attic-pmc = rw
+
+[/pmc/royale]
+@royale-pmc = rw
 
 [/pmc/serf]
 @serf-pmc = rw

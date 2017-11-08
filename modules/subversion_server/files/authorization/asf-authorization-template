@@ -342,6 +342,8 @@ river={ldap:cn=river,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 river-pmc={reuse:pit-authorization:river-pmc}
 roller={ldap:cn=roller,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 roller-pmc={reuse:pit-authorization:roller-pmc}
+royale={ldap:cn=royale,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+royale-pmc={reuse:pit-authorization:royale-pmc}
 rya={ldap:cn=rya,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 s2graph={ldap:cn=s2graph,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samoa={ldap:cn=samoa,ou=project,ou=groups,dc=apache,dc=org;attr=member}
