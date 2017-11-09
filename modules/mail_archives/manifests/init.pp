@@ -33,7 +33,7 @@ class mail_archives (
     $install_dir:
       ensure => directory,
       owner  => $username,
-      group  => 'root',
+      group  => 'root';
     "${install_dir}/raw":
       ensure => directory,
       mode   => '0755';
