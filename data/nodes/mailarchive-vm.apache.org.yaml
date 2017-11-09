@@ -1,0 +1,8 @@
+---
+classes:
+  - mail_archives
+
+# mail_archives class variables
+
+mail_archives::parent_dir: '/x1'
+
