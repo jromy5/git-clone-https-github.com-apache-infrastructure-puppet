@@ -15,13 +15,13 @@ class mail_archives (
 
   group {
     $groupname:
-      ensure => $group_present,
+      ensure => present,
       system => true,
   }->
 
   user {
     $username:
-      ensure  => $user_present,
+      ensure  => present,
       system  => true,
       name    => $username,
       shell   => $shell,
