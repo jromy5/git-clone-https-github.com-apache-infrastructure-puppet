@@ -101,7 +101,16 @@ class build_slaves::jenkins (
   apt::ppa { 'ppa:cwchien/gradle':
     ensure => present,
   } ->
-  package { 'gradle':
+  package { 'gradle-3.1':
+    ensure => latest,
+  } ->
+  package { 'gradle-3.5':
+    ensure => latest,
+  } ->
+  package { 'gradle-4.3':
+    ensure => latest,
+  } ->
+  package { 'gradle': # this installs the latest version which is 4 right now
     ensure => latest,
   }
 
