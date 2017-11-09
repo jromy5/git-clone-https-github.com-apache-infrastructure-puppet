@@ -10,13 +10,14 @@ class build_slaves::jenkins (
   $gsr_user = '',
   $gsr_pw = '',
   $jenkins_packages = [],
-  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake'],
+  $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake', 'gradle'],
   $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
   $jbake = ['jbake-2.5.1'],
+  $gradle_versions = ['3.1', '3.5', '4.3']
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9', 'apache-maven-3.5.0'], # lint:ignore:140chars
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'], # lint:ignore:140chars
@@ -97,18 +98,20 @@ class build_slaves::jenkins (
       target => "/usr/local/asfpackages/java/${javaa}",
     }
   }
+  #define gradle symlinking
+  define build_slaves::symlink_gradle ($gradleversions = $title) {
+    package {"gradle-${gradleversions}":
+       ensure => latest,
+    } ->
+    file {"/home/jenkins/tools/gradle/${gradleversions}":
+      ensure => link,
+      target => "/usr/lib/gradle/${gradleversions}",
+    }
+  }
+
 
   apt::ppa { 'ppa:cwchien/gradle':
     ensure => present,
-  } ->
-  package { 'gradle-3.1':
-    ensure => latest,
-  } ->
-  package { 'gradle-3.5':
-    ensure => latest,
-  } ->
-  package { 'gradle-4.3':
-    ensure => latest,
   } ->
   package { 'gradle': # this installs the latest version which is 4 right now
     ensure => latest,
@@ -380,6 +383,10 @@ class build_slaves::jenkins (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
+
+  # make gradle symlinks
+  build_slaves::symlink_gradle { $gradle_versions: }
+
 
   cron {
     'docker-cleanup':
