@@ -114,7 +114,7 @@ mod 'java',
 
 mod 'letsencrypt',
   :git => 'https://github.com/danzilio/puppet-letsencrypt',
-  :tag => '1.1.0'
+  :tag => 'v1.1.0'
    #:commit => 'a89464a3447551e0d5bc9809b7a7fe39fc6a46be'
 
 
