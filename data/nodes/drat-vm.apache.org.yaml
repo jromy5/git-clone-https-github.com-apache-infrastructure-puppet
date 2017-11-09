@@ -50,7 +50,7 @@ vhosts_asf::vhosts::vhosts:
     redirect_dest: 'https://drat-vm.apache.org/'
 
   drat-vm:
-    servername: drat-vm.apache.org
+    servername: 'drat-vm.apache.org'
     port: 443
     ssl: true
     ssl_cert: '/etc/letsencrypt/live/drat-vm.apache.org/cert.pem'
