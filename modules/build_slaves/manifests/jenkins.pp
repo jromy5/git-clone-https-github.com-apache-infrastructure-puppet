@@ -148,7 +148,7 @@ class build_slaves::jenkins (
   if $::hostname == jenkins-ubuntu1 {
     exec { 'change_uid_and_chown':
       command => '/usr/sbin/usermod -u 910 jenkins && /usr/sbin/groupmod -g 910 jenkins && /bin/chown -R 910:910 /home/jenkins/',
-      onlyif  => '/usr/bin/test `/bin/grep -c 'jenkins:x:910' /etc/passwd` -eq 0',
+      onlyif  => '/usr/bin/test `/bin/grep -c \'jenkins:x:910\' /etc/passwd` -eq 0',
     }
   }
 
