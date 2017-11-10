@@ -45,13 +45,13 @@ class mail_archives (
 
 # required scripts for cron jobs
 
-  "/home/${username}/scripts/mbox-raw-rsync.sh":
-    ensure  => present,
-    require => User[$username],
-    owner   => $username,
-    group   => $groupname,
-    mode    => '0755',
-    source  => 'puppet:///modules/mail_archives/scripts/mbox-raw-rsync.sh';
+    "/home/${username}/scripts/mbox-raw-rsync.sh":
+      ensure  => present,
+      require => User[$username],
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0755',
+      source  => 'puppet:///modules/mail_archives/scripts/mbox-raw-rsync.sh';
 
   }
 
