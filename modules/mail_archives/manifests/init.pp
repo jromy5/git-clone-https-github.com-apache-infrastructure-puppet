@@ -38,7 +38,9 @@ class mail_archives (
       group  => 'root';
     "${install_dir}/raw":
       ensure => directory,
-      mode   => '0755';
+      mode   => '0755',
+      owner  => $username,
+      group  => 'root';
     "/home/${username}/scripts/":
       ensure => 'directory',
       mode   => '0755';
