@@ -135,7 +135,8 @@ class build_slaves::jenkins (
     shell      => '/bin/bash',
     managehome => true,
     groups     => ['docker', 'jenkins'],
-  }
+    uid        => '800',
+  } ->
 
   file { '/home/jenkins/env.sh':
     ensure => present,
@@ -143,6 +144,11 @@ class build_slaves::jenkins (
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
     owner  => 'jenkins',
     group  => 'jenkins',
+  }
+
+  exec { 'change_uid_and_chown':
+    command => '/usr/sbin/usermod -u 910 jenkins && /usr/sbin/groupmod -g 910 jenkins && /bin/chown -R 910:910 /home/jenkins/',
+    onlyif  => '/usr/bin/test `/bin/grep -c 910 /etc/passwd` -eq 0',
   }
 
   file { '/etc/ssh/ssh_keys/jenkins.pub':
