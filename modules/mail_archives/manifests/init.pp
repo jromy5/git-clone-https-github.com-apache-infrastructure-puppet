@@ -51,7 +51,7 @@ class mail_archives (
     owner   => $username,
     group   => $groupname,
     mode    => '0755',
-    source  => 'puppet:///modules/scripts/mbox-raw-rsync.sh';
+    source  => 'puppet:///modules/mail_archives/scripts/mbox-raw-rsync.sh';
 
   }
 
