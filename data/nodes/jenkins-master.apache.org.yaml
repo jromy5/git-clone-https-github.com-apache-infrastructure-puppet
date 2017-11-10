@@ -55,7 +55,7 @@ logrotate::rule:
     ensure: 'present'
   jenkins-tomcat:
     ensure: 'present'
-    path: '/x1/jenkins/tools/tomcat/latest/logs/catalina.out'
+    path: '/x1/jenkins/tools/tomcat/current/logs/catalina.out'
     copytruncate: true
     compress: false
     ifempty: true
