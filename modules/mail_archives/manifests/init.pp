@@ -21,12 +21,14 @@ class mail_archives (
 
   user {
     $username:
-      ensure  => present,
-      system  => true,
-      name    => $username,
-      shell   => $shell,
-      gid     => $groupname,
-      require => Group[$groupname],
+      ensure     => present,
+      home       => "/home/${username}",
+      system     => true,
+      managehome => true,
+      name       => $username,
+      shell      => $shell,
+      gid        => $groupname,
+      require    => Group[$groupname],
   }
 
   file {
@@ -37,6 +39,31 @@ class mail_archives (
     "${install_dir}/raw":
       ensure => directory,
       mode   => '0755';
+    "/home/${username}/scripts/":
+      ensure => 'directory',
+      mode   => '0755';
+
+# required scripts for cron jobs
+
+  "/home/${username}/scripts/mbox-raw-rsync.sh":
+    ensure  => present,
+    require => User[$username],
+    owner   => $username,
+    group   => $groupname,
+    mode    => '0755',
+    source  => 'puppet:///modules/scripts/mbox-raw-rsync.sh';
+
+  }
+
+# cron jobs
+
+  cron {
+    'public-mbox-rsync-raw':
+      user        => $username,
+      minute      => '42',
+      command     => "/home/${username}/scripts/mbox-raw-rsync.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
   }
 
 }
