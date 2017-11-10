@@ -135,7 +135,6 @@ class build_slaves::jenkins (
     shell      => '/bin/bash',
     managehome => true,
     groups     => ['docker', 'jenkins'],
-    uid        => '800',
   } ->
 
   file { '/home/jenkins/env.sh':
