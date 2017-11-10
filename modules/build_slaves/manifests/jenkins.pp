@@ -135,7 +135,7 @@ class build_slaves::jenkins (
     shell      => '/bin/bash',
     managehome => true,
     groups     => ['docker', 'jenkins'],
-  } ->
+  }
 
   file { '/home/jenkins/env.sh':
     ensure => present,
