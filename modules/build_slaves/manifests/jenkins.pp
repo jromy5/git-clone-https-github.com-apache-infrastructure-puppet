@@ -147,13 +147,6 @@ class build_slaves::jenkins (
     group  => 'jenkins',
   }
 
-  if $::hostname == asf910 or $::hostname == asf913 or $::hostname == asf914 or $::hostname == asf915 or $::hostname == asf919 or $::hostname == asf921 {
-    exec { 'change_uid_and_chown':
-      command => '/usr/sbin/usermod -u 910 jenkins && /usr/sbin/groupmod -g 910 jenkins && /bin/chown -R 910:910 /home/jenkins/',
-      onlyif  => '/usr/bin/test `/bin/grep -c \'jenkins:x:910\' /etc/passwd` -eq 0',
-    }
-  }
-
   file { '/etc/ssh/ssh_keys/jenkins.pub':
     ensure => present,
     mode   => '0640',
