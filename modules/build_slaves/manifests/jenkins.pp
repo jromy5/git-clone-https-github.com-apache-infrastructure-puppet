@@ -263,11 +263,17 @@ class build_slaves::jenkins (
     match => '^USERGROUPS_ENAB.*'
   }
 
-  file {'/home/jenkins/tools/':
-    ensure => 'directory',
-    owner  => 'jenkins',
-    group  => 'jenkins',
-    mode   => '0755',
+  file {
+    '/home/jenkins/tools/':
+      ensure => 'directory',
+      owner  => 'jenkins',
+      group  => 'jenkins',
+      mode   => '0755';
+    '/usr/local/asfpackages/':
+      ensure => 'directory',
+      owner  => 'jenkins',
+      group  => 'jenkins',
+      mode   => '0755';
   }->
 
   # populate /home/jenkins/tools/ with asf_packages types
