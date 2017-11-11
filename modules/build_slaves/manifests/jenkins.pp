@@ -123,6 +123,7 @@ class build_slaves::jenkins (
 
   group { 'jenkins':
     ensure => present,
+    gid    => 910,
   }
 
   group { 'docker':
@@ -131,6 +132,7 @@ class build_slaves::jenkins (
 
   user { 'jenkins':
     ensure     => present,
+    uid        => 910,
     require    => Group['jenkins'],
     shell      => '/bin/bash',
     managehome => true,
