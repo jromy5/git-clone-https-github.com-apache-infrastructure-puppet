@@ -22,7 +22,9 @@ letsencrypt::certonly:
     domains:
       - jspwiki-wiki.apache.org
       - jspwiki-vm2.apache.org
-    plugin: standalone
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
@@ -76,6 +78,8 @@ vhosts_asf::vhosts::vhosts:
       Alias /robots.txt /var/www/robots.txt
       ProxyPass /favicon.ico !
       Alias /favicon.ico /var/www/favicon.ico
+      # do not proxy letsencrypt cert renewal requests
+      ProxyPass /.well-known !
   
       RPAFenable On
       RPAFsethostname On
