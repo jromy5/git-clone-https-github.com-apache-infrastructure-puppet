@@ -23,7 +23,8 @@ letsencrypt::certonly:
       - jspwiki-wiki.apache.org
       - jspwiki-vm2.apache.org
     plugin: webroot
-    webroot_home: '/var/www/html'
+    webroot_paths:
+      - /var/www/html
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
