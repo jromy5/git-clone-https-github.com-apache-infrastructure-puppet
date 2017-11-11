@@ -808,6 +808,40 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent / http://deltaspike.apache.org/
 
+  drat:
+    vhost_name: '*'
+    port: 80
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    redirect_source: '/'
+    redirect_dest: 'https://drat.apache.org/'
+
+  drat-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    proxy_pass:
+      -
+        path: '/asfgit'
+        url: 'http://drat-vm.apache.org:8080/viz'
+      -
+        path: '/demo'
+        url: 'http://drat-vm.apache.org:8080/proteus'
+
   freemarker:
     vhost_name: '*'
     port: 80
