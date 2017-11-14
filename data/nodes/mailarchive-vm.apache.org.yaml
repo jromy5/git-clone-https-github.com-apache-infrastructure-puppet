@@ -1,5 +1,6 @@
 ---
 classes:
+  - apache
   - mail_archives
 
 # mail_archives class variables
