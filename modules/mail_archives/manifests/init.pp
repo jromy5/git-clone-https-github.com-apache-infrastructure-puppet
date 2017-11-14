@@ -9,7 +9,7 @@ class mail_archives (
   # override below in yaml
   $parent_dir,
 
-  $required_packages = ['autogen' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev'],
+  $required_packages = ['autotools' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev'],
 ){
 
 # install required packages:
