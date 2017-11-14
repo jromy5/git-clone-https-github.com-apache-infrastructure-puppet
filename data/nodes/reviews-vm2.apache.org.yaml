@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::wsgi
+  - blocky
   - memcached
   - python
   - reviews_asf
