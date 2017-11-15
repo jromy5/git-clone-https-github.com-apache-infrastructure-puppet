@@ -19,6 +19,7 @@ class mail_archives (
   }
 
   $install_dir = "${parent_dir}/mail-archives"
+  $mbox_source = "${parent_dir}/mod_mbox"
 
   group {
     $groupname:
@@ -68,6 +69,18 @@ class mail_archives (
     ensure => link,
     target => '/usr/bin/apxs';
 
+  }
+
+# execs
+
+# build the requires mbox modules for apache2
+  exec {
+    'build mbox module':
+      command => '/usr/bin/scons',
+      cwd     => "${parent_dir}/${mbox_source}",
+      creates => "[${parent_dir}/${mbox_source}/mod_mbox.so , ${parent_dir}/${mbox_source}/mod-mbox-util]",
+      timeout => 1200,
+      require => Package['scons'];
   }
 
 # cron jobs
