@@ -21,6 +21,7 @@ class mail_archives (
   $install_dir  = "${parent_dir}/mail-archives"
   $mbox_source  = "${parent_dir}/mod_mbox"
   $mbox_svn_url = 'https://svn.apache.org/repos/asf/httpd/mod_mbox/trunk'
+  $mbox_content = 'LoadModule mbox_module /usr/lib/apache2/modules/mod_mbox.so'
 
   group {
     $groupname:
@@ -74,6 +75,16 @@ class mail_archives (
     '/usr/local/bin/apxs':
     ensure => link,
     target => '/usr/bin/apxs';
+
+# loadmodule content to call mod_mbox module
+
+    '/etc/apache2/mods-available/mod_mbox.load':
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0644',
+      content => $mbox_content,
+      require => Package['apache2'];
 
   }
 
