@@ -77,8 +77,8 @@ class mail_archives (
   exec {
     'build mbox module':
       command => '/usr/bin/scons',
-      cwd     => "${parent_dir}/${mbox_source}",
-      creates => "${parent_dir}/${mbox_source}/mod_mbox.so",
+      cwd     => "${mbox_source}",
+      creates => "${mbox_source}/mod_mbox.so",
       timeout => 1200,
       require => Package['scons'];
   }
