@@ -9,7 +9,7 @@ class mail_archives (
   # override below in yaml
   $parent_dir,
 
-  $required_packages = ['autotools-dev' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev'],
+  $required_packages = ['apache2-dev' , 'autotools-dev' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev' , 'scons'],
 ){
 
 # install required packages:
@@ -61,6 +61,12 @@ class mail_archives (
       group   => $groupname,
       mode    => '0755',
       source  => 'puppet:///modules/mail_archives/scripts/mbox-raw-rsync.sh';
+
+# symlink for apxs as SConstruct points to wrong dir
+
+    '/usr/local/bin/apxs':
+    ensure => link,
+    target => '/usr/bin/apxs';
 
   }
 
