@@ -18,8 +18,9 @@ class mail_archives (
       ensure => 'present',
   }
 
-  $install_dir = "${parent_dir}/mail-archives"
-  $mbox_source = "${parent_dir}/mod_mbox"
+  $install_dir  = "${parent_dir}/mail-archives"
+  $mbox_source  = "${parent_dir}/mod_mbox"
+  $mbox_svn_url = 'https://svn.apache.org/repos/asf/httpd/mod_mbox/trunk'
 
   group {
     $groupname:
@@ -72,6 +73,17 @@ class mail_archives (
   }
 
 # execs
+
+# download the svn source of mod_mbox
+
+  exec {
+    'download mbox svn':
+      command => "/usr/bin/svn export ${mbox_svn_url} ${mbox_source}",
+      cwd     => "${parent_dir}",
+      creates => "${mbox_source}/NOTICE",
+      timeout => 1200,
+      require => File[$parent_dir];
+  }
 
 # build the requires mbox modules for apache2
   exec {
