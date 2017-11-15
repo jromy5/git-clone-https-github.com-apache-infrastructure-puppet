@@ -8,6 +8,8 @@ classes:
 
 mail_archives::parent_dir: '/x1'
 
+# vhosts
+
 vhosts_asf::modules::modules:
   mbox:
     name: 'mbox'
