@@ -1,10 +1,14 @@
 ---
 classes:
   - apache
-  - apache::mod::mbox
+  - vhosts_asf::modules
   - mail_archives
 
 # mail_archives class variables
 
 mail_archives::parent_dir: '/x1'
+
+vhosts_asf::modules::modules:
+  mbox:
+    name: 'mbox'
 
