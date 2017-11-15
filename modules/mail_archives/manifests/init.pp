@@ -100,6 +100,17 @@ class mail_archives (
       require => Package['scons'];
   }
 
+# copy the compiled apache module to the expected apache modules directory
+  exec {
+    'copy mod_mbox.so':
+      command => "/bin/cp ${mbox_source}/mod_mbox.so /usr/lib/apache2/modules/",
+      cwd     => $mbox_source,
+      user    => 'root',
+      creates => '/usr/lib/apache2/modules/mod_mbox.so',
+      timeout => 1200,
+      require => Package['apache2'];
+  }
+
 # cron jobs
 
   cron {
