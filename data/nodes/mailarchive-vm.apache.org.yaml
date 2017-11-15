@@ -1,7 +1,7 @@
 ---
 classes:
   - apache
-  - apache::mod::mod_mbox
+  - apache::mod::mbox
   - mail_archives
 
 # mail_archives class variables
