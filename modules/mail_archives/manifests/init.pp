@@ -41,6 +41,11 @@ class mail_archives (
   }
 
   file {
+    $parent_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
     $install_dir:
       ensure => directory,
       owner  => $username,
