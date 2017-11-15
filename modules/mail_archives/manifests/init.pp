@@ -79,11 +79,12 @@ class mail_archives (
 # loadmodule content to call mod_mbox module
 
     '/etc/apache2/mods-available/mod_mbox.load':
-      ensure => present,
-      owner  => root,
-      group  => root,
-      mode   => '0644',
-      content => $mbox_content;
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0644',
+      content => $mbox_content,
+      require => Package['apache2'];
 
   }
 
