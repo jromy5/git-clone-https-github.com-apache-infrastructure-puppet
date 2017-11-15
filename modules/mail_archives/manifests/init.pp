@@ -108,7 +108,7 @@ class mail_archives (
       user    => 'root',
       creates => '/usr/lib/apache2/modules/mod_mbox.so',
       timeout => 1200,
-      require => [Package['apache2'];
+      require => Package['apache2'];
   }
 
 # cron jobs
