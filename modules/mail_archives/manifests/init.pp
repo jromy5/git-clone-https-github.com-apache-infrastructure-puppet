@@ -137,6 +137,7 @@ class mail_archives (
       require     => User[$username];
 
     'create-archive-list':
+      user        => $username,
       minute      => '14',
       hour        => '12',
       command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list",
@@ -144,6 +145,7 @@ class mail_archives (
       require     => User[$username];
 
     'site-index':
+      user        => $username,
       minute      => '51',
       hour        => '12',
       command     => "/home/${username}/scripts/site-index.py > ${$archives_www}/mod_mbox/index.html",
