@@ -9,7 +9,7 @@ class mail_archives (
   # override below in yaml
   $parent_dir,
 
-  $required_packages = ['apache2-dev' , 'autotools-dev' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev' , 'scons'],
+  $required_packages = ['apache2-dev' , 'autotools-dev' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev' , 'scons'], # lint:ignore:140chars
 ){
 
 # install required packages:
@@ -66,17 +66,17 @@ class mail_archives (
       mode    => '0755',
       source  => 'puppet:///modules/mail_archives/scripts';
     "/home/${username}/archives/":
-      ensure  => 'directory',
-      owner   => $username,
-      group   => $username,
-      mode    => '0755';
+      ensure => 'directory',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
     "${archives_www}/mod_mbox":
       ensure => 'directory',
-      owner   => $username,
-      group   => root,
+      owner  => $username,
+      group  => root,
       mode   => '0755';
     $assets:
       ensure  => 'directory',
@@ -125,7 +125,7 @@ class mail_archives (
   exec {
     'download mbox svn':
       command => "/usr/bin/svn export ${mbox_svn_url} ${mbox_source}",
-      cwd     => "${parent_dir}",
+      cwd     => $parent_dir,
       creates => "${mbox_source}/NOTICE",
       timeout => 1200,
       require => File[$parent_dir];
@@ -135,7 +135,7 @@ class mail_archives (
   exec {
     'build mbox module':
       command => '/usr/bin/scons',
-      cwd     => "${mbox_source}",
+      cwd     => $mbox_source,
       creates => "${mbox_source}/mod_mbox.so",
       timeout => 1200,
       require => Package['scons'];
@@ -167,7 +167,7 @@ class mail_archives (
       user        => $username,
       minute      => '14',
       hour        => '12',
-      command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list",
+      command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list", # lint:ignore:140chars
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
 
@@ -178,6 +178,14 @@ class mail_archives (
       command     => "/home/${username}/scripts/site-index.py > ${$archives_www}/mod_mbox/index.html",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
+
+    'update-index':
+      user        => $username,
+      minute      => '27',
+      command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+
   }
 
 }
