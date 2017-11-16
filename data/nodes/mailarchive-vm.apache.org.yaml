@@ -7,15 +7,7 @@ classes:
   - vhosts_asf::vhosts
   - mail_archives
 
-# mail_archives class variables
-
 mail_archives::parent_dir: '/x1'
-
-# vhosts
-
-vhosts_asf::modules::modules:
-  mbox:
-    name: 'mbox'
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -33,6 +25,10 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+vhosts_asf::modules::modules:
+  mbox:
+    name: 'mbox'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -42,23 +38,22 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'mailarchive-vm.apache.org'
-    serveralias: 'mail-archives-new.apache.org'
+    serveraliases: 
+      - 'mail-archives-new.apache.org'
     default_vhost: true
     docroot: '/x1/mail-archives.apache.org/'
     access_log_file: 'mail-archives.apache.org_access.log'
     error_log_file: 'mail-archives.apache.org_error.log'
     custom_fragment: |
-
       <Directory /x1/mail-archives.apache.org>
         AllowOverride none
         Options Indexes FollowSymLinks
         Order allow,deny
-       Allow from all
+        Allow from all
 
         AddHandler mbox-handler .mbox
         MboxIndex on
         MboxRootPath /mod_mbox/
         MboxStyle /archives/style.css
         MboxScript /archives/archives.js
-     </Directory>
-
+      </Directory>
