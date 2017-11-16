@@ -157,7 +157,8 @@ class mail_archives (
   cron {
     'public-mbox-rsync-raw':
       user        => $username,
-      minute      => '42',
+      minute      => '01',
+      hour        => '12',
       command     => "/home/${username}/scripts/mbox-raw-rsync.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
