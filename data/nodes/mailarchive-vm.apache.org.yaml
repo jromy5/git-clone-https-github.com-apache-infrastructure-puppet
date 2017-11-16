@@ -40,7 +40,6 @@ logrotate::rule:
 vhosts_asf::vhosts::vhosts:
   mailarchives-80:
     vhost_name: '*'
-    ensure: 'present'
     port: 80
     servername: 'mailarchive-vm.apache.org'
     serveralias: 'mail-archives-new.apache.org'
