@@ -65,6 +65,11 @@ class mail_archives (
       group   => $username,
       mode    => '0755',
       source  => 'puppet:///modules/mail_archives/scripts';
+    "/home/${username}/archives/":
+      ensure  => 'directory',
+      owner   => $username,
+      group   => $username,
+      mode    => '0755';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
@@ -90,6 +95,16 @@ class mail_archives (
     '/x1/mail-archives/mod_mbox':
     ensure => link,
     target => "${archives_www}/mod_mbox";
+
+# symlink archives from home to x1
+
+    "/home/${username}/archives/raw":
+    ensure => link,
+    target => "{install_dir}/raw";
+
+    "/home/${username}/archives/mod_mbox":
+    ensure => link,
+    target => "{install_dir}/mod_mbox";
 
 # loadmodule content to call mod_mbox module
 
