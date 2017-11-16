@@ -50,17 +50,16 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'mail-archives.apache.org_error.log'
     custom_fragment: |
 
-    <Directory /x1/mail-archives.apache.org>
-      AllowOverride none
-      Options Indexes FollowSymLinks
-      Order allow,deny
-      Allow from all
+      <Directory /x1/mail-archives.apache.org>
+        AllowOverride none
+        Options Indexes FollowSymLinks
+        Order allow,deny
+       Allow from all
 
-      AddHandler mbox-handler .mbox
-      MboxIndex on
-      MboxRootPath /mod_mbox/
-      MboxStyle /archives/style.css
-      MboxScript /archives/archives.js
-   </Directory>
-
+        AddHandler mbox-handler .mbox
+        MboxIndex on
+        MboxRootPath /mod_mbox/
+        MboxStyle /archives/style.css
+        MboxScript /archives/archives.js
+     </Directory>
 
