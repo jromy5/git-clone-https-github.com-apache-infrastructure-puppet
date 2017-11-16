@@ -22,6 +22,8 @@ class mail_archives (
   $mbox_source  = "${parent_dir}/mod_mbox"
   $mbox_svn_url = 'https://svn.apache.org/repos/asf/httpd/mod_mbox/trunk'
   $mbox_content = 'LoadModule mbox_module /usr/lib/apache2/modules/mod_mbox.so'
+  $archives_www = "${parent_dir}/mail-archives.apache.org"
+  $assets       = "${archives_www}/archives"
 
   group {
     $groupname:
@@ -57,6 +59,12 @@ class mail_archives (
       owner  => $username,
       group  => 'root';
     "/home/${username}/scripts/":
+      ensure => 'directory',
+      mode   => '0755';
+    $archives_www:
+      ensure => 'directory',
+      mode   => '0755';
+    $assets:
       ensure => 'directory',
       mode   => '0755';
 

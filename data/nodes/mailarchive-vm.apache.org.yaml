@@ -1,7 +1,10 @@
 ---
 classes:
   - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
   - vhosts_asf::modules
+  - vhosts_asf::vhosts
   - mail_archives
 
 # mail_archives class variables
@@ -13,4 +16,51 @@ mail_archives::parent_dir: '/x1'
 vhosts_asf::modules::modules:
   mbox:
     name: 'mbox'
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  mailarchives-80:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'mailarchive-vm.apache.org'
+    serveralias: 'mail-archives-new.apache.org'
+    default_vhost: true
+    docroot: '/x1/mail-archives.apache.org/'
+    access_log_file: 'mail-archives.apache.org_access.log'
+    error_log_file: 'mail-archives.apache.org_error.log'
+    custom_fragment: |
+
+    <Directory /x1/mail-archives.apache.org>
+      AllowOverride none
+      Options Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+
+      AddHandler mbox-handler .mbox
+      MboxIndex on
+      MboxRootPath /mod_mbox/
+      MboxStyle /archives/style.css
+      MboxScript /archives/archives.js
+   </Directory>
+
 
