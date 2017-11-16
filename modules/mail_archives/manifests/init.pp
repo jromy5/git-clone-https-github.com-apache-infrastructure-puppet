@@ -87,9 +87,9 @@ class mail_archives (
 
 # symlink mod_mbox for existing scripts
 
-    '/x1/mail-archives.apache.org/mod_mbox':
+    '/x1/mail-archives/mod_mbox':
     ensure => link,
-    target => '/x1/mail-archives/mod_mbox';
+    target => "${archives_www}/mod_mbox";
 
 # loadmodule content to call mod_mbox module
 
