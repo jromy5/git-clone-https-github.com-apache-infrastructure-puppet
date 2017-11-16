@@ -65,8 +65,10 @@ class mail_archives (
       ensure => 'directory',
       mode   => '0755';
     $assets:
-      ensure => 'directory',
-      mode   => '0755';
+      ensure  => 'directory',
+      recurse => true,
+      mode    => '0755';
+      source  => 'puppet:///modules/mail_archives/assets',
 
 # required scripts for cron jobs
 
