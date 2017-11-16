@@ -59,8 +59,12 @@ class mail_archives (
       owner  => $username,
       group  => 'root';
     "/home/${username}/scripts/":
-      ensure => 'directory',
-      mode   => '0755';
+      ensure  => 'directory',
+      recurse => true,
+      owner   => $username,
+      group   => $username,
+      mode    => '0755';
+      source  => 'puppet:///modules/mail_archives/scripts';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
@@ -69,16 +73,6 @@ class mail_archives (
       recurse => true,
       mode    => '0755',
       source  => 'puppet:///modules/mail_archives/assets';
-
-# required scripts for cron jobs
-
-    "/home/${username}/scripts/mbox-raw-rsync.sh":
-      ensure  => present,
-      require => User[$username],
-      owner   => $username,
-      group   => $groupname,
-      mode    => '0755',
-      source  => 'puppet:///modules/mail_archives/scripts/mbox-raw-rsync.sh';
 
 # symlink for apxs as SConstruct points to wrong dir
 
