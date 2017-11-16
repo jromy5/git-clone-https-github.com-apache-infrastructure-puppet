@@ -68,7 +68,7 @@ class mail_archives (
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
-    $archives_www/mod_mbox:
+    "${archives_www}/mod_mbox":
       ensure => 'directory',
       owner   => $username,
       group   => root,
