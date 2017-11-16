@@ -100,11 +100,11 @@ class mail_archives (
 
     "/home/${username}/archives/raw":
     ensure => link,
-    target => "{install_dir}/raw";
+    target => "${install_dir}/raw";
 
     "/home/${username}/archives/mod_mbox":
     ensure => link,
-    target => "{install_dir}/mod_mbox";
+    target => "${install_dir}/mod_mbox";
 
 # loadmodule content to call mod_mbox module
 
