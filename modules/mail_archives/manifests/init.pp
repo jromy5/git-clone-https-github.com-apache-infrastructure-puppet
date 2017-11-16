@@ -63,7 +63,7 @@ class mail_archives (
       recurse => true,
       owner   => $username,
       group   => $username,
-      mode    => '0755';
+      mode    => '0755',
       source  => 'puppet:///modules/mail_archives/scripts';
     $archives_www:
       ensure => 'directory',
@@ -133,6 +133,20 @@ class mail_archives (
       user        => $username,
       minute      => '42',
       command     => "/home/${username}/scripts/mbox-raw-rsync.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+
+    'create-archive-list':
+      minute      => '14',
+      hour        => '12',
+      command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+
+    'site-index':
+      minute      => '51',
+      hour        => '12',
+      command     => "/home/${username}/scripts/site-index.py > ${$archives_www}/mod_mbox/index.html",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
   }
