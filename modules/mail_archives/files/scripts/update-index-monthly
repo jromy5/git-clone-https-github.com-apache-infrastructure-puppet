@@ -38,7 +38,7 @@ for i in ${ARCHIVES} ; do
     wget)
         wget -q $mboxpath.gz -O $mboxfile2.gz
         if [ -f $mboxfile2.gz ] ; then
-            gzcat $mboxfile2.gz > $mboxfile
+            zcat $mboxfile2.gz > $mboxfile
             rm $mboxfile2.gz
         fi 
         ;;
