@@ -94,7 +94,6 @@ class mail_archives (
       ensure  => 'directory',
       require => Package['apache2'];
 
-
 # symlink for apxs as SConstruct points to wrong dir
 
     '/usr/local/bin/apxs':
@@ -160,7 +159,15 @@ class mail_archives (
       user    => 'root',
       creates => '/usr/lib/apache2/modules/mod_mbox.so',
       timeout => 1200,
-      require => Package['apache2'];
+      require => [Package['apache2'], exec['build mbox module']];
+
+    'copy mod-mbox-util':
+      command => "/bin/cp ${mbox_source}/mod-mbox-util ${apache2_bin}",
+      cwd     => $mbox_source,
+      user    => 'root',
+      creates => "${apache2_bin}/mod-mbox-util",
+      timeout => 1200,
+      require => [Package['apache2'], exec['build mbox module']];
   }
 
 # cron jobs
