@@ -2,7 +2,7 @@
 # ZSH 4+ script to retrieve archives in a variety of mechanisms
 DATE=`TZ=PST8PDT date -u "+%Y%m"`
 ARCHIVES_PATH=$HOME/archives/mbox-archives.conf
-RSYNC=${RSYNC:-/usr/bin/env rsync}
+RSYNC=${RSYNC:-/usr/bin/rsync}
 
 if [ $# -ge 1 ]; then
   ARCHIVES_PATH="$1"
