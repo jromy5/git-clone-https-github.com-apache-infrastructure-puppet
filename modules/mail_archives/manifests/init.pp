@@ -70,6 +70,12 @@ class mail_archives (
       owner  => $username,
       group  => $username,
       mode   => '0755';
+    "/home/${username}/archives/mbox-archives.conf":
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755',
+      source  => 'puppet:///modules/mail_archives/mbox-archives.conf';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
