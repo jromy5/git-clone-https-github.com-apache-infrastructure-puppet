@@ -24,6 +24,7 @@ class mail_archives (
   $mbox_content = 'LoadModule mbox_module /usr/lib/apache2/modules/mod_mbox.so'
   $archives_www = "${parent_dir}/mail-archives.apache.org"
   $assets       = "${archives_www}/archives"
+  $apache2_bin   = '/etc/apache2/bin'
 
   group {
     $groupname:
@@ -75,7 +76,7 @@ class mail_archives (
       owner  => $username,
       group  => $username,
       mode   => '0755',
-      source  => 'puppet:///modules/mail_archives/mbox-archives.conf';
+      source => 'puppet:///modules/mail_archives/mbox-archives.conf';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
@@ -89,6 +90,10 @@ class mail_archives (
       recurse => true,
       mode    => '0755',
       source  => 'puppet:///modules/mail_archives/assets';
+    $apache2_bin:
+      ensure  => 'directory',
+      require => Package['apache2'];
+
 
 # symlink for apxs as SConstruct points to wrong dir
 
