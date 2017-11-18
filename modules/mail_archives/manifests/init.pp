@@ -208,7 +208,7 @@ class mail_archives (
       user        => $username,
       minute      => '30',
       hour        => '14',
-      day         => '1',
+      monthday    => '1',
       command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index-monthly",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
       require     => User[$username];
