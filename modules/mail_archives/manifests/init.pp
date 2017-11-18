@@ -186,7 +186,7 @@ class mail_archives (
       minute      => '14',
       hour        => '12',
       command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list", # lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
       require     => User[$username];
 
     'site-index':
@@ -201,7 +201,16 @@ class mail_archives (
       user        => $username,
       minute      => '27',
       command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
+      require     => User[$username];
+
+    'update-index-monthly':
+      user        => $username,
+      minute      => '30',
+      hour        => '14',
+      day         => '1',
+      command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index-monthly",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
       require     => User[$username];
 
   }
