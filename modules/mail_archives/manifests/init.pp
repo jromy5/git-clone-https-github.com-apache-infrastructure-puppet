@@ -176,7 +176,7 @@ class mail_archives (
     'public-mbox-rsync-raw':
       user        => $username,
       minute      => '01',
-      hour        => '12',
+      hour        => '*/4',
       command     => "/home/${username}/scripts/mbox-raw-rsync.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
@@ -184,7 +184,7 @@ class mail_archives (
     'create-archive-list':
       user        => $username,
       minute      => '14',
-      hour        => '12',
+      hour        => '*/4',
       command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list", # lint:ignore:140chars
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
       require     => User[$username];
@@ -192,7 +192,7 @@ class mail_archives (
     'site-index':
       user        => $username,
       minute      => '51',
-      hour        => '12',
+      hour        => '*/4',
       command     => "/home/${username}/scripts/site-index.py > ${$archives_www}/mod_mbox/index.html",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
