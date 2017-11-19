@@ -170,7 +170,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'dist.*.apache.org'
     custom_fragment: |
-      AddType text/plain .asc .md5 .sha .sha1 .sha2 .sha256 .sha3 .mds
+      AddType text/plain .asc .md5 .sha .sha1 .sha2 .sha256 .sha512 .sha3 .mds
       LimitXMLRequestBody 10000000
       SetEnvIf User-Agent ".*MSIE [2-5].*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
