@@ -154,6 +154,7 @@ vhosts_whimsy::vhosts::vhosts:
       - path: /board/agenda/
         except: 
         - app.js
+        - app.js.map
         - "[-\\d]+/bootstrap.html"
         - stylesheets/app.css
         - sw.js
