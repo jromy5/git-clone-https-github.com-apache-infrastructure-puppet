@@ -60,7 +60,7 @@ vhosts_asf::vhosts::vhosts:
       </Directory>
 
       RewriteEngine On
-      RewriteCond %{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
-      RewriteCond /x1/${INSTANCE}/mod_mbox/incubator-%1 !-d
-      RewriteCond /x1/${INSTANCE}/mod_mbox/%1 -d
+      RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
+      RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
+      RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
