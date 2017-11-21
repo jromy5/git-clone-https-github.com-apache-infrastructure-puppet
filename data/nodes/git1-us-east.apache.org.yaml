@@ -43,6 +43,12 @@ git_asf::daemon_directory: '/x1/git/mirrors'
 logrotate::rule:
   apache2:
     ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+apache::logroot: '/x1/log'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
 
