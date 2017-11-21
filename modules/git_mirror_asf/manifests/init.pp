@@ -1,7 +1,7 @@
 #/etc/puppet/modules/git_mirror_asf/manifests/init.pp
 
 class git_mirror_asf (
-  $directories = ['/x1', '/x1/git', '/x1/logs', '/x1/git/mirrors'],
+  $directories = ['/x1', '/x1/git', '/x1/log', '/x1/git/mirrors'],
 ) {
 
   include git_asf
@@ -37,15 +37,15 @@ class git_mirror_asf (
       minute  => '*/10',
       require => Class['rootbin_asf'];
     'update authors.txt':
-      command => 'wget https://git-wip-us.apache.org/authors.txt -O /x1/git/authors.txt > /x1/logs/authors-cron.log 2>&1',
+      command => 'wget https://git-wip-us.apache.org/authors.txt -O /x1/git/authors.txt > /x1/log/authors-cron.log 2>&1',
       user    => $git_mirror_asf::user::username,
       minute  => '*/30',
-      require => File['/x1/git', '/x1/logs'];
+      require => File['/x1/git', '/x1/log'];
     'update all mirrors':
-      command => '/x1/git/bin/update-all-mirrors.sh > /x1/logs/update-all-mirrors.log 2>&1',
+      command => '/x1/git/bin/update-all-mirrors.sh > /x1/log/update-all-mirrors.log 2>&1',
       user    => $git_mirror_asf::user::username,
       minute  => '45',
-      require => File['/x1/git/bin', '/x1/logs'];
+      require => File['/x1/git/bin', '/x1/log'];
   }
 
 }
