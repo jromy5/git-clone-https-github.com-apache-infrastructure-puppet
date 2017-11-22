@@ -19,4 +19,14 @@ class netbeans_pvm_asf (
     $required_packages:
       ensure => 'present',
   }
+
+# files
+
+  file {
+    '/usr/local/db_config.php':
+      ensure  => 'present',
+      mode    => '0755',
+      content => template('netbeans_pvm_asf/db_config.php.erb');
+  }
+
 }
