@@ -19,21 +19,23 @@ class wicket_pvm_asf (
       command => '/usr/bin/docker pull apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-6',
       timeout => 1200,
       require => Package['docker-engine'],
-  }->
+      notify  => Service['docker-wicket-demo-6'],
+  }
 # for wicket-7
   exec {
     'download-wicket-docker-7':
       command => '/usr/bin/docker pull apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-7',
       timeout => 1200,
       require => Package['docker-engine'],
-  }->
+      notify  => Service['docker-wicket-demo-7'],
+  }
 # for wicket-8
   exec {
     'download-wicket-docker-8':
       command => '/usr/bin/docker pull apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-8',
       timeout => 1200,
       require => Package['docker-engine'],
-      notify  => Service['docker'],
+      notify  => Service['docker-wicket-demo-8'],
   }
 
   docker::run { 'wicket-demo-6':
