@@ -194,7 +194,7 @@ vhosts_whimsy::vhosts::vhosts:
         CheckSpelling On
 
         <FilesMatch ".(js|css)$">
-          <If "%{QUERY_STRING} =~ /^\d+$/">
+          <If "%%{}{QUERY_STRING} =~ /^\d+$/">
             Header set Cache-Control "public, max-age=31536000, immutable"
             ExpiresDefault "access plus 1 year"
           </If>
