@@ -78,3 +78,7 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  synergy:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
