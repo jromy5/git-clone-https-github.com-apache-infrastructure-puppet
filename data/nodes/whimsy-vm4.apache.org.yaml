@@ -188,15 +188,17 @@ vhosts_whimsy::vhosts::vhosts:
       AddCharset UTF-8 .json
 
       ExpiresActive On
-      <If "%(QUERY_STRING) =~ /^\d+$/">
-        ExpiresByType text/css "access plus 1 month"
-        ExpiresByType application/javascript "access plus 1 month"
-      </If>
-
       <Directory /x1/srv/whimsy/www/>
         AddHandler cgi-script .cgi
         MultiViewsMatch Any
         CheckSpelling On
+
+        <FilesMatch ".(js|css)$">
+          <If "%{QUERY_STRING} =~ /^\d+$/">
+            Header set Cache-Control "public, max-age=31536000, immutable"
+            ExpiresDefault "access plus 1 year"
+          </If>
+        </FilesMatch>
       </Directory>
 
       <Directory /x1/srv/whimsy/www/public/>
