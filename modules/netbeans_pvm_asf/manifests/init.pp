@@ -2,6 +2,14 @@
 
 class netbeans_pvm_asf (
 
+  # override below in eyaml.
+
+  $nb_db_url         = '',
+  $nb_db_user        = '',
+  $nb_db_pw          = '',
+  $nb_db_name        = '',
+  $nb_db_hostname    = '',
+
   $required_packages = ['php7.0' , 'php7.0-cli' , 'php7.0-mysql'],
 
 ){
