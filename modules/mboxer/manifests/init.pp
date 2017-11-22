@@ -90,6 +90,16 @@ mailalias {
       name      => 'treasurer',
       provider  => aliases,
       recipient => "|python3 ${install_base}/tools/archive.py --lid treasurer@apache.org private";
+    'vp-brand':
+      ensure    => present,
+      name      => 'vp-brand',
+      provider  => aliases,
+      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-brand@apache.org private";
+    'vp-fundraising':
+      ensure    => present,
+      name      => 'vp-fundraising',
+      provider  => aliases,
+      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-fundraising@apache.org private";
     'zztest':
       ensure    => present,
       name      => 'zztest',
