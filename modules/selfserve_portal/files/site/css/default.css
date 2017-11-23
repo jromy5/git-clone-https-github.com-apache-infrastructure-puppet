@@ -280,3 +280,8 @@ label {
     transition: ease-in 0.175s;
     
 }
+
+.forgotpw > a {
+    color: #FFF;
+    margin: 5px;
+}

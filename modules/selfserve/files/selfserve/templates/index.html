@@ -7,7 +7,7 @@
                             <p><label>Change password?</label><input type="checkbox" name="changepw" [if-any changepw_is_checked]checked[end] tabindex="10"/></p>
                             <p><input type="submit" name="login" value="Login" tabindex="100" /></p>
                         </form>
-                        <p><a href="[script_name]/reset/enter">Forgot your password?</a></p>
+                        <p class="forgotpw"><a href="[script_name]/reset/enter">Forgot your password?</a></p>
                         <!-- end of layout -->
 [end][define messagebox]
                         <h3>[if-any message][message][else]Please Login[end]</h3>
