@@ -65,8 +65,8 @@ mysql::server::databases:
   forumaoo_nl:
     ensure: 'present'
     charset: 'utf8'
-  collate: 'utf8_bin'
-    forumaoo_pl:
+    collate: 'utf8_bin'
+  forumaoo_pl:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
