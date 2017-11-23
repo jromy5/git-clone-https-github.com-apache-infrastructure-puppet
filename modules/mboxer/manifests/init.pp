@@ -94,12 +94,12 @@ mailalias {
       ensure    => present,
       name      => 'vp-brand',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-brand@apache.org private";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-brand@apache.org restricted";
     'vp-fundraising':
       ensure    => present,
       name      => 'vp-fundraising',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-fundraising@apache.org private";
+      recipient => "|python3 ${install_base}/tools/archive.py --lid vp-fundraising@apache.org restricted";
     'zztest':
       ensure    => present,
       name      => 'zztest',
