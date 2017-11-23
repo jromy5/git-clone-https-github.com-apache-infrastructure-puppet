@@ -23,10 +23,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples6x_error.log'
     custom_fragment: |
-      RewriteEngine On
-      RewriteRule   "^/$"  "/wicket-examples/"  [R]
       ProxyPass / http://127.0.0.1:8086/
-      ProxyPassReverse / http://127.0.0.1:8086/wicket-examples/
+      ProxyPassReverse / http://127.0.0.1:8086/
   examples7x-80:
     vhost_name: '*'
     priority: '12'
@@ -38,10 +36,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples7x_error.log'
     custom_fragment: |
-      RewriteEngine On
-      RewriteRule   "^/$"  "/wicket-examples/"  [R]
       ProxyPass / http://127.0.0.1:8087/
-      ProxyPassReverse / http://127.0.0.1:8087/wicket-examples/
+      ProxyPassReverse / http://127.0.0.1:8087/
   examples8x-80:
     vhost_name: '*'
     priority: '12'
@@ -53,7 +49,5 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www'
     error_log_file: 'examples8x_error.log'
     custom_fragment: |
-      RewriteEngine On
-      RewriteRule   "^/$"  "/wicket-examples/"  [R]
       ProxyPass / http://127.0.0.1:8088/
-      ProxyPassReverse / http://127.0.0.1:8088/wicket-examples/
+      ProxyPassReverse / http://127.0.0.1:8088/
