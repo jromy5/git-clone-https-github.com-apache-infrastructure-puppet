@@ -284,4 +284,5 @@ label {
 .forgotpw > a {
     color: #DDD;
     margin: 15px;
+    text-decoration-line: none;
 }
