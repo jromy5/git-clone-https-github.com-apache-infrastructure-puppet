@@ -6,16 +6,20 @@ body
   padding: 0;
   font-size: small;
   background-color: white;
-  background-image: url("/archives/asf_logo_simple.png");
+  background-image: url("/archives/feather.png");
   background-repeat: no-repeat;
   background-position: 98% 1em;
 }
 
 a:hover { text-decoration: underline; }
 
+main {
+  font-size: 1em;
+}
+
 h1
 {
-  font-size: x-large;
+  font-size: 1.3em;
   margin: 1em 2% 0.4em 2%;
   padding: 0;
 }
