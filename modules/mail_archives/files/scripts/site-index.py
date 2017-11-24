@@ -49,6 +49,13 @@ print """<?xml version="1.0" encoding="UTF-8"?>
 <head>
   <title>Available Mailing Lists</title>
   <style>
+    body{
+      background-color: white;
+      background-image: url("/archives/feather.png");
+      background-repeat: no-repeat;
+      background-position: 98% 0.1em;
+      background-size: 45px;
+    }
     li h3{
       border-bottom: 1px #D42 solid;
       border-width: 5px;
