@@ -846,6 +846,12 @@ vhosts_asf::vhosts::vhosts:
       -
         path: '/demo'
         url: 'http://drat-vm.apache.org:8080/proteus'
+      -
+        path: '/oodt'
+        url: 'http://drat-vm.apache.org:8080/opsui'
+      -
+        path: '/solr'
+        url: 'http://drat-vm.apache.org:8080/solr'
 
   freemarker:
     vhost_name: '*'
