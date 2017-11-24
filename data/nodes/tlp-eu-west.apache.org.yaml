@@ -23,6 +23,7 @@ classes:
   - apmirror
   - blocky
   - datadog_agent::integrations::apache
+  - datadog_asf::integrations::snmp
   - loggy
   - ssl::name::wildcard_apache_org
   - ssl::name::apachecon_com

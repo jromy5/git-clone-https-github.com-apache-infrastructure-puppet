@@ -7,6 +7,7 @@ classes:
   - apache::mod::headers
   - apache::mod::ssl
   - blocky
+  - datadog_asf::integrations::snmp
   - loggy
   - jenkins_asf
   - oraclejava::install
