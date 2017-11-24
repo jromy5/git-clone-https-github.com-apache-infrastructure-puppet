@@ -88,8 +88,6 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 datadog_agent::integrations::apache::url: 'https://tlp-eu-west.apache.org/server-status-dd'
 datadog_agent::use_curl_http_client: true
 
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
-
 logrotate::rule:
   apache2:
     ensure: 'present'
