@@ -7,6 +7,7 @@ classes:
   - apache::mod::headers
   - apache::mod::ssl
   - blocky
+  - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
   - loggy
   - jenkins_asf
@@ -17,6 +18,8 @@ classes:
   - ulimit_asf
   - vhosts_asf::vhosts
   - zmanda_asf::client
+
+datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
@@ -98,7 +101,11 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'analysis.apache.org.error.log'
     access_log_file: 'analysis.apache.org.access.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://builds.apache.org/analysis/$1
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://builds.apache.org/analysis/$1
 
   jenkins-master-80:
     vhost_name: '*'
@@ -110,7 +117,11 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'builds.apache.org.error.log'
     access_log_file: 'builds.apache.org.access.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://builds.apache.org/$1
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://builds.apache.org/$1
 
   jenkins-master-443:
       vhost_name: '*'
