@@ -8,7 +8,8 @@ body
   background-color: white;
   background-image: url("/archives/feather.png");
   background-repeat: no-repeat;
-  background-position: 98% 1em;
+  background-position: 98% 0.1em;
+  background-size: 45px;
 }
 
 a:hover { text-decoration: underline; }
