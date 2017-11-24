@@ -11,7 +11,7 @@ classes:
   - apache::mod::status
   - blocky
   - datadog_agent::integrations::apache
-  - datadog_asf::integrations::snmp
+  - datadog_asf::integrations::network
   - jira_asf
   - oraclejava::install
   - ssl::name::wildcard_apache_org
