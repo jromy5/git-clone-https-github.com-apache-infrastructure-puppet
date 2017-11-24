@@ -23,7 +23,6 @@ classes:
   - apmirror
   - blocky
   - datadog_agent::integrations::apache
-  - datadog_agent::integrations::network
   - dell
   - dell::openmanage
   - loggy
