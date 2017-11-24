@@ -80,6 +80,24 @@ class mail_archives (
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
+    "${archives_www}/index.html":
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755',
+      source => 'puppet:///modules/mail_archives/index.html';
+    "${archives_www}/favicon.ico":
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755',
+      source => 'puppet:///modules/mail_archives/favicon.ico';
+    "${archives_www}/robots.txt":
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755',
+      source => 'puppet:///modules/mail_archives/robots.txt';
     "${archives_www}/mod_mbox":
       ensure => 'directory',
       owner  => $username,
