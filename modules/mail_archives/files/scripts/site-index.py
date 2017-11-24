@@ -48,6 +48,20 @@ print """<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <title>Available Mailing Lists</title>
+  <style>
+    li h3{
+      border-bottom: 1px #D42 solid;
+      border-width: 5px;
+    }
+    li{
+      list-style: none;
+    }
+    li ul{
+      border: 1px #D42 solid;
+      background-color: #eee;
+    }
+  </style>
+
 </head>
 <!-- Background white, links blue (unvisited), navy (visited), red
 (active) -->
