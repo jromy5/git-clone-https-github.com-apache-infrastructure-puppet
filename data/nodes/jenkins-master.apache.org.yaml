@@ -6,6 +6,7 @@ classes:
   - apache::mod::rewrite
   - apache::mod::headers
   - apache::mod::ssl
+  - apache::mod::status
   - blocky
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
