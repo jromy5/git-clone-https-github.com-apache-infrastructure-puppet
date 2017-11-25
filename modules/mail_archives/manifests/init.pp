@@ -219,7 +219,7 @@ class mail_archives (
       user        => $username,
       minute      => '05',
       hour        => '*/4',
-      command     => "/home/modmbox/scripts/site-sitemap.py '/x1/mail-archives.apache.org/mod_mbox/sitemap.\%d.xml'",
+      command     => "/home/modmbox/scripts/site-sitemap.py '/x1/mail-archives.apache.org/mod_mbox/sitemap.%d.xml'",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
 
