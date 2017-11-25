@@ -52,8 +52,8 @@ datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server
 
 # jira_asf class variables.
 # jira_asf::jira_version: 'software-7.3.3'
-# jira_asf::jira_version: 'software-7.0.11'
-jira_asf::jira_version: '6.4.14'
+jira_asf::jira_version: 'software-7.0.11'
+# jira_asf::jira_version: '6.4.14'
 jira_asf::pgsql_connector_version: '42.0.0'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
@@ -176,14 +176,3 @@ vhosts_asf::vhosts::vhosts:
         AddOutputFilterByType SUBSTITUTE text/xml
         Substitute s!http://issues-test.apache.org/!https://issues-test.apache.org/!
       </Location>
-
-      # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
-      SSLProxyEngine On
-
-      # Bloodhound instance on bloodhound-vm.a.o - MEH!
-      SSLProxyVerify none
-      SSLProxyCheckPeerCN off
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerExpire off
-      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
-      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
