@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem 'r10k'
 gem 'hiera-eyaml'
 gem 'hiera-eyaml-gpg'
+gem 'gpgme'
 
 gem 'rspec', '~> 2.99'
 gem 'rspec-puppet'
@@ -10,6 +11,7 @@ gem 'puppet', '~> 3.7.5'
 gem 'puppetlabs_spec_helper'
 gem 'serverspec'
 gem 'puppet-lint'
+gem 'yaml-lint'
 gem 'rake'
 
 
