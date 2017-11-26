@@ -785,7 +785,7 @@ projects_role = rw
 [/directory]
 @directory = rw
 
-[/directory/shared]
+[/directory/(shared|studio|apacheds|documentation/samples|project|buildtools|mavibot)]
 * = r
 
 [/drill]
