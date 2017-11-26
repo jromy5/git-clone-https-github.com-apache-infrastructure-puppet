@@ -29,13 +29,14 @@ class base (
     source => 'puppet:///modules/base/ssl.com.crt',
     owner  => 'root',
     group  => 'root',
-  }->
+  }
 
-  exec { 'update-ca-certs':
-    command => '/usr/sbin/update-ca-certificates',
-  } ->
-  exec { 'update-apt':
-    command => '/usr/bin/apt-get update',
+  tidy {
+    'apt-cache':
+        path    => '/var/cache/apt/archives/',
+        age     => '1w',
+        recurse => 1,
+        matches => ['*.deb'],
   }
 
   # hiera_hash+create_resources used to instantiate puppet "defines"
