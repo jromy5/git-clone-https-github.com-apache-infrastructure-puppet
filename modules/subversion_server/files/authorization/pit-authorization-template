@@ -162,6 +162,7 @@ kafka={reuse:asf-authorization:kafka}
 kafka-pmc={ldap:cn=kafka,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 karaf={reuse:asf-authorization:karaf}
 karaf-pmc={ldap:cn=karaf,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+kibble-pmc={ldap:cn=kibble,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 knox={reuse:asf-authorization:knox}
 knox-pmc={ldap:cn=knox,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 kudu={reuse:asf-authorization:kudu}
@@ -957,6 +958,9 @@ openejb-tck = r
 
 [/pmc/juddi]
 @juddi-pmc = rw
+
+[/pmc/kibble]
+@kibble-pmc = rw
 
 [/pmc/labs]
 @labs-pmc = rw
