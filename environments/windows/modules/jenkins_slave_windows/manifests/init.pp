@@ -32,32 +32,26 @@ class {'jenkins_slave_windows::install': }
     onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\ant\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-
-
   exec { "create symlink for latest Maven":
     command      => "powershell.exe cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
     onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-
   exec { "create symlink for Maven2":
     command      => "powershell.exe cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest2 F:\\jenkins\\tools\\maven\\apache-maven-2.2.1",
     onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest2') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-
   exec { "create symlink for Maven3":
     command      => "powershell.exe cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
     onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest3') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-
   exec { "create symlink for latest JDK":
     command      => "powershell.exe cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest F:\\jenkins\\tools\\java\\jdk9.0.1",
     #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-
   exec { "create symlink for JDK1.9":
     command      => "powershell.exe cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
     onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.9') { exit 1;}  else { exit 0; }",

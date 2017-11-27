@@ -33,17 +33,14 @@ class jenkins_slave_windows::install (
     provider => powershell,
   }
 
+  exec { "extract cygwin64" :
+      command => "powershell.exe Expand-Archive -Force C:\\temp\\cygwin64.zip -DestinationPath F:\\cygwin64",
+      #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
+      provider => powershell,
+  }
+
+
   ###################### Setup ANT #############################
-
-
-
-  define download_ant($ant_version = $title){
-      download_file { "Download asf-build-${ant_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${ant_version}.zip",
-        destination_directory => 'F:\jenkins\tools\ant\zips',
-      }
-    }
-
   define extract_ant($ant_version = $title){
       file { ["F:\\jenkins\\tools\\ant\\${ant_version}"]:
         ensure => directory,
@@ -62,20 +59,12 @@ class jenkins_slave_windows::install (
       }
     }
   
-  download_ant { $ant:} -> extract_ant { $ant:}
+  extract_ant { $ant:}
 
 #################################################################
 
 
 ###################### Setup Chromedriver #############################
-
-  define download_chromedriver($chromedriver_version = $title){
-      download_file { "Download asf-build-chromedriver-${chromedriver_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-chromedriver-${chromedriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\chromedriver\zips',
-      }
-    }
-
   define extract_chromedriver($chromedriver_version = $title){
       file { ["F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}"]:
         ensure => directory,
@@ -94,19 +83,11 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_chromedriver { $chromedriver:} -> extract_chromedriver { $chromedriver:}
+ extract_chromedriver { $chromedriver:}
 
 #################################################################
 
 ###################### Setup Geckodriver #############################
-
-  define download_geckodriver($geckodriver_version = $title){
-      download_file { "Download asf-build-geckodriver-${geckodriver_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-geckodriver-${geckodriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\geckodriver\zips',
-      }
-    }
-
   define extract_geckodriver($geckodriver_version = $title){
       file { ["F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}"]:
         ensure => directory,
@@ -125,19 +106,11 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_geckodriver { $geckodriver:} -> extract_geckodriver { $geckodriver:}
+extract_geckodriver { $geckodriver:}
 
 #################################################################
 
 ###################### Setup IEdriver #############################
-
-  define download_iedriver($iedriver_version = $title){
-      download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-iedriver-${iedriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\iedriver\zips',
-      }
-    }
-
   define extract_iedriver($iedriver_version = $title){
       file { ["F:\\jenkins\\tools\\iedriver\\${iedriver_version}"]:
         ensure => directory,
@@ -156,28 +129,20 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_iedriver { $iedriver:} -> extract_iedriver { $iedriver:}
+  extract_iedriver { $iedriver:}
 
 #################################################################
 
 ###################### Setup JDK #############################
-
-  define download_jdk($jdk_version = $title){
-      download_file { "Download asf-build-${jdk_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${jdk_version}.zip",
-        destination_directory => 'F:\jenkins\tools\java\zips',
-      }
-    }
-
   define extract_jdk($jdk_version = $title){
       file { ["F:\\jenkins\\tools\\java\\${jdk_version}"]:
         ensure => directory,
       }
-       
+
       file { ["F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip"]:
         audit => mtime,
       }
-
+       
       exec { "extract ${jdk_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}",
         #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
@@ -187,20 +152,12 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_jdk { $jdk:} -> extract_jdk { $jdk:}
+  extract_jdk { $jdk:}
 
 #################################################################
 
 
 ###################### Setup Maven #############################
-
-  define download_maven($maven_version = $title){
-      download_file { "Download asf-build-${maven_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${maven_version}.zip",
-        destination_directory => 'F:\jenkins\tools\maven\zips',
-      }
-    }
-
   define extract_maven($maven_version = $title){
       file { ["F:\\jenkins\\tools\\maven\\${maven_version}"]:
         ensure => directory,
@@ -219,20 +176,12 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_maven { $maven:} -> extract_maven { $maven:}
+  extract_maven { $maven:}
 
 #################################################################
 
 
 ###################### Setup nant #############################
-
-  define download_nant($nant_version = $title){
-      download_file { "Download asf-build-nant-${nant_version} zip from bintray" :
-        url                   => "https://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",
-        destination_directory => 'F:\jenkins\tools\nant\zips',
-      }
-    }
-
   define extract_nant($nant_version = $title){
       file { ["F:\\jenkins\\tools\\nant\\${nant_version}"]:
         ensure => directory,
@@ -251,7 +200,7 @@ class jenkins_slave_windows::install (
       }
     }
 
-  download_nant { $nant:} -> extract_nant { $nant:}
+  extract_nant { $nant:}
 
 #################################################################
 }
