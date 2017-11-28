@@ -143,12 +143,10 @@ extract_geckodriver { $geckodriver:}
         audit => mtime,
       }
        
-      exec { "extract ${jdk_version}" :
+      exec { "extract ${jdk_version}":
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip"],
-        refreshonly => true,
+        creates  => File["F:\\jenkins\\tools\\java\\${jdk_version}\\bin\java.exe"],
       }
     }
 
