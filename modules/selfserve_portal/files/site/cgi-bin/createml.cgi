@@ -77,7 +77,7 @@ else:
 mods = form.getvalue('moderators', "").split("\n")
 for mod in mods:
     if not re.match(r"^\S+@\S+$", mod):
-        sscommon.buggo("Invalid administrator username!")
+        sscommon.buggo("Invalid moderator email (no spaces or commas, please!)")
 
 # Get and validate private option
 # TODO currently this field serves no purpose and could be dropped.
