@@ -10,7 +10,7 @@ class buildbot_slave (
   $username          = 'buildslave',
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
-  $gradle_versions   = ['3.1', '3.5', '4.3'],
+  $gradle_versions   = ['3.5', '4.3', '4.3.1'],
 
   # override below in eyaml
 
