@@ -135,18 +135,10 @@ extract_geckodriver { $geckodriver:}
 
 ###################### Setup JDK #############################
   define extract_jdk($jdk_version = $title){
-      file { ["F:\\jenkins\\tools\\java\\${jdk_version}"]:
-        ensure => directory,
-      }
-
-      file { ["F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip"]:
-        audit => mtime,
-      }
-       
-      exec { "extract ${jdk_version}":
+      exec { "extract ${jdk_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}",
         provider => powershell,
-        creates  => File["F:\\jenkins\\tools\\java\\${jdk_version}\\bin\java.exe"],
+        creates => "F:\\jenkins\\tools\\java\\${jdk_version}\\bin\java.exe",
       }
     }
 
