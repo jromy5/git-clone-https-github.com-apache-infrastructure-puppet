@@ -10,12 +10,23 @@ class jenkins_slave_windows::install (
 ) {
 
   include jenkins_slave_windows::params
+  #### Install winSVN ####
+  package { 'CMake':
+    ensure => present,
+    source => 'c:\temp\cmake-3.7.2-win64-x64.msi',
+  }
 
-  #### Install JDK 9 silently for the system, but only if C:\Program Files\Java doesn't exist
+  #### Install Firefox silently for the system, but only if not already installed
+  exec { 'install Firefox' :
+    command => 'powershell.exe c:\temp\Firefox%20Installer.exe -ms',
+    creates => 'C:\Program Files\Mozilla Firefox\firefox.exe',
+    provider => powershell,
+  }
+
+    #### Install JDK 9 silently for the system, but only if C:\Program Files\Java doesn't exist
   exec { 'install jdk' :
     command => 'powershell.exe c:\temp\asf-build-jdk9.0.exe /s',
-    onlyif    => "if (Test-Path 'C:\\Program Files\\Java') { exit 1;}  else { exit 0; }",
-    logoutput => true,
+    creates => 'C:\Program Files\Java\jdk-9\bin\java.exe',
     provider => powershell,
   }
 
@@ -28,17 +39,22 @@ class jenkins_slave_windows::install (
   #### Install Git silently for the system, but only if C:\Program Files\Git doesn't exist
   exec { 'install Git' :
     command => 'powershell.exe c:\temp\Git-2.14.3-64-bit.exe /SILENT',
-    onlyif    => "if (Test-Path 'C:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
-    logoutput => true,
+    creates => 'C:\Program Files\Git\git-cmd.exe',
     provider => powershell,
   }
-
+  
+  #### Unzip cygwin into f:\cygwin
   exec { "extract cygwin64" :
-      command => "powershell.exe Expand-Archive -Force C:\\temp\\cygwin64.zip -DestinationPath F:\\cygwin64",
-      #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
-      provider => powershell,
+    command => "powershell.exe Expand-Archive -Force C:\\temp\\cygwin64.zip -DestinationPath F:\\cygwin64",
+    creates => 'F:\cygwin64\cygwin64.bat',
+    provider => powershell,
   }
-
+  #### Install Visual Studio 2015 Community Edition
+  exec { 'install Visual Studio 2015' :
+    command => 'powershell.exe c:\temp\vs_2015_community_ENU.exe /quiet',
+    #creates => 'C:\Program Files\Git\git-cmd.exe',
+    provider => powershell,
+  }
 
   ###################### Setup ANT #############################
   define extract_ant($ant_version = $title){
