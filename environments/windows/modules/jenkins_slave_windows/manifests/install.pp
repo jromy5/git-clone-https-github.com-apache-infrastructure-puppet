@@ -42,20 +42,10 @@ class jenkins_slave_windows::install (
 
   ###################### Setup ANT #############################
   define extract_ant($ant_version = $title){
-      file { ["F:\\jenkins\\tools\\ant\\${ant_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\ant\\zips\\asf-build-${ant_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${ant_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\ant\\zips\\asf-build-${ant_version}.zip -DestinationPath F:\\jenkins\\tools\\ant\\${ant_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\ant\\zips\\asf-build-${ant_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\ant\\${ant_version}\\bin\\ant.cmd",
       }
     }
   
@@ -66,20 +56,10 @@ class jenkins_slave_windows::install (
 
 ###################### Setup Chromedriver #############################
   define extract_chromedriver($chromedriver_version = $title){
-      file { ["F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\chromedriver\\zips\\asf-build-chromedriver-${chromedriver_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${chromedriver_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\chromedriver\\zips\\asf-build-chromedriver-${chromedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\chromedriver\\zips\\asf-build-chromedriver-${chromedriver_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}\\win32\\chromedriver.exe",
       }
     }
 
@@ -89,20 +69,10 @@ class jenkins_slave_windows::install (
 
 ###################### Setup Geckodriver #############################
   define extract_geckodriver($geckodriver_version = $title){
-      file { ["F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\geckodriver\\zips\\asf-build-geckodriver-${geckodriver_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${geckodriver_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\geckodriver\\zips\\asf-build-geckodriver-${geckodriver_version}.zip -DestinationPath F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\geckodriver\\zips\\asf-build-geckodriver-${geckodriver_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}\\win32\\geckodriver.exe",
       }
     }
 
@@ -112,20 +82,10 @@ extract_geckodriver { $geckodriver:}
 
 ###################### Setup IEdriver #############################
   define extract_iedriver($iedriver_version = $title){
-      file { ["F:\\jenkins\\tools\\iedriver\\${iedriver_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\iedriver\\zips\\asf-build-iedriver-${iedriver_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${iedriver_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\iedriver\\zips\\asf-build-iedriver-${iedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\iedriver\\${iedriver_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\iedriver\\zips\\asf-build-iedriver-${iedriver_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\iedriver\\${iedriver_version}\\win32\\iedriverserver.exe",
       }
     }
 
@@ -149,20 +109,10 @@ extract_geckodriver { $geckodriver:}
 
 ###################### Setup Maven #############################
   define extract_maven($maven_version = $title){
-      file { ["F:\\jenkins\\tools\\maven\\${maven_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\maven\\zips\\asf-build-${maven_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${maven_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\maven\\zips\\asf-build-${maven_version}.zip -DestinationPath F:\\jenkins\\tools\\maven\\${maven_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\maven\\zips\\asf-build-${maven_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\maven\\${maven_version}\\bin\\mvn",
       }
     }
 
@@ -173,20 +123,10 @@ extract_geckodriver { $geckodriver:}
 
 ###################### Setup nant #############################
   define extract_nant($nant_version = $title){
-      file { ["F:\\jenkins\\tools\\nant\\${nant_version}"]:
-        ensure => directory,
-      }
-       
-      file { ["F:\\jenkins\\tools\\nant\\zips\\asf-build-nant-${nant_version}.zip"]:
-        audit => mtime,
-      }
-
       exec { "extract ${nant_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\nant\\zips\\asf-build-nant-${nant_version}.zip -DestinationPath F:\\jenkins\\tools\\nant\\${nant_version}",
-        #onlyif    => "if (Test-Path 'F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk}.zip') { exit 0;}  else { exit 1; }",
         provider => powershell,
-        subscribe   => File["F:\\jenkins\\tools\\nant\\zips\\asf-build-nant-${nant_version}.zip"],
-        refreshonly => true,
+        creates => "F:\\jenkins\\tools\\nant\\${nant_version}\\bin\\nant.exe",
       }
     }
 
