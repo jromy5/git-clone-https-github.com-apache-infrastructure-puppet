@@ -9,12 +9,21 @@ class jenkins_slave_windows::download (
   $nant = $jenkins_slave_windows::params::nant,
 ) {
   include jenkins_slave_windows::params
-  #### Download winSVN ####
-  download_file { "Download winsvn from bintray" :
-    url                   => 'https://apache.bintray.com/WindowsPackages/Setup-Subversion-1.8.17.msi',
+  #### Download CMake 3.7.2 from Bintray
+  download_file { "Download Cmake from bintray" :
+    url                   => 'https://apache.bintray.com/WindowsPackages/cmake-3.7.2-win64-x64.msi',
+    destination_directory => 'C:\temp',
+  } 
+  #### Download cygwin from Bintray
+  download_file { "Download cygwin from bintray" :
+    url                   => 'https://apache.bintray.com/WindowsPackages/cygwin64.zip',
     destination_directory => 'C:\temp',
   }
-
+  #### Download Firefox from Bintray ####
+  download_file { "Download Firefox from bintray" :
+    url                   => 'https://apache.bintray.com/WindowsPackages/Firefox%20Installer.exe',
+    destination_directory => 'C:\temp',
+  }
   #### Download Git from Bintray
   download_file { "Download Git from bintray" :
     url                   => 'https://apache.bintray.com/WindowsPackages/Git-2.14.3-64-bit.exe',
@@ -26,9 +35,15 @@ class jenkins_slave_windows::download (
     url                   => 'https://apache.bintray.com/WindowsPackages/asf-build-jdk9.0.exe',
     destination_directory => 'C:\temp',
   }
+    #### Download Visual Studio 2015 from Bintray ####
+  download_file { "Download Visual Studio 2015 from bintray" :
+    url                   => 'https://apache.bintray.com/WindowsPackages/vs_2015_community_ENU.exe',
+    destination_directory => 'C:\temp',
+  }
 
-  download_file { "Download cygwin from bintray" :
-    url                   => 'https://apache.bintray.com/WindowsPackages/cygwin64.zip',
+  #### Download winSVN ####
+  download_file { "Download winsvn from bintray" :
+    url                   => 'https://apache.bintray.com/WindowsPackages/Setup-Subversion-1.8.17.msi',
     destination_directory => 'C:\temp',
   }
 
