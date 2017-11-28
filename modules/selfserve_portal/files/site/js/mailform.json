@@ -52,7 +52,7 @@
                   "placeholder": "Email addresses, one on each line",
                   "type": "textarea",
                   "mandatory": true,
-                  "filter": "^(\\S+@\\S+\\.\\S+\\s*)+$"
+                  "filter": "^([^,\\s@]+@[^,\\s\\.]+\\.[^,\\s]+\\n*)+$"
               }
           }
       }
