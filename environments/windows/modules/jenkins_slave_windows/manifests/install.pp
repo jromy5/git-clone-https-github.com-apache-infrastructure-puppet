@@ -138,7 +138,7 @@ extract_geckodriver { $geckodriver:}
       exec { "extract ${jdk_version}" :
         command => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}",
         provider => powershell,
-        creates => "F:\\jenkins\\tools\\java\\${jdk_version}\\bin\java.exe",
+        creates => "F:\\jenkins\\tools\\java\\${jdk_version}\\bin\\java.exe",
       }
     }
 
