@@ -59,7 +59,7 @@ class {'jenkins_slave_windows::install': }
   }
   exec { "create symlink for JDK1.9":
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.9') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest9') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
     exec { "create symlink for JDK1.8":

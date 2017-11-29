@@ -51,7 +51,7 @@ class jenkins_slave_windows::install (
   }
   #### Install Visual Studio 2015 Community Edition
   exec { 'install Visual Studio 2015' :
-    command => 'powershell.exe c:\temp\vs_2015_community_ENU.exe /quiet',
+    command => 'powershell.exe c:\temp\vs_2015_community_ENU.exe /quiet /full',
     #creates => 'C:\Program Files\Git\git-cmd.exe',
     provider => powershell,
   }
