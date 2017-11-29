@@ -46,13 +46,7 @@ class jenkins_slave_windows::install (
   #### Unzip cygwin into f:\cygwin
   exec { "extract cygwin64" :
     command => "powershell.exe Expand-Archive -Force C:\\temp\\cygwin64.zip -DestinationPath F:\\cygwin64",
-    creates => 'F:\cygwin64\cygwin64.bat',
-    provider => powershell,
-  }
-  #### Install Visual Studio 2015 Community Edition
-  exec { 'install Visual Studio 2015' :
-    command => 'powershell.exe c:\temp\vs_2015_community_ENU.exe /quiet /full',
-    #creates => 'C:\Program Files\Git\git-cmd.exe',
+    creates => 'F:\Cygwin64\Cygwin.bat',
     provider => powershell,
   }
 
