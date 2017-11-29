@@ -17,7 +17,7 @@ class jenkins_slave_windows (
   }
 
   #### create directories for Jenkins, tools, and such
-  file { ['F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']:
+  file { ['F:\Program Files','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']:
     ensure => directory
   }
 
@@ -29,7 +29,7 @@ class {'jenkins_slave_windows::install': }
 ################### create symlinks #############################
   exec { "create symlink for CMake":
     command  => "cmd.exe /c mklink /d \"F:\\Program Files\\CMake\" \"C:\\Program Files\CMake\"",
-    #onlyif    => "if (Test-Path 'F:\\Program Files\\CMake') { exit 1;}  else { exit 0; }",
+    onlyif    => "if (Test-Path 'F:\\Program Files\\CMake') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { "create symlink for latest Ant":
