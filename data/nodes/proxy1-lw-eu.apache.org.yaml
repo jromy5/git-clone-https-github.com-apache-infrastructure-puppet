@@ -135,6 +135,10 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / https://cust-asf2.ponee.io/
       AddOutputFilterByType DEFLATE application/json
       Header edit Set-Cookie (^.*$) "$1; HTTPOnly; Secure"
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
 
 fail2ban_asf::config::jails:
   jira:
