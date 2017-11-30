@@ -27,6 +27,12 @@ class netbeans_pvm_asf (
       ensure  => 'present',
       mode    => '0755',
       content => template('netbeans_pvm_asf/db_config.php.erb');
-  }
 
+    '/var/www/html/':
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'www-data',
+      mode    => '0755',
+      require => Package['apache2'];
+  }
 }
