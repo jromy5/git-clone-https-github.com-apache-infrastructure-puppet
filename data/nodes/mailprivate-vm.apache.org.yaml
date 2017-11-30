@@ -10,6 +10,8 @@ classes:
   - vhosts_asf::vhosts
   - mail_private
 
+mail_private::parent_dir: '/x1'
+
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
