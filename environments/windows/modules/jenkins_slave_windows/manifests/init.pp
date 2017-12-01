@@ -90,4 +90,9 @@ class jenkins_slave_windows (
     data   =>  1,
   }
 
+  exec { 'Enable longpaths for git':
+    command  => 'git config --system core.longpaths true',
+    provider => powershell
+  }
+
 }
