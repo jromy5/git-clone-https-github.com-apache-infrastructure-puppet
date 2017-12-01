@@ -82,6 +82,11 @@ class jenkins_slave_windows (
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.5') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
+  exec { 'create symlink for short path to workspaces':
+    command  => "cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace",
+    onlyif   => "if (Test-Path 'F:\\short') { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
 #################################################################
 
   registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled':
