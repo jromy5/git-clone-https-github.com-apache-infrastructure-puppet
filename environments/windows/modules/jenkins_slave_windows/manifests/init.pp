@@ -21,10 +21,10 @@ class jenkins_slave_windows (
     ensure => directory
   }
 
-include jenkins_slave_windows::params
+  include jenkins_slave_windows::params
 
-class {'jenkins_slave_windows::download': } ->
-class {'jenkins_slave_windows::install': }
+  class {'jenkins_slave_windows::download': } ->
+  class {'jenkins_slave_windows::install': }
 
 ################### create symlinks #############################
   exec { "create symlink for CMake":
@@ -83,5 +83,11 @@ class {'jenkins_slave_windows::install': }
     provider => powershell,
   }
 #################################################################
+
+  registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled':
+    ensure => present,
+    type   => dword,
+    data   =>  1,
+  }
 
 }
