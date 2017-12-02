@@ -38,8 +38,6 @@ buildbot_slave::cpan::cpan_modules:
 - 'Test::Harness'
 - 'URI'
 
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
-
 python::python_pips:
   mkdocs:
     ensure: present

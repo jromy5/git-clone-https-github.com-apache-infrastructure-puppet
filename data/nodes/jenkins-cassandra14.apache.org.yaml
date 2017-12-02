@@ -4,5 +4,3 @@ classes:
 
 build_slaves::jenkins::npmrc_password: ''
 build_slaves::jenkins::nexus_password: ''
-
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'

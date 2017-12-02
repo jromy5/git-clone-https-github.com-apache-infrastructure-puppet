@@ -3,5 +3,3 @@ classes:
   - build_slaves::jenkins
   - orthrus
   - loggy
-
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
