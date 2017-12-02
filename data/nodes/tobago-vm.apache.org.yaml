@@ -2,8 +2,6 @@
 classes:
   - oraclejava::install
 
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
-
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
