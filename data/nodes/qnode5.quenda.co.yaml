@@ -8,5 +8,3 @@ buildbot_slave::required_packages:
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'

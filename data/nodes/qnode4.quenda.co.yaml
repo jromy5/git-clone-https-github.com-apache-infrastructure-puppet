@@ -14,8 +14,6 @@ buildbot_slave::required_packages:
   - 'libssl-dev'
   - 'sqlite3'
 
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
-
 python::python_pips:
   pelican:
     ensure: present

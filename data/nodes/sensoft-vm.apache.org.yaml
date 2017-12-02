@@ -2,7 +2,5 @@
 classes:
   - loggy
 
-ldapclient::ldapservers: 'ldap-us-ro.apache.org'
-
 base::basepackages:
   - docker-engine
