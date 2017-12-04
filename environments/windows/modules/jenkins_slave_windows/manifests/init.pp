@@ -94,7 +94,7 @@ class jenkins_slave_windows (
   }
   exec { "create symlink for Subversion":
     command  => "cmd.exe /c mklink /d \"F:\\Program Files (x86)\\Subversion\" \"C:\\Program Files (x86)\\Subversion\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files\\Subversion') { exit 1;}  else { exit 0; }",
+    onlyif    => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
 #################################################################
