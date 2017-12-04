@@ -1,0 +1,15 @@
+#!/bin/bash
+
+util=<%= @apache2_bin %>/mod-mbox-util
+prefix=<%= @archives_www %>/mod_mbox
+
+for d in $prefix/*
+do
+    if [ -d $d ]
+    then
+        echo `date +%H:%M:%S` $d
+        $util -c $d
+        chmod 775 $d/*.msgsum* $d/listinfo.db*
+    fi
+done
+

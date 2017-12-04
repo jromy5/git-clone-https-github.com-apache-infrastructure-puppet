@@ -13,7 +13,9 @@ gem 'serverspec'
 gem 'puppet-lint'
 gem 'yaml-lint'
 gem 'rake'
+gem 'syck'
 
+gem 'safe_yaml', '~> 1.0.4'
 
 #gem 'vagrant', :github => 'mitchellh/vagrant', :ref => 'v1.7.1'
 

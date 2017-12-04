@@ -90,6 +90,21 @@ class mail_private (
       content => $mbox_content,
       require => Package['apache2'];
 
+# files required for scripts/cron jobs
+
+    "${install_dir}/recreate-index.sh":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $username,
+      mode    => '0755',
+      content => template('mail_private/recreate-index.sh.erb');
+
+    "${install_dir}/gen-httpdconfig.sh":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $username,
+      mode    => '0755',
+      content => template('mail_private/gen-httpdconfig.sh.erb');
   }
 
 # execs
@@ -123,7 +138,7 @@ class mail_private (
       user    => 'root',
       creates => '/usr/lib/apache2/modules/mod_mbox.so',
       timeout => 1200,
-      require => [Package['apache2'], exec['build mbox module']];
+      require => [Package['apache2'], Exec['build mbox module']];
 
     'copy mod-mbox-util':
       command => "/bin/cp ${mbox_source}/mod-mbox-util ${apache2_bin}",
@@ -131,7 +146,7 @@ class mail_private (
       user    => 'root',
       creates => "${apache2_bin}/mod-mbox-util",
       timeout => 1200,
-      require => [Package['apache2'], exec['build mbox module']];
+      require => [Package['apache2'], Exec['build mbox module']];
   }
 
 }

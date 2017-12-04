@@ -1,0 +1,130 @@
+#!/usr/bin/perl
+
+use File::Find;
+use Cwd;
+use Parallel::ForkManager;
+use Email::Folder;
+use LWP::UserAgent;
+use Date::Parse;
+use XML::Genx;
+
+my %box_update_list;
+my $prefix="/x1/mail-private.apache.org/mod_mbox";
+my $mod_mbox_util="${apache_bin}/mod-mbox-util";
+my @update_list_from_rsync;
+my @changed_directory_list;
+my $baseref="https://mail-private.apache.org/private-arch/";
+
+$rsync_log = "/home/$username/rsync.log";
+
+# remove any old log
+unlink("$rsync_log");
+
+system ("umask u=rwx,g=rwx,o=");
+
+system ("/bin/rsync --log-file=$rsync_log -az -e 'ssh -q' minotaur.apache.org:/home/apmail/private-arch/ /x1/mail-archives.apache.org/mod_mbox")
+  and warn "sync failed";
+
+system ("chmod -R 775 $prefix");
+
+open(LOG, $rsync_log) || die "Error opening usage log file: $rsync_log\n";
+
+while (<LOG>) {
+
+my $rsyncd_prefix = '\d\d\d\d/\d\d/\d\d \d\d:\d\d:\d\d ';
+
+   next unless ($day,$time,$op,$file)
+      = m{^
+          ( \w\w\w\s+\d+ | \d+/\d\d/\d\d ) \s+ # day
+          (\d\d:\d\d:\d\d) \s+                 # time
+          [^[]* \[\d+\]:? \s+                  # pid (ignored)
+          (send|recv|[<>]f\S+) \s+             # op (%o or %i)
+          (.*) \s+                             # file name
+          $ }x;
+
+   if ($op =~ /^>/) {
+      $op = 'send';
+      push @update_list_from_rsync,$file;
+   } elsif ($op =~ /^</) {
+      $op = 'recv';
+   }
+
+}
+close LOG;
+
+#my $pm = new Parallel::ForkManager(40);
+
+foreach my $file (@update_list_from_rsync) {
+
+#$pm->start and next;
+
+	#We use the file's path to get the tlp and listname
+	#These are used to build the url that will be stored in the doc
+	#and the listname is stored in the lucene document for filtering
+	(my $listdir,my $mbox) = split(/\//,$file);
+
+	#build a list of directories that need mboxutil run on them
+	$mbox_update_list{$prefix.$listdir}++;
+
+	# **Listname might end up being undefined
+	# Use listdir to get the path for the url?
+        (my $tlp,my $listname) = split(/-/,$listdir,2);
+	print "TLP:$tlp\tListname:$listname\n";
+
+	#fixup $file so that it's the full path to the file
+	#what we get from thersync log is relative.
+	my $fullpath = $prefix . $file;
+
+	#Inflate leaving the original around so future rsyncs are happy.
+        if ($fullpath =~ m/.+\.gz$/) {
+                my $unzfile = $fullpath;
+                $unzfile =~ s/\.gz$//;
+		$mbox =~ s/\.gz$//;
+                my $gzresult = `gzcat $fullpath > $unzfile`;
+                $fullpath=$unzfile;
+        }
+	if ($listname eq "") {
+	  $listname = $tlp;
+	  }
+	# Check for zero byte file that mbox-util will puke on.
+ 	# If we find one do not create the symlink to *.mbox
+	my $filezise = -s $fullpath;
+	my $link = $fullpath . ".mbox";
+	if ($filezise > 0) {
+        	symlink("$fullpath","$link");
+	}
+	else {
+		print "*** Zero Byte mailbox found: $link\n"; 
+		unlink("$link");
+	};
+	 
+
+#$pm->finish;
+	
+}
+
+#$pm->wait_all_children;
+
+#my $pm2 = new Parallel::ForkManager(10);
+
+while((my $key, my $value) = each(%mbox_update_list)) {
+
+#$pm2->start and next;
+
+	print "MBOX_UTIL: indexing $key\n";
+	my $timeout = 3600; #number of seconds to wait
+ 	eval {
+        local $SIG{ALRM} = sub { print "Timeout on $key\n"; next }; 
+        alarm $timeout;
+        system ("$mod_mbox_util -u $key");
+	system ("chmod 775 $key");
+	system ("chmod -R 775 $key");
+        alarm 0;
+    };
+
+#$pm2->finish;
+
+}
+
+#$pm2->wait_all_children;
+
