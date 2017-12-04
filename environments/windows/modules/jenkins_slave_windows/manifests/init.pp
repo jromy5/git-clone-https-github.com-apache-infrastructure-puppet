@@ -87,6 +87,16 @@ class jenkins_slave_windows (
     onlyif   => "if (Test-Path 'F:\\short') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
+  exec { "create symlink for Git":
+    command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\Git\"",
+    onlyif    => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
+  exec { "create symlink for Subversion":
+    command  => "cmd.exe /c mklink /d \"F:\\Program Files (x86)\\Subversion\" \"C:\\Program Files (x86)\\Subversion\"",
+    onlyif    => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
 #################################################################
 
   registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled':
