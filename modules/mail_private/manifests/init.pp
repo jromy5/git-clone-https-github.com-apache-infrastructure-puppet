@@ -101,10 +101,17 @@ class mail_private (
 
     "${install_dir}/gen-httpdconfig.sh":
       ensure  => 'present',
+      owner   => root,
+      group   => $username,
+      mode    => '0744',
+      content => template('mail_private/gen-httpdconfig.sh.erb');
+
+    "${install_dir}/refresh-index.pl":
+      ensure  => 'present',
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      content => template('mail_private/gen-httpdconfig.sh.erb');
+      content => template('mail_private/refresh-index.pl.erb');
   }
 
 # execs
