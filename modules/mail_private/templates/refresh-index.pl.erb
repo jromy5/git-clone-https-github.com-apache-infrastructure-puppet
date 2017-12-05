@@ -22,7 +22,7 @@ unlink("$rsync_log");
 
 system ("umask u=rwx,g=rwx,o=");
 
-system ("/bin/rsync --log-file=$rsync_log -az -e 'ssh -q' minotaur.apache.org:/home/apmail/private-arch/ /x1/mail-archives.apache.org/mod_mbox")
+system ("/usr/bin/rsync --log-file=$rsync_log -az -e 'ssh -q' minotaur.apache.org:/home/apmail/private-arch/ /x1/mail-archives.apache.org/mod_mbox")
   and warn "sync failed";
 
 system ("chmod -R 775 $prefix");
