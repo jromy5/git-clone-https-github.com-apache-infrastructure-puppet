@@ -9,6 +9,10 @@ classes:
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - mail_private
+  - mail_private::cpan
+
+mail_private::cpan::cpan_modules:
+  - 'Parallel::ForkManager'
 
 mail_private::parent_dir: '/x1'
 
