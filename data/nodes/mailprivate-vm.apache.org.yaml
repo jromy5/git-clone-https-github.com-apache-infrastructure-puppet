@@ -18,7 +18,6 @@ mail_private::cpan::cpan_modules:
   - 'Date::Parse'
   - 'XML::Genx'
 
-
 mail_private::parent_dir: '/x1'
 
 apache::default_vhost: false
