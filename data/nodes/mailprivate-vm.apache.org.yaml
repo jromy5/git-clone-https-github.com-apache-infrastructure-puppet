@@ -13,6 +13,11 @@ classes:
 
 mail_private::cpan::cpan_modules:
   - 'Parallel::ForkManager'
+  - 'Email::Folder'
+  - 'LWP::UserAgent'
+  - 'Date::Parse'
+  - 'XML::Genx'
+
 
 mail_private::parent_dir: '/x1'
 
