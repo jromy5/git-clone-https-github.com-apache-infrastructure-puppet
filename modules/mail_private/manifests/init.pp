@@ -55,10 +55,10 @@ class mail_private (
       owner  => $username,
       group  => 'root';
     "/home/${username}/scripts/":
-      ensure  => 'directory',
-      owner   => $username,
-      group   => $username,
-      mode    => '0755';
+      ensure => 'directory',
+      owner  => $username,
+      group  => $username,
+      mode   => '0755';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
@@ -68,8 +68,8 @@ class mail_private (
       group  => root,
       mode   => '0755';
     $assets:
-      ensure  => 'directory',
-      mode    => '0755';
+      ensure => 'directory',
+      mode   => '0755';
     $apache2_bin:
       ensure  => 'directory',
       require => Package['apache2'];
