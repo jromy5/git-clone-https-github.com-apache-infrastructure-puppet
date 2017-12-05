@@ -9,13 +9,13 @@ use Date::Parse;
 use XML::Genx;
 
 my %box_update_list;
-my $prefix="/x1/mail-private.apache.org/mod_mbox";
-my $mod_mbox_util="${apache_bin}/mod-mbox-util";
+my $prefix="<%= @archives_www %>/mod_mbox";
+my $mod_mbox_util="<%= @apache2_bin %>/mod-mbox-util";
 my @update_list_from_rsync;
 my @changed_directory_list;
 my $baseref="https://mail-private.apache.org/private-arch/";
 
-$rsync_log = "/home/$username/rsync.log";
+$rsync_log = "/home/<%= @username %>/rsync.log";
 
 # remove any old log
 unlink("$rsync_log");
