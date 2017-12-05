@@ -9,7 +9,7 @@ use Date::Parse;
 use XML::Genx;
 
 my %box_update_list;
-my $prefix="<%= @archives_www %>/mod_mbox";
+my $prefix="<%= @archives_www %>/mod_mbox/";
 my $mod_mbox_util="<%= @apache2_bin %>/mod-mbox-util";
 my @update_list_from_rsync;
 my @changed_directory_list;
@@ -22,7 +22,7 @@ unlink("$rsync_log");
 
 system ("umask u=rwx,g=rwx,o=");
 
-system ("/usr/bin/rsync --log-file=$rsync_log -az -e 'ssh -q' apmail@minotaur.apache.org::priv-mail-arch-new /x1/mail-archives.apache.org/mod_mbox")
+system ("/usr/bin/rsync --log-file=$rsync_log -az apmail\@minotaur.apache.org::priv-mail-arch-new $prefix")
   and warn "sync failed";
 
 system ("chmod -R 775 $prefix");
