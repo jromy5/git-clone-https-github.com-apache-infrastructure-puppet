@@ -2896,7 +2896,7 @@ class ConfigMaxlinesEnvironmentMixin(
     """Limit the email body to the number of lines specified in config."""
 
     def __init__(self, config, **kw):
-        emailmaxlines = int(config.get('emailmaxlines', default='0'))
+        emailmaxlines = int(config.get('emailmaxlines', default='10000'))
         super(ConfigMaxlinesEnvironmentMixin, self).__init__(
             config=config,
             emailmaxlines=emailmaxlines,
