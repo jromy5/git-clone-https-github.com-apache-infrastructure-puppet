@@ -755,6 +755,8 @@ puppetsvn = r
 [/infrastructure/trunk/qmail]
 smtpd = r
 @member = rw
+# Need below for auto-sync with self-serve
+@apezmlm = rw
 
 [/infrastructure/trunk/roller]
 @infrastructure-interest = rw
