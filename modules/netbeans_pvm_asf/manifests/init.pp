@@ -28,7 +28,7 @@ class netbeans_pvm_asf (
       mode    => '0755',
       content => template('netbeans_pvm_asf/db_config.php.erb');
 
-    '/var/www/html/':
+    '/var/www/html/synergy':
       ensure  => directory,
       owner   => 'www-data',
       group   => 'www-data',
