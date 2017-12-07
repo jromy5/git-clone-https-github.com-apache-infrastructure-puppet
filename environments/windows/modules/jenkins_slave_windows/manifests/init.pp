@@ -28,7 +28,7 @@ class jenkins_slave_windows (
 
 ################### create symlinks #############################
   exec { "create symlink for CMake":
-    command  => "cmd.exe /c mklink /d \"F:\\Program Files\\CMake\" \"C:\\Program Files\CMake\"",
+    command  => "cmd.exe /c mklink /d \"F:\\Program Files\\CMake\" \"C:\\Program Files\\CMake\"",
     onlyif    => "if (Test-Path 'F:\\Program Files\\CMake') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
@@ -88,7 +88,7 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { "create symlink for Git":
-    command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\Git\"",
+    command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\\Git\"",
     onlyif    => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
@@ -105,9 +105,9 @@ class jenkins_slave_windows (
     data   =>  1,
   }
 
-  file { 'C:\ProgramData\Git\config':
-    ensure => file,
-    content  => '[core] longpaths=true',
+  file_line { 'gitconfig':
+    path => 'C:\\ProgramData\\Git\\config',
+    ensure => present,
+    line  => '[core] longpaths=true',
   }
-
 }
