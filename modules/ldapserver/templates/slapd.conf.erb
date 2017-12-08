@@ -57,6 +57,7 @@ database mdb
 suffix cn=accesslog
 directory /var/lib/ldap/accesslog
 rootdn cn=accesslog
+maxsize <%= @maxsize %>
 index default eq
 index entryCSN,objectClass,reqEnd,reqResult,reqStart
 access to dn.subtree="cn=accesslog"
@@ -79,7 +80,7 @@ maxsize        <%= @maxsize %>
 
 overlay accesslog
 logdb cn=accesslog
-logops writes
+logops writes session
 logsuccess TRUE
 logold (objectclass=*)
 
