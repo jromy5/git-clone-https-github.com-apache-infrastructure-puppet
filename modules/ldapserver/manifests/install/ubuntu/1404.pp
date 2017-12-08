@@ -118,7 +118,7 @@ class ldapserver::install::ubuntu::1404 (
   tidy {
     'ldap-backup':
         path    => $backuppath,
-        age     => '1w',
+        age     => '2d',
         recurse => 1,
         matches => ['ldap.*','accesslog.*'],
   }
