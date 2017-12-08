@@ -155,7 +155,7 @@ ldapserver::schemas:
   - openssh-lpk
   - ppolicy
   - asf-custom
-ldapserver::ldaploglevel: 'sync'
+ldapserver::ldaploglevel: 'stats'
 ldapserver::modulepath: '/usr/lib/ldap'
 ldapserver::modules:
   - back_mdb
