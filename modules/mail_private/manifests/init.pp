@@ -55,10 +55,12 @@ class mail_private (
       owner  => $username,
       group  => 'root';
     "/home/${username}/scripts/":
-      ensure => 'directory',
-      owner  => $username,
-      group  => $username,
-      mode   => '0755';
+      ensure  => 'directory',
+      recurse => true,
+      owner   => $username,
+      group   => $username,
+      mode    => '0755',
+      source  => 'puppet:///modules/mail_private/scripts';
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
