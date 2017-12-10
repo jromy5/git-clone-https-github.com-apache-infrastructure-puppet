@@ -177,7 +177,7 @@ class mail_archives (
       user    => 'root',
       creates => '/usr/lib/apache2/modules/mod_mbox.so',
       timeout => 1200,
-      require => [Package['apache2'], exec['build mbox module']];
+      require => [Package['apache2'], Exec['build mbox module']];
 
     'copy mod-mbox-util':
       command => "/bin/cp ${mbox_source}/mod-mbox-util ${apache2_bin}",
@@ -185,7 +185,7 @@ class mail_archives (
       user    => 'root',
       creates => "${apache2_bin}/mod-mbox-util",
       timeout => 1200,
-      require => [Package['apache2'], exec['build mbox module']];
+      require => [Package['apache2'], Exec['build mbox module']];
   }
 
 # cron jobs
@@ -204,7 +204,7 @@ class mail_archives (
       minute      => '14',
       hour        => '*/4',
       command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list", # lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
       require     => User[$username];
 
     'site-index':
@@ -227,7 +227,7 @@ class mail_archives (
       user        => $username,
       minute      => '27',
       command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
       require     => User[$username];
 
     'update-index-monthly':
@@ -235,8 +235,8 @@ class mail_archives (
       minute      => '30',
       hour        => '14',
       monthday    => '1',
-      command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index-monthly",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings
+      command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index-monthly", # lint:ignore:140chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
       require     => User[$username];
 
   }

@@ -35,9 +35,10 @@ class buildbot_slave (
     ensure => latest,
   }
 
+  # define gradle symlinking.
   define buildbot_slaves::symlink_gradle ($versions = $title) {
     package {"gradle-${versions}":
-       ensure => latest,
+      ensure => latest,
     }
   }
 

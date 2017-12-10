@@ -101,7 +101,7 @@ class build_slaves::jenkins (
   #define gradle symlinking
   define build_slaves::symlink_gradle ($gradleversions = $title) {
     package {"gradle-${gradleversions}":
-       ensure => latest,
+      ensure => latest,
     } ->
     file {"/home/jenkins/tools/gradle/${gradleversions}":
       ensure => link,
