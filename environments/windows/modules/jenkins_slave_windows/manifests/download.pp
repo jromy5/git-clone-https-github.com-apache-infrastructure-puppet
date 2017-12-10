@@ -1,3 +1,5 @@
+#/environments/windows/modules//jenkins_slave_windows/manifests/download.pp
+
 class jenkins_slave_windows::download (
 
   $ant = $jenkins_slave_windows::params::ant,
@@ -10,39 +12,39 @@ class jenkins_slave_windows::download (
 ) {
   include jenkins_slave_windows::params
   #### Download CMake 3.7.2 from Bintray
-  download_file { "Download Cmake from bintray" :
+  download_file { 'Download Cmake from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/cmake-3.7.2-win64-x64.msi',
     destination_directory => 'C:\temp',
-  } 
+  }
   #### Download cygwin from Bintray
-  download_file { "Download cygwin from bintray" :
+  download_file { 'Download cygwin from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/cygwin64.zip',
     destination_directory => 'C:\temp',
   }
   #### Download Firefox from Bintray ####
-  download_file { "Download Firefox from bintray" :
+  download_file { 'Download Firefox from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/Firefox%20Installer.exe',
     destination_directory => 'C:\temp',
   }
   #### Download Git from Bintray
-  download_file { "Download Git from bintray" :
+  download_file { 'Download Git from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/Git-2.14.3-64-bit.exe',
     destination_directory => 'C:\temp',
   }
 
   #### Download JDK9 from Bintray
-  download_file { "Download JDK9 from bintray" :
+  download_file { 'Download JDK9 from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/asf-build-jdk9.0.exe',
     destination_directory => 'C:\temp',
   }
     #### Download Visual Studio 2015 from Bintray. Manual install. ####
-  download_file { "Download Visual Studio 2015 from bintray" :
+  download_file { 'Download Visual Studio 2015 from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/vs_2015_community_ENU.exe',
     destination_directory => 'C:\temp',
   }
 
   #### Download winSVN ####
-  download_file { "Download winsvn from bintray" :
+  download_file { 'Download winsvn from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/Setup-Subversion-1.8.17.msi',
     destination_directory => 'C:\temp',
   }
@@ -54,36 +56,42 @@ class jenkins_slave_windows::download (
       destination_directory => 'F:\jenkins\tools\ant\zips',
     }
   }
+  # download chromedriver
   define download_chromedriver($chromedriver_version = $title){
       download_file { "Download asf-build-chromedriver-${chromedriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-chromedriver-${chromedriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\chromedriver\zips',
       }
     }
+  # download geckodriver
   define download_geckodriver($geckodriver_version = $title){
       download_file { "Download asf-build-geckodriver-${geckodriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-geckodriver-${geckodriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\geckodriver\zips',
       }
     }
+  # download iedriver
   define download_iedriver($iedriver_version = $title){
       download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-iedriver-${iedriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\iedriver\zips',
       }
     }
+  # download jdk
   define download_jdk($jdk_version = $title){
       download_file { "Download asf-build-${jdk_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${jdk_version}.zip",
         destination_directory => 'F:\jenkins\tools\java\zips',
       }
     }
+  # download Maven
   define download_maven($maven_version = $title){
       download_file { "Download asf-build-${maven_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${maven_version}.zip",
         destination_directory => 'F:\jenkins\tools\maven\zips',
       }
     }
+  # download nant
   define download_nant($nant_version = $title){
       download_file { "Download asf-build-nant-${nant_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",

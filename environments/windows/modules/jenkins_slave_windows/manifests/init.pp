@@ -1,3 +1,5 @@
+#/environments/windows/modules//jenkins_slave_windows/manifests/init.pp 
+
 class jenkins_slave_windows (
 
   $user_password    = '',
@@ -17,7 +19,7 @@ class jenkins_slave_windows (
   }
 
   #### create directories for Jenkins, tools, and such
-  file { ['F:\Program Files','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']:
+  file { ['F:\Program Files','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']: # lint:ignore:140chars
     ensure => directory
   }
 
@@ -27,74 +29,74 @@ class jenkins_slave_windows (
   class {'jenkins_slave_windows::install': }
 
 ################### create symlinks #############################
-  exec { "create symlink for CMake":
+  exec { 'create symlink for CMake':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files\\CMake\" \"C:\\Program Files\\CMake\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files\\CMake') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\Program Files\\CMake') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for latest Ant":
+  exec { 'create symlink for latest Ant':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\ant\\latest F:\\jenkins\\tools\\ant\\apache-ant-1.10.1",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\ant\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for latest Maven":
+  exec { 'create symlink for latest Maven':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for Maven2":
+  exec { 'create symlink for Maven2':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest2 F:\\jenkins\\tools\\maven\\apache-maven-2.2.1",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest2') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for Maven3":
+  exec { 'create symlink for Maven3':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest3') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for latest JDK":
+  exec { 'create symlink for latest JDK':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest F:\\jenkins\\tools\\java\\jdk9.0.1",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for JDK1.9":
+  exec { 'create symlink for JDK1.9':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest9') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-    exec { "create symlink for JDK1.8":
+  exec { 'create symlink for JDK1.8':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.8 F:\\jenkins\\tools\\java\\jdk1.8.0_152",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.8') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for JDK1.7":
+  exec { 'create symlink for JDK1.7':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.7 F:\\jenkins\\tools\\java\\jdk1.7.0_79-unlimited-security",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.7') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for JDK1.6":
+  exec { 'create symlink for JDK1.6':
     command  => " cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.6 F:\\jenkins\\tools\\java\\jdk1.6.0_30",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.6') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for JDK1.5":
+  exec { 'create symlink for JDK1.5':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.5 F:\\jenkins\\tools\\java\\jdk1.5.0_22-64",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.5') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for short path to workspaces':
-    command  => "cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace",
+    command  => 'cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace',
     onlyif   => "if (Test-Path 'F:\\short') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for Git":
+  exec { 'create symlink for Git':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\\Git\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for Subversion":
+  exec { 'create symlink for Subversion':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files (x86)\\Subversion\" \"C:\\Program Files (x86)\\Subversion\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
 #################################################################
@@ -106,8 +108,8 @@ class jenkins_slave_windows (
   }
 
   file_line { 'gitconfig':
-    path => 'C:\\ProgramData\\Git\\config',
     ensure => present,
-    line  => '[core] longpaths=true',
+    path   => 'C:\\ProgramData\\Git\\config',
+    line   => '[core] longpaths=true',
   }
 }

@@ -1,3 +1,5 @@
+#/environments/windows/modules//asf999_windows/manifests/create_user.pp
+
 class asf999_windows::create_user (
 
   $groups      = [],
