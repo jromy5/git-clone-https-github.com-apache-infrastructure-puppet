@@ -1,5 +1,6 @@
 ---
 classes:
+  - aardvark_asf # requires lua deps in basepackages
   - apache
   - apache::mod::headers
   - apache::mod::proxy
@@ -43,6 +44,11 @@ apache::mod::event::threadsperchild: '50'
 base::basepackages:
  - 'issues-data'
  - 'lua5.2'
+ - 'liblua5.2-dev'
+ - 'lua5.2-cjson'
+ - 'lua5.2-socket'
+ - 'lua5.2-sec'
+ - 'lua5.2-yaml'
  
 fail2ban_asf::config::jails:
   bz:
