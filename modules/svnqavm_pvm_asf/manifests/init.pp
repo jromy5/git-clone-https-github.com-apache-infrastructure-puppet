@@ -40,7 +40,7 @@ class svnqavm_pvm_asf (
       minute  => 23;
     # Run backport merges
     'backport-cron':
-      command     => 'for i in 1.6.x 1.7.x 1.8.x 1.9.x ; do cd && cd src/svn/$i && $SVN up -q --non-interactive && YES=1 MAY_COMMIT=1 ../trunk/tools/dist/backport.pl; done', # lint:ignore:140chars
+      command     => 'for i in 1.6.x 1.7.x 1.8.x 1.9.x 1.10.x; do cd && cd src/svn/$i && $SVN up -q --non-interactive && YES=1 MAY_COMMIT=1 ../trunk/tools/dist/backport.pl; done', # lint:ignore:140chars
       user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
