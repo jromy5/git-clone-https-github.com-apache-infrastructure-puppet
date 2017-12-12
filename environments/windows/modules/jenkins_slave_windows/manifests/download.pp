@@ -49,51 +49,56 @@ class jenkins_slave_windows::download (
     destination_directory => 'C:\temp',
   }
 
-  #### Iterate through each tool version (as defined in params.pp) and download the file ####
+  #### Download ant ####
   define download_ant($ant_version = $title){
     download_file { "Download asf-build-${ant_version} zip from bintray" :
       url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${ant_version}.zip",
       destination_directory => 'F:\jenkins\tools\ant\zips',
     }
   }
+  #### Download chromeDriver ####
   define download_chromedriver($chromedriver_version = $title){
       download_file { "Download asf-build-chromedriver-${chromedriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-chromedriver-${chromedriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\chromedriver\zips',
       }
     }
+  #### Download geckoDriver ####
   define download_geckodriver($geckodriver_version = $title){
       download_file { "Download asf-build-geckodriver-${geckodriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-geckodriver-${geckodriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\geckodriver\zips',
       }
     }
+  #### Download ieDriver ####
   define download_iedriver($iedriver_version = $title){
       download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-iedriver-${iedriver_version}.zip",
         destination_directory => 'F:\jenkins\tools\iedriver\zips',
       }
     }
+  #### Download JDK ####
   define download_jdk($jdk_version = $title){
       download_file { "Download asf-build-${jdk_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${jdk_version}.zip",
         destination_directory => 'F:\jenkins\tools\java\zips',
       }
     }
+  #### Download maven ####
   define download_maven($maven_version = $title){
       download_file { "Download asf-build-${maven_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-${maven_version}.zip",
         destination_directory => 'F:\jenkins\tools\maven\zips',
       }
     }
+  #### Download nant ####
   define download_nant($nant_version = $title){
       download_file { "Download asf-build-nant-${nant_version} zip from bintray" :
         url                   => "https://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",
         destination_directory => 'F:\jenkins\tools\nant\zips',
       }
     }
-  #### End iteration ####
-  
+
   download_ant { $ant:}
   download_chromedriver { $chromedriver:}
   download_geckodriver { $geckodriver:}

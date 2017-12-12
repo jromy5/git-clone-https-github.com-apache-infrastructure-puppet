@@ -1,3 +1,5 @@
+#/environments/windows/modules/jenkins_slave_windows/manifests/init.pp
+
 class jenkins_slave_windows (
 
   $user_password    = '',
@@ -28,8 +30,8 @@ class jenkins_slave_windows (
 
   include jenkins_slave_windows::params
 
-  class {'jenkins_slave_windows::download': } ->
-  class {'jenkins_slave_windows::install': }
+  class {'jenkins_slave_windows::download': }
+  -> class {'jenkins_slave_windows::install': }
 
 ################### create symlinks #############################
   exec { 'create symlink for CMake':
@@ -94,17 +96,17 @@ class jenkins_slave_windows (
   }
   exec { 'create symlink for Git':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\\Git\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Subversion':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files (x86)\\Subversion\" \"C:\\Program Files (x86)\\Subversion\"",
-    onlyif    => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
-  exec { "create symlink for hudson":
+  exec { 'create symlink for hudson':
     command  => "cmd.exe /c mklink /d \"F:\\hudson\" \"F:\\jenkins\"",
-    onlyif    => "if (Test-Path 'F:\\hudson') { exit 1;}  else { exit 0; }",
+    onlyif   => "if (Test-Path 'F:\\hudson') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
 #################################################################
@@ -116,9 +118,9 @@ class jenkins_slave_windows (
   }
 
   file_line { 'gitconfig':
-    path => 'C:\\ProgramData\\Git\\config',
     ensure => present,
-    line  => '[core] longpaths=true',
+    path   => 'C:\\ProgramData\\Git\\config',
+    line   => '[core] longpaths=true',
   }
 
   file { 'C:/Users/Jenkins/.m2/settings.xml':

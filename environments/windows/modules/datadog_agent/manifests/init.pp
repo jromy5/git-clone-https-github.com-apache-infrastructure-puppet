@@ -1,4 +1,4 @@
-#/environments/windows/modules//datadog_agent/manifests/init.pp
+#/environments/windows/modules/datadog_agent/manifests/init.pp
 
 class datadog_agent (
   $api_key = '',
@@ -11,10 +11,10 @@ class datadog_agent (
   download_file { 'Download datadog agent' :
     url                   => 'https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-latest.msi',
     destination_directory => 'c:\temp',
-  }->
+  }
 
-  package { 'ddagent-cli-latest.msi':
-  source          => 'c:\temp\ddagent-cli-latest.msi',
-  install_options => ["APIKEY=${api_key}"],
+  package { 'ddagent-cli-latest.msi' :
+    source          => 'c:\temp\ddagent-cli-latest.msi',
+    install_options => ["APIKEY=${api_key}"],
   }
 }
