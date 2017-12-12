@@ -30,7 +30,8 @@ class jenkins_slave_windows (
 
   include jenkins_slave_windows::params
 
-  class {'jenkins_slave_windows::download': } ->  class {'jenkins_slave_windows::install': }
+  class {'jenkins_slave_windows::download': }
+  -> class {'jenkins_slave_windows::install': }
 
 ################### create symlinks #############################
   exec { 'create symlink for CMake':
