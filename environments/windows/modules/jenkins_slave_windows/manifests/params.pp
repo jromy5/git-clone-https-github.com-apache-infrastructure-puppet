@@ -1,4 +1,4 @@
-#/environments/windows/modules//jenkins_slave_windows/manifests/params.pp
+#/environments/windows/modules/jenkins_slave_windows/manifests/params.pp
 
 class jenkins_slave_windows::params (
 
