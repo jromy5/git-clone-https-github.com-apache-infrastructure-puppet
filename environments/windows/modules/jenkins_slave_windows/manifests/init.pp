@@ -1,5 +1,3 @@
-#/environments/windows/modules//jenkins_slave_windows/manifests/init.pp 
-
 class jenkins_slave_windows (
 
   $user_password    = '',
@@ -10,6 +8,11 @@ class jenkins_slave_windows (
   $jdk = [],
   $maven = [],
   $nant = [],
+  $struts2_snapshots_username = '',
+  $apache_snapshots_username = '',
+  $apache_snapshots_password = '',
+  $vmbuild_snapshots_username = '',
+  $vmbuild_snapshots_password = '',
 ) {
   user { 'jenkins':
     ensure   => present,
@@ -85,18 +88,23 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for short path to workspaces':
-    command  => 'cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace',
+    command  => "cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace",
     onlyif   => "if (Test-Path 'F:\\short') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Git':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files\\Git\" \"C:\\Program Files\\Git\"",
-    onlyif   => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
+    onlyif    => "if (Test-Path 'F:\\Program Files\\Git') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Subversion':
     command  => "cmd.exe /c mklink /d \"F:\\Program Files (x86)\\Subversion\" \"C:\\Program Files (x86)\\Subversion\"",
-    onlyif   => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
+    onlyif    => "if (Test-Path 'F:\\Program Files (x86)\\Subversion') { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
+  exec { "create symlink for hudson":
+    command  => "cmd.exe /c mklink /d \"F:\\hudson\" \"F:\\jenkins\"",
+    onlyif    => "if (Test-Path 'F:\\hudson') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
 #################################################################
@@ -108,8 +116,12 @@ class jenkins_slave_windows (
   }
 
   file_line { 'gitconfig':
+    path => 'C:\\ProgramData\\Git\\config',
     ensure => present,
-    path   => 'C:\\ProgramData\\Git\\config',
-    line   => '[core] longpaths=true',
+    line  => '[core] longpaths=true',
+  }
+
+  file { 'C:/Users/Jenkins/.m2/settings.xml':
+    content => template ('jenkins_slave_windows/settings.xml.erb'),
   }
 }

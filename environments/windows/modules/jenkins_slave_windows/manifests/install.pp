@@ -1,4 +1,4 @@
-#/environments/windows/modules//jenkins_slave_windows/manifests/install.pp
+#/environments/windows/modules/jenkins_slave_windows/manifests/install.pp
 
 class jenkins_slave_windows::install (
 

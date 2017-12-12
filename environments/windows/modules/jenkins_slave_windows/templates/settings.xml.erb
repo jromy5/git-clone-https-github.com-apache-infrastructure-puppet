@@ -1,0 +1,85 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <localRepository>F:\hudson\m2_repository</localRepository> 
+
+  <servers>
+    <server>
+      <id>struts2.snapshots</id>
+      <username>'<%= @struts2_snapshots_username %>'</username>
+    </server>
+
+    <server>
+     <id>apache.snapshots.https</id>
+     <username>'<%= @apache_snapshots_username %>'</username>
+     <password>'<%= @apache_snapshots_password %>'</password>
+    </server>
+
+
+    <server>
+     <id>vmbuild.snapshots</id>
+     <username>'<%= @vmbuild_snapshots_username %>'</username>
+     <password>'<%= @vmbuild_snapshots_password %>'</password>
+    </server>
+
+</servers>
+  <mirrors>
+    <!--mirror>
+<id>Nexus</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Nexus</name>
+      <url>https://repository.apache.org/content/repositories/central</url>
+    </mirror-->
+    <mirror>
+<id>Nexus</id>
+      <mirrorOf>apache.snapshots</mirrorOf>
+      <name>Nexus</name>
+      <url>http://repository.apache.org/snapshots</url>
+    </mirror>
+    <mirror>
+<id>Nexus</id>
+      <mirrorOf>apache-snapshots</mirrorOf>
+      <name>Nexus</name>
+      <url>http://repository.apache.org/snapshots</url>
+    </mirror>
+  </mirrors>
+
+
+<!-- Profile that adds the apache snapshot repo to maven (as normal and plugin repo) --> 
+    <profiles> 
+        <profile> 
+            <id>apache-snapshots-enabled</id> 
+            <!--Enable snapshots for the built in central repo and plugin repo --> 
+            <repositories> 
+                <repository> 
+                    <id>apache-snapshots</id> 
+                    <url>http://repository.apache.org/snapshots/</url> 
+                    <releases> 
+                        <enabled>false</enabled> 
+                    </releases> 
+                    <snapshots> 
+                        <enabled>true</enabled> 
+                    </snapshots> 
+                </repository> 
+            </repositories> 
+            <pluginRepositories> 
+                <pluginRepository> 
+                    <id>apache-snapshots</id> 
+                    <url>http://repository.apache.org/snapshots/</url> 
+                    <releases> 
+                        <enabled>false</enabled> 
+                    </releases> 
+                    <snapshots> 
+                        <enabled>true</enabled> 
+                    </snapshots> 
+                </pluginRepository> 
+            </pluginRepositories> 
+        </profile> 
+    </profiles> 
+
+<activeProfiles>
+    <activeProfile>apache-snapshots-enabled</activeProfile>
+  </activeProfiles>
+</settings>
