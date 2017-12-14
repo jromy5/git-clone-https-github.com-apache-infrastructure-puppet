@@ -43,19 +43,19 @@ def authorized_committers(repo_name):
     numldap = 0 # ldap entries fetched
     attrs = ["memberUid", "member"]
     try:
-        for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
+        for pdn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
             numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
-            for dn in attrs.get("member", []):
-                writers.add(DN_RE.match(dn).group(1))
+            for pdn in attrs.get("member", []):
+                writers.add(DN_RE.match(pdn).group(1))
     except:
         log.exception()
     
     # In case of LDAP move (like whimsy), use the updated DN
     if numldap == 0:
         try:
-            for dn, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
+            for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
                 numldap += 1
                 for availid in attrs.get("memberUid", []):
                     writers.add(availid)
