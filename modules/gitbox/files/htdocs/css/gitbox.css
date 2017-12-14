@@ -1,0 +1,52 @@
+.tbl1 {
+    background: #EA6153;
+}
+
+.tbl2 {
+    background: #27AE60;
+}
+
+.tbl3 {
+    background: #2980B9;
+}
+
+
+tbody tr:nth-child(odd) {
+   background-color: #ccc;
+}
+
+tbody tr:nth-child(even) {
+   background-color: #eee;
+}
+
+table {
+    border-radius: 4px;
+    border-spacing: 0;
+    padding: 4px;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    margin: 20px;
+    width: 1040px;
+}
+
+table>thead {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+table>tbody>tr>td:nth-of-type(1) {
+    width: 240px;
+}
+
+table>tbody>tr>td:nth-of-type(2) {
+    width: 240px;
+}
+
+table>tbody>tr>td:nth-of-type(3) {
+    width: 240px;
+}
+
+table>tbody>tr>td:nth-of-type(4) {
+    width: 320px;
+}
