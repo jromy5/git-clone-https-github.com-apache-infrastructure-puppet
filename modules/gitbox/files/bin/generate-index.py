@@ -159,6 +159,7 @@ html = """
 </head>
 
 <body>
+<img src="/images/gitbox-logo.png" style="margin-left: 125px; width: 750px;"/><br/>
 """
 
 repohtml = getActivity()
