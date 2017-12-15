@@ -63,29 +63,31 @@ def getActivity():
         if lcommit == 0:
             agotxt = "No commits"
         elif ago < 60:
-            agotxt = "Less than 1 minute ago"
+            agotxt = "&lt;1 minute ago"
         elif ago < 120:
-            agotxt = "Less than 2 minutes ago"
+            agotxt = "&lt;2 minutes ago"
         elif ago < 300:
-            agotxt = "Less than 5 minutes ago"
+            agotxt = "&lt;5 minutes ago"
         elif ago < 900:
-            agotxt = "Less than 15 minutes ago"
+            agotxt = "&lt;15 minutes ago"
         elif ago < 1800:
-            agotxt = "Less than 30 minutes ago"
+            agotxt = "&lt;30 minutes ago"
         elif ago < 3600:
-            agotxt = "Less than 1 hour ago"
+            agotxt = "&lt;1 hour ago"
         elif ago < 7200:
-            agotxt = "Less than 2 hours ago"
+            agotxt = "&lt; 2 hours ago"
         elif ago < 14400:
-            agotxt = "Less than 4 hours ago"
+            agotxt = "&lt; 4 hours ago"
         elif ago < 43200:
-            agotxt = "Less than 12 hours ago"
+            agotxt = "&lt; 12 hours ago"
         elif ago < 86400:
-            agotxt = "Less than 1 day ago"
+            agotxt = "&lt; 1 day ago"
         elif ago < 172800:
-            agotxt = "Less than 2 days ago"
-        else:
+            agotxt = "&lt; 2 days ago"
+        elif ago <= (31 * 86400):
             agotxt = "%u days ago" % round(ago/86400)
+        else:
+            agotxt = "%u weeks ago" % round(ago/(86400*7))
         
         if lcommit == 0:
             agotxt = "<span style='color: #777; font-style: italic;'>%s</span>" % agotxt
@@ -120,6 +122,12 @@ def getActivity():
     </tr>
 </thead>
 <tbody>
+    <tr>
+        <th>Repository name:</th>
+        <th>Description:</th>
+        <th>Last changed:</th>
+        <th>Links:</th>
+    </tr>
 """ % (a, pname)
         for repo in projects[project]:
             table += """
