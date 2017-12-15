@@ -44,7 +44,7 @@ def authorized_committers(repo_name):
     attrs = ["memberUid", "member"]
     # check new style ldap groups DN first
     try:
-        for pdn, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
+        for ldapresult, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
             numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
@@ -56,7 +56,7 @@ def authorized_committers(repo_name):
     # If new style doesn't exist, default to old style DN
     if numldap == 0:
         try:
-            for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
+            for ldapresult, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
                 numldap += 1
                 for availid in attrs.get("memberUid", []):
                     writers.add(availid)
