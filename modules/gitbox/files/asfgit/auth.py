@@ -48,8 +48,8 @@ def authorized_committers(repo_name):
             numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
-            for pdn in attrs.get("member", []):
-                writers.add(DN_RE.match(pdn).group(1))
+            for result in attrs.get("member", []):
+                writers.add(DN_RE.match(result).group(1))
     except:
         log.exception()
     
@@ -60,8 +60,8 @@ def authorized_committers(repo_name):
                 numldap += 1
                 for availid in attrs.get("memberUid", []):
                     writers.add(availid)
-                for dn in attrs.get("member", []):
-                    writers.add(DN_RE.match(dn).group(1))
+                for result in attrs.get("member", []):
+                    writers.add(DN_RE.match(result).group(1))
         except:
             log.exception()
 
