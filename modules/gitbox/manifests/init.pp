@@ -140,6 +140,11 @@ $pbcsPwd  = ''
       command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup backups/gitbox.db.$(date +\\%Y\\%m\\%d\\%H).bak\"",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => File['/x1/gitbox/db'];
+    'generate-index':
+      user        => 'www-data',
+      minute      => '*/2',
+      command     => "python /x1/gitbox/bin/generate-index.py > /tmp/gi-tmp.html && cp &tmp/gi-tmp.html /x1/gitbox/htdocs/repos.html",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
   tidy { '/x1/gitbox/db/backups':
