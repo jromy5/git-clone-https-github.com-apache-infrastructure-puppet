@@ -42,25 +42,26 @@ def authorized_committers(repo_name):
     lh = ldap.initialize("ldaps://ldap-us-ro.apache.org")
     numldap = 0 # ldap entries fetched
     attrs = ["memberUid", "member"]
+    # check new style ldap groups DN first
     try:
-        for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
+        for ldapresult, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
             numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
-            for dn in attrs.get("member", []):
-                writers.add(DN_RE.match(dn).group(1))
+            for result in attrs.get("member", []):
+                writers.add(DN_RE.match(result).group(1))
     except:
         log.exception()
     
-    # In case of LDAP move (like whimsy), use the updated DN
+    # If new style doesn't exist, default to old style DN
     if numldap == 0:
         try:
-            for dn, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
+            for ldapresult, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
                 numldap += 1
                 for availid in attrs.get("memberUid", []):
                     writers.add(availid)
-                for dn in attrs.get("member", []):
-                    writers.add(DN_RE.match(dn).group(1))
+                for result in attrs.get("member", []):
+                    writers.add(DN_RE.match(result).group(1))
         except:
             log.exception()
 
