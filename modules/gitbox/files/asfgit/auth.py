@@ -26,12 +26,12 @@ def authorized_committers(repo_name):
         writers.add(util.decode(admin.strip()))
 
     if parser.has_option("groups", repo_name):
-        dn = parser.get("groups", repo_name).strip()
+        oldldapresults = parser.get("groups", repo_name).strip()
     else:
         # drop subproject name if present
         repo_name = SUBPROJECT_RE.sub("", repo_name)
-        dn = GROUP_DN % {"group": repo_name}
-        pdn = PGROUP_DN % {"group": repo_name}
+        oldldapresults = GROUP_DN % {"group": repo_name}
+        ldapresults = PGROUP_DN % {"group": repo_name}
 
     # Individually granted access
     if parser.has_option("individuals", repo_name):
@@ -44,24 +44,24 @@ def authorized_committers(repo_name):
     attrs = ["memberUid", "member"]
     # check new style ldap groups DN first
     try:
-        for pdn, attrs in lh.search_s(pdn, ldap.SCOPE_BASE, attrlist=attrs):
+        for ldapresults, attrs in lh.search_s(ldapresults, ldap.SCOPE_BASE, attrlist=attrs):
             numldap += 1
             for availid in attrs.get("memberUid", []):
                 writers.add(availid)
-            for pdn in attrs.get("member", []):
-                writers.add(DN_RE.match(pdn).group(1))
+            for ldapresults in attrs.get("member", []):
+                writers.add(DN_RE.match(ldapresults).group(1))
     except:
         log.exception()
     
     # If new style doesn't exist, default to old style DN
     if numldap == 0:
         try:
-            for dn, attrs in lh.search_s(dn, ldap.SCOPE_BASE, attrlist=attrs):
+            for oldldapresults, attrs in lh.search_s(oldldapresults, ldap.SCOPE_BASE, attrlist=attrs):
                 numldap += 1
                 for availid in attrs.get("memberUid", []):
                     writers.add(availid)
-                for dn in attrs.get("member", []):
-                    writers.add(DN_RE.match(dn).group(1))
+                for oldldapresults in attrs.get("member", []):
+                    writers.add(DN_RE.match(oldldapresults).group(1))
         except:
             log.exception()
 
