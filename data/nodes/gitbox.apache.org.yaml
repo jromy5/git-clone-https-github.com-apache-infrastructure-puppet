@@ -172,6 +172,9 @@ gitbox::custom_fragment_443: |
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/tree/(.*)$ /repos/$1?p=$2.git;a=tree;hb=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/diff/(.*)$ /repos/$1?p=$2.git;a=commitdiff;h=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
+      # Redirect to static index when /repos/asf is requested
+      RewriteCond %{QUERY_STRING} ^$
+      RewriteRule ^/repos/asf/?$ /x1/gitbox/htdocs/repos.html [L,END]
       SetEnv GIT_HTTP_EXPORT_ALL
       <Location /repos/asf>
           SetEnv GIT_PROJECT_ROOT /x1/repos/asf
