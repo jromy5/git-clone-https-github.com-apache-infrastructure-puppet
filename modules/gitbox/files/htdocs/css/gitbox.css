@@ -54,5 +54,6 @@ table>tbody>tr>td:nth-of-type(4) {
 
 body {
    text-align: left;
-   width: 100%;
+   width: 1060px;
+   margin: 10px auto;
 }
