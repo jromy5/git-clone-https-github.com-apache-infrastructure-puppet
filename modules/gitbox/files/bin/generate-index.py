@@ -108,7 +108,7 @@ def getActivity():
     for project in sorted(projects):
         a %= 3
         a += 1
-        pname = "Apache Unknown"
+        pname = project[0].upper() + project[1:]
         if project in PODLINGS['podling']:
             pname = "Apache " + PODLINGS['podling'][project]['name'] + " (Incubating)"
         if project in TLPS['committees']:
