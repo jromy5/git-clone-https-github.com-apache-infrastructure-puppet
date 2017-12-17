@@ -5,6 +5,7 @@
 tbody>tr>td {
     background: #EEE;
     border-bottom: 0.75px solid rgba(0,0,0,0.25);
+    padding: 3px;
 }
 
 th {
