@@ -62,7 +62,6 @@
              "trailer": {
                 "desc": "Add Unsubscribe default footer",
                 "type": "checkbox",
-                  "t": "Add Unsubscribe footer with default text (see below)",
            }
       }
    }
