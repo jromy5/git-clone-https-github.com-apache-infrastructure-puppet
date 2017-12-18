@@ -21,7 +21,7 @@
                   "mandatory": false
               },
               "preset": {
-                  "desc": "OR select a preset bunch to make",
+                  "desc": "OR choose one or more of the following:",
                   "type": "multilist",
                   "options": {
                     "private": "private (will be PRIVATE)",
@@ -30,6 +30,7 @@
                     "users": "users",
                     "issues": "issues",
                     "notifications": "notifications"
+                    "security": "security",
                   },
                   "mandatory": false
               }
