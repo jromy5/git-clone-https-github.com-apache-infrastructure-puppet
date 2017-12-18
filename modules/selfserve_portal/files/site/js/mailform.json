@@ -21,7 +21,7 @@
                   "mandatory": false
               },
               "preset": {
-                  "desc": "OR select a preset bunch to make",
+                  "desc": "OR choose one or more of the following:",
                   "type": "multilist",
                   "options": {
                     "private": "private (will be PRIVATE)",
@@ -30,6 +30,7 @@
                     "users": "users",
                     "issues": "issues",
                     "notifications": "notifications"
+                    "security": "security",
                   },
                   "mandatory": false
               }
@@ -55,6 +56,15 @@
                   "filter": "^([^,\\s@]+@[^,\\s\\.]+\\.[^,\\s]+\\n*)+$"
               }
           }
+   }, {
+         "title": "Optional Extras",
+         "fields": {
+             "trailer": {
+                "desc": "Add Unsubscribe default footer",
+                "type": "checkbox",
+           },
+         "footer": "Default footer text (if applied): <br/><pre>---------------------------------------------------------------------\n            To unsubscribe, e-mail: $listname-unsubscribe@$listdomain\n            For additional commands, e-mail: $listname-help@$listdomain</pre>"
       }
+   }
   ]
 }
