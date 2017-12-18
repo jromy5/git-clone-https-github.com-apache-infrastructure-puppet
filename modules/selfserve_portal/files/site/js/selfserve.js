@@ -680,6 +680,9 @@ renderForm = function(state, page) {
       onclick: 'submitForm("' + state.file + '");'
     }));
   }
+  if (entry.footer) {
+    doc.innerHTML += entry.footer;
+  }
   return doc.inject(form);
 };
 

@@ -420,7 +420,11 @@ renderForm = (state, page) ->
             form.inject(new HTML('input', {style: {float: 'right'}, type: 'button', value: 'Next page', onclick: 'changePage("'+state.file+'", '+(page+1)+');'}))
     else
             form.inject(new HTML('input', {style: {float: 'right', background: '#125caa'}, type: 'button', value: 'Submit request', onclick: 'submitForm("'+state.file+'");'}))
-            
+    
+    # Entry footer html?
+    if entry.footer
+        doc.innerHTML += entry.footer
+        
     doc.inject(form)
 
     
