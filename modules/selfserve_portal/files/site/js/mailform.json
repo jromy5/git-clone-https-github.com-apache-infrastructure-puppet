@@ -64,7 +64,7 @@
                 "type": "checkbox"
              }
            },
-         "footer": "Default footer text (if applied): <br/><pre>---------------------------------------------------------------------\n            To unsubscribe, e-mail: $listname-unsubscribe@$listdomain\n            For additional commands, e-mail: $listname-help@$listdomain</pre>"
+         "footer": "<div style='float: left; width: 100%; margin-top: 20px; background: #FFD; border: 1px dotted #666;'>Default footer text (if applied): <br/><pre>---------------------------------------------------------------------\n            To unsubscribe, e-mail: $listname-unsubscribe@$listdomain\n            For additional commands, e-mail: $listname-help@$listdomain</pre></div>"
       }
   ]
 }
