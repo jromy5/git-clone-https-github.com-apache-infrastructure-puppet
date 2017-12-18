@@ -91,7 +91,7 @@ if not muopts in ['mu', 'Mu', 'mU']:
 
 trailer = form.getvalue('trailer', 'T')
 if trailer == 'true':
-    trailer = 't'
+    trailer = 't'
 
 for newlist in lists:
     # Write payload to file
