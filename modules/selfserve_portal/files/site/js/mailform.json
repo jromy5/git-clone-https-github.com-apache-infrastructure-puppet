@@ -62,7 +62,8 @@
              "trailer": {
                 "desc": "Add Unsubscribe default footer",
                 "type": "checkbox",
-           }
+           },
+         "footer": "Default footer text (if applied): <br/><pre>---------------------------------------------------------------------\n            To unsubscribe, e-mail: $listname-unsubscribe@$listdomain\n            For additional commands, e-mail: $listname-help@$listdomain</pre>"
       }
    }
   ]
