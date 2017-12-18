@@ -56,6 +56,17 @@
                   "filter": "^([^,\\s@]+@[^,\\s\\.]+\\.[^,\\s]+\\n*)+$"
               }
           }
+   }, {
+         "title": "Optional Extras",
+         "fields": {
+             "trailer": {
+                "desc": "Add Unsubscribe default footer",
+                "type": "checkboxes",
+                "options": {
+                  "t": "Add Unsubscribe footer with default text (see below)",
+                }
+           }
       }
+   }
   ]
 }
