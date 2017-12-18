@@ -681,7 +681,7 @@ renderForm = function(state, page) {
     }));
   }
   if (entry.footer) {
-    doc.innerHTML += entry.footer;
+    form.innerHTML += entry.footer;
   }
   return doc.inject(form);
 };
