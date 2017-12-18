@@ -423,7 +423,7 @@ renderForm = (state, page) ->
     
     # Entry footer html?
     if entry.footer
-        doc.innerHTML += entry.footer
+        form.innerHTML += entry.footer
         
     doc.inject(form)
 
