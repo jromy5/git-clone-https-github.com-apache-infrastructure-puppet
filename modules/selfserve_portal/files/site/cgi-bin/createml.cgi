@@ -90,6 +90,8 @@ if not muopts in ['mu', 'Mu', 'mU']:
     sscommon.buggo("Invalid moderation setting requested!")
 
 trailer = form.getvalue('trailer', 'T')
+if trailer == 'true':
+    trailer = 't'
 
 for newlist in lists:
     # Write payload to file

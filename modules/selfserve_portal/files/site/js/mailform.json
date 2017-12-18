@@ -61,7 +61,7 @@
          "fields": {
              "trailer": {
                 "desc": "Add Unsubscribe default footer",
-                "type": "checkboxes",
+                "type": "checkbox",
                 "options": {
                   "t": "Add Unsubscribe footer with default text (see below)",
                 }
