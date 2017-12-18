@@ -89,6 +89,8 @@ muopts = form.getvalue('muopts', 'mu')
 if not muopts in ['mu', 'Mu', 'mU']:
     sscommon.buggo("Invalid moderation setting requested!")
 
+trailer = form.getvalue('trailer', 'T')
+
 for newlist in lists:
     # Write payload to file
     payload = {
@@ -99,7 +101,8 @@ for newlist in lists:
         'list': newlist,
         'muopts': muopts,
         'private': True if (private or newlist in ['private', 'security']) else False, # Force private for private+security@
-        'mods': mods
+        'mods': mods,
+        'trailer': trailer
     }
 
     filename = "mailinglist-%s-%s.json" % (newlist, domain)
