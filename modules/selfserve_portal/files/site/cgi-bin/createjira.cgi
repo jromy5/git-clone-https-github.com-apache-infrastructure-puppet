@@ -36,6 +36,10 @@ project = form.getvalue('project', None)
 if not project or not re.match(r"^[A-Z0-9]+$", project):
     sscommon.buggo("Invalid project name!")
 
+name = form.getvalue('name', None)
+if not name:
+    sscommon.buggo("Invalid project name!")
+
 description = form.getvalue('description', None)
 if not description:
     sscommon.buggo("Invalid project description!")
@@ -66,7 +70,7 @@ try:
         '--password', sscommon.config['jira']['password'],
         '--action', 'createProject',
         '--project', project,
-        '--name', description,
+        '--name', name,
         '--description', description,
         '--lead',  lead,
         '--issueTypeScheme', issuescheme,

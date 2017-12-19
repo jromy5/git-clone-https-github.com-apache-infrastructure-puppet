@@ -7,7 +7,7 @@
           "title": "Base data",
           "fields": {
               "project": {
-                  "desc": "JIRA project name",
+                  "desc": "JIRA project key",
                   "placeholder": "STORM, PONYMAIL etc - [A-Z0-9] only",
                   "type": "text",
                   "filter": "^[A-Z0-9]+$",
@@ -20,6 +20,12 @@
                   "placeholder": "https://foo.apache.org",
                   "type": "text",
                   "filter": "^https?:\/\/.+$",
+                  "mandatory": true
+              },
+              "name": {
+                  "desc": "Project name",
+                  "placeholder": "Short Project Name - Apache Foo",
+                  "type": "textarea",
                   "mandatory": true
               },
               "description": {
