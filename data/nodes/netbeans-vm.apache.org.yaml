@@ -2,6 +2,7 @@
 classes:
   - apache
   - apache::mod::rewrite
+  - apache::mod::php
   - netbeans_pvm_asf
 
 apache::keepalive:          'On'
