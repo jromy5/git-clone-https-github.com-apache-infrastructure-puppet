@@ -10,7 +10,7 @@ class netbeans_pvm_asf (
   $nb_db_name        = '',
   $nb_db_hostname    = '',
 
-  $required_packages = ['php7.0' , 'php7.0-cli' , 'php7.0-mysql'],
+  $required_packages = ['php7.0' , 'php7.0-cli' , 'php7.0-mysql' , 'libapache2-mod-php7.0'],
 
 ){
 
