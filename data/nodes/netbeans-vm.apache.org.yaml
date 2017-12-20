@@ -10,5 +10,8 @@ apache::keepalive_timeout:  '15'
 apache::timeout: 600
 apache::mpm_module:         'prefork'
 
+apache::mod::php::package_name: 'libapache2-mod-php7.0'
+apache::mod::php::path: '/usr/lib/apache2/modules/libphp7.0.so'
+
 # netbeans class variables.
 
