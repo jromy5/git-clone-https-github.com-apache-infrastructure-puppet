@@ -2,17 +2,13 @@
 classes:
   - apache
   - apache::mod::rewrite
-#  - apache::mod::php
   - netbeans_pvm_asf
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
-apache::timeout: 600
+apache::timeout:            600
 apache::mpm_module:         'prefork'
-
-# apache::mod::php::package_name: 'libapache2-mod-php7.0'
-# apache::mod::php::path: '/usr/lib/apache2/modules/libphp7.0.so'
-# apache::mod::php::source: 'puppet:///netbeans_pvm_asf/php.conf'
+apache::purge_configs:      false
 
 # netbeans class variables.
 
