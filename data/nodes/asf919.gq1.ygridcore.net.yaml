@@ -7,3 +7,5 @@ python::python_pips:
     ensure: present
   Sphinx:
     ensure: present
+  blockdiag:
+    ensure: present
