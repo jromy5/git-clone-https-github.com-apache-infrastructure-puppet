@@ -9,3 +9,7 @@ python::python_pips:
     ensure: present
   blockdiag:
     ensure: present
+
+base::basepackages:
+  - 'python-seqdiag'
+  - 'python-nwdiag'
