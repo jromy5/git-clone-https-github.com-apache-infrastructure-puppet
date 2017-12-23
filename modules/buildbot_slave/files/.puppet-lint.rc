@@ -1,6 +1,6 @@
 #/etc/puppet/modules/buildbot_slave/files/.puppet-lint.rc
 
-# lint check excludes - checks we dont want to perform right now.
+# lint check excludes - checks we don't want to perform right now.
 # note these checks are performed against the default modules dir and
 # also the windows envirnoment modules dir.
 
