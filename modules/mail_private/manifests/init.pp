@@ -30,7 +30,7 @@ class mail_private (
     $groupname:
       ensure => present,
       system => true,
-  }->
+  }
 
   user {
     $username:
