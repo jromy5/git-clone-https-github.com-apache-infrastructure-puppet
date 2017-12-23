@@ -1,0 +1,7 @@
+#/etc/puppet/modules/buildbot_slave/files/.puppet-lint.rc
+
+# lint check excludes - checks we dont want to perform right now.
+
+--no-nested_classes_or_defines-check
+--no-autoloader_layout-check
+

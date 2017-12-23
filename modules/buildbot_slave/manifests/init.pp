@@ -130,6 +130,14 @@ class buildbot_slave (
       group   => $groupname,
       mode    => '0755';
 
+    "/home/${username}/.puppet-lint.rc":
+      require => User[$username],
+      path    => "/home/${username}/.puppet-lint.rc",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      source  => 'puppet:///modules/buildbot_slave/.puppet-lint.rc';
+
     "/home/${username}/.m2/settings.xml":
       require => File["/home/${username}/.m2"],
       path    => "/home/${username}/.m2/settings.xml",
