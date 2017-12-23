@@ -211,7 +211,7 @@ class mail_archives (
       user        => $username,
       minute      => '51',
       hour        => '*/4',
-      command     => "/home/${username}/scripts/site-index.py > ${$archives_www}/mod_mbox/index.html",
+      command     => "/home/${username}/scripts/site-index.py > ${archives_www}/mod_mbox/index.html",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
 
