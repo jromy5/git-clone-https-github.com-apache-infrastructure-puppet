@@ -49,7 +49,7 @@ class mail_private (
       ensure => directory,
       owner  => 'root',
       group  => 'root',
-      mode  => '0755';
+      mode   => '0755';
     $install_dir:
       ensure => directory,
       owner  => $username,
