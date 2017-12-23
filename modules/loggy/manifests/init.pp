@@ -28,6 +28,8 @@ class loggy (
       ensure  => present;
     'pyasn1' :
       ensure  => present;
+    'setuptools':
+      ensure  => latest;
   } ->
 
   file {
