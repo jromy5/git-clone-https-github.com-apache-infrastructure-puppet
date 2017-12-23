@@ -143,7 +143,7 @@ $pbcsPwd  = ''
     'generate-index':
       user        => 'www-data',
       minute      => '*/2',
-      command     => "python /x1/gitbox/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/gitbox/htdocs/repos.html",
+      command     => "python /x1/gitbox/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/gitbox/htdocs/repos.html", # lint:ignore:double_quoted_strings
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
