@@ -47,6 +47,7 @@ def main():
     authorized_committers = auth.authorized_committers(cfg.repo_name)
     authorized_committers.add('git-site-role')
     authorized_committers.add('mergebot-role')
+    authorized_committers.add('buildbot')
     if cfg.committer not in authorized_committers:
         util.abort(NOT_AUTHORIZED)
 
@@ -54,6 +55,11 @@ def main():
     # 207.244.88.152 is mergebot-vm.apache.org for the Beam project
     if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152"):
         util.abort(u"mergebot only works from the mergebot VM, tut tut!")
+    
+    # buildbot only possible from bb-slave1
+    # 209.188.14.160 is bb-slave1.a.o
+    if cfg.committer == "buildbot" and (cfg.ip != "209.188.14.160"):
+        util.abort(u"Buildbot role account only accessible via bb-slave1")
 
     # Check individual refs and commits for all of
     # our various conditions. Track each ref update
