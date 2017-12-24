@@ -36,23 +36,23 @@ class mail_private (
     $username:
       ensure     => present,
       home       => "/home/${username}",
-      system   => true,
+      system     => true,
       managehome => true,
       name       => $username,
       shell      => $shell,
       gid        => $groupname,
-      require   => Group[$groupname],
+      require    => Group[$groupname],
   }
 
   file {
-    $parent_dir: 
+    $parent_dir:
       ensure => directory,
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
     $install_dir:
       ensure => directory,
-      owner  => $username, 
+      owner  => $username,
       group  => 'root';
     "/home/${username}/scripts/":
       ensure  => 'directory',
