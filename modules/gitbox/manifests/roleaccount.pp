@@ -6,6 +6,8 @@ class gitbox::roleaccount (
   $rapassword = '',
   $mergebotuser = '',
   $mergebotpass = '',
+  $buildbotuser = '',
+  $buildbotpass = '',
 ) {
   file {
     '/x1/gitbox/auth/roleaccounts':
