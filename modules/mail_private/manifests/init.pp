@@ -34,18 +34,18 @@ class mail_private (
 
   user {
     $username:
-      ensure    => present,
+      ensure     => present,
       home       => "/home/${username}",
       system     => true,
       managehome => true,
       name       => $username,
-      shell     => $shell,
-      gid       => $groupname,
+      shell      => $shell,
+      gid        => $groupname,
       require    => Group[$groupname],
   }
 
   file {
-    $parent_dir: 
+    $parent_dir:
       ensure => directory,
       owner  => 'root',
       group  => 'root',
