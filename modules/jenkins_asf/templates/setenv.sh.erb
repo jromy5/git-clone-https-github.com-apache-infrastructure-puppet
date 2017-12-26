@@ -7,5 +7,6 @@ CATALINA_OPTS="-Djavax.net.ssl.trustStore=/x1/jenkins/jvm-sslcerts/cacerts ${CAT
 CATALINA_OPTS="-Dorg.jenkinsci.plugins.docker.workflow.client.DockerClient.CLIENT_TIMEOUT=30 ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dhudson.scm.SubversionSCM.pollFromMaster=true -Dhudson.DNSMultiCast.disabled=true ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dhudson.model.DirectoryBrowserSupport.CSP= ${CATALINA_OPTS} "
+CATALINA_OPTS="-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -verbose:gc ${CATALINA_OPTS} "
 JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export CATALINA_OPTS JAVA_HOME
