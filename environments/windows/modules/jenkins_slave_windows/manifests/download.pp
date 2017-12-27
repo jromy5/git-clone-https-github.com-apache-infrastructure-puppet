@@ -26,6 +26,11 @@ class jenkins_slave_windows::download (
     url                   => 'https://apache.bintray.com/WindowsPackages/Firefox%20Installer.exe',
     destination_directory => 'C:\temp',
   }
+  #### Download flashplayer from Bintray. Needed for FlexJS ####
+  download_file { 'Download flashplayer from bintray' :
+    url                   => 'https://apache.bintray.com/WindowsPackages/flashplayer_22_sa_debug.exe',
+    destination_directory => 'C:\Program Files (x86)\Adobe',
+  }
   #### Download Git from Bintray
   download_file { 'Download Git from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/Git-2.14.3-64-bit.exe',
@@ -42,6 +47,7 @@ class jenkins_slave_windows::download (
     url                   => 'https://apache.bintray.com/WindowsPackages/vs_2015_community_ENU.exe',
     destination_directory => 'C:\temp',
   }
+
 
   #### Download winSVN ####
   download_file { 'Download winsvn from bintray' :
