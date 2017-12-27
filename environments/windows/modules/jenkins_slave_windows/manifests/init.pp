@@ -120,7 +120,12 @@ class jenkins_slave_windows (
   file_line { 'gitconfig':
     ensure => present,
     path   => 'C:\\ProgramData\\Git\\config',
-    line   => '[core] longpaths=true',
+    line   => '
+      [core]
+           longpaths=true
+      [user]
+           email = jenkins@builds.apache.org
+           name = Jenkins Win 2016-1',
   }
 
   file { 'C:/Users/Jenkins/.m2/settings.xml':
