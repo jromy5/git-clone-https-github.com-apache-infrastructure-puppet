@@ -64,7 +64,7 @@ $ldappass  = ''
       serveraliases   => ['aim-test.apache.org'],
       error_log_file  => 'aim_error.log',
       redirect_status => 'permanent',
-      redirect_dest   => 'https://aim.apache.org/'
+      redirect_dest   => 'https://aim.apache.org/',
       directories     => [
         {
           path           => '/var/www/aim/html',
