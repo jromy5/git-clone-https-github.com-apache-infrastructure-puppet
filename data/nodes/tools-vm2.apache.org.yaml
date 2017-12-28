@@ -3,6 +3,7 @@ classes:
   - apache
   - aim_server
   - blocky
+  - elasticsearch
   - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org
@@ -32,6 +33,19 @@ apache::mod::event::threadsperchild: '50'
 base::gempackages:
   - 'r10k'
   - 'puppet-lint'
+
+elasticsearch::jvm_options:
+  - '-Xms2g'
+  - '-Xmx2g'
+elasticsearch::java_install: true
+elasticsearch::version: '5.4.3'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  tools:
+    config:
+      node.name: 'tools-vm2'
+      network.host: '127.0.0.1'
 
 logrotate::rule:
   apache2:
