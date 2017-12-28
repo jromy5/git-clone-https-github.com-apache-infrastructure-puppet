@@ -1,0 +1,32 @@
+########################################################################
+# PubSubConfiguration                                                  #
+########################################################################
+properties:
+  domain:
+    description: The (sub) domain part of the list to be modified
+    example: kibble
+    type: string
+  project:
+    description: The TLP ID
+    example: kibble
+    type: string
+  type:
+    description: The PubSub type (git/svn) in use
+    example: git
+    type: string
+  listname:
+    description: The list name part of the mailing list
+    type: string
+    example: kibble
+  moderators:
+    description: The current moderators of the list
+    type: object
+    example: ['foo@bar', 'bar@baz']
+required:
+    - domain
+    - type
+    - project
+    - listname
+    - moderators
+
+
