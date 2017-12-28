@@ -7,7 +7,6 @@ classes:
   - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org
-  - vhosts_asf::modules
   - zmanda_asf::client
   
 apache::keepalive:          'On'
