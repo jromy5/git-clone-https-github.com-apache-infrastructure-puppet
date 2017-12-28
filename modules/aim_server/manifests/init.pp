@@ -116,4 +116,15 @@ $ldappass  = ''
           },
       ],
   }
+  
+  # Gunicorn for AIM
+  # Run this command unless gunicorn is already running.
+  # -w 4 == 4 workers, we can up that if need be.
+  exec { '/usr/bin/gunicorn3 -w 4 -b 127.0.0.1:3456 -D handler:application':
+    path   => '/usr/bin:/usr/sbin:/bin',
+    user   => 'root',
+    group  => 'root',
+    cwd    =>  '/var/www/aim',
+    unless => '/bin/ps ax | /bin/grep -q [g]unicorn3',
+  }
 }
