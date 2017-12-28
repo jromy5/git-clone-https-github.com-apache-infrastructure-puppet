@@ -28,7 +28,7 @@ class build_slaves (
 
   exec { 'raise-UserTasksMax':
     command => '/bin/sed -i /\#User/d /etc/systemd/logind.conf && /bin/echo UserTasksMax=49152 >> /etc/systemd/logind.conf',
-    onlyif  => '/bin/grep \#User /etc/systemd/logind.conf',
+    onlyif  => '/usr/bin/test `/bin/grep -c UserTasksMax=49152 /etc/systemd/logind.conf` -eq 0'
   }
 
 }
