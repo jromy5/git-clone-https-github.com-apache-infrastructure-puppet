@@ -31,8 +31,8 @@ class build_slaves (
     ensure  => present,
     path    => '/etc/systemd/logind.conf',
     mode    => '0644',
-    content => template('build_slaves/logind.conf.erb')
-    notify => Service['systemd-logind.service'],
+    content => template('build_slaves/logind.conf.erb'),
+    notify  => Service['systemd-logind.service'],
   }
 
 }
