@@ -26,4 +26,9 @@ class build_slaves (
     pkgname => 'pip',
   }
 
+  exec { 'raise-UserTasksMax':
+    command => '/bin/sed -i /\#User/d /etc/systemd/logind.conf && /bin/echo UserTasksMax=49152 >> /etc/systemd/logind.conf',
+    onlyif  => '/bin/grep \#User /etc/systemd/logind.conf',
+  }
+
 }
