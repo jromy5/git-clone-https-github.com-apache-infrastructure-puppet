@@ -182,8 +182,8 @@ vhosts_whimsy::vhosts::vhosts:
       SetEnv PATH /usr/local/rvm/wrappers/ruby-%{hiera('ruby_version')}:${PATH}
 
       PassengerFriendlyErrorPages on
-      PassengerDefaultUser %{apache::user}
-      PassengerDefaultGroup %{apache::group}
+      PassengerUser %{apache::user}
+      PassengerGroup %{apache::group}
 
       AddCharset UTF-8 .json
 
