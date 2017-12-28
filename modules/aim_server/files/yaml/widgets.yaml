@@ -1,0 +1,120 @@
+defaultWidget: home
+
+
+
+widgets:
+### FRONT PAGE
+    home:
+        title: "Your projects"
+        rows:
+            -
+                name: "Your projects"
+                children:
+                    -
+                        type: projects
+                        blocks: 12
+                        name: "Your projects"
+                        source: resources/mine
+                        
+            
+### QUEUE LIST
+    queue:
+        title: "Request Queue"
+        rows:
+            -
+                name: "Pending requests from projects"
+                children:
+                    -
+                        type: queue
+                        blocks: 12
+                        name: "Pending requests from projects"
+                        source: queue/list/pending
+            -
+                name: "Approved requests pending processing"
+                children:
+                    -
+                        type: queue
+                        blocks: 12
+                        name: "Approved requests pending processing"
+                        source: queue/list/current
+
+# MODIFY PUBSUB CONFIGURATION
+    pubsub-modify:
+        title: "Modify Configuration"
+        rows:
+            -
+                name: "Modify PubSub Configuration"
+                children:
+                    -
+                        type: pubsubeditor
+                        blocks: 12
+                        name: "Modify PubSub Configuration"
+                        source: resources/pubsub
+
+
+# MODIFY MAILING LIST CONFIGURATION
+    mail-modify:
+        title: "Modify Mailing List Configuration"
+        rows:
+            -
+                name: "Modify ML Configuration"
+                children:
+                    -
+                        type: maileditor
+                        blocks: 12
+                        name: "Modify Mailing List Configuration"
+                        source: resources/ml
+                    -
+                        type: mailunsub
+                        blocks: 12
+                        name: "Unsubscribe an email address"
+                        source: resources/ml
+    mail-new:
+        title: "Create a New Mailing List"
+        rows:
+            -
+                name: "Create a New Mailing List"
+                children:
+                    -
+                        type: maileditor
+                        blocks: 12
+                        name: "Create a New Mailing List"
+                        source: resources/ml
+                        
+# MODIFY REPOS
+    repo-modify:
+        title: "Modify Repository"
+        rows:
+            -
+                name: "Modify Repository"
+                children:
+                    -
+                        type: repoeditor
+                        blocks: 12
+                        name: "Modify Repository"
+                        source: resources/repo
+                   
+    repo-new:
+        title: "Create a New Repository"
+        rows:
+            -
+                name: "Create a New Repository"
+                children:
+                    -
+                        type: repoeditor
+                        blocks: 12
+                        name: "Create a Repository"
+                        source: resources/repo
+                        
+# ADD A RESOURCE
+    new:
+        title: "Add a resource"
+        rows:
+            -
+                name: "Add a resource"
+                children:
+                    -
+                        type: neweditor
+                        blocks: 12
+                        name: "Add a new resource"
+                        source: resources/all
