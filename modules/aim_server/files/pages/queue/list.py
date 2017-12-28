@@ -291,7 +291,7 @@ def mlChange(doc, API, session):
         if doc['trailer']:
             diff += "- Add unsubscribe trailer to emails\n"
         else:
-            diff += "- Remove unsubscribe trailer from emails\n"
+            diff += "- Do not add unsubscribe trailer to emails\n"
         
         # Mod unsubbed
         if doc['modunsubbed']:
