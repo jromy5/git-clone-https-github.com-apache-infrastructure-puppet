@@ -2,6 +2,7 @@
 
 class build_slaves (
   $distro_packages  = [],
+  $UserTasksMax     = 49152,
   ) {
 
   class { "build_slaves::install::${::asfosname}::${::asfosrelease}":
@@ -26,9 +27,11 @@ class build_slaves (
     pkgname => 'pip',
   }
 
-  exec { 'raise-UserTasksMax':
-    command => '/bin/sed -i /\#User/d /etc/systemd/logind.conf && /bin/echo UserTasksMax=49152 >> /etc/systemd/logind.conf',
-    onlyif  => '/usr/bin/test `/bin/grep -c UserTasksMax=49152 /etc/systemd/logind.conf` -eq 0'
+  file { 'logind.conf':
+    ensure  => present,
+    path    => '/etc/systemd/logind.conf',
+    mode    => '0644',
+    content => template('build_slaves/logind.conf.erb')
   }
 
 }
