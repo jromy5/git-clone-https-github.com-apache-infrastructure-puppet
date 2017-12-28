@@ -1,0 +1,41 @@
+########################################################################
+# QueueItem                                                            #
+########################################################################
+properties:
+  opts:
+    description: queue options, ignored
+    type: string
+  status:
+    description: When patching a request item, this denotes its status (approved, denied, rescheduled)
+    type: string
+    example: approved
+  id:
+    description: The ID of the queue item
+    example: abcdef67126734271
+    type: string
+  type:
+    description: The type of the request (ml, pubsub, jira, confluence)
+    example: pubsub
+    type: string
+  project:
+    description: The project this request is for
+    type: string
+    example: royale
+  por:
+    description: proof-of-request. Can be a reason for the request or a vote link
+    type: string
+    example: This guy is a spammer, we need to unsub him.
+  payload:
+    description: The queue payload, as a JSON object
+    type: object
+    example: {"project": "flex", "path": "/var/www/flex.apache.org", "source": "$gitbox/flex-site.git"}
+  handler:
+    description: Host that has handled the request (when marking as complete)
+    type: string
+    example: hermes.apache.org
+  error:
+    description: Optional error message if handling of a request failed
+    type: string
+    example: Mailing list already exists!
+required: []
+
