@@ -4,7 +4,7 @@ class aim_server (
 
   $packages            = ['python3-ldap3', 'python3-crypto',
                           'python3-bcrypt', 'python3-gunicorn',
-                          'python3-elasticsearch'],
+                          'python3-elasticsearch', 'gunicorn3'],
 
 # override below in eyaml
 
@@ -50,6 +50,7 @@ $ldappass  = ''
   apache::mod { 'ldap': }
   apache::mod { 'proxy': }
   apache::mod { 'rewrite': }
+  apache::mod { 'headers': }
   apache::mod { 'proxy_http': }
 
   apache::vhost {
