@@ -24,7 +24,7 @@ class jenkins_slave_windows (
   }
 
   #### create directories for Jenkins, tools, and such
-  file { ['F:\Program Files','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']: # lint:ignore:140chars
+  file { ['F:\Program Files','C:\Program Files (x86)\Adobe','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips']: # lint:ignore:140chars
     ensure => directory
   }
 
@@ -118,9 +118,9 @@ class jenkins_slave_windows (
   }
 
   file { 'gitconfig':
-    ensure => present,
-    path   => 'C:\\ProgramData\\Git\\config',
-    content   => template ('jenkins_slave_windows/gitconfig.txt.erb'),
+    ensure  => present,
+    path    => 'C:\\ProgramData\\Git\\config',
+    content => template ('jenkins_slave_windows/gitconfig.txt.erb'),
   }
 
   file { 'C:/Users/Jenkins/.m2/settings.xml':
