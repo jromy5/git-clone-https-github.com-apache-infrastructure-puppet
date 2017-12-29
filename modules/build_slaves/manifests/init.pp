@@ -34,4 +34,10 @@ class build_slaves (
     content => template('build_slaves/logind.conf.erb'),
   }
 
+  service { 'systemd-logind':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/systemd/logind.conf'],
+  }
+
 }
