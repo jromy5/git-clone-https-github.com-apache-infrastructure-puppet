@@ -2,7 +2,7 @@
 
 class build_slaves (
   $distro_packages  = [],
-  $UserTasksMax     = 49160,
+  $UserTasksMax     = 49168,
   ) {
 
   class { "build_slaves::install::${::asfosname}::${::asfosrelease}":
