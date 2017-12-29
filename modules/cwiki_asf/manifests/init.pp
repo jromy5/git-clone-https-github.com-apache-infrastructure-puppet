@@ -66,10 +66,10 @@ class cwiki_asf (
       shell      => $shell,
       uid        => $uid,
       gid        => $groupname,
-      groups    => $groups,
+      groups     => $groups,
       managehome => true,
       require    => Group[$groupname],
-  }  
+  }
 
   group {
     $groupname:
