@@ -27,6 +27,7 @@ class build_slaves (
     pkgname => 'pip',
   }
 
+if $::lsbdistrelease == 16.04 {
   file { 'logind.conf':
     ensure  => present,
     path    => '/etc/systemd/logind.conf',
@@ -39,5 +40,6 @@ class build_slaves (
     enable    => true,
     subscribe => File['/etc/systemd/logind.conf'],
   }
+}
 
 }
