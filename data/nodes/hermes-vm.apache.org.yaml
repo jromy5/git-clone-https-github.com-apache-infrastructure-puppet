@@ -1,0 +1,21 @@
+---
+classes: 
+  - blocky
+  - rsync::server
+  - ssl::name::wildcard_apache_org
+  - loggy
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  hermes:
+    path: '/x1/from_hermes/'
+    hosts_allow: '140.211.11.3'
+    auth_users: 'apb-hermes'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
