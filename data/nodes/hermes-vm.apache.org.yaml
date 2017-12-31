@@ -4,6 +4,11 @@ classes:
   - rsync::server
   - ssl::name::wildcard_apache_org
   - loggy
+  - qmail_asf
+
+# qmail_asf class variables.
+
+qmail_asf::parent_dir: '/x1'
 
 rsync::package_ensure:        'latest'
 rsync::server::use_xinetd:    false
