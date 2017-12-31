@@ -12,7 +12,7 @@ rsync::server::gid:           'nogroup'
 rsync::server::module:
   hermes:
     path: '/x1/from_hermes/'
-    hosts_allow: '140.211.11.3'
+    hosts_allow: '140.211.11.30'
     auth_users: 'apb-hermes'
     secrets_file: '/etc/rsyncd.secrets'
     incoming_chmod: false
