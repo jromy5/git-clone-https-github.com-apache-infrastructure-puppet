@@ -19,3 +19,10 @@ rsync::server::module:
     outgoing_chmod: false
     read_only: 'no'
 
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+
