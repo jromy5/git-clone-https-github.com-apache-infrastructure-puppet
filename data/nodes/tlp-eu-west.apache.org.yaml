@@ -2415,6 +2415,10 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
+         <Directory /var/www/subversion-staging.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
       <Directory /var/www/serf.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
