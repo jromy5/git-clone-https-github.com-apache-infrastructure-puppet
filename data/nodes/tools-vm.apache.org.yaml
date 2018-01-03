@@ -133,6 +133,7 @@ vhosts_asf::vhosts::vhosts:
           Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
       </Location>
 
+      ProxyPass /list !
       ProxyPass / http://localhost:9001/
       ProxyPassReverse / http://localhost:9001/
       ProxyPreserveHost On
