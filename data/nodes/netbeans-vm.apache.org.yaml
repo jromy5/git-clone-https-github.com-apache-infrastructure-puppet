@@ -16,7 +16,7 @@ apache::purge_configs:      false
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
-  drat:
+  netbeans:
     domains:
       - netbeans-vm.apache.org
     plugin: webroot
