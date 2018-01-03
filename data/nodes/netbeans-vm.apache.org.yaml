@@ -2,8 +2,10 @@
 classes:
   - apache
   - apache::mod::rewrite
-  - vhosts_asf::vhosts
+  - apache::mod::ssl
+  - letsencrypt
   - netbeans_pvm_asf
+  - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -11,9 +13,21 @@ apache::timeout:            600
 apache::mpm_module:         'prefork'
 apache::purge_configs:      false
 
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  drat:
+    domains:
+      - neatbeans-vm.apache.org
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
+    manage_cron: true
+    cron_success_command: 'service apache2 reload'
+
+
 vhosts_asf::vhosts::vhosts:
   netbeans-vm.apache.org-80:
-    vhost_name: '*'
     ensure: 'present'
     port: 80
     servername: 'netbeans-vm.apache.org'
@@ -21,6 +35,43 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/html'
     access_log_file: 'netbeans-vm.apache.org_access.log'
     error_log_file: 'netbeans-vm.apache.org_error.log'
+    directories:
+      -
+        path: '/var/www/html'
+        options:
+          - 'FollowSymLinks'
+          - 'MultiViews'
+        allow_override:
+          - 'All'
+        order: 'allow,deny'
+        allow: 'from all'
+    custom_fragment: |
+
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
+
+      ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+      <Directory "/usr/lib/cgi-bin">
+          AllowOverride None
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          Order allow,deny
+          Allow from all
+      </Directory>
+
+  netbeans-vm-ssl:
+    servername: 'netbeans-vm.apache.org'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/netbeans-vm.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/netbeans-vm.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/netbeans-vm.apache.org/chain.pem'
+    ssl_proxyengine: true
+    docroot:  '/var/www/html'
+    access_log_format: 'combined'
+    access_log_file: "netbeans-vm_access.log"
+    error_log_file: "netbeans-vm_error.log"
     directories:
       -
         path: '/var/www/html'
