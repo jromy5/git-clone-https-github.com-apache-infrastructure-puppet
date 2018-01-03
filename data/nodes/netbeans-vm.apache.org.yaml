@@ -25,13 +25,14 @@ vhosts_asf::vhosts::vhosts:
       -
         path: '/var/www/html'
         options:
-          - 'None'
+          - 'FollowSymLinks'
+          - 'MultiViews'
         allow_override:
           - 'All'
         order: 'allow,deny'
         allow: 'from all'
     custom_fragment: |
-      
+
       <Directory />
         Options FollowSymLinks
         AllowOverride None
