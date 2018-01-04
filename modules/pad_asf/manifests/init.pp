@@ -13,7 +13,7 @@ class pad_asf (
       ensure => present;
   }
 
-  $parent_dir  = '/var/www/etherpad_lite'
+  $parent_dir  = '/var/www/etherpad-lite'
   $install_dir = 'asf'
 
   file {
