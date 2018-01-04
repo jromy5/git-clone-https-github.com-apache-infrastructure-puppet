@@ -24,6 +24,11 @@ class pad_asf (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/pad_asf/pads.cgi';
+    '/var/www/etherpad-lite/asf/pads.ezt':
+      mode   => '0644',
+      owner  => $username,
+      group  => $group,
+      source => 'puppet:///modules/pad_asf/pads.ezt';
   }
 
 }
