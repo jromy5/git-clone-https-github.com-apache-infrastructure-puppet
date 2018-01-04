@@ -1,0 +1,20 @@
+<html><head>
+<title>List of Pads</title>
+<style>
+  .odd {
+    background-color: #eeeeee;
+  }
+  div {
+    padding: 2px;
+  }
+</style>
+</head>
+<body style="padding-left: 2em">
+<h1>List of Pads</h1>
+[for pads]
+<div [if-index pads odd]class="odd"[end]>
+  <a href="/p/[format "url"][pads][end]">[pads]</a>
+</div>
+[end]
+<div style="padding-bottom: 2em">&nbsp;</div>
+</body></html>
