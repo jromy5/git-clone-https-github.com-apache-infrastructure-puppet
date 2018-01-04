@@ -12,6 +12,7 @@ classes:
   - git_self_serve::tools
   - jenkins_node_monitor
   - loggy
+  - pad_asf
   - selfserve
   - selfserve_portal
   - ssl::name::wildcard_apache_org
