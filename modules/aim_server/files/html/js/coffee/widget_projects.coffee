@@ -124,6 +124,13 @@ projectDetails = (obj, id) ->
     
     obj.innerHTML = ""
     obj.inject(html)
+    
+pMissingComponent = (item) ->
+    if not item.dns
+        return "This project has no DNS record set yet."
+    if not item.mailinglists or item.mailinglists.length == 0
+        return "This project has no mailing lists yet"
+    return null
 
 projectList = (json, state) ->
     tbl = new HTML('table', {class: 'table table-striped'})
@@ -144,10 +151,15 @@ projectList = (json, state) ->
         for item in json.pmcs
             projects[item.id] = item
             tr = new HTML('tr', { class: 'hovertr', onclick: "showHideProject('#{item.id}')"})
-            if item.error
+            w = pMissingComponent(item)
+            if w
+                tr.style.background = '#F0D0C0'
+                tr.style.color = '#604000'
+                tr.setAttribute("title",  w)
+            if item.error 
                 tr.style.background = '#F0D0C0'
                 tr.style.color = '#803000'
-                
+            
             tr.inject(
                 new HTML('td', {}, item.id)
             )
