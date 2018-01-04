@@ -13,18 +13,22 @@ class pad_asf (
       ensure => present;
   }
 
+  $parent_dir  = '/var/www/etherpad_lite'
+  $install_dir = 'asf'
+
   file {
-    '/var/www/etherpad-lite/asf':
-      ensure => directory,
-      mode   => '0755',
-      owner  => $username,
-      group  => $group;
-    '/var/www/etherpad-lite/asf/pads.cgi':
+    "${parent_dir}/${install_dir}":
+      ensure  => directory,
+      mode    => '0755',
+      owner   => $username,
+      group   => $group,
+      require => [Class['apache'], Class['etherpad_lite']];
+    "${parent_dir}/${install_dir}/pads.cgi":
       mode   => '0755',
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/pad_asf/pads.cgi';
-    '/var/www/etherpad-lite/asf/pads.ezt':
+    "${parent_dir}/${install_dir}/pads.ezt":
       mode   => '0644',
       owner  => $username,
       group  => $group,
