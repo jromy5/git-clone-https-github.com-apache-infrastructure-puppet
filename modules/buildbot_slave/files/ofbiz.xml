@@ -20,7 +20,7 @@
     Check over Apache Ofbiz source files for license headers.
   </description>
 
-  <property name="src-dir" location="../ofbiz-trunk-framework-rat/build"/>
+  <property name="src-dir" location="../ofbizTrunkFrameworkRat/build"/>
   <property name="version" value="0.12"/>
   <property name="jar"
             location="../apache-rat-${version}.jar"/>
