@@ -264,7 +264,7 @@ elif 'repository' in data and 'name' in data['repository']:
                 f.close()
             
             # Send an email to users@infra.a.o with the bork
-            errmsg = err.output
+            errmsg = error.output
             msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
             msg['Subject'] = "gitbox repository %s: sync failed!" % reponame
             msg['To'] = "<team@infra.apache.org>"
