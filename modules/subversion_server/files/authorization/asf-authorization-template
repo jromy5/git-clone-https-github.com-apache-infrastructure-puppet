@@ -1824,6 +1824,9 @@ svn-role = rw
 [/vcl]
 * = r
 
+[/vcl/site]
+@vcl = rw
+
 [/velocity]
 @velocity = rw
 
