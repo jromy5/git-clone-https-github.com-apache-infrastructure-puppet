@@ -1823,6 +1823,7 @@ svn-role = rw
 
 [/vcl]
 * = r
+@vcl = rw
 
 [/velocity]
 @velocity = rw
