@@ -60,4 +60,5 @@ postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-c
 postfix::server::smtpd_sasl_auth:        'true'
 postfix::server::ssl:                    'wildcard.apache.org'
 postfix::server::submission:             'true'
-postfix::server::transport_maps: 'hash:/etc/postfix/transport_maps'
+# This is already defined elsewhere
+#postfix::server::transport_maps: 'hash:/etc/postfix/transport_maps'
