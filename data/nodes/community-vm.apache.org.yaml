@@ -1,0 +1,92 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - apache::mod::authnz_ldap
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - default_pvm_asf
+  - elasticsearch
+  - loggy
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '300'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '10'
+apache::mod::event::serverlimit: '4'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '300'
+apache::mod::event::threadsperchild: '50'
+
+
+base::basepackages:
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+
+elasticsearch::jvm_options:
+  - '-Xms1g'
+  - '-Xmx1g'
+elasticsearch::java_install: true
+elasticsearch::version: '5.4.3'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  comdev:
+    datadir: '/elastic/db/'
+    config:
+      node.name: 'comdev'
+      network.host: '127.0.0.1'
+  
+
+httpd_modules::dev_package:
+  - 'apache2-dev'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+    
+vhosts_asf::modules::modules:
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  community-vm:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    ssl: false
+    servername: 'community-vm.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/community-vm/'
+    access_log_file: 'community-vm.access.log'
+    error_log_file: 'community-vm.error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8000/
+  community-vm-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: /etc/letsencrypt/live/community-vm.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/community-vm.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/community-vm.apache.org/chain.pem
+    servername: 'community-vm.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/community-vm/'
+    access_log_file: 'community-vm.access.log'
+    error_log_file: 'community-vm.error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8000/

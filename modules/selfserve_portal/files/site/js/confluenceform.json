@@ -1,0 +1,33 @@
+{
+  "posturl": "cgi-bin/createconfluence.cgi",
+  "preload": [
+  ],
+   "pages": [{
+          "title": "Base data",
+          "fields": {
+              "space": {
+                  "desc": "Confluence Space name",
+                  "placeholder": "STORM, PONYMAIL etc - [A-Z0-9] only",
+                  "type": "text",
+                  "filter": "^[A-Z0-9]+$",
+                  "verifier": "verifyCONF",
+                  "preload": "js/spacekeys.json",
+                  "mandatory": true
+              },
+              "description": {
+                  "desc": "Project description",
+                  "placeholder": "A simple description of the project",
+                  "type": "textarea",
+                  "mandatory": true
+              },
+              "admin": {
+                  "desc": "Space Administrator",
+                  "placeholder": "Initial Space Admin who can add others.",
+                  "type": "text",
+                  "verifier": "cuserExists",
+                  "mandatory": true
+              }
+          }
+      }
+  ]
+}

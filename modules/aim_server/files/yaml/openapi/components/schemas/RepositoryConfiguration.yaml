@@ -1,0 +1,35 @@
+########################################################################
+# RepositoryConfiguration                                              #
+########################################################################
+properties:
+  project:
+    description: The TLP ID
+    example: kibble
+    type: string
+  type:
+    description: The type (svn/gitwip/gitbox) in use
+    example: gitbox
+    type: string
+  repository:
+    description: The name of the repository
+    type: string
+    example: kibble.git
+  commitlist:
+    description: The commit list for diff emails etc
+    type: string
+    example: commits@kibble.apache.org
+  issuelist:
+    description: Optional mailing list for PR/issue notifs
+    type: string
+    example: issues@kibble.apache.org
+  jira:
+    description: JIRA settings (nocommit, worklog etc)
+    type: string
+    example: worklog
+required:
+    - project
+    - type
+    - repository
+
+
+

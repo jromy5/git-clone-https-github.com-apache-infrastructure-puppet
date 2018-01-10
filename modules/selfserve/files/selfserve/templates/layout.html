@@ -1,0 +1,22 @@
+[define fullbody]
+[# this file uses 'format raw' because the variables were constructed
+   using 'define', so they're fully escaped. ]
+
+            <!-- start of layout -->
+            <div style="width: 900px; margin: 0px auto;" >
+                <div class="left" >
+                    [if-any messagebox]
+                        [format "raw"][messagebox][end]
+                    [else]
+                        <!-- layout:messagebox -->
+                        <p>&nbsp;</p>
+                    [end]
+                </div>
+                <div class="right" >
+                    [format "raw"][body][end]
+                </div>
+            </div>
+            <!-- end of layout -->
+[end][#
+
+][include "base.html"]

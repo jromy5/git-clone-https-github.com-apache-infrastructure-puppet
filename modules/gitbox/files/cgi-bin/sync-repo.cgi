@@ -75,13 +75,79 @@ With regards,
 gitbox.apache.org
 """
 
-if 'repository' in data and 'name' in data['repository']:
+EMPTY_HASH = '0'*40
+
+# Start off by checking if this is a wiki change!
+if 'pages' in data:
+    log = ""
+    repo = data['repository']['name']
+    wikipath = "/x1/repos/wikis/%s.wiki.git" % repo
+    wikiurl = "https://github.com/apache/%s.wiki.git" % repo
+    # If we don't have the wiki.git yet, clone it
+    if not os.path.exists(wikipath):
+        os.chdir("/x1/repos/wikis/")
+        subprocess.check_output(['git','clone', '--mirror', wikiurl, wikipath])
+    
+    # chdir to wiki git, pull in changes
+    os.chdir(wikipath)
+    subprocess.check_output(['git','fetch'])
+    
+    ########################
+    # Get ASF ID of pusher #
+    ########################
+    asfid = "unknown"
+    pusher = data['sender']['login']
+    conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
+    row = cursor.fetchone()
+    # Found it, yay!
+    if row:
+        asfid = row[0]
+    conn.close()
+    
+    # Ready the hook env
+    gitenv = {
+        'NO_SYNC': 'yes',
+        'WEB_HOST': 'https://gitbox.apache.org/',
+        'GIT_COMMITTER_NAME': asfid,
+        'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
+        'GIT_PROJECT_ROOT': '/x1/repos/wikis',
+        'GIT_ORIGIN_REPO': "/x1/repos/asf/%s.git" % repo,
+        'GIT_WIKI_REPO': wikipath,
+        'PATH_INFO': repo+".wiki.git",
+        'ASFGIT_ADMIN': '/x1/gitbox',
+        'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
+        'WRITE_LOCK': '/x1/gitbox/write.lock',
+        'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
+    }
+    for page in data['pages']:
+        after = page['sha']
+        before = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1", after]).strip().split(' ')[1]
+        update = "%s %s refs/heads/master\n" % (before if before != after else EMPTY_HASH, after)
+        
+        # Fire off the multimail hook for the wiki
+        try:                    
+            hook = "/x1/gitbox/hooks/post-receive"
+            # Fire off the email hook
+            process = subprocess.Popen([hook], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=gitenv)
+            out, err = process.communicate(input=update)
+            log += out
+            log += "[%s] [%s]: Multimail deployed (%s -> %s)!\n" % (time.strftime("%c"), wikipath, before, after)
+              
+        except Exception as err:
+            log += "[%s] [%s]: Multimail hook failed: %s\n" % (time.strftime("%c"), wikipath, err)
+        open("/x1/gitbox/sync.log", "a").write(log)
+    
+    
+
+elif 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
-    pusher = data['pusher']['name']
+    pusher = data['pusher']['name'] if 'pusher' in data else data['sender']['login']
     ref = data['ref']
-    baseref = data['base_ref']
-    before = data['before']
-    after = data['after']
+    baseref = data['base_ref'] if 'base_ref' in data else data['master_branch'] if 'master_branch' in data else data['ref']
+    before = data['before'] if 'before' in data else EMPTY_HASH
+    after = data['after'] if 'after' in data else EMPTY_HASH
     repopath = "/x1/repos/asf/%s.git" % reponame
     broken = False
     
@@ -118,16 +184,16 @@ if 'repository' in data and 'name' in data['repository']:
         #######################################
         # Check that we haven't missed a push #
         #######################################
-        emptybranch = '0'*40 # 40 0s means a new branch was made
-        if before and before != emptybranch:
+        if before and before != EMPTY_HASH:
             try:
                 # First, check the db for pushes we have
                 cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
                 foundOld = cursor.fetchone()
                 if not foundOld:
                     # See if we've ever gotten any push logs for this repo, or if this is a first
-                    cursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
-                    foundAny = cursor.fetchone()
+                    tcursor = conn.cursor() # make a temp cursor, try fetching one row
+                    tcursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
+                    foundAny = tcursor.fetchone()
                     if foundAny:
                         raise Exception("Could not find previous push (??->%s) in push log!" % before)
                 # Then, be doubly sure by doing cat-file on the old rev
@@ -143,7 +209,7 @@ if 'repository' in data and 'name' in data['repository']:
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
         
         # If new branch, fetch the old ref from head_commit
-        if before and before == emptybranch and 'head_commit' in data:
+        if before and before == EMPTY_HASH and 'head_commit' in data:
             before = data['head_commit']['id']
         
         ##################################
@@ -172,29 +238,37 @@ if 'repository' in data and 'name' in data['repository']:
         # SYNC WITH GITHUB #
         ####################
         log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-        try:
-            # Change to repo dir
-            os.chdir(repopath)
-            # Run 'git fetch'
-            out = subprocess.check_output(["git", "fetch"])
+    
+        # Change to repo dir
+        os.chdir(repopath)
+        # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
+        p = subprocess.Popen(["git", "fetch", "--prune"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        output,error = p.communicate()
+        rv = p.poll()
+        if not rv:
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
             try:
-                os.unlink("/x1/gitbox/broken/%s.txt" % cfg.repo_name)
+                if os.path.exists("/x1/gitbox/broken/%s.txt" % reponame):
+                    os.unlink("/x1/gitbox/broken/%s.txt" % reponame)
             except:
-                pass
-        except subprocess.CalledProcessError as err:
+                pass # Fail silently
+        else:
             broken = True
-            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, err.output)
-            with open("/x1/gitbox/broken/%s.txt" % cfg.repo_name, "w") as f:
-                f.write("BROKEN AT %s\n" % time.strftime("%c"))
+            log += "[%s] [%s.git]: Git fetch failed: %s\n" % (time.strftime("%c"), reponame, error)
+            with open("/x1/gitbox/broken/%s.txt" % reponame, "w") as f:
+                f.write("BROKEN AT %s\n\nOutput:\n" % time.strftime("%c"))
+                f.write("Return code: %s\nText output:\n" % rv)
+                f.write(error)
                 f.close()
             
             # Send an email to users@infra.a.o with the bork
-            errmsg = err.output
+            errmsg = error.output
             msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
-            msg['Subject'] = "gitbox repository %s: sync failed!" % repository
+            msg['Subject'] = "gitbox repository %s: sync failed!" % reponame
             msg['To'] = "<team@infra.apache.org>"
-            msg['From'] = "<gitbox@gitbox.apache.org>"
+            msg['From'] = "<gitbox@apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
             
@@ -222,8 +296,8 @@ if 'repository' in data and 'name' in data['repository']:
                     'WRITE_LOCK': '/x1/gitbox/write.lock',
                     'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
                 }
-                update = "%s %s %s\n" % (before, after, ref)
-
+                update = "%s %s %s\n" % (before if before != after else EMPTY_HASH, after, ref)
+                
                 try:                    
                     # Change to repo dir
                     os.chdir(repopath)

@@ -1,0 +1,33 @@
+---
+classes: 
+  - blocky
+  - rsync::server
+  - ssl::name::wildcard_apache_org
+  - loggy
+  - qmail_asf
+
+# qmail_asf class variables.
+
+qmail_asf::parent_dir: '/x1'
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  hermes:
+    path: '/x1/from_hermes/'
+    hosts_allow: '140.211.11.30'
+    auth_users: 'apb-hermes'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+

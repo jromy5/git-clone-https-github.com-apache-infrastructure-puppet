@@ -1,0 +1,17 @@
+elasticsearch:
+  dbname: aim
+  host: localhost
+  port: 9200
+  ssl: false
+mail:
+  mailhost: localhost
+  mailport: '25'
+  sender: Apache Infrastructure Management Services <aim@apache.org>
+hipchat:
+  room: 2651110
+  token: <%= @hipchattoken %>
+ldap:
+  host:     ldap-eu-ro.apache.org
+  user:     <%= @ldapuser %>
+  password: <%= @ldappass %>
+

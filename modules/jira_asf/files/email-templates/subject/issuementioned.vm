@@ -1,2 +1,11 @@
 #disable_html_escaping()
-#if($remoteUser)${remoteUser.displayName}#else$i18n.getText("common.words.anonymous")#end $i18n.getText("jira.mentions.mentioned.you") (JIRA)
+#if($remoteUser)
+    #set($userDisplayName = ${remoteUser.displayName})
+#else
+    #set($userDisplayName = $i18n.getText("common.words.anonymous"))
+#end
+#if($issue)
+$i18n.getText("jira.mentions.mentioned.you.on.issue",$userDisplayName, ${issue.getKey()}) (JIRA)
+#else
+$i18n.getText("jira.mentions.mentioned.you", $userDisplayName) (JIRA)
+#end

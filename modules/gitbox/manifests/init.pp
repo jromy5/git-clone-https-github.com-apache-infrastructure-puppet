@@ -6,7 +6,8 @@ class gitbox (
   $custom_fragment_443 = '',
   $packages            = ['gitweb', 'libnet-github-perl',
                           'libnet-ldap-perl', 'swaks',
-                          'python-ldap', 'python-twisted'],
+                          'python-ldap', 'python-twisted',
+                          'highlight'],
 
 # override below in eyaml
 
@@ -24,14 +25,14 @@ $pbcsPwd  = ''
     ensure => directory,
     owner  => 'root',
     group  => 'www-data',
-    mode   => '0750',
+    mode   => '0755',
   }
 
   file { '/x1/repos':
     ensure  => directory,
     owner   => 'root',
     group   => 'www-data',
-    mode    => '0750',
+    mode    => '0755',
     require => File['/x1'],
   }
 
@@ -41,7 +42,7 @@ $pbcsPwd  = ''
     owner    => 'root',
     group    => 'www-data',
     checksum => 'md5',
-    mode     => '0750';
+    mode     => '0755';
   }
 
   file { '/x1/gitbox/hooks/post-receive.d/private.py':
@@ -70,13 +71,18 @@ $pbcsPwd  = ''
       require => Package[$packages],
       owner   => 'www-data',
       group   => 'www-data',
-      mode    => '0750';
+      mode    => '0755';
     '/x1/gitbox/sync.log':
       ensure => present,
       owner  => 'www-data',
       group  => 'www-data',
-      mode   => '0750';
+      mode   => '0755';
     '/x1/gitbox/db':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0750';
+    '/x1/gitbox/db/backups':
       ensure => directory,
       owner  => 'www-data',
       group  => 'www-data',
@@ -89,7 +95,7 @@ $pbcsPwd  = ''
       ensure => directory,
       owner  => 'www-data',
       group  => 'www-data',
-      mode   => '0750';
+      mode   => '0755';
   }
 
   file {
@@ -126,6 +132,27 @@ $pbcsPwd  = ''
       mode   => '0750',
       source => 'puppet:///modules/gitbox/gitweb/gitweb.css';
   }
+
+  cron {
+    'backup-db':
+      user        => 'www-data',
+      minute      => '25',
+      command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup backups/gitbox.db.$(date +\\%Y\\%m\\%d\\%H).bak\"",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      require     => File['/x1/gitbox/db'];
+    'generate-index':
+      user        => 'www-data',
+      minute      => '*/2',
+      command     => "python /x1/gitbox/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/gitbox/htdocs/repos.html", # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+  }
+
+  tidy { '/x1/gitbox/db/backups':
+        age     => '1w',
+        recurse => 1,
+        matches => ['*.bak'],
+  }
+
 
 
   ## Unless declared otherwise the default behaviour is to enable these modules

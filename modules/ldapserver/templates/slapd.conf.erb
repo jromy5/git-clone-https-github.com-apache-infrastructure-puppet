@@ -10,7 +10,7 @@
 
 # Schema and objectClass definitions
 <%-
-schemas.each do |schema|
+@schemas.each do |schema|
 -%>
 include        /etc/ldap/schema/<%= schema %>.schema
 <%- end -%>
@@ -24,19 +24,19 @@ argsfile        /var/run/slapd/slapd.args
 
 # Read slapd.conf(5) for possible values
 #loglevel        none
-loglevel        <%= ldaploglevel %>
+loglevel        <%= @ldaploglevel %>
 
 # Where the dynamically loaded modules are stored
-modulepath      <%= modulepath %>
+modulepath      <%= @modulepath %>
 
 <%-
-modules.each do |mod|
+@modules.each do |mod|
 -%>
 moduleload      <%= mod %>
 <%- end -%>
 
 # The maximum number of entries that is returned for a search operation
-sizelimit      <%= sizelimit %>
+sizelimit      <%= @sizelimit %>
 
 # The tool-threads parameter sets the actual amount of cpu's that is used
 # for indexing.
@@ -47,26 +47,46 @@ tool-threads 2
 # Specific Backend Directives for @BACKEND@:
 # Backend specific directives apply to this backend until another
 # 'backend' directive occurs
-backend        <%= backend %>
+backend        <%= @backend %>
+
+
+#######################################################################
+# accesslog overlay config
+
+database mdb
+suffix cn=accesslog
+directory /var/lib/ldap/accesslog
+rootdn cn=accesslog
+maxsize <%= @maxsize %>
+index default eq
+index entryCSN,objectClass,reqEnd,reqResult,reqStart
+access to dn.subtree="cn=accesslog"
+ by dn.base="cn=root,dc=apache,dc=org" read
+ by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" read
 
 
 #######################################################################
 # Specific Directives for database #1, of type @BACKEND@:
 # Database specific directives apply to this databasse until another
 # 'database' directive occurs
-database        <%= database %>
+database        <%= @database %>
 
 # The base of your directory in database #1
-suffix          <%= suffix %>
-directory      <%= directory %>
-rootdn          <%= rootdn %>
-rootpw          <%= rootpw %>
-maxsize        <%= maxsize %>
+suffix          <%= @suffix %>
+directory      <%= @directory %>
+rootdn          <%= @rootdn %>
+rootpw          <%= @rootpw %>
+maxsize        <%= @maxsize %>
 
+overlay accesslog
+logdb cn=accesslog
+logops writes
+logsuccess TRUE
+logold (objectclass=*)
 
 # Indexing options for database #1
 <%-
-indexes.each do |idx|
+@indexes.each do |idx|
 -%>
 index          <%= idx %> eq
 <%- end -%>
@@ -79,29 +99,29 @@ lastmod        on
 security tls=1
 
 # Define SSL Certs for LDAPS
-TLSCACertificateFile    <%= cafile %>
-TLSCertificateFile      <%= certfile %>
-TLSCertificateKeyFile   <%= keyfile %>
+TLSCACertificateFile    <%= @cafile %>
+TLSCertificateFile      <%= @certfile %>
+TLSCertificateKeyFile   <%= @keyfile %>
 
 
 #######################################################################
 # Replication Directives:
 
 <%-
-  server_hash = slapd_peers.select { |id, s| s == @fqdn }
+  server_hash = @slapd_peers.select { |id, s| s == @fqdn }
   server_id = server_hash.keys.first
 %>
 serverID <%= server_id %>
 
 <%-
-  ldap_servers = slapd_peers.reject { |id, server| server == @fqdn }
+  ldap_servers = @slapd_peers.reject { |id, server| server == @fqdn }
   ldap_servers.each do |id, server|
 -%>
 syncrepl rid=<%= id %>
         provider=ldaps://<%= server %>:636
         binddn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org"
         bindmethod=simple
-        credentials="<%= replcreds %>"
+        credentials="<%= @replcreds %>"
         attrs="*,+"
         searchbase="dc=apache,dc=org"
         type=refreshAndPersist
@@ -220,6 +240,15 @@ access to dn.subtree="ou=people,dc=apache,dc=org"
   by * read
   by anonymous auth
 
+## Explictly make people writable by apldap (root@ equiv) and the ASF Secretary Group
+access to dn.subtree="ou=people,dc=apache,dc=org"
+  attrs=children,entry
+  by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
+  by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
+  by * read
+  by anonymous auth
 
 ## Allow PMC chairs, and Hudson admins to grant job admin privs
 access to dn.subtree="ou=hudson,ou=apps,ou=groups,dc=apache,dc=org"
@@ -255,12 +284,13 @@ access to dn.subtree="ou=auth,ou=groups,dc=apache,dc=org"
   by anonymous auth
 
 
-## Allow the PMC chairs and PMC members to edit group memberships.
+## Allow ASF Members, PMC chairs, and members of a [P]PMC to edit group memberships.
 access to dn.subtree="ou=groups,dc=apache,dc=org"
   attrs=memberUid,member,owner
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org" write
   by group.exact="cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org" write
+  by set="[cn=member,ou=groups,dc=apache,dc=org]/memberUid & user/uid" write
   by dnattr=owner write
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read

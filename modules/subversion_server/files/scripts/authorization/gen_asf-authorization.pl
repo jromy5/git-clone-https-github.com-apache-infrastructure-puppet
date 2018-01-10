@@ -21,7 +21,7 @@ use Net::LDAP::Constant qw(
   LDAP_SYNC_REFRESH_AND_PERSIST
   LDAP_SUCCESS );
 
-my $LDAPHOST  = "ldaps://ldap-lb-us.apache.org";
+my $LDAPHOST  = "ldaps://ldap-us-ro.apache.org";
 my $debug         = 1;
 my ( $cookie, $ldap, %watchlist );
 
@@ -93,21 +93,19 @@ sub rebuild {
             die "Uh-oh: found '@lines', expected one line; at '$_'" unless @lines == 1;
             $_ = $lines[0];
         }
-        if ($_ !~ m/^#/ && $_ =~ m/{ldap:(cn=.+)}/ ) {
+        if ( $_ !~ m/^#/ && $_ =~ m/^([-\w]+)={ldap:(cn=[^;\s}]*);?([^\s}]*)}/ ) {
+            my ( $listname, $dn, $opts ) = ( $1, $2, $3 );
             chomp;
-            my @groupdn = split( /,/, $1 );
+            my @groupdn = split( /,/, $dn );
             my $groupname = shift(@groupdn);
             my ( $groupbase, $membersline );
             $groupbase = join( ',', @groupdn );
             $groupname =~ s/^cn=//;
+            my $attrs = $1 if $opts && $opts =~ /attr=(.*)/;
             push( @dirtyOUwatchlist, "$groupbase" );
-            ( my @memberlist ) = getMembers( $groupname, $groupbase );
+            ( my @memberlist ) = getMembers( $groupname, $groupbase, $attrs );
 
-            # Fix up for -pmc
-            if ( $groupdn[0] eq "ou=pmc" ) {
-                $groupname .= "-pmc";
-            }
-            push( @newauthzfile, "$groupname=" );
+            push( @newauthzfile, "$listname=" );
             foreach my $member (@memberlist) {
 
                 # shorten the full dn down to just the uid value.
@@ -154,8 +152,10 @@ sub rebuild {
 sub getMembers {
     my $gid  = shift;
     my $base = shift;
+    my $attrs = shift || 'memberUid,member';
+
     my ( @members, @entries, $attr, @attrs );
-    print "getMembers: Looking for $gid, $base\n" if ($debug);
+    print "getMembers: Looking for $gid, $base, $attrs\n" if ($debug);
 
     # Look for memberUid for posix groups and member for groupOfNames
     # No group should ever have both?
@@ -164,7 +164,7 @@ sub getMembers {
         filter => "(cn=$gid)",
         base   => "$base",
         scope  => 'one',
-        attrs  => [ 'memberUid', 'member' ]
+        attrs  => [ split( /,/, $attrs ) ]
     );
     $request->code && die $request->error;
     @entries = $request->entries;

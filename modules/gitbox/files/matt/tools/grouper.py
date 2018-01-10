@@ -39,7 +39,7 @@ if DEBUG_RUN:
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("grouper.cfg") # Yeah, you're not getting this info...
 
-LDAP_URI = "ldaps://ldap-lb-us.apache.org:636"
+LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 
@@ -49,6 +49,9 @@ ORG_READ_TOKEN = CONFIG.get('github', 'token')
 logging.info("Preloading 2FA JSON index...")
 MFA = json.load(open("../mfa.json"))
 
+# GH Mappings
+WRITERS = {}
+LINKS = {}
 
 def getGitHubTeams():
     """Fetches a list of all GitHub committer teams (projects only, not the parent org team or the admin teams)"""
@@ -192,54 +195,20 @@ def addGitHubTeamRepo(teamID, repo):
         logging.error(r.content)
 
 
-
-def getCommitters(group):
-    """ Gets the list of availids in a project committer group """
-    # First, check if there's a hardcoded member list for this group
-    # If so, read it and return that instead of trying LDAP
-    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
-        logging.warning("Found hardcoded member list for %s!" % group)
-        return CONFIG.get('group:%s' % group, 'members').split(' ')
-    # Also check if there's a hard coded LDAP base.
-    # If so, the list is usually different, so we'll use getStandardGroup for this.
-    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'ldap'):
-        lb = CONFIG.get('group:%s' % group, 'ldap')
-        return getStandardGroup(group, lb)
-    logging.info("Fetching LDAP committer list for %s" % group)
-    committers = []
-    # This might fail in case of ldap bork, if so we'll return nothing.
-    try:
-        ldapClient = ldap.initialize(LDAP_URI)
-        ldapClient.set_option(ldap.OPT_REFERRALS, 0)
-
-        ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-
-        results = ldapClient.search_s("cn=%s,ou=groups,dc=apache,dc=org" % group, ldap.SCOPE_BASE)
-
-        for result in results:
-            result_dn = result[0]
-            result_attrs = result[1]
-
-            if "memberUid" in result_attrs:
-                for member in result_attrs["memberUid"]:
-                    committers.append(member)
-
-        ldapClient.unbind_s()
-        committers = sorted(committers) #alphasort
-    except Exception as err:
-        logging.error("Could not fetch LDAP data: %s" % err)
-        committers = None
-    return committers
-
-
-def getStandardGroup(group, ldap_base = None):
+def getStandardGroup(group):
     """ Gets the list of availids in a standard group (pmcs, services, podlings) """
     logging.info("Fetching LDAP group list for %s" % group)
+    ldap_base = "cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group
     # First, check if there's a hardcoded member list for this group
     # If so, read it and return that instead of trying LDAP
     if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'members'):
         logging.warning("Found hardcoded member list for %s!" % group)
         return CONFIG.get('group:%s' % group, 'members').split(' ')
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'ldap'):
+        ldap_base = CONFIG.get('group:%s' % group, 'ldap')
+    ldap_key = "member"
+    if CONFIG.has_section('group:%s' % group) and CONFIG.has_option('group:%s' % group, 'ldapkey'):
+        ldap_key = CONFIG.get('group:%s' % group, 'ldapkey')
     groupmembers = []
     # This might fail in case of ldap bork, if so we'll return nothing.
     try:
@@ -248,9 +217,6 @@ def getStandardGroup(group, ldap_base = None):
 
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
         
-        # Default LDAP base if not specified
-        if not ldap_base:
-            ldap_base = "cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group
 
         # This is using the new podling/etc LDAP groups defined by Sam
         results = ldapClient.search_s(ldap_base, ldap.SCOPE_BASE)
@@ -259,8 +225,8 @@ def getStandardGroup(group, ldap_base = None):
             result_dn = result[0]
             result_attrs = result[1]
             # We are only interested in the member attribs here. owner == ppmc, but we don't care
-            if "member" in result_attrs:
-                for member in result_attrs["member"]:
+            if ldap_key in result_attrs:
+                for member in result_attrs[ldap_key]:
                     m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
                     if m:
                         groupmembers.append(m.group(1))
@@ -305,8 +271,6 @@ for repo in allrepos:
 existingTeams = getGitHubTeams()
 existingRepos = getGitHubRepos()
 
-# pre-fetch IPMC list for podling extensions
-ipmc = getStandardGroup('incubator', 'cn=incubator,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org')
 
 # Process each project in the MATT test
 for project in MATT_PROJECTS:
@@ -344,13 +308,10 @@ for project in MATT_PROJECTS:
         logging.info(existingTeams[teamID] + ": " + ", ".join(members))
 
     # Now get the committer availids from LDAP
-    ldap_team = getCommitters(project) if ptype == "tlp" else getStandardGroup(project)
+    ldap_team = getStandardGroup(project)
     if not ldap_team or len(ldap_team) == 0:
         logging.warning("LDAP Borked (no group data returned)? Trying next project instead")
         continue
-    # If a podling, extend the committer list with the IPMC membership (mentors etc)
-    if MATT_PROJECTS[project] == "podling":
-        ldap_team.extend(uid for uid in ipmc if uid not in ldap_team)
 
     # For each committer, IF THEY HAVE MFA, add them to a 'this is what it should look like' list
     hopefulTeam = []
@@ -367,7 +328,7 @@ for project in MATT_PROJECTS:
         elif githubID and githubID in MFA['disabled']:
             logging.warning(githubID + " does not have MFA enabled, can't add to team")
         elif githubID:
-            logging.error(githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled), borked JSON?!")
+            logging.error(githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled); likely: unaccepted org invite")
         else:
             logging.warning(committer + " does not seem to have linked ASF and GitHub ID at gitbox.a.o/setup yet (not found in gitbox.db), ignoring")
 
@@ -389,7 +350,20 @@ for project in MATT_PROJECTS:
             logging.info(member + " not found in GitHub team, adding...")
             if not DEBUG_RUN:
                 addGitHubTeamMember(teamID, member)
-
+                
+    # Add writers to GH map
+    WRITERS[project] = hopefulTeam
+    
     logging.info("Done with " + project + ", moving to next project...")
+
+# Spit out JSON github map
+for account in accounts:
+    LINKS[account[0].lower()] = account[1]
+with open("/x1/gitbox/matt/site/ghmap.json", "w") as f:
+    json.dump({
+        'repos': WRITERS,
+        'map': LINKS
+    }, f)
+    f.close()
 
 logging.info("ALL DONE WITH THIS RUN!")

@@ -5,7 +5,7 @@ classes:
   - apache::mod::ssl
   - elasticsearch
   - loggy
-  - ssl::name::vote_apache_org 
+  - ssl::name::wildcard_apache_org
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
@@ -52,7 +52,7 @@ apache::mod::status::allow_from:
   - all
 
 apache::mpm_module:         'event'
-apache::serveradmin:        'infrastructure@apache.org'
+apache::serveradmin:        'users@infra.apache.org'
 
 base::basepackages:
   - 'lua5.2'
@@ -91,9 +91,9 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/steve/www/htdocs'
     servername: 'vote.apache.org'
     directoryindex: 'index.html'
-    ssl_cert: '/etc/ssl/certs/vote.apache.org.crt'
-    ssl_chain: '/etc/ssl/certs/vote.apache.org.chain'
-    ssl_key: '/etc/ssl/private/vote.apache.org.key'
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     options:
       - Indexes
       - FollowSymLinks
@@ -118,7 +118,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
         AuthName "ASF Committers Only"
-        AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         #AuthLDAPGroupAttribute memberUid
         #AuthLDAPGroupAttributeIsDN off
         #Require ldap-group cn=member,ou=groups,dc=apache,dc=org
@@ -130,7 +130,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /steve/admin>
           AuthType Basic
           AuthName "STeVe administration"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap1-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user

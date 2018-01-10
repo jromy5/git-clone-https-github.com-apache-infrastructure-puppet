@@ -302,7 +302,7 @@ class NodeThread(Thread):
         sys.stderr.flush()
         if not iname in gotindex:
             gotindex[iname] = True
-            if not self.xes.indices.exists(iname):
+            if not self.xes.indices.exists(index=iname):
                 mappings = {}
                 for entry in config.options('RawFields'):
                     js = {
@@ -310,16 +310,21 @@ class NodeThread(Thread):
                         "properties": {
                             "@timestamp" : { "store": True, "type" : "date", "format": "yyyy/MM/dd HH:mm:ss"},
                             "@node" : { "store": True, "type" : "string", "index": "not_analyzed"},
+                            "date" : { "store": True, "type" : "string", "index": "not_analyzed"},
                             "geo_location" : { "type": "geo_point", "geohash": True }
                         }
                     }
                     for field in config.get('RawFields', entry).split(","):
                         x = field.strip()
-                        js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed"}
-                    
+                        js['properties'][x] = {"store": True, "type": "string", "index": "not_analyzed", "fields": { "keyword": { "type": "keyword" }}}
                     mappings[entry] = js
                     
-                res = self.xes.indices.create(index = iname, body = {
+                res = self.xes.indices.create(index = iname, ignore=400, body = {
+                        "settings" : {
+                            "index.mapping.ignore_malformed": True,
+                            "number_of_shards": 3,
+                            "number_of_replicas": 1
+                        },
                         "mappings" : mappings
                     }
                 )
@@ -657,7 +662,7 @@ class Loggy(Thread):
                             
             
                 for x in json_pending:
-                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50:
+                    if (time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 500:
                         if not x in fp:
                             fp[x] = True
                             print("First push for " + x + "!")
@@ -688,7 +693,7 @@ class Loggy(Thread):
                     for x in json_pending:
                         if not x in last_push:
                             last_push[x] = time.time()
-                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 50):
+                        if len(json_pending[x]) > 0 and ((time.time() > (last_push[x] + 15)) or len(json_pending[x]) >= 500):
                             if not x in fp:
                                 fp[x] = True
                                 syslog.syslog(syslog.LOG_INFO, "First push for " + x + "!")

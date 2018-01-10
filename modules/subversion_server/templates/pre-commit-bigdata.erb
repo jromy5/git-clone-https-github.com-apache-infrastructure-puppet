@@ -1,0 +1,15 @@
+#!/usr/local/bin/bash
+
+# This file is maintained in puppet
+# see modules/subversion_server/templates/pre-commit-bigdata.erb
+
+MAINTENANCE=/etc/nocommit
+
+if [ -f $MAINTENANCE ]; then
+  echo "Write access is currently disabled. The ASF SVN BIGDATA repository is currently undergoing maintenance."  > /dev/stderr
+  exit 1
+fi
+source /x1/svn/hooks/pre-commit-sha1
+
+exit 0
+

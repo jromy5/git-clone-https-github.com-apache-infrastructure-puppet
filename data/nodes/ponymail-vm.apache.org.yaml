@@ -20,7 +20,7 @@ elasticsearch::instances:
   pony:
     config:
       node.name: 'ponymail-vm'
-      path.data: '/x1/elastic/db'
+      path.data: '/x1/elastic/db/pony'
       network.host: '127.0.0.1'
 
 apache::default_vhost: false
@@ -50,8 +50,6 @@ base::basepackages:
 
 httpd_modules::dev_package:
   - 'apache2-dev'
-
-ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
 
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false

@@ -80,6 +80,9 @@ org.apache.roller.weblogger.ui.rendering.plugins.comments.AkismetCommentValidato
 # Activate LDAP - also see the security.xml file for LDAP changes/additions.
 authentication.method=ldap
 
+# override default username allowed characters to enable underscore, which we allow in our LDAP
+username.allowedChars=A-Za-z0-9_ 
+
 # logging
 log4j.rootLogger=INFO, roller
 log4j.appender.roller.File=/var/lib/tomcat8/logs/roller.log

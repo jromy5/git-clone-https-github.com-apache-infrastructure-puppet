@@ -6,25 +6,24 @@ classes:
 
 buildbot_slave::slave_name: 'bb_qnode4_ubuntu'
 buildbot_slave::required_packages:
+  - 'graphviz'
+  - 'graphviz-dev'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'graphviz'
-  - 'graphviz-dev'
+  - 'libssl-dev'
   - 'sqlite3'
-
-ldapclient::ldapservers: 'ldaps://snappy5.apache.org:636 ldaps://ldap1-eu-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636'
 
 python::python_pips:
   pelican:
     ensure: present
   markdown:
     ensure: present
+  py-gfm:
+    ensure: present
   beautifulsoup4:
     ensure: present
 
-buildbot_slave::rat::project_name: 'OdfToolkit'
-buildbot_slave::rat::src_dir: 'odftoolkit-trunk'
-buildbot_slave::rat::build_dir: 'build'
-buildbot_slave::rat::report_file: 'rat-output.xml'
-buildbot_slave::rat::rat_excludes: 'rat-excludes'
+buildbot_slave::rat::projects:
+  - 'odftoolkit'
+  - 'trafficcontrol'

@@ -1,0 +1,79 @@
+{
+  "posturl": "cgi-bin/createjira.cgi",
+  "preload": [
+          "js/jiraworkflowschemes.json"
+  ],
+   "pages": [{
+          "title": "Base data",
+          "fields": {
+              "project": {
+                  "desc": "JIRA project key",
+                  "placeholder": "STORM, PONYMAIL etc - [A-Z0-9] only",
+                  "type": "text",
+                  "filter": "^[A-Z0-9]+$",
+                  "verifier": "verifyJIRA",
+                  "preload": "js/keys.json",
+                  "mandatory": true
+              },
+              "url": {
+                  "desc": "Project URL",
+                  "placeholder": "https://foo.apache.org",
+                  "type": "text",
+                  "filter": "^https?:\/\/.+$",
+                  "mandatory": true
+              },
+              "name": {
+                  "desc": "Project name",
+                  "placeholder": "Short Project Name - Apache Foo",
+                  "type": "textarea",
+                  "mandatory": true
+              },
+              "description": {
+                  "desc": "Project description",
+                  "placeholder": "A simple description of the project",
+                  "type": "textarea",
+                  "mandatory": true
+              }
+          }
+      }, {
+          "title": "Issue types and workflows",
+          "fields": {
+              "issuetype": {
+                  "desc": "Issue type scheme",
+                  "type": "list",
+                  "options": ["Apache Default Issue Type Scheme"],
+                  "mandatory": true
+              },
+              "workflow": {
+                  "desc": "Workflow scheme",
+                  "type": "list",
+                  "options": "js/jiraworkflowschemes.json",
+                  "default": "Default workflow, editable Closed issues",
+                  "mandatory": true
+              }
+          }
+      }, {
+          "title": "Permissions",
+          "fields": {
+              "admins": {
+                  "desc": "Project admins",
+                  "placeholder": "comma-separated list of usernames",
+                  "type": "text",
+                  "mandatory": true,
+                  "verifier": "userExists"
+              }
+          }
+      }, {
+          "title": "Notifications",
+          "fields": {
+              "notif_all": {
+                  "desc": "Notification list (all events)",
+                  "placeholder": "dev@foo.apache.org",
+                  "type": "text",
+                  "filter": "^[-a-zA-Z0-9]+@(?:[a-z0-9]+\\.)?apache\\.org$",
+                  "mandatory": true
+              }
+          }
+      }
+  ]
+}

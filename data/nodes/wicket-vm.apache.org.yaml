@@ -1,0 +1,53 @@
+---
+classes:
+  - wicket_pvm_asf
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - vhosts_asf::vhosts
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  examples6x-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'examples6x.wicket.apache.org'
+    serveraliases:
+      - 'www.examples6x.wicket.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'examples6x_error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8086/
+      ProxyPassReverse / http://127.0.0.1:8086/
+  examples7x-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'examples7x.wicket.apache.org'
+    serveraliases:
+      - 'www.examples7x.wicket.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'examples7x_error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8087/
+      ProxyPassReverse / http://127.0.0.1:8087/
+  examples8x-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'examples8x.wicket.apache.org'
+    serveraliases:
+      - 'www.examples8x.wicket.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'examples8x_error.log'
+    custom_fragment: |
+      ProxyPass / http://127.0.0.1:8088/
+      ProxyPassReverse / http://127.0.0.1:8088/

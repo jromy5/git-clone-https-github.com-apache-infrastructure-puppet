@@ -2,9 +2,10 @@
 classes:
   - apache
   - apache::mod::geoip
+  - apache::mod::headers
   - apache::mod::perl
-  - datadog_agent::integrations::http_check
   - gitbox
+  - gitbox::roleaccount
   - blocky
   - loggy
   - rootbin_asf
@@ -34,18 +35,31 @@ apache::mod::event::threadsperchild: '50'
 
 
 cron:
-  json1:
+  # MFA: Collate MFA status for org members
+  mfa:
     user: 'root'
-    minute: [0,30]
+    minute: [0,15,30,45]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
+  # Grouper: invite gitbox members to their repos/teams
   grouper:
     user: 'root'
     minute: [10,40]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
+  # GHAdd: Invite people to ASF GH Org based on LDAP
+  ghadd:
+    user: 'root'
+    minute: [0,10,20,30,40,50]
+    hour: '*'
+    command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
+  # JSONStats: collect traffic stats from GH
+  jsonstats:
+    user: 'root'
+    minute: [10]
+    hour: '0'
+    command: 'cd /x1/gitbox/matt/tools/ && python json-stats.py'
 
-datadog_agent::integrations::http_check::url: 'https://gitbox.apache.org/repos/asf'
 
   
 base::gempackages:
@@ -80,22 +94,44 @@ gitbox::custom_fragment_443: |
       SetEnv WRITE_LOCK /etc/nocommit
       SetEnv AUTH_FILE /x1/gitbox/conf/auth.cfg
       SetEnv GIT_REPOS_ROOT /x1/repos
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
       <Location /repos/>
           SetEnv WEB_HOST https://gitbox.apache.org
+      </Location>
+      <Location /stats/>
+        AuthType Basic
+        AuthName "ASF Committers"
+        AuthBasicProvider ldap
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute memberUid
+        AuthLDAPGroupAttributeIsDN off
+        Require ldap-attribute gidNumber=5000
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+        Require valid-user
       </Location>
       RewriteEngine On
       <LocationMatch "^/repos/">
         Require all denied
         <If "%%{}{QUERY_STRING} =~ /service=git-receive-pack/ || %%{}{REQUEST_URI} =~ /git-receive-pack$/">
-                AuthType Basic
-                AuthName "ASF Committers"
-                AuthBasicProvider ldap
-                AuthLDAPUrl "ldaps://ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
-                AuthLDAPGroupAttribute memberUid
-                AuthLDAPGroupAttributeIsDN off
-                Require ldap-attribute gidNumber=5000
-                Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
-                Require valid-user
+          AuthType Basic
+          AuthName "ASF Committers"
+          AuthBasicProvider file ldap
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          # Fall back to auth file for role accounts
+          AuthUserFile /x1/gitbox/auth/roleaccounts
+          <RequireAny>
+            <RequireAll>
+              Require ldap-attribute gidNumber=5000
+              Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+              Require valid-user
+            </RequireAll>
+            Require valid-user
+          </RequireAny>
         </If>
         <Else>
                 Require all granted
@@ -103,7 +139,8 @@ gitbox::custom_fragment_443: |
       </LocationMatch>
       AliasMatch ^/logs/asf/(.+?)(?:\.git)?$ /x1/repos/asf/$1.git/ref-updates.log
       # Handlers for Github web hooks
-      ScriptAliasMatch ^/([^/]+)\.cgi$ /x1/gitbox/cgi-bin/$1.cgi
+      ScriptAliasMatch ^/([^/]+)\.cgi.*$ /x1/gitbox/cgi-bin/$1.cgi
+      AcceptPathInfo On
       <Directory /x1/gitbox/cgi-bin>
           require all granted
           Options ExecCGI FollowSymlinks
@@ -135,6 +172,9 @@ gitbox::custom_fragment_443: |
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/tree/(.*)$ /repos/$1?p=$2.git;a=tree;hb=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/diff/(.*)$ /repos/$1?p=$2.git;a=commitdiff;h=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
+      # Redirect to static index when /repos/asf is requested
+      RewriteCond %%{}{QUERY_STRING} ^$
+      RewriteRule ^/repos/asf/?$ /x1/gitbox/htdocs/repos.html [L,END]
       SetEnv GIT_HTTP_EXPORT_ALL
       <Location /repos/asf>
           SetEnv GIT_PROJECT_ROOT /x1/repos/asf
@@ -148,8 +188,24 @@ gitbox::custom_fragment_443: |
       <Directory /x1/gitbox/matt/site>
         Require all granted
       </Directory>
-      Alias /setup/ /x1/gitbox/matt/site/
-      <Location /setup/>
+      Alias /setup /x1/gitbox/matt/site/
+      <Location /setup>
           Options +ExecCGI
           AddHandler cgi-script .cgi
       </Location>
+      # Mergebot GH Mappings file - mergebot-vm only!!
+      <Location /setup/ghmap.json>
+        Require ip 207.244.88.152
+      </Location>
+      <LocationMatch "^/setup/newrepo.*">
+          AuthType Basic
+          AuthName "ASF Committers"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-attribute gidNumber=5000
+          Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+          Require valid-user
+      </LocationMatch>
+

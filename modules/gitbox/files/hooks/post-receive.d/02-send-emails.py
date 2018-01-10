@@ -35,6 +35,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         mailer = git_multimail.SendMailer(
+            os.environ,
             command=['/usr/local/sbin/sendmail', '-oi', '-t'],
             envelopesender='git@apache.org',
             )
@@ -43,6 +44,6 @@ if __name__ == '__main__':
     except Exception, exc:
         log.exception()
         print "Error: %s" % exc
-        exit(1)
+        exit(0) # Don't exit(1) here, we want the bleedin' sync to complete!
 
 

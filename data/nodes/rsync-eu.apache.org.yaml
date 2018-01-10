@@ -1,0 +1,20 @@
+---
+classes:
+  - loggy
+  - svnwcsub
+  - rsync
+  - rsync::server
+  - rsync_mirror
+  
+svnwcsub::gid:              '9995'
+svnwcsub::uid:              '9995'
+svnwcsub::conf_file:        'svnwcsub.conf'
+svnwcsub::service_ensure:   'running'
+svnwcsub:::conf_path:       '/etc/'
+svnwcsub::groupname:        'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_name:     'svnwcsub'
+svnwcsub::shell:            '/bin/bash'
+svnwcsub::source:           'svnwcsub.conf.dist'
+svnwcsub::username:         'svnwc'

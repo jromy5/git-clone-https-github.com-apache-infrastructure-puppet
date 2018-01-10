@@ -1,0 +1,73 @@
+---
+classes:
+  - apache
+  - apache::mod::rewrite
+  - apache::mod::ssl
+  - letsencrypt
+  - vhosts_asf::vhosts
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '2000'
+apache::mod::event::maxrequestworkers: '50'
+apache::mod::event::maxsparethreads: '20'
+apache::mod::event::minsparethreads: '15'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '50'
+apache::mod::event::threadsperchild: '5'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  drat:
+    domains:
+      - drat-vm.apache.org
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
+    manage_cron: true
+    cron_success_command: 'service apache2 reload'
+
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::vhosts::vhosts:
+  redirect-80:
+    servername: 'drat-vm.apache.org'
+    priority: '12'
+    port: 80
+    docroot: '/var/www/html'
+    ssl: false
+    redirect_source: '/'
+    redirect_dest: 'https://drat-vm.apache.org/'
+
+  drat-vm:
+    servername: 'drat-vm.apache.org'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/drat-vm.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/drat-vm.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/drat-vm.apache.org/chain.pem'
+    ssl_proxyengine: true
+    docroot:  '/var/www/html'
+    access_log_format: 'combined'
+    access_log_file: "drat-vm_access.log"
+    error_log_file: "drat-vm_error.log"
+    proxy_pass:
+      -
+        path: '/.well-known/'
+        url: '!'
+      -
+        path: '/asfgit'
+        url: 'http://localhost:8080/viz'
+      -
+        path: '/demo'
+        url: 'http://localhost:8080/proteus'

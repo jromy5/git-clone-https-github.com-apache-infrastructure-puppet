@@ -1,21 +1,31 @@
 local JSON = require 'cjson'
 local http = require 'ssl.https'
-local ldap_host = "snappy5.apache.org"
+local ldap_host = "ldap-eu-ro.apache.org"
 local aaa_domain = "apache.org"
-local aaa_binddn = "<%= @nssbinddn %>"
-local aaa_bindpw = "<%= @nssbindpasswd %>"
+local aaa_binddn = "<%= scope['ldapclient::nssbinddn'] %>"
+local aaa_bindpw = "<%= scope['ldapclient::nssbindpasswd'] %>"
 local aaa_base = "dc=apache,dc=org"
 local hct = "<%= @hipchattoken %>"
 
 -- Get a list of PMCs the user is a part of
 function getPMCs(r, uid)
     local groups = {}
-    local ldapquery = ([[ldapsearch -x -Z -h %s -D %s -w %s -b %s -LLL "(|(memberUid=%s)(member=uid=%s,ou=people,dc=apache,dc=org))" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, aaa_base, uid, uid)
+    
+    -- Fetch list of podlings
+    local rv = http.request("https://projects.apache.org/json/foundation/podlings.json")
+    podlings = JSON.decode(rv)
+    
+    -- PMCs, discard podlings for now (We'll fix that later).
+    local ldapquery = ([[ldapsearch -x -Z -H ldaps://%s:636 -D %s -w %s -b "ou=project,ou=groups,dc=apache,dc=org" -LLL "(owner=uid=%s,ou=people,dc=apache,dc=org)" cn]]):format(ldap_host, aaa_binddn, aaa_bindpw, uid)
     local ldapdata = io.popen(ldapquery)
     local data = ldapdata:read("*a")
-    for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=pmc,ou=committees,ou=groups,dc=apache,dc=org") do
-        table.insert(groups, match)
+    for match in data:gmatch("dn: cn=([-a-zA-Z0-9]+),ou=project,ou=groups,dc=apache,dc=org") do
+        if match and not podlings[match] then
+            table.insert(groups, match)
+        end
     end
+    ldapdata:close()
+    
     return groups
 end
 
@@ -44,10 +54,17 @@ function handle(r)
     
     -- call to fetch list of PMCs a user belongs to?
     if get.action and get.action == 'pmcs' then
+        -- Get PMC LDAP entries
         local pmcs = getPMCs(r, r.user or 'nobody')
+        
+        -- Get PMC display names
+        local rv = http.request('https://whimsy.apache.org/public/committee-info.json')
+        local pjson = JSON.decode(rv)
+        
         r:puts(JSON.encode{
             okay = true,
-            pmcs =pmcs
+            pmcs = pmcs,
+            names = pjson.committees
         })
         return apache2.OK
     end

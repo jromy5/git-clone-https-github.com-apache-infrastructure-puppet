@@ -37,10 +37,12 @@ class whimsy_server (
     nodejs,
     pdftk,
     procmail,
+
+    gnupg2,
   ]
 
   exec { 'Add nodesource sources':
-    command => 'curl https://deb.nodesource.com/setup_5.x | bash -',
+    command => 'curl https://deb.nodesource.com/setup_8.x | bash -',
     creates => '/etc/apt/sources.list.d/nodesource.list',
     path    => ['/usr/bin', '/bin', '/usr/sbin']
   } ->
@@ -52,7 +54,7 @@ class whimsy_server (
   ############################################################
 
   class { 'rvm::passenger::apache':
-    version            => '5.0.29',
+    version            => '5.1.8',
     ruby_version       => "ruby-${ruby_version}",
     mininstances       => '3',
     maxinstancesperapp => '0',
@@ -81,6 +83,7 @@ class whimsy_server (
   #                         Symlink Ruby                     #
   ############################################################
 
+  # define ruby symlinking
   define whimsy_server::ruby::symlink ($binary = $title, $ruby = '') {
     $version = split($ruby, '-')
     file { "/usr/local/bin/${binary}${version[1]}" :
@@ -90,6 +93,7 @@ class whimsy_server (
     }
   }
 
+  # define rvm symlinking
   define whimsy_server::rvm::symlink ($ruby = $title) {
     $binaries = [bundle, erb, gem, irb, rackup, rake, rdoc, ri, ruby, testrb]
     whimsy_server::ruby::symlink { $binaries: ruby => $ruby}
@@ -126,11 +130,32 @@ class whimsy_server (
   }
 
   ############################################################
+  #                      Whimsy pubsub                       #
+  ############################################################
+
+  file { '/etc/init/whimsy-pubsub.conf' :
+    source => 'puppet:///modules/whimsy_server/whimsy-pubsub.conf'
+  } ->
+
+  file { '/etc/systemd/system/whimsy-pubsub.service' :
+    source => 'puppet:///modules/whimsy_server/whimsy-pubsub.service'
+  } ->
+
+  service { 'whimsy-pubsub':
+    ensure  => running,
+    require => Vcsrepo['/x1/srv/whimsy']
+  }
+
+  ############################################################
   #              Board Agenda WebSocket Server               #
   ############################################################
 
   file { '/etc/init/board-agenda-websocket.conf' :
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.conf'
+  } ->
+
+  file { '/etc/systemd/system/board-agenda-websocket.service' :
+    source => 'puppet:///modules/whimsy_server/board-agenda-websocket.service'
   } ->
 
   service { 'board-agenda-websocket':
@@ -157,6 +182,7 @@ class whimsy_server (
 
   $directories = [
     '/x1/srv/agenda',
+    '/x1/srv/cache',
     '/x1/srv/secretary',
     '/x1/srv/secretary/tlpreq',
     '/x1/srv/whimsy/www/board/minutes',

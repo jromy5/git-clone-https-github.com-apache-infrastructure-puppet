@@ -132,7 +132,10 @@
                    redirectPort="8443"
                    enableLookups="false"
                    protocol="AJP/1.3"
-                   URIEncoding="UTF-8"/>
+                   URIEncoding="UTF-8"
+                   acceptorThreadCount="2"
+                   maxThreads="800"
+                   />
 <% end %>
 
         <Engine name="Catalina" defaultHost="localhost">
@@ -185,6 +188,12 @@
                 ====================================================================================
 
             -->
+
+            <!-- crawler valve to try and deal with session contention -->
+
+            <Valve className="org.apache.catalina.valves.CrawlerSessionManagerValve"
+              crawlerUserAgents=".*[bB]ot.*|.*Slurp.*|.*Feedfetcher.*|Java.*|.*spider.*|.*Jetslide.*|.*daum.*|.*nagios.*|.*Axis.*|.*HttpClient.*|.*Googlebot.*|.*curl.*|.*urllib.*|.*AppEngine.*|.*Yandex.*"/>
+
             <Valve className="org.apache.catalina.valves.AccessLogValve" resolveHosts="false"
                    pattern="%a %{jira.request.id}r %{jira.request.username}r %t &quot;%m %U%q %H&quot; %s %b %D &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot; &quot;%{jira.request.assession.id}r&quot;"/>
 

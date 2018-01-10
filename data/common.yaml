@@ -14,6 +14,10 @@ classes:
   - timezone
   - ulimit_asf
 
+#classes_windows:
+#  - asf999_windows::create_user
+#  - datadog_agent
+
 ## MODULES
 ## AMANDA
 amanda::client::remote_user: 'amandabackup'
@@ -60,9 +64,17 @@ asf999::create_user::keycontent: |
 
   # pono
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC0uGTHhDHdfiisFmyOG9kg4I3bXywTjC1IfR1femPl65B1VnvCLs0M9GZvJz2ZQyHKSieIcjDb/JoS5IxOfLw59bHTOfRGW3eUpG1H9LqFDoPKGEzZpa7s5pKfOk2OUmeepi8P0TApSpKxHineXkuWgv2bVw+iwL70Heql8SVpfVBDS4YerjpW/YjMX9EyUuDGKTV4HWPAM4FxtALqEr5DU2pSfJ4UXJleqUeeprlVve0Fxfi4EeyYI+aJRxjAzhad/c7tgyDSNgzN1iXaMoc6EvqgtGHxyuKPHdkMhufdVR8SlmwmLR0N/XkvTaltwSdPYnCsezSBck+5WZB0Sz1cRgMEP/Ff62U04MqSWJVgEr86354ijmspA/m+2BE5kbIKfKDNdbR2wHaGXrkF7LIILYiRBWg/Cgps1X+jenImJDtsi556SBetLbE2PepJf0LVxgTRSROn/3U2C7JkenOyV/cZTJgS0KQU4+nQGO6W+rRgeSd/dMYmNiojDBuXQz24DCd0Mut/cLbERFez5NLNHj6adQi+XJBrAtpR5rqvUIVth1W/gyB0kx3Xxpdzoo5jcl+gqHzjEmZEeshAhfjuZmTX0r1zw3CergqXpbQSwkEuWjvLluONO4h6s4sOxDCCL/Mx3dpFp7k7+QmIzcparuE3YCE4/PO3X/jMpdau1Q== d@nube
+  
+  # christ
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJivoCwPuWBhdeg/e/OcmfRkDLX3DTJPdiRJd3XbHP4QP+yjDeBqq57O956UEk1qoG/JGQx3vOXk96oSTFKpOJcZopZ2Dg1lJAWWccKompkrUGP0R8lb8Ki9VWf1TujNagDuDzxt9jruwW5jEeG1iOhgu0J0Qufd1up6Q5yvBE5dohpZ2OOhZennIudWOXqRduUVuNR6J5umfRVSPbg1bJXjjvwC5aeNGCJdH/NEp71+n7YjSfavoHbG8y3B3OvwJq3xQMqW5LZz0oxfpriIbBITzG8LO09TNnPLXc+CqGuMyqFHcv7KhhtQiA6oTom/9/Ylsg1HVmGxS/ARMW53czld8iVMFFdGGAs4Y3tV9glokG8JTaekYLTQoTJH41ZtF8gDXpabxrsfUQUDuETlpMJ+21U1xnwahMaMQzNL5+Kq2/KOc+qmLzrk4KY3Om3svKSs/v5nd3KHE5sDaL0A69l6wqIFzKiPTUSHew8wG1+BouRWJQ2NDow0F/QUpUKlXRC2zwQgn4Ha939EiQX1l2zDeGcBY+ohDHbgRZWhsXR8g7MSKKPQfQ16DBOkEzhQ6ztmTs2u/43olUEwjKjyVQXhbA5uI26eZyFYv5QBM7xwXpmbX8BTNqHhl02kIJGn2uSPYD9IpeAkRkt7INf60UUKOuIP2F3BTvFnhDnrdMIQ== christ@ECTO1
 
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
+
+#asf999_windows::create_user::user: 'asf999_windows'
+#asf999_windows::create_user::groups:
+#  - 'Users'
+#  - 'Administrators'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
@@ -124,15 +136,15 @@ ldapclient::ldapcert: |
 ldapclient::authorizedkeysfolder: '/etc/ssh/bin'
 ldapclient::authorizedkeysfile: 'asf-ldap-sshkeys.sh'
 ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
-ldapclient::nssbindpasswd: 'b1t3me'
-
 
 ldapserver::slapd_peers:
   1: themis.apache.org
-  3: ldap1-lw-us.apache.org
-  4: ldap1-lw-eu.apache.org
-  5: devops.apache.org
-  6: snappy5.apache.org
+  2: ldap1-lw-us.apache.org
+  3: ldap1-lw-eu.apache.org
+  4: devops.apache.org
+  5: ldap1-ec2-va.apache.org
+  6: ldap1-il-eu.apache.org
+  7: ldap2-lw-us.apache.org
 
 ldapserver::schemas:
   - core
@@ -150,6 +162,7 @@ ldapserver::modules:
   - back_mdb
   - syncprov
   - memberof
+  - accesslog
 ldapserver::sizelimit: 'unlimited'
 ldapserver::backend: 'mdb'
 ldapserver::database: 'mdb'
@@ -170,7 +183,7 @@ ldapserver::cafile: '/etc/ldap/cacerts/cacert.pem'
 ldapserver::certfile: '/etc/ldap/cacerts/ldap-wildcard-cert.pem'
 ldapserver::keyfile: '/etc/ldap/cacerts/ldap-wildcard-cert.key'
 
-mail_relay::mail_ldap_servers: 'ldaps://ldap1-us-west.apache.org ldaps://ldap2-us-west.apache.org'
+mail_relay::mail_ldap_servers: 'ldaps://ldap-us-ro.apache.org ldaps://ldap-eu-ro.apache.org'
 
 ntp::disable_monitor: true
 ntp::udlc: false
@@ -334,6 +347,7 @@ spamassassin::spamd::whitelist_from:
   - 'isporders@symantec.com'
   - 'carledi@ar.ibm.com'
   - 'altmann@us.ibm.com'
+  - 'jira@apache.org'
 
 spamassassin::spamd::whitelist_to:
   - '*-reject-*@apache.org'

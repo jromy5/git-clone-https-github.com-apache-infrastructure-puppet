@@ -1,0 +1,59 @@
+.tbl1,.tbl2,.tbl3 {
+    background: #1c5f89;
+}
+
+tbody>tr>td {
+    background: #EEE;
+    border-bottom: 0.75px solid rgba(0,0,0,0.25);
+    padding: 3px;
+}
+
+th {
+    border-bottom: 0.75px solid rgba(0,0,0,0.4);
+    background: #DDD;
+    font-size: 0.75rem !important;
+}
+
+table {
+    border-radius: 4px;
+    border-spacing: 0;
+    padding: 2px;
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    margin: 20px;
+    width: 1040px;
+}
+
+table>thead {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 0 auto;
+}
+
+table>tbody>tr>td:nth-of-type(1) {
+    width: 350px;
+}
+
+table>tbody>tr>td:nth-of-type(2) {
+    max-width: 310px;
+    min-width: 310px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+table>tbody>tr>td:nth-of-type(3) {
+    width: 120px;
+}
+
+table>tbody>tr>td:nth-of-type(4) {
+    width: 260px;
+    font-size: 0.7rem;
+}
+
+body {
+   text-align: left;
+   width: 1060px;
+   margin: 10px auto;
+}

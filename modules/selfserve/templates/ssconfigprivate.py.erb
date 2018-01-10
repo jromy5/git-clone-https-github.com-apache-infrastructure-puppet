@@ -1,0 +1,15 @@
+### - This file is maintained in puppet, do not modify locally or it will be overwritten
+### - See modules/selfserve/templates/ssconfigprivate.py.erb
+
+SYSTEM_DN="<%= @system_dn %>"
+SYSTEM_PW="<%= @system_pw %>"
+
+SYSTEM_READ_DN="<%= @system_read_dn %>"
+SYSTEM_READ_PW="<%= @system_read_pw %>"
+
+## Members of these can't reset their passwords, etc.
+PRIVILEGED_GROUPS="apldap infrastructure-root"
+
+## If any of these attributes is set on a user (to any value), they can't reset their passwords, etc.
+PRIVILEGED_ATTRS="employeeType asf-banned"
+

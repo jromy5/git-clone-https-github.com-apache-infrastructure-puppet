@@ -1,0 +1,11 @@
+language: ruby
+cache: bundler
+
+rvm:
+ - 2.3
+
+install:
+  - bundle install
+
+script:
+  - ./bin/lint.sh

@@ -1,0 +1,6 @@
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.0.xml
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.1.xml
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.2.xml
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.3.xml
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.4.xml
+Sitemap: http://mail-archives.apache.org/mod_mbox/sitemap.5.xml

@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+usage() {
+  echo "$0 \$availid"
+  exit 1
+}
+
+who=$1
+[ -n "$who" ] || usage
+
+# MAGIC from SESSION_MAGIC in lib/ss2config.py
+# TOKEN is half of TOKEN_LENGTH from lib/ss2config.py
+MAGIC=<%= @session_magic %>
+TOKEN=`head -c 20 /dev/urandom | xxd -ps`
+expires=`perl -e 'print 3600 + time'`
+
+(echo $MAGIC; echo $TOKEN; echo $who; echo $expires;
+ echo ${SSH_CONNECTION%% *}) | sudo tee state/$TOKEN >/dev/null
+sudo chown www-data:www-data state/$TOKEN
+echo \'https://id.apache.org/details/$who\?session=$TOKEN\'
+echo \'https://id.apache.org/staging/details/$who\?session=$TOKEN\'

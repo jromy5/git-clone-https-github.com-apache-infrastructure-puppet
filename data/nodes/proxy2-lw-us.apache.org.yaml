@@ -116,8 +116,8 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'archiva-repository.apache.org.ssl_access.log'
     error_log_file: 'archiva-repository.apache.org.error.log'
     custom_fragment: |
-      ProxyPass / http://archiva-vm.apache.org/
-      ProxyPassReverse / http://archiva-vm.apache.org/
+      ProxyPass / http://archiva-vm2.apache.org/
+      ProxyPassReverse / http://archiva-vm2.apache.org/
       ProxyPreserveHost On
 
       ProxyErrorOverride On
@@ -132,7 +132,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'blogs.apache.org'
     serveraliases:
       - 'www.blogs.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'blogs.apache.org.http_access.log'
     error_log_file: 'blogs.apache.org.error.log'
@@ -147,7 +147,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'blogs.apache.org'
     serveraliases:
       - 'www.blogs.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'blogs.apache.org.ssl_access.log'
     error_log_file: 'blogs.apache.org.error.log'
@@ -199,7 +199,7 @@ vhosts_asf::vhosts::vhosts:
 
         <Location /committers.lua>
           # Require LDAP authentication for /committers.lua
-          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthName "ASF Committers"
           AuthType Basic
@@ -215,190 +215,6 @@ vhosts_asf::vhosts::vhosts:
           RequestHeader unset Authorization
           ProxyPass http://192.168.0.62:8080/committers.lua retry=0 timeout=60
         </Location>
-
-  demo-old-ofbiz:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'demo-old-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      ProxyPass / http://ofbiz-vm.apache.org:18080/
-      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
-      RequestHeader set X-Forwarded-Proto http
-
-  demo-old-ofbiz-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'demo-old-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerCN off
-      SSLProxyEngine On
-      ProxyPass / https://ofbiz-vm.apache.org:28443/
-      ProxyPassReverse / https://ofbiz-vm.apache.org:28443/
-      ProxyPreserveHost On
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-old-ofbiz.apache.org&code=503
-
-  demo-stable-ofbiz:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'demo-stable-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      ProxyPass / http://ofbiz-vm.apache.org:18080/
-      ProxyPassReverse / http://ofbiz-vm.apache.org:18080/
-      RequestHeader set X-Forwarded-Proto http
-
-  demo-stable-ofbiz-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'demo-stable-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerCN off
-      SSLProxyEngine On
-      ProxyPass / https://ofbiz-vm.apache.org:18443/
-      ProxyPassReverse / https://ofbiz-vm.apache.org:18443/
-      ProxyPreserveHost On
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-stable-ofbiz.apache.org&code=503
-
-  demo-trunk-ofbiz:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'demo-trunk-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.http_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      ProxyPass / http://ofbiz-vm.apache.org:8080/
-      ProxyPassReverse / http://ofbiz-vm.apache.org:8080/
-      RequestHeader set X-Forwarded-Proto http
-
-  demo-trunk-ofbiz-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'demo-trunk-ofbiz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www/html'
-    access_log_file: 'demo-x-ofbiz.apache.org.ssl_access.log'
-    error_log_file: 'demo-x-ofbiz.apache.org.error.log'
-    custom_fragment: |
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerCN off
-      SSLProxyEngine On
-      ProxyPass / https://ofbiz-vm.apache.org:8443/
-      ProxyPassReverse / https://ofbiz-vm.apache.org:8443/
-      ProxyPreserveHost On
-      RequestHeader set X-Forwarded-Proto https
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=demo-trunk-ofbiz.apache.org&code=503
-
-  helpinfrahelpyou:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'helpinfrahelpyou.apache.org'
-    serveraliases:
-      - 'infrahelp.apache.org'
-      - 'jira.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
-    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
-
-  helpinfrahelpyou-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    servername: 'helpinfrahelpyou.apache.org'
-    serveraliases:
-      - 'infrahelp.apache.org'
-      - 'jira.apache.org'
-    serveradmin: 'infrastructure@apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
-    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
-
-  inventory:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    docroot: '/var/www/html'
-    servername: 'inventory.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'inventory.apache.org.http_access.log'
-    error_log_file: 'inventory.apache.org.error.log'
-    custom_fragment: |
-      Redirect / https://inventory.apache.org/
-
-  inventory-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    docroot: '/var/www/html'
-    servername: 'inventory.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'inventory.apache.org.ssl_access.log'
-    error_log_file: 'inventory.apache.org.error.log'
-    custom_fragment: |
-      ProxyPreserveHost on
-
-      <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthName "Root members only"
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthLDAPGroupAttribute member
-        AuthLDAPGroupAttributeIsDN on
-        Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-
-        # Remove Authorization header to prevent passwords from being transmitted
-        RequestHeader unset Authorization
-        ProxyPass http://192.168.0.55:8080/ retry=0 timeout=60
-      </Location>
 
   issues:
     vhost_name: '*'
@@ -564,48 +380,6 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
       SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
 
-  modules:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    docroot: '/var/www/html'
-    servername: 'modules.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'modules.apache.org.http_access.log'
-    error_log_file: 'modules.apache.org.error.log'
-    custom_fragment: |
-      Redirect / https://modules.apache.org/
-
-  modules-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    docroot: '/var/www/html'
-    servername: 'modules.apache.org'
-    serveradmin: 'webmaster@apache.org'
-    access_log_file: 'modules.apache.org.ssl_access.log'
-    error_log_file: 'modules.apache.org.error.log'
-    custom_fragment: |
-      ProxyPreserveHost on
-
-      # Need to use mod_rewrite for doing maintenance
-      RewriteEngine on
-
-      ProxyPass / http://192.168.0.55:10180/ retry=0 timeout=60
-      # To enable system maintenance, comment out the line above and uncomment the five lines below
-      # Note: Modify the hardcoded IP as necessary to allow you to access Jira during maintenance
-      # RewriteCond %%{}{REQUEST_URI} !/maintenance.html
-      # RewriteCond %%{}{REMOTE_ADDR} !2\.24\.222\.166
-      # RewriteRule ^/(.*) /maintenance.html
-      # RewriteCond %%{}{REMOTE_ADDR} 2\.24\.222\.166
-      # RewriteRule ^/(.*) http://192.168.0.55:10180/$1 [P]     
-
-      # Protect cookies - not sure this is needed yet
-      <Location / >
-        Header edit Set-Cookie (^.*$) "$1; Secure"
-      </Location>
-
   pad:
     vhost_name: '*'
     ensure: 'present'
@@ -630,7 +404,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -681,7 +455,7 @@ vhosts_asf::vhosts::vhosts:
 
       <Location /p>
         # Require LDAP authentication for /p[id], /post or /token
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -731,7 +505,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthName "ASF Committers"
         AuthBasicProvider ldap
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
         Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
@@ -790,7 +564,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthName "Infrastructure members only"
         AuthBasicProvider ldap
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
         Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
@@ -834,7 +608,7 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost On
 
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic

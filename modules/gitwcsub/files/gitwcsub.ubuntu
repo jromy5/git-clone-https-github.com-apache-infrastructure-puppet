@@ -25,7 +25,7 @@ RETVAL=0
 start() {
     echo "Starting GitWcSub Server: "
     cd $gitwcsub_appdir
-    python3.4 gitwcsub.py --daemonize --user=$gitwcsub_user --group=$gitwcsub_group
+    python3 gitwcsub.py --daemonize --user=$gitwcsub_user --group=$gitwcsub_group
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
@@ -34,7 +34,7 @@ start() {
 stop() {
     echo "Stopping GitWcSub Server: "
     cd $gitwcsub_appdir
-    python3.4 gitwcsub.py --stop
+    python3 gitwcsub.py --stop
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL

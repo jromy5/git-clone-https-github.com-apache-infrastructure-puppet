@@ -33,6 +33,7 @@ import StringIO
 from email.mime.text import MIMEText
 import requests
 import base64
+import email.utils
 
 # Define some defaults and debug vars
 DEBUG_MAIL_TO = None # "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
@@ -62,18 +63,19 @@ def getvalue(key):
         return None
 
 def sendEmail(rcpt, subject, message):
-    sender = "<git@git.apache.org>"
+    sender = "GitBox <git@apache.org>"
     receivers = [rcpt]
     msg = """From: %s
 To: %s
 Subject: %s
+Message-ID: %s
 
 %s
 
 With regards,
 Apache Git Services
-""" % (sender, rcpt, subject, message)
-
+""" % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), message)
+    msg = msg.encode('ascii', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
         smtpObj.sendmail(sender, receivers, msg)
@@ -96,6 +98,8 @@ TMPL_CLOSED_TICKET = """
 GitHub user %(user)s closed #%(id)i: %(title)s
 
 You can view it online at: %(link)s
+
+%(diff)s
 """
 
 TMPL_GENERIC_COMMENT = """
@@ -124,7 +128,7 @@ def issueOpened(payload):
 def issueClosed(payload):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
-    fmt['user'] = obj['user']['login']
+    fmt['user'] = payload['sender']['login'] if 'sender' in payload else obj['user']['login']
     # PR or issue??
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
@@ -134,6 +138,17 @@ def issueClosed(payload):
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
+    fmt['prdiff'] = None
+    # If foreign diff, we have to pull it down here
+    if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
+        if not obj['head']['repo']['full_name'].startswith("apache/"):
+            txt = requests.get(obj['diff_url']).text
+            fmt['prdiff'] = """
+As this is a foreign pull request (from a fork), the diff is supplied
+below (as it won't show otherwise due to GitHub magic):
+
+%s
+""" % txt
     return fmt
 
 
@@ -218,9 +233,60 @@ def updateTicket(ticket, name, txt, worklog):
             return rv.txt
     except:
         pass # Not much to do just yet
+
+def remoteLink(ticket, url, prno):
+    auth = open("/x1/jirauser.txt").read().strip()
+    auth = str(base64.encodestring(bytes(auth))).strip()
     
-
-
+    # Post comment or worklog entry!
+    headers = {"Content-type": "application/json",
+                 "Accept": "*/*",
+                 "Authorization": "Basic %s" % auth
+                 }
+    try:
+        urlid = url.split('#')[0] # Crop out anchor
+        data = {
+            'globalId': "github=%s" % urlid,
+            'object':
+                {
+                    'url': urlid,
+                    'title': "GitHub Pull Request #%s" % prno,
+                    'icon': {
+                        'url16x16': "https://github.com/favicon.ico"
+                    }
+                }
+            }
+        rv = requests.post("https://issues.apache.org/jira/rest/api/latest/issue/%s/remotelink" % ticket,headers=headers, json = data)
+        if rv.status_code == 200 or rv.status_code == 201:
+            return "Updated JIRA Ticket %s" % ticket
+        else:
+            return rv.txt
+    except:
+        pass # Not much to do just yet
+    
+def addLabel(ticket):
+    auth = open("/x1/jirauser.txt").read().strip()
+    auth = str(base64.encodestring(bytes(auth))).strip()
+    
+    # Post comment or worklog entry!
+    headers = {"Content-type": "application/json",
+                 "Accept": "*/*",
+                 "Authorization": "Basic %s" % auth
+                 }
+    data = {
+        "update": {
+            "labels": [
+                {"add": "pull-request-available"}
+            ]
+        }
+    }
+    rv = requests.put("https://issues.apache.org/jira/rest/api/latest/issue/%s" % ticket,headers=headers, json = data)
+    if rv.status_code == 200 or rv.status_code == 201:
+        return "Added PR label to Ticket %s\n" % ticket
+    else:
+        sys.stderr.write(rv.text)
+        return rv.text
+    
 # Main function
 def main():
     # Get JSON payload from GitHub
@@ -248,7 +314,7 @@ def main():
     project = "infra" # Default to infra
     if m:
         project = m.group(1)
-    mailto = gconf.get('apache', 'dev') if gconf.has_section('apache') and gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
+    mailto = gconf.get('apache', 'dev') if gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
@@ -256,6 +322,7 @@ def main():
     # Now figure out what type of event we got
     fmt = None
     email = None
+    isComment = False
     if 'action' in data:
         # Issue opened or reopened
         if data['action'] in ['opened', 'reopened']:
@@ -270,17 +337,19 @@ def main():
                 # Diff review
                 if 'diff_hunk' in data['comment']:
                     fmt = reviewComment(data)
+                    isComment = True
             # Standard commit comment
             elif 'commit_id' in data['comment']:
-                pass
+                isComment = True
             # Generic comment
             else:
                 fmt = ticketComment(data)
+                isComment = True
 
     # Send email if applicable
     if fmt:
         # EZT needs these to be defined
-        for el in ['filename','diff']:
+        for el in ['filename','diff', 'prdiff']:
             if not el in fmt:
                 fmt[el] = None
         # Indent comment
@@ -291,15 +360,18 @@ def main():
         sendEmail(mailto, email['subject'], email['message'])
 
     # Now do JIRA if need be
-    jiraopt = gconf.get('apache', 'jira') if gconf.has_section('apache') and gconf.has_option('apache', 'jira') else None
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'default'
     
     if jiraopt and fmt:
         if 'title' in fmt:
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
             if m:
                 ticket = m.group(1)
-                worklog = True if jiraopt == 'worklog' else False
-                return updateTicket(ticket, fmt['user'], email['message'], worklog)
+                worklog = True if jiraopt.find('worklog') != -1 else False
+                if not (jiraopt.find("nocomment") != -1 and isComment):
+                    remoteLink(ticket, fmt['link'], fmt['id']) # Make link to PR
+                    addLabel(ticket)
+                    return updateTicket(ticket, fmt['user'], email['message'], worklog)
     # All done!
     return None
 

@@ -1,17 +1,22 @@
 ---
 classes:
   - buildbot_slave
+  - buildbot_slave::rat
   - loggy
   - tomcat
 
 buildbot_slave::slave_name: 'silvanus_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
   - 'graphviz'
   - 'graphviz-dev'
+  - 'ruby2.0'
+  - 'ruby2.0-dev'
+
+buildbot_slave::rat::projects:
+  - 'tomcat'
 
 tomcat::install:
   '/opt/tomcat7':

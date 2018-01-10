@@ -23,6 +23,12 @@ rsync::server::module:
     auth_users: 'apb-allura'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  allura-vm2:
+    path: '/x1/backups/allura-vm2/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.238'
+    auth_users: 'apb-allura'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   analysis-vm:
     path: '/x1/backups/analysis-vm/./target/'
     hosts_allow: '127.0.0.1 140.211.11.128'
@@ -114,6 +120,18 @@ rsync::server::module:
     path: '/x1/backups/translate-vm/./target/'
     hosts_allow: '127.0.0.1 140.211.11.86'
     auth_users: 'apb-translate-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  titan:
+    path: '/x1/backups/titan/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.18'
+    auth_users: 'apb-titan'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  coeus:
+    path: '/x1/backups/coeus/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.17'
+    auth_users: 'apb-coeus'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
 

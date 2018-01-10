@@ -15,6 +15,7 @@ classes:
   - vhosts_asf::vhosts
   - loggy
   - blocky
+  - kif
 
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
@@ -87,7 +88,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
 
       <Location />
-        AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -130,9 +131,14 @@ vhosts_asf::vhosts::vhosts:
       SSLProxyCheckPeerCN off
       SSLProxyCheckPeerName off
       SSLProxyCheckPeerExpire off
-      ProxyPass / https://cust-asf.ponee.io/
-      ProxyPassReverse / https://cust-asf.ponee.io/
+      ProxyPass / https://cust-asf2.ponee.io/
+      ProxyPassReverse / https://cust-asf2.ponee.io/
       AddOutputFilterByType DEFLATE application/json
+      Header edit Set-Cookie (^.*$) "$1; HTTPOnly; Secure"
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
 
 fail2ban_asf::config::jails:
   jira:

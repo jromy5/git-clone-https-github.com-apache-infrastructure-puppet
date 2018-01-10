@@ -42,8 +42,18 @@ module Puppet::Parser::Functions
       end
 
       if content
+        # strip leading newlines
+        content = content.sub /\A\n+/, ''
+
+        # strip trailing whitespace
+        content = content.sub /\s+\z/, ''
+
+        # normalize indentation by changing all lines so that the first line
+        # is indented by exactly two spaces.
+        content = content.gsub /^#{content[/^\s+/]}/, '  '
+
+        # insert resulting content into fragment
         path = Regexp.escape(path)
-        content.strip!.gsub! /^\s*/, '  '
         @fragment[/\n<#{tag} #{path}>\n.*?()<\/#{tag}>/m, 1] = content + "\n"
       end
     end
@@ -68,7 +78,13 @@ module Puppet::Parser::Functions
       authldap.each do |auth|
         isdn = auth['idsn'] || (auth['attribute']=='memberUid' ? 'off' : 'on')
 
-        auth['locations'].each do |url|
+        auth['locations'].each do |location|
+          if location.is_a? Hash
+            url = location['path']
+	  else
+	    url = location
+	  end
+
           if url.end_with? '/'
             directive = 'Directory'
             path = @alias[url].chomp('/')
@@ -77,6 +93,32 @@ module Puppet::Parser::Functions
             path = '^' + url
           end
 
+          # build require statements for each group
+          groups = Array(auth['group']).map do |group|
+            "Require ldap-group #{group}"
+          end
+
+          # concatenate require statements
+          if groups.length == 1
+            test = groups.first
+          else
+            test = "<RequireAny>\n    #{groups.join("\n    ")}\n  </RequireAny>"
+          end
+ 
+          # prepend any exceptions
+	  if location.is_a? Hash and location['except']
+	    exceptions = location['except'].map do |name|
+	      if name =~ /[\\+*\[\]]/
+	        "Require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
+	      else
+	        "Require expr %{REQUEST_URI} == '#{url}#{name}'"
+	      end
+	    end
+
+	    test = exceptions.push(test).join("\n  ")
+	  end
+
+          # emit auth section
           section directive, path, %{
             AuthType Basic
             AuthName #{auth['name'].inspect}
@@ -84,7 +126,7 @@ module Puppet::Parser::Functions
             AuthLDAPUrl #{@ldap.inspect}
             AuthLDAPGroupAttribute #{auth['attribute']}
             AuthLDAPGroupAttributeIsDN #{isdn}
-            Require ldap-group #{auth['group']}
+            #{test}
           }
         end
       end

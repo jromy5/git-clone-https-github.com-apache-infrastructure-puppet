@@ -80,11 +80,16 @@ cron:
     minute: '9'
     hour: '*'
     command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_authgroups.json'
+  json10:
+    user: 'www-data'
+    minute: '10'
+    hour: '*'
+    command: 'cd /var/www/html/public/ && wget -N -nv https://whimsy.apache.org/public/public_ldap_projects.json'
   html1:
     user: 'www-data'
     minute: '10'
     hour: '*'
-    command: '/usr/bin/python3 /var/www/tools/committers.py'
+    command: '/usr/bin/python /var/www/tools/committers.py'
   keys1:
     user: 'www-data'
     minute: '10'

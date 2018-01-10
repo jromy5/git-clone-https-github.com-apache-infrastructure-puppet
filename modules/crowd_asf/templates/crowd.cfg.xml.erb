@@ -5,9 +5,11 @@
   <setupType>custom</setupType>
   <buildNumber>5982</buildNumber>
   <properties>
-    <property name="crowd.license.message"><%= @crowd_license_message -%></property>
     <property name="attachments.dir">${crowdHome}/attachments</property>
+    <!--
+    <property name="crowd.license.message"><%= @crowd_license_message -%></property>
     <property name="crowd.setup.server.id"><%= @crowd_setup_server_id -%></property>
+    -->
     <property name="crowd.webapp.context.path">/crowd</property>
     <property name="email.configured">true</property>
     <property name="hibernate.c3p0.acquire_increment">1</property>

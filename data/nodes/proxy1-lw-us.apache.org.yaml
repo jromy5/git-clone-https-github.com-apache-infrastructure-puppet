@@ -7,6 +7,8 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
+  - apache::mod::proxy_connect
+  - apache::mod::proxy_html
   - apache::mod::rewrite
   - apache::mod::ssl
   - ssl::name::wildcard_apache_org
@@ -15,6 +17,7 @@ classes:
   - vhosts_asf::vhosts
   - loggy
   - blocky
+  - kif
 
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
@@ -60,6 +63,8 @@ vhosts_asf::modules::modules:
     name: 'substitute'
   lua:
     name: 'lua'
+  xml2enc:
+    name: 'xml2enc'
 
 vhosts_asf::vhosts::vhosts:
   blogs:
@@ -118,7 +123,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'crowd.apache.org.http_access.log'
     error_log_file: 'crowd.apache.org.error.log'
     custom_fragment: |
-      Redirect / https://crowd.apache.org/
+      Redirect / https://crowd.apache.org/crowd
 
   crowd-ssl:
     vhost_name: '*'
@@ -132,8 +137,43 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'crowd.apache.org.error.log'
     custom_fragment: |
       RewriteEngine On
-      ProxyPass /crowd http://10.10.3.14:8095/crowd/
-      ProxyPassReverse /crowd http://10.10.3.14:8095/crowd/
+      RewriteCond %%{}{REQUEST_URI} ^/$
+      RewriteRule ^(.*)$ https://crowd.apache.org/crowd/
+      ProxyPass / ajp://10.10.3.14:8099/
+      ProxyPassReverse / ajp://10.10.3.14:8099/
+
+  donate:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'donate.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'donate.apache.org.http_access.log'
+    error_log_file:  'donate.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://donate.apache.org/
+
+  donate-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'donate.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'donate.apache.org.ssl_access.log'
+    error_log_file:  'donate.apache.org.error.log'
+    custom_fragment: |
+      Proxypass / https://apache.giv.sh/
+      SSLProxyEngine On
+      ProxypassReverse / https://apache.giv.sh/
+      ProxyHTMLEnable On
+      ProxyHTMLURLMap https://apache.giv.sh/ /
+      RequestHeader unset Accept-Encoding
+
 
   repository:
     vhost_name: '*'

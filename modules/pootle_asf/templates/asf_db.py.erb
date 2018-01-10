@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+MY_DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '<%= @pootle_dbname %>',
+        'USER': '<%= @pootle_dbuser %>', 
+        'PASSWORD': '<%= @pootle_dbpass %>',
+        'HOST': '<%= @pootle_dbhost %>',
+        'PORT': '',
+    }
+}

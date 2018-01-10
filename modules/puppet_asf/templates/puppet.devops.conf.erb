@@ -1,0 +1,51 @@
+## This file is managed by puppet and all local changes will be lost
+
+
+[master]
+sslddir = /etc/puppet/ssl
+    #confdir = /etc/puppet
+    #vardir = /var/lib/puppet
+    #name = master
+    #logdir = /var/log/puppet
+     #trace = false
+     #syslogfacility = daemon
+    #rundir = /var/run/puppet
+    environment = <%= @environment %>
+    environmentpath = $confdir/environments
+    disable_per_environment_manifest = true
+    route_file = /etc/puppet/routes.yaml
+    node_terminus = plain
+    #node_cache_terminus = write_only_yaml
+    data_binding_terminus = hiera
+    hiera_config = /etc/puppet/hiera.yaml
+    #catalog_terminus = compiler
+    facts_terminus = facter
+    inventory_terminus = facter
+    #default_file_terminus = rest
+    #httplog = /var/log/puppet/http.log
+    #filetimeout = 15
+    #certname = devops.apache.org
+    #certificate_expire_warning = 5184000
+    #pluginsource = puppet://puppet/plugins
+    pluginsync = true
+    #autosign = /etc/puppet/autosign.conf
+    #config = /etc/puppet/puppet.conf
+    #masterlog = /var/log/puppet/puppetmaster.log
+    #masterhttplog = /var/log/puppet/masterhttp.log
+    reports = store,puppetdb,foreman,datadog_reports
+    storeconfigs = true
+    storeconfigs_backend = puppetdb
+    #rrdinterval = 1800
+    #node_name_value = devops.apache.org
+    #runinterval = 1800
+    #splaylimit = 1800
+    #configtimeout = 120
+    #report_server = devops.apache.org
+    inventory_server = devops.apache.org
+    #waitforcert = 120
+
+[main]
+server = devops.apache.org
+report = true
+## Force the clients to check in every 30mins
+runinterval = 1800

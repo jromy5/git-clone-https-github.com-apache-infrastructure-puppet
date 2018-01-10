@@ -1,0 +1,325 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# OLD 10-base.conf
+_ = lambda x: x
+
+TITLE = _("Apache Translate Pootle service")
+
+DESCRIPTION = _("""<div><p></p><div dir="ltr" lang="en"><br><h2 class="title">ASF Translate service.</h2><p class="about"> This is the official Pootle Translate server used by ASF projects for language localisation services for their project.</p><p><br></p><p>See <a href="https://cwiki.apache.org/confluence/display/INFRA/translate+pootle+service+auth+levels"> this wiki page</a> for more details</p><br></div></div></div>""")
+
+TIME_ZONE = 'UTC'
+USE_TZ = True
+LANGUAGE_CODE = 'en-us'
+USE_I18N = True
+MEDIA_ROOT = '<%= @pootle_wwwroot -%>/media/'
+MEDIA_URL = '/media/'
+STATIC_ROOT = '<%= @pootle_venv -%>/lib/python2.7/site-packages/pootle/assets/'
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = [ '<%= @pootle_venv -%>/lib/python2.7/site-packages/pootle/static' ]
+SECRET_KEY = '<%= @pootle_secretkey -%>'
+
+# OLD 20-backends.conf
+
+import asf_db
+
+DATABASES = asf_db.MY_DATABASES
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+OBJECT_CACHE_TIMEOUT = 2500000
+CACHE_TIMEOUT = 2500000
+
+# OLD 30-site.conf
+SITE_ID = 1
+INTERNAL_IPS = ('127.0.0.1',)
+
+ADMINS = (
+    ('jani',      'nomail1@apache.org'),
+    ('gmcdonald', 'nomail2@apache.org'),
+    ('cml',       'nomail3@apache.org')
+)
+MANAGERS = ADMINS
+
+DEBUG = False
+CAN_REGISTER = False
+DEFAULT_FROM_EMAIL = 'translate@apache.org'
+CONTACT_EMAIL = 'users@infra.apache.org'
+CAN_CONTACT = True
+
+
+# OLD 40-apps.conf
+CUSTOM_TEMPLATE_CONTEXT = {}
+TOPSTAT_SIZE = 5
+
+MIN_AUTOTERMS = 60
+MAX_AUTOTERMS = 600
+
+FUZZY_MATCH_MAX_LENGTH = 70
+FUZZY_MATCH_MIN_SIMILARITY = 75
+
+MARKUP_FILTER = (None, {})
+USE_CAPTCHA = True
+
+LEGALPAGE_NOCHECK_PREFIXES = (
+    '/about',
+    '/accounts',
+    '/admin',
+    '/api',
+    '/contact',
+    '/django_admin',
+    '/jsi18n',
+    '/pages',
+)
+
+ASSETS_DEBUG = False
+ASSETS_AUTO_BUILD = True
+
+ACCOUNT_ACTIVATION_DAYS = 3
+
+EMAIL_SEND_HTML = False
+
+SOUTH_LOGGING_ON = False
+SOUTH_LOGGING_FILE = '/tmp/south.log'
+
+POOTLE_ENABLE_API = False
+TASTYPIE_DEFAULT_FORMATS = ['json']
+API_LIMIT_PER_PAGE = 0
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
+# OLD 50-project.conf
+
+
+MIDDLEWARE_CLASSES = [
+    'pootle.middleware.baseurl.BaseUrlMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'djblets.siteconfig.middleware.SettingsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'pootle.middleware.setlocale.SetLocale',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'pootle.middleware.errorpages.ErrorPagesMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'pootle.middleware.captcha.CaptchaMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+]
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
+    "django.core.context_processors.static",
+    "pootle_misc.context_processors.pootle_context",
+]
+
+
+TEMPLATE_DIRS = (
+   '<%= @pootle_venv -%>/lib/python2.7/site-packages/pootle/templates/custom',
+   '<%= @pootle_venv -%>/lib/python2.7/site-packages/pootle/templates',
+)
+
+STATICFILES_FINDERS = (
+    "django_assets.finders.AssetsFinder",
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder"
+)
+
+INSTALLED_APPS = [
+    'pootle_app',
+    'django.contrib.sessions',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Pootle-specific
+    'pootle_misc',
+    'pootle_store',
+    'pootle_language',
+    'pootle_project',
+    'pootle_translationproject',
+    'pootle_profile',
+    'pootle_statistics',
+    'pootle_tagging',
+    'pootle_notifications',
+    'pootle_autonotices',
+    'pootle_terminology',
+    'staticpages',
+    # External apps
+    'registration',
+    'profiles',
+    'djblets.siteconfig',
+    'djblets.util',
+    'django_assets',
+    'taggit',
+    'voting',
+    'south',
+]
+
+
+AUTHENTICATION_BACKENDS = [
+    'pootle.core.auth.ldap_backend.LdapBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+ROOT_URLCONF = 'pootle.urls'
+
+AUTH_PROFILE_MODULE = "pootle_profile.PootleProfile"
+
+# OLD 51-ldap.conf
+
+AUTH_LDAP_SERVER = 'ldaps://ldap-master.apache.org'
+
+AUTH_LDAP_ANON_DN = '<%= scope['ldapclient::nssbinddn'] %>'
+AUTH_LDAP_ANON_PASS = '<%= scope['ldapclient::nssbindpasswd'] %>'
+
+
+AUTH_LDAP_BASE_DN = 'ou=people,dc=apache,dc=org'
+AUTH_LDAP_FILTER = 'uid=%s'
+AUTH_LDAP_FIELDS = {
+        'dn': 'dn',
+}
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
+
+# OLD 60-translation.conf
+
+
+PODIRECTORY =  '<%= @pootle_poroot %>'
+VCS_DIRECTORY = '<%= @pootle_reporoot %>'
+
+EXPORTED_FILE_MODE = 0644
+EXPORTED_DIRECTORY_MODE = 0755
+LIVE_TRANSLATION = False
+AUTOSYNC = False
+PARSE_POOL_SIZE = 40
+PARSE_POOL_CULL_FREQUENCY = 4
+
+MT_BACKENDS = [
+#        ('APERTIUM', ''),
+        ('GOOGLE_TRANSLATE', ''),
+]
+
+LOOKUP_BACKENDS = [
+        'wikipedia',
+]
+
+#AMAGAMA_URL = 'http://amagama.locamotion.org/tmserver/'
+AMAGAMA_URL = ''
+
+# OLD 90-local.conf.sample
+
+
+ALLOWED_HOSTS = ['*']
+
+#CONTRIBUTORS_EXCLUDED_NAMES = (
+#        'sorryjusttesting',
+#        'testest',
+#)
+#CONTRIBUTORS_EXCLUDED_PROJECT_NAMES = (
+#        "Testing, please don't work here",
+#)
+
+
+# OLD 95-outro.conf
+
+import logging
+import os
+
+
+LOCALE_PATHS = ("<%= @pootle_venv -%>/lib/python2.7/site-packages/pootle/locale", )
+
+from pootle.i18n import override, gettext_live, gettext
+from django.utils import translation
+from django.utils.translation import trans_real
+
+LANGUAGES = override.find_languages(LOCALE_PATHS[0])
+
+def hijack_translation():
+    """Sabotage django's fascist linguistical regime."""
+    # Override functions that check if language is known to Django
+    translation.check_for_language = lambda lang_code: True
+    trans_real.check_for_language = lambda lang_code: True
+    translation.get_language_from_request = override.get_language_from_request
+
+    # Override django's inadequate bidi detection
+    translation.get_language_bidi = override.get_language_bidi
+
+    if LIVE_TRANSLATION:
+        trans_real.translation = override.translation_dummy
+        override.override_gettext(gettext_live)
+    else:
+        # Even when live translation is not enabled we hijack
+        # gettext functions to install the safe variable formatting override
+        override.override_gettext(gettext)
+
+hijack_translation()
+
+# Setup a tempdir inside the ``PODIRECTORY`` hierarchy, this way we have
+# reasonable guarantee that temp files will be created on the same
+# filesystem as translation files (required for save operations).
+import tempfile
+tempfile.tempdir = "<%= @pootle_wwwroot -%>/po/.tmp"
+# Ensure that temp dir exists
+if not os.path.exists(tempfile.tempdir):
+    os.mkdir(tempfile.tempdir)
+
+# Setup the checkout directory if it doesn't exist
+if not os.path.exists(VCS_DIRECTORY):
+    os.mkdir(VCS_DIRECTORY)
+
+
+TEMPLATE_DEBUG = DEBUG
+if TEMPLATE_DEBUG:
+    TEMPLATE_CONTEXT_PROCESSORS += ("django.core.context_processors.debug",)
+
+if DEBUG:
+    TEMPLATE_LOADERS = (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
+
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)s %(message)s',
+    )
+else:
+    # We should only enable caching with DEBUG = False
+    TEMPLATE_LOADERS = (
+        ('django.template.loaders.cached.Loader', (
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        )),
+    )
+
+    # Will log only CRITICAL errors to the console
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s %(levelname)s %(message)s',
+    )
+
+CACHE_TIMEOUT = 2500000
+POOTLE_TOP_STATS_CACHE_TIMEOUT = 86400

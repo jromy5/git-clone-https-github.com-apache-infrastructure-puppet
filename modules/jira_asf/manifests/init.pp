@@ -179,7 +179,7 @@ class jira_asf (
       source => "puppet:///modules/jira_asf/${pgsql_connector}";
     "${install_dir}/atlassian-jira/WEB-INF/classes/com/atlassian/jira/notification/NotificationRecipient.class":
       ensure  => present,
-      source  => 'puppet:///modules/jira_asf/NotificationRecipient.class',
+      source  => "puppet:///modules/jira_asf/${jira_version}/NotificationRecipient.class",
       owner   => 'jira',
       group   => 'jira',
       require => File[$install_dir];

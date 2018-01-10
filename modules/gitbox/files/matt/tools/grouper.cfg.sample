@@ -9,6 +9,10 @@ token:              abcdef1234567890
 [group:openwhisk]
 members:            humbedooh gstein pono
 
+# Example podling extended with IPMC
+[group:ponymail]
+ipmc:              true
+
 # Example project with a different LDAP base for membership
 [group:infrastructure]
 ldap: cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org

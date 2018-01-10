@@ -1,0 +1,4 @@
+archivedir:     '/x1/archives'
+privatedir:     '/x1/private'
+dumpfile:       '/x1/restricted/bademails.dat'
+restricteddir:  '/x1/restricted'

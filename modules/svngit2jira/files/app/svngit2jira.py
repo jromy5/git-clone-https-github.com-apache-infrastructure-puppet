@@ -503,6 +503,7 @@ class PubSubClient(Thread):
                             author = commit['author']
                             email = commit['email']
                             ref = commit['ref']
+                            server = commit['server'] if 'server' in commit else 'git-wip-us'
                             
                             # Find out if this is a project we're tracking
                             for section in config.sections():
@@ -524,11 +525,11 @@ class PubSubClient(Thread):
                                             # Create a JSON object and RB body for sending
                                             data = None;
                                             if doWorkLog:
-                                                data = {'timeSpent': "10m", 'comment': "Commit %s in %s's branch %s from %s\n[ https://git-wip-us.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, jira.sender, project, ssha, body) }
+                                                data = {'timeSpent': "10m", 'comment': "Commit %s in %s's branch %s from %s\n[ https://%s.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, jira.sender, server, project, ssha, body) }
                                             else:
-                                                data = {'body': "Commit %s in %s's branch %s from %s\n[ https://git-wip-us.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, jira.sender, project, ssha, body) }
+                                                data = {'body': "Commit %s in %s's branch %s from %s\n[ https://%s.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, jira.sender, server, project, ssha, body) }
                                                 
-                                            rb_data = "Commit %s in %s's branch %s from %s\n[ https://git-wip-us.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, author, project, ssha, body)
+                                            rb_data = "Commit %s in %s's branch %s from %s\n[ https://%s.apache.org/repos/asf?p=%s.git;h=%s ]\n\n%s" % (sha, project, ref, author, server, project, ssha, body)
                                             
                                             # Update the ticket
                                             jira.update(json.dumps(data), 'worklog' if doWorkLog else 'comment')

@@ -1,0 +1,11 @@
+## This file is managed by puppet and all local changes will be lost
+
+[main]
+server      = devops.apache.org
+environment = <%= @environment %>
+report      = true
+
+## Force the clients to check in every 30mins
+runinterval = 1800
+splaylimit  = 60
+

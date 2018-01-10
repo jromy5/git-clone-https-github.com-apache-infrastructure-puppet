@@ -3,10 +3,13 @@ classes:
   - crowd_asf
   - oraclejava::install
 
+base::basepackages:
+  - libmysql-java
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
-crowd_asf::crowd_version: '2.10.1'
+crowd_asf::crowd_version: '2.11.1'
 crowd_asf::mysql_connector_version: '5.1.40'
 crowd_asf::parent_dir: '/x1/crowd'
 crowd_asf::server_port: '8008'

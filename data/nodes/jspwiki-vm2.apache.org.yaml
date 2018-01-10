@@ -1,0 +1,90 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::rpaf
+  - letsencrypt
+  - loggy
+  - tomcat
+  - vhosts_asf::vhosts
+  
+base::basepackages:
+    - 'mailutils'
+    - 'openjdk-8-jdk'
+
+letsencrypt::email: 'dev@jspwiki.apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  jspwiki-vm2:
+    domains:
+      - jspwiki-wiki.apache.org
+      - jspwiki-vm2.apache.org
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+
+postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
+tomcat::install:
+  '/opt/tomcat9':
+    source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M20/bin/apache-tomcat-9.0.0.M20.tar.gz'
+    manage_user: true
+    manage_group: true
+    user: 'tomcat1'
+    group: 'tomcat1'
+
+vhosts_asf::vhosts::vhosts:
+  jspwiki-80:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'jspwiki-wiki.apache.org'
+    default_vhost: true
+    docroot: '/var/www/'
+    access_log_file: 'jspwiki-wiki_access.log'
+    error_log_file: 'jspwiki-wiki_error.log'
+    custom_fragment: |
+      Redirect permanent / https://jspwiki-wiki.apache.org/    
+
+  jspwiki-443:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    servername: 'jspwiki-wiki.apache.org'
+    ssl: true
+    docroot: '/var/www/'
+    access_log_file: 'jspwiki-wiki_access-ssl.log'
+    error_log_file: 'jspwiki-wiki_error-ssl.log'
+    ssl_cert: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/jspwiki-wiki.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/jspwiki-wiki.apache.org/chain.pem'
+    custom_fragment: |
+      Alias /robots.txt /var/www/robots.txt
+      # prevent these from being proxied first, then alias them 
+      ProxyPass /robots.txt !
+      Alias /robots.txt /var/www/robots.txt
+      ProxyPass /favicon.ico !
+      Alias /favicon.ico /var/www/favicon.ico
+      # do not proxy letsencrypt cert renewal requests
+      ProxyPass /.well-known !
+  
+      RPAFenable On
+      RPAFsethostname On
+      RPAFproxy_ips 209.188.14.138
+      RPAFheader X-Forwarded-For
+
+      ProxyPass / ajp://localhost:8009/
+      ProxyPassReverse / ajp://localhost:8009/

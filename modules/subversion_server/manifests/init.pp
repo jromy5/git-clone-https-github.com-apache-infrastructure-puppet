@@ -189,6 +189,17 @@ class subversion_server (
       owner  => 'www-data',
       group  => 'svnadmins',
       mode   => '0775';
+    '/x1/svn/repos/bigdata':
+      ensure  => directory,
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/repos'];
+    '/x1/svn/repos/bigdata/hooks':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins',
+      mode   => '0775';
   }
 
   # file block for templated hooks
@@ -213,6 +224,18 @@ class subversion_server (
       require => File['/x1/svn/hooks'];
     '/x1/svn/hooks/post-commit-private':
       content => template('subversion_server/post-commit-private.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/pre-commit-bigdata':
+      content => template('subversion_server/pre-commit-bigdata.erb'),
+      owner   => 'www-data',
+      group   => 'svnadmins',
+      mode    => '0775',
+      require => File['/x1/svn/hooks'];
+    '/x1/svn/hooks/post-commit-bigdata':
+      content => template('subversion_server/post-commit-bigdata.erb'),
       owner   => 'www-data',
       group   => 'svnadmins',
       mode    => '0775',
@@ -556,6 +579,63 @@ class subversion_server (
       group  => 'svnadmins';
     }
 
+    # /repos/bigdata specific files
+    file {
+    '/x1/svn/repos/bigdata/hooks/pre-commit':
+      ensure => link,
+      target => '/x1/svn/hooks/pre-commit-bigdata',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/start-commit':
+      ensure => link,
+      target => '/x1/svn/hooks/start-commit',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/post-commit':
+      ensure => link,
+      target => '/x1/svn/hooks/post-commit-bigdata',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/pre-lock':
+      ensure => link,
+      target => '/x1/svn/hooks/pre-lock',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/post-lock':
+      ensure => link,
+      target => '/x1/svn/hooks/post-lock',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/post-revprop-change':
+      ensure => link,
+      target => '/x1/svn/hooks/post-revprop-change',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/pre-revprop-change':
+      ensure => link,
+      target => '/x1/svn/hooks/pre-revprop-change',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/pre-unlock':
+      ensure => link,
+      target => '/x1/svn/hooks/pre-unlock',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/repos/bigdata/hooks/post-unlock':
+      ensure => link,
+      target => '/x1/svn/hooks/post-unlock',
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/x1/svn/bigdata-backups.d':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    '/var/log/svnbigdatasynclog':
+      ensure => file,
+      owner  => 'www-data',
+      group  => 'svnadmins';
+    }
+
     file { '/x1/svn/asf-committers':
       owner   => 'root',
       group   => 'www-data',
@@ -614,6 +694,17 @@ class subversion_server (
   host { 'svn-master.apache.org':
     ip           => $::ipaddress,
     host_aliases => $::fqdn,
+  }
+
+  # Gunicorn for viewvc
+  # Run this command unless gunicorn is already running.
+  # -w 10 == 10 workers, we can up that if need be.
+  exec { '/usr/local/bin/gunicorn -w 8 -b 127.0.0.1:8080 -D viewvc-wsgi:application':
+    path   => '/usr/bin:/usr/sbin:/bin',
+    user   => 'www-data',
+    group  => 'www-data',
+    cwd    =>  '/usr/lib/viewvc/cgi-bin/',
+    unless => '/bin/ps ax | /bin/grep -q [g]unicorn',
   }
 
 }

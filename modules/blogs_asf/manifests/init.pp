@@ -15,6 +15,7 @@ class blogs_asf (
   $heap_min_size           = '',
   $heap_max_size           = '',
   $maxmetaspacesize        = '',
+  $session_timeout         = '30', # 30 minute default for 'remember me'
 
 # override below in eyaml
 
@@ -145,6 +146,16 @@ class blogs_asf (
       mode    => '0644',
       source  => 'puppet:///modules/blogs_asf/javax.mail.jar',
       require => [File[$parent_dir],Package['tomcat8']];
+    '/var/lib/tomcat8/webapps/ROOT/WEB-INF/web.xml':
+      ensure  => present,
+      owner   => 'tomcat8',
+      group   => 'tomcat8',
+      content => template('blogs_asf/web.xml.erb'),
+      require => [
+        File[$parent_dir],
+        Package['tomcat8'],
+        Exec['deploy-roller'],
+      ];
     '/var/lib/tomcat8/webapps/ROOT/themes/asf':
       ensure  => directory,
       recurse => true,

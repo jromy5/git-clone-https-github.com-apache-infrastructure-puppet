@@ -73,9 +73,14 @@ class RefUpdate(object):
 
     def is_protected(self, patterns):
         for p in patterns:
+            # foo == foo
             if p == self.name:
                 return True
-            if p.endswith("/") and self.name.startswith(p):
+            # foo/ == foo/bar but also foo exactly
+            if p.endswith("/") and (self.name.startswith(p) or self.name == p[:-1]):
+                return True
+            # foo-* == foo-bar, foo-baz etc
+            if p.endswith("*") and self.name.startswith(p[:-1]):
                 return True
         return False
 

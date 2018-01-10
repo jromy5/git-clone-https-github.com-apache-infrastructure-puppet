@@ -32,9 +32,6 @@ contact users@infra.apache.org!
 """
 
 def main():
-    # WIP: FOR NOW, ABORT EVERYTHING!
-    if True:
-        util.abort(NOT_AUTHORIZED)
 
     # Check if commits are enabled.
     for lockname in cfg.write_locks:
@@ -48,8 +45,21 @@ def main():
     # Check committer's authorization for this
     # repository.
     authorized_committers = auth.authorized_committers(cfg.repo_name)
+    authorized_committers.add('git-site-role')
+    authorized_committers.add('mergebot-role')
+    authorized_committers.add('buildbot')
     if cfg.committer not in authorized_committers:
         util.abort(NOT_AUTHORIZED)
+
+    # Mergebot can only commit from a.b.c.d
+    # 207.244.88.152 is mergebot-vm.apache.org for the Beam project
+    if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152"):
+        util.abort(u"mergebot only works from the mergebot VM, tut tut!")
+    
+    # buildbot only possible from bb-slave1
+    # 209.188.14.160 is bb-slave1.a.o
+    if cfg.committer == "buildbot" and (cfg.ip != "209.188.14.160"):
+        util.abort(u"Buildbot role account only accessible via bb-slave1")
 
     # Check individual refs and commits for all of
     # our various conditions. Track each ref update
@@ -57,6 +67,9 @@ def main():
     refs = []
     for ref in git.stream_refs(sys.stdin):
         refs.append(ref)
+        # Site writer role
+        if ref.name.find("asf-site") == -1 and cfg.committer == "git-site-role":
+            util.abort(u"git-site-role can only write to asf-site branches!")
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
             util.abort(NO_REWRITES % ref.name)
         if ref.is_tag():

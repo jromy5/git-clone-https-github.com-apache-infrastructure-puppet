@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# This file is maintained in puppet
+# see modules/subversion_server/templates/post-commit-bigdata.erb
+
+SVN=/usr/bin/svn
+SVNLOOK=/usr/bin/svnlook
+SVNADMIN=/usr/bin/svnadmin
+SVNSYNC=/usr/bin/svnsync
+MAILER=/usr/bin/svn-mailer
+SUDO=/usr/bin/sudo
+SETLOCK=/root/bin/setlock.pl
+MASTER_HOSTNAME=svn01-us-west.apache.org
+HOSTNAME=`/bin/hostname -f`
+
+REPOS="$1"
+REV="$2"
+
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
+then
+
+    # send the commit mail
+    $MAILER --commit --config=/x1/svn/asf-mailer.conf --repository=$REPOS --revision=$REV \
+        2>>/var/log/svnmailer/errors/bigdata-mailer-stderr &
+
+fi
+

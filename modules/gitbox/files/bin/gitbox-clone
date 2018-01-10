@@ -65,14 +65,6 @@ def clone_git(git_url, git_dir, desc):
     log("Initializing Git repository.")
     git("clone", "--mirror", git_url, git_dir)
 
-    try:
-      if not sp.check_output(["git", "ls-remote", git_url, "master"]):
-        log("Moving trunk to master")
-        git("symbolic-ref", "HEAD", "refs/heads/master")
-        git("branch", "-m", "trunk", "master")
-    except sp.CalledProcessError:
-      error("Unable to rename branch trunk to master")
-
     if desc is None:
         desc = run_editor(initial="Project description, ie 'Apache Jackrabbit'")
     if desc is None:
@@ -147,7 +139,7 @@ def configure_asfgit(git_dir, commit):
 
         At the time of this writing, $(REPOS) should be:
 
-          /x1/git/repos/asf
+          /x1/repos/asf
 
         """ % {"git_repo": git_repo}))
 

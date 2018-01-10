@@ -23,7 +23,7 @@ classes:
   - apmirror
   - blocky
   - datadog_agent::integrations::apache
-  - datadog_agent::integrations::http_check
+  - datadog_asf::integrations::network
   - dell
   - dell::openmanage
   - loggy
@@ -33,6 +33,7 @@ classes:
   - rsync_mirror
   - ssl::name::wildcard_apache_org
   - ssl::name::apachecon_com
+  - ssl::name::archive_apachecon_com
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
@@ -74,7 +75,7 @@ apache::mod::status::apache_version:         '2.3' # Force module to use Allow f
 apache::mod::status::status_path:            '/server-status-dd'
 
 apache::mpm_module:                          'event'
-apache::serveradmin:                         'infrastructure@apache.org'
+apache::serveradmin:                         'users@infra.apache.org'
 
 apmirror::uid:                               '508'
 apmirror::gid:                               '508'
@@ -87,7 +88,6 @@ apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
 base::basepackages:
   - mod-lua-asf
 
-datadog_agent::integrations::http_check::url: 'https://themis.apache.org/server-status-dd'
 datadog_agent::integrations::apache::url: 'https://themis.apache.org/server-status-dd?auto'
 
 logrotate::rule:
@@ -280,7 +280,7 @@ vhosts_asf::vhosts::vhosts:
       - 'any23.org'
       - 'any23.com'
       - 'www.any23.com'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
     custom_fragment: |
@@ -296,7 +296,7 @@ vhosts_asf::vhosts::vhosts:
       - 'ooo-site.apache.org'
       - '*.openoffice.org'
       - 'openoffice.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file:  'errorlog.log'
     directories:
@@ -351,7 +351,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -421,7 +421,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -536,7 +536,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -676,9 +676,9 @@ vhosts_asf::vhosts::vhosts:
       - 'archive.*.apachecon.com'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
-    ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
-    ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
-    ssl_key: '/etc/ssl/private/apachecon.com.key'
+    ssl_cert: '/etc/ssl/certs/archive.apachecon.com.crt'
+    ssl_chain: '/etc/ssl/certs/archive.apachecon.com.chain'
+    ssl_key: '/etc/ssl/private/archive.apachecon.com.key'
 
   apachecon-archive-na11:
     vhost_name: '*'
@@ -763,7 +763,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www.cloudstack.com'
       - 'cloudstack.org.uk'
       - 'www.cloudstack.org.uk'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log' 
     custom_fragment: |
@@ -775,7 +775,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'docs.cloudstack.org'
     docroot: '/var/www/cloudstack.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -793,7 +793,7 @@ vhosts_asf::vhosts::vhosts:
       - 'couchhack.org'
       - 'www.couchapp.com'
       - 'www.couchhack.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -807,11 +807,51 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'deltaspike.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       Redirect permanent / http://deltaspike.apache.org/
+
+  drat:
+    vhost_name: '*'
+    port: 80
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    redirect_source: '/'
+    redirect_dest: 'https://drat.apache.org/'
+
+  drat-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    proxy_pass:
+      -
+        path: '/asfgit'
+        url: 'http://drat-vm.apache.org:8080/viz'
+      -
+        path: '/demo'
+        url: 'http://drat-vm.apache.org:8080/proteus'
+      -
+        path: '/oodt'
+        url: 'http://drat-vm.apache.org:8080/opsui'
+      -
+        path: '/solr'
+        url: 'http://drat-vm.apache.org:8080/solr'
 
   freemarker:
     vhost_name: '*'
@@ -823,7 +863,7 @@ vhosts_asf::vhosts::vhosts:
       - 'freemarker.org'
       - 'freemarker.incubator.apache.org'
       - 'freemarker.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -842,7 +882,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -893,7 +933,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -941,7 +981,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'httpcomponents.apache.org'
     docroot: '/var/www/hc.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -955,7 +995,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'httpcomponents.apache.org'
     docroot: '/var/www/hc.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -985,7 +1025,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1149,7 +1189,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1287,6 +1327,22 @@ vhosts_asf::vhosts::vhosts:
           SetHandler lua-script
       </Location>
       
+  modssl:
+    vhost_name: '*'
+    port: 80
+    servername: 'modssl.com'
+    docroot: '/var/www/httpd.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'modssl.net'
+      - 'www.modssl.com'
+      - 'www.modssl.net'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://httpd.apache.org/docs/current/ssl/
+
   incubator:
     vhost_name: '*'
     priority: 98
@@ -1314,7 +1370,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1389,7 +1445,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1442,7 +1498,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     override:
       - 'All'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -1493,7 +1549,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     override:
       - 'All'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -1545,7 +1601,7 @@ vhosts_asf::vhosts::vhosts:
       - 'jclouds.com'
     docroot: '/var/www/jclouds.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1559,7 +1615,7 @@ vhosts_asf::vhosts::vhosts:
       - 'jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1571,7 +1627,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jspwiki.apache.org'
     docroot: '/var/www/jspwiki.apache.org/content'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: | 
@@ -1588,7 +1644,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www.jspwiki.org'
     docroot: '/var/www/jspwiki.apache.org/content'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: | 
@@ -1607,7 +1663,7 @@ vhosts_asf::vhosts::vhosts:
       - 'libcloud.net'
       - 'www.libcloud.com'
       - 'libcloud.com'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1621,7 +1677,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'myfaces.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1651,7 +1707,7 @@ vhosts_asf::vhosts::vhosts:
       - 'odftoolkit.com'
       - 'www.odftoolkit.net'
       - 'odftoolkit.net'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1665,7 +1721,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'ofbiz.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1704,7 +1760,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1854,7 +1910,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1984,7 +2040,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'projectgeode.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -1994,15 +2050,31 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.qi4j.org'
-    docroot: '/var/www/zest.apache.org'
+    docroot: '/var/www/polygene.apache.org'
     manage_docroot: false
     serveraliases:
       - 'qi4j.org'
-    serveradmin: 'infrastructure@apache.org'
+      - 'zest.apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://zest.apache.org/
+      Redirect permanent / http://polygene.apache.org/
+
+  zest-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.zest.apache.org'
+    docroot: '/var/www/polygene.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'zest.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://polygene.apache.org/
 
   quetz:
     vhost_name: '*'
@@ -2012,7 +2084,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'python.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2027,7 +2099,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'python.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2057,7 +2129,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2107,7 +2179,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2161,7 +2233,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www.us.spamassassin.org'
       - 'www.useast.spamassassin.org'
       - 'www.uswest.spamassassin.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2179,19 +2251,33 @@ vhosts_asf::vhosts::vhosts:
       - 'subversion.net'
       - 'www.subversion.com'
       - 'subversion.com'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RedirectMatch permanent ^ http://subversion.apache.org/
 
+  tinkerpop.com:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.tinkerpop.com'
+    docroot: '/var/www/tinkerpop.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'tinkerpop.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch permanent ^ http://tinkerpop.apache.org/
+      
   svn.collab.net:
     vhost_name: '*'
     port: 80
     servername: 'svn.collab.net'
     docroot: '/var/www/subversion.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2223,7 +2309,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2236,6 +2322,10 @@ vhosts_asf::vhosts::vhosts:
         AddOutputFilter INCLUDES .html
       </Directory>
       <Directory /var/www/subversion.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion-staging.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
@@ -2314,7 +2404,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2327,6 +2417,10 @@ vhosts_asf::vhosts::vhosts:
         AddOutputFilter INCLUDES .html
       </Directory>
       <Directory /var/www/subversion.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion-staging.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
@@ -2394,7 +2488,7 @@ vhosts_asf::vhosts::vhosts:
       -
         rewrite_rule:
           - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -2445,7 +2539,7 @@ vhosts_asf::vhosts::vhosts:
       -
         rewrite_rule:
           - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -2500,7 +2594,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2542,7 +2636,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2569,7 +2663,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2584,7 +2678,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2598,7 +2692,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2613,7 +2707,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2625,7 +2719,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'wiki.spamassassin.org'
     docroot: '/var/www/spamassassin.apache.org'
     manage_docroot: false
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2640,7 +2734,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/ws.apache.org'
@@ -2687,7 +2781,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/ws.apache.org'
@@ -2733,7 +2827,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'jspwiki.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2747,7 +2841,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -2795,7 +2889,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
@@ -2858,7 +2952,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2907,7 +3001,7 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
@@ -2939,7 +3033,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/xml.apache.org'
@@ -2994,7 +3088,7 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/xml.apache.org'
@@ -3049,7 +3143,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'infra-test.apache.org'
       - 'infra.*.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/infra.apache.org/output'
@@ -3074,7 +3168,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'infra.*.apache.org'
       - 'infra-test.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directories:
       -
         path: '/var/www/infra.apache.org/output'

@@ -1,0 +1,71 @@
+[define title]Apache Account Utility: Change Details[end][#
+
+][define body]
+<script type="text/javascript">var ie = 0;</script>
+<!--[[]if IE]>
+<script type="text/javascript">ie = 1;</script>
+<![[]endif]-->
+<script type="text/javascript" language="javascript">
+function addattr(attr, v) {
+  if (v != "") {
+    var attr_p = document.getElementById(attr);
+    var sib = attr_p;
+    if (ie) {
+      while (sib.nextSibling
+         && sib.getElementsByTagName('input')[[]0].name ==
+           attr_p.getElementsByTagName('input')[[]0].name)
+      {
+        var val = sib.getElementsByTagName('input')[[]0].value
+        if (val == "") {
+          return false;
+        }
+        sib = sib.nextSibling;
+      }
+    }
+    else {
+      while (sib.nextSibling && sib.innerHTML == attr_p.innerHTML)
+      {
+        var val = sib.getElementsByTagName('input')[[]0].value
+        if (val == "") {
+          return false;
+        }
+        sib = sib.nextSibling;
+      }
+    }
+    var new_p = document.createElement('p');
+    new_p.innerHTML = attr_p.innerHTML;
+    attr_p.parentNode.insertBefore(new_p, sib);
+    new_p.getElementsByTagName('input')[[]0].value = "";
+    return false;
+  }
+}
+</script>
+
+                        <form action="?session=[session]" method="POST" autocomplete="off" id="form">
+[for attributes]
+    [for attributes.values]
+                                <p><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="[attributes.values]" [attributes.editable] tabindex="1" /></p>
+    [end]
+    [if-any attributes.multivalue]
+                                <p id='[attributes.key]'><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="" onchange="addattr('[attributes.key]', this.value)" tabindex="1" /></p>
+    [end]
+[end]
+
+                                <p><label><b>Password:</b></label><input type="password" size="54" name="old_pw" tabindex="10" /></p>
+                                <p><input type="submit" name="submit" value="Submit changes..." tabindex="100" /></p>
+                                <p><input type="hidden" name="availid" value="[availid]" /></p>
+                                <p><input type="hidden" name="session" value="[session]" /></p>
+                                <p><label>LDAP Distinguished Name: </label> [dn]</p>
+                        </form>
+[end][define toolbar]
+        <div style="float: left;"><h2>Welcome, [availid].</h2></div>
+        <div style="float: right;"><h2><a href="[script_name]/details/logout/[session]">Logout</a></h2></div>
+[end][define menu]
+                    <!-- change details:menu -->
+                    
+                    <!-- logout button is already present above -->
+[end][define messagebox]
+	[if-any message]<p>[message]</p>[else]<p>Please update your details, and enter your password to confirm.</p>[end]
+[end][#
+
+][include "layout.html"]

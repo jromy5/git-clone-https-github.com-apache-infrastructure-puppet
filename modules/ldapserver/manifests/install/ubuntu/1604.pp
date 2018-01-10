@@ -24,6 +24,7 @@ class ldapserver::install::ubuntu::1604 (
   $cafilecontents   = '',
   $certfilecontents = '',
   $keyfilecontents  = '',
+  $backuppath       = '/var/lib/ldap/backup',
 
 
 ) {
@@ -81,11 +82,45 @@ class ldapserver::install::ubuntu::1604 (
       owner   => openldap,
       mode    => '0600',
       notify  => Service['slapd'];
+    "${directory}/accesslog":
+      ensure => directory,
+      owner  => 'openldap',
+      group  => 'openldap',
+      mode   => '0750';
+    $backuppath:
+      ensure  => directory,
+      owner   => 'openldap',
+      group   => 'openldap',
+      mode    => '0750',
+      require => Package['slapd'];
   }
 
   service { 'slapd':
     ensure     =>  running,
     hasrestart =>  true,
     hasstatus  =>  true,
+  }
+
+  cron {
+    'backup-ldap':
+      user    => 'root',
+      hour    => '1',
+      minute  => '51',
+      command => "/usr/sbin/slapcat -b dc=apache,dc=org > ${backuppath}/ldap.$(date +\\%Y\\%m\\%d\\%H\\%M).ldif",
+      require => File[$backuppath];
+    'backup-accesslog':
+      user    => 'root',
+      hour    => '1',
+      minute  => '50',
+      command => "/usr/sbin/slapcat -b cn=accesslog > ${backuppath}/accesslog.$(date +\\%Y\\%m\\%d\\%H\\%M).ldif",
+      require => File[$backuppath];
+  }
+
+  tidy {
+    'ldap-backup':
+        path    => $backuppath,
+        age     => '2d',
+        recurse => 1,
+        matches => ['ldap.*','accesslog.*'],
   }
 }

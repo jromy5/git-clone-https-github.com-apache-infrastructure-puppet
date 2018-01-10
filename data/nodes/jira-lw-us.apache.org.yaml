@@ -2,18 +2,23 @@
 classes:
   - aardvark_asf # requires lua deps in basepackages
   - apache
+  - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - apache::mod::status
   - blocky
+  - datadog_agent::integrations::apache
+  - datadog_asf::integrations::network
   - jira_asf
   - oraclejava::install
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - zmanda_asf::client
+  - kif
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
@@ -29,6 +34,10 @@ apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
 
+apache::mod::status::allow_from:
+      - 'All'
+apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 
 base::basepackages:
@@ -39,10 +48,28 @@ base::basepackages:
   - 'lua5.2-cjson'
   - 'lua5.2-socket'
   - 'lua5.2-sec'
+  - 'lua5.2-yaml'
 
+datadog_agent::integrations::apache::url: 'https://issues.apache.org/server-status?auto'
+
+# Fail2ban for aardvark
+fail2ban_asf::config::jails:
+  jira:
+    filter: asf-jira
+    action:
+      - iptables-allports
+    logpath: /usr/local/etc/aardvark/spammers.txt
+    findtime: 3600
+    maxretry: 1
+    enable: true
+
+fail2ban_asf::config::filters:
+  asf-jira:
+    filterfailregex: |
+      <HOST> spammed Aardvark
 
 # jira_asf class variables.
-jira_asf::jira_version: '6.3.15'
+jira_asf::jira_version: '6.4.14'
 jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
@@ -63,6 +90,8 @@ logrotate::rule:
     ifempty: false
     rotate: 52
 
+kif::httpd_connections: 800
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
@@ -79,6 +108,40 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
+  helpinfrahelpyou:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
+  helpinfrahelpyou-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    servername: 'helpinfrahelpyou.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
+    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+
   issues:
     vhost_name: '*'
     ensure: 'present'
@@ -117,8 +180,9 @@ vhosts_asf::vhosts::vhosts:
       # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
       RewriteEngine on
 
-      # Proxy requests
-      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
+      # Proxy requests to AJP backend but ignore server-status
+      ProxyPass /server-status !
+      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=800
 
       # Anti-spam for Aardvark
       LuaScope thread
@@ -146,12 +210,3 @@ vhosts_asf::vhosts::vhosts:
       
       # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
       SSLProxyEngine On
-      
-      # Bloodhound instance on bloodhound-vm.a.o - MEH!
-      SSLProxyVerify none
-      SSLProxyCheckPeerCN off
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerExpire off
-      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
-      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound
-

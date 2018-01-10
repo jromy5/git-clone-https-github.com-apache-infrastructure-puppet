@@ -1,5 +1,6 @@
 ---
 classes:
+  - aardvark_asf # requires lua deps in basepackages
   - apache
   - apache::mod::headers
   - apache::mod::proxy
@@ -14,6 +15,7 @@ classes:
   - vhosts_asf::modules
   - loggy
   - blocky
+  - kif
 
 apache::default_vhost: false
 
@@ -41,6 +43,12 @@ apache::mod::event::threadsperchild: '50'
 
 base::basepackages:
  - 'issues-data'
+ - 'lua5.2'
+ - 'liblua5.2-dev'
+ - 'lua5.2-cjson'
+ - 'lua5.2-socket'
+ - 'lua5.2-sec'
+ - 'lua5.2-yaml'
  
 fail2ban_asf::config::jails:
   bz:
@@ -66,7 +74,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'bz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/issues-data'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -80,7 +88,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'bz.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     docroot: '/var/www/issues-data'
     access_log_env_var: 'combined_forwarded'
     setenv: 'combined_forwarded'

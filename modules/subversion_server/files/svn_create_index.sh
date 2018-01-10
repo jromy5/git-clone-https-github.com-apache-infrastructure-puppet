@@ -52,7 +52,7 @@ function create_gnu_index ()
         echo "<p>This directory contains manually generated dumps of the ASF subversion repository.</p>"
         echo "<p>Files are compressed using the 7zip format. </p>"
         echo "<p><a href="http://p7zip.sourceforge.net/">p7zip</a> is available in most package systems to decompress these files.</p>"
-        echo "<p>Contact infrastructure@apache.org for more info.</p>"
+        echo "<p>Contact users@infra.apache.org for more info.</p>"
         echo "<font color="red">"
         echo "<h2>These files expand to over 65 gigabytes.</h2>"
         echo "</font>"

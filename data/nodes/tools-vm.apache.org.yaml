@@ -3,12 +3,22 @@ classes:
   - apache
   - apache::mod::authnz_ldap
   - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
   - elasticsearch
+  - etherpad_lite
+  - etherpad_lite::site
   - git_self_serve::tools
+  - jenkins_node_monitor
   - loggy
+  - pad_asf
+  - selfserve
+  - selfserve_portal
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
+  - zmanda_asf::client
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
@@ -28,6 +38,7 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+selfserve_portal::cliversion: '5.7.0'
 
 base::basepackages:
   - 'lua5.2'
@@ -36,6 +47,15 @@ base::basepackages:
   - 'lua5.2-socket'
   - 'lua5.2-sec'
   - 'mod-lua-asf'
+  - 'nodejs'
+
+cron:
+  # JNM: Jenkins Node Monitor, check status of Jenkins nodes and pushes that to DataDog
+  jnm:
+    user: 'root'
+    minute: '*/10'
+    hour: '*'
+    command: 'cd /usr/local/etc/jenkins_node_monitor/ && python jnm.py > /dev/null 2>&1'
   
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
@@ -50,6 +70,8 @@ elasticsearch::instances:
       network.host: '127.0.0.1'
       init_defaults:
         ES_HEAP_SIZE: '2g'
+        
+etherpad_lite::site::etherpad_title: 'ASF EtherPad'
 
 httpd_modules::dev_package:
   - 'apache2-dev'
@@ -59,10 +81,69 @@ logrotate::rule:
     ensure: 'present'
 
 vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
   lua:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
+  etherpad-lite:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    docroot: '/var/www/etherpad-lite'
+    manage_docroot: false
+    access_log_file: 'pad.apache.org.http_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://pad.apache.org/
+      
+  etherpad-lite-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'pad.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    manage_docroot: false
+    docroot: '/var/www/etherpad-lite'
+    access_log_file: 'pad.apache.org.ssl_access.log'
+    error_log_file: 'pad.apache.org.error.log'
+    custom_fragment: |
+      <Location />
+        AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPRemoteUserAttribute uid
+        AuthName "ASF Committers"
+        AuthType Basic
+        AuthBasicProvider ldap
+        Require valid-user
+      </Location>
+
+      AddHandler cgi-script .cgi
+      Alias /list /var/www/etherpad-lite/asf/pads.cgi
+      <Location /list>
+          Options +ExecCGI
+          AuthType Basic
+          AuthName "Apache infrastructure team only"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+      </Location>
+
+      ProxyPass /list !
+      ProxyPass / http://localhost:9001/
+      ProxyPassReverse / http://localhost:9001/
+      ProxyPreserveHost On
+
+      ProxyErrorOverride On
+      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=500
+      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=502
+      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=503
+    
   paste:
     vhost_name: '*'
     port: 80
@@ -97,7 +178,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /p/>
           AuthType Basic
           AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
@@ -136,7 +217,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /new>
           AuthType Basic
           AuthName "Apache committers only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute uid
           AuthBasicProvider ldap
           require valid-user
@@ -175,7 +256,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /infra/>
           AuthType Basic
           AuthName "Apache infrastructure team only"
-          AuthLDAPurl "ldaps://ldap-lb-eu.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthBasicProvider ldap
           AuthLDAPGroupAttributeIsDN on
@@ -211,9 +292,11 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
+      AddHandler cgi-script .cgi
       FallbackResource /index.html
       <Location />
-        AuthLDAPUrl "ldaps://snappy5.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        Options +ExecCGI
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers"
         AuthType Basic
@@ -221,6 +304,7 @@ vhosts_asf::vhosts::vhosts:
         <RequireAny>
           Require ip 140.211.11.23
           Require ip 54.84.58.65
+          Require ip 140.211.11.3
           Require valid-user
         </RequireAny>
       </Location>
@@ -243,7 +327,7 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/var/www/oauth/html'
     manage_docroot: false
     servername: 'oauth.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directoryindex: 'index.lua'
     options:
       - Indexes
@@ -259,10 +343,104 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       FallbackResource /index.lua
       <Location /auth>
-        AuthLDAPUrl "ldaps://snappy5.apache.org ldap-lb-eu.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthLDAPRemoteUserAttribute uid
         AuthName "ASF Committers only"
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
       </Location> 
+  id:
+    vhost_name: '*'
+    port: 80
+    servername: 'id.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve'
+    manage_docroot: false
+    access_log_file: 'id.apache.org.access.log'
+    error_log_file: 'id.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://id.apache.org/
+  id-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'id.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve/app'
+    manage_docroot: false
+    access_log_file: 'id.apache.org.ssl_access.log'
+    error_log_file: 'id.apache.org.ssl_error.log'
+    custom_fragment: |
+      AddHandler cgi-script .py
+      RewriteEngine On
+      RewriteRule /\.subversion - [F,L]
+      RewriteCond %%{}{REQUEST_URI} !^/acreq
+      RewriteCond %%{}{REQUEST_URI} !^/info
+      RewriteCond %%{}{REQUEST_URI} !^/img
+      RewriteCond %%{}{REQUEST_URI} !^/style
+      RewriteCond %%{}{REQUEST_URI} !^/favicon.ico
+      RewriteCond %%{}{REQUEST_URI} !^/robots.txt
+      RewriteCond %%{}{REQUEST_URI} !^/ss2x.py
+      Rewriterule ^(.*) /ss2.py/$1 [L]
+      RedirectMatch ^/acreq/(members|pmc-chairs) https://whimsy.apache.org/officers/acreq
+      <Directory /var/www/selfserve/app>
+        Options FollowSymLinks MultiViews ExecCGI
+        AllowOverride None
+        Order allow,deny
+        allow from all
+      </Directory>
+      <LocationMatch ^/ss2.py>
+        Options +ExecCGI -MultiViews +FollowSymLinks
+        Order allow,deny
+        Allow from all
+      </LocationMatch>
+  selfserve:
+    vhost_name: '*'
+    port: 80
+    servername: 'selfserve.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve-portal/site'
+    manage_docroot: false
+    access_log_file: 'selfserve.apache.org.access.log'
+    error_log_file: 'selfserve.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://selfserve.apache.org/
+  selfserve-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'selfserve.apache.org'
+    serveradmin: 'root@apache.org'
+    docroot: '/var/www/selfserve-portal/site'
+    manage_docroot: false
+    access_log_file: 'selfserve.apache.org.ssl_access.log'
+    error_log_file: 'selfserve.apache.org.ssl_error.log'
+    custom_fragment: |
+      AddHandler cgi-script .cgi
+      AddHandler lua-script .lua
+      <Directory /var/www/selfserve-portal/site/cgi-bin>
+        Options ExecCGI
+        AllowOverride None
+        Require all granted
+      </Directory>
+      # Restrict access to jira,conf,mail,git to chairs + root.
+      <LocationMatch "^/(cgi-bin|mail|jira|confluence|git)">
+        Options +ExecCGI -MultiViews +FollowSymLinks
+        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthName "ASF Project Chairs Only!"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPGroupAttribute member
+        AuthLDAPGroupAttributeIsDN on
+        <RequireAny>
+          # Hermes or valid chair/root
+          Require ip 140.211.11.3
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          Require ldap-group cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
+          Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
+        </RequireAny>
+      </LocationMatch>
+      Alias /cgi-bin/ss.lua /var/www/git-setup/ss.lua
+      ErrorDocument 401 /401.html
+      ErrorDocument 403 /401.html

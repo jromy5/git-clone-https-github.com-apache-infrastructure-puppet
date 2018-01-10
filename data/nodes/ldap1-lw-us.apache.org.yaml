@@ -1,3 +1,7 @@
 ---
 classes:
+  - blocky
   - ldapserver
+  - loggy
+  - kif
+  - zmanda_asf::client

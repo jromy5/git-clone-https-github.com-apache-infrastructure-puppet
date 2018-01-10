@@ -1,0 +1,53 @@
+---
+classes:
+  - apache
+  - aim_server
+  - blocky
+  - elasticsearch
+  - loggy
+  - rootbin_asf
+  - ssl::name::wildcard_apache_org
+  - zmanda_asf::client
+  
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '30'
+apache::default_vhost:      true
+apache::docroot:            '/var/www/html'
+apache::docroot_owner:      'www-data'
+
+apache::serveradmin:        'users@infra.apache.org'
+
+apache::mpm_module:         'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+ 
+base::gempackages:
+  - 'r10k'
+  - 'puppet-lint'
+
+elasticsearch::jvm_options:
+  - '-Xms2g'
+  - '-Xmx2g'
+elasticsearch::java_install: true
+elasticsearch::version: '5.4.3'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
+elasticsearch::instances:
+  tools:
+    config:
+      node.name: 'tools-vm2'
+      network.host: '127.0.0.1'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+

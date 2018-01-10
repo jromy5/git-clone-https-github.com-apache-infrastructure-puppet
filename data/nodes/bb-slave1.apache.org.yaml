@@ -6,18 +6,21 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave1_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
-  - 'tomcat7'
+  - 'graphviz'
+  - 'graphviz-dev'
   - 'libtool'
   - 'libpcre3' 
   - 'libpcre3-dev'
-  - 'graphviz'
-  - 'graphviz-dev'
+  - 'tomcat7'
+  - 'ruby2.0'
+  - 'ruby2.0-dev'
 
 python::python_pips:
   pelican:
     ensure: present
   markdown:
+    ensure: present
+  py-gfm:
     ensure: present
   beautifulsoup4:
     ensure: present

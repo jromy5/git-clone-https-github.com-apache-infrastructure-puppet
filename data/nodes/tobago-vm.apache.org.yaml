@@ -1,0 +1,7 @@
+---
+classes:
+  - oraclejava::install
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+

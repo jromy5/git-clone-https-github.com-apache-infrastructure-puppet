@@ -1,0 +1,27 @@
+########################################################################
+# PubSubConfiguration                                                  #
+########################################################################
+properties:
+  domain:
+    description: The (sub) domain to be modified
+    example: kibble
+    type: string
+  type:
+    description: The PubSub type (git/svn) in use
+    example: git
+    type: string
+  project:
+    description: The project this request is for
+    type: string
+    example: kibble
+  source:
+    description: The source of the pubsub site
+    type: string
+    example: https://gitbox.apache.org/repos/asf/kibble-website.git
+required:
+    - domain
+    - type
+    - project
+    - source
+
+

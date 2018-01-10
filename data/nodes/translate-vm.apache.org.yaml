@@ -1,0 +1,181 @@
+---
+classes:
+  - apache
+  - apache::mod::expires
+  - apache::mod::ssl
+  - apache::mod::status
+  - apache::mod::wsgi
+  - datadog_agent::integrations::apache
+  - loggy
+  - memcached
+  - oraclejava::install
+  - pootle_asf
+  - python
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::mpm_module: 'event'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '750'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '3750'
+apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::minsparethreads:         '150'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '150'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+apache::mod::wsgi::wsgi_python_path: "%{pootle_asf::pootle_venv}/lib/python2.7/site-packages"
+
+base::basepackages:
+  - build-essential
+  - libxml2-dev
+  - libxslt-dev
+  - zlib1g-dev
+  - libmysqlclient-dev
+  - libsasl2-dev
+  - libldap2-dev
+  - libssl-dev
+
+datadog_agent::integrations::apache::url: 'https://translate-vm.apache.org/server-status?auto'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/var/log/apache/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+memcached::max_memory: '10%'
+memcached::listen_ip: '127.0.0.1'
+memcached::tcp_port: '11211'
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
+python::version: 'system'
+python::pip: true
+python::dev: true
+python::virtualenv: true
+python::gunicorn: false
+python::manage_gunicorn: false
+
+python::venv:
+  'pootle':
+    ensure: 'present'
+    version: 'system'
+    requirements: '/x1/www/pootle-requirements.txt'
+    owner: 'www-data'
+    group: 'www-data'
+    venv_dir: '%{pootle_asf::pootle_venv}'
+
+file:
+  '/x1/www/pootle-requirements.txt':
+    ensure: present
+    path: '/x1/www/pootle-requirements.txt'
+    owner: 'www-data'
+    group: 'www-data'
+    content: |
+      Django==1.4.10
+      django-assets==0.8
+      Pootle==2.5.1.3
+      MySQL-python==1.2.3
+      django-auth-ldap==1.2.14
+      python-Levenshtein==0.12.0
+      python-memcached==1.58
+
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+postfix::server::myhostname: 'translate.apache.org'
+postfix::server::mydestination: 'translate.apache.org, translate-vm.apache.org, localhost.apache.org, localhost'
+
+vhosts_asf::vhosts::vhosts:
+  translate:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'translate.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    docroot: '/var/www'
+    log_level: 'warn'
+    access_log_file: 'translate.apache.org.http_access.log'
+    error_log_file:  'translate.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://translate.apache.org/
+
+  translate-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    docroot: '/x1/www'
+    servername: 'translate.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'translate.apache.org.ssl_access.log'
+    error_log_file: 'translate.apache.org.error.log'
+    setenv:
+      -
+        'POOTLE_SETTINGS /x1/www/pootle/settings.py'
+    wsgi_daemon_process: 'pootle' 
+    wsgi_daemon_process_options:
+      processes: 2 
+      threads: 3 
+      stack-size: 1048576 
+      maximum-requests: 5000 
+      inactivity-timeout: 900 
+      display-name: '%%{}{GROUP}'
+      python-path: '%{pootle_asf::pootle_venv}/lib/python2.7/site-packages'
+    wsgi_process_group: 'pootle'
+    wsgi_script_aliases:
+      /:
+        '/x1/www/pootle/wsgi.py'
+    aliases:
+      -
+        scriptalias: '/cgi-bin/'
+        path: '/usr/lib/cgi-bin'
+      -
+        alias: '/assets'
+        path: '/x1/www/pootle/assets'
+      -
+        alias: '/pootle/assets'
+        path: '/x1/www/pootle/assets'
+      -
+        alias: '/export'
+        path: '%{pootle_asf::pootle_poroot}'
+      -
+        alias: '/pootle/export'
+        path: '/x1/www/po'
+      -
+        alias: '/transfer'
+        path: '/x1/www/xfer'
+    directories:
+      - 
+        path: '%{pootle_asf::pootle_wwwroot}'
+        require: 'all granted'
+        expires_active: 'on'
+        expires_by_type: "image/x-icon 'access plus 1 month'"
+      -
+        path: '%{pootle_asf::pootle_poroot}'
+        require: 'all granted'
+        expires_active: 'on'
+        expires_by_type: "image/x-icon 'access plus 1 month'"
+      -
+        path: '/usr/lib/cgi-bin'
+        require: 'all granted'
+        options:
+          - '+ExecCGI'
+          - '+SymlinksIfOwnerMatch'
+          - '-MultiViews'
+    custom_fragment: |
+      <Location "/server-status">
+        SetHandler server-status
+        Require host translate-vm.apache.org
+      </Location>

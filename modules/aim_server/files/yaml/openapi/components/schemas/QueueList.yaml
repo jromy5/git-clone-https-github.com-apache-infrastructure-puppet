@@ -1,0 +1,12 @@
+########################################################################
+# QueueList                                                            #
+########################################################################
+properties:
+  requests:
+    description: The list of queued items
+    items:
+      $ref: '#/components/schemas/QueueItem'
+    type: array
+required:
+- requests
+

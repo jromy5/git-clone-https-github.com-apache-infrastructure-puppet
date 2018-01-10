@@ -1,0 +1,61 @@
+---
+classes:
+  - apache
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - loggy
+  - vhosts_asf::vhosts
+
+base::basepackages:
+    - 'openjdk-8-jdk'
+
+vhosts_asf::vhosts::vhosts:
+  archiva.apache.org-80:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'archiva.apache.org'
+    servername: 'archiva-vm2.apache.org'
+    serveraliases: 'archiva-repository.apache.org archiva-repository archiva-vm2.apache.org archiva-vm2'
+    default_vhost: true
+    docroot: '/var/www/'
+    access_log_file: 'archiva_access.log'
+    error_log_file: 'archiva_error.log'
+    custom_fragment: |
+      ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+      <Directory "/usr/lib/cgi-bin">
+          AllowOverride None
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          Order allow,deny
+          Allow from all
+      </Directory>
+
+      CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+      Alias /doc/ "/usr/share/doc/"
+      <Directory "/usr/share/doc/">
+          Options Indexes MultiViews FollowSymLinks
+          AllowOverride None
+          Order deny,allow
+          Deny from all
+          Allow from 127.0.0.0/255.0.0.0 ::1/128
+      </Directory>
+      #RedirectMatch permanent ^/$ https://archiva-repository.apache.org/archiva/
+
+      ProxyPass /archiva/ http://localhost:9191/ connectiontimeout=15 timeout=180
+      ProxyPassReverse /archiva/ http://localhost:9191/
+
+          #cache directive 
+          # default
+          Header set Cache-Control "max-age=86401, public"
+
+          #Header set Cache-control "max-age=0, must-revalidate, no-store" 
+          #Header append Cache-control "public"
+
+          # *.jsp, *.action  no-cache=true
+          #SetEnvIf Request_URI "\.jsp$" no-cache=true
+
+          # def no-cache
+          Header set Cache-Control "max-age=0, must-revalidate, no-store" env=no-cache

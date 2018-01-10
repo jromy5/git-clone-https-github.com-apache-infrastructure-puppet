@@ -1,0 +1,69 @@
+
+rules:
+    loggy:
+        description:     'loggy hogging all the memory'
+        procid:
+            - 'python2.7'
+            - 'loggy.py'
+            - '--daemonize'
+            - '--user=root'
+            - '--group=root'
+        triggers:
+            maxmemory:   1024mb
+        runlist:
+            - 'service loggy restart'
+    postfix:
+        description:     'postfix memory hogging prevention'
+        procid:          '/usr/lib/postfix/master'
+        triggers:
+            maxmemory:   50%
+            maxfds:      10240
+        runlist:
+            - 'service postfix restart'
+    slapd:
+        description:     'LDAP memory hogging prevention'
+        procid:          '/usr/sbin/slapd'
+        triggers:
+            maxmemory:   50%
+            maxfds:      1024
+        runlist:
+            - 'service slapd restart'
+    elastic:
+        description:     'Snappy ElasticSearch OOM'
+        procid:          '/etc/elasticsearch/asful'
+        triggers:
+            maxmemory:   40gb
+            maxfds:      99999
+        runlist:
+            - 'service elasticsearch-asful restart'
+    gitpubsub:
+        description:     'gitpubsub running out of FDs'
+        # We can also define the full cmdline stack to search for:
+        procid:
+            - 'lua'
+            - 'gitpubsub.lua'
+        triggers:
+            maxfds:     255
+        runlist:
+            - 'service gitpubsub restart'
+    httpd:
+        description:     'httpd too many backend connections (pool filling up?)'
+        procid: '/usr/sbin/apache2'
+        # Use combine: true to combine the resource of multiple processes into one check.
+        combine:            true
+        triggers:
+            maxlocalconns:  <%= @httpd_connections %>
+        runlist:
+            - 'service apache2 restart'
+
+notifications:
+    hipchat:
+        room:  '2651110'
+        token:  '<%= @hipchat_token %>'
+        notify: true
+    email:
+        rcpt:  'private@infra.apache.org'
+        from:  'KIF <kif@apache.org>'
+
+logging:
+    logfile: /var/log/kif.log

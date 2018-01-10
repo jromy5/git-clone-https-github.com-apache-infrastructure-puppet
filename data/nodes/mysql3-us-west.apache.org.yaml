@@ -7,6 +7,7 @@ classes:
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
+datadog_agent::integrations::mysql::replication: 1
 
 
 mysql::server::override_options:
@@ -21,7 +22,7 @@ mysql::server::override_options:
     binlog-ignore-db: 'mysql'
     expire-logs-days: '2'
     character-set-server: 'utf8'
-    max_allowed_packet: '64M'
+    max_allowed_packet: '256M'
     max_connections: '1024'
     performance_schema: 'ON'
     innodb_buffer_pool_size: '2048M'
@@ -41,6 +42,10 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  archiva:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
   asfblogs:
     ensure: 'present'
     charset: 'utf8'
@@ -50,6 +55,10 @@ mysql::server::databases:
     charset: 'utf8'
     collate: 'utf8_bin'
   reviewboard:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
+  openmeetings:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'

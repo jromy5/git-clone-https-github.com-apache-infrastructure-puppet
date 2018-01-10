@@ -1,0 +1,105 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - letsencrypt
+  - loggy
+  - oraclejava::install
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+  
+base::basepackages:
+  - 'ffmpeg'
+  - 'imagemagick'
+  - 'libfreetype6-dev'
+  - 'libgif-dev'
+  - 'libjpeg-dev'
+  - 'libreoffice'
+  - 'sox'
+  - 'x264'
+  - 'zlib1g-dev'
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::manage_dependencies: false
+letsencrypt::certonly:
+  openmeetings-vm2:
+    domains:
+      - demo-openmeetings.apache.org
+      - openmeetings-vm2.apache.org
+    plugin: standalone
+    manage_cron: true
+    cron_success_command: '/bin/systemctl reload apache2.service'
+    before: Class[Apache]
+
+vhosts_asf::modules::modules:
+  proxy_wstunnel:
+    name: 'proxy_wstunnel'
+
+vhosts_asf::vhosts::vhosts:
+  demo-openmeetings.apache.org-80:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'demo-openmeetings.apache.org'
+    default_vhost: true
+    docroot: '/var/www/'
+    access_log_file: 'demo-openmeetings_access.log'
+    error_log_file: 'demo-openmeetings_error.log'
+    custom_fragment: |
+      Redirect permanent / https://demo-openmeetings.apache.org/
+
+  demo-openmeetings.apache.org-443:
+    vhost_name: '*'
+    ensure: 'present'
+    servername: 'demo-openmeetings.apache.org'
+    port: 443
+    docroot: '/var/www/'
+    docroot_owner: 'www-data'
+    docroot_group: 'www-data'
+    access_log_file: 'demo-openmeetings.apache.org.http_access.log'
+    error_log_file: 'demo-openmeetings.apache.org-ssl-error.log'
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/demo-openmeetings.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/demo-openmeetings.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/demo-openmeetings.apache.org/chain.pem'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteCond %%{}{HTTP:Connection} Upgrade [NC]
+      RewriteCond %%{}{HTTP:Upgrade} websocket [NC]
+      RewriteRule /(.*) ws://localhost:5080/$1 [P,L]
+      RedirectMatch ^/$ https://demo-openmeetings.apache.org/openmeetings
+      ProxyPreserveHost On
+
+
+      <Location /openmeetings>
+        Require all granted      
+        ProxyPass http://localhost:5080/openmeetings
+        ProxyPassReverse http://localhost:5080/openmeetings
+        RewriteEngine On
+        RewriteRule ^/(.*) http://localhost:5080/$1 [P]
+      </Location>
+      <Location /open>
+        Require all granted
+        ProxyPass http://localhost:5080/open
+        ProxyPassReverse http://localhost:5080/open
+      </Location>
+      <Location /send>
+        Require all granted
+        ProxyPass http://localhost:5080/send
+        ProxyPassReverse http://localhost:5080/send
+      </Location>
+      <Location /idle>
+        Require all granted
+        ProxyPass http://localhost:5080/idle
+        ProxyPassReverse http://localhost:5080/idle
+      </Location>
+      <Location /close>
+        Require all granted
+        ProxyPass http://localhost:5080/close
+        ProxyPassReverse http://localhost:5080/close
+      </Location>

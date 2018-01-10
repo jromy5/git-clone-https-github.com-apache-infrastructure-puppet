@@ -6,7 +6,9 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave3_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
+  - 'ruby2.0'
+  - 'ruby2.0-dev'
+
 
 # mkdocs needed for eagle docs build
 

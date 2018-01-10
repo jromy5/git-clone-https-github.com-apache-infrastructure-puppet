@@ -10,6 +10,7 @@ class buildbot_slave (
   $username          = 'buildslave',
   $service_ensure    = 'running',
   $service_name      = 'buildslave',
+  $gradle_versions   = ['3.5', '4.3', '4.3.1'],
 
   # override below in eyaml
 
@@ -33,6 +34,17 @@ class buildbot_slave (
   package { 'gradle':
     ensure => latest,
   }
+
+  # define gradle symlinking.
+  define buildbot_slaves::symlink_gradle ($versions = $title) {
+    package {"gradle-${versions}":
+      ensure => latest,
+    }
+  }
+
+  buildbot_slaves::symlink_gradle { $gradle_versions: }
+
+
 
   python::pip { 'Flask':
     pkgname => 'Flask';
@@ -117,6 +129,14 @@ class buildbot_slave (
       owner   => $username,
       group   => $groupname,
       mode    => '0755';
+
+    "/home/${username}/.puppet-lint.rc":
+      require => User[$username],
+      path    => "/home/${username}/.puppet-lint.rc",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      source  => 'puppet:///modules/buildbot_slave/.puppet-lint.rc';
 
     "/home/${username}/.m2/settings.xml":
       require => File["/home/${username}/.m2"],

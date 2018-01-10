@@ -93,11 +93,25 @@ class whimsy_server::cronjobs (
     minute  => 45
   }
 
+  cron { 'public_ldap_projects':
+    ensure  => present,
+    command => "(cd /srv/whimsy/www; ${ruby} roster/public_ldap_projects.rb public/public_ldap_projects.json > logs/public-ldap-projects 2>&1)", # lint:ignore:140chars
+    user    => $apache::user,
+    minute  => 50
+  }
+
   cron { 'board_minutes':
     ensure  => present,
     command => "(cd /srv/whimsy/tools; ${ruby} collate_minutes.rb > ../www/logs/collate_minutes 2>&1)",
     user    => $apache::user,
     minute  => 10
+  }
+
+  cron { 'site-scan':
+    ensure  => present,
+    command => "(cd /srv/whimsy/tools; ${ruby} site-scan.rb ../www/public/site-scan.json ../www/public/pods-scan.json > ../www/logs/site-scan 2>&1)", # lint:ignore:140chars
+    user    => $apache::user,
+    minute  => 55
   }
 
   cron { 'letsencrypt_auto':

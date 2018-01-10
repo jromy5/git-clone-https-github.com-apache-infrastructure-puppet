@@ -2,12 +2,15 @@
 classes:
   - aardvark_asf
   - apache
+  - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
   - apache::mod::ssl
+  - apache::mod::status
   - blocky
+  - datadog_agent::integrations::apache
   - jira_asf
   - oraclejava::install
   - rsync::server
@@ -29,6 +32,10 @@ apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '250'
 apache::mod::event::threadsperchild:         '150'
 
+apache::mod::status::allow_from:
+    - 'All'
+apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
 
 base::basepackages:
@@ -39,14 +46,19 @@ base::basepackages:
   - 'lua5.2-cjson'
   - 'lua5.2-socket'
   - 'lua5.2-sec'
+  - 'lua5.2-yaml'
+
+datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
 
 # jira_asf class variables.
-jira_asf::jira_version: '6.4.14'
-jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
+jira_asf::jira_version: 'software-7.6.0'
+# jira_asf::jira_version: 'software-7.0.11'
+# jira_asf::jira_version: '6.4.14'
+jira_asf::pgsql_connector_version: '42.0.0'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
-jira_asf::connector_port_http: '8888'
-jira_asf::connector_port_ajp: ''
+jira_asf::connector_port_http: ''
+jira_asf::connector_address_ajp: '127.0.0.1'
 jira_asf::context_path: '/jira'
 jira_asf::docroot: '/var/www'
 jira_asf::jvm_min_size: '6144m'
@@ -78,9 +90,11 @@ rsync::server::gid:           'nogroup'
 rsync::server::module:
   jira:
     path: '/x1/jira/'
-    hosts_allow: '10.10.3.5'
+    hosts_allow: '10.10.3.242'
     auth_users: 'apb-jira'
     secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
     read_only: 'no'
 
 file:
@@ -135,7 +149,8 @@ vhosts_asf::vhosts::vhosts:
       # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
       RewriteEngine on
 
-      # Proxy requests
+      # Proxy requests to AJP backend but ignore server-status
+      ProxyPass /server-status !
       ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
 
       # Anti-spam for Aardvark
@@ -161,14 +176,3 @@ vhosts_asf::vhosts::vhosts:
         AddOutputFilterByType SUBSTITUTE text/xml
         Substitute s!http://issues-test.apache.org/!https://issues-test.apache.org/!
       </Location>
-
-      # Setup SSL Proxy Support (needed to allow SSL proxying for bloodhound)
-      SSLProxyEngine On
-
-      # Bloodhound instance on bloodhound-vm.a.o - MEH!
-      SSLProxyVerify none
-      SSLProxyCheckPeerCN off
-      SSLProxyCheckPeerName off
-      SSLProxyCheckPeerExpire off
-      ProxyPass /bloodhound    https://bloodhound-vm.apache.org/bloodhound
-      SetEnvIf Request_URI "^/bloodhound" asf_proxy=bloodhound

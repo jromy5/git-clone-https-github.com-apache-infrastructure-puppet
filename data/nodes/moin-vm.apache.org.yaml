@@ -1,13 +1,16 @@
 ---
 classes:
   - apache
-  - apache::mod::ssl
   - apache::mod::rewrite
+  - apache::mod::ssl
+  - apache::mod::status
+  - blocky
+  - datadog_agent::integrations::apache
+  - kif
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - zmanda_asf::client
-  - blocky
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -27,15 +30,14 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '800'
 apache::mod::event::threadsperchild: '200'
 
-apache::mod::status::allow_from:
-  - all
-
 apache::mpm_module:         'event'
 apache::serveradmin:        'users@infra.apache.org'
 
 base::basepackages:
   - 'rsync'
   - 'libapache2-mod-wsgi'
+
+datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
 
 logrotate::rule:
   apache2:
@@ -82,3 +84,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule /moin_static(\d+)/(.*)$ /www/wiki/share/moin/htdocs/$2 [L]
       RewriteRule ^/wiki(.*)$ /www/wiki/share/moin/htdocs$1 [L]
       RedirectMatch ^/$ /general/
+
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>

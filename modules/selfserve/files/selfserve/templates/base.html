@@ -1,0 +1,28 @@
+[include "headers.http"][#
+]<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="stylesheet" href="https://selfserve.apache.org/css/default.css" type="text/css" media="screen, projection"/>
+    <title>[title]</title>
+  </head>
+  <body>
+       <h1 style="color: #FFF;">Apache Account Utility</h1>
+            [# this was constructed in layout.html ]
+            [format "raw"][fullbody][end]
+    <div class="footer">
+        <p>
+            Copyright &copy; 2017 The Apache Software Foundation,
+            Licensed under the
+            <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.<br />
+            Apache and the Apache feather logo are trademarks of
+            The Apache Software Foundation.
+        </p>
+    </div>
+  </body>
+[if-any _debug]
+<pre>DEBUG:
+[_debug]</pre>
+[end]
+</html>

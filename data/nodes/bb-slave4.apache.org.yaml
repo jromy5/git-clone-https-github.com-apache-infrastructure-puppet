@@ -7,31 +7,28 @@ classes:
 
 buildbot_slave::slave_name: 'bb_slave4_ubuntu'
 buildbot_slave::required_packages:
-  - 'openjdk-7-jdk'
-  - 'libcups2-dev'
-  - 'rpm'
-  - 'pkg-config'
-  - 'libfreetype6-dev'
-  - 'libfontconfig1-dev'
-  - 'libxrandr-dev'
   - 'bison'
   - 'flex'
+  - 'freeglut3-dev'
+  - 'gperf'
+  - 'libarchive-zip-perl'
+  - 'libdbus-glib-1-dev'
+  - 'libcups2-dev'
+  - 'libfreetype6-dev'
+  - 'libfontconfig1-dev'
   - 'libgconf2-dev'
   - 'libgnomevfs2-dev'
   - 'libgtk2.0-dev'
   - 'libhamcrest1.2-java'
-  - 'libdbus-glib-1-dev'
-  - 'libarchive-zip-perl'
   - 'libidl-dev'
   - 'liborbit2-dev'
-  - 'orbit2'
   - 'libxaw7-dev'
   - 'libxmu-dev'
   - 'libxmu-headers'
   - 'libxpm-dev'
-  - 'freeglut3-dev'
-  - 'libssl-dev'
-  - 'gperf'
+  - 'libxrandr-dev'
+  - 'orbit2'
+  - 'rpm'
 
 buildbot_slave::cpan::cpan_modules: 
   - 'Archive::Zip'
@@ -40,11 +37,8 @@ buildbot_slave::cpan::cpan_modules:
   - 'XML::Parser'
   - 'LWP::Protocol::https'
 
-buildbot_slave::rat::project_name: 'OpenOffice'
-buildbot_slave::rat::src_dir: 'openoffice-nightly-rat'
-buildbot_slave::rat::build_dir: 'build'
-buildbot_slave::rat::report_file: 'rat-output.xml'
-buildbot_slave::rat::rat_excludes: 'main/rat-excludes'
+buildbot_slave::rat::projects:
+  - 'openoffice'
 
 python::python_pips:
   mkdocs:

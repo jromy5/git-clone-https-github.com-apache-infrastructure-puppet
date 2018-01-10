@@ -1,0 +1,13 @@
+[Unit]
+Description=crowd
+
+[Service]
+Type=forking
+ExecStart=/x1/crowd/current/start_crowd.sh
+ExecStop=/x1/crowd/current/stop_crowd.sh
+User=crowd
+Group=crowd
+
+[Install]
+WantedBy=multi-user.target
+Alias=crowd.service

@@ -1,0 +1,1 @@
+<%= @install_base %>/<%= @atlassian_cli %>/jira.sh --action getWorkflowSchemeList --columns Name | python -c 'import json, sys; print(json.dumps(sys.stdin.read().replace("\"", "").split("\n")[2:-2]))' > <%= @deploy_dir %>/site/js/jiraworkflowschemes.json

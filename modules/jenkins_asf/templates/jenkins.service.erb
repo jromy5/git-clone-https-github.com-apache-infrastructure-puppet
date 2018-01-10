@@ -1,0 +1,22 @@
+[Unit]
+Description=Apache Tomcat for Jenkins
+After=network.target
+
+[Service]
+Type=forking
+
+Environment=CATALINA_PID=<%= @catalina_base %>/temp/tomcat.pid
+Environment=CATALINA_HOME=<%= @catalina_base %>
+Environment=CATALINA_BASE=<%= @catalina_base %>
+
+ExecStart=<%= @catalina_base %>/bin/startup.sh
+ExecStop=<%= @catalina_base %>/bin/shutdown.sh
+
+User=jenkins
+Group=jenkins
+UMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -43,7 +43,7 @@ apache::mod::status::allow_from:
 apache::mod::status::apache_version: '2.3'
 
 apache::mpm_module:         'event'
-apache::serveradmin:        'infrastructure@apache.org'
+apache::serveradmin:        'users@infra.apache.org'
 
 logrotate::rule:
   apache2:
@@ -74,7 +74,7 @@ vhosts_asf::vhosts::vhosts:
     default_vhost: true
     manage_docroot: false
     servername: 'status.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     directoryindex: 'index.html manage.cgi'
     options:
       - Indexes
@@ -91,7 +91,7 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/x1/www/status'
     manage_docroot: false
     servername: 'status.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'

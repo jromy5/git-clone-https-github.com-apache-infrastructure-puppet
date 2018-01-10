@@ -122,21 +122,26 @@ function renderRepos(json) {
         }
         projects.sort();
         obj.innerHTML = "";
-        for (var i in projects) {
-            var project = projects[i];
-            var list = json[project];
-            list.sort();
-            var li = "<li><b>" + project + ":\n<ul>";
-            if (list.length > 0) {
-                for (var r in list) {
-                    var repo = list[r];
-                    li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+        if (projects.length == 0) {
+            obj.innerHTML = "You do not seem to have access to any repositories. Please make sure you are in the correct LDAP groups!";
+        }
+        else {
+            for (var i in projects) {
+                var project = projects[i];
+                var list = json[project];
+                list.sort();
+                var li = "<li><b>" + project + ":\n<ul>";
+                if (list.length > 0) {
+                    for (var r in list) {
+                        var repo = list[r];
+                        li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+                    }
+                } else {
+                    li += "<li><i>No repositories for the " + project + " project served from gitbox yet...</i></li>";
                 }
-            } else {
-                li += "<li><i>No repositories for the " + project + " project served from gitbox yet...</i></li>";
+                li += "</ul></li>";
+                obj.innerHTML += li;
             }
-            li += "</ul></li>";
-            obj.innerHTML += li;
         }
     } else {
         obj.innerHTML += "<li>Something went wrong :( Please try again in a few minutes.";
@@ -182,9 +187,9 @@ function renderPage(json) {
     // Step 3: MFA
     obj = document.getElementById('mfa');
 
-    if (json && json.githubid && typeof(json.mfa) == 'boolean') {
+    if (json && json.githubid) {
         var mfa = json.mfa;
-        var t = "Unknown, not part of the Apache organisation on GitHub yet.";
+        var t = "User not a member of the ASF GitHub organisation. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org.";
         var s = "???";
         if (mfa  === true) {
             t = "<b style='color: green;'>MFA ENABLED</b>";
@@ -192,7 +197,7 @@ function renderPage(json) {
             obj.setAttribute("class", "tc_good tc");
             wa = true;
         } else if (mfa === false) {
-            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org.";
+            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org. Please allow 15 minutes for your MFA status to propagate.";
             t = "<b style='color: red;'>MFA DISABLED</b>";
             obj.setAttribute("class", "tc_bad tc");
         }
@@ -201,7 +206,7 @@ function renderPage(json) {
         
         obj = document.getElementById('bread');
         if (wa) {
-            obj.innerHTML += "<p>You will have access to the following repositories:</p>";
+            obj.innerHTML += "<p>According to LDAP, you will have access to the following repositories:</p>";
             obj.innerHTML += "<ul id='repolist'><li>Loading repository list, hang on..!</li></ul>";
             GetAsync("oauth.cgi?repos=true", null, renderRepos);
             

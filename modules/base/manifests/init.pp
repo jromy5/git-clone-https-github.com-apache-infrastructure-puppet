@@ -23,6 +23,22 @@ class base (
     ensure => purged,
   }
 
+  file { '/usr/local/share/ca-certificates/ssl.com.crt':
+    ensure => present,
+    mode   => '0644',
+    source => 'puppet:///modules/base/ssl.com.crt',
+    owner  => 'root',
+    group  => 'root',
+  }
+
+  tidy {
+    'apt-cache':
+        path    => '/var/cache/apt/archives/',
+        age     => '1w',
+        recurse => 1,
+        matches => ['*.deb'],
+  }
+
   # hiera_hash+create_resources used to instantiate puppet "defines"
   # via hiera/yaml, since there is no associated class.
 
@@ -34,6 +50,9 @@ class base (
 
   $logrotate_rule = hiera_hash('logrotate::rule', {})
   create_resources(logrotate::rule, $logrotate_rule)
+
+  $logrotate_conf = hiera_hash('logrotate::conf', {})
+  create_resources(logrotate::conf, $logrotate_conf)
 
   $crons = hiera_hash('cron', {})
   create_resources(cron, $crons)
@@ -73,6 +92,12 @@ class base (
 
   $tcinstall = hiera_hash('tomcat::install',{})
   create_resources(tomcat::install, $tcinstall)
+
+  $venvs = hiera_hash('python::venv',{})
+  create_resources(python::virtualenv, $venvs)
+
+  $dbfile = hiera_hash('postfix::dbfile', {})
+  create_resources(postfix::dbfile, $dbfile)
 
   class { "base::install::${::asfosname}::${::asfosrelease}":
   }

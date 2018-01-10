@@ -18,7 +18,7 @@ mysql::server::override_options:
     relay-log: '/var/log/mysql/mysql-relay-bin.log'
     read-only: 1
     character-set-server: 'utf8'
-    max_allowed_packet: '64M'
+    max_allowed_packet: '256M'
     max_connections: '512'
     performance_schema: 'on'
   mysqldump:

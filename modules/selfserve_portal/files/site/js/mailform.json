@@ -1,0 +1,70 @@
+{
+  "posturl": "cgi-bin/createml.cgi",
+  "preload": [
+          "cgi-bin/maildomains.cgi"
+  ],
+   "pages": [{
+          "title": "Base data",
+          "fields": {
+              "domain": {
+                  "desc": "Project domain",
+                  "type": "list",
+                  "options": "cgi-bin/maildomains.cgi", 
+                  "mandatory": true
+              },
+              "list": {
+                  "desc": "List name",
+                  "placeholder": "dev, users, commits, etc. [a-z0-9] and dashes only.",
+                  "type": "text",
+                  "filter": "^($|([a-z0-9]+(?:-[a-z0-9]+)?$))",
+                  "verifier": "verifyListname",
+                  "mandatory": false
+              },
+              "preset": {
+                  "desc": "OR choose one or more of the following:",
+                  "type": "multilist",
+                  "options": {
+                    "private": "private (will be PRIVATE)",
+                    "dev": "dev",
+                    "commits": "commits",
+                    "users": "users",
+                    "issues": "issues",
+                    "notifications": "notifications",
+                    "security": "security (will be PRIVATE)"
+                  },
+                  "mandatory": false
+              }
+          }
+   }, {
+          "title": "Privacy settings",
+          "fields": {
+              "muopts": {
+                  "desc": "Moderation options",
+                  "type": "list",
+                  "options": {
+                    "mu": "Allow subscribers to post, moderate all others",
+                    "Mu": "Allow subscribers to post, reject all others",
+                    "mU": "Moderate all posts"
+                  },
+                  "mandatory": true
+              },
+              "moderators": {
+                  "desc": "List moderators",
+                  "placeholder": "Email addresses, one on each line",
+                  "type": "textarea",
+                  "mandatory": true,
+                  "filter": "^([^,\\s@]+@[^,\\s\\.]+\\.[^,\\s]+\\n*)+$"
+              }
+          }
+   }, {
+         "title": "Optional Extras",
+         "fields": {
+             "trailer": {
+                "desc": "Add Unsubscribe default footer",
+                "type": "checkbox"
+             }
+           },
+         "footer": "<div style='float: left; width: 100%; margin-top: 20px; background: #FFD; border: 1px dotted #666;'>Default footer text (if applied): <br/><pre>---------------------------------------------------------------------\n            To unsubscribe, e-mail: $listname-unsubscribe@$listdomain\n            For additional commands, e-mail: $listname-help@$listdomain</pre></div>"
+      }
+  ]
+}

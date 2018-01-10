@@ -1,0 +1,123 @@
+#!/usr/bin/python
+#
+# Non-private configuration file for selfserve ss2.
+#
+# ====================================================================
+#    Licensed to the Apache Software Foundation (ASF) under one
+#    or more contributor license agreements.  See the NOTICE file
+#    distributed with this work for additional information
+#    regarding copyright ownership.  The ASF licenses this file
+#    to you under the Apache License, Version 2.0 (the
+#    "License"); you may not use this file except in compliance
+#    with the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing,
+#    software distributed under the License is distributed on an
+#    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#    KIND, either express or implied.  See the License for the
+#    specific language governing permissions and limitations
+#    under the License.
+######################################################################
+
+import ldap
+import os
+
+## The number of pseudo-random bytes to use for the one-time token.
+TOKEN_LENGTH = 20
+
+## How long, in seconds, the token is valid for.
+TOKEN_EXPIRY = 7200
+
+## Output messages at least this level.
+## Values are the constants from the 'logging' module.
+# TODO: use a logging.config.fileConfig() instead
+LOG_LEVEL = "DEBUG"
+
+## Same, for the interactive support (ss2lib.py's purging of expired tokens).
+LOG_LEVEL_INTERACTIVE = "WARNING"
+
+## Same, for sending mails to root@.
+LOG_LEVEL_MAIL = "WARNING"
+
+## Our place in the LOGGING module's namespace.
+LOGGER_NAME = "apache.ss2"
+
+## The From: for our mails.
+FROM_ADDRESS = os.environ.get('SERVER_ADMIN', 'root@apache.org')
+
+## Notify root@ on password resets.  (I'm not going to pretend this is generic.)
+NOTIFY_TO = FROM_ADDRESS
+
+## Time format for the email
+TIME_FMT = "%Y-%m-%d %H:%M:%S +0000"
+
+## Send emails via SMTP to this server, using the given username/password
+## or unauthenticated SMTP if they are None.
+SMTP_HOST = "localhost"
+SMTP_USER = None
+SMTP_PASSWORD = None
+
+## Work against this LDAP server.
+# (or space-separated list of servers)
+LDAP_HOST = os.environ.get('LDAP_HOST', ldap.get_option(ldap.OPT_URI))
+
+## see ldap.conf
+BASE_DN = "dc=apache,dc=org"
+
+## Template for a user (Web UI consumer)'s DN.
+USER_DN_T = 'uid=%s,ou=people,dc=apache,dc=org'
+
+## Where to store tokens.
+STATE_DIR = '../state/'
+
+## The viewable/editable attributes.
+# TODO: maintain this in sync this with ldap_acl.conf
+ATTRIBUTES = (
+    # ('attrNameInLDAP', ('Human-friendly name', 'editable-p', 'multivalue-p'), ),
+    ('uid', ('Username (availid)', False, False), ),
+    ('uidNumber', ('User ID', False, False), ),
+    ('cn', ('Full name', False, False), ),
+    ('loginShell', ('Preferred shell', False, False), ),
+    ('host', ('SSH Access', False, False), ),
+    ('mail', ('Forwarding email address', True, True), ),
+    ('asf-altEmail', ('Alias address', True, True), ),
+    ('asf-personalURL', ('Homepage URL', True, True), ),
+    ('githubUsername', ('Your GitHub Username', True, True), ),
+    ('asf-sascore', ('SpamAssassin Score Threshold', True, False), ),
+    ('asf-pgpKeyFingerprint', ('OpenPGP Public Key Primary Fingerprint', True, True), ),
+    ('asf-icla-legalname', ('ICLA Legal name', False, False), ),
+    ('asf-icla-publicname', ('ICLA Public name', True, False), ),
+    ('asf-icla-email', ('ICLA email', False, False), ),
+    ('sshPublicKey', ('SSH Key (authorized_keys line)', True, True), ),
+    #('asf-icla-file', ('ICLA URL', False, False)),
+    ('givenName', ('Given name', True, False), ),
+    #('sn', ('Surname', True, False), ),
+)
+
+## Two arbitrary values.  Must be distinct and 16 lowercase hexdigits.
+PW_RESET_MAGIC = '<%= @pw_reset_magic %>'
+SESSION_MAGIC = '<%= @session_magic %>'
+
+## Enable in-browser tracebacks.  (TODO: also un-comment the _debug in the mako templates.)
+DEBUG_MODE=False
+
+## Currently, this just controls whether `form` (with any passwords therein) is logged.
+DEBUG_EVERYTHING=False
+
+## When resetting the password, what attribute to store the new one in.
+# DO NOT USE ldap.passwd_s() --- it generates {SSHA} passwords, we want stronger {CRYPT} passwords.
+PASSWORD_ATTR='userPassword'
+
+## The URL scheme to us for intra-instance links.
+if os.environ.get("HTTPS", "off") == "on":
+  HTTP_PROTOCOL="https"
+else:
+  HTTP_PROTOCOL="http"
+
+## Require a valid TLS certificate?
+REQUIRE_LDAP_CERT=True
+
+## Where to fetch keys from
+KEY_FOR_AVAILID_URL='https://home.apache.org/keys/committer/%s.asc'

@@ -4,13 +4,14 @@ dnsclient::nameservers:
   - '8.8.8.8'
   - '8.8.4.4'
 
-ldapclient::ldapservers: 'ldaps://ldap3-us-west.apache.org:636 ldaps://ldap2-us-west.apache.org:636 ldaps://ldap-lb-us.apache.org:636'
+ldapclient::ldapservers: 'ldaps://ldap-us-ro.apache.org:636 ldaps://ldap-eu-ro.apache.org:636'
 
 postfix::server::relayhost: '[10.41.0.14]:25'
 
 base::hosts:
   ldap3-us-west.apache.org:
     ip: '140.211.11.135'
+    ensure: absent
   svn.apache.org:
     ip: '10.41.0.6'
     host_aliases:

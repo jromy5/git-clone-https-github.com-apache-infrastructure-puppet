@@ -1,7 +1,6 @@
 ---
 classes:
   - apache
-  - datadog_agent::integrations::http_check
   - loggy
   - blocky
   - git_asf::git_daemon
@@ -34,24 +33,35 @@ apache::mod::event::threadsperchild: '50'
 
 apache::mpm_module:         'event'
 
-datadog_agent::integrations::http_check::url: 'https://git.apache.org'
-
-git_asf::daemon_user: 'nobody'
+# This needs write-access to temp objects, so needs git user
+# Which is okay, as only upload-pack is enabled (git fetch/pull)
+# Writing to the git repo is still not allowed.
+git_asf::daemon_user: 'git'
 git_asf::daemon_basepath: '/x1/git/mirrors'
 git_asf::daemon_directory: '/x1/git/mirrors'
 
 logrotate::rule:
   apache2:
     ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+apache::logroot: '/x1/log'
 
 postfix::server::mydestination:          "%{::fqdn}, git.apache.org, localhost.%{::domain}, localhost"
+
+python::python_pips:
+  git:
+    ensure: present
 
 vhosts_asf::vhosts::vhosts:
   git:
     vhost_name: '*'
     port: 80
     servername: 'git.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     default_vhost: true
     docroot: '/x1/git/mirrors'
     docroot_owner: 'git'
@@ -63,7 +73,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'git.apache.org'
-    serveradmin: 'infrastructure@apache.org'
+    serveradmin: 'users@infra.apache.org'
     default_vhost: true
     docroot: '/x1/git/mirrors'
     docroot_owner: 'git'

@@ -38,7 +38,7 @@ mod 'datacat',
 
 mod 'datadog_agent',
   :git => 'https://github.com/DataDog/puppet-datadog-agent',
-  :tag => '1.3.0'
+  :tag => '1.7.0'
 
 
 mod 'dell',
@@ -53,16 +53,18 @@ mod 'docker',
 
 mod 'elasticsearch',
   :git => 'https://github.com/elastic/puppet-elasticsearch',
-  :tag => '0.15.1'
+  :tag => '5.3.1'
 
 
 mod 'epel',
   :git => 'https://github.com/stahnma/puppet-module-epel',
   :tag => '1.0.0'
 
+mod 'etherpad_lite',
+  :git => 'https://github.com/cthistle/puppet-etherpad_lite.git'
 
 mod 'fail2ban',
-  :git => 'https://github.com/stumped2/puppet-fail2ban',
+  :git => 'https://github.com/clambertus/puppet-fail2ban',
   :branch => 'fix_actionsource'
 
 
@@ -86,17 +88,17 @@ mod 'gnupg',
   :tag => '1.2.1'
 
 mod 'iptables',
-  :git    => 'https://github.com/pctony/puppet-iptables.git',
+  :git    => 'https://github.com/clambertus/puppet-iptables.git',
   :commit => '351e389a9e54d254d14b5eb2c8acde46bf70cd8c'
 
 
 mod 'logrotate',
-  :git    => 'https://github.com/stumped2/puppet-logrotate.git',
-  :branch => 'fix_conf_security'
+  :git    => 'https://github.com/yo61/puppet-logrotate',
+  :tag    => 'v1.4.0'
 
 
 mod 'ldap',
-  :git    => 'https://github.com/pctony/puppet-ldap.git',
+  :git    => 'https://github.com/clambertus/puppet-ldap.git',
   :commit => 'a0c97c093cc6013514669a2a1897211bcc7b917b'
 
 
@@ -112,11 +114,12 @@ mod 'java',
 
 mod 'letsencrypt',
   :git => 'https://github.com/danzilio/puppet-letsencrypt',
-  :commit => 'a89464a3447551e0d5bc9809b7a7fe39fc6a46be'
+  :tag => 'v1.1.0'
+   #:commit => 'a89464a3447551e0d5bc9809b7a7fe39fc6a46be'
 
 
 mod 'mailman3',
-  :git => 'https://github.com/pctony/puppet-mailman3.git',
+  :git => 'https://github.com/clambertus/puppet-mailman3.git',
   :branch => 'asf_development'
 
 
@@ -178,27 +181,28 @@ mod 'puppet',
   :git => 'https://github.com/theforeman/puppet-puppet.git',
   :tag => '2.3.1'
 
-
+  
 mod 'puppetlabs_yum',
   :git => 'https://github.com/stahnma/puppet-module-puppetlabs_yum',
   :commit => 'b11d47c92e49e6b839cfd3d7a50df78b5637d3f1'
 
+
 mod 'puppet-ca_cert',
   :git => 'https://github.com/pcfens/puppet-ca_cert',
   :tag => 'v1.6.0'
-
+  
 mod 'python',
   :git => 'https://github.com/stankevich/puppet-python.git',
-  :tag => '1.9.4'
+  :tag => '1.18.2'
 
 
 mod 'rsync',
-  :git => 'https://github.com/stumped2/puppetlabs-rsync.git',
+  :git => 'https://github.com/clambertus/puppetlabs-rsync.git',
   :branch => 'add_logfile'
 
 
 mod 'rsyslog',
-  :git    => 'https://github.com/pctony/puppet-rsyslog.git',
+  :git    => 'https://github.com/clambertus/puppet-rsyslog.git',
   :commit => 'e6dddeec8b71cda20d3a682af7b973e3027f4f01'
 
 
@@ -222,7 +226,7 @@ mod 'snmp',
 
 
 mod 'ssh',
-  :git    => 'https://github.com/pctony/puppet-ssh.git',
+  :git    => 'https://github.com/clambertus/puppet-ssh.git',
   :commit => 'baa874949b04fca2e5b39cb02f70cab4e1690cea'
 
 
@@ -269,7 +273,8 @@ mod 'ulimit',
 
 
 mod 'unattended_upgrades',
-  :git => 'https://github.com/puppet-community/puppet-unattended_upgrades'
+  :git => 'https://github.com/puppet-community/puppet-unattended_upgrades',
+  :tag => 'v2.2.0'
 
 
 mod 'vcsrepo',
@@ -278,5 +283,21 @@ mod 'vcsrepo',
 
 
 mod 'xinetd',
-  :git => 'https://github.com/puppetlabs/puppetlabs-xinetd'
+  :git => 'https://github.com/puppetlabs/puppetlabs-xinetd',
+  :tag => '2.0.0'
 
+
+
+#Modules that are Windows specific
+
+mod 'download_file',
+  :git => 'https://github.com/voxpupuli/puppet-download_file.git',
+  :tag => 'v2.1.0' 
+
+mod 'puppetlabs-powershell',
+  :git => 'https://github.com/puppetlabs/puppetlabs-powershell',
+  :tag => '2.1.2'
+
+mod 'puppetlabs-registry',
+  :git => 'https://github.com/puppetlabs/puppetlabs-registry',
+  :tag => '1.1.4'

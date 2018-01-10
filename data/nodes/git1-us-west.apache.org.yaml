@@ -2,8 +2,8 @@
 classes:
   - apache
   - apache::mod::geoip
+  - apache::mod::headers
   - apache::mod::perl
-  - datadog_agent::integrations::http_check
   - gitserver_asf
   - gitserver_asf::role
   - git_self_serve::create
@@ -20,21 +20,11 @@ apache::default_vhost:      true
 apache::docroot:            '/x1/git/htdocs'
 apache::docroot_owner:      'git'
 
-apache::mpm_module:         'event'
-apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '250'
-apache::mod::event::maxconnectionsperchild: '20000'
-apache::mod::event::maxrequestworkers: '500'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '150'
-apache::mod::event::serverlimit: '10'
-apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
-apache::mod::event::threadsperchild: '50'
+apache::mpm_module:         'prefork'
+apache::mod::prefork::maxrequestworkers: '120'
+apache::mod::prefork::startservers: '25'
 
-apache::serveradmin:        'infrastructure@apache.org'
-
-datadog_agent::integrations::http_check::url: 'https://git-wip-us.apache.org/repos/asf'
+apache::serveradmin:        'users@infra.apache.org'
 
 base::gempackages:
   - 'highlight'
@@ -48,8 +38,6 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   sed:
     name: 'sed'
-  cgi:
-    name: 'cgi'
 
 gitserver_asf::custom_fragment_80: |
       <Directory /x1/git/htdocs>
@@ -64,6 +52,10 @@ gitserver_asf::custom_fragment_443: |
       SetEnv WRITE_LOCK /etc/nocommit
       SetEnv AUTH_FILE /x1/git/asfgit-admin/asf/conf/auth.cfg
       SetEnv GIT_REPOS_ROOT /x1/git/repos
+      Header set Access-Control-Allow-Origin "*"
+      Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+      Header set Access-Control-Allow-Headers "X-PINGOTHER"
+      Header set Access-Control-Max-Age "1728000"
 
       <Location /repos/asf>
           SetEnv WEB_HOST http://git-wip-us.apache.org
@@ -81,7 +73,7 @@ gitserver_asf::custom_fragment_443: |
                 AuthType Basic
                 AuthName "ASF Committers"
                 AuthBasicProvider file ldap
-                AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+                AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
                 AuthLDAPGroupAttribute memberUid
                 AuthLDAPGroupAttributeIsDN off
                 # Fall back to auth file for role accounts
@@ -163,7 +155,7 @@ gitserver_asf::custom_fragment_443: |
           AuthType Basic
           AuthName "Git Infrastructure"
           AuthBasicProvider ldap
-          AuthLDAPUrl "ldaps://ldap2-us-west.apache.org ldap-lb-us.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
           Order allow,deny

@@ -38,9 +38,13 @@ def _repo_name():
     return util.decode(path)
 
 
+if os.environ.get('GIT_ORIGIN_REPO'):
+  os.chdir(os.environ.get('GIT_ORIGIN_REPO'))
 _all_config = dict(c.split('=')
                    for c in run.git('config', '--list')[1].splitlines()
                    if c.strip())
+if os.environ.get('GIT_WIKI_REPO'):
+  os.chdir(os.environ.get('GIT_WIKI_REPO'))
 
 def _git_config(key, default=NO_DEFAULT):
     if key not in _all_config:
@@ -60,6 +64,7 @@ script_name = util.environ("SCRIPT_NAME")
 web_host = util.environ("WEB_HOST")
 write_locks = [util.environ("WRITE_LOCK"), os.path.join(repo_dir, "nocommit")]
 auth_file = util.environ("AUTH_FILE")
+ip = os.environ.get("REMOTE_ADDR", "127.0.0.1")
 
 debug = _git_config("hooks.asfgit.debug") == "true"
 protect = _git_config("hooks.asfgit.protect").split()

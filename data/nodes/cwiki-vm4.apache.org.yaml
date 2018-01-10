@@ -10,6 +10,7 @@ classes:
   - loggy
   - datadog_agent::integrations::apache
   - ssl::name::cwiki_apache_org 
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
 
@@ -30,7 +31,8 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
 # cwiki_asf class variables.
-cwiki_asf::confluence_version: '5.8.4'
+cwiki_asf::confluence_version: '5.8.17'
+cwiki_asf::conf_build_number: '5997'
 cwiki_asf::mysql_connector_version: '5.1.11'
 cwiki_asf::parent_dir: '/x1/cwiki'
 cwiki_asf::server_port: '8008'
@@ -46,7 +48,7 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-datadog_agent::integrations::apache::url: 'http://cwiki.apache.org/server-status?auto'
+datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
@@ -67,7 +69,7 @@ vhosts_asf::vhosts::vhosts:
         SetHandler server-status
         Require local
       </Location>
-      RedirectMatch permanent ^/(.*)$ https://cwiki.apache.org/$1
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://cwiki.apache.org/$1
 
   cwiki-vm4-443:
       vhost_name: '*'
@@ -79,12 +81,23 @@ vhosts_asf::vhosts::vhosts:
       docroot: '/var/www'
       error_log_file: 'cwiki_error.log'
       ssl: true
-      ssl_cert: '/etc/ssl/certs/cwiki.apache.org.crt'
-      ssl_chain: '/etc/ssl/certs/cwiki.apache.org.chain'
-      ssl_key: '/etc/ssl/private/cwiki.apache.org.key'
+      ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+      ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
       custom_fragment: |
         RewriteEngine On
+        # INFRA-14849
+        RewriteMap solr_id_to_new "txt:/etc/apache2/solr_id_to_new.map.txt"
+        RewriteMap solr_name_to_new "txt:/etc/apache2/solr_name_to_new.map.txt"
+        RewriteCond "${solr_name_to_new:$1}" !="" [NC]
+        RewriteRule "solr/(.*)" https://lucene.apache.org/solr/guide/6_6${solr_name_to_new:$1}? [R=301,NC,NE]
+        RewriteCond %%{}{QUERY_STRING} pageId=(\d+)
+        RewriteCond "${solr_id_to_new:%1}" !="" [NC]
+        RewriteRule ".*" https://lucene.apache.org/solr/guide/6_6${solr_id_to_new:%1}? [R=301,NC,NE]
+        RewriteRule "^solr(/?)" https://lucene.apache.org/solr/guide/ [R=301,NC,NE]
+        # cwiki
         ProxyPass /intermediates !
+        ProxyPass /confluence//spaces/viewdefaultdecorator.action !
         ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
         ProxyPass /server-status !
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/

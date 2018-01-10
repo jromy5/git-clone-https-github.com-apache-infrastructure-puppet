@@ -6,6 +6,7 @@ class loggy (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
+  $route          = '',
 ){
   require python
 
@@ -15,10 +16,20 @@ class loggy (
 
   python::pip {
     'elasticsearch' :
-      ensure => '1.6.0';
+      ensure => '5.3.0';
     'python-inotify==0.6-test' :
       ensure  => present,
       require => Package['gcc'];
+    'certifi' :
+      ensure  => present;
+    'pyopenssl' :
+      ensure  => present;
+    'ndg-httpsclient' :
+      ensure  => present;
+    'pyasn1' :
+      ensure  => present;
+    'setuptools':
+      ensure  => latest;
   } ->
 
   file {
@@ -43,10 +54,10 @@ class loggy (
       group  => $group,
       source => 'puppet:///modules/loggy/loggy.py';
     '/usr/local/etc/loggy/loggy.cfg':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
-      source => 'puppet:///modules/loggy/loggy.cfg';
+      mode    => '0755',
+      owner   => $username,
+      group   => $group,
+      content => template('loggy/loggy.cfg.erb');
     } ->
 
     service { $service_name:

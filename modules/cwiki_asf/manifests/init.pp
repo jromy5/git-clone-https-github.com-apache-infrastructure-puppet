@@ -14,6 +14,7 @@ class cwiki_asf (
 
   # override below in yaml
   $confluence_version            = '',
+  $conf_build_number             = '',
   $mysql_connector_version       = '',
   $parent_dir,
   $server_port                   = '',
@@ -149,6 +150,11 @@ class cwiki_asf (
     "${install_dir}/conf/server.xml":
       content => template('cwiki_asf/server.xml.erb'),
       mode    => '0644';
+    "${install_dir}/conf/Standalone":
+      ensure => directory,
+      owner  => 'confluence',
+      group  => 'confluence',
+      mode   => '0755';
     "${install_dir}/bin/setenv.sh":
       content => template('cwiki_asf/setenv.sh.erb'),
       mode    => '0644';
@@ -193,6 +199,16 @@ class cwiki_asf (
       group   => $groupname,
       content => template('cwiki_asf/cleanup-tomcat-logs.sh.erb'),
       mode    => '0755';
+    '/etc/apache2/solr_id_to_new.map.txt':
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/cwiki_asf/solr_id_to_new.map.txt',
+      mode   => '0644';
+    '/etc/apache2/solr_name_to_new.map.txt':
+      owner  => 'root',
+      group  => 'root',
+      source => 'puppet:///modules/cwiki_asf/solr_name_to_new.map.txt',
+      mode   => '0644';
   }
 
   service {

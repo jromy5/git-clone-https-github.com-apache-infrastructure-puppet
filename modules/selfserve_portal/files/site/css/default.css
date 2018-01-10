@@ -1,0 +1,288 @@
+
+.wave-parent {
+    width: 500px;
+    height: 150px;
+    position: relative;
+    margin: 60px auto;
+}
+.wave {
+  margin-top: -17%;
+  height: 34%; 
+  width: 2%;
+  top: 30%;
+  border-radius: 20px;
+  position: absolute;
+}
+
+.wavetext {
+    text-align: center;
+    color: #FFF;
+    font-size: 20px;
+    margin-top: -60px;
+    float: left;
+    width: 100%;
+}
+
+.wave:nth-of-type(1)  { animation: wave 8s   0.000s linear infinite; }
+.wave:nth-of-type(2)  { animation: wave 8s -8s linear infinite; }
+.wave:nth-of-type(3)  { animation: wave 8s -7.5s linear infinite; }
+.wave:nth-of-type(4)  { animation: wave 8s -7s linear infinite; }
+.wave:nth-of-type(5)  { animation: wave 8s -6.5s linear infinite; }
+.wave:nth-of-type(6)  { animation: wave 8s -6s linear infinite; }
+.wave:nth-of-type(7)  { animation: wave 8s -5.5s linear infinite; }
+.wave:nth-of-type(8)  { animation: wave 8s -5s linear infinite; }
+.wave:nth-of-type(9)  { animation: wave 8s  -4.5s linear infinite; }
+.wave:nth-of-type(10) { animation: wave 8s  -4s linear infinite; }
+.wave:nth-of-type(11) { animation: wave 8s  -3.5s linear infinite; }
+.wave:nth-of-type(12) { animation: wave 8s  -3s linear infinite; }
+.wave:nth-of-type(13) { animation: wave 8s  -2.5s linear infinite; }
+.wave:nth-of-type(14) { animation: wave 8s  -2s linear infinite; }
+.wave:nth-of-type(15) { animation: wave 8s  -1.5s linear infinite; }
+.wave:nth-of-type(16) { animation: wave 8s  -1s linear infinite; }
+.wave:nth-of-type(17) { animation: wave 8s  -0.5s linear infinite; }
+
+@keyframes wave {
+  0%   { left:-2%; background: #3B44D1; }
+  5%   { background: #9337FE; }
+  10%  { height:10%; margin-top: -5%; background: #C532FC; }
+  15%  { background: #F639F8; }
+  20%  { height:34%; margin-top:-17%; background: #F236C8; }
+  25%  { background: #FF2F8D; }
+  30%  { height:10%; margin-top: -5%; background: #EE3860; }
+  35%  { background: #DC5245; }
+  40%  { height:34%; margin-top:-17%; background: #F38643; }
+  45%  { background: #F8B435; }
+  50%  { height:10%; margin-top: -5%; background: #FAF444; }
+  55%  { background: #E0FF3B; }
+  60%  { height:34%; margin-top:-17%; background: #E1FF3C; }
+  65%  { background: #46F443; }
+  70%  { height:10%; margin-top: -5%; background: #54E67B; }
+  75%  { background: #4DF3A9; }
+  80%  { height:34%; margin-top:-17%; background: #3AF9DA; }
+  85%  { background: #36EBF4; }
+  90%  { height:10%; margin-top: -5%; background: #3DB3F3; }
+  95%  { background: #3C82F1; }
+  100% { height:34%; margin-top:-17%; left:100%; background: #5B38EE; }
+}
+
+html {
+    min-height: 100%;
+    background: radial-gradient(ellipse at center, #85779B 0%, #0F143A 100%);
+    font-family: sans-serif;
+    color: #000;
+}
+
+input[type=button], input[type=submit] {
+    background: #12AD5E;
+    border-radius: 2px;
+    border: none;
+    height: 24px;
+    color: #FFF;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: #FFF;
+}
+
+form > h1 {
+    color: #000;
+}
+
+.breadcrumb {
+    width: 900px;
+    margin: 0px auto;
+    float: left;
+    padding-top: 2px;
+}
+
+.bctext {
+    float: left;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.bc {
+    width: 24px;
+    height: 21px;
+    background:  #FFF;
+    color: #000;
+    font-weight: bold;
+    border-radius: 12px;
+    float: left;
+    text-align: center;
+    padding-top: 3px;
+    cursor: pointer;
+}
+
+.bcsplitter {
+    float: left;
+    width: 160px;
+    height: 2px;
+    background: #FFF;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.bc[type=selected] {
+    background: #12AD5E;
+    color:  #FFF;
+}
+
+#form {
+    margin: 0px auto;
+    width: 720px;
+}
+
+form {
+    width: 720px;
+    margin: 0px auto;
+    padding: 10px;
+    background: #FFF;
+    margin-top: 20px;
+    float: left;
+    border-radius: 3px;
+    box-shadow: 3px 2px 6px -2px rgba(0,0,0,0.64);
+}
+
+
+input:not([type]), input[type=text], input[type=password], textarea, select {
+    padding: 8px;
+    border: 2px solid #999;
+    background: #EEE;
+    border-radius: 2px;
+    width: 80%;
+    max-width: 360px !important;
+}
+
+select[multiple=multiple] {
+    padding: 8px;
+    border: 2px solid #999;
+    background: #EEE;
+    border-radius: 2px;
+    width: 80%;
+    max-width: 360px !important;
+    height: 120px;
+}
+
+
+/* id.a.o stuff */
+label {
+    width: 50%;
+    min-width: 300px;
+    display: inline-block;
+}
+
+.left {
+    margin: 0px auto;
+    padding: 10px;
+    margin-top: 20px;
+    float: left;
+    border-radius: 3px;
+    box-shadow: 3px 2px 6px -2px rgba(0,0,0,0.64);
+    background: #FFD;
+    width: 800px;
+    margin: 0px -40px auto;
+}
+
+.right {
+    float: left;
+    margin: 20px auto;
+}
+
+.footer {
+    color: #FFF;
+    font-style: italic;
+    font-size:  11px;
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+
+.footer a {
+    color: #FFF !important;
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.bad:after {
+    color: #F00;
+    position: relative;
+    right: 30px;
+    content: "\2717";
+}
+
+.bad > input, .bad > textarea {
+    border: 2px solid #F00;
+}
+
+.good:after {
+    color: #090;
+    position: relative;
+    right: 30px;
+    top: 0px;
+    content: "\2713";
+}
+
+.good > input, .good > textarea {
+    border: 2px solid #090;
+}
+
+.warning {
+    color: #F50;
+    text-align: right;
+    width: 90%;
+}
+
+.bread {
+    color: #FFF;
+}
+
+.ss-wrap {
+    width: 1040px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.ss-selector {
+    margin: 10px;
+    width: 180px;
+    float: left;
+    background: #129D4E;
+    border:  1px solid #FFF;
+    border-radius: 3px;
+    box-shadow: 3px 2px 6px -2px rgba(0,0,0,0.64);
+    transition: ease-in 0.175s;
+    text-align: center;
+}
+
+.ss-selector img {
+    width: 160px !important;
+    height: 160px !important;
+    margin: 5px;
+}
+
+.ss-selector:hover {
+    cursor: pointer;
+    background: #125CAA;
+    transition: ease-in 0.175s;
+    
+}
+
+.forgotpw > a {
+    color: #DDD;
+    margin: 15px;
+    text-decoration-line: none;
+}
