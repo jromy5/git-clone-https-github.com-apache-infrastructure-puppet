@@ -37,9 +37,9 @@ class jenkins_slave_windows::download (
     destination_directory => 'C:\temp',
   }
 
-  #### Download JDK9 from Bintray
-  download_file { 'Download JDK9 from bintray' :
-    url                   => 'https://apache.bintray.com/WindowsPackages/asf-build-jdk9.0.exe',
+  #### Download JDK1.8 from Bintray
+  download_file { 'Download JDK1.8 from bintray' :
+    url                   => 'https://apache.bintray.com/WindowsPackages/asf-build-jdk1.8.0_152.exe',
     destination_directory => 'C:\temp',
   }
     #### Download Visual Studio 2015 from Bintray. Manual install. ####
