@@ -25,10 +25,10 @@ class jenkins_slave_windows::install (
     provider => powershell,
   }
 
-    #### Install JDK 9 silently for the system, but only if C:\Program Files\Java doesn't exist
+    #### Install JDK 1.8 silently for the system, but only if C:\Program Files\Java doesn't exist
   exec { 'install jdk' :
-    command  => 'powershell.exe c:\temp\asf-build-jdk9.0.exe /s',
-    creates  => 'C:\Program Files\Java\jdk-9\bin\java.exe',
+    command  => 'powershell.exe c:\temp\asf-build-jdk1.8.0_152.exe /s',
+    creates  => 'C:\Program Files\Java\jdk1.8.0_152\bin\java.exe',
     provider => powershell,
   }
 
