@@ -24,6 +24,7 @@ mysql::server::override_options:
     max_allowed_packet: '64M'
     max_connections: '4096'
     skip_name_resolve: '1'
+    sql_mode: 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
   mysqldump:
     max_allowed_packet: '64M'
 
