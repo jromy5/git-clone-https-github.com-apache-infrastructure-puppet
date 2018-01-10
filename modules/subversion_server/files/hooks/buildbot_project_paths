@@ -18,7 +18,6 @@
 ^(ofbiz/ofbiz-plugins/trunk)/(.*)
 ^(ofbiz/ofbiz-plugins/branches/release17.12)/(.*)
 ^(ofbiz/branches/release16.11)/(.*)
-^(ofbiz/branches/release17.12)/(.*)
 ^(ofbiz/cmssite)/(.*)
 ^(logging/log4php/trunk)/(.*)
 ^(incubator/photark/server/trunk|photark/server/trunk)/(.*)
