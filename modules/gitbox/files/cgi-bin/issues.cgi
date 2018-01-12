@@ -230,7 +230,7 @@ def updateTicket(ticket, name, txt, worklog):
         if rv.status_code == 200 or rv.status_code == 201:
             return "Updated JIRA Ticket %s" % ticket
         else:
-            return rv.txt
+            return rv.text
     except:
         pass # Not much to do just yet
 
