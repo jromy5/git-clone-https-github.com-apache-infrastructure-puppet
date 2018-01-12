@@ -43,10 +43,16 @@ git_asf::daemon_directory: '/x1/git/mirrors'
 logrotate::rule:
   apache2:
     ensure: 'present'
-    path: '/x1/log/*.log'
+    path: '/x1/log/git*.log'
     delaycompress: true
     ifempty: false
-    rotate: 52
+    rotate: 4
+  apache2-error:
+    ensure: 'present'
+    path: '/x1/log/error.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 4
 
 apache::logroot: '/x1/log'
 
