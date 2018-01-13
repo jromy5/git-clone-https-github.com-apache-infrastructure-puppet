@@ -259,7 +259,7 @@ FOOTER_TEMPLATE = """\
 
 -- \n\
 To stop receiving notification emails like this one, please contact
-%(recipients)s.
+%(administrator)s.
 """
 
 
