@@ -332,19 +332,19 @@ def main():
             fmt = issueClosed(data)
         # Comment on issue or specific code (WIP)
         elif 'comment' in data:
+            isComment = True
             # File-specific comment
             if 'path' in data['comment']:
                 # Diff review
                 if 'diff_hunk' in data['comment']:
                     fmt = reviewComment(data)
-                    isComment = True
             # Standard commit comment
             elif 'commit_id' in data['comment']:
-                isComment = True
+                # We don't quite handle this yet
+                pass
             # Generic comment
             else:
                 fmt = ticketComment(data)
-                isComment = True
 
     # Send email if applicable
     if fmt:
