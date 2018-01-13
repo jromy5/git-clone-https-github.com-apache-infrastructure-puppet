@@ -71,7 +71,7 @@ Facter.add("asfcolo") do
       when /^10.20.([0-9])+.([0-9]+)$/
         "lw-nl"
       else
-        "yahoo"
+        "default"
       end
     end
   end
