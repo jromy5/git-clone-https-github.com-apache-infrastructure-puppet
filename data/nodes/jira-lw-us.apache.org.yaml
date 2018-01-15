@@ -71,9 +71,10 @@ fail2ban_asf::config::filters:
 # pre-upgrade 20180114 cml
 # jira_asf::jira_version: '6.4.14'
 # jira_asf::pgsql_connector_version: '9.1-903.jdbc4'
+# jira_asf::jira_version: 'software-7.0.11'
 
 # jira_asf class variables.
-jira_asf::jira_version: 'software-7.0.11'
+jira_asf::jira_version: 'software-7.6.3'
 jira_asf::pgsql_connector_version: '42.0.0'
 jira_asf::parent_dir: '/x1/jira'
 jira_asf::server_port: '8008'
