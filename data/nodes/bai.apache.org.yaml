@@ -134,6 +134,12 @@ rsync::server::module:
     auth_users: 'apb-coeus'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  jenkins:
+    path: '/x1/backups/jenkins-master/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.235'
+    auth_users: 'apb-jenkins'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
