@@ -5,3 +5,4 @@ base::basepackages:
   - 'build-essential'
   - 'ruby-dev'
   - 'libgmp3-dev'
+  - 'libz-dev'
