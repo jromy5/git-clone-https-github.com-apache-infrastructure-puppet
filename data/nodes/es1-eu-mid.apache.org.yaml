@@ -67,6 +67,10 @@ apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+# Hermes etc needs old-skool stuff still
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
+apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3']
+
 logrotate::rule:
   apache2:
     ensure: 'present'
