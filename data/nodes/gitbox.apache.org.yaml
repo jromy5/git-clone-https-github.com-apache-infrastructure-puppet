@@ -193,9 +193,9 @@ gitbox::custom_fragment_443: |
           Options +ExecCGI
           AddHandler cgi-script .cgi
       </Location>
-      # Mergebot GH Mappings file - mergebot-vm only!!
+      # Mergebot GH Mappings file - mergebot-vm|vm2 only!!
       <Location /setup/ghmap.json>
-        Require ip 207.244.88.152
+        Require ip 207.244.88.152 62.210.60.243
       </Location>
       <LocationMatch "^/setup/newrepo.*">
           AuthType Basic
