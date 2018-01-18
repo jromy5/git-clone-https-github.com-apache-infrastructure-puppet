@@ -60,9 +60,7 @@ apache::mod::event::threadsperchild: '50'
 logrotate::rule:
   apache2:
     ensure: 'present'
-    
-oraclejava::install::version: '8'
-oraclejava::install::unlimited_jce: true
+
 
 vhosts_asf::vhosts::vhosts:
   es2-eu-mid:
