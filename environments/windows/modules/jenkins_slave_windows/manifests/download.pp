@@ -5,6 +5,7 @@ class jenkins_slave_windows::download (
   $ant = $jenkins_slave_windows::params::ant,
   $chromedriver = $jenkins_slave_windows::params::chromedriver,
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
+  $gradle = $jenkins_slave_windows::params::gradle,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
@@ -42,12 +43,11 @@ class jenkins_slave_windows::download (
     url                   => 'https://apache.bintray.com/WindowsPackages/asf-build-jdk1.8.0_152.exe',
     destination_directory => 'C:\temp',
   }
-    #### Download Visual Studio 2015 from Bintray. Manual install. ####
+  #### Download Visual Studio 2015 from Bintray. Manual install. ####
   download_file { 'Download Visual Studio 2015 from bintray' :
     url                   => 'https://apache.bintray.com/WindowsPackages/vs_2015_community_ENU.exe',
     destination_directory => 'C:\temp',
   }
-
 
   #### Download winSVN ####
   download_file { 'Download winsvn from bintray' :
@@ -76,6 +76,13 @@ class jenkins_slave_windows::download (
         destination_directory => 'F:\jenkins\tools\geckodriver\zips',
       }
     }
+  #### Download Gradle ####
+  define download_gradle($gradle_version = $title){
+        download_file { "Download asf-build-gradle-${gradle_version} zip from bintray" :
+          url                   => "https://apache.bintray.com/WindowsPackages/asf-build-gradle-${gradle_version}.zip",
+          destination_directory => 'F:\jenkins\tools\gradle\zips',
+        }
+      }
   #### Download ieDriver ####
   define download_iedriver($iedriver_version = $title){
       download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
@@ -108,6 +115,7 @@ class jenkins_slave_windows::download (
   download_ant { $ant:}
   download_chromedriver { $chromedriver:}
   download_geckodriver { $geckodriver:}
+  download_gradle { $gradle:}
   download_iedriver { $iedriver:}
   download_jdk { $jdk:}
   download_maven { $maven:}

@@ -5,6 +5,7 @@ class jenkins_slave_windows::install (
   $ant = $jenkins_slave_windows::params::ant,
   $chromedriver = $jenkins_slave_windows::params::chromedriver,
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
+  $gradle = $jenkins_slave_windows::params::gradle,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
@@ -89,6 +90,19 @@ class jenkins_slave_windows::install (
     }
 
 extract_geckodriver { $geckodriver:}
+
+#################################################################
+
+###################### Setup Gradle #############################
+  define extract_gradle($gradle_version = $title){
+      exec { "extract ${gradle_version}" :
+        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\gradle\\zips\\asf-build-gradle-${gradle_version}.zip -DestinationPath F:\\jenkins\\tools\\gradle\\${gradle_version}", # lint:ignore:140chars
+        provider => powershell,
+        creates  => "F:\\jenkins\\tools\\gradle\\${gradle_version}\\bin\\gradle.bat",
+      }
+    }
+
+extract_gradle { $gradle:}
 
 #################################################################
 
