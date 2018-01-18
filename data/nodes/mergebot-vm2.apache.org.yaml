@@ -6,3 +6,4 @@ base::basepackages:
   - 'ruby-dev'
   - 'libgmp3-dev'
   - 'libz-dev'
+  - 'libcurl4-openssl-dev'
