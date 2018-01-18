@@ -7,13 +7,13 @@ paths:          /var/log/, /x1/log/
 
 # Primary and secondary JSON receiver.
 [ElasticSearch:Primary]
-host:   es-cluster-eu-01.apache.org
+host:   es1-eu-mid.apache.org
 port:   443
 ssl:    true
 prefix: logstash/<%= @route %>
 
 [ElasticSearch:Backup]
-host: es-cluster-eu-02.apache.org
+host:   es2-eu-mid.apache.org
 port:   443
 ssl:    true
 prefix: logstash/<%= @route %>
