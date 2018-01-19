@@ -53,7 +53,8 @@ def main():
 
     # Mergebot can only commit from a.b.c.d
     # 207.244.88.152 is mergebot-vm.apache.org for the Beam project
-    if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152"):
+    # 62.210.60.243 is mergebot-vm2.apache.org for the Beam project
+    if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152" or cfg.ip != "62.210.60.243"):
         util.abort(u"mergebot only works from the mergebot VM, tut tut!")
     
     # buildbot only possible from bb-slave1
