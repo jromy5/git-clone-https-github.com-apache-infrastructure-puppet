@@ -31,6 +31,11 @@ This repository is currently out of sync, please
 contact users@infra.apache.org!
 """
 
+MERGEBOT_APPROVED_IPS = [
+    "207.244.88.152",  # mergebot-vm1
+    "62.210.60.243",  # mergebot-vm2
+]
+
 def main():
 
     # Check if commits are enabled.
@@ -52,9 +57,8 @@ def main():
         util.abort(NOT_AUTHORIZED)
 
     # Mergebot can only commit from a.b.c.d
-    # 207.244.88.152 is mergebot-vm.apache.org for the Beam project
-    # 62.210.60.243 is mergebot-vm2.apache.org for the Beam project
-    if cfg.committer == "mergebot-role" and (cfg.ip != "207.244.88.152" or cfg.ip != "62.210.60.243"):
+    # IP addresses are listed in the constant above.
+    if cfg.committer == "mergebot-role" and cfg.ip not in MERGEBOT_APPROVED_IPS:
         util.abort(u"mergebot only works from the mergebot VM, tut tut!")
     
     # buildbot only possible from bb-slave1
