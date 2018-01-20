@@ -231,9 +231,6 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'reference.apache.org'
-    serveraliases:
-      - 'infrahelp'
-      - 'helpinfrahelpyou'
     default_vhost: true
     docroot: '/var/www/reference/'
     manage_docroot: false
@@ -248,9 +245,6 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'reference.apache.org'
-    serveraliases:
-      - 'infrahelp'
-      - 'helpinfrahelpyou'
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www/reference/'
     manage_docroot: false
@@ -409,6 +403,9 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'selfserve.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'helpinfrahelpyou.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve-portal/site'
     manage_docroot: false
@@ -421,6 +418,9 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'selfserve.apache.org'
+    serveraliases:
+      - 'infrahelp.apache.org'
+      - 'helpinfrahelpyou.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve-portal/site'
     manage_docroot: false
