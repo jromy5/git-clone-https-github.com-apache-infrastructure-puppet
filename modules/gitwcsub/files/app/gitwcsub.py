@@ -154,11 +154,11 @@ class Daemonize:
 
 
 # Func for cloning a new repo
-def buildRepo(path, URL):
+def buildRepo(path, URL, branch):
     logging.info("%s does not exist, trying to clone into it as a new dir" % path)
     rv = "No output"
     try:
-        rv = subprocess.check_output(("git", "clone", "-b", config.get("Misc", "branch"), "--single-branch", URL, path))
+        rv = subprocess.check_output(("git", "clone", "-b", branch, "--single-branch", URL, path))
     except Exception as err:
         rv = "Error while cloning: %s" % err
     logging.info(rv)
@@ -180,6 +180,10 @@ def updatePending():
             trueRepo = m.group(2)
             groot = m.group(1)
             httproot = config.get("Servers", groot) if config.has_option("Servers", groot) else httproot
+        # Special branch via repo:branch syntax? Otherwise, default to config global
+        branch = config.get("Misc", "branch")
+        if ':' in trueRepo:
+            trueRepo, branch = trueRepo.split(':', 1)
         newURL = "%s%s.git" % (httproot, trueRepo)
         
         # Check if we need to pull or clone:
@@ -213,20 +217,20 @@ def updatePending():
                         logging.warn("Local origin (%s) does not match configuration origin (%s), rebuilding!" % (oldURL, newURL))
                         os.chdir("/")
                         shutil.rmtree(path)
-                        buildRepo(path, newURL)
+                        buildRepo(path, newURL, branch)
             # Otherwise, just pull in changes
                 else:
                     logging.info("Pulling changes into %s" % path)
-                    rv = subprocess.check_output(("git", "fetch", "origin", config.get("Misc", "branch")))
+                    rv = subprocess.check_output(("git", "fetch", "origin", branch))
                     logging.info(rv)
-                    rv = subprocess.check_output(("git", "reset", "--hard", "origin/%s" % config.get("Misc", "branch")))
+                    rv = subprocess.check_output(("git", "reset", "--hard", "origin/%s" % branch))
                     logging.info(rv)
             except Exception as err:
                 logging.error("Git update error: %s" % err)
                 
         # New repo?
         else:
-            buildRepo(path, newURL)
+            buildRepo(path, newURL, branch)
             
 def read_chunk(req):
     while True:
@@ -245,8 +249,10 @@ def read_chunk(req):
 def parseGitCommit(commit):
     global pending
     if commit['repository'] == "git":
-        commit['ref'] = commit['ref'].replace("refs/heads/", "")
-        if commit['ref'] == config.get("Misc", "branch"):
+        if 'project' in commit:
+            branchNeeded = config.get("Misc", "branch")
+            project = commit['project']
+            branch = commit['ref'].replace("refs/heads/", "")
             for option in config.options("Tracking"):
                 path = option
                 repo = config.get("Tracking", option)
@@ -256,11 +262,14 @@ def parseGitCommit(commit):
                 if m:
                     trueRepo = m.group(2)
                     groot = m.group(1)
-                if 'project' in commit and trueRepo == commit['project']:
+                # Check for non-standard publish branch
+                if ':' in trueRepo:
+                    trueRepo, branchNeeded = trueRepo.split(':', 1)
+                if project == trueRepo and branch == branchNeeded:
                     logging.info("Adding %s (%s) to the update queue" % (path, repo))
                     pending[repo] = path
-                    
-   
+                
+
             
     
 # PubSub class: handles connecting to a pubsub service and checking commits
