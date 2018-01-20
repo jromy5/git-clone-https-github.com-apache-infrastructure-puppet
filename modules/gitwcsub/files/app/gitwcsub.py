@@ -183,7 +183,7 @@ def updatePending():
         # Special branch via repo:branch syntax? Otherwise, default to config global
         branch = config.get("Misc", "branch")
         if ':' in trueRepo:
-            trueRepo, branchNeeded = trueRepo.split(':', 1)
+            trueRepo, branch = trueRepo.split(':', 1)
         newURL = "%s%s.git" % (httproot, trueRepo)
         
         # Check if we need to pull or clone:
