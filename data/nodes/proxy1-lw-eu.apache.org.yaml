@@ -131,8 +131,8 @@ vhosts_asf::vhosts::vhosts:
       SSLProxyCheckPeerCN off
       SSLProxyCheckPeerName off
       SSLProxyCheckPeerExpire off
-      ProxyPass / https://cust-asf2.ponee.io/
-      ProxyPassReverse / https://cust-asf2.ponee.io/
+      ProxyPass / https://asf.ui-eu-01.ponee.io/
+      ProxyPassReverse / https://asf.ui-eu-01.ponee.io/
       AddOutputFilterByType DEFLATE application/json
       Header edit Set-Cookie (^.*$) "$1; HTTPOnly; Secure"
       Header set Access-Control-Allow-Origin "*"
