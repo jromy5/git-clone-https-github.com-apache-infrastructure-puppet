@@ -4,7 +4,6 @@ classes:
   - datadog_asf::integrations::snmp
   - dell
   - dell::openmanage
-  - ldapserver
 
 datadog_agent::puppet_run_reports: true
 
