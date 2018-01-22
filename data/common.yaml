@@ -138,10 +138,8 @@ ldapclient::authorizedkeysfile: 'asf-ldap-sshkeys.sh'
 ldapclient::nssbinddn: 'cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org'
 
 ldapserver::slapd_peers:
-  1: themis.apache.org
   2: ldap1-lw-us.apache.org
   3: ldap1-lw-eu.apache.org
-  4: devops.apache.org
   5: ldap1-ec2-va.apache.org
   6: ldap1-il-eu.apache.org
   7: ldap2-lw-us.apache.org
