@@ -1,4 +1,8 @@
+before_install:  # Earliest build step
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo "Not a PR, skipping" && exit; fi
+
 language: ruby
+
 cache: bundler
 
 rvm:
