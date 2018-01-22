@@ -125,8 +125,6 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'lists-ssl_access.log'
     error_log_file: 'lists-ssl_error.log'
     custom_fragment: |
-      ProxyPreserveHost On
-      ProxyPassPreserveHost On
       SSLProxyEngine On
       SSLProxyVerify none
       SSLProxyCheckPeerCN off
