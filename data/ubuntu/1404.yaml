@@ -483,6 +483,7 @@ build_slaves::distro_packages:
   - python-boto
   - python-setuptools
   - python-support
+  - python3-dev
   - re2c
   - ruby
   - ruby-dev
