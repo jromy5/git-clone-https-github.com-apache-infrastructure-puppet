@@ -6,7 +6,6 @@ class build_slaves::kube ( ) {
     command => "/usr/bin/curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl",
     creates => "/usr/local/bin/kubectl",
     timeout => 600,
-    require => [Package['curl'],
   }
 
 }
