@@ -17,6 +17,7 @@ class aardvark_asf (){
   $aardvark                 = '/usr/local/etc/aardvark'
   $aardvark_filter          = "${aardvark}/filter.lua"
   $aardvark_ruleset         = "${aardvark}/ruleset.yaml"
+  $aardvark_whitelist       = "${aardvark}/whitelist"
   $aardvark_debug           = "${aardvark}/debug"
 
   exec { 'check_aardvark':
@@ -49,6 +50,13 @@ class aardvark_asf (){
       group   => 'root',
       mode    => '0755',
       source  => 'puppet:///modules/aardvark_asf/ruleset.yaml',
+      require => [ File[$aardvark]]
+    $aardvark_whitelist:
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/aardvark_asf/whitelist',
       require => [ File[$aardvark]]
   }
 
