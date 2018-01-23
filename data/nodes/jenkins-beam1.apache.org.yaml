@@ -1,3 +1,4 @@
 ---
 classes:
   - build_slaves::jenkins
+  - build_slaves::kube
