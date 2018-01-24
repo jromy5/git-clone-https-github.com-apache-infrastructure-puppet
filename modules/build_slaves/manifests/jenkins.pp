@@ -17,7 +17,7 @@ class build_slaves::jenkins (
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0'],
   $jbake = ['jbake-2.5.1'],
-  $gradle_versions = ['3.5', '4.3.1', '4.4'],
+  $gradle_versions = ['3.5', '4.3.1', '4.4.1'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9', 'apache-maven-3.5.0' , 'apache-maven-3.5.2'], # lint:ignore:140chars
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'], # lint:ignore:140chars
