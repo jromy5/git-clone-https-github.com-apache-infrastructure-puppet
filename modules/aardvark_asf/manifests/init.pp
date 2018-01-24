@@ -50,7 +50,7 @@ class aardvark_asf (){
       group   => 'root',
       mode    => '0755',
       source  => 'puppet:///modules/aardvark_asf/ruleset.yaml',
-      require => [ File[$aardvark]]
+      require => [ File[$aardvark]];
     $aardvark_whitelist:
       ensure  => present,
       owner   => 'root',
