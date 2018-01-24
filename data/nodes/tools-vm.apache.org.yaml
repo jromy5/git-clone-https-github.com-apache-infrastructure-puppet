@@ -69,6 +69,7 @@ elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::instances:
   tools:
+    datadir: '/usr/share/elasticsearch/data/tools'
     config:
       node.name: 'tools'
       network.host: '127.0.0.1'
