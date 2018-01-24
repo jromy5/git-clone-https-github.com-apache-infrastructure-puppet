@@ -10,6 +10,21 @@ if f then
 end   
 local yamlRuleset = yaml.load(yamlData)
 
+-- Get IP whitelist on load
+local whitelist = {}
+local wl = io.open("/usr/local/etc/aardvark/whitelist", "r")
+if wl then
+   for line in wl:lines() do
+    table.insert (whitelist, line);
+   end
+end
+
+function has_value(array, value)
+  for i, v in ipairs(array) do
+    if v == value then
+      return true
+  end
+end
 
 function logspam(r, buck)
    local f = io.open("/usr/local/etc/aardvark/spammers.txt", "a")
@@ -31,6 +46,10 @@ function logspam(r, buck)
 end
 
 function input_filter(r)
+
+   -- check for IP in whitelist and exit if found
+   if has_value(whitelist, r.useragent_ip) then
+       return
    
    -- first, if we need to ignore this URL, we'll do so
    for k, v in pairs(yamlRuleset.ignoreurls or {}) do
