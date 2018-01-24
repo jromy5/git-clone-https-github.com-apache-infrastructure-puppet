@@ -50,6 +50,7 @@ function input_filter(r)
    -- check for IP in whitelist and exit if found
    if has_value(whitelist, r.useragent_ip) then
        return
+   end
    
    -- first, if we need to ignore this URL, we'll do so
    for k, v in pairs(yamlRuleset.ignoreurls or {}) do
