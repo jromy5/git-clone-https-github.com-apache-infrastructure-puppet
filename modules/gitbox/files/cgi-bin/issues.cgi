@@ -80,7 +80,7 @@ Apache Git Services
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
         smtpObj.sendmail(sender, receivers, msg)
     except smtplib.SMTPException:
-        raise Exception("Could not send email - SMTP server down??")
+        raise Exception("Could not send email - SMTP server down or you put .incubator in the recip address, remove it!")
 
 ################################
 # Message formatting functions #
