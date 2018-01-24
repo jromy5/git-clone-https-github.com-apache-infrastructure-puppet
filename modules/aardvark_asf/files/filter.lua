@@ -23,6 +23,7 @@ function has_value(array, value)
   for i, v in ipairs(array) do
     if v == value then
       return true
+    end
   end
 end
 
