@@ -187,7 +187,7 @@ class rsync_mirror (
 
   rsync::server::module { 'x1-www-sync-peers':
     path            => '/home/apbackup/x1-www-sync-peers',
-    comment         => 'remote machines that need to collect a 'find' file - Generated locally to perform rsync of /x1/www',
+    comment         => 'remote machines that need to collect a \'find\' file - Generated locally to perform rsync of /x1/www',
     max_connections => 80,
     read_only       => 'yes',
     list            => 'no',
