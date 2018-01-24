@@ -19,6 +19,13 @@ if wl then
    end
 end
 
+function has_value(array, value)
+  for i, v in ipairs(array) do
+    if v == value then
+      return true
+  end
+end
+
 function logspam(r, buck)
    local f = io.open("/usr/local/etc/aardvark/spammers.txt", "a")
    if f then
@@ -41,7 +48,7 @@ end
 function input_filter(r)
 
    -- check for IP in whitelist and exit if found
-   if has_value(whitelistData, r.useragent_ip) then
+   if has_value(whitelist, r.useragent_ip) then
        return
    
    -- first, if we need to ignore this URL, we'll do so
