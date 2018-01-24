@@ -392,8 +392,13 @@ class build_slaves::jenkins (
     target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
 
-  # make gradle symlinks
+
+  # make gradle symlinks 4.3 is the latest
   build_slaves::symlink_gradle { $gradle_versions: }
+  file { '/home/jenkins/tools/gradle/4.3':
+    ensure => link,
+    target => '/usr/lib/gradle/4.3.1',
+  }
 
 
   cron {
