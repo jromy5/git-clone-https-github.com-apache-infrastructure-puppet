@@ -155,6 +155,7 @@ vhosts_whimsy::vhosts::vhosts:
         except: 
         - app.js
         - app.js.map
+        - ".*\\.js\\.rb"
         - "[-\\d]+/bootstrap.html"
         - stylesheets/app.css
         - sw.js
