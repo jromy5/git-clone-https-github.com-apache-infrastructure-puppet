@@ -63,6 +63,11 @@ c['slaves'] = [BuildSlave("orcus_ubuntu", private.orcus_ubuntuPwd,
                           missing_timeout=300,
                           max_builds=2,
                           ),
+               BuildSlave("svn-bb-openbsd", private.slave38Pwd,
+                          notify_on_missing="stsp@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
 
 # PhoenixNAP hosted Slaves
 
