@@ -159,7 +159,7 @@ apt::sources:
     release: 'trusty'
     repos: 'main'
     key:
-      id: '36E47E1CC4DCC5E8152D115CC0B5E0AB66FD4949'
+      id: 'DF7A3D29490F686342CDA1EA15FC30A204BBAA7B'
       server: 'pool.sks-keyservers.net'
     include:
       deb: true
