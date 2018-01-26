@@ -4,9 +4,6 @@ class postfix_asf (
   $sender_access = '',
 ) {
 
-  $dbfile = hiera_hash('postfix::dbfile', {})
-  create_resources(postfix::dbfile, $dbfile)
-
   exec { 'refresh_sender_access' :
     command     => '/usr/sbin/postmap /etc/postfix/sender_access && /usr/sbin/postfix reload',
     refreshonly => true,
