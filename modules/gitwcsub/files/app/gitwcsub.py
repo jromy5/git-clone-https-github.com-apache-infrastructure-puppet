@@ -250,10 +250,10 @@ def parseGitCommit(commit):
     global pending
     if commit['repository'] == "git":
         if 'project' in commit:
-            branchNeeded = config.get("Misc", "branch")
             project = commit['project']
             branch = commit['ref'].replace("refs/heads/", "")
             for option in config.options("Tracking"):
+                branchNeeded = config.get("Misc", "branch")
                 path = option
                 repo = config.get("Tracking", option)
                 trueRepo = repo
