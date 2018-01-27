@@ -32,7 +32,6 @@ contact users@infra.apache.org!
 """
 
 MERGEBOT_APPROVED_IPS = [
-    "207.244.88.152",  # mergebot-vm
     "62.210.60.243",  # mergebot-vm2
 ]
 
