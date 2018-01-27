@@ -197,7 +197,7 @@ gitbox::custom_fragment_443: |
       </Location>
       # Mergebot GH Mappings file - mergebot-vm|vm2 only!!
       <Location /setup/ghmap.json>
-        Require ip 207.244.88.152 62.210.60.243
+        Require ip 62.210.60.243
       </Location>
       <LocationMatch "^/setup/newrepo.*">
           AuthType Basic
