@@ -43,10 +43,11 @@ letsencrypt::certonly:
       - demo-trunk.ofbiz.apache.org
       - demo-stable.ofbiz.apache.org
       - demo-old.ofbiz.apache.org
-    plugin: standalone
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
     manage_cron: true
-    cron_before_command: 'service apache2 stop'
-    cron_success_command: 'service apache2 start'
+    cron_success_command: 'service apache2 reload'
     
 logrotate::rule:
   apache2:
@@ -89,6 +90,8 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:8009/
       ProxyPassReverse / ajp://localhost:8009/
+      # do not proxy letsencrypt cert renewal requests
+      ProxyPass /.well-known !
 
 #  settings for the demo against the release of latest OFBiz release branch
   ofbiz-stable-vm2-80:
@@ -123,6 +126,8 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:18009/
       ProxyPassReverse / ajp://localhost:18009/
+      # do not proxy letsencrypt cert renewal requests
+      ProxyPass /.well-known !
 
 #  settings for the demo against the release of latest -1 OFBiz release branch
   ofbiz-old-vm2-80:
@@ -157,6 +162,8 @@ vhosts_asf::vhosts::vhosts:
       ProxyPreserveHost On
       ProxyPass / ajp://localhost:28009/
       ProxyPassReverse / ajp://localhost:28009/
+      # do not proxy letsencrypt cert renewal requests
+      ProxyPass /.well-known !
 
 #  settings for the big files site
   ofbiz-vm-bigfiles-80:
