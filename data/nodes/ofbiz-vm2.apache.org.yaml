@@ -45,9 +45,9 @@ letsencrypt::certonly:
       - demo-old.ofbiz.apache.org
     plugin: standalone
     manage_cron: true
-    cron_success_command: 'service apache2 reload'
-    before: Class[Apache]
-
+    cron_before_command: 'service apache2 stop'
+    cron_success_command: 'service apache2 start'
+    
 logrotate::rule:
   apache2:
     ensure: 'present'
