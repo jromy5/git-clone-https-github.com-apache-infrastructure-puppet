@@ -88,10 +88,11 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
-      ProxyPass / ajp://localhost:8009/
-      ProxyPassReverse / ajp://localhost:8009/
       # do not proxy letsencrypt cert renewal requests
       ProxyPass /.well-known !
+      ProxyPass / ajp://localhost:8009/
+      ProxyPassReverse / ajp://localhost:8009/
+
 
 #  settings for the demo against the release of latest OFBiz release branch
   ofbiz-stable-vm2-80:
@@ -124,10 +125,10 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
-      ProxyPass / ajp://localhost:18009/
-      ProxyPassReverse / ajp://localhost:18009/
       # do not proxy letsencrypt cert renewal requests
       ProxyPass /.well-known !
+      ProxyPass / ajp://localhost:18009/
+      ProxyPassReverse / ajp://localhost:18009/
 
 #  settings for the demo against the release of latest -1 OFBiz release branch
   ofbiz-old-vm2-80:
@@ -160,10 +161,10 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyRequests Off
       ProxyPreserveHost On
-      ProxyPass / ajp://localhost:28009/
-      ProxyPassReverse / ajp://localhost:28009/
       # do not proxy letsencrypt cert renewal requests
       ProxyPass /.well-known !
+      ProxyPass / ajp://localhost:28009/
+      ProxyPassReverse / ajp://localhost:28009/
 
 #  settings for the big files site
   ofbiz-vm-bigfiles-80:
