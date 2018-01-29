@@ -45,7 +45,7 @@ letsencrypt::certonly:
       - demo-old.ofbiz.apache.org
     plugin: webroot
     webroot_paths:
-      - /var/www/html
+      - /var/www/ofbiz/big-files
     manage_cron: true
     cron_success_command: 'service apache2 reload'
     
