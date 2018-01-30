@@ -32,6 +32,11 @@ apache::mod::status::apache_version: '2.3'
 apache::mpm_module:         'event'
 apache::serveradmin:        'dev@community.apache.org'
 
+base::basepackages:
+  - 'libcgi-pm-perl'
+  - 'libjson-perl'
+  - 'perl-doc'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
