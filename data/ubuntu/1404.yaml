@@ -4,6 +4,7 @@ classes:
   - apt::update
   - base
   - datadog_agent
+  - datadog_agent::integrations::process
   - dnsclient
   - fail2ban_asf::config
   - git_asf
@@ -194,6 +195,10 @@ base::remove_os_install_user::osinstalluser:  'ubuntu'
 base::remove_os_install_user::osinstallgroup: 'ubuntu'
 
 datadog_agent::log_level: 'error'
+
+datadog_agent::integrations::process::processes:
+  - name: 'puppet'
+    search_string: ['puppet']
 
 fail2ban::service_status: true
 
