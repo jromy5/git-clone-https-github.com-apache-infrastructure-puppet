@@ -65,7 +65,10 @@ function addattr(attr, v) {
                     
                     <!-- logout button is already present above -->
 [end][define messagebox]
-	[if-any message]<p>[message]</p>[else]<p>Please update your details, and enter your password to confirm.</p>[end]
+	[if-any message]<p>[message]</p>[else]
+	<p>Please update your details, and enter your password to confirm.</p>
+	<p><b>Note: this page may not work properly if certain plugins (e.g. LastPass) are used.</b></p>
+	[end]
 [end][#
 
 ][include "layout.html"]
