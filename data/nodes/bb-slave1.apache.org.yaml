@@ -25,3 +25,10 @@ python::python_pips:
   beautifulsoup4:
     ensure: present
 
+ruby_version: '2.3.1'
+
+rvm::system_rubies:
+  "ruby-%{hiera('ruby_version')}": {}
+
+rvm::system_users:
+  - buildslave
