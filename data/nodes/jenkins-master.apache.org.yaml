@@ -19,6 +19,21 @@ classes:
   - ulimit_asf
   - vhosts_asf::vhosts
   - zmanda_asf::client
+  - fail2ban_asf::config
+
+fail2ban_asf::config::jails:
+  apache-jenkins:
+    filter: apache-jenkins
+    action:
+      - iptables-allports
+    port:
+      - http
+      - https
+    logpath: /var/log/apache2/builds.apache.org.access.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
 
 datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
 
