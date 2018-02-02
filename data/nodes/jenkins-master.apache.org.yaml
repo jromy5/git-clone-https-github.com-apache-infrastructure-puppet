@@ -23,6 +23,7 @@ classes:
 
 fail2ban_asf::config::jails:
   apache-jenkins:
+    ignoreip: 127.0.0.1 140.211.11.0/24 10.41.0.6 160.45.251.2 67.195.81.0/24 163.172.0.0/16 195.154.0.0/16 62.210.0.0/16
     filter: apache-jenkins
     action:
       - iptables-allports
