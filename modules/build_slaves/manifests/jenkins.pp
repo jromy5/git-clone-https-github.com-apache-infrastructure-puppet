@@ -412,6 +412,12 @@ class build_slaves::jenkins (
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
+  cron {
+    'docker-cleanup-weekly':
+      hour        => '20',
+      command     => '/usr/bin/docker system prune -a -f -filter "until=168h"',
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+  }
 
 
   service { 'apache2':
