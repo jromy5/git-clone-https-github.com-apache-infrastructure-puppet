@@ -18,6 +18,8 @@ python::python_pips:
   psycopg2:
     ensure: present
 
+Django_version: '1.3'
+
 apache::keepalive: 'On'
 apache::keepalive_timeout: '15'
 apache::timeout: 600
