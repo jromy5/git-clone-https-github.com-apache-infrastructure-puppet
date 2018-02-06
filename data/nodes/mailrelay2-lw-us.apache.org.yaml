@@ -1,0 +1,34 @@
+---
+classes: 
+  - dovecot
+  - mail_relay
+  - ssl::name::wildcard_apache_org
+  - loggy
+
+dovecot::dovecot_packages:
+  - dovecot-core
+  - dovecot-ldap
+
+postfix::server::myhostname:             "%{::fqdn}"
+postfix::server::mydomain:               'apache.org'
+postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
+postfix::server::inet_interfaces:        'all'
+postfix::server::message_size_limit:     '15360000'
+postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::alias_maps:              'hash:/etc/aliases ldap:/etc/postfix/ldap-mail-forward-lookup.cf'
+postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
+postfix::server::virtual_transport:      'dovecot'
+postfix::server::smtpd_sender_restrictions:
+  -  'permit_mynetworks'
+  -  'reject_unknown_sender_domain'
+postfix::server::smtpd_recipient_restrictions:    
+  -  'permit_sasl_authenticated'
+  -  'permit_mynetworks'
+  -  'reject_unauth_destination'
+postfix::server::submission_smtpd_client_restrictions: 'permit_mynetworks,permit_sasl_authenticated,reject'
+postfix::server::smtpd_tls_key_file:     '/etc/ssl/private/wildcard.apache.org.key'
+postfix::server::smtpd_tls_cert_file:    '/etc/ssl/private/wildcard.apache.org-combined.cert'
+postfix::server::smtpd_tls_CAfile:       '/etc/ssl/certs/wildcard.apache.org.chain'
+postfix::server::smtpd_sasl_auth:        'true'
+postfix::server::ssl:                    'wildcard.apache.org'
+postfix::server::submission:             'true'
