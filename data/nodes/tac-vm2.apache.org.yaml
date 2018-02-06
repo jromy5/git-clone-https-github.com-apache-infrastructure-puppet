@@ -80,5 +80,11 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     custom_fragment: |
-      ProxyPass / http://127.0.0.1:8060/
-      ProxyPassReverse / http://127.0.0.1:8060/
+      ProxyPass / http://127.0.0.1:8000/
+      ProxyPassReverse / http://127.0.0.1:8000/
+      WSGIScriptAlias / /usr/local/tac/tac_app.wsgi
+      Alias /admin_media/ /usr/local/django/contrib/admin/media/
+      <Location "/admin_media/">
+        SetHandler None
+      </Location>
+
