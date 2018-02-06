@@ -8,6 +8,8 @@ classes:
   - apache::mod::wsgi
   - postgresql::client
   - postgresql::server
+  - postgres_asf
+  - postgres_asf::backup
   - vhosts_asf::vhosts
   - ssl::name::wildcard_apache_org
 
