@@ -407,6 +407,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'infrahelp.apache.org'
       - 'helpinfrahelpyou.apache.org'
+      - 'infra.apache.org'
+      - 'infrastructure.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve-portal/site'
     manage_docroot: false
