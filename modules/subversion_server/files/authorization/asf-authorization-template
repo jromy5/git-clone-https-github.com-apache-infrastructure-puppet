@@ -491,7 +491,7 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @accumulo = rw
 
 [/ace]
-@ace = rw
+@attic-pmc = rw
 
 [/activemq]
 * = r
