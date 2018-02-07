@@ -11,7 +11,7 @@ class tac_asf (
 
   # below are contained in eyaml
 
-  $tac_dbpassd = '',
+  $tac_dbpasswd = '',
   $tac_dbuser = '',
 
 ){
