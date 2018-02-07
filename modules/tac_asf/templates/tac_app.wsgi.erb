@@ -7,7 +7,7 @@ import sys, os
 django_version = '<%= @django_version %>'
 root = '<%= @parent_dir %>'
 
-sys.path = [ '', root, "%s/tac_app" % root, /usr/local/django ] + sys.path
+sys.path = [ '', root, "%s/tac_app" % root, "/usr/local/django" ] + sys.path
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "tac_app.settings"
 
