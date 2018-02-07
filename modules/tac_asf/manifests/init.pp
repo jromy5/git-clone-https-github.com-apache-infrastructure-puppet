@@ -42,7 +42,7 @@ $django_version = '1.3'
       owner   => $username,
       group   => $groupname,
       require => File[$parent_dir];
-    "${parent_dir}/tac_wsgi.py":
+    "${parent_dir}/tac_app.wsgi":
       owner   => $username,
       group   => $groupname,
       content => template('tac_asf/tac_app.wsgi.erb'),
