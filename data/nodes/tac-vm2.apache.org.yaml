@@ -16,6 +16,9 @@ classes:
 datadog_agent::integrations::postgres::host: 'localhost'
 datadog_agent::integrations::postgres::user: 'datadog'
 
+# tac_asf class variables.
+tac_asf::parent_dir: '/usr/local/tac'
+
 python::python_pips:
   Django:
     ensure: '1.3'

@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+# This file is managed in puppet. See modules/tac_app/templates/tac_wsgi.py.erb
+
+import sys, os
+
+django_version = '<%= @django_version %>'
+root = '<%= @parent_dir %>'
+
+sys.path = [ '', root, "%s/tac_app" % root, /usr/local/django ] + sys.path
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "tac_app.settings"
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
+
