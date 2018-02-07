@@ -45,7 +45,7 @@ $django_version = '1.3'
     "${parent_dir}/tac_wsgi.py":
       owner   => $username,
       group   => $groupname,
-      content => template('tac_asf/tac_wsgi.py.erb'),
+      content => template('tac_asf/tac_app.wsgi.erb'),
       mode    => '0755';
     "${install_dir}/local_settings.py":
       owner   => $username,
