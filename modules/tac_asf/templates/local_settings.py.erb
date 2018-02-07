@@ -2,8 +2,8 @@
 
 DATABASE_ENGINE = 'postgresql_psycopg2'
 DATABASE_NAME = 'tac_app' 
-DATABASE_USER = '<%= scope['postgresql::server::db::tac_app::user'] %>'
-DATABASE_PASSWORD = '<%= scope['postgresql::server::db::tac_app::password'] %>'
+DATABASE_USER = '<%= @tac_dbuser %>'
+DATABASE_PASSWORD = '<%= @tac_dbpasswd %>'
 DATABASE_HOST = ''
 DATABASE_PORT = ''
 

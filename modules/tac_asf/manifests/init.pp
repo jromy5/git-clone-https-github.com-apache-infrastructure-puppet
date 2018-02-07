@@ -11,6 +11,9 @@ class tac_asf (
 
   # below are contained in eyaml
 
+  $tac_dbpassd = '',
+  $tac_dbuser = '',
+
 ){
 
 $install_dir    = "${parent_dir}/tac_app"
