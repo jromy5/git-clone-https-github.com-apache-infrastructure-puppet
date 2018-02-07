@@ -7,7 +7,7 @@ class tac_asf (
 
   # override below in yaml
 
-$parent_dir,
+  $parent_dir,
 
   # below are contained in eyaml
 
@@ -18,11 +18,11 @@ $django_version = '1.3'
 
   user {
     $username:
-      ensure     => present,
-      system     => true,
-      name       => $username,
-      gid        => $groupname,
-      require    => Group[$groupname],
+      ensure  => present,
+      system  => true,
+      name    => $username,
+      gid     => $groupname,
+      require => Group[$groupname],
   }
 
   group {
