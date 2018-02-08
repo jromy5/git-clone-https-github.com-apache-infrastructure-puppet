@@ -16,6 +16,9 @@ class tac_asf (
   $tac_dbhost = '',
   $tac_dbport = '',
 
+  # rsync backups to bai
+  $rsync_passwd = '',
+
 ){
 
 $install_dir    = "${parent_dir}/tac_app"
@@ -57,5 +60,31 @@ $django_version = '1.3'
       group   => $groupname,
       content => template('tac_asf/local_settings.py.erb'),
       mode    => '0750';
+    '/root/rsynclogs':
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0700';
+    '/root/.pw-abi':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      content => $rsync_passwd;
+    '/root/tac-daily-bai.sh':
+      ensure => present,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0600',
+      source => 'puppet:///modules/tac_asf/tac-daily-bai.sh';
   }
+
+  cron {
+    'tac_daily_bai':
+      command: '/root/tac-daily-bai.sh',
+      user: 'root',
+      hour: '18',
+      minute: '30',
+  }
+
 }

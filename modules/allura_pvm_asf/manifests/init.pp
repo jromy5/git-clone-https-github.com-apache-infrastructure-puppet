@@ -28,5 +28,13 @@ class allura_pvm_asf (
       source => 'puppet:///modules/allura_pvm_asf/allura-daily-abi.sh';
   }
 
+  cron {
+    'allura_daily_abi':
+      command: '/root/allura-daily-abi-test.sh',
+      user: 'root',
+      hour: '06',
+      minute: '15',
+  }
+
 }
 

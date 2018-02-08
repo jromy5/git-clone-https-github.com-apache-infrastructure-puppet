@@ -12,6 +12,7 @@ classes:
   - postgresql_asf::backup
   - vhosts_asf::vhosts
   - ssl::name::wildcard_apache_org
+  - stunnel_asf
   - tac_asf
 
 datadog_agent::integrations::postgres::host: 'localhost'
