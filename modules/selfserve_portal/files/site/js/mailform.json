@@ -63,6 +63,11 @@
                 "desc": "Add Unsubscribe default footer",
                 "type": "checkbox"
              },
+             
+             "private": {
+                "desc": "Force list to be private (infra staff only!)",
+                "type": "checkbox"
+             },
              "expedite": {
                 "desc": "Expedite creation of list (infra staff only!)",
                 "type": "checkbox"
