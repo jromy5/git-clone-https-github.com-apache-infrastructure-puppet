@@ -83,7 +83,7 @@ for mod in mods:
 # Get and validate private option
 # TODO currently this field serves no purpose and could be dropped.
 private = form.getvalue("private", False)
-if private and listname not in ['private', 'security']:
+if private and listname not in ['private', 'security'] and requser not in staffers:
     sscommon.buggo("Only private@ and security@ can be private by default!")
 
 muopts = form.getvalue('muopts', 'mu')
