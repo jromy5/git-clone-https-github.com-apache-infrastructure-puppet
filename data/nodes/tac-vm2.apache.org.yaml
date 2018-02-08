@@ -22,7 +22,7 @@ tac_asf::parent_dir: '/usr/local/tac'
 
 python::python_pips:
   Django:
-    ensure: '1.3'
+    ensure: '1.6.11'
   psycopg2:
     ensure: present
 
