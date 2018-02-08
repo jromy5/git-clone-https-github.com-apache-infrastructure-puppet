@@ -1,0 +1,43 @@
+---
+classes:
+  - loggy
+  - buildbot_slave
+  - buildbot_slave::cpan
+
+buildbot_slave::slave_name: 'bb_slave7_ubuntu'
+buildbot_slave::required_packages:
+  - 'build-essential'
+  - 'libaprutil1-dbd-sqlite3'
+  - 'libaprutil1-ldap'
+  - 'liblua5.3-dev'
+  - 'libpcre3-dev'
+  - 'libpcre2-dev'
+  - 'libsystemd-dev'
+  - 'libxml2-dev'
+  - 'zlib1g-dev'
+
+buildbot_slave::cpan::cpan_modules: 
+- 'AnyEvent'
+- 'Crypt::SSLeay'
+- 'DateTime'
+- 'Devel::CoreStack'
+- 'Devel::Symdump'
+- 'Digest::MD5'
+- 'HTML::HeadParser'
+- 'HTML::Parser'
+- 'HTML::Tagset'
+- 'HTTP::DAV'
+- 'IO::Socket::SSL'
+- 'IPC::Run3'
+- 'LWP'
+- 'LWP::Protocol::https'
+- 'MIME::Base64'
+- 'Net::Cmd'
+- 'Net::SSLeay'
+- 'Protocol::HTTP2::Client'
+- 'Test::Harness'
+- 'URI'
+
+python::python_pips:
+  mkdocs:
+    ensure: present
