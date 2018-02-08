@@ -13,7 +13,6 @@ sleep 1
 --log-file=/root/rsynclogs/backups-tac-$DAY.log \
 --password-file=/root/.pw-abi \
   /x1/db_dump rsync://apb-tacvm@localhost:1873/tac-vm/
-kill `cat /home/apbackup/rsynclogs/stunnel.pid`
 
 # Clean up five day old logs, not rotating, no need to keep more than five.
 
