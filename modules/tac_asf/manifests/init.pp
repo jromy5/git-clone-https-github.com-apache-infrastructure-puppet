@@ -13,6 +13,8 @@ class tac_asf (
 
   $tac_dbpasswd = '',
   $tac_dbuser = '',
+  $tac_dbhost = '',
+  $tac_dbport = '',
 
 ){
 
