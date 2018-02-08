@@ -9,6 +9,7 @@ class postfix_asf (
     refreshonly => true,
   }
 
+
   file {
     '/etc/postfix/sender_access':
       ensure  => file,
@@ -17,5 +18,6 @@ class postfix_asf (
       group   => 'root',
       content => template('postfix_asf/sender_access.erb'),
       notify  => Exec['refresh_sender_access'];
-    }
+  }
+
 }
