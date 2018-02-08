@@ -17,6 +17,9 @@ DATABASES = {
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+# What hostnames to respond to
+ALLOWED_HOSTS = ["tac-apply.apache.org","tac-vm2.apache.org"]
+
 # Pull in local ADMINS, not in puppet
 from admins import ADMINS
 MANAGERS = ADMINS
