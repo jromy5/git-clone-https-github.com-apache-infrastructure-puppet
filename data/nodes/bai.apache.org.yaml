@@ -105,7 +105,7 @@ rsync::server::module:
     read_only: 'no'
   tac-vm:
     path: '/x1/backups/tac-vm/./target/'
-    hosts_allow: '127.0.0.1 140.211.11.86'
+    hosts_allow: '127.0.0.1 140.211.11.86 34.238.98.164'
     auth_users: 'apb-tacvm'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
