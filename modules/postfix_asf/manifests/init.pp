@@ -9,7 +9,6 @@ class postfix_asf (
     refreshonly => true,
   }
 
-
   file {
     '/etc/postfix/sender_access':
       ensure  => file,
