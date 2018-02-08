@@ -560,6 +560,7 @@ buildbot_slave::bb_basepackages:
   - libserf-dev
   - libsqlite3-0
   - libsqlite3-dev
+  - libssl-dev
   - maven
   - openjdk-7-jdk
   - pkg-config
