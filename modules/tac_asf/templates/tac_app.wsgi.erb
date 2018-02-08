@@ -2,15 +2,25 @@
 
 # This file is managed in puppet. See modules/tac_app/templates/tac_wsgi.py.erb
 
-import sys, os
+"""
+WSGI config for tac_app project.
 
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
+"""
+
+import os, sys
+
+# Add our application to the Python Path
 django_version = '<%= @django_version %>'
 root = '<%= @parent_dir %>'
+sys.path = [ '', root, "%s/tac_app" % root ] + sys.path
 
-sys.path = [ '', root, "%s/tac_app" % root, "/usr/local/django" ] + sys.path
+# What settings to run with
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tac_app.settings")
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "tac_app.settings"
-
-import django.core.handlers.wsgi
-application = django.core.handlers.wsgi.WSGIHandler()
-
+# And off we go!
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()

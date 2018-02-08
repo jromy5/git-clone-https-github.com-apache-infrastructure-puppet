@@ -1,20 +1,27 @@
 # This file is in puppet. See modules:tac_asf/templates/local_settings.py.erb
 
-DATABASE_ENGINE = 'postgresql_psycopg2'
-DATABASE_NAME = 'tac_app' 
-DATABASE_USER = '<%= @tac_dbuser %>'
-DATABASE_PASSWORD = '<%= @tac_dbpasswd %>'
-DATABASE_HOST = '<%= @tac_dbhost %>'
-DATABASE_PORT = '<%= @tac_dbport %>'
+# Database
+# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+DATABASES = {
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tac_app',
+        'USER': '<%= @tac_dbuser %>',
+        'PASSWORD': '<%= @tac_dbpasswd %>',
+        'HOST': '<%= @tac_dbhost %>',
+        'PORT': '<%= @tac_dbport %>',
+     },
+}
 
 # Debug should normally be False when in production
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-import admins
-reload(admins)
+# What hostnames to respond to
+ALLOWED_HOSTS = ["tac-apply.apache.org","tac-vm2.apache.org"]
 
-ADMINS = admins.ADMINS
+# Pull in local ADMINS, not in puppet
+from admins import ADMINS
 MANAGERS = ADMINS
 
 EMAIL_HOST = "localhost"
