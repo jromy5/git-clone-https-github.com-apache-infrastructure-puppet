@@ -29,6 +29,7 @@ import sscommon
 import fcntl
 
 requser = os.environ['REMOTE_USER']
+staffers = ['humbedooh','gmcdonald','cml','pono','cthistle','gstein']
 
 def checkDomain(dom):
     """Check if an apache.org ML domain exists or not"""
@@ -93,18 +94,30 @@ trailer = form.getvalue('trailer', 'T')
 if trailer == 'true':
     trailer = 't'
 
+# Time of request (add 12h to process)
+reqqed = int(time.time())
+
+# If staffer, we can expedite requests by faking the request time.
+speedup = form.getvalue('expedite', 'false')
+if speedup == 'true' and requser in staffers:
+    speedup = True
+    reqqed -= 86400
+else:
+    speedup = False
+
 for newlist in lists:
     # Write payload to file
     payload = {
         'type': 'mailinglist',
         'requester': requser,
-        'requested': int(time.time()),
+        'requested': reqqed,
         'domain': domain,
         'list': newlist,
         'muopts': muopts,
         'private': True if (private or newlist in ['private', 'security']) else False, # Force private for private+security@
         'mods': mods,
-        'trailer': trailer
+        'trailer': trailer,
+        'expedited': speedup
     }
 
     filename = "mailinglist-%s-%s.json" % (newlist, domain)
