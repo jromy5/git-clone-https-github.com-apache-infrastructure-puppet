@@ -4,6 +4,7 @@ class mail_relay (
 
   $mail_ldap_servers = '',
   $packages          = ['postfix-ldap'],
+  $mynetworks         = '', # defined in common.eyaml
 
 ) {
 
@@ -17,4 +18,14 @@ class mail_relay (
       mode    => '0644',
       notify  => Service['postfix'],
   }
+
+  file {
+    '/etc/postfix/mynetworks':
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      content => $mynetworks,
+      notify  => Service['postfix'];
+   }
 }
