@@ -30,10 +30,10 @@ class allura_pvm_asf (
 
   cron {
     'allura_daily_abi':
-      command: '/root/allura-daily-abi-test.sh',
-      user: 'root',
-      hour: '06',
-      minute: '15',
+      command => '/root/allura-daily-abi-test.sh',
+      user    => 'root',
+      hour    => '06',
+      minute  => '15',
   }
 
 }

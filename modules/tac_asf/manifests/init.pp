@@ -81,10 +81,10 @@ $django_version = '1.3'
 
   cron {
     'tac_daily_bai':
-      command: '/root/tac-daily-bai.sh',
-      user: 'root',
-      hour: '18',
-      minute: '30',
+      command => '/root/tac-daily-bai.sh',
+      user    => 'root',
+      hour    => '18',
+      minute  => '30',
   }
 
 }
