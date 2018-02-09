@@ -27,6 +27,8 @@ python::python_pips:
   psycopg2:
     ensure: present
 
+postfix::server::relayhost: '[mailrelay1-lw-us.apache.org]:25'
+
 postgresql::server::listen_addresses: "localhost"
 postgresql::server::encoding: 'UTF-8'
 postgresql::server::locale: 'en_US.UTF-8'
