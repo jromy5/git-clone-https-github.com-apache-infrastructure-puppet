@@ -1,6 +1,7 @@
 ---
 classes: 
   - dovecot
+  - fail2ban_asf::config
   - mail_relay
   - ssl::name::wildcard_apache_org
   - loggy
@@ -8,6 +9,20 @@ classes:
 dovecot::dovecot_packages:
   - dovecot-core
   - dovecot-ldap
+
+fail2ban::service_autorestart: true
+fail2ban::disable: false
+fail2ban::service_status: true
+
+fail2ban_asf::config::jails:
+  postfix-sasl:
+    filter: postfix-sasl
+    action:
+      - iptables-allports
+    logpath: /var/log/mail.log
+    findtime: 600
+    maxretry: 5
+    enable: true
 
 base::basepackages:
   - postfix-policyd-spf-python
@@ -18,6 +33,7 @@ postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, loca
 postfix::server::inet_interfaces:        'all'
 postfix::server::message_size_limit:     '15360000'
 postfix::server::relayhost:              '[mail.apache.org]:2025'
+postfix::server::mynetworks:             '/etc/postfix/mynetworks'
 postfix::server::alias_maps:              'hash:/etc/aliases ldap:/etc/postfix/ldap-mail-forward-lookup.cf'
 postfix::server::mail_name:              "ASF Mail Server at %{::fqdn}"
 postfix::server::virtual_transport:      'dovecot'
