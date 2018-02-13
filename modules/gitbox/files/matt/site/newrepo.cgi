@@ -207,7 +207,7 @@ def main():
             repo = xform.getvalue("name")
             reponame = pmc
             title = "Apache %s" % pmc
-            if repo:
+            if repo and repo != '-': # - means no repo name, just pmc name. stoopid JS
                 reponame = "%s-%s" % (pmc, repo)
                 title = "Apache %s %s" % (pmc, repo)
             t = xform.getvalue("description")
