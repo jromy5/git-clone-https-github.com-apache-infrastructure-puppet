@@ -10,8 +10,10 @@ classes:
   - blocky
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
-  - loggy
+  - fail2ban_asf::config
   - jenkins_asf
+  - kif
+  - loggy
   - oraclejava::install
   - rsync::server
   - ssl::name::wildcard_apache_org
@@ -19,7 +21,6 @@ classes:
   - ulimit_asf
   - vhosts_asf::vhosts
   - zmanda_asf::client
-  - fail2ban_asf::config
 
 fail2ban_asf::config::jails:
   apache-jenkins:
@@ -70,6 +71,8 @@ apache::mod::event::serverlimit: '10'
 apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
+
+kif::httpd_connections: 800
 
 logrotate::rule:
   apache2:
