@@ -129,7 +129,7 @@ def getActivity():
         <th>Links:</th>
     </tr>
 """ % (a, pname)
-        for repo in projects[project]:
+        for repo in sorted(projects[project]):
             table += """
     <tr>
         <td><a href="/repos/asf/?p=%s">%s</a></td>
