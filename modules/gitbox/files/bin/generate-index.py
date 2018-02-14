@@ -98,6 +98,7 @@ def getActivity():
         r = re.match(r"^(?:incubator-)?([^-.]+).*", repo)
         project = r.group(1)
         projects[project] = projects.get(project, [])
+        repo = repo.replace(".git", "") # Crop this for sorting reasons (INFRA-15952)
         projects[project].append(repo)
         if len(repodesc) > 64:
             repodesc = repodesc[:61] + "..."
@@ -132,14 +133,14 @@ def getActivity():
         for repo in sorted(projects[project]):
             table += """
     <tr>
-        <td><a href="/repos/asf/?p=%s">%s</a></td>
+        <td><a href="/repos/asf/?p=%s.git">%s.git</a></td>
         <td>%s</td>
         <td>%s</td>
         <td>
-            <a href="/repos/asf/?p=%s;a=summary">Summary</a> |
-            <a href="/repos/asf/?p=%s;a=shortlog">Short Log</a> |
-            <a href="/repos/asf/?p=%s;a=log">Full Log</a> |
-            <a href="/repos/asf/?p=%s;a=tree">Tree View</a>
+            <a href="/repos/asf/?p=%s.git;a=summary">Summary</a> |
+            <a href="/repos/asf/?p=%s.git;a=shortlog">Short Log</a> |
+            <a href="/repos/asf/?p=%s.git;a=log">Full Log</a> |
+            <a href="/repos/asf/?p=%s.git;a=tree">Tree View</a>
         </td>
     </tr>
 """ % (repo, repo, gitrepos[repo][1],gitrepos[repo][0], repo, repo, repo, repo)
