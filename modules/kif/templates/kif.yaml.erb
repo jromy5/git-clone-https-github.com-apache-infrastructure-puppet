@@ -55,6 +55,14 @@ rules:
             maxlocalconns:  <%= @httpd_connections %>
         runlist:
             - 'service apache2 restart'
+    zmanda:
+        description: 'zmanda dumper process hung'
+        procid:
+            - '--user=amandabackup'
+        triggers:
+            maxage: 259200
+        kill: true
+        killwith: 9
 
 notifications:
     hipchat:
