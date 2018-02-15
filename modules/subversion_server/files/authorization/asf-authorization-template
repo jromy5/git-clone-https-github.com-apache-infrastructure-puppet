@@ -1193,6 +1193,10 @@ buildbot = rw
 [/james]
 @james = rw
 
+# moved to gitbox
+[/james/hupa]
+* = r
+
 # moved to git
 [/james/jdkim]
 * = r
