@@ -29,6 +29,9 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 apache::default_vhost: false
 
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
+apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3']
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
