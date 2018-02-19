@@ -57,7 +57,9 @@ letsencrypt::certonly:
   ponymail-vm:
     domains:
       - ponymail-vm.apache.org
-    plugin: standalone
+    plugin: webroot
+    webroot_paths:
+      - /var/www/html
     manage_cron: true
     cron_success_command: '/bin/systemctl reload apache2.service'
     before: Class[Apache]
