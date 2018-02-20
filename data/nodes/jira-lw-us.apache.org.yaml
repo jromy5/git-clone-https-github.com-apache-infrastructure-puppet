@@ -113,40 +113,6 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
-  helpinfrahelpyou:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 80
-    servername: 'helpinfrahelpyou.apache.org'
-    serveraliases:
-      - 'infrahelp.apache.org'
-    serveradmin: 'users@infra.apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
-    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
-
-  helpinfrahelpyou-ssl:
-    vhost_name: '*'
-    ensure: 'present'
-    port: 443
-    ssl: true
-    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
-    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
-    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
-    servername: 'helpinfrahelpyou.apache.org'
-    serveraliases:
-      - 'infrahelp.apache.org'
-    serveradmin: 'users@infra.apache.org'
-    docroot: '/var/www'
-    log_level: 'warn'
-    access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
-    error_log_file:  'helpinfrahelpyou.apache.org.error.log'
-    custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
-
   issues:
     vhost_name: '*'
     ensure: 'present'
@@ -155,6 +121,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jira-lw-us.apache.org'
     serveraliases:
       - 'issues.apache.org'
+      - 'jira.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.http_access.log'
     error_log_file: 'issues.apache.org.error.log'
@@ -172,6 +139,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jira-lw-us.apache.org'
     serveraliases:
       - 'issues.apache.org'
+      - 'jira.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.ssl_access.log'
     error_log_file: 'issues.apache.org.error.log'
