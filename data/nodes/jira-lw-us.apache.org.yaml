@@ -126,7 +126,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'helpinfrahelpyou.apache.org.http_access.log'
     error_log_file:  'helpinfrahelpyou.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+      Redirect permanent / https://selfserve.apache.org/
 
   helpinfrahelpyou-ssl:
     vhost_name: '*'
@@ -145,7 +145,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'helpinfrahelpyou.apache.org.ssl_access.log'
     error_log_file:  'helpinfrahelpyou.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://issues.apache.org/jira/servicedesk/customer/portal/1
+      Redirect permanent / https://selfserve.apache.org/
 
   issues:
     vhost_name: '*'
@@ -155,6 +155,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jira-lw-us.apache.org'
     serveraliases:
       - 'issues.apache.org'
+      - 'jira.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.http_access.log'
     error_log_file: 'issues.apache.org.error.log'
@@ -172,6 +173,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jira-lw-us.apache.org'
     serveraliases:
       - 'issues.apache.org'
+      - 'jira.apache.org'
     serveradmin: 'webmaster@apache.org'
     access_log_file: 'issues.apache.org.ssl_access.log'
     error_log_file: 'issues.apache.org.error.log'
