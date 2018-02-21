@@ -1,6 +1,6 @@
-#/etc/puppet/modules/build_slaves/manifests/install/ubuntu/1604.pp
+#/etc/puppet/modules/build_slaves/manifests/install/ubuntu/ubuntu_1604.pp
 
-class build_slaves::install::ubuntu::1604 (
+class build_slaves::install::ubuntu::ubuntu_1604 (
 
 
 ) {
