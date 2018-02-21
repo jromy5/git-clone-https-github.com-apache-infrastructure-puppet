@@ -4,6 +4,8 @@ include apt
 
 # jenkins class for the build slaves.
 class build_slaves::jenkins (
+  $username = 'jenkins',
+  $groupname = 'jenkins',
   $nexus_password   = '',
   $npmrc_password    = '',
   $jenkins_pub_key  = '',
@@ -31,8 +33,8 @@ class build_slaves::jenkins (
   define build_slaves::mkdir_tools ($tool = $title) {
     file {"/home/jenkins/tools/${tool}":
       ensure => directory,
-      owner  => 'jenkins',
-      group  => 'jenkins',
+      owner  => $username,
+      group  => $groupname,
     }
   }
   #define ant symlinking
@@ -143,39 +145,39 @@ class build_slaves::jenkins (
     ensure => present,
     mode   => '0755',
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
-    owner  => 'jenkins',
-    group  => 'jenkins',
+    owner  => $username,
+    group  => $groupname,
   }
 
   file { '/etc/ssh/ssh_keys/jenkins.pub':
     ensure => present,
     mode   => '0640',
     source => 'puppet:///modules/build_slaves/jenkins.pub',
-    owner  => 'jenkins',
+    owner  => $username,
     group  => 'root',
   }
 
   file { '/home/jenkins/.m2':
     ensure  => directory,
     require => User['jenkins'],
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0755'
   }
 
   file { '/home/jenkins/.buildr':
     ensure  => directory,
     require => User['jenkins'],
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0755'
   }
 
   file { '/home/jenkins/.gradle':
     ensure  => directory,
     require => User['jenkins'],
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0755'
   }
 
@@ -183,8 +185,8 @@ class build_slaves::jenkins (
     ensure  => present,
     require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/settings.xml',
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/m2_settings.erb')
   }
@@ -193,8 +195,8 @@ class build_slaves::jenkins (
     ensure  => present,
     require => File['/home/jenkins/.m2'],
     path    => '/home/jenkins/.m2/toolchains.xml',
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0640',
     source  => 'puppet:///modules/build_slaves/toolchains.xml',
   }
@@ -203,8 +205,8 @@ class build_slaves::jenkins (
     ensure  => present,
     require => File['/home/jenkins/.buildr'],
     path    => '/home/jenkins/.buildr/settings.yaml',
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
   }
@@ -213,8 +215,8 @@ class build_slaves::jenkins (
     ensure  => present,
     require => File['/home/jenkins/.gradle'],
     path    => '/home/jenkins/.gradle/gradle.properties',
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/gradle_properties.erb')
   }
@@ -222,8 +224,8 @@ class build_slaves::jenkins (
   file { '/home/jenkins/.npmrc':
     ensure  => present,
     path    => '/home/jenkins/.npmrc',
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/npmrc.erb')
   }
@@ -232,8 +234,8 @@ class build_slaves::jenkins (
       file { '/home/jenkins/.git-credentials':
         ensure  => present,
         path    => '/home/jenkins/.git-credentials',
-        owner   => 'jenkins',
-        group   => 'jenkins',
+        owner   => $username,
+        group   => $groupname,
         mode    => '0640',
         content => template('build_slaves/git-credentials.erb')
       }
@@ -241,8 +243,8 @@ class build_slaves::jenkins (
       file { '/home/jenkins/.gitconfig':
         ensure => present,
         path   => '/home/jenkins/.gitconfig',
-        owner  => 'jenkins',
-        group  => 'jenkins',
+        owner  => $username,
+        group  => $groupname,
         mode   => '0640',
         source => 'puppet:///modules/build_slaves/gitconfig',
       }
@@ -266,13 +268,13 @@ class build_slaves::jenkins (
   file {
     '/home/jenkins/tools/':
       ensure => 'directory',
-      owner  => 'jenkins',
-      group  => 'jenkins',
+      owner  => $username,
+      group  => $groupname,
       mode   => '0755';
     '/usr/local/asfpackages/':
       ensure => 'directory',
-      owner  => 'jenkins',
-      group  => 'jenkins',
+      owner  => $username,
+      group  => $groupname,
       mode   => '0755';
   }->
 
@@ -280,22 +282,22 @@ class build_slaves::jenkins (
   build_slaves::mkdir_tools { $tools: }
   file {'/usr/local/asfpackages/jiracli/':
     ensure  => directory,
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     require => [ User['jenkins'], Package['asf-build-jira-cli-2.1.0'] ],
     recurse => true,
   }
   file {'/usr/local/asfpackages/forrest/':
     ensure  => directory,
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     require => [ User['jenkins'], Package['asf-build-apache-forrest-0.9'] ],
     recurse => true,
   }
   file {'/usr/local/asfpackages/jbake/':
     ensure  => directory,
-    owner   => 'jenkins',
-    group   => 'jenkins',
+    owner   => $username,
+    group   => $groupname,
     require => [ User['jenkins'], Package['asf-build-jbake-2.5.1'] ],
     recurse => true,
   }
