@@ -5,7 +5,7 @@ class build_slaves (
   $UserTasksMax     = 49168,
   ) {
 
-  class { "build_slaves::install::${::asfosname}::${::asfosrelease}":
+  class { "build_slaves::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 
   package {
