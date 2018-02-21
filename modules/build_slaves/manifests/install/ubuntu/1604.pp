@@ -11,6 +11,6 @@ $jenkins_pids_max = $build_slaves::UserTasksMax
     path    => '/sys/fs/cgroup/pids/user.slice/user-910.slice/pids.max',
     mode    => '0644',
     content => $jenkins_pids_max,
-    require => [User[$build_slaves::username]];
+    require => [User[$build_slaves::jenkins::username]];
   }
 }
