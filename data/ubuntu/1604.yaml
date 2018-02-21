@@ -439,6 +439,7 @@ build_slaves::distro_packages:
   - liblzo2-dev
   - liblua5.2-dev
   - libmono-system-web4.0-cil
+  - libpcap0.8
   - libperl-dev
   - libqt4-dev
   - libsasl2-dev
