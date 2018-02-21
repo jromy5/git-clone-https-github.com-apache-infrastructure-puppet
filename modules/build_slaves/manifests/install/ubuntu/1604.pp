@@ -2,15 +2,19 @@
 
 class build_slaves::install::ubuntu::1604 (
 
-$jenkins_pids_max = $build_slaves::UserTasksMax
 
 ) {
 
-  file { 'pids.max':
+  file { 'logind.conf':
     ensure  => present,
-    path    => '/sys/fs/cgroup/pids/user.slice/user-910.slice/pids.max',
+    path    => '/etc/systemd/logind.conf',
     mode    => '0644',
-    content => $jenkins_pids_max,
-    require => [User[$build_slaves::jenkins::username]];
+    content => template('build_slaves/logind.conf.erb'),
+  }
+
+  service { 'systemd-logind':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/systemd/logind.conf'],
   }
 }

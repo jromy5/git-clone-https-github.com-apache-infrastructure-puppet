@@ -27,19 +27,4 @@ class build_slaves (
     pkgname => 'pip',
   }
 
-if $::lsbdistrelease == 16.04 {
-  file { 'logind.conf':
-    ensure  => present,
-    path    => '/etc/systemd/logind.conf',
-    mode    => '0644',
-    content => template('build_slaves/logind.conf.erb'),
-  }
-
-  service { 'systemd-logind':
-    ensure    => running,
-    enable    => true,
-    subscribe => File['/etc/systemd/logind.conf'],
-  }
-}
-
 }
