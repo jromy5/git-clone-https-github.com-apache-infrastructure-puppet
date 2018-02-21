@@ -141,7 +141,7 @@ class build_slaves::jenkins (
     groups     => ['docker', $username],
   }
 
-  file { '/home/${username}/env.sh':
+  file { "/home/${username}/env.sh":
     ensure => present,
     mode   => '0755',
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
@@ -157,7 +157,7 @@ class build_slaves::jenkins (
     group  => 'root',
   }
 
-  file { '/home/${username}/.m2':
+  file { "/home/${username}/.m2":
     ensure  => directory,
     require => User['jenkins'],
     owner   => $username,
