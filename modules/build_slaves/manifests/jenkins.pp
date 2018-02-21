@@ -31,7 +31,7 @@ class build_slaves::jenkins (
 
   #define all symlink making iterators
   define build_slaves::mkdir_tools ($tool = $title) {
-    file {"/home/${username}/tools/${tool}":
+    file {"/home/${build_slaves::username}/tools/${tool}":
       ensure => directory,
       owner  => $username,
       group  => $groupname,
@@ -39,63 +39,63 @@ class build_slaves::jenkins (
   }
   #define ant symlinking
   define build_slaves::symlink_ant ($ant_version = $title) {
-    file {"/home/${username}/tools/ant/${ant_version}":
+    file {"/home/${build_slaves::username}/tools/ant/${ant_version}":
       ensure => link,
       target => "/usr/local/asfpackages/ant/${ant_version}",
     }
   }
   #define findbugs symlinking
   define build_slaves::symlink_findbugs ($findbugs_version = $title) {
-    file {"/home/${username}/tools/findbugs/${findbugs_version}":
+    file {"/home/${build_slaves::username}/tools/findbugs/${findbugs_version}":
       ensure => link,
       target => "/usr/local/asfpackages/findbugs/${findbugs_version}",
     }
   }
   #define forrest symlinking
   define build_slaves::symlink_forrest ($forrest_version = $title) {
-    file {"/home/${username}/tools/forrest/${forrest_version}":
+    file {"/home/${build_slaves::username}/tools/forrest/${forrest_version}":
       ensure => link,
       target => "/usr/local/asfpackages/forrest/${forrest_version}",
     }
   }
   #define jbake symlinking
   define build_slaves::symlink_jbake ($jbake_version = $title) {
-    file {"/home/${username}/tools/jbake/${jbake_version}":
+    file {"/home/${build_slaves::username}/tools/jbake/${jbake_version}":
       ensure => link,
       target => "/usr/local/asfpackages/jbake/${jbake_version}",
     }
   }
   #define jiracli symlinking
   define build_slaves::symlink_jiracli ($jiracli_version = $title) {
-    file {"/home/${username}/tools/jiracli/${jiracli_version}":
+    file {"/home/${build_slaves::username}/tools/jiracli/${jiracli_version}":
       ensure => link,
       target => "/usr/local/asfpackages/jiracli/${jiracli_version}",
     }
   }
   #define maven old symlinking (deprecated, remove soon)
   define build_slaves::symlink_maven_old ($maven_old_version = $title) {
-    file {"/home/${username}/tools/maven/${maven_old_version}":
+    file {"/home/${build_slaves::username}/tools/maven/${maven_old_version}":
       ensure => link,
-      target => "/usr/local/${username}/maven/${maven_old_version}",
+      target => "/usr/local/${build_slaves::username}/maven/${maven_old_version}",
     }
   }
   #define maven symlinking (installs to /usr/local/asfpackages)
   define build_slaves::symlink_maven ($maven_version = $title) {
-    file {"/home/${username}/tools/maven/${maven_version}":
+    file {"/home/${build_slaves::username}/tools/maven/${maven_version}":
       ensure => link,
       target => "/usr/local/asfpackages/maven/${maven_version}",
     }
   }
   #define java symlinking
   define build_slaves::symlink_jenkins ($javaj = $title) {
-    file {"/home/${username}/tools/java/${javaj}":
+    file {"/home/${build_slaves::username}/tools/java/${javaj}":
       ensure => link,
-      target => "/usr/local/${username}/java/${javaj}",
+      target => "/usr/local/${build_slaves::username}/java/${javaj}",
     }
   }
   #define java symlinking
   define build_slaves::symlink_asfpackages ($javaa = $title) {
-    file {"/home/${username}/tools/java/${javaa}":
+    file {"/home/${build_slaves::username}/tools/java/${javaa}":
       ensure => link,
       target => "/usr/local/asfpackages/java/${javaa}",
     }
@@ -105,7 +105,7 @@ class build_slaves::jenkins (
     package {"gradle-${gradleversions}":
       ensure => latest,
     } ->
-    file {"/home/${username}/tools/gradle/${gradleversions}":
+    file {"/home/${build_slaves::username}/tools/gradle/${gradleversions}":
       ensure => link,
       target => "/usr/lib/gradle/${gradleversions}",
     }
@@ -141,7 +141,7 @@ class build_slaves::jenkins (
     groups     => ['docker', $username],
   }
 
-  file { "/home/${username}/env.sh":
+  file { "/home/${build_slaves::username}/env.sh":
     ensure => present,
     mode   => '0755',
     source => 'puppet:///modules/build_slaves/jenkins_env.sh',
@@ -157,7 +157,7 @@ class build_slaves::jenkins (
     group  => 'root',
   }
 
-  file { "/home/${username}/.m2":
+  file { "/home/${build_slaves::username}/.m2":
     ensure  => directory,
     require => User['jenkins'],
     owner   => $username,
@@ -165,7 +165,7 @@ class build_slaves::jenkins (
     mode    => '0755'
   }
 
-  file { "/home/${username}/.buildr":
+  file { "/home/${build_slaves::username}/.buildr":
     ensure  => directory,
     require => User[$username],
     owner   => $username,
@@ -173,7 +173,7 @@ class build_slaves::jenkins (
     mode    => '0755'
   }
 
-  file { "/home/${username}/.gradle":
+  file { "/home/${build_slaves::username}/.gradle":
     ensure  => directory,
     require => User[$username],
     owner   => $username,
@@ -181,49 +181,49 @@ class build_slaves::jenkins (
     mode    => '0755'
   }
 
-  file { "/home/${username}/.m2/settings.xml":
+  file { "/home/${build_slaves::username}/.m2/settings.xml":
     ensure  => present,
-    require => File["/home/${username}/.m2"],
-    path    => "/home/${username}/.m2/settings.xml",
+    require => File["/home/${build_slaves::username}/.m2"],
+    path    => "/home/${build_slaves::username}/.m2/settings.xml",
     owner   => $username,
     group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/m2_settings.erb')
   }
 
-  file { "/home/${username}/.m2/toolchains.xml":
+  file { "/home/${build_slaves::username}/.m2/toolchains.xml":
     ensure  => present,
-    require => File["/home/${username}/.m2"],
-    path    => "/home/${username}/.m2/toolchains.xml",
+    require => File["/home/${build_slaves::username}/.m2"],
+    path    => "/home/${build_slaves::username}/.m2/toolchains.xml",
     owner   => $username,
     group   => $groupname,
     mode    => '0640',
     source  => 'puppet:///modules/build_slaves/toolchains.xml',
   }
 
-  file { "/home/${username}/.buildr/settings.yaml":
+  file { "/home/${build_slaves::username}/.buildr/settings.yaml":
     ensure  => present,
-    require => File["/home/${username}/.buildr"],
-    path    => "/home/${username}/.buildr/settings.yaml",
+    require => File["/home/${build_slaves::username}/.buildr"],
+    path    => "/home/${build_slaves::username}/.buildr/settings.yaml",
     owner   => $username,
     group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/buildr_settings.erb')
   }
 
-  file { "/home/${username}/.gradle/gradle.properties":
+  file { "/home/${build_slaves::username}/.gradle/gradle.properties":
     ensure  => present,
-    require => File["/home/${username}/.gradle"],
-    path    => "/home/${username}/.gradle/gradle.properties",
+    require => File["/home/${build_slaves::username}/.gradle"],
+    path    => "/home/${build_slaves::username}/.gradle/gradle.properties",
     owner   => $username,
     group   => $groupname,
     mode    => '0640',
     content => template('build_slaves/gradle_properties.erb')
   }
 
-  file { "/home/${username}/.npmrc":
+  file { "/home/${build_slaves::username}/.npmrc":
     ensure  => present,
-    path    => "/home/${username}/.npmrc",
+    path    => "/home/${build_slaves::username}/.npmrc",
     owner   => $username,
     group   => $groupname,
     mode    => '0640',
@@ -231,18 +231,18 @@ class build_slaves::jenkins (
   }
 
     if ($::fqdn == 'asf920.gq1.ygridcore.net') or ($::fqdn == 'asf919.gq1.ygridcore.net'){
-      file { "/home/${username}/.git-credentials":
+      file { "/home/${build_slaves::username}/.git-credentials":
         ensure  => present,
-        path    => "/home/${username}/.git-credentials",
+        path    => "/home/${build_slaves::username}/.git-credentials",
         owner   => $username,
         group   => $groupname,
         mode    => '0640',
         content => template('build_slaves/git-credentials.erb')
       }
 
-      file { "/home/${username}/.gitconfig":
+      file { "/home/${build_slaves::username}/.gitconfig":
         ensure => present,
-        path   => "/home/${username}/.gitconfig",
+        path   => "/home/${build_slaves::username}/.gitconfig",
         owner  => $username,
         group  => $groupname,
         mode   => '0640',
@@ -266,7 +266,7 @@ class build_slaves::jenkins (
   }
 
   file {
-    "/home/${username}/tools/":
+    "/home/${build_slaves::username}/tools/":
       ensure => 'directory',
       owner  => $username,
       group  => $groupname,
@@ -278,7 +278,7 @@ class build_slaves::jenkins (
       mode   => '0755';
   }->
 
-  # populate /home/${username}/tools/ with asf_packages types
+  # populate /home/${build_slaves::username}/tools/ with asf_packages types
   build_slaves::mkdir_tools { $tools: }
   file {'/usr/local/asfpackages/jiracli/':
     ensure  => directory,
@@ -308,35 +308,35 @@ class build_slaves::jenkins (
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
-  file { "/home/${username}/tools/ant/latest":
+  file { "/home/${build_slaves::username}/tools/ant/latest":
     ensure => link,
     target => '/usr/local/asfpackages/ant/apache-ant-1.10.1',
   }
 
   # findbugs symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_findbugs     { $findbugs: }
-  file { "/home/${username}/tools/findbugs/latest":
+  file { "/home/${build_slaves::username}/tools/findbugs/latest":
     ensure => link,
     target => '/usr/local/asfpackages/findbugs/findbugs-3.0.1',
   }
 
   # forrest symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_forrest      { $forrest: }
-  file { "/home/${username}/tools/forrest/latest":
+  file { "/home/${build_slaves::username}/tools/forrest/latest":
     ensure => link,
     target => '/usr/local/asfpackages/forrest/apache-forrest-0.9',
   }
 
   # jbake symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_jbake      { $jbake: }
-  file { "/home/${username}/tools/jbake/latest":
+  file { "/home/${build_slaves::username}/tools/jbake/latest":
     ensure => link,
     target => '/usr/local/asfpackages/jbake/jbake-2.5.1',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
   build_slaves::symlink_jiracli      { $jiracli: }
-  file { "/home/${username}/tools/jiracli/latest":
+  file { "/home/${build_slaves::username}/tools/jiracli/latest":
     ensure => link,
     target => '/usr/local/asfpackages/jiracli/jira-cli-2.1.0',
   }
@@ -345,15 +345,15 @@ class build_slaves::jenkins (
   # build_slaves::symlink_maven_old    { $maven_old: }
   # maven symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_maven        { $maven: }
-  file { "/home/${username}/tools/maven/latest2":
+  file { "/home/${build_slaves::username}/tools/maven/latest2":
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-2.2.1',
   }
-  file { "/home/${username}/tools/maven/latest":
+  file { "/home/${build_slaves::username}/tools/maven/latest":
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.5.2',
   }
-  file { "/home/${username}/tools/maven/latest3":
+  file { "/home/${build_slaves::username}/tools/maven/latest3":
     ensure => link,
     target => '/usr/local/asfpackages/maven/apache-maven-3.5.2',
   }
@@ -361,35 +361,35 @@ class build_slaves::jenkins (
   # java symlinks - old java location, new java location, and latest symlinks
   build_slaves::symlink_jenkins { $java_jenkins: }
   build_slaves::symlink_asfpackages  { $java_asfpackages: }
-  file { "/home/${username}/tools/java/ibm-1.7-64":
+  file { "/home/${build_slaves::username}/tools/java/ibm-1.7-64":
     ensure => link,
     target => '/usr/local/asfpackages/java/ibm-java-x86_64-70',
   }
-  file { "/home/${username}/tools/java/latest":
+  file { "/home/${build_slaves::username}/tools/java/latest":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_144',
   }
-  file { "/home/${username}/tools/java/latest1.4":
+  file { "/home/${build_slaves::username}/tools/java/latest1.4":
     ensure => link,
     target => '/usr/local/asfpackages/java/j2sdk1.4.2_19',
   }
-  file { "/home/${username}/tools/java/latest1.5":
+  file { "/home/${build_slaves::username}/tools/java/latest1.5":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.5.0_22-64',
   }
-  file { "/home/${username}/tools/java/latest1.6":
+  file { "/home/${build_slaves::username}/tools/java/latest1.6":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.6.0_45-64',
   }
-  file { "/home/${username}/tools/java/latest1.7":
+  file { "/home/${build_slaves::username}/tools/java/latest1.7":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.7.0_80',
   }
-  file { "/home/${username}/tools/java/latest1.8":
+  file { "/home/${build_slaves::username}/tools/java/latest1.8":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_152',
   }
-  file { "/home/${username}/tools/java/latest1.9":
+  file { "/home/${build_slaves::username}/tools/java/latest1.9":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
@@ -397,11 +397,11 @@ class build_slaves::jenkins (
 
   # make gradle symlinks 4.3 is the latest
   build_slaves::symlink_gradle { $gradle_versions: }
-  file { "/home/${username}/tools/gradle/4.3":
+  file { "/home/${build_slaves::username}/tools/gradle/4.3":
     ensure => link,
     target => '/usr/lib/gradle/4.3.1',
   }
-  file { "/home/${username}/tools/gradle/4.4":
+  file { "/home/${build_slaves::username}/tools/gradle/4.4":
     ensure => link,
     target => '/usr/lib/gradle/4.4.1',
   }
