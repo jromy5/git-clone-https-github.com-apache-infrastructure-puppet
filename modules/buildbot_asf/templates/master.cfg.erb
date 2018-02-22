@@ -113,15 +113,6 @@ c['slaves'] = [BuildSlave("orcus_ubuntu", private.orcus_ubuntuPwd,
                           max_builds=2,
                           ),
 
-
-# Leaswweb Hosted Slaves
-
-               BuildSlave("bb_1604_test_ubuntu", private.bb_1604_test_ubuntuPwd,
-                          notify_on_missing="users@infra.apache.org",
-                          missing_timeout=300,
-                          max_builds=2,
-                          ),
-
 # Quenda Hosted Slaves
 
                BuildSlave("bb_qnode4_ubuntu", private.bb_qnode4_ubuntuPwd,
