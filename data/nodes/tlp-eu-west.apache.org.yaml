@@ -604,7 +604,7 @@ vhosts_asf::vhosts::vhosts:
         Options Indexes SymLinksIfOwnerMatch
         RewriteEngine On
         RewriteCond "%%{}{REQUEST_URI}" "^/dist/([-a-zA-Z0-9]+)"
-        RewriteCond "/www/attic.apache.org/projects/%1.html" -f
+        RewriteCond "/var/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
 
