@@ -69,12 +69,13 @@ def sendEmail(rcpt, subject, message):
 To: %s
 Subject: %s
 Message-ID: %s
+Date: %s
 
 %s
 
 With regards,
 Apache Git Services
-""" % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), message)
+""" % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), email.utils.formatdate(), message)
     msg = msg.encode('ascii', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
