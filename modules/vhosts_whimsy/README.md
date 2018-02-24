@@ -107,7 +107,7 @@ authldap
     <Directory /srv/whimsy/www/board/agenda>
       AuthType Basic
       AuthName "ASF Committers"
-      AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+      AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
       AuthLDAPGroupAttribute memberUid
       AuthLDAPGroupAttributeIsDN off
       Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
@@ -116,7 +116,7 @@ authldap
     <LocationMatch ^/www/board/publish_minutes>
       AuthType Basic
       AuthName "ASF Committers"
-      AuthLDAPUrl "ldaps://ldap1-us-west.apache.org ldap2-us-west.apache.org/ou=people,dc=apache,dc=org?uid"
+      AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
       AuthLDAPGroupAttribute memberUid
       AuthLDAPGroupAttributeIsDN off
       Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
