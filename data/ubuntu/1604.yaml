@@ -309,7 +309,7 @@ python::dev: true
 python::pip: 'latest'
 python::virtualenv: true
 
-snmp:snmpd_options: '-Lsd -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
+snmp:snmpd_options: '-LS0-5d -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 
 spamassassin::package_list:
   - spamassassin
