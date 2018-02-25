@@ -175,6 +175,12 @@ ldapserver::indexes:
   - sn
   - uid
   - asf-pgpKeyFingerprint
+  - asf-altEmail
+  - memberUid
+  - uidNumber
+  - gidNumber
+  - entryUUID
+
 ldapserver::cafile: '/etc/ldap/cacerts/cacert.pem'
 ldapserver::certfile: '/etc/ldap/cacerts/ldap-wildcard-cert.pem'
 ldapserver::keyfile: '/etc/ldap/cacerts/ldap-wildcard-cert.key'
