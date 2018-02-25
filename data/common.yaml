@@ -180,6 +180,8 @@ ldapserver::indexes:
   - uidNumber
   - gidNumber
   - entryUUID
+  - member
+  - uniqueMember
 
 ldapserver::cafile: '/etc/ldap/cacerts/cacert.pem'
 ldapserver::certfile: '/etc/ldap/cacerts/ldap-wildcard-cert.pem'
