@@ -57,15 +57,15 @@ apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.o
 apache::mpm_module:         'event'
 
 apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
+apache::mod::event::maxclients: '1000'
 apache::mod::event::maxconnectionsperchild: '20000'
-apache::mod::event::maxrequestworkers: '300'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '6'
-apache::mod::event::startservers: '3'
-apache::mod::event::threadlimit: '300'
-apache::mod::event::threadsperchild: '50'
+apache::mod::event::maxrequestworkers: '1000'
+apache::mod::event::maxsparethreads: '500'
+apache::mod::event::minsparethreads: '100'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '1000'
+apache::mod::event::threadsperchild: '100'
 
 # Hermes etc needs old-skool stuff still
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
