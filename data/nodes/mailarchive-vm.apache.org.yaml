@@ -59,6 +59,7 @@ vhosts_asf::vhosts::vhosts:
         MboxScript /archives/archives.js
       </Directory>
 
+      AllowEncodedSlashes On
       RewriteEngine On
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
