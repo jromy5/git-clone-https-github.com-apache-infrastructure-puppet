@@ -321,7 +321,7 @@ def main():
 
     if repos:
         # Try to get cache if <1 hour old
-        repolistfile = "/x1/gitbox/matt/repos.json"
+        repolistfile = "/tmp/repos.json"
         mtime = 0
         try: # Catch in case enofile
             sinfo = os.stat(repolistfile)
