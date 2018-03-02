@@ -89,15 +89,6 @@ $pbcsPwd  = ''
       mode   => '0750';
   }
 
-  ## MATT dir
-  file {
-    '/x1/gitbox/matt':
-      ensure => directory,
-      owner  => 'www-data',
-      group  => 'www-data',
-      mode   => '0755';
-  }
-
   file {
     '/etc/gitweb':
       ensure  => directory,
