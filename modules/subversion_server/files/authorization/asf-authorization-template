@@ -748,6 +748,9 @@ projects_role = rw
 [/cxf/web]
 @cxf = rw
 
+[/datafu]
+@datafu = rw
+
 [/db]
 @db = rw
 
@@ -972,9 +975,6 @@ buildbot = rw
 
 [/incubator/callback]
 @incubator = rw
-
-[/incubator/datafu]
-@datafu = rw
 
 [/incubator/droids]
 * = r
