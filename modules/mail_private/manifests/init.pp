@@ -70,8 +70,10 @@ class mail_private (
       group  => root,
       mode   => '0755';
     $assets:
-      ensure => 'directory',
-      mode   => '0755';
+      ensure  => 'directory',
+      recurse => true,
+      mode    => '0755',
+      source  => 'puppet:///modules/mail_private/assets';
     $apache2_bin:
       ensure  => 'directory',
       require => Package['apache2'];
