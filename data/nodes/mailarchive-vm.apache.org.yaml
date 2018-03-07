@@ -74,10 +74,10 @@ vhosts_asf::vhosts::vhosts:
   mailarchives-443:
     vhost_name: '*'
     port: 443
+    ssl: true
     servername: 'mailarchive-vm.apache.org'
     serveraliases:
       - 'mail-archives.apache.org'
-    default_vhost: true
     docroot: '/x1/mail-archives.apache.org/'
     access_log_file: 'mail-archives.apache.org-ssl_access.log'
     error_log_file: 'mail-archives.apache.org-ssl_error.log'
