@@ -4,6 +4,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
   - mail_archives
@@ -26,6 +27,10 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
 vhosts_asf::modules::modules:
   mbox:
     name: 'mbox'
@@ -39,7 +44,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'mailarchive-vm.apache.org'
-    serveraliases: 
+    serveraliases:
       - 'mail-archives.apache.org'
     default_vhost: true
     docroot: '/x1/mail-archives.apache.org/'
@@ -59,6 +64,35 @@ vhosts_asf::vhosts::vhosts:
         MboxScript /archives/archives.js
       </Directory>
 
+      AllowEncodedSlashes On
+      RewriteEngine On
+      RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
+      RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
+      RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
+      RewriteRule . /mod_mbox/%1%2 [L]
+
+  mailarchives-443:
+    vhost_name: '*'
+    port: 443
+    servername: 'mailarchive-vm.apache.org'
+    serveraliases:
+      - 'mail-archives.apache.org'
+    default_vhost: true
+    docroot: '/x1/mail-archives.apache.org/'
+    access_log_file: 'mail-archives.apache.org-ssl_access.log'
+    error_log_file: 'mail-archives.apache.org-ssl_error.log'
+    custom_fragment: |
+      <Directory /x1/mail-archives.apache.org>
+        AllowOverride none
+        Options Indexes FollowSymLinks
+        Order allow,deny
+        Allow from all
+        AddHandler mbox-handler .mbox
+        MboxIndex on
+        MboxRootPath /mod_mbox/
+        MboxStyle /archives/style.css
+        MboxScript /archives/archives.js
+      </Directory>
       AllowEncodedSlashes On
       RewriteEngine On
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
