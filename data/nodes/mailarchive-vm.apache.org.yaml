@@ -40,7 +40,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     servername: 'mailarchive-vm.apache.org'
     serveraliases: 
-      - 'mail-archives-new.apache.org'
+      - 'mail-archives.apache.org'
     default_vhost: true
     docroot: '/x1/mail-archives.apache.org/'
     access_log_file: 'mail-archives.apache.org_access.log'
