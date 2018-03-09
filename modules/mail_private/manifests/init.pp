@@ -160,4 +160,15 @@ class mail_private (
       require => [Package['apache2'], Exec['build mbox module']];
   }
 
+# cron jobs
+
+  cron {
+    'populate-pmc-macros':
+      user        => root,
+      minute      => '43',
+      hour        => '*/4',
+      command     => "${install_dir}/gen-httpdconfig.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+  }
+
 }
