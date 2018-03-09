@@ -141,7 +141,7 @@ vhosts_asf::vhosts::vhosts:
       Options +Indexes
       </LocationMatch>
 
-      # Default permissions for private-arch directories that aren't mentioned by mail-search-pmcs.macro
+      # Default permissions for private-arch directories that aren't mentioned by mail-private-pmcs.macro
       # (e.g., new lists since last time it ran)
       # Also default mod_mbox settings.
       <Location /pmc/private-arch>
@@ -164,7 +164,7 @@ vhosts_asf::vhosts::vhosts:
       </Location>
 
       ## Now include the config file that will explictly list all PMCs with configured access.
-      Include /etc/apache2/sites-enabled/mail-search-pmcs.macro
+      Include /etc/apache2/sites-enabled/mail-private-pmcs.macro
 
       # Allow members full access from here. 
       <Location /members/private-arch>

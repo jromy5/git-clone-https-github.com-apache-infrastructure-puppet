@@ -88,7 +88,7 @@ EOT
   else
     echo "* ${DIR}... I can't seem to find an LDAP PMC group, so locking the access to ASF Members only!";
 
-    # Note: subdirs that are created later are handled by vhosts/mail-search.conf
+    # Note: subdirs that are created later are handled by sites-enabled/mail-search.conf
 
     cat <<CONFIG >>${PMCS_CONFIG}
 # Redirect /pmc/private-arch/${DIR} /members/private-arch/${DIR}
