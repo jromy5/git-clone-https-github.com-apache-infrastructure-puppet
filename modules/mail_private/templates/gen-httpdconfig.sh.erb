@@ -41,14 +41,15 @@ for DIR in `ls -1 ${BASE}`; do
    MboxScript "/assets/archives.js"
    MboxHideEmpty On
    MboxAntispam On
-   AuthType Basic
-   AuthBasicProvider ldap
-   AuthName "${PMC} - PMC members only."
-   AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-   AuthLDAPGroupAttribute member
-   AuthLDAPRemoteUserIsDN On
-   AuthzLDAPAuthoritative On
-   Require ldap-group cn=${LDAPCN},ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
+   <RequireAll>
+     AuthType Basic
+     AuthBasicProvider ldap
+     AuthName "${PMC} - PMC members only."
+     AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
+     AuthLDAPGroupAttribute member
+     AuthLDAPRemoteUserIsDN On
+     Require ldap-group cn=${LDAPCN},ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
+   </RequireAll>
 </LocationMatch>
 
 CONFIG
@@ -69,14 +70,15 @@ EOT
    MboxScript "/assets/archives.js"
    MboxHideEmpty On
    MboxAntispam On
-   AuthType Basic
-   AuthBasicProvider ldap
-   AuthName "ASF Committers only."
-   AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-   AuthLDAPGroupAttribute memberUid
-   AuthLDAPRemoteUserIsDN Off
-   AuthzLDAPAuthoritative On
-   Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+   <RequireAll>
+     AuthType Basic
+     AuthBasicProvider ldap
+     AuthName "ASF Committers only."
+     AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPRemoteUserIsDN Off
+     Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+   </RequireAll>
 </LocationMatch>
 
 CONFIG
@@ -99,14 +101,15 @@ EOT
    MboxScript "/assets/archives.js"
    MboxHideEmpty On
    MboxAntispam On
-   AuthType Basic
-   AuthBasicProvider ldap
-   AuthName "ASF Members only."
-   AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-   AuthLDAPGroupAttribute memberUid
-   AuthLDAPRemoteUserIsDN Off
-   AuthzLDAPAuthoritative On
-   Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+   <RequireAll>
+     AuthType Basic
+     AuthBasicProvider ldap
+     AuthName "ASF Members only."
+     AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPRemoteUserIsDN Off
+     Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+   <RequireAll>
 </LocationMatch>
 
 CONFIG
