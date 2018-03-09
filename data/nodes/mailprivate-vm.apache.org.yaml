@@ -39,6 +39,8 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
 
+apache::purge_vhost_dir: false
+
 logrotate::rule:
   apache2:
     ensure: 'present'
