@@ -6,8 +6,8 @@ if [ "`/usr/bin/whoami`" != "root" ]; then
 fi
 
 BASE=<%= @archives_www %>/mod_mbox/
-PMCS_CONFIG=/etc/apache2/vhosts/mail-private-pmcs.include
-PMCS_MACRO=/etc/apache2/vhosts/mail-private-pmcs.macro
+PMCS_CONFIG=/etc/apache2/sites-enabled/mail-private-pmcs.include
+PMCS_MACRO=/etc/apache2/sites-enabled/mail-private-pmcs.macro
 COMMITTERS_CONFIG=/dev/null
 COMMITTERS_MACRO=/dev/null
 
@@ -76,7 +76,6 @@ EOT
    AuthLDAPGroupAttribute memberUid
    AuthLDAPRemoteUserIsDN Off
    AuthzLDAPAuthoritative On
-   Require ldap-attribute gidNumber=5000
    Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
 </LocationMatch>
 
@@ -96,8 +95,8 @@ EOT
 <LocationMatch ^/pmc/private-arch/${DIR}(.*)>
    MboxIndex On
    MboxRootPath "/pmc/private-arch/"
-   MboxStyle "/artifacts/style.css"
-   MboxScript "/artifacts/archives.js"
+   MboxStyle "/assets/style.css"
+   MboxScript "/assets/archives.js"
    MboxHideEmpty On
    MboxAntispam On
    AuthType Basic
@@ -107,7 +106,6 @@ EOT
    AuthLDAPGroupAttribute memberUid
    AuthLDAPRemoteUserIsDN Off
    AuthzLDAPAuthoritative On
-   Require ldap-attribute gidNumber=5008
    Require ldap-group cn=member,ou=groups,dc=apache,dc=org
 </LocationMatch>
 
