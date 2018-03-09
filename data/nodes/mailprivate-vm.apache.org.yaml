@@ -91,3 +91,98 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
       </Location>
+
+      <Macro MacroMboxPMC $dir $pmc $cn>
+      <LocationMatch ^/pmc/private-arch/$dir(.*)>
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "$pmc - PMC members only."
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPRemoteUserIsDN On
+          Require ldap-group cn=$cn,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
+        </RequireAll>
+      </LocationMatch>
+      </Macro>
+
+      <Macro MacroMboxMembers $dir>
+      # Redirect /pmc/private-arch/$dir /members/private-arch/$dir
+      <LocationMatch ^/pmc/private-arch/$dir(.*)>
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Members only."
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPRemoteUserIsDN Off
+          Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        </RequireAll>
+      </LocationMatch>
+      </Macro>
+
+       ## We dont provide search any more, however ...
+      <Location /search>
+        # Lets add some redirect to lists.a.o here maybe ?
+      </Location>
+
+      ## Allow the committers group to use the dropdown list.
+      ## This is needed to see what lists are available.
+      <LocationMatch ^/pmc/$>
+      <RequireAll>
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthName "ASF Committers (/pmc/)"
+        AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+        AuthLDAPGroupAttribute memberUid
+        AuthLDAPGroupAttributeIsDN off
+        Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+      </RequireAll>
+      Options +Indexes
+      </LocationMatch>
+
+      # Default permissions for private-arch directories that aren't mentioned by mail-search-pmcs.macro
+      # (e.g., new lists since last time it ran)
+      # Also default mod_mbox settings.
+      <Location /pmc/private-arch>
+        MboxIndex On
+        MboxRootPath "/pmc/private-arch/"
+        MboxStyle "/assets/style.css"
+        MboxScript "/assets/archives.js"
+        MboxHideEmpty On
+        MboxAntispam On
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Members (/pmc/private-arch residual)"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        </RequireAll>
+        Options +Indexes
+      </Location>
+
+      ## Now include the config file that will explictly list all PMCs with configured access.
+      Include /etc/apache2/sites-enabled/mail-search-pmcs.macro
+
+      # Allow members full access from here. 
+      <Location /members/private-arch>
+        MboxIndex On
+        MboxRootPath "/members/private-arch/"
+        MboxStyle "/assets/style.css"
+        MboxScript "/assets/archives.js"
+        MboxHideEmpty On
+        MboxAntispam On
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Members (/members/private-arch)"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        </RequireAll>
+       Options +Indexes
+     </Location>
+
