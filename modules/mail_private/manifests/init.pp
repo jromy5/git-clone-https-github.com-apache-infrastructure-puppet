@@ -24,7 +24,8 @@ class mail_private (
   $mbox_content = 'LoadModule mbox_module /usr/lib/apache2/modules/mod_mbox.so'
   $archives_www = "${parent_dir}/mail-private.apache.org"
   $assets       = "${archives_www}/assets"
-  $apache2_bin   = '/etc/apache2/bin'
+  $pmc_www      = "${archives_www}/pmc"
+  $apache2_bin  = '/etc/apache2/bin'
 
   group {
     $groupname:
@@ -74,6 +75,9 @@ class mail_private (
       recurse => true,
       mode    => '0755',
       source  => 'puppet:///modules/mail_private/assets';
+    $pmc_www:
+      ensure => 'directory',
+      mode   => '0755';
     $apache2_bin:
       ensure  => 'directory',
       require => Package['apache2'];
@@ -116,6 +120,13 @@ class mail_private (
       group   => $username,
       mode    => '0755',
       content => template('mail_private/refresh-index.pl.erb');
+
+    "${install_dir}/update-pmc-dropdown.sh":
+      ensure  => 'present',
+      owner   => root,
+      group   => $username,
+      mode    => '0744',
+      content => template('mail_private/update-pmc-dropdown.sh.erb');
   }
 
 # execs
@@ -168,6 +179,13 @@ class mail_private (
       minute      => '43',
       hour        => '*/4',
       command     => "${install_dir}/gen-httpdconfig.sh",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+
+    'populate-pmc-index':
+      user        => root,
+      minute      => '13',
+      hour        => '*/4',
+      command     => "${install_dir}/update-pmc-dropdown.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
   }
 

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+SED=/bin/sed
+
+BASE=<%= @archives_www %>
+PRIVARCH=${BASE}/mod_mbox/
+
+## Now we will wipe out the old entries first (but only if file exists)
+if [ -f "${BASE}/pmc/index.html" ];then
+  ${SED} -i '/\<OPTION\ VALUE/d' ${BASE}/pmc/index.html
+fi
+
+# We are about to populate the dropdown list as used in https://mail-private.apache.org/pmc/
+for DIR in `ls -1 ${PRIVARCH}`; do 
+ echo ${DIR}
+ ${SED} -i s%"<!--PMCLISTS-END-->"%"<OPTION VALUE='/pmc/private-arch/${DIR}/'> ${DIR}\n<!--PMCLISTS-END-->"% ${BASE}/pmc/index.html
+done
+
