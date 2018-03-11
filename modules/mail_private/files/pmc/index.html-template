@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License. 
+-->
+<HTML 
+xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>Welcome! - The Apache Software Foundation</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"><LINK 
+media="screen, projection" href="/assets_files/compressed.css" type=text/css 
+rel=stylesheet><LINK media="screen, projection" href="/assets_files/style.css" 
+type=text/css rel=stylesheet><!--[if IE]><LINK media="screen, projection" 
+href="/assets_files/ie.css" type=text/css rel=stylesheet><![endif]--><LINK 
+title="announce@apache.org Archives" 
+href="http://mail-archives.apache.org/mod_mbox/www-announce/?format=atom" 
+type=application/atom+xml rel=alternate>
+<META content="The Apache Software Foundation" name=author>
+<META content=apache.AT.apache.DOT.org name=email>
+
+<style>
+
+.result {
+
+ -moz-border-radius:6px;
+ -webkit-border-radius:6px;
+ -moz-box-shadow:0 0 2px #ccc;
+ box-shadow: 0 0 2px #ccc;
+ -webkit-box-shadow: 0 0 2px #ccc;
+ background:#fcfcfc;
+ margin:8px;
+ padding:4px;
+ border:1px solid #ccc;
+ 
+}
+
+.rounded {
+
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  -moz-box-shadow:0 0 12px #ccc;
+  -webkit-box-shadow:0 0 3px #ccc;
+  background-color:#fff;
+  background-image:url(/assets_files/fieldset.gif);
+  background-position:left bottom;
+  background-repeat:repeat-x;
+  border:1px solid #BBBBBB;
+  margin-bottom:1em;
+  margin-top:1em;
+  padding:0.25em;
+}
+
+#query {
+  padding:0.50em;
+}
+
+#resultwrapper {
+  clear:both;
+  
+}
+.results {
+  display:none;
+}
+.results img {
+  margin:0.25em;
+}
+</style>
+<script type="text/javascript" src="/assets_files/jQuery.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+function JumpToIt(list) {
+    var newPage = list.options[list.selectedIndex].value
+    if (newPage != "None") {
+        location.href=newPage
+    }
+}
+//-->
+</SCRIPT>
+
+</HEAD>
+<BODY>
+<DIV class=navigation>
+<UL>
+  <LI><A title="About the Foundation" 
+  href="http://apache.org/foundation">Foundation</A> 
+  <LI><A title="Apache Projects" href="http://projects.apache.org/">Projects</A> 
+  <LI><A title="Apache People" href="http://people.apache.org/">People</A> 
+  <LI><A title="Get involved in Apache" 
+  href="http://apache.org/foundation/getinvolved.html">Get Involved</A> 
+  <LI><A title="Support the mission of Apache" 
+  href="http://apache.org/foundation/sponsorship.html">Support Apache</A> 
+  <LI class=dlink><A title="Download Apache projects" 
+  href="http://apache.org/dyn/closer.cgi">Download</A> 
+  <LI><A title="Foundation Blog" href="http://blogs.apache.org/foundation/">ASF 
+  Blog</A> </LI></UL></DIV>
+<DIV class=container>
+<HR class="space col">
+
+<DIV class=block>
+<DIV class="column span-24">
+<DIV id=header>
+<H1>The Apache Software Foundation<BR><SPAN class=alt><SMALL>Celebrating a 
+Decade of Open Source Leadership.</SMALL></SPAN></H1>
+<p>&nbsp;</p></DIV></DIV></DIV>
+<HR>
+
+<DIV class=block>
+
+<DIV class="column span-15 first append-1">
+
+<H3>Search Mailing List</H3>
+<!--
+<div id="searchbox" class="rounded">
+<div style="float:right;"><img src="/assets_files/27-0.gif" title="please wait" style="display:none" class="busy"></div>
+<div id="query"><label for="q">Search:</label>&nbsp;<input type="text" name="q" id="q"><button id="sub">Go!</button></div>
+<div id="resultwrapper" class="results"></div>
+<div id="resultnav" class="results"></div>
+</div>
+-->
+
+
+<!--PMCLISTS-START-->
+
+<FORM>
+<SELECT WIDTH=20 onChange="JumpToIt(this)">
+
+<!--PMCLISTS-END-->
+
+</SELECT>
+</FORM>
+
+</DIV>
+
+<DIV class="column span-8 last">
+<DIV class=block>
+<DIV class="nav column span-11">
+<DIV>
+<DIV class=menuheader><A href="http://projects.apache.org/">Apache 
+Projects</A></DIV>
+<UL>
+  <LI><A title="Apache Web Server (httpd)" href="http://httpd.apache.org/">HTTP 
+  Server</A> 
+  <LI><A title="Atom Publishing Protocol Implementation" 
+  href="http://abdera.apache.org/">Abdera</A> 
+  <LI><A title="Distributed Messaging System" 
+  href="http://activemq.apache.org/">ActiveMQ</A> 
+  <LI><A title="Java-based build tool" href="http://ant.apache.org/">Ant</A> 
+  <LI><A title="Apache Portable Runtime libraries" 
+  href="http://apr.apache.org/">APR</A> 
+  <LI><A title="Build Artifact Repository Manager" 
+  href="http://archiva.apache.org/">Archiva</A> 
+  <LI><A title="Simple and intuitive build system for Java applications" 
+  href="http://buildr.apache.org/">Buildr</A> 
+  <LI><A 
+  title="Spring based Integration Framework which implements the Enterprise Integration Patterns" 
+  href="http://camel.apache.org/">Camel</A> 
+  <LI><A title="User-friendly Java ORM with Tools" 
+  href="http://cayenne.apache.org/">Cayenne</A> 
+  <LI><A 
+  title="Web development framework: separation of concerns, component-based" 
+  href="http://cocoon.apache.org/">Cocoon</A> 
+  <LI><A title="Reusable Java components" 
+  href="http://commons.apache.org/">Commons</A> 
+  <LI><A title="Continuous Integration and Build Server" 
+  href="http://continuum.apache.org/">Continuum</A> 
+  <LI><A title="RESTful document database" 
+  href="http://couchdb.apache.org/">CouchDB</A> 
+  <LI><A title="Service Framework" href="http://cxf.apache.org/">CXF</A> 
+  <LI><A title="Database access" href="http://db.apache.org/">DB</A> 
+  <LI><A title="Apache Directory Server" 
+  href="http://directory.apache.org/">Directory</A> 
+  <LI><A 
+  title="Embeddable software libraries related to component and service management access" 
+  href="http://excalibur.apache.org/">Excalibur</A> 
+  <LI><A title="OSGi Framework and components." 
+  href="http://felix.apache.org/">Felix</A> 
+  <LI><A title="Aggregated multi-channel documentation, separation of concerns" 
+  href="http://forrest.apache.org/">Forrest</A> 
+  <LI><A title="Java2, Enterprise Edition (J2EE) container" 
+  href="http://geronimo.apache.org/">Geronimo</A> 
+  <LI><A title="Continuous integration of open source projects" 
+  href="http://gump.apache.org/">Gump</A> 
+  <LI><A title="Distributed computing platform" 
+  href="http://hadoop.apache.org/">Hadoop</A> 
+  <LI><A title="Open source implementation of Java SE" 
+  href="http://harmony.apache.org/">Harmony</A> 
+  <LI><A title="Java toolset of low level HTTP components" 
+  href="http://hc.apache.org/">HttpComponents</A> 
+  <LI><A title="SQL Data Mapper for Java and .NET" 
+  href="http://ibatis.apache.org/">iBATIS</A> 
+  <LI><A title="Shepherd for new projects" 
+  href="http://incubator.apache.org/">Incubator</A> 
+  <LI><A title="Content Repository for Java" 
+  href="http://jackrabbit.apache.org/">Jackrabbit</A> 
+  <LI><A title="Server-side Java" href="http://jakarta.apache.org/">Jakarta</A> 
+  <LI><A title="Java Apache Mail Enterprise Server" 
+  href="http://james.apache.org/">James</A> 
+  <LI><A title="The Innovation Laboratories of the Apache Software Foundation" 
+  href="http://labs.apache.org/">Labs</A> 
+  <LI><A title="Content Management System" 
+  href="http://lenya.apache.org/">Lenya</A> 
+  <LI><A title="Cross-language logging services" 
+  href="http://logging.apache.org/">Logging</A> 
+  <LI><A title="Search engine library" 
+  href="http://lucene.apache.org/">Lucene</A> 
+  <LI><A title="Java project management and comprehension tools" 
+  href="http://maven.apache.org/">Maven</A> 
+  <LI><A title="Multipurpose Infrastructure for Network Application" 
+  href="http://mina.apache.org/">Mina</A> 
+  <LI><A title="JavaServer(tm) Faces implementation and components" 
+  href="http://myfaces.apache.org/">MyFaces</A> 
+  <LI><A 
+  title="Orchestration Director Engine: Business Process Management (BPM), Process Orchestration and Workflow through service compositioni." 
+  href="http://ode.apache.org/">ODE</A> 
+  <LI><A title="Open for Business: enterprise automation software" 
+  href="http://ofbiz.apache.org/">OFBiz</A> 
+  <LI><A 
+  title="OpenEJB: a modular, configurable, and extendable EJB Container System and Server" 
+  href="http://openejb.apache.org/">OpenEJB</A> 
+  <LI><A title="OpenJPA: Object Relational Mapping for Java" 
+  href="http://openjpa.apache.org/">OpenJPA</A> 
+  <LI><A 
+  title="OpenWebBeans: JSR-299 Context and Dependency Injection for Java EE Platform Implementation" 
+  href="http://openwebbeans.apache.org/">OpenWebBeans</A> 
+  <LI><A title="Java library for working with PDF documents" 
+  href="http://pdfbox.apache.org/">PDFBox</A> 
+  <LI><A title="Dynamic websites using Perl" 
+  href="http://perl.apache.org/">Perl</A> 
+  <LI><A title="Rich Internet applications in Java" 
+  href="http://pivot.apache.org/">Pivot</A> 
+  <LI><A title="Java API for OLE 2 Compound Documents" 
+  href="http://poi.apache.org/">POI</A> 
+  <LI><A title="Portal technology" href="http://portals.apache.org/">Portals</A> 
+
+  <LI><A 
+  title="Multiple language implementation of the latest Advanced Message Queuing Protocol (AMQP)" 
+  href="http://qpid.apache.org/">Qpid</A> 
+  <LI><A title="Java blog server" href="http://roller.apache.org/">Roller</A> 
+  <LI><A title="XML Security in Java and C++" 
+  href="http://santuario.apache.org/">Santuario</A> 
+  <LI><A title="Enterprise Service Bus" 
+  href="http://servicemix.apache.org/">ServiceMix</A> 
+  <LI><A title="Web Framework for JCR Content Repositories" 
+  href="http://sling.apache.org/">Sling</A> 
+  <LI><A title="Mail filter to identify spam" 
+  href="http://spamassassin.apache.org/">SpamAssassin</A> 
+  <LI><A title="Apache C++ Standard Library" 
+  href="http://stdcxx.apache.org/">STDCXX</A> 
+  <LI><A title="Model 2 framework for building Java web applications" 
+  href="http://struts.apache.org/">Struts</A> 
+  <LI><A title="Enterprise Service Bus and Mediation Framework" 
+  href="http://synapse.apache.org/">Synapse</A> 
+  <LI><A title="Component-based Java Web Application Framework" 
+  href="http://tapestry.apache.org/">Tapestry</A> 
+  <LI><A title="Dynamic websites using TCL" 
+  href="http://tcl.apache.org/">TCL</A> 
+  <LI><A title="A templating framework for web application user interfaces" 
+  href="http://tiles.apache.org/">Tiles</A> 
+  <LI><A title="A Java Servlet and JSP Container" 
+  href="http://tomcat.apache.org/">Tomcat</A> 
+  <LI><A 
+  title="A Java Servlet Web Application Framework and associated component library" 
+  href="http://turbine.apache.org/">Turbine</A> 
+  <LI><A title="An SCA based Service Composition Framework" 
+  href="http://tuscany.apache.org/">Tuscany</A> 
+  <LI><A title="A Java Templating Engine" 
+  href="http://velocity.apache.org/">Velocity</A> 
+  <LI><A title="Component-based Java Web Application Framework." 
+  href="http://wicket.apache.org/">Wicket</A> 
+  <LI><A href="http://ws.apache.org/">Web Services</A> 
+  <LI><A title="XSLT processors in Java and C++" 
+  href="http://xalan.apache.org/">Xalan</A> 
+  <LI><A title="XML parsers in Java, C++ and Perl" 
+  href="http://xerces.apache.org/">Xerces</A> 
+  <LI><A title="XML solutions focused on the web" 
+  href="http://xml.apache.org/">XML</A> 
+  <LI><A title="XML-Java binding tool" 
+  href="http://xmlbeans.apache.org/">XMLBeans</A> 
+  <LI><A title="Conversion from XML to graphical output" 
+  href="http://xmlgraphics.apache.org/">XML Graphics</A> 
+  <LI><A title="Inactive project repository" 
+  href="http://attic.apache.org/">Attic</A> </LI></UL></DIV></DIV>
+<DIV class="nav column prepend-1 span-12 last">
+<H6><A href="http://apache.org/foundation/">Foundation</A></H6>
+<UL>
+  <LI><A href="http://apache.org/foundation/faq.html">FAQ</A> 
+  <LI><A href="http://apache.org/licenses/">Licenses</A> 
+  <LI><A href="http://apache.org/foundation/news.html">News</A> 
+  <LI><A href="http://apache.org/press/">Press Inquiries</A> 
+  <LI><A href="http://apache.org/foundation/records/">Public Records</A> 
+  <LI><A href="http://apache.org/foundation/sponsorship.html">Sponsorship</A> 
+  <LI><A href="http://apache.org/foundation/contributing.html">Donations</A> 
+  <LI><A href="http://apache.org/foundation/buy_stuff.html">Buy Stuff</A> 
+  <LI><A href="http://apache.org/foundation/thanks.html">Thanks</A> 
+  <LI><A href="http://apache.org/foundation/contact.html">Contact</A> </LI></UL>
+<H6>Foundation Projects</H6>
+<UL>
+  <LI><A title="Meetings of developers and users" 
+  href="http://apache.org/foundation/conferences.html">Conferences</A> 
+  <LI><A 
+  title="ASF Infrastructure: Operations and howto documents for PMCs and contributors" 
+  href="http://apache.org/dev/">Infrastructure</A> 
+  <LI><A title="Apache and the Java Community Process" 
+  href="http://apache.org/jcp/">JCP</A> 
+  <LI><A title="Legal Affairs" href="http://apache.org/legal/">Legal Affairs</A> 
+
+  <LI><A title="Public Relations" href="http://apache.org/press/">Public 
+  Relations</A> 
+  <LI><A title=Security href="http://apache.org/security/">Security</A> 
+  <LI><A title="Travel Assistance" href="http://apache.org/travel/">Travel 
+  Assistance</A> </LI></UL>
+<H6>How it works</H6>
+<UL>
+  <LI><A href="http://apache.org/foundation/how-it-works.html">Introduction</A> 
+  <LI><A 
+  href="http://apache.org/foundation/how-it-works.html#meritocracy">Meritocracy</A> 
+
+  <LI><A 
+  href="http://apache.org/foundation/how-it-works.html#structure">Structure</A> 
+  <LI><A href="http://apache.org/foundation/how-it-works.html#roles">Roles</A> 
+  <LI><A 
+  href="http://apache.org/foundation/how-it-works.html#management">Collaboration</A> 
+
+  <LI><A 
+  href="http://apache.org/foundation/how-it-works.html#infrastructure">Infrastructure</A> 
+
+  <LI><A 
+  href="http://apache.org/foundation/how-it-works.html#incubator">Incubator</A> 
+  <LI><A href="http://apache.org/press/">Public Relations Committee</A> 
+  <LI><A href="http://apache.org/foundation/how-it-works.html#other">Other 
+  entities</A> 
+  <LI><A href="http://apache.org/foundation/glossary.html">Glossary</A> 
+  <LI><A href="http://apache.org/foundation/voting.html">Voting</A> </LI></UL>
+<H6><A href="http://apache.org/foundation/getinvolved.html">Get 
+Involved</A></H6>
+<UL>
+  <LI><A href="http://apache.org/foundation/mailinglists.html">Mailing Lists</A> 
+
+  <LI><A href="http://apache.org/dev/version-control.html">Version Control</A> 
+  <LI><A href="http://apache.org/dev/">Developer Info</A> </LI></UL>
+<H6>Download</H6>
+<UL>
+  <LI><A href="http://apache.org/dyn/closer.cgi">from a mirror</A> </LI></UL>
+<H6>Community</H6>
+<UL>
+  <LI><A href="http://apache.org/memorials/">Memorials</A> </LI></UL>
+<H6>Related Sites</H6>
+<UL>
+  <LI><A title="Official Apache Conference" 
+  href="http://apachecon.com/">ApacheCon</A> 
+  <LI><A title="Apache Podcasts" href="http://feathercast.org/">Feathercast</A> 
+  <LI><A title="Apache Committers' Blogs" 
+  href="http://planet.apache.org/committers/">PlanetApache</A> 
+</LI></UL></DIV></DIV></DIV>
+<DIV class="column span-24 footer">
+<HR>
+
+<P>Copyright ? 2009 The Apache Software Foundation, Licensed under the <A 
+href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 
+2.0</A>.<BR>Apache and the Apache feather logo are trademarks of The Apache 
+Software Foundation.</P></DIV></DIV></DIV></BODY></HTML>

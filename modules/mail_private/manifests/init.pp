@@ -78,6 +78,12 @@ class mail_private (
     $pmc_www:
       ensure => 'directory',
       mode   => '0755';
+    "${pmc_www}/index.html-template":
+      ensure  => 'present',
+      owner   => $username,
+      group   => $username,
+      mode    => '0444',
+      source => 'puppet:///modules/mail_archives/pmc/index.html-template';
     $apache2_bin:
       ensure  => 'directory',
       require => Package['apache2'];
