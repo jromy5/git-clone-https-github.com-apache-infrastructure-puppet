@@ -1,0 +1,42 @@
+BODY {
+	TEXT-ALIGN: center
+}
+.container {
+	TEXT-ALIGN: left
+}
+* HTML .column {
+	OVERFLOW-X: hidden
+}
+.pull-1 {
+	POSITION: relative
+}
+.pull-2 {
+	POSITION: relative
+}
+.pull-3 {
+	POSITION: relative
+}
+.pull-4 {
+	POSITION: relative
+}
+.push-1 {
+	POSITION: relative
+}
+.push-2 {
+	POSITION: relative
+}
+.push-3 {
+	POSITION: relative
+}
+.push-4 {
+	POSITION: relative
+}
+UL {
+	POSITION: relative
+}
+OL {
+	POSITION: relative
+}
+LEGEND {
+	MARGIN-BOTTOM: 1.4em
+}
