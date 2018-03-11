@@ -67,7 +67,7 @@ else:
     print("Search for a repository to re-sync: <input type='text' placeholder='foo.git' onkeyup='filterRepos(this.value);'><br/>\r\n")
     print("<div id='list'></div><script>var repos = " + json.dumps(repos, indent = 2) + ";")
     print("""
-          func filterRepos(wat) {
+          function filterRepos(wat) {
             arr = []
             for (var repo in repos) {
                 if (repo.indexOf(wat) != -1) {
