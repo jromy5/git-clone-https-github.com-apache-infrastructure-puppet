@@ -83,7 +83,7 @@ class mail_private (
       owner   => $username,
       group   => $username,
       mode    => '0444',
-      source => 'puppet:///modules/mail_archives/pmc/index.html-template';
+      source => 'puppet:///modules/mail_private/pmc/index.html-template';
     $apache2_bin:
       ensure  => 'directory',
       require => Package['apache2'];
