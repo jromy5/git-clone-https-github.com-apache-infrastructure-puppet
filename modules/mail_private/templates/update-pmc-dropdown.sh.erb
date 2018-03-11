@@ -5,9 +5,11 @@ SED=/bin/sed
 BASE=<%= @archives_www %>
 PRIVARCH=${BASE}/mod_mbox/
 
-## Now we will wipe out the old entries first (but only if file exists)
+## Now we will wipe out the old entries first (but only if file exists. If not exist then create it from a template file.)
 if [ -f "${BASE}/pmc/index.html" ];then
   ${SED} -i '/\<OPTION\ VALUE/d' ${BASE}/pmc/index.html
+else
+  cp ${BASE}/pmc/index.html-template ${BASE}/pmc/index.html
 fi
 
 # We are about to populate the dropdown list as used in https://mail-private.apache.org/pmc/
