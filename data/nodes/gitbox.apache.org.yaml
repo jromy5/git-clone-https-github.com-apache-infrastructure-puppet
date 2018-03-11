@@ -199,7 +199,7 @@ gitbox::custom_fragment_443: |
       <Location /setup/ghmap.json>
         Require ip 62.210.60.243
       </Location>
-      <LocationMatch "^/setup/newrepo.*">
+      <LocationMatch "^/setup/(newrepo.*|resync.cgi)">
           AuthType Basic
           AuthName "ASF Committers"
           AuthBasicProvider ldap
