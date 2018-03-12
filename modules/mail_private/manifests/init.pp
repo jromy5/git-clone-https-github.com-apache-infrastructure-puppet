@@ -65,17 +65,17 @@ class mail_private (
     $archives_www:
       ensure => 'directory',
       mode   => '0755';
-    "${archives_www}/mod_mbox":
-      ensure => 'directory',
-      owner  => $username,
-      group  => root,
-      mode   => '0755';
-    "${archives_www}/mod_mbox/index.html":
+    "${archives_www}/index.html":
       ensure => 'present',
       owner  => $username,
       group  => $username,
       mode   => '0644',
       source => 'puppet:///modules/mail_private/index.html';
+    "${archives_www}/mod_mbox":
+      ensure => 'directory',
+      owner  => $username,
+      group  => root,
+      mode   => '0755';
     $assets:
       ensure  => 'directory',
       recurse => true,
