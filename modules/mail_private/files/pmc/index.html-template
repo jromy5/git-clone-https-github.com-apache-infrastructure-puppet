@@ -22,11 +22,11 @@
 xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Welcome! - The Apache Software Foundation</title>
 <meta http-equiv=Content-Type content="text/html; charset=utf-8">
-<link media="screen, projection" href="/assets_files/compressed.css" type=text/css
+<link media="screen, projection" href="/assets/compressed.css" type=text/css
 rel=stylesheet>
-<link media="screen, projection" href="/assets_files/style.css"
+<link media="screen, projection" href="/assets/style.css"
 type=text/css rel=stylesheet><!--[if IE]><LINK media="screen, projection"
-href="/assets_files/ie.css" type=text/css rel=stylesheet><![endif]-->
+href="/assets/ie.css" type=text/css rel=stylesheet><![endif]-->
 <link title="announce@apache.org Archives"
 href="http://mail-archives.apache.org/mod_mbox/www-announce/?format=atom"
 type=application/atom+xml rel=alternate>
@@ -56,7 +56,7 @@ type=application/atom+xml rel=alternate>
   -moz-box-shadow:0 0 12px #ccc;
   -webkit-box-shadow:0 0 3px #ccc;
   background-color:#fff;
-  background-image:url(/assets_files/fieldset.gif);
+  background-image:url(/assets/fieldset.gif);
   background-position:left bottom;
   background-repeat:repeat-x;
   border:1px solid #BBBBBB;
@@ -81,7 +81,7 @@ type=application/atom+xml rel=alternate>
 }
 </style>
 
-<script type="text/javascript" src="/assets_files/jQuery.js"></script>
+<script type="text/javascript" src="/assets/jQuery.js"></script>
 <script language="JavaScript">
 <!--
 function JumpToIt(list) {
@@ -127,7 +127,7 @@ Decade of Open Source Leadership.</SMALL></SPAN></h1>
 <h3>Search Mailing List</h3>
 <!--
 <div id="searchbox" class="rounded">
-<div style="float:right;"><img src="/assets_files/27-0.gif" title="please wait" style="display:none" class="busy"></div>
+<div style="float:right;"><img src="/assets/27-0.gif" title="please wait" style="display:none" class="busy"></div>
 <div id="query"><label for="q">Search:</label>&nbsp;<input type="text" name="q" id="q"><button id="sub">Go!</button></div>
 <div id="resultwrapper" class="results"></div>
 <div id="resultnav" class="results"></div>
