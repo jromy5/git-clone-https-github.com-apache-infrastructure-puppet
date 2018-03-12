@@ -444,15 +444,14 @@ vhosts_asf::vhosts::vhosts:
         AuthName "ASF Project Chairs Only!"
         AuthType Basic
         AuthBasicProvider ldap
-        AuthLDAPGroupAttribute member
-        AuthLDAPGroupAttributeIsDN on
+        AuthLDAPGroupAttribute Uid
+        AuthLDAPGroupAttributeIsDN off
         <RequireAny>
           # Hermes or valid chair/root
           Require ip 140.211.11.3
-          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-          Require ldap-group cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
-          Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
+          Require valid-user
         </RequireAny>
+        LuaHookAuthChecker /var/www/selfserve-portal/tools/authz.lua handler
       </LocationMatch>
       Alias /cgi-bin/ss.lua /var/www/git-setup/ss.lua
       ErrorDocument 401 /401.html
