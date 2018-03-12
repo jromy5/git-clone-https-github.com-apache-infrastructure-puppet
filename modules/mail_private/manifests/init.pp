@@ -70,6 +70,12 @@ class mail_private (
       owner  => $username,
       group  => root,
       mode   => '0755';
+    "${archives_www}/mod_mbox/index.html":
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0644';
+      source => 'puppet:///modules/mail_private/index.html';
     $assets:
       ensure  => 'directory',
       recurse => true,
