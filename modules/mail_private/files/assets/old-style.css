@@ -1,0 +1,72 @@
+A {
+	FONT-WEIGHT: bold; COLOR: #4b107e; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+.nav UL LI A {
+	COLOR: #c9123f
+}
+.nav UL LI A:hover {
+	COLOR: #000
+}
+BODY {
+	MARGIN-TOP: 0px; FONT-SIZE: 0.8em; BACKGROUND-COLOR: #f9f7ed
+}
+H1 SMALL {
+	FONT-SIZE: 0.7em
+}
+.alt {
+	COLOR: #7794aa
+}
+.blurb {
+	PADDING-TOP: 10px; BACKGROUND-COLOR: transparent! important
+}
+.col {
+	BACKGROUND-COLOR: #f9f7ed! important
+}
+.dlink {
+	
+}
+.container {
+	PADDING-LEFT: 10px; BACKGROUND: url(feather.gif) no-repeat 575px 10px
+}
+#sub .container {
+	BACKGROUND: url(feather-small.gif) no-repeat 645px 12px
+}
+#header H1 {
+	WIDTH: 600px
+}
+.highlight {
+	FONT-WEIGHT: bold; FONT-SIZE: 1.25em; COLOR: #333
+}
+.navigation {
+	BACKGROUND: #eee; PADDING-TOP: 8px; BORDER-BOTTOM: #ddd 1px solid; HEIGHT: 25px; TEXT-ALIGN: center
+}
+.navigation UL LI {
+	PADDING-RIGHT: 10px; DISPLAY: inline; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.search {
+	PADDING-TOP: 0px! important
+}
+.searchsub {
+	PADDING-BOTTOM: 10px
+}
+.search INPUT[type=text] {
+	PADDING-RIGHT: 1px; MARGIN-TOP: 0px! important; PADDING-LEFT: 1px; FONT-SIZE: 1.1em; PADDING-BOTTOM: 1px; WIDTH: 15em; COLOR: #aaa; PADDING-TOP: 1px
+}
+.content IMG {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN-LEFT: 10px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 3px; BORDER-BOTTOM: #ccc 1px solid; BACKGROUND-COLOR: white
+}
+.content H4 {
+	FONT-WEIGHT: bold
+}
+.noborder {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.source {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; FONT-SIZE: smaller; PADDING-BOTTOM: 5px; MARGIN: 0px 0px 10px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #ccc 1px solid; WHITE-SPACE: pre
+}
+.sshkey {
+	FONT-SIZE: 0.75em
+}

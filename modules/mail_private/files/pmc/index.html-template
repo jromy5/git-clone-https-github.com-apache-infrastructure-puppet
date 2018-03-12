@@ -24,7 +24,7 @@ xmlns="http://www.w3.org/1999/xhtml">
 <meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <link media="screen, projection" href="/assets/compressed.css" type=text/css
 rel=stylesheet>
-<link media="screen, projection" href="/assets/style.css"
+<link media="screen, projection" href="/assets/old-style.css"
 type=text/css rel=stylesheet><!--[if IE]><LINK media="screen, projection"
 href="/assets/ie.css" type=text/css rel=stylesheet><![endif]-->
 <link title="announce@apache.org Archives"
