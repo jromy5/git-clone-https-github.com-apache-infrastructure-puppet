@@ -74,7 +74,7 @@ class mail_private (
       ensure => 'present',
       owner  => $username,
       group  => $username,
-      mode   => '0644';
+      mode   => '0644',
       source => 'puppet:///modules/mail_private/index.html';
     $assets:
       ensure  => 'directory',
