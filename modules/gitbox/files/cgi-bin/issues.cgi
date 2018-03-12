@@ -144,6 +144,17 @@ def issueClosed(payload):
     if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
         if not obj['head']['repo']['full_name'].startswith("apache/"):
             txt = requests.get(obj['diff_url']).text
+            addendum = None
+            # No greater than 5MB or 20,000 lines, whichever comes first.
+            if len(txt) > 5000000:
+                txt = txt[:5000000]
+                addendum = "This diff was greater than 5MB in size, and has been truncated"
+            lines = txt.split("\n")
+            if len(lines) > 20000:
+                txt = "\n".join(lines[:20000])
+                addendum = "This diff was longer than 20,000 lines, and has been truncated"
+            if addendum:
+                txt += "\n\n  (%s...)\n" % addendum
             fmt['prdiff'] = """
 As this is a foreign pull request (from a fork), the diff is supplied
 below (as it won't show otherwise due to GitHub magic):
