@@ -251,14 +251,14 @@ label {
 }
 
 .ss-wrap {
-    width: 1040px;
+    width: 1140px;
     text-align: center;
     margin: 0px auto;
 }
 
 .ss-selector {
     margin: 10px;
-    width: 180px;
+    width: 160px;
     float: left;
     background: #129D4E;
     border:  1px solid #FFF;
@@ -269,9 +269,13 @@ label {
 }
 
 .ss-selector img {
-    width: 160px !important;
-    height: 160px !important;
+    width: 120px !important;
+    height: 120px !important;
     margin: 5px;
+}
+
+.ss-selector > h4 {
+  font-size: 0.8rem;
 }
 
 .ss-selector:hover {
