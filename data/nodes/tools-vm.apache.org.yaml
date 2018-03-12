@@ -441,7 +441,7 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch "^/(cgi-bin|mail|jira|confluence|git)">
         Options +ExecCGI -MultiViews +FollowSymLinks
         AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthName "ASF Project Chairs Only!"
+        AuthName "ASF Members and Project Chairs Only!"
         AuthType Basic
         AuthBasicProvider ldap
         AuthLDAPGroupAttribute Uid
