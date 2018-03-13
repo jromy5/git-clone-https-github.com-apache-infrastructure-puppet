@@ -200,7 +200,7 @@ class mail_private (
       command     => "${install_dir}/update-pmc-dropdown.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
 
-    'populate-pmc-index':
+    'refresh-mail-lists':
       user        => modmbox,
       minute      => '20',
       command     => "${install_dir}/refresh-index.pl | grep -v 'Reading List-Post header from .* failed' > /dev/null",
