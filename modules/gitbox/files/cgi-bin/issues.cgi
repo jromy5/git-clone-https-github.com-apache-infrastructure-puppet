@@ -70,13 +70,15 @@ To: %s
 Subject: %s
 Message-ID: %s
 Date: %s
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
 %s
 
 With regards,
 Apache Git Services
 """ % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), email.utils.formatdate(), message)
-    msg = msg.encode('ascii', errors='replace')
+    msg = msg.encode('utf-8', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
         smtpObj.sendmail(sender, receivers, msg)
