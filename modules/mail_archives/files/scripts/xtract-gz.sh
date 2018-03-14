@@ -54,11 +54,14 @@ fi
 curdir=`pwd`;
 
 for extract in $name; do
-  if [ $overwrite == "y" ] || [ ! -f $extract ]; then
+  size=`stat -c%s $extract.gz`
+  if [ $overwrite == "y" ] || [ ! -f $extract ] && [ $size != 27 ]; then
     $ZCAT $extract.gz > $extract;
     echo "$extract has been extracted (and overwritten if already existed)";
-  elif  [ -f $extract ]; then
-    echo "$extract exists and so was skipped from extraction";
+  elif  [ -f $extract ] && [ $size != 27 ]; then
+    echo "$extract exists and is not empty and so was skipped from extraction";
+  elif [ $size == 27 ]; then
+    echo "gz archive is empty so not extracting";
   fi
     if [ -L $extract.mbox ];then
       echo "Symlink exists, skipping ...";
@@ -66,6 +69,7 @@ for extract in $name; do
       echo "Creating symlink to $extract.mbox ...";
       ln -s $curdir/$extract $extract.mbox;
     fi
+    echo "Size = $size";
 done
 
 echo "All Done: You might want to run the mod-mbox-util script now, then re-index.";
