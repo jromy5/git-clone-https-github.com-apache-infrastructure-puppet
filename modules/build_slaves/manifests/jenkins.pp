@@ -264,6 +264,14 @@ class build_slaves::jenkins (
     line  => 'USERGROUPS_ENAB no',
     match => '^USERGROUPS_ENAB.*'
   }
+  
+  file { '/usr/local/asfpackages/kill-old-docker.sh':
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0755',
+    source  => 'puppet:///modules/build_slaves/kill-old-docker.sh',
+  }
 
   file {
     "/home/${build_slaves::username}/tools/":
@@ -418,6 +426,13 @@ class build_slaves::jenkins (
     'docker-cleanup-weekly':
       hour        => '20',
       command     => '/usr/bin/docker system prune -a -f -filter "until=168h"',
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+  }
+
+  cron {
+    'docker-kill-old-containers':
+      hour        => '6',
+      command     => '/bin/bash /usr/local/asfpackages/kill-old-docker.sh',
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
   }
 
