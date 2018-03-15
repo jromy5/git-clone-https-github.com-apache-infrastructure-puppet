@@ -684,7 +684,6 @@ projects_role = rw
 
 [/comdev/site]
 @committers = rw
-@ea = rw
 
 [/commons]
 @committers = rw
@@ -1149,7 +1148,6 @@ buildbot = rw
 [/infrastructure/financials]
 # Copy permissions from pit:/financials if needed
 @member = rw
-@ea = rw
 
 [/infrastructure/site]
 @committers = rw
