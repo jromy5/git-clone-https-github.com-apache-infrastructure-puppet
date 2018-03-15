@@ -86,17 +86,6 @@ vhosts_asf::vhosts::vhosts:
 
       AddHandler mbox-handler .mbox
 
-      # infra-root only:
-      <Location />
-          AuthType Basic
-          AuthName "Apache infrastructure root only during testing"
-          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPGroupAttribute member
-          AuthBasicProvider ldap
-          AuthLDAPGroupAttributeIsDN on
-          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-      </Location>
-
       <Macro MacroMboxPMC $dir $pmc $cn>
       <LocationMatch ^/pmc/private-arch/$dir(.*)>
         <RequireAll>
