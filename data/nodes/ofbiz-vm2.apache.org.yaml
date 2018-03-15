@@ -6,6 +6,7 @@ classes:
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - apache::mod::a2enmod
   - letsencrypt
   - vhosts_asf::vhosts
   - ofbiz_pvm_asf
@@ -92,6 +93,8 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /.well-known !
       ProxyPass / ajp://localhost:8009/
       ProxyPassReverse / ajp://localhost:8009/
+      Header set Access-Control-Allow-Origin "https://localhost:8443"
+      Header set Access-Control-Allow-Headers "Authorization"
 
 
 #  settings for the demo against the release of latest OFBiz release branch
