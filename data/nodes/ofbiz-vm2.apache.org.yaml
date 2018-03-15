@@ -2,11 +2,11 @@
 classes:
   - default_pvm_asf
   - apache
+  - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_ajp
   - apache::mod::proxy_http
   - apache::mod::rewrite
-  - apache::mod::a2enmod
   - letsencrypt
   - vhosts_asf::vhosts
   - ofbiz_pvm_asf
