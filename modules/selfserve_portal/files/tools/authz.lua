@@ -19,7 +19,7 @@ function isChair(uid)
     local ldapdata = io.popen( ldapquery )
     local data = ldapdata:read("*a")
     ldapdata:close()
-    for match in data:gmatch("member: ([-a-z0-9_.]+)") do
+    for match in data:gmatch("member: uid=([-a-z0-9_.]+)") do
         -- Found them?
         if match == uid then
            return true
