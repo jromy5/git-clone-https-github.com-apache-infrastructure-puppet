@@ -46,9 +46,9 @@ for DIR in `ls -1 ${BASE}`; do
      AuthBasicProvider ldap
      AuthName "${PMC} - PMC members only."
      AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-     AuthLDAPGroupAttribute member
+     AuthLDAPGroupAttribute owner
      AuthLDAPRemoteUserIsDN On
-     Require ldap-group cn=${LDAPCN},ou=pmc,ou=committees,ou=groups,dc=apache,dc=org
+     Require ldap-group cn=${LDAPCN},ou=project,ou=groups,dc=apache,dc=org
    </RequireAll>
 </LocationMatch>
 
