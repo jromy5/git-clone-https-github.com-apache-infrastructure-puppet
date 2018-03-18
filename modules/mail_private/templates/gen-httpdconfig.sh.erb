@@ -28,7 +28,7 @@ for DIR in `ls -1 ${BASE}`; do
   PMC=`echo ${DIR} | cut -f1 -d'-'`
   echo ${PMC};
 
-  LDAPCN=`ldapsearch -x -LLL -b ou=pmc,ou=committees,ou=groups,dc=apache,dc=org cn=${PMC} cn | grep cn: | cut -f2 -d ' '`
+  LDAPCN=`ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org cn=${PMC} cn | grep cn: | cut -f2 -d ' '`
 
    if [ ! -x ${LDAPCN} ]; then
     echo "* ${DIR}... has an LDAP CN - ${LDAPCN}";
