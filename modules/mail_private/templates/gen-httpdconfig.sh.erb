@@ -28,6 +28,8 @@ for DIR in `ls -1 ${BASE}`; do
   PMC=`echo ${DIR} | cut -f1 -d'-'`
   if [ $PMC == "whimsical" ];then
     PMC="whimsy"
+  elif [ $PMC == 'hc" ];then
+    PMC="httpcomponents"
   fi
   echo ${PMC};
 
