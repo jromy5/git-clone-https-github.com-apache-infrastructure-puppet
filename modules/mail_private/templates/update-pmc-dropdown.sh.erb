@@ -12,9 +12,30 @@ else
   cp ${BASE}/pmc/index.html-template ${BASE}/pmc/index.html
 fi
 
+# Get a list of all the valid PMCs - space separated including start and finish
+LDAPLIST=" $(ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org cn=* cn | sed -n -e 's/cn: //p' | xargs) "
+
 # We are about to populate the dropdown list as used in https://mail-private.apache.org/pmc/
 for DIR in `ls -1 ${PRIVARCH}`; do 
- echo ${DIR}
- ${SED} -i s%"<!--PMCLISTS-END-->"%"<OPTION VALUE='/pmc/private-arch/${DIR}/'> ${DIR}\n<!--PMCLISTS-END-->"% ${BASE}/pmc/index.html
+  echo ${DIR}
+  PMC=`echo ${DIR} | cut -f1 -d'-'`
+  case $PMC in
+    hc)
+     PMC=httpcomponents
+     ;;
+    empire)
+     PMC=empire-db
+     ;;
+    community)
+      PMC=comdev
+      ;;
+    whimsical)
+      PMC=whimsy
+      ;;
+  esac
+  # Is the PMC in the list?
+  if [[ $LDAPLIST == *" $PMC "* ]]; then
+    ${SED} -i s%"<!--PMCLISTS-END-->"%"<OPTION VALUE='/pmc/private-arch/${DIR}/'> ${DIR}\n<!--PMCLISTS-END-->"% ${BASE}/pmc/index.html
+  fi
 done
 
