@@ -39,6 +39,10 @@ class base (
         matches => ['*.deb'],
   }
 
+  file { '/etc/apt/sources.list.d/vmware-tools.list':
+    ensure => absent,
+  }
+
   # hiera_hash+create_resources used to instantiate puppet "defines"
   # via hiera/yaml, since there is no associated class.
 
