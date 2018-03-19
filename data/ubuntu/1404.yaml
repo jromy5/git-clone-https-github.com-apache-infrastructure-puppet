@@ -167,7 +167,7 @@ apt::sources:
       src: false
   'sbt':
     location: 'https://dl.bintray.com/sbt/debian'
-    repos: 'dependencies'
+    repos: 'main'
     key:
       id: '2EE0EA64E40A89B84B2DF73499E82A75642AC823'
       server: 'keyserver.ubuntu.com'
