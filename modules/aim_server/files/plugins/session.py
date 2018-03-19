@@ -90,7 +90,7 @@ class AimChat(object):
         requests.post('https://api.hipchat.com/v1/rooms/message', data = payload)
 
     def notifyNew(self, obj):
-            msg = "A new %s request (%s) for %s by %s has been filed.<br/>" % (obj['type'], obj['id'], obj['project'],obj['creator'])
+            msg = "A %s request (%s) for %s by %s has been filed.<br/>" % (obj['type'], obj['id'], obj['project'],obj['creator'])
             color = 'green'
             diff = obj.get('diff', '')
             if diff:
