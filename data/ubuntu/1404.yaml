@@ -502,6 +502,7 @@ build_slaves::distro_packages:
   - re2c
   - ruby
   - ruby-dev
+  - sbt
   - sharutils
   - shellcheck
   - sloccount
