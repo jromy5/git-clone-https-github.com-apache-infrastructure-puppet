@@ -165,6 +165,15 @@ apt::sources:
     include:
       deb: true
       src: false
+  'sbt':
+    location: 'https://dl.bintray.com/sbt/debian'
+    repos: 'dependencies'
+    key:
+      id: '2EE0EA64E40A89B84B2DF73499E82A75642AC823'
+      server: 'keyserver.ubuntu.com'
+    include:
+      deb: true
+      src: false
   'vmware-tools':
     location: 'http://packages.vmware.com/packages/ubuntu'
     release: 'trusty'
