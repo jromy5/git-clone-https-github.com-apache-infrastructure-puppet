@@ -175,16 +175,6 @@ apt::sources:
     include:
       deb: true
       src: false
-  'vmware-tools':
-    location: 'http://packages.vmware.com/packages/ubuntu'
-    release: 'trusty'
-    repos: 'main'
-    key:
-      id: 'DF7A3D29490F686342CDA1EA15FC30A204BBAA7B'
-      server: 'pool.sks-keyservers.net'
-    include:
-      deb: true
-      src: false
 
 apt::force:
   'orthrus':
