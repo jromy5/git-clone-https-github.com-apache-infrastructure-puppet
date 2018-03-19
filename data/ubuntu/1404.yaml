@@ -135,6 +135,16 @@ apt::sources:
     include:
       deb: true
       src: false
+  'nodesource-6':
+    location: 'https://deb.nodesource.com/node_6.x'
+    release: 'trusty'
+    repos: 'main'
+    key:
+      id: '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280'
+      server: 'pool.sks-keyservers.net'
+    include:
+      deb: true
+      src: false
   'puppetlabs':
     location: 'https://apt.puppetlabs.com'
     release: 'trusty'
@@ -155,22 +165,21 @@ apt::sources:
     include:
       deb: true
       src: false
+  'sbt':
+    location: 'https://dl.bintray.com/sbt/debian'
+    repos: 'dependencies'
+    key:
+      id: '2EE0EA64E40A89B84B2DF73499E82A75642AC823'
+      server: 'keyserver.ubuntu.com'
+    include:
+      deb: true
+      src: false
   'vmware-tools':
     location: 'http://packages.vmware.com/packages/ubuntu'
     release: 'trusty'
     repos: 'main'
     key:
       id: 'DF7A3D29490F686342CDA1EA15FC30A204BBAA7B'
-      server: 'pool.sks-keyservers.net'
-    include:
-      deb: true
-      src: false
-  'nodesource-6':
-    location: 'https://deb.nodesource.com/node_6.x'
-    release: 'trusty'
-    repos: 'main'
-    key:
-      id: '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280'
       server: 'pool.sks-keyservers.net'
     include:
       deb: true
@@ -493,6 +502,7 @@ build_slaves::distro_packages:
   - re2c
   - ruby
   - ruby-dev
+  - sbt
   - sharutils
   - shellcheck
   - sloccount
