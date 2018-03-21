@@ -96,6 +96,7 @@ vhosts_asf::vhosts::vhosts:
             AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
             <RequireAll>
               AuthLDAPGroupAttribute owner
+              AuthLDAPGroupAttributeIsDN On
               AuthLDAPRemoteUserIsDN On
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
