@@ -90,20 +90,16 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch ^/pmc/private-arch/$dir(.*)>
         ## Either PMC member or ASF member
         <RequireAny>
+            AuthType Basic
+            AuthBasicProvider ldap
+            AuthName "$pmc - PMC or ASF members"
+            AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
             <RequireAll>
-              AuthType Basic
-              AuthBasicProvider ldap
-              AuthName "$pmc - PMC members only."
-              AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
               AuthLDAPGroupAttribute owner
               AuthLDAPRemoteUserIsDN On
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
             <RequireAll>
-              AuthType Basic
-              AuthBasicProvider ldap
-              AuthName "ASF Members only."
-              AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
               AuthLDAPGroupAttribute memberUid
               AuthLDAPGroupAttributeIsDN Off
               Require ldap-group cn=member,ou=groups,dc=apache,dc=org
