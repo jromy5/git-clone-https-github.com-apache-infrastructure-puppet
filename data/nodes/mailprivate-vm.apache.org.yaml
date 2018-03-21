@@ -105,7 +105,7 @@ vhosts_asf::vhosts::vhosts:
               AuthName "ASF Members only."
               AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
               AuthLDAPGroupAttribute memberUid
-              AuthLDAPRemoteUserIsDN Off
+              AuthLDAPGroupAttributeIsDN Off
               Require ldap-group cn=member,ou=groups,dc=apache,dc=org
             </RequireAll>
         <RequireAny>
@@ -121,7 +121,7 @@ vhosts_asf::vhosts::vhosts:
           AuthName "ASF Members only."
           AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
-          AuthLDAPRemoteUserIsDN Off
+          AuthLDAPGroupAttributeIsDN Off
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
       </LocationMatch>
