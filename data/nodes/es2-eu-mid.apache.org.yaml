@@ -34,8 +34,6 @@ elasticsearch::instances:
     datadir: '/x1/elastic/db/'
     config:
       node.name: 'es2-eu-mid'
-      index.number_of_shards: 2
-      index.number_of_replicas: 0
       network.host: '0.0.0.0'
       discovery.zen.ping.unicast.hosts:
         - 94.130.237.55
