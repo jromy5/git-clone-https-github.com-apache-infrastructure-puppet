@@ -95,6 +95,7 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / ajp://localhost:8009/
       Header set Access-Control-Allow-Origin "https://localhost:8443"
       Header set Access-Control-Allow-Headers "Authorization"
+      Header set Access-Control-Allow-Credentials "true"
 
 
 #  settings for the demo against the release of latest OFBiz release branch
