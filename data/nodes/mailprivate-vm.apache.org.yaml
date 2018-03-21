@@ -108,7 +108,7 @@ vhosts_asf::vhosts::vhosts:
               AuthLDAPGroupAttributeIsDN Off
               Require ldap-group cn=member,ou=groups,dc=apache,dc=org
             </RequireAll>
-        <RequireAny>
+        </RequireAny>
       </LocationMatch>
       </Macro>
 
