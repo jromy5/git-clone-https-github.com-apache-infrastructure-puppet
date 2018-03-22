@@ -65,6 +65,8 @@ committers={ldap:cn=committers,ou=groups,dc=apache,dc=org;attr=memberUid}
 # refers to them.
 
 ### marker for tlpreq to add new entries ###
+ace={ldap:cn=ace,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+ace-pmc={reuse:pit-authorization:ace-pmc}
 activemq={ldap:cn=activemq,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 activemq-pmc={reuse:pit-authorization:activemq-pmc}
 accumulo={ldap:cn=accumulo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
