@@ -51,6 +51,14 @@ vhosts_asf::modules::modules:
   macro:
     name: 'macro'
 
+# TODO this needs to be added to the config file outside any virtual host
+#
+#    <AuthzProviderAlias ldap-group ldap-group-member cn=member,ou=groups,dc=apache,dc=org>
+#          AuthLDAPurl AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+#          AuthLDAPGroupAttribute memberUid
+#          AuthLDAPGroupAttributeIsDN Off
+#    </AuthzProviderAlias>
+
 vhosts_asf::vhosts::vhosts:
 
   mail-private:
@@ -101,9 +109,7 @@ vhosts_asf::vhosts::vhosts:
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
             <RequireAll>
-              AuthLDAPGroupAttribute memberUid
-              AuthLDAPGroupAttributeIsDN Off
-              Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+              Require ldap-group-member
             </RequireAll>
         </RequireAny>
       </LocationMatch>
