@@ -1128,7 +1128,7 @@ buildbot = rw
 @accumulo = rw
 
 [/websites/production/ace]
-@ace = rw
+@attic-pmc = rw
 
 [/websites/production/activemq]
 buildbot = rw
