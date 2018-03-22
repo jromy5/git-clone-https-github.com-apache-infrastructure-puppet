@@ -4,6 +4,8 @@
 committers={reuse:asf-authorization:committers}
 
 ### marker for tlpreq to add new entries ###
+ace={reuse:asf-authorization:ace}
+ace-pmc={ldap:cn=ace,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 activemq={reuse:asf-authorization:activemq}
 activemq-pmc={ldap:cn=activemq,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 accumulo={reuse:asf-authorization:accumulo}
