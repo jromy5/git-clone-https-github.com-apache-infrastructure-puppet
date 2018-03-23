@@ -469,7 +469,6 @@ infrastructure-root={reuse:pit-authorization:infrastructure-root}
 member={reuse:pit-authorization:member}
 pmc-chairs={reuse:pit-authorization:pmc-chairs}
 security={reuse:pit-authorization:security}
-security-pmc={reuse:pit-authorization:security-pmc}
 svnadmins={reuse:pit-authorization:svnadmins}
 
 [/]
