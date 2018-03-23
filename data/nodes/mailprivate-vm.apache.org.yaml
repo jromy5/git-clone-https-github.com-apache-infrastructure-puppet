@@ -109,10 +109,10 @@ vhosts_asf::vhosts::vhosts:
               AuthLDAPRemoteUserIsDN On
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
-# TODO: enable this section when AuthzProviderAlias has been set up (see above)
-#            <RequireAll>
-#              Require ldap-group-member
-#            </RequireAll>
+            # TODO: enable this section when AuthzProviderAlias has been set up (see above)
+            #            <RequireAll>
+            #              Require ldap-group-member
+            #            </RequireAll>
         </RequireAny>
       </LocationMatch>
       </Macro>
