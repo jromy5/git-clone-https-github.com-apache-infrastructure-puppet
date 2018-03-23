@@ -1,0 +1,15 @@
+---
+classes:
+  - build_slaves::jenkins
+
+python::python_pips:
+  pelican:
+    ensure: present
+  Sphinx:
+    ensure: present
+  blockdiag:
+    ensure: present
+
+base::basepackages:
+  - 'python-seqdiag'
+  - 'python-nwdiag'
