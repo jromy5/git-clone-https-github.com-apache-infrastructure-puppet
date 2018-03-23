@@ -65,7 +65,7 @@ cron:
     minute: '28'
     hour: '0'
     weekday: '7'
-    command: '/usr/bin/find /tmp -name "mailinglist-*.json.lock" -atime +7 > /dev/null 2>&1'
+    command: '/usr/bin/find /tmp -name "mailinglist-*.json.lock" -atime +7 -delete > /dev/null 2>&1'
   
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
