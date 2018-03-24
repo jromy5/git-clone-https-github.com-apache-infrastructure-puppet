@@ -51,14 +51,16 @@ vhosts_asf::modules::modules:
   macro:
     name: 'macro'
 
-# TODO this needs to be added to the config file outside any virtual host
-# See below for other section that needs to be enabled when this has been done
-#
-#    <AuthzProviderAlias ldap-group ldap-group-member cn=member,ou=groups,dc=apache,dc=org>
-#          AuthLDAPurl AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-#          AuthLDAPGroupAttribute memberUid
-#          AuthLDAPGroupAttributeIsDN Off
-#    </AuthzProviderAlias>
+# define custom config file to check for ASF membership
+# This is needed to allow the use of conflicting LDAP settings within a RequireAny block 
+apache::custom_config:
+  authz_ldap_group_member:
+    content: |
+      <AuthzProviderAlias ldap-group ldap-group-member cn=member,ou=groups,dc=apache,dc=org>
+         AuthLDAPurl AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+         AuthLDAPGroupAttribute memberUid
+         AuthLDAPGroupAttributeIsDN Off
+      </AuthzProviderAlias>
 
 vhosts_asf::vhosts::vhosts:
 
@@ -101,7 +103,7 @@ vhosts_asf::vhosts::vhosts:
         <RequireAny>
             AuthType Basic
             AuthBasicProvider ldap
-            AuthName "$pmc - PMC or ASF members"
+            AuthName "$pmc - PMC or ASF members."
             AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
             <RequireAll>
               AuthLDAPGroupAttribute owner
@@ -109,10 +111,10 @@ vhosts_asf::vhosts::vhosts:
               AuthLDAPRemoteUserIsDN On
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
-            # TODO: enable this section when AuthzProviderAlias has been set up (see above)
-            #            <RequireAll>
-            #              Require ldap-group-member
-            #            </RequireAll>
+           <RequireAll>
+             # uses authz_ldap_group_member custom config
+             Require ldap-group-member
+           </RequireAll>
         </RequireAny>
       </LocationMatch>
       </Macro>
