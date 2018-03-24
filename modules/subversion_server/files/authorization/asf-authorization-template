@@ -390,8 +390,6 @@ synapse-pmc={reuse:pit-authorization:synapse-pmc}
 syncope={ldap:cn=syncope,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 syncope-pmc={reuse:pit-authorization:syncope-pmc}
 systemml={ldap:cn=systemml,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-# There is no tac unix group; ensure tac is published on people.a.o
-tac-pmc={reuse:pit-authorization:tac-pmc}
 tajo={ldap:cn=tajo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tajo-pmc={reuse:pit-authorization:tajo-pmc}
 tapestry={ldap:cn=tapestry,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -469,7 +467,6 @@ infrastructure-root={reuse:pit-authorization:infrastructure-root}
 member={reuse:pit-authorization:member}
 pmc-chairs={reuse:pit-authorization:pmc-chairs}
 security={reuse:pit-authorization:security}
-security-pmc={reuse:pit-authorization:security-pmc}
 svnadmins={reuse:pit-authorization:svnadmins}
 
 [/]
