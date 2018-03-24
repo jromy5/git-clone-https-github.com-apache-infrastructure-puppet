@@ -230,7 +230,7 @@ class build_slaves::jenkins (
     content => template('build_slaves/npmrc.erb')
   }
 
-    if ($::fqdn == 'asf920.gq1.ygridcore.net') or ($::fqdn == 'asf919.gq1.ygridcore.net'){
+    if ($::fqdn == 'jenkins-websites1.apache.org'){
       file { "/home/${build_slaves::username}/.git-credentials":
         ensure  => present,
         path    => "/home/${build_slaves::username}/.git-credentials",
