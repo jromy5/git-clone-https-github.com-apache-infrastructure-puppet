@@ -57,7 +57,7 @@ apache::custom_config:
   authz_ldap_group_member:
     content: |
       <AuthzProviderAlias ldap-group ldap-group-member cn=member,ou=groups,dc=apache,dc=org>
-         AuthLDAPurl AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+         AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
          AuthLDAPGroupAttribute memberUid
          AuthLDAPGroupAttributeIsDN Off
       </AuthzProviderAlias>
