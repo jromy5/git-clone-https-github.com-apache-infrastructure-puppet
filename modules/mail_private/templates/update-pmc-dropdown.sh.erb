@@ -19,6 +19,9 @@ LDAPLIST=" $(ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org cn=* cn
 for DIR in `ls -1 ${PRIVARCH}`; do 
   echo ${DIR}
   PMC=`echo ${DIR} | cut -f1 -d'-'`
+  # This should agree with the list in gen-httpdconfig.sh.erb
+  # Note: no need to check for incubator-x-* here:
+  # there is an incubator project group so all its entries are needed.
   case $PMC in
     hc)
      PMC=httpcomponents
@@ -28,6 +31,9 @@ for DIR in `ls -1 ${PRIVARCH}`; do
      ;;
     community)
       PMC=comdev
+      ;;
+    travel)
+      PMC=tac
       ;;
     whimsical)
       PMC=whimsy
