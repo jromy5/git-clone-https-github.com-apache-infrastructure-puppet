@@ -31,7 +31,6 @@ cat <<EOF
 * = r
 
 [/release/META]
-@infrastructure-root = rw
 henkp = rw
 
 [groups]
