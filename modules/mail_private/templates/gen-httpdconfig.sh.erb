@@ -42,6 +42,7 @@ for DIR in `ls -1 ${BASE}`; do
       ;;
   esac
 
+  # This should agree with the list in update-pmc-dropdown.sh.erb
   case $PMC in
     hc)
       PMC=httpcomponents
@@ -51,6 +52,9 @@ for DIR in `ls -1 ${BASE}`; do
       ;;
     community)
       PMC=comdev
+      ;;
+    travel)
+      PMC=tac
       ;;
     whimsical)
       PMC=whimsy
