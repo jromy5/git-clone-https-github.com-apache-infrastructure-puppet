@@ -1362,7 +1362,7 @@ buildbot = rw
 [/maven]
 @maven = rw
 
-[/maven/archetype]
+[/maven/(archetype|archetypes)]
 * = r
 
 [/maven/core-integration-testing]
