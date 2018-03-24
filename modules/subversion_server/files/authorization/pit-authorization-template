@@ -334,7 +334,6 @@ velocity={reuse:asf-authorization:velocity}
 velocity-pmc={ldap:cn=velocity,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 vxquery={reuse:asf-authorization:vxquery}
 vxquery-pmc={ldap:cn=vxquery,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-wave={reuse:asf-authorization:wave}
 whimsy={reuse:asf-authorization:whimsy}
 whimsy-pmc={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 wicket={reuse:asf-authorization:wicket}
@@ -1444,9 +1443,6 @@ buildbot = rw
 
 [/websites/production/vcl]
 @vcl = rw
-
-[/websites/production/wave]
-@wave = rw
 
 [/websites/production/wink]
 @attic-pmc = rw

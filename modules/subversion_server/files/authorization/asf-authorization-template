@@ -429,7 +429,6 @@ velocity={ldap:cn=velocity,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 velocity-pmc={reuse:pit-authorization:velocity-pmc}
 vxquery={ldap:cn=vxquery,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 vxquery-pmc={reuse:pit-authorization:vxquery-pmc}
-wave={ldap:cn=wave,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy={ldap:cn=whimsy,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 whimsy-pmc={reuse:pit-authorization:whimsy-pmc}
 wicket={ldap:cn=wicket,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1119,7 +1118,7 @@ buildbot = rw
 * = r
 
 [/incubator/wave]
-@wave = rw
+* = r
 
 [/incubator/xap]
 * = r
