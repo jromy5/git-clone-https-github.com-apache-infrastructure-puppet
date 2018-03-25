@@ -191,20 +191,29 @@ class mail_private (
       minute      => '43',
       hour        => '*/4',
       command     => "${install_dir}/gen-httpdconfig.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin', 
+        'SHELL=/bin/sh'
+      ];
 
     'populate-pmc-index':
       user        => root,
       minute      => '13',
       hour        => '*/4',
       command     => "${install_dir}/update-pmc-dropdown.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin', 
+        'SHELL=/bin/sh'
+      ];
 
     'refresh-mail-lists':
       user        => modmbox,
       minute      => '20',
       command     => "${install_dir}/refresh-index.pl | grep -v 'Reading List-Post header from .* failed' > /dev/null",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin', 
+        'SHELL=/bin/sh'
+      ];
   }
 
 }
