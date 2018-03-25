@@ -401,6 +401,10 @@ class build_slaves::jenkins (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
+  file { "/home/${build_slaves::username}/tools/java/latest10":
+    ensure => link,
+    target => '/usr/local/asfpackages/java/jdk-10_46',
+  }
 
 
   # make gradle symlinks 4.3 is the latest

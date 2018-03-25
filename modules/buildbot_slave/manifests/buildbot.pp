@@ -110,5 +110,9 @@ class buildbot_slave::buildbot (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-9.0.1',
   }
+  file { '/home/buildslave/slave/tools/java/latest10':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/jdk-10_46',
+  }
 
 }
