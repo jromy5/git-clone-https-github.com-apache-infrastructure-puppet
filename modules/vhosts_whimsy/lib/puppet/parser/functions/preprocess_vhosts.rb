@@ -81,9 +81,9 @@ module Puppet::Parser::Functions
         auth['locations'].each do |location|
           if location.is_a? Hash
             url = location['path']
-	  else
-	    url = location
-	  end
+          else
+            url = location
+          end
 
           if url.end_with? '/'
             directive = 'Directory'
@@ -106,17 +106,17 @@ module Puppet::Parser::Functions
           end
  
           # prepend any exceptions
-	  if location.is_a? Hash and location['except']
-	    exceptions = location['except'].map do |name|
-	      if name =~ /[\\+*\[\]]/
-	        "Require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
-	      else
-	        "Require expr %{REQUEST_URI} == '#{url}#{name}'"
-	      end
-	    end
+          if location.is_a? Hash and location['except']
+            exceptions = location['except'].map do |name|
+              if name =~ /[\\+*\[\]]/
+                "Require expr %{REQUEST_URI} =~ m#^#{url}#{name}$#"
+              else
+                "Require expr %{REQUEST_URI} == '#{url}#{name}'"
+              end
+            end
 
-	    test = exceptions.push(test).join("\n  ")
-	  end
+            test = exceptions.push(test).join("\n  ")
+          end
 
           # emit auth section
           section directive, path, %{
