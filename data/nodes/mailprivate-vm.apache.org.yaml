@@ -35,7 +35,7 @@ apache::mod::event::maxconnectionsperchild: '20000'
 apache::mod::event::maxrequestworkers: '300'
 apache::mod::event::maxsparethreads: '250'
 apache::mod::event::minsparethreads: '10'
-apache::mod::event::serverlimit: '4'
+apache::mod::event::serverlimit: '6'
 apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
@@ -198,5 +198,18 @@ vhosts_asf::vhosts::vhosts:
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
         Options +Indexes
+      </Location>
+
+      # direct access should be members-only or maybe redirect?
+      <Location /mod_mbox>
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Members Only"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-group cn=member,ou=groups,dc=apache,dc=org
+        </RequireAll>
       </Location>
 
