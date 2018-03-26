@@ -32,11 +32,11 @@ base::gempackages:
   - 'r10k'
 
 cron:
-  'generate-index':
-      user        => 'www-data',
-      minute      => '*/2',
-      command     => "python /x1/git/asfgit-admin/asf/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/git/asfgit-admin/asf/site/htdocs/repos.html", # lint:ignore:double_quoted_strings, lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+  genindex:
+      user:         'www-data'
+      minute:       '*/2'
+      command:      "python /x1/git/asfgit-admin/asf/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/git/asfgit-admin/asf/site/htdocs/repos.html" # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment:  "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh" # lint:ignore:double_quoted_strings
 
 logrotate::rule:
   apache2:
