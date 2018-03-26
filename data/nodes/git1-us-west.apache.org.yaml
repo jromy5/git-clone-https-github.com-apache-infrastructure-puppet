@@ -31,6 +31,13 @@ base::gempackages:
   - 'puppet-lint'
   - 'r10k'
 
+cron:
+  'generate-index':
+      user        => 'www-data',
+      minute      => '*/2',
+      command     => "python /x1/git/asfgit-admin/asf/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/git/asfgit-admin/asf/site/htdocs/repos.html", # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -134,7 +141,9 @@ gitserver_asf::custom_fragment_443: |
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/tree/(.*)$ /repos/$1?p=$2.git;a=tree;hb=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/diff/(.*)$ /repos/$1?p=$2.git;a=commitdiff;h=$3 [R,NE]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/blob/([^/]+)/(.*) /repos/$1?p=$2.git;a=blob;f=$4;hb=$3 [R,NE]
-
+      # Redirect to static index when /repos/asf is requested
+      RewriteCond %%{}{QUERY_STRING} ^$
+      RewriteRule ^/repos/asf/?$ /x1/git/asfgit-admin/asf/site/htdocs/repos.html [L,END]
 
       SetEnv GIT_HTTP_EXPORT_ALL
 
