@@ -1,21 +1,11 @@
 #!/usr/bin/perl
 
-use File::Find;
-use Cwd;
-use Parallel::ForkManager;
-use Email::Folder;
-use LWP::UserAgent;
-use Date::Parse;
-use XML::Genx;
-
-my %box_update_list;
+my %mbox_update_list;
 my $prefix="<%= @archives_www %>/mod_mbox/";
 my $mod_mbox_util="<%= @apache2_bin %>/mod-mbox-util";
 my @update_list_from_rsync;
-my @changed_directory_list;
-my $baseref="https://mail-private.apache.org/private-arch/";
 
-$rsync_log = "/home/<%= @username %>/rsync.log";
+my $rsync_log = "/home/<%= @username %>/rsync.log";
 
 # remove any old log
 unlink("$rsync_log");
@@ -52,11 +42,7 @@ my $rsyncd_prefix = '\d\d\d\d/\d\d/\d\d \d\d:\d\d:\d\d ';
 }
 close LOG;
 
-#my $pm = new Parallel::ForkManager(40);
-
 foreach my $file (@update_list_from_rsync) {
-
-#$pm->start and next;
 
     #We use the file's path to get the tlp and listname
     #These are used to build the url that will be stored in the doc
@@ -99,17 +85,9 @@ foreach my $file (@update_list_from_rsync) {
     };
      
 
-#$pm->finish;
-    
 }
 
-#$pm->wait_all_children;
-
-#my $pm2 = new Parallel::ForkManager(10);
-
 while((my $key, my $value) = each(%mbox_update_list)) {
-
-#$pm2->start and next;
 
     print "MBOX_UTIL: indexing $key\n";
     my $timeout = 3600; #number of seconds to wait
@@ -122,9 +100,4 @@ while((my $key, my $value) = each(%mbox_update_list)) {
         alarm 0;
     };
 
-#$pm2->finish;
-
 }
-
-#$pm2->wait_all_children;
-
