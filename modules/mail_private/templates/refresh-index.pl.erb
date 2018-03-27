@@ -1,33 +1,46 @@
 #!/usr/bin/perl
 
-my %mbox_update_list;
-my $prefix="<%= @archives_www %>/mod_mbox/";
+#
+# Script to fetch mbox files and update the mod_mbox indexes
+#
+
+use strict;
+
+my %mbox_update_list; # directories with changes
+my $prefix="<%= @archives_www %>/mod_mbox/"; # where files are stored
 my $mod_mbox_util="<%= @apache2_bin %>/mod-mbox-util";
-my @update_list_from_rsync;
+my @update_list_from_rsync; # incoming file names from rsync log
 
 my $rsync_log = "/home/<%= @username %>/rsync.log";
 
 # remove any old log
 unlink("$rsync_log");
 
-system ("umask u=rwx,g=rwx,o=");
+system ("umask u=rwx,g=rwx,o="); # TODO: does this work? Surely it has to be done before starting Perl?
 
 system ("/usr/bin/rsync --log-file=$rsync_log -rtlzv apmail\@minotaur.apache.org::priv-mail-arch-new $prefix")
   and warn "sync failed";
 
-system ("chmod -R 775 $prefix");
+system ("chmod -R 775 $prefix"); # TODO this is expensive to do every time
 
-open(LOG, $rsync_log) || die "Error opening usage log file: $rsync_log\n";
+open(LOG, $rsync_log) || die "Error opening rsync log file: $rsync_log\n";
+
+# Sample log entries:
+#2018/03/27 16:20:02 [18360] receiving file list
+#2018/03/27 16:20:04 [18361] .d..t...... apachecon-planners/
+#2018/03/27 16:20:14 [18361] >f.st...... apachecon-planners/201803
+#2018/03/27 16:20:15 [18361] .d..t...... board/
+#2018/03/27 16:20:15 [18361] >f.st...... board/201803
 
 while (<LOG>) {
 
-   next unless ($day,$time,$op,$file)
+   next unless (my $day, my $time, my $op, my $file)
       = m{^
-          ( \w\w\w\s+\d+ | \d+/\d\d/\d\d ) \s+ # day
-          (\d\d:\d\d:\d\d) \s+                 # time
+          ( \w\w\w\s+\d+ | \d+/\d\d/\d\d ) \s+ # day (unused)
+          (\d\d:\d\d:\d\d) \s+                 # time (unused)
           [^[]* \[\d+\]:? \s+                  # pid (ignored)
           (send|recv|[<>]f\S+) \s+             # op (%o or %i)
-          (.*) \s+                             # file name
+          (.*) \s+                             # file name (e.g. board/201803)
           $ }x;
 
    if ($op =~ /^>/) {
@@ -42,7 +55,10 @@ close LOG;
 
 foreach my $file (@update_list_from_rsync) {
 
-    (my $listdir,my $mbox) = split(/\//,$file);
+    (my $listdir, my $mbox) = split(/\//,$file);
+
+    # Skip files that should not be processed
+    next unless $mbox =~ m/^\d{6}(?:\.gz)?$/; # only want dddddd[.gz]
 
     #build a list of directories that need mboxutil run on them
     $mbox_update_list{$prefix.$listdir}++;
@@ -61,6 +77,7 @@ foreach my $file (@update_list_from_rsync) {
     }
 
     # Check for zero byte file that mbox-util will puke on.
+    # TODO does it really object?
     # If we find one do not create the symlink to *.mbox
     my $filezise = -s $fullpath;
     my $link = $fullpath . ".mbox";
@@ -71,11 +88,10 @@ foreach my $file (@update_list_from_rsync) {
         print "*** Zero Byte mailbox found: $link\n"; 
         unlink("$link");
     };
-     
 
 }
 
-while((my $key, my $value) = each(%mbox_update_list)) {
+foreach my $key (keys %mbox_update_list) {
 
     print "MBOX_UTIL: indexing $key\n";
     my $timeout = 3600; #number of seconds to wait
@@ -83,6 +99,7 @@ while((my $key, my $value) = each(%mbox_update_list)) {
         local $SIG{ALRM} = sub { print "Timeout on $key\n"; next }; 
         alarm $timeout;
         system ("$mod_mbox_util -u $key");
+        # TODO are these necessary? Better to run Perl with the correct umask
         system ("chmod 775 $key");
         system ("chmod -R 775 $key");
         alarm 0;
