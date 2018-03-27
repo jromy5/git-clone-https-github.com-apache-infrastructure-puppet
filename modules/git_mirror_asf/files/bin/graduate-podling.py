@@ -25,7 +25,7 @@ When run on git-wip or gitbox, it:
 When run on git.a.o, it:
     - Renames the repository
     - Updates SVN remote if this is a SVN mirror
-    
+
 Usage: graduate-podling.py $project, e.g.: graduate-podling.py ponymail
 MUST BE RUN AS www-data OR git USER!
 """
@@ -55,20 +55,20 @@ def rename_github_repo(token, old, new):
     # Cut away the .git ending if it's there
     old = old.replace(".git", "")
     new = new.replace(".git", "")
-    
+
     # API URL for patching the name
     url = "https://api.github.com/repos/apache/%s" % old
-    
+
     # Headers - json payload + creds
     headers = {
         'content-type': 'application/json'
     }
-    
+
     # Construct payload
     payload = json.dumps({
         'name': new
     })
-    
+
     # Run the request
     print("  - Changing repository from %s to %s on GitHub..." % (old, new))
     r = requests.patch(url, headers = headers, data = payload, auth = (token, 'x-oauth-basic'))
@@ -77,10 +77,10 @@ def rename_github_repo(token, old, new):
     else:
         print("  - Something went wrong :(")
         print(r.text)
-        print("Something did not work here, aborting proces!!")
+        print("Something did not work here, aborting process!!")
         print("Fix the issue and run the tool again.")
         sys.exit(-1)
-    
+
 def rename_local_repo(old, new, project):
     """
     Renames local repositories:
@@ -92,7 +92,7 @@ def rename_local_repo(old, new, project):
     # First, rename the dir on the box. Fall flat on our behind if this fails.
     print("  - Renaming gitbox repo from %s/%s to %s/%s..." % (REPO_ROOT, old, REPO_ROOT, new))
     os.rename("%s/%s" % (REPO_ROOT, old), "%s/%s" % (REPO_ROOT, new))
-    
+
     # Change git config options
     gcpath = "%s/%s/config" % (REPO_ROOT, new)
     if not os.path.exists(gcpath):
@@ -104,14 +104,14 @@ def rename_local_repo(old, new, project):
         print("  - Setting remote...")
         # This needs to be...figured out automatically:
         gconf.set('remote "origin"', 'url', "https://git-wip-us.apache.org/repos/asf/%s" % new)
-    
+
     # Remote SVN origin?
     if gconf.has_section('svn-remote "svn"'):
         svnremote = gconf.get('svn-remote "svn"', 'url')
         newsvn = svnremote.replace("/incubator/", "/")
         print("  - Setting SVN remote from %s to %s...")
         gconf.set('svn-remote "svn"', 'url', newsvn)
-    
+
     # ML notification targets for commits and PRs
     print("  - Changing notification options..")
     if gconf.has_option('hooks.asfgit', 'recips'):
@@ -124,16 +124,16 @@ def rename_local_repo(old, new, project):
         ml = re.sub(r"incubator\.", "", ml)
         print("    - Changing PR notification ML to %s" % ml)
         gconf.set('apache', 'dev', ml)
-    
+
     print("  - Done!")
-    
+
 # Demand being run by www-data or git
 me = pwd.getpwuid(os.getuid()).pw_name
 if me != "www-data" and me != "git":
     print("You must run this as either www-data (on gitbox/git-wip) or git (on git.a.o)!")
     print("You are running as: %s" % me)
     sys.exit(-1)
-    
+
 # Expect one project name passed on, and only one!
 if len(sys.argv) == 2:
     PROJECT = sys.argv[1]
@@ -155,5 +155,3 @@ if len(sys.argv) == 2:
 else:
     print("Usage: graduate-podling.py $podling")
     print("Example: graduate-podling.py openwhisk")
-    
-    

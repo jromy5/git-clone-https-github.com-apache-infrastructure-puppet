@@ -74,7 +74,7 @@ def removeGitHubOrgMember(login):
     if r.status_code <= 204:
         logging.info("- Removal done!")
     else:
-        logging.error("- Error occured while trying to remove member!")
+        logging.error("- Error occurred while trying to remove member!")
         logging.error(r.status_code)
 
 def addGitHubTeamMember(teamID, login):
@@ -89,7 +89,7 @@ def addGitHubTeamMember(teamID, login):
     if 'state' in data:
         logging.info("- Additions done!")
     else:
-        logging.error("- Error occured while trying to add member!")
+        logging.error("- Error occurred while trying to add member!")
         logging.error(data)
 
 def getGitHubTeamMembers(teamID):

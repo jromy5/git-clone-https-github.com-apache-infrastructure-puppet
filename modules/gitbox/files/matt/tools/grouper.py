@@ -15,19 +15,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import sys
-import re
-import ldap
-import urllib2
-import json
-import requests
-import hashlib
 import ConfigParser
-import sqlite3
+import json
 import logging
+import os
+import re
+import sqlite3
+import sys
+import urllib2
 
-logging.basicConfig(filename='grouper.log', format='[%(asctime)s]: %(message)s', level=logging.INFO)
+import ldap
+import requests
+
+logging.basicConfig(filename='grouper.log',
+                    format='[%(asctime)s]: %(message)s', level=logging.INFO)
 
 # LDAP Defs
 UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
@@ -35,9 +36,9 @@ UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 # Run `python grouper.py debug` to check teams but not add/remove users
 DEBUG_RUN = True if len(sys.argv) > 1 and sys.argv[1] == 'debug' else False
 if DEBUG_RUN:
-    print("Debug run active! Not modifying teams")
+    print "Debug run active! Not modifying teams"
 CONFIG = ConfigParser.ConfigParser()
-CONFIG.read("grouper.cfg") # Yeah, you're not getting this info...
+CONFIG.read("grouper.cfg")  # Yeah, you're not getting this info...
 
 LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
@@ -53,12 +54,15 @@ MFA = json.load(open("../mfa.json"))
 WRITERS = {}
 LINKS = {}
 
+
 def getGitHubTeams():
-    """Fetches a list of all GitHub committer teams (projects only, not the parent org team or the admin teams)"""
+    """Fetches a list of all GitHub committer teams (projects only, not the
+    parent org team or the admin teams)"""
     logging.info("Fetching GitHub teams...")
     teams = {}
-    for n in range(1,100):
-        url = "https://api.github.com/orgs/apache/teams?access_token=%s&page=%u" % (ORG_READ_TOKEN, n)
+    for n in range(1, 100):
+        url = "https://api.github.com/orgs/apache/teams?access_token=%s&page=%u" % (
+            ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
         # Break if we've hit the end
@@ -79,10 +83,12 @@ def getGitHubTeams():
 
 def getGitHubRepos():
     """ Fetches all GitHub repos we own """
-    logging.info("Fetching list of GitHub repos, hang on (this may take a while!)..")
+    logging.info(
+        "Fetching list of GitHub repos, hang on (this may take a while!)..")
     repos = []
-    for n in range(1, 100): # 100 would be 3000 repos, we have 750ish now...
-        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (ORG_READ_TOKEN, n)
+    for n in range(1, 100):  # 100 would be 3000 repos, we have 750ish now...
+        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (
+            ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
         # Break if no more repos
@@ -92,14 +98,16 @@ def getGitHubRepos():
             repos.append(repo['name'])
     return sorted(repos)
 
+
 def getGitHubTeamMembers(teamID):
     """Given a Team ID, fetch the current list of members of the team"""
     members = []
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 100): # 100 would be 3000 repos, we have 750ish now...
-        url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (teamID, ORG_READ_TOKEN, n)
+    for n in range(1, 100):  # 100 would be 3000 repos, we have 750ish now...
+        url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (
+            teamID, ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
         # Break if no more members
@@ -109,6 +117,7 @@ def getGitHubTeamMembers(teamID):
             members.append(member['login'])
     return sorted(members)
 
+
 def getGitHubTeamRepos(teamID):
     """Given a Team ID, fetch the current list of repos in the team"""
     repos = []
@@ -116,7 +125,8 @@ def getGitHubTeamRepos(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
     for n in range(1, 10):
-        url = "https://api.github.com/teams/%s/repos?access_token=%s&page=%u" % (teamID, ORG_READ_TOKEN, n)
+        url = "https://api.github.com/teams/%s/repos?access_token=%s&page=%u" % (
+            teamID, ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
         data = json.load(response)
         # Break if no more members
@@ -126,12 +136,14 @@ def getGitHubTeamRepos(teamID):
             repos.append(repo['name'])
     return sorted(repos)
 
+
 def createGitHubTeam(project):
     """ Given a project, try to create it as a GitHub team"""
     logging.info("- Trying to create %s as a GitHub team..." % project)
     # Make sure we only allow the ones with permission to use MATT
     if not project in MATT_PROJECTS:
-        logging.error(" - This project has not been cleared for MATT yet. Aborting team creation")
+        logging.error(
+            " - This project has not been cleared for MATT yet. Aborting team creation")
         return False
 
     url = "https://api.github.com/orgs/apache/teams?access_token=%s" % ORG_READ_TOKEN
@@ -142,9 +154,11 @@ def createGitHubTeam(project):
         logging.info("New GitHub team created as #%s" % str(data['id']))
         return data['id']
     else:
-        logging.warning("Unknown return code, dunno if the team was created or not...?")
+        logging.warning(
+            "Unknown return code, dunno if the team was created or not...?")
         logging.warning(data)
         return None
+
 
 def removeGitHubTeamMember(teamID, login):
     """ Remove a team member from a team """
@@ -156,13 +170,15 @@ def removeGitHubTeamMember(teamID, login):
         return
     logging.info("- Removing %s from team #%s..." % (login, str(teamID)))
     url = "https://api.github.com/teams/%s/memberships/%s" % (teamID, login)
-    r = requests.delete(url, headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
+    r = requests.delete(
+        url, headers={'Authorization': "token %s" % ORG_READ_TOKEN})
 
     if r.status_code <= 204:
         logging.info("- Removal done!")
     else:
-        logging.error("- Error occured while trying to remove member!")
+        logging.error("- Error occurred while trying to remove member!")
         logging.error(r.status_code)
+
 
 def addGitHubTeamMember(teamID, login):
     """ Add a member to a team """
@@ -171,12 +187,13 @@ def addGitHubTeamMember(teamID, login):
         return None
     logging.info("- Adding %s to team #%s..." % (login, str(teamID)))
     url = "https://api.github.com/teams/%s/memberships/%s" % (teamID, login)
-    r = requests.put(url, headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
+    r = requests.put(
+        url, headers={'Authorization': "token %s" % ORG_READ_TOKEN})
     data = json.loads(r.content)
     if 'state' in data:
         logging.info("- Additions done!")
     else:
-        logging.error("- Error occured while trying to add member!")
+        logging.error("- Error occurred while trying to add member!")
         logging.error(data)
 
 
@@ -187,11 +204,12 @@ def addGitHubTeamRepo(teamID, repo):
         return None
     logging.info("- Adding repo %s to team #%s..." % (repo, str(teamID)))
     url = "https://api.github.com/teams/%s/repos/apache/%s" % (teamID, repo)
-    r = requests.put(url, data = "{\"permission\": \"push\"}", headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
+    r = requests.put(url, data="{\"permission\": \"push\"}",
+                     headers={'Authorization': "token %s" % ORG_READ_TOKEN})
     if r.status_code <= 204:
-        logging.info("- Team succesfully subscribed to repo!")
+        logging.info("- Team successfully subscribed to repo!")
     else:
-        logging.error("- Error occured while trying to add repo!")
+        logging.error("- Error occurred while trying to add repo!")
         logging.error(r.content)
 
 
@@ -216,7 +234,6 @@ def getStandardGroup(group):
         ldapClient.set_option(ldap.OPT_REFERRALS, 0)
 
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-        
 
         # This is using the new podling/etc LDAP groups defined by Sam
         results = ldapClient.search_s(ldap_base, ldap.SCOPE_BASE)
@@ -224,15 +241,18 @@ def getStandardGroup(group):
         for result in results:
             result_dn = result[0]
             result_attrs = result[1]
-            # We are only interested in the member attribs here. owner == ppmc, but we don't care
+            # We are only interested in the member attribs here. owner == ppmc,
+            # but we don't care
             if ldap_key in result_attrs:
                 for member in result_attrs[ldap_key]:
-                    m = UID_RE.match(member) # results are in the form uid=janedoe,dc=... so weed out the uid
+                    # results are in the form uid=janedoe,dc=... so weed out
+                    # the uid
+                    m = UID_RE.match(member)
                     if m:
                         groupmembers.append(m.group(1))
 
         ldapClient.unbind_s()
-        groupmembers = sorted(groupmembers) #alphasort
+        groupmembers = sorted(groupmembers)  # alphasort
     except Exception as err:
         logging.error("Could not fetch LDAP data: %s" % err)
         groupmembers = None
@@ -257,17 +277,20 @@ logging.info("Found %u account links!" % len(accounts))
 
 # get a list of all repos that are active on gitbox
 gitdir = '/x1/repos/asf'
-allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.listdir(gitdir))
+allrepos = filter(lambda repo: os.path.isdir(
+    os.path.join(gitdir, repo)), os.listdir(gitdir))
 
 # turn that into a list of projects to run the manager for
 for repo in allrepos:
     m = re.match(r"(?:incubator-)?([^-.]+)(?:.*\.git)", repo)
-    if m: #don't see why this would fail, but best to be sure
+    if m:  # don't see why this would fail, but best to be sure
         project = m.group(1)
         if not project in MATT_PROJECTS:
-            MATT_PROJECTS[project] = "tlp" if not re.match(r"incubator-", repo) else "podling" # distinguish between tlp and podling
+            MATT_PROJECTS[project] = "tlp" if not re.match(
+                r"incubator-", repo) else "podling"  # distinguish between tlp and podling
 
-# Then, start off by getting all existing GitHub teams and repos - we'll need that later.
+# Then, start off by getting all existing GitHub teams and repos - we'll
+# need that later.
 existingTeams = getGitHubTeams()
 existingRepos = getGitHubRepos()
 
@@ -294,7 +317,8 @@ for project in MATT_PROJECTS:
 
     # Make sure all $tlp-* repos are writeable by this team
     teamRepos = getGitHubTeamRepos(teamID)
-    logging.info ("Team is subbed to the following repos: " + ", ".join(teamRepos))
+    logging.info("Team is subbed to the following repos: " +
+                 ", ".join(teamRepos))
     for repo in existingRepos:
         m = re.match(r"^(?:incubator-)?([^-]+)-?", repo)
         p = m.group(1)
@@ -310,10 +334,12 @@ for project in MATT_PROJECTS:
     # Now get the committer availids from LDAP
     ldap_team = getStandardGroup(project)
     if not ldap_team or len(ldap_team) == 0:
-        logging.warning("LDAP Borked (no group data returned)? Trying next project instead")
+        logging.warning(
+            "LDAP Borked (no group data returned)? Trying next project instead")
         continue
 
-    # For each committer, IF THEY HAVE MFA, add them to a 'this is what it should look like' list
+    # For each committer, IF THEY HAVE MFA, add them to a 'this is what it
+    # should look like' list
     hopefulTeam = []
     for committer in ldap_team:
         githubID = None
@@ -326,21 +352,26 @@ for project in MATT_PROJECTS:
             hopefulTeam.append(githubID)
         # If MFA was disabled again, we can't have 'em here.
         elif githubID and githubID in MFA['disabled']:
-            logging.warning(githubID + " does not have MFA enabled, can't add to team")
+            logging.warning(
+                githubID + " does not have MFA enabled, can't add to team")
         elif githubID:
-            logging.error(githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled); likely: unaccepted org invite")
+            logging.error(
+                githubID + " does not seem to be in the MFA JSON (neither disabled nor enabled); likely: unaccepted org invite")
         else:
-            logging.warning(committer + " does not seem to have linked ASF and GitHub ID at gitbox.a.o/setup yet (not found in gitbox.db), ignoring")
+            logging.warning(
+                committer + " does not seem to have linked ASF and GitHub ID at gitbox.a.o/setup yet (not found in gitbox.db), ignoring")
 
     # If no team, assume something broke for now
     if len(hopefulTeam) == 0:
-        logging.warning("No hopeful GitHub team could be constructed, assuming something's wrong and cycling to next project")
+        logging.warning(
+            "No hopeful GitHub team could be constructed, assuming something's wrong and cycling to next project")
         continue
 
     # Now, for each member in the team, find those that don't belong here.
     for member in members:
         if not member in hopefulTeam:
-            logging.info(member + " should not be a part of this team, removing...")
+            logging.info(
+                member + " should not be a part of this team, removing...")
             if not DEBUG_RUN:
                 removeGitHubTeamMember(teamID, member)
 
@@ -350,10 +381,10 @@ for project in MATT_PROJECTS:
             logging.info(member + " not found in GitHub team, adding...")
             if not DEBUG_RUN:
                 addGitHubTeamMember(teamID, member)
-                
+
     # Add writers to GH map
     WRITERS[project] = hopefulTeam
-    
+
     logging.info("Done with " + project + ", moving to next project...")
 
 # Spit out JSON github map

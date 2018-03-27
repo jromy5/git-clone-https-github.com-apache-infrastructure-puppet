@@ -60,7 +60,7 @@ for VOL in `zfs list | /usr/bin/awk '{print $1}' | grep ${TLP}`; do
  zfs list | /usr/bin/grep "${NEWVOL}"
 
  if [ ${?} != "0" ] ; then 
-   echo -e "It seems the ${VOL} volume didnt copy successfuly. Exiting to prevent automated stupidity.\nYou should check to see if the volume copied to ${NEWVOL}";
+   echo -e "It seems the ${VOL} volume did not copy successfully. Exiting to prevent automated stupidity.\nYou should check to see if the volume copied to ${NEWVOL}";
    echo "This is the command we used to copy the data... "
    echo "zfs send ${VOL}@${TODAY} | zfs receive ${NEWVOL}"
    exit 1
