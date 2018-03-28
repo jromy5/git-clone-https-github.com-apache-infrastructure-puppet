@@ -129,7 +129,7 @@ class mail_archives (
 
 # symlink mod_mbox for existing scripts
 
-    '/x1/mail-archives/mod_mbox':
+    "${install_dir}/mod_mbox":
     ensure => link,
     target => "${archives_www}/mod_mbox";
 
@@ -237,7 +237,7 @@ class mail_archives (
       user        => $username,
       minute      => '05',
       hour        => '*/4',
-      command     => "/home/${username}/scripts/site-sitemap.py '/x1/mail-archives.apache.org/mod_mbox/sitemap.%d.xml'",
+      command     => "/home/${username}/scripts/site-sitemap.py '${archives_www}/mod_mbox/sitemap.%d.xml'",
       environment => [
         'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
         'SHELL=/bin/sh'
