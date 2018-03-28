@@ -65,6 +65,11 @@ class jenkins_slave_windows (
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
+  exec { 'create symlink for JDK10':
+    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest10 F:\\jenkins\\tools\\java\\jdk10_46",
+    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest10') { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
   exec { 'create symlink for JDK1.9':
     command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
     onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest9') { exit 1;}  else { exit 0; }",
