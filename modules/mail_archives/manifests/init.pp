@@ -223,6 +223,7 @@ class mail_archives (
       require     => User[$username];
 
     'site-index':
+      # N.B. update-index also creates the index file
       user        => $username,
       minute      => '51',
       hour        => '*/4',
