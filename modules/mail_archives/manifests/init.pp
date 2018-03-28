@@ -9,7 +9,16 @@ class mail_archives (
   # override below in yaml
   $parent_dir,
 
-  $required_packages = ['apache2-dev' , 'autotools-dev' , 'autoconf' , 'libapr1' , 'libapr1-dev' , 'libaprutil1' , 'libaprutil1-dev' , 'scons'], # lint:ignore:140chars
+  $required_packages = [
+    'apache2-dev',
+    'autotools-dev',
+    'autoconf',
+    'libapr1',
+    'libapr1-dev',
+    'libaprutil1',
+    'libaprutil1-dev',
+    'scons'
+  ],
 ){
 
 # install required packages:
@@ -120,7 +129,7 @@ class mail_archives (
 
 # symlink mod_mbox for existing scripts
 
-    '/x1/mail-archives/mod_mbox':
+    "${install_dir}/mod_mbox":
     ensure => link,
     target => "${archives_www}/mod_mbox";
 
@@ -196,7 +205,10 @@ class mail_archives (
       minute      => '01',
       hour        => '*/4',
       command     => "/home/${username}/scripts/mbox-raw-rsync.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ],
       require     => User[$username];
 
     'create-archive-list':
@@ -204,30 +216,43 @@ class mail_archives (
       minute      => '14',
       hour        => '*/4',
       command     => "/home/${username}/scripts/create-archive-list /home/${username}/archives/raw > /home/${username}/archives/mbox-archives.list", # lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/zsh'
+      ],
       require     => User[$username];
 
     'site-index':
+      # N.B. update-index also creates the index file
       user        => $username,
       minute      => '51',
       hour        => '*/4',
       command     => "/home/${username}/scripts/site-index.py > ${archives_www}/mod_mbox/index.html",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ],
       require     => User[$username];
 
     'generate-sitemap':
       user        => $username,
       minute      => '05',
       hour        => '*/4',
-      command     => "/home/modmbox/scripts/site-sitemap.py '/x1/mail-archives.apache.org/mod_mbox/sitemap.%d.xml'",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      command     => "/home/${username}/scripts/site-sitemap.py '${archives_www}/mod_mbox/sitemap.\%d.xml'", # cron treats % as NL
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ],
       require     => User[$username];
 
     'update-index':
       user        => $username,
       minute      => '27',
       command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/zsh'
+      ],
       require     => User[$username];
 
     'update-index-monthly':
@@ -236,7 +261,10 @@ class mail_archives (
       hour        => '14',
       monthday    => '1',
       command     => "/home/${username}/scripts/setlock.pl /home/${username}/.update-lockfile /home/${username}/scripts/update-index-monthly", # lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/zsh", # lint:ignore:double_quoted_strings, lint:ignore:140chars
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/zsh'
+      ],
       require     => User[$username];
 
   }
