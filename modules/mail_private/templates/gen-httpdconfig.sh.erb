@@ -160,3 +160,8 @@ EOT
 
 done
 
+echo "Restarting httpd (graceful)"
+
+/usr/sbin/apache2 -k graceful
+
+echo "All done"
