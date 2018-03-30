@@ -35,3 +35,4 @@ postfix::dbfile:
       admin@hkug.org     REJECT
       2066044032@qq.com  REJECT
       test@test.test  REJECT
+      autoposts.com.br REJECT
