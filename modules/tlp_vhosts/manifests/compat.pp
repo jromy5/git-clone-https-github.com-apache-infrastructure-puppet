@@ -96,6 +96,7 @@ class tlp_vhosts::compat {
     ensure  => 'directory',
     owner   => $apmirror::username,
     group   => $svnwcsub::groupname,
+    mode    => '0775',
     require => File['/var/www/www.apache.org/dist'],
   }
 
