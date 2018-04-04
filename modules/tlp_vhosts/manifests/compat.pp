@@ -95,9 +95,7 @@ class tlp_vhosts::compat {
   file { '/var/www/www.apache.org/dist/zzz':
     ensure  => 'directory',
     owner   => $apmirror::username,
-    group   => $apmirror::groupname,
-    source  => 'puppet:///modules/tlp_vhosts/zzz',
-    recurse => true,
+    group   => $svnwcsub::groupname,
     require => File['/var/www/www.apache.org/dist'],
   }
 
