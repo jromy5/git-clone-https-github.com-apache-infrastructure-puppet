@@ -109,6 +109,7 @@ flume={reuse:asf-authorization:flume}
 flume-pmc={ldap:cn=flume,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 forrest={reuse:asf-authorization:forrest}
 forrest-pmc={ldap:cn=forrest,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+freemarker-pmc={ldap:cn=freemarker,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 geronimo={reuse:asf-authorization:geronimo}
 geronimo-pmc={ldap:cn=geronimo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 giraph={reuse:asf-authorization:giraph}
@@ -887,6 +888,9 @@ openejb-tck = r
 
 [/pmc/flume]
 @flume-pmc = rw
+
+[/pmc/freemarker]
+@freemarker-pmc = rw
 
 [/pmc/geronimo]
 @geronimo-pmc=rw
