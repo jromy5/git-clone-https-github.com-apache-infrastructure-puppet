@@ -50,6 +50,10 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/x1/mail-archives.apache.org/'
     access_log_file: 'mail-archives.apache.org_access.log'
     error_log_file: 'mail-archives.apache.org_error.log'
+
+   # N.B. This host does NOT automatically redirect to https, so all the settings
+   # need to be duplicated for the https host
+
     custom_fragment: |
       <Directory /x1/mail-archives.apache.org>
         AllowOverride none
@@ -64,12 +68,17 @@ vhosts_asf::vhosts::vhosts:
         MboxScript /archives/archives.js
       </Directory>
 
+      # Redirect incubator-name-list to name-list if the former does not exist and the latter does
+      # This allows for graduated podlings
       AllowEncodedSlashes On
       RewriteEngine On
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
+
+      # Redirect projects that have been renamed (keep this in sync with the list below)
+      RedirectMatch "/argus-(.*)" "/ranger-$1"
 
   mailarchives-443:
     vhost_name: '*'
@@ -81,6 +90,9 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/x1/mail-archives.apache.org/'
     access_log_file: 'mail-archives.apache.org-ssl_access.log'
     error_log_file: 'mail-archives.apache.org-ssl_error.log'
+
+    # N.B. keep the following settings in sync with the http host settings
+
     custom_fragment: |
       <Directory /x1/mail-archives.apache.org>
         AllowOverride none
@@ -93,9 +105,15 @@ vhosts_asf::vhosts::vhosts:
         MboxStyle /archives/style.css
         MboxScript /archives/archives.js
       </Directory>
+
+      # Redirect incubator-name-list to name-list if the former does not exist and the latter does
+      # This allows for graduated podlings
       AllowEncodedSlashes On
       RewriteEngine On
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
+
+      # Redirect projects that have been renamed (keep this in sync with the list above)
+      RedirectMatch "/argus-(.*)" "/ranger-$1"
