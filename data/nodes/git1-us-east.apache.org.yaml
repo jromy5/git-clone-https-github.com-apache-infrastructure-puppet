@@ -73,7 +73,10 @@ vhosts_asf::vhosts::vhosts:
     docroot_owner: 'git'
     access_log_file: 'git.apache.org.http_access.log'
     error_log_file: 'git.apache.org.error.log'
-
+    custom_fragment: |
+      <Directory /x1/git/mirrors>
+          AllowOverride FileInfo
+      </Directory>
   git-ssl:
     vhost_name: '*'
     port: 443
@@ -85,3 +88,7 @@ vhosts_asf::vhosts::vhosts:
     docroot_owner: 'git'
     access_log_file: 'git.apache.org.ssl_access.log'
     error_log_file: 'git.apache.org.error.log'
+    custom_fragment: |
+      <Directory /x1/git/mirrors>
+          AllowOverride FileInfo
+      </Directory>
