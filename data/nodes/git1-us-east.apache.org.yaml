@@ -76,6 +76,8 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       <Directory /x1/git/mirrors>
           AllowOverride FileInfo
+          Require all granted
+          Options Indexes FollowSymLinks MultiViews
       </Directory>
   git-ssl:
     vhost_name: '*'
@@ -91,4 +93,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       <Directory /x1/git/mirrors>
           AllowOverride FileInfo
+          Require all granted
+          Options Indexes FollowSymLinks MultiViews
       </Directory>
