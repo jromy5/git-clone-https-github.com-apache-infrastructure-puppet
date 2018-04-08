@@ -34,6 +34,45 @@ apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.o
 vhosts_asf::modules::modules:
   mbox:
     name: 'mbox'
+  macro:
+    name: 'macro'
+
+# Custom config file to perform renames
+# This defines a composite macro that can be referenced in both hosts
+apache::custom_config:
+  macros:
+    content: |
+      # Rename a project by prefix
+      <Macro RenameProject $old $new>
+        RedirectMatch Permanent "^/mod_mbox/$old-(.*)" "/mod_mbox/$new-$1"
+      </Macro>
+
+      # Rename a list (don't match trailing characters)
+      <Macro RenameList $old $new>
+        RedirectMatch Permanent "^/mod_mbox/$old($|/.*$)" "/mod_mbox/$new$1"
+      </Macro>
+
+      # group all the renames together
+      <Macro Renames>
+        Use RenameProject "argus"        "ranger"
+        Use RenameProject "fleece"       "johnzon"
+        Use RenameProject "mysos"        "cotton"
+        Use RenameProject "openejb"       "tomee"
+        Use RenameProject "optiq"        "calcite"
+        Use RenameProject "quarks"       "edgent"
+        Use RenameProject "stratosphere" "flink"
+        Use RenameProject "zest"         "polygene"
+
+        # sub-project moved to TLP
+        Use RenameProject "lucene/lucene-net" "lucenenet"
+
+        # list moved to sub-project
+        RedirectMatch Permanent "^/mod_mbox/(distributedlog-.+)" "/mod_mbox/bookkeeper-$1"
+
+        # individual list renames
+        Use RenameList "jclouds-issues"  "jclouds-notifications"
+        Use RenameList "libcloud-issues" "libcloud-notifications"
+      </Macro>
 
 logrotate::rule:
   apache2:
@@ -77,8 +116,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
 
-      # Redirect projects that have been renamed (keep this in sync with the list below)
-      RedirectMatch "/argus-(.*)" "/ranger-$1"
+      # Redirect lists that have been renamed
+      Use Renames
 
   mailarchives-443:
     vhost_name: '*'
@@ -115,5 +154,5 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
 
-      # Redirect projects that have been renamed (keep this in sync with the list above)
-      RedirectMatch "/argus-(.*)" "/ranger-$1"
+      # Redirect lists that have been renamed
+      Use Renames
