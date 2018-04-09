@@ -66,7 +66,7 @@ def getvalue(key):
 def sendEmail(rcpt, subject, message):
     sender = "GitBox <git@apache.org>"
     receivers = [rcpt]
-    sub = email.header.Header(subject, 'utf-8')
+    sub = email.header.Header(subject, 'utf-8').encode('utf-8')
     msg = """From: %s
 To: %s
 Subject: %s
