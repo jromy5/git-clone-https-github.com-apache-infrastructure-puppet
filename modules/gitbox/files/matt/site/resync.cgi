@@ -32,6 +32,7 @@ xform = cgi.FieldStorage();
 
 reponame = xform.getvalue("repo")
 if reponame:
+    reponame = reponame.replace(".git", "")
     username = os.environ.get('REMOTE_USER', 'nobody')
     server = xform.getvalue("server", "git-wip-us")
     requests.post("http://gitpubsub.apache.org:2069/json/", json = {
