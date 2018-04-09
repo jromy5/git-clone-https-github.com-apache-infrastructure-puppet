@@ -34,6 +34,7 @@ from email.mime.text import MIMEText
 import requests
 import base64
 import email.utils
+import email.header
 
 # Define some defaults and debug vars
 DEBUG_MAIL_TO = None # "humbedooh@apache.org" # Set to a var to override mail recipients, or None to disable.
@@ -65,6 +66,7 @@ def getvalue(key):
 def sendEmail(rcpt, subject, message):
     sender = "GitBox <git@apache.org>"
     receivers = [rcpt]
+    sub = email.header.Header(subject, 'utf-8')
     msg = """From: %s
 To: %s
 Subject: %s
@@ -77,7 +79,7 @@ Content-Transfer-Encoding: 8bit
 
 With regards,
 Apache Git Services
-""" % (sender, rcpt, subject, email.utils.make_msgid("gitbox"), email.utils.formatdate(), message)
+""" % (sender, rcpt, sub, email.utils.make_msgid("gitbox"), email.utils.formatdate(), message)
     msg = msg.encode('utf-8', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
