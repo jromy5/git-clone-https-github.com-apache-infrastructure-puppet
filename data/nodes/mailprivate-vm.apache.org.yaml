@@ -205,6 +205,50 @@ vhosts_asf::vhosts::vhosts:
         </RequireAll>
       </Location>
 
+      # maintain permalinks for renamed lists (members only)
+      RedirectMatch Permanent ^/members/private-arch/apachecon-(barcamp|fastfeather|speakers)-2011-NA /members/private-arch/apachecon-$1-2011-na
+      RedirectMatch Permanent ^/members/private-arch/code-awards($|/.*$) /members/private-arch/community-mentors$1
+      RedirectMatch Permanent ^/members/private-arch/infrastructure($|/.*$) /members/private-arch/infra-users$1
+
+      # Public list initially created as private
+      <Macro PublicList $name>
+        RedirectMatch Permanent "^/(pmc|members)/private-arch/$name($|/.*$)" "http://mail-archives.apache.org/mod_mbox/$name$2"
+      </Macro>
+
+      Use PublicList "batchee-dev"
+      Use PublicList "bigtop-issues"
+      Use PublicList "lens-commits"
+      Use PublicList "olingo-user"
+
+      # project renames
+
+      # Use Redirect here so auth works and user sees updated URL
+      <Macro RenameProject $old $new>
+        RedirectMatch Permanent "^/(pmc|members)/private-arch/$old-(.*)" "/$1/private-arch/$new-$2"
+        RedirectMatch Permanent "^/(pmc|members)/private-arch/incubator-$old-(.*)" "/$1/private-arch/incubator-$new-$2"
+      </Macro>
+
+      Use RenameProject "amber"        "oltu"
+      Use RenameProject "argus"        "ranger"
+      Use RenameProject "callback"     "cordova"
+      Use RenameProject "connectors"   "manifoldcf"
+      Use RenameProject "deft"         "awf"
+      Use RenameProject "fleece"       "johnzon"
+      Use RenameProject "mysos"        "cotton"
+      Use RenameProject "ooo"          "openoffice"
+      Use RenameProject "openejb"      "tomee"
+      Use RenameProject "optiq"        "calcite"
+      Use RenameProject "oscar"        "felix"
+      Use RenameProject "quarks"       "edgent"
+      Use RenameProject "rat "         "creadur"
+      Use RenameProject "stratosphere" "flink"
+      Use RenameProject "zest"         "polygene"
+
+      #sub-project renames
+      Use RenameProject "lucene/lucene-net" "lucenenet"
+
+      # Conditional incubator renames
+
       AllowEncodedSlashes On
       RewriteEngine On
 
@@ -227,37 +271,3 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond /x1/mail-private.apache.org/mod_mbox/%2-private -d
       # Use Redirect so auth works and user sees updated URL
       RewriteRule . /%1/private-arch/%2-private%4 [L,R=301]
-
-      # maintain permalinks for renamed lists (members only)
-      RedirectMatch Permanent ^/members/private-arch/apachecon-(barcamp|fastfeather|speakers)-2011-NA /members/private-arch/apachecon-$1-2011-na
-      RedirectMatch Permanent ^/members/private-arch/code-awards($|/.*$) /members/private-arch/community-mentors$1
-      RedirectMatch Permanent ^/members/private-arch/infrastructure($|/.*$) /members/private-arch/infra-users$1
-
-      # Public list initially created as private
-      <Macro PublicList $name>
-        RedirectMatch Permanent "^/(pmc|members)/private-arch/$name($|/.*$)" "http://mail-archives.apache.org/mod_mbox/$name$2"
-      </Macro>
-
-      Use PublicList "batchee-dev"
-      Use PublicList "bigtop-issues"
-      Use PublicList "lens-commits"
-      Use PublicList "olingo-user"
-
-      # project renames
-
-      # Use Redirect here so auth works and user sees updated URL
-      <Macro RenameProject $old $new>
-        RedirectMatch Permanent "^/(pmc|members)/private-arch/$old-(.*)" "/$1/private-arch/$new-$2"
-      </Macro>
-
-      Use RenameProject "argus"        "ranger"
-      Use RenameProject "fleece"       "johnzon"
-      Use RenameProject "mysos"        "cotton"
-      Use RenameProject "openejb"       "tomee"
-      Use RenameProject "optiq"        "calcite"
-      Use RenameProject "quarks"       "edgent"
-      Use RenameProject "stratosphere" "flink"
-      Use RenameProject "zest"         "polygene"
-
-      #sub-project renames
-      Use RenameProject "lucene/lucene-net" "lucenenet"
