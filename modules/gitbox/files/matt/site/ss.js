@@ -266,6 +266,13 @@ submitForm = function (form) {
     }
     ispodling = (get('ispodling') && get('ispodling').checked) ? 'yes' : null;
     reponame = get('reponame').value;
+    if (reponame.length > 0) {
+        var firstbit = reponame.split("-")[0];
+        if (firstbit == pmc) {
+            alert("You can't call the repo "+pmc+"-"+reponame+".git, that would be silly!");
+            return false;
+        }
+    }
     var generatedName = get('generatedname').value;
     if (reponame.length === 0) {
         if (!confirm("You have not entered a sub-name. This will request " + generatedName + "! Are you sure?")) {
