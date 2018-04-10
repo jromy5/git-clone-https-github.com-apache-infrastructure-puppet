@@ -215,7 +215,7 @@ class cwiki_asf (
     $service_name:
       ensure     => $service_ensure,
       enable     => true,
-      hasstatus  => false,
+      hasstatus  => true,
       hasrestart => true,
       require    => Class['apache'],
   }
