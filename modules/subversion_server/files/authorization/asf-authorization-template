@@ -1361,6 +1361,14 @@ buildbot = rw
 [/maven]
 @maven = rw
 
+[/maven/website]
+@maven-pmc = rw
+@maven-svn = rw
+
+[/maven/doxia/website]
+@maven-pmc = rw
+@maven-svn = rw
+
 [/maven/(archetype|archetypes)]
 * = r
 
