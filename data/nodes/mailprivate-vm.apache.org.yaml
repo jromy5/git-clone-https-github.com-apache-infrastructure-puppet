@@ -245,7 +245,7 @@ vhosts_asf::vhosts::vhosts:
       Use RenameProject "zest"         "polygene"
 
       #sub-project renames
-      Use RenameProject "lucene/lucene-net" "lucenenet"
+      Use RenameProject "lucene-lucene-net" "lucenenet"
 
       # Conditional incubator renames
 
