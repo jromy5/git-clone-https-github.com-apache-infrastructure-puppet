@@ -1,43 +1,88 @@
-#!/bin/sh
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          confluence
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: confluence
+# Description:       start confluence script
+#### END INIT INFO
 
-RUN_AS_USER=<%= @username %>
-CONFLUENCE_INSTALL=<%= @current_dir %>
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+confluence_user=${confluence_user-"<%= @username %>"}
+confluence_group=${confluence_group-"<%= @groupname %>"}
+confluence_pidfile=${confluence_pidfile-"<%= @current_dir %>/work/catalina.pid"}
+confluence_logfile=${confluence_logfile-"<%= @current_dir %>/logs/catalina.out"}
+confluence_appdir=${confluence_appdir-"<%= @current_dir %>"}
+pidfile="${confluence_pidfile}"
+
+RETVAL=0
 
 start() {
-        echo "Starting Confluence: "
-        umask 002
-        if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "cd $CONFLUENCE_INSTALL/bin && ./startup.sh"
+    if [ -f $confluence_pidfile ]; then
+        # pid file exists, check is proc is running
+        PID=`cat $confluence_pidfile`
+        if kill -0 $PID >/dev/null 2>&1; then
+            echo 'Confluence is already running'
+            return 1
         else
-          $CONFLUENCE_INSTALL/bin/startup.sh
+            # Confluence was killed but not cleaned up
+            echo 'Confluence was not stopped cleanly, cleaning up'
+            rm -f $confluence_pidfile
         fi
-        echo "done."
+    fi
+
+    echo "Starting Confluence "
+    if [ "x$USER" != "x$confluence_user" ]; then
+          su - $confluence_user -c "cd $confluence_appdir/bin && ./startup.sh"
+    else
+          $confluence_appdir/bin/startup.sh
+    fi
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
 }
+
 stop() {
-        echo "Shutting down Confluence: "
-        if [ "x$USER" != "x$RUN_AS_USER" ]; then
-          su - $RUN_AS_USER -c "cd $CONFLUENCE_INSTALL/bin && ./shutdown.sh"
-        else
-          $CONFLUENCE_INSTALL/bin/shutdown.sh
-        fi
-        echo "done."
+    echo "Stopping Confluence "
+    if [ "x$USER" != "x$confluence_user" ]; then
+          su - $confluence_user -c "cd $confluence_appdir/bin && ./shutdown.sh"
+    else
+          $confluence_appdir/bin/shutdown.sh
+    fi
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
+    return $RETVAL
 }
 
 case "$1" in
-  start)
+    start)
         start
         ;;
-  stop)
+    stop)
         stop
         ;;
-  restart)
+    restart)
         stop
-        sleep 8
         start
         ;;
-  *)
-        echo "Usage: $0 {start|stop|restart}"
+    status)
+        PID=`cat $confluence_pidfile`
+        if ps -p $PID > /dev/null
+        then
+            echo "Confluence is running, yay!"
+            exit 0
+        else
+            echo "Confluence ain't running :("
+            exit 3
+        fi;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
 esac
 
-exit 0
+exit $RETVAL
 
