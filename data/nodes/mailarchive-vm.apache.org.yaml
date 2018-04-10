@@ -46,6 +46,7 @@ apache::custom_config:
       # Rename a project by prefix
       <Macro RenameProject $old $new>
         RedirectMatch Permanent "^/mod_mbox/$old-(.*)" "/mod_mbox/$new-$1"
+        RedirectMatch Permanent "^/mod_mbox/incubator-$old-(.*)" "/incubator-mod_mbox/$new-$1"
       </Macro>
 
       # Rename a list (don't match trailing characters)
@@ -55,12 +56,19 @@ apache::custom_config:
 
       # group all the renames together
       <Macro Renames>
+        Use RenameProject "amber"        "oltu"
         Use RenameProject "argus"        "ranger"
+        Use RenameProject "callback"     "cordova"
+        Use RenameProject "connectors"   "manifoldcf"
+        Use RenameProject "deft"         "awf"
         Use RenameProject "fleece"       "johnzon"
         Use RenameProject "mysos"        "cotton"
-        Use RenameProject "openejb"       "tomee"
+        Use RenameProject "ooo"          "openoffice"
+        Use RenameProject "openejb"      "tomee"
         Use RenameProject "optiq"        "calcite"
+        Use RenameProject "oscar"        "felix"
         Use RenameProject "quarks"       "edgent"
+        Use RenameProject "rat "         "creadur"
         Use RenameProject "stratosphere" "flink"
         Use RenameProject "zest"         "polygene"
 
@@ -72,7 +80,7 @@ apache::custom_config:
 
         # individual list renames
         Use RenameList "jclouds-issues"  "jclouds-notifications"
-        Use RenameList "libcloud-issues" "libcloud-notifications"
+        Use RenameList "libcloud-commits" "libcloud-notifications"
       </Macro>
 
 logrotate::rule:
@@ -108,6 +116,10 @@ vhosts_asf::vhosts::vhosts:
         MboxScript /archives/archives.js
       </Directory>
 
+      # Redirect lists that have been renamed
+      # must be done before incubator renames
+      Use Renames
+
       # Redirect incubator-name-list to name-list if the former does not exist and the latter does
       # This allows for graduated podlings
       AllowEncodedSlashes On
@@ -116,9 +128,6 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
-
-      # Redirect lists that have been renamed
-      Use Renames
 
   mailarchives-443:
     vhost_name: '*'
@@ -146,6 +155,10 @@ vhosts_asf::vhosts::vhosts:
         MboxScript /archives/archives.js
       </Directory>
 
+      # Redirect lists that have been renamed
+      # must be done before incubator renames
+      Use Renames
+
       # Redirect incubator-name-list to name-list if the former does not exist and the latter does
       # This allows for graduated podlings
       AllowEncodedSlashes On
@@ -154,6 +167,3 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
       RewriteRule . /mod_mbox/%1%2 [L]
-
-      # Redirect lists that have been renamed
-      Use Renames
