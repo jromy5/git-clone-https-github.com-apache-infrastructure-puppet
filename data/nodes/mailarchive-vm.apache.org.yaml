@@ -73,7 +73,7 @@ apache::custom_config:
         Use RenameProject "zest"         "polygene"
 
         # sub-project moved to TLP
-        Use RenameProject "lucene/lucene-net" "lucenenet"
+        Use RenameProject "lucene-lucene-net" "lucenenet"
 
         # list moved to sub-project
         RedirectMatch Permanent "^/mod_mbox/(distributedlog-.+)" "/mod_mbox/bookkeeper-$1"
