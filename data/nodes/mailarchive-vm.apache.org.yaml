@@ -87,6 +87,9 @@ apache::custom_config:
         # lists moved to different TLP
         RedirectMatch Permanent "^/mod_mbox/ws-(wsrp4j-(dev|user))" "/mod_mbox/portals-$1" # since retired
 
+        # Jakarta closed down
+        RedirectMatch Permanent "^/mod_mbox/jakarta-(lucene-(dev|user))" "/mod_mbox/$1"
+
         # individual list renames
         Use RenameList "jclouds-issues"  "jclouds-notifications"
         Use RenameList "libcloud-commits" "libcloud-notifications"
