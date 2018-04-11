@@ -184,15 +184,15 @@ class cwiki_asf (
       group   => $groupname,
       content => template('cwiki_asf/create-intermediates-index.sh.erb'),
       mode    => '0755';
-    "/home/${username}/copy-intermediate-html.sh":
+    "/home/${username}/copy-intermediates.sh":
       owner   => $username,
       group   => $groupname,
-      content => template('cwiki_asf/copy-intermediate-html.sh.erb'),
+      content => template('cwiki_asf/copy-intermediates.sh.erb'),
       mode    => '0755';
-    "/home/${username}/remove-intermediates-daily.sh":
+    "/home/${username}/remove-intermediates-weekly.sh":
       owner   => $username,
       group   => $groupname,
-      content => template('cwiki_asf/remove-intermediates-daily.sh.erb'),
+      content => template('cwiki_asf/remove-intermediates-weekly.sh.erb'),
       mode    => '0755';
     "/home/${username}/cleanup-tomcat-logs.sh":
       owner   => $username,
@@ -229,17 +229,18 @@ class cwiki_asf (
       command     => "/home/${username}/create-intermediates-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
-    'copy-intermediate-html':
+    'copy-intermediates':
       user        => $username,
       minute      => '30',
-      command     => "/home/${username}/copy-intermediate-html.sh",
+      command     => "/home/${username}/copy-intermediates.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
-    'remove-intermediates-daily':
+    'remove-intermediates-weekly':
       user        => $username,
+      weekday     => 1,
       minute      => 05,
       hour        => 07,
-      command     => "/home/${username}/remove-intermediates-daily.sh",
+      command     => "/home/${username}/remove-intermediates-weekly.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'cleanup-tomcat-logs':

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd <%= @intermediates_dir %>
+
+find . -type d -name 'htmlexport*' -mtime 7 -exec rm -rf {} \;
+find . -type d -name 'pdfexport*' -mtime 7 -exec rm -rf {} \;
