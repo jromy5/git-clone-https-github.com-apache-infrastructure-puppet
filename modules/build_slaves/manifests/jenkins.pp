@@ -268,7 +268,7 @@ class build_slaves::jenkins (
         owner  => $username,
         group  => $groupname,
         mode   => '0750',
-        require => File["/home/${build_slaves::username}/.subversion/auth";
+        require => File["/home/${build_slaves::username}/.subversion/auth"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple/d3c8a345b14f6a1b42251aef8027ab57":
         ensure  => present,
         owner   => $username,
