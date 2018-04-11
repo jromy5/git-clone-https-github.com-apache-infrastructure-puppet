@@ -11,6 +11,8 @@ class build_slaves::jenkins (
   $jenkins_pub_key  = '',
   $gsr_user = '',
   $gsr_pw = '',
+  $ssr_user = '',
+  $ssr_pw = '',
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake', 'gradle'],
   $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1'],
@@ -230,24 +232,52 @@ class build_slaves::jenkins (
     content => template('build_slaves/npmrc.erb')
   }
 
-    if ($::fqdn == 'jenkins-websites1.apache.org'){
-      file { "/home/${build_slaves::username}/.git-credentials":
+  if ($::fqdn == 'jenkins-websites1.apache.org'){
+    file { "/home/${build_slaves::username}/.git-credentials":
+      ensure  => present,
+      path    => "/home/${build_slaves::username}/.git-credentials",
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('build_slaves/git-credentials.erb')
+    }
+
+    file { "/home/${build_slaves::username}/.gitconfig":
+      ensure => present,
+      path   => "/home/${build_slaves::username}/.gitconfig",
+      owner  => $username,
+      group  => $groupname,
+      mode   => '0640',
+      source => 'puppet:///modules/build_slaves/gitconfig',
+    }
+
+    file { 
+     "/home/${build_slaves::username}/.subversion":
+        ensure  => directory,
+        owner   => $username,
+        group   => $groupname,
+        mode    => '0750';
+      "/home/${build_slaves::username}/.subversion/auth":
+        ensure  => directory,
+        owner   => $username,
+        group   => $groupname,
+        mode    => '0750',
+        require => File["/home/${build_slaves::username}/.subversion";
+      "/home/${build_slaves::username}/.subversion/auth/svn.simple":
+        ensure => directory,
+        owner  => $username,
+        group  => $groupname,
+        mode   => '0750',
+        require => File["/home/${build_slaves::username}/.subversion/auth";
+      "/home/${build_slaves::username}/.subversion/auth/svn.simple/d3c8a345b14f6a1b42251aef8027ab57":
         ensure  => present,
-        path    => "/home/${build_slaves::username}/.git-credentials",
         owner   => $username,
         group   => $groupname,
         mode    => '0640',
-        content => template('build_slaves/git-credentials.erb')
-      }
+        content => template('build_slaves/svn-credentials.erb')
+        require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple";
+     }
 
-      file { "/home/${build_slaves::username}/.gitconfig":
-        ensure => present,
-        path   => "/home/${build_slaves::username}/.gitconfig",
-        owner  => $username,
-        group  => $groupname,
-        mode   => '0640',
-        source => 'puppet:///modules/build_slaves/gitconfig',
-      }
     }
 
   file { '/etc/security/limits.d/jenkins.conf':
