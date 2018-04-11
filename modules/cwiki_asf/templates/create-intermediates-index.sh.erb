@@ -3,7 +3,7 @@
 cd <%= @intermediates_dir %>
 if [[ -d htmlexport* ] || [ -d pdfexport* ]]; then
   cat header.inc > index.html
-  echo "<h3> HYML Intermediates </h3>" >> index.html
+  echo "<h3> HTML Intermediates </h3>" >> index.html
   find . -type d -name 'htmlexport*' -exec echo '<a href={}>{} </a><br />' \; | sort | sed -e s/\\.\\///g >> index.html
   echo "<h3> PDF Intermediates </h3>" >> index.html
   find . -type d -name 'pdfexport*' -exec echo '<a href={}>{} </a><br />' \; | sort | sed -e s/\\.\\///g >> index.html
