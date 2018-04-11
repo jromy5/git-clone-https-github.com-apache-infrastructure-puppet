@@ -162,7 +162,7 @@ class cwiki_asf (
       content => template('cwiki_asf/confluence.cfg.xml.erb'),
       owner   => 'confluence',
       group   => 'confluence',
-      mode    => '0644',
+      mode    => '0664',
       require => Exec['check_cfg_exists'],
       notify  => Service[$service_name];
     "${mysql_connector_dest_dir}/${mysql_connector}":
