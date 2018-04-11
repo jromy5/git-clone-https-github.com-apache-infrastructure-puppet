@@ -2,9 +2,17 @@
 # ZSH 4+ script to ensure that we are up-to-date last month
 DATE=`date -u "+%Y%m"`
 typeset -i DATE
-# add year support sometime...
+
 CURDATE=$DATE
-DATE=$DATE-1
+# date is of the form YYYYMM
+# if the date ends in 01, we need to subtract 1 year and add 11 months
+if [[ $(($DATE % 100)) == 1 ]]
+then
+    DATE=$DATE-89 # i.e. -100 (1 year) +11 (months)
+else
+    DATE=$DATE-1
+fi
+
 ARCHIVES_PATH=$HOME/archives/mbox-archives.conf
 
 if [ $# -ge 1 ]; then
