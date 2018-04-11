@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-cd <%= @intermediates_dir %>
-if [[ -d htmlexport* ] || [ -d pdfexport* ]]; then
+shopt -s nullglob
+cd /var/www/intermediates
+
+if [ -d htmlexport* ] || [ -d pdfexport* ]; then
   cat header.inc > index.html
   echo "<h3> HTML Intermediates </h3>" >> index.html
   find . -type d -name 'htmlexport*' -exec echo '<a href={}>{} </a><br />' \; | sort | sed -e s/\\.\\///g >> index.html
