@@ -225,13 +225,13 @@ class cwiki_asf (
   cron {
     'create-intermediates-index':
       user        => $username,
-      minute      => '*/30',
+      minute      => '25',
       command     => "/home/${username}/create-intermediates-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'copy-intermediate-html':
       user        => $username,
-      minute      => '*/10',
+      minute      => '30',
       command     => "/home/${username}/copy-intermediate-html.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
