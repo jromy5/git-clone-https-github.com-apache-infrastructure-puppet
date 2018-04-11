@@ -1363,11 +1363,11 @@ buildbot = rw
 
 [/maven/website]
 @maven-pmc = rw
-@svn-site-role = rw
+svn-site-role = rw
 
 [/maven/doxia/website]
 @maven-pmc = rw
-@svn-site-role = rw
+svn-site-role = rw
 
 [/maven/(archetype|archetypes)]
 * = r
