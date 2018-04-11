@@ -17,11 +17,11 @@ ARCHIVES_PATH=$HOME/archives/mbox-archives.conf
 
 if [ $# -ge 1 ]; then
   ARCHIVES_PATH="$1"
-  exit 1
 fi
 
 if [ ! -f $ARCHIVES_PATH ] ; then
   echo $ARCHIVES_PATH not found.  Exiting.
+  exit 1
 fi
 
 source $ARCHIVES_PATH
