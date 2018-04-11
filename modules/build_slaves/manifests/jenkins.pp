@@ -262,7 +262,7 @@ class build_slaves::jenkins (
         owner   => $username,
         group   => $groupname,
         mode    => '0750',
-        require => File["/home/${build_slaves::username}/.subversion";
+        require => File["/home/${build_slaves::username}/.subversion"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple":
         ensure => directory,
         owner  => $username,
@@ -274,7 +274,7 @@ class build_slaves::jenkins (
         owner   => $username,
         group   => $groupname,
         mode    => '0640',
-        content => template('build_slaves/svn-credentials.erb')
+        content => template('build_slaves/svn-credentials.erb'),
         require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple";
      }
 
