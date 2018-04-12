@@ -227,6 +227,8 @@ vhosts_asf::vhosts::vhosts:
       Use PublicList "bigtop-issues"
       Use PublicList "lens-commits"
       Use PublicList "olingo-user"
+      Use PublicList "reef-dev"
+      Use PublicList "sirona-dev"
 
       # project renames
 
