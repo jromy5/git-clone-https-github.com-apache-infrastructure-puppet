@@ -215,7 +215,8 @@ vhosts_asf::vhosts::vhosts:
       Use RenameList "code-awards"            "community-mentors"
       Use RenameList "infrastructure"         "infra-users"
       Use RenameList "infrastructure-private" "infra-private"
-      Use RenameList "infrastructure-tools"   "infra-tools" # migrated then closed down
+      # migrated then closed down
+      Use RenameList "infrastructure-tools"   "infra-tools"
 
       # Public list initially created as private
       <Macro PublicList $name>
