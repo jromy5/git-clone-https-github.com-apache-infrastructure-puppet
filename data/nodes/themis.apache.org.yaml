@@ -2386,7 +2386,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
       LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%{HTTP_HOST}'">
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
         AddOutputFilter attic html
       </If>
 
@@ -2486,7 +2486,7 @@ vhosts_asf::vhosts::vhosts:
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
       LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%{HTTP_HOST}'">
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
         AddOutputFilter attic html
       </If>
 
