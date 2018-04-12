@@ -148,7 +148,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
-      RewriteRule . /mod_mbox/%1%2 [L]
+      # use Redirect so user sees updated URL
+      RewriteRule . /mod_mbox/%1%2 [L,R=301]
 
   mailarchives-443:
     vhost_name: '*'
@@ -187,4 +188,5 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
-      RewriteRule . /mod_mbox/%1%2 [L]
+      # use Redirect so user sees updated URL
+      RewriteRule . /mod_mbox/%1%2 [L,R=301]
