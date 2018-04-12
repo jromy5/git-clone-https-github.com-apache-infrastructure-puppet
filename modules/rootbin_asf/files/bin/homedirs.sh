@@ -48,8 +48,8 @@ Hi $me,
 
 Your home directory [/home/$user_dir] on minotaur(people.apache.org) has
 PRIVATE ssh keys in it.  You should consider these keys compromised
-and remove them from ASF hardware and replace them as soon as possible.  You 
-should never store sensitive key related data on any public machines whether 
+and remove them from ASF hardware and replace them as soon as possible.  You
+should never store sensitive key related data on any public machines whether
 ASF hardware or not.
 
 $keys
@@ -90,10 +90,10 @@ gpg() {
   cat <<END_BODY > $f
 Hi $me,
 
-Your home directory [/home/$user_dir] on minotaur(people.apache.org) has 
+Your home directory [/home/$user_dir] on minotaur(people.apache.org) has
 PRIVATE gpg or related keys in it.  You should consider these keys compromised
-and remove them from ASF hardware and replace them as soon as possible.  You 
-should never store sensitive key related data on any public machines whether 
+and remove them from ASF hardware and replace them as soon as possible.  You
+should never store sensitive key related data on any public machines whether
 ASF hardware or not.
 
 If you've used this key to sign releases, you will need to resign them if you
@@ -121,7 +121,7 @@ size() {
 
   size=$(/usr/bin/du -h -m -d 0 /home/$user_dir | awk '{print $1}')
 
-  if [ $size -lt 3768 ]; then 
+  if [ $size -lt 3768 ]; then
     return
   fi
 
@@ -130,7 +130,7 @@ size() {
 Hi $me,
 
 Your home directory(/home/$user_dir) on minotaur(people.apache.org)
-is currently over 2.0 GB [$size].  Please delete some things 
+is currently over 2.0 GB [$size].  Please delete some things
 to bring your current disk usage to 2.0 GB or under.
 
 Thanks,
@@ -148,7 +148,7 @@ svnpw() {
   # pgollucci - 2010/03/02
   if [ "$user_dir" = "upayavira" ]; then ## incubator marvin, tmp
     return;
-  fi 
+  fi
   # pgollucci - 2010/03/01
   if [ "$user_dir" = "jim" ]; then ## committers page, others, tmp
     return;
@@ -171,7 +171,7 @@ $files
 
 To fix this simply remove the file(s) in question.
 Then set 'store-passwords = no' in the [auth] section
-of your ~/.subversion/config, otherwise set 
+of your ~/.subversion/config, otherwise set
 'store-plaintext-passwords = no' in the [global] section
 of your ~/.subversion/servers file.
 
@@ -207,7 +207,7 @@ contactable() {
 
   if [ $ff -eq 0 -a $qf -eq 0 ]; then
     log="has neither $q or $f"
-    
+
   elif [ $ff -eq 1 -a $qf -eq 1 ]; then
     log="has BOTH $q and $f"
 
@@ -227,7 +227,7 @@ contactable() {
     else
       rc=$(echo $fc | grep -c @)
       if [ $rc -ne 1 ]; then
-        log="containts <> 1 '@': [$fc]"
+        log="contains <> 1 '@': [$fc]"
       fi
     fi
   elif [ $qf -eq 1 ]; then
@@ -236,7 +236,7 @@ contactable() {
     else
       rc=$(echo $qc | grep -c @)
       if [ $rc -ne 1 ]; then
-        log="containts <> 1 '@': [$qc]"
+        log="contains <> 1 '@': [$qc]"
       fi
     fi
   fi

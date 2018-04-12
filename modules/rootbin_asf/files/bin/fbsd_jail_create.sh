@@ -71,7 +71,7 @@ just specified.
 This script will now end so you can check it out, renaming the similar
 entry in the /etc/rc.conf file temporarily if need be.
 
-Relevent entry(s) are:
+Relevant entry(s) are:
 ";
 cat /etc/rc.conf | grep jail_list | grep $name
 exit 1;
