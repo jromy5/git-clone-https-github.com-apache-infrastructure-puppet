@@ -342,7 +342,7 @@ class build_slaves::jenkins (
 
   package { $jenkins_packages:
     ensure => latest,
-    require  => Exec['apt_update'],
+    notify  => Exec['apt_update'],
   }
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
