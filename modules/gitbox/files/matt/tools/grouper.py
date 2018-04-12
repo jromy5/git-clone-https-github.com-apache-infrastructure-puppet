@@ -36,7 +36,7 @@ UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 # Run `python grouper.py debug` to check teams but not add/remove users
 DEBUG_RUN = True if len(sys.argv) > 1 and sys.argv[1] == 'debug' else False
 if DEBUG_RUN:
-    print "Debug run active! Not modifying teams"
+    print("Debug run active! Not modifying teams")
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("grouper.cfg")  # Yeah, you're not getting this info...
 
