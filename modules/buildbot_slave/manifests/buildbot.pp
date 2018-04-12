@@ -59,6 +59,7 @@ class buildbot_slave::buildbot (
 
   package { $buildbot_packages:
     ensure => latest,
+    require  => Exec['apt-get update'],
   }
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
