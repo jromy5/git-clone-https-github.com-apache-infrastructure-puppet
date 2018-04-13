@@ -13,6 +13,11 @@ class buildbot_slave::buildbot (
 
   require stdlib
   require buildbot_slave
+  
+  #hax to get apt to update
+  exec { 'update':
+    command => 'apt update -y',
+  }
 
   #define all symlink making iterators
   define buildbot_slave::mkdir_tools ($tool = $title) {
@@ -59,7 +64,6 @@ class buildbot_slave::buildbot (
 
   package { $buildbot_packages:
     ensure => latest,
-    notify  => Exec['apt_update'],
   }
 
   # ant symlinks - populate array, make all symlinks, make latest symlink

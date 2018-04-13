@@ -30,6 +30,11 @@ class build_slaves::jenkins (
 
   require stdlib
   require build_slaves
+  
+  #hax to get apt to update
+  exec { 'update':
+    command => 'apt update -y',
+  }
 
   #define all symlink making iterators
   define build_slaves::mkdir_tools ($tool = $title) {
@@ -342,7 +347,6 @@ class build_slaves::jenkins (
 
   package { $jenkins_packages:
     ensure => latest,
-    notify  => Exec['apt_update'],
   }
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
