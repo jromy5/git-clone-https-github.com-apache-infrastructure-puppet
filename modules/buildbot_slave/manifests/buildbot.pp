@@ -16,7 +16,7 @@ class buildbot_slave::buildbot (
   
   #hax to get apt to update
   exec { 'update':
-    command => 'apt update -y',
+    command => '/usr/bin/apt update -y',
   }
 
   #define all symlink making iterators
