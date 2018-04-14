@@ -158,7 +158,7 @@ demand_data_total=$((demand_data_hits + demand_data_misses))
 demand_data_perc=$((100*demand_data_hits / demand_data_total))
 
 
-printf "ARC Efficency:\n"
+printf "ARC Efficiency:\n"
 printf "\t Cache Access Total:        \t %d\n" $arc_accesses_total
 printf "\t Cache Hit Ratio:      %2d%%\t %d   \t[Defined State for buffer]\n" $arc_hit_perc $arc_hits
 printf "\t Cache Miss Ratio:     %2d%%\t %d   \t[Undefined State for Buffer]\n" $arc_miss_perc $arc_misses

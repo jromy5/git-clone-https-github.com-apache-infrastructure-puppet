@@ -313,6 +313,22 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
+      -
+        path: '/var/www/ooo-site.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+
     custom_fragment: |
       Use OpenOffice http
       Use BlockSvn
@@ -2384,6 +2400,11 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
+      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+        AddOutputFilter attic html
+      </If>
+
 
   tlp-ssl:
     priority: 99
@@ -2478,6 +2499,11 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+        AddOutputFilter attic html
+      </If>
 
   tomee:
     vhost_name: '*'

@@ -25,11 +25,16 @@ class build_slaves::jenkins (
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9', 'apache-maven-3.5.0' , 'apache-maven-3.5.2'], # lint:ignore:140chars
   $java_jenkins = ['jdk1.5.0_17-32','jdk1.5.0_17-64','jdk1.6.0_11-32','jdk1.6.0_11-64','jdk1.6.0_20-32','jdk1.6.0_20-64','jdk1.6.0_27-32','jdk1.6.0_27-64','jdk1.6.0_45-32','jdk1.7.0_04','jdk1.7.0_55', 'jdk1.8.0'], # lint:ignore:140chars
-  $java_asfpackages = ['harmony-jdk-713673' , 'jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_121', 'jdk1.8.0_131', 'jdk1.8.0_144' , 'jdk1.8.0_144-unlimited-security' , 'jdk1.8.0_152' , 'jigsaw-jdk-9-ea-b156', 'jdk-9-ea-b179' , 'jdk-9-b181' , 'jdk-9-b181-unlimited-security' , 'IBMJava2-142' , 'IBMJava2-amd64-142' , 'ibm-java2-i386-50' , 'ibm-java-i386-60' , 'ibm-java2-x86_64-50' , 'ibm-java-x86_64-60', 'ibm-java-x86_64-70', 'ibm-java-x86_64-80' , 'jdk-9.0.1' , 'jdk-10-ea+36' , 'jdk-10_46'], # lint:ignore:140chars
+  $java_asfpackages = ['harmony-jdk-713673' , 'jdk1.5.0_22-32', 'jdk1.5.0_22-64', 'jdk1.6.0_20-32-unlimited-security', 'jdk1.6.0_45-64', 'jdk1.7.0-32', 'jdk1.7.0-64', 'jdk1.7.0_25-32', 'jdk1.7.0_25-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_121', 'jdk1.8.0_131', 'jdk1.8.0_144' , 'jdk1.8.0_144-unlimited-security' , 'jdk1.8.0_152' , 'jigsaw-jdk-9-ea-b156', 'jdk-9-ea-b179' , 'jdk-9-b181' , 'jdk-9-b181-unlimited-security' , 'IBMJava2-142' , 'IBMJava2-amd64-142' , 'ibm-java2-i386-50' , 'ibm-java-i386-60' , 'ibm-java2-x86_64-50' , 'ibm-java-x86_64-60', 'ibm-java-x86_64-70', 'ibm-java-x86_64-80' , 'jdk-9.0.1' , 'jdk-10-ea+36' , 'jdk-10_46' , 'jdk-11-ea+8'], # lint:ignore:140chars
 ) {
 
   require stdlib
   require build_slaves
+  
+  #hax to get apt to update
+  exec { 'update':
+    command => '/usr/bin/apt update -y',
+  }
 
   #define all symlink making iterators
   define build_slaves::mkdir_tools ($tool = $title) {
@@ -262,20 +267,20 @@ class build_slaves::jenkins (
         owner   => $username,
         group   => $groupname,
         mode    => '0750',
-        require => File["/home/${build_slaves::username}/.subversion";
+        require => File["/home/${build_slaves::username}/.subversion"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple":
         ensure => directory,
         owner  => $username,
         group  => $groupname,
         mode   => '0750',
-        require => File["/home/${build_slaves::username}/.subversion/auth";
+        require => File["/home/${build_slaves::username}/.subversion/auth"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple/d3c8a345b14f6a1b42251aef8027ab57":
         ensure  => present,
         owner   => $username,
         group   => $groupname,
         mode    => '0640',
-        content => template('build_slaves/svn-credentials.erb')
-        require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple";
+        content => template('build_slaves/svn-credentials.erb'),
+        require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple"];
      }
 
     }
