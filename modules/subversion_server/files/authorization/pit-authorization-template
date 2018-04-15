@@ -209,8 +209,6 @@ ofbiz={reuse:asf-authorization:ofbiz}
 ofbiz-pmc={ldap:cn=ofbiz,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 olingo={reuse:asf-authorization:olingo}
 olingo-pmc={ldap:cn=olingo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-oltu={reuse:asf-authorization:oltu}
-oltu-pmc={ldap:cn=oltu,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 oodt={reuse:asf-authorization:oodt}
 oodt-pmc={ldap:cn=oodt,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 oozie={reuse:asf-authorization:oozie}

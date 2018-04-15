@@ -289,8 +289,6 @@ ofbiz={ldap:cn=ofbiz,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ofbiz-pmc={reuse:pit-authorization:ofbiz-pmc}
 olingo={ldap:cn=olingo,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 olingo-pmc={reuse:pit-authorization:olingo-pmc}
-oltu={ldap:cn=oltu,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-oltu-pmc={reuse:pit-authorization:oltu-pmc}
 oodt={ldap:cn=oodt,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 oodt-pmc={reuse:pit-authorization:oodt-pmc}
 oozie={ldap:cn=oozie,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1488,7 +1486,7 @@ svn-site-role = rw
 @olingo = rw
 
 [/oltu]
-@oltu = rw
+@attic-pmc = rw
 
 [/onami]
 @attic-pmc = rw
