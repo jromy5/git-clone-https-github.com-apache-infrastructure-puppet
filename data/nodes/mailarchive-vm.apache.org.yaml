@@ -91,6 +91,7 @@ apache::custom_config:
 
         # Jakarta closed down
         RedirectMatch Permanent "^/mod_mbox/jakarta-(lucene-(dev|user).*)" "/mod_mbox/$1"
+        RedirectMatch Permanent "^/mod_mbox/jakarta-(jmeter-(dev|user).*)" "/mod_mbox/$1"
 
         # individual list renames
         Use RenameList "jclouds-issues"  "jclouds-notifications"
