@@ -100,6 +100,7 @@ apache::custom_config:
         Use RenameList "jclouds-issues"  "jclouds-notifications"
         Use RenameList "libcloud-commits" "libcloud-notifications"
         Use RenameList "incubator-libcloud" "libcloud-dev"
+        Use RenameList "ws-general" "ws-dev"
         Use RenameList "www-infrastructure-issues" "infra-issues"
       </Macro>
 
