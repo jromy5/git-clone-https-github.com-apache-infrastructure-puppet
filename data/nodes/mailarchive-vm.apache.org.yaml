@@ -90,11 +90,17 @@ apache::custom_config:
         RedirectMatch Permanent "^/mod_mbox/ws-(wsrp4j-(dev|user).*)" "/mod_mbox/portals-$1"
 
         # Jakarta closed down
-        RedirectMatch Permanent "^/mod_mbox/jakarta-(lucene-(dev|user).*)" "/mod_mbox/$1"
+        Use RenameList "jakarta-lucene-dev"  "lucene-dev"
+        # and java-dev was then renamed: 
+        Use RenameList "lucene-java-dev"     "lucene-dev"
+        Use RenameList "jakarta-lucene-user" "lucene-java-user"
+        RedirectMatch Permanent "^/mod_mbox/jakarta-(jmeter-(dev|user).*)" "/mod_mbox/$1"
 
         # individual list renames
         Use RenameList "jclouds-issues"  "jclouds-notifications"
         Use RenameList "libcloud-commits" "libcloud-notifications"
+        Use RenameList "incubator-libcloud" "libcloud-dev"
+        Use RenameList "ws-general" "ws-dev"
         Use RenameList "www-infrastructure-issues" "infra-issues"
       </Macro>
 
