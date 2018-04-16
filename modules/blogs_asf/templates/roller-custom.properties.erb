@@ -79,6 +79,9 @@ org.apache.roller.weblogger.ui.rendering.plugins.comments.AkismetCommentValidato
 
 # Activate LDAP - also see the security.xml file for LDAP changes/additions.
 authentication.method=ldap
+
+# Autoprovision should be enabled for new user accounts to be created from ldap
+# See INFRA-16152 for more info
 users.ldap.autoProvision.enabled=true
 
 # override default username allowed characters to enable underscore, which we allow in our LDAP
