@@ -25,6 +25,10 @@ classes:
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
   - loggy
+  - rootbin_asf
+  - rsync
+  - rsync::server
+  - rsync_mirror
   - ssl::name::wildcard_apache_org
   - ssl::name::apachecon_com
   - ssl::name::archive_apachecon_com
