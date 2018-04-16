@@ -102,6 +102,12 @@ apache::custom_config:
         Use RenameList "incubator-libcloud" "libcloud-dev"
         Use RenameList "ws-general" "ws-dev"
         Use RenameList "www-infrastructure-issues" "infra-issues"
+
+        # Renamed on graduation
+        # empire-db-* => empire-*
+        RedirectMatch Permanent "^/mod_mbox/incubator-empire-db-(.*)" "/mod_mbox/empire-$1"
+        # oozie-users => oozie-user
+        RedirectMatch Permanent "^/mod_mbox/incubator-oozie-users($|/.*$)" "/mod_mbox/oozie-user$1"
       </Macro>
 
 logrotate::rule:
@@ -148,7 +154,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
-      RewriteRule . /mod_mbox/%1%2 [L]
+      # use Redirect so user sees updated URL
+      RewriteRule . /mod_mbox/%1%2 [L,R=301]
 
   mailarchives-443:
     vhost_name: '*'
@@ -187,4 +194,5 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{REQUEST_URI} ^/mod_mbox/incubator-([^/]+)($|/.*$)
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/incubator-%1 !-d
       RewriteCond /x1/mail-archives.apache.org/mod_mbox/%1 -d
-      RewriteRule . /mod_mbox/%1%2 [L]
+      # use Redirect so user sees updated URL
+      RewriteRule . /mod_mbox/%1%2 [L,R=301]
