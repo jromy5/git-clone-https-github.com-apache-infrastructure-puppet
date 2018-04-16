@@ -31,10 +31,6 @@ classes:
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
-  - rootbin_asf
-  - rsync
-  - rsync::server
-  - rsync_mirror
   - tlp_vhosts::compat
   - vhosts_asf::custom_config
   - vhosts_asf::modules
@@ -77,7 +73,6 @@ apache::mod::status::status_path:            '/server-status-dd'
 
 apache::mpm_module:                          'event'
 apache::serveradmin:                         'users@infra.apache.org'
-
 
 apmirror::uid:                               '508'
 apmirror::gid:                               '508'
@@ -511,8 +506,6 @@ vhosts_asf::vhosts::vhosts:
       <Location "/server-status-dd">
         SetHandler server-status
       </Location>
-      
-      
 
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
@@ -524,6 +517,7 @@ vhosts_asf::vhosts::vhosts:
       <Location "/server-status">
           SetHandler lua-script
       </Location>
+
       Use BlockSvn
 
   apache-ssl:
@@ -642,8 +636,8 @@ vhosts_asf::vhosts::vhosts:
       <Location "/server-status">
           SetHandler lua-script
       </Location>
+
       Use BlockSvn
-      
 
   apachecon:
     vhost_name: '*'
@@ -675,8 +669,8 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
     ssl_key: '/etc/ssl/private/apachecon.com.key'
     custom_fragment: |
-      Redirect permanent /c http://archive.apachecon.com/c    
-  
+      Redirect permanent /c http://archive.apachecon.com/c
+
   apachecon-archive:
     vhost_name: '*'
     port: 80
@@ -820,7 +814,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html 
+      Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html
 
   deltaspike:
     vhost_name: '*'
@@ -2449,7 +2443,7 @@ vhosts_asf::vhosts::vhosts:
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-         <Directory /var/www/subversion-staging.apache.org>
+      <Directory /var/www/subversion-staging.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>

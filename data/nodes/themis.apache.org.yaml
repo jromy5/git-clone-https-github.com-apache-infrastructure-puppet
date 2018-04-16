@@ -774,7 +774,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      Redirect permanent / http://code.google.com/a/apache-extras.org 
+      Redirect permanent / http://code.google.com/a/apache-extras.org
 
   cloudstack:
     vhost_name: '*'
@@ -1065,6 +1065,7 @@ vhosts_asf::vhosts::vhosts:
       AddDefaultCharset off
 
       RewriteEngine On
+
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#asf-wide [R=301,L,NE]
 
@@ -1483,7 +1484,7 @@ vhosts_asf::vhosts::vhosts:
 
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
-    
+
       LuaScope thread
       LuaCodeCache stat
       RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
@@ -2282,6 +2283,18 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       RedirectMatch permanent ^ http://subversion.apache.org/
 
+  svn.collab.net:
+    vhost_name: '*'
+    port: 80
+    servername: 'svn.collab.net'
+    docroot: '/var/www/subversion.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch ^ https://subversion.apache.org/source-code
+
   tinkerpop.com:
     vhost_name: '*'
     port: 80
@@ -2295,18 +2308,6 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     custom_fragment: |
       RedirectMatch permanent ^ http://tinkerpop.apache.org/
-      
-  svn.collab.net:
-    vhost_name: '*'
-    port: 80
-    servername: 'svn.collab.net'
-    docroot: '/var/www/subversion.apache.org'
-    manage_docroot: false
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
-    custom_fragment: |
-      RedirectMatch ^ https://subversion.apache.org/source-code
 
   tlp:
     vhost_name: '*'
