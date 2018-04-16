@@ -200,7 +200,6 @@ helix-pmc={reuse:pit-authorization:helix-pmc}
 hive={ldap:cn=hive,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 hive-pmc={reuse:pit-authorization:hive-pmc}
 hive-hcatalog={ldap:cn=hive-hcatalog,ou=auth,ou=groups,dc=apache,dc=org}
-htrace={ldap:cn=htrace,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 httpcomponents={ldap:cn=httpcomponents,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 httpcomponents-pmc={reuse:pit-authorization:httpcomponents-pmc}
 httpd={ldap:cn=httpd,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -984,9 +983,6 @@ buildbot = rw
 
 [/incubator/heraldry]
 * = r
-
-[/incubator/htrace]
-@htrace = rw
 
 [/johnzon]
 @johnzon = rw
