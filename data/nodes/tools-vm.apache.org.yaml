@@ -429,6 +429,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'selfserve.apache.org'
     serveraliases:
       - 'infrahelp.apache.org'
+      - 'infra.apache.org'
       - 'helpinfrahelpyou.apache.org'
     serveradmin: 'root@apache.org'
     docroot: '/var/www/selfserve-portal/site'
