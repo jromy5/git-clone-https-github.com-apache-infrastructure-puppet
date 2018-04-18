@@ -197,6 +197,8 @@ base::remove_os_install_user::osinstallgroup: 'ubuntu'
 
 datadog_agent::log_level: 'error'
 
+datadog_agent::host: '%{::fqdn}'
+
 datadog_agent::integrations::process::processes:
   - name: 'puppet'
     search_string: ['puppet']
