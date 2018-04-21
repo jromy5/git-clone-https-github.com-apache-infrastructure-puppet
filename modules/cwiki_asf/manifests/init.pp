@@ -158,6 +158,7 @@ class cwiki_asf (
     "${install_dir}/bin/setenv.sh":
       content => template('cwiki_asf/setenv.sh.erb'),
       mode    => '0644';
+    # Below mode 0664 required by the confluence app, and will reset it if not matched
     "${confluence_home}/confluence.cfg.xml":
       content => template('cwiki_asf/confluence.cfg.xml.erb'),
       owner   => 'confluence',
