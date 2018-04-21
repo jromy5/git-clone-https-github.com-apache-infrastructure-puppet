@@ -146,9 +146,9 @@ class crowd_asf (
     "${install_dir}/crowd-webapp/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
       mode    => '0644';
-    # "${install_dir}/apache-tomcat/conf/server.xml":
-    #   content => template('crowd_asf/server.xml.erb'),
-    #   mode    => '0644';
+    "${install_dir}/apache-tomcat/conf/server.xml":
+      content => template('crowd_asf/server.xml.erb'),
+      mode    => '0644';
     "${install_dir}/apache-tomcat/bin/setenv.sh":
       content => template('crowd_asf/setenv.sh.erb'),
       mode    => '0644';
