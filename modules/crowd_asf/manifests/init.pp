@@ -54,7 +54,6 @@ class crowd_asf (
   $install_dir              = "${parent_dir}/${crowd_build}"
   $crowd_home               = "${parent_dir}/crowd-data"
   $current_dir              = "${parent_dir}/current"
-  $intermediates_dir        = "${docroot}/intermediates"
 
   user {
     $username:
