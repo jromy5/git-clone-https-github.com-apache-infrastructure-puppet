@@ -30,7 +30,7 @@ class build_slaves::jenkins (
 
   require stdlib
   require build_slaves
-  
+
   #hax to get apt to update
   exec { 'update':
     command => '/usr/bin/apt update -y',
@@ -256,12 +256,12 @@ class build_slaves::jenkins (
       source => 'puppet:///modules/build_slaves/gitconfig',
     }
 
-    file { 
-     "/home/${build_slaves::username}/.subversion":
-        ensure  => directory,
-        owner   => $username,
-        group   => $groupname,
-        mode    => '0750';
+    file {
+      "/home/${build_slaves::username}/.subversion":
+        ensure => directory,
+        owner  => $username,
+        group  => $groupname,
+        mode   => '0750';
       "/home/${build_slaves::username}/.subversion/auth":
         ensure  => directory,
         owner   => $username,
@@ -269,10 +269,10 @@ class build_slaves::jenkins (
         mode    => '0750',
         require => File["/home/${build_slaves::username}/.subversion"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple":
-        ensure => directory,
-        owner  => $username,
-        group  => $groupname,
-        mode   => '0750',
+        ensure  => directory,
+        owner   => $username,
+        group   => $groupname,
+        mode    => '0750',
         require => File["/home/${build_slaves::username}/.subversion/auth"];
       "/home/${build_slaves::username}/.subversion/auth/svn.simple/d3c8a345b14f6a1b42251aef8027ab57":
         ensure  => present,
@@ -281,7 +281,7 @@ class build_slaves::jenkins (
         mode    => '0640',
         content => template('build_slaves/svn-credentials.erb'),
         require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple"];
-     }
+      }
 
     }
 
@@ -299,13 +299,13 @@ class build_slaves::jenkins (
     line  => 'USERGROUPS_ENAB no',
     match => '^USERGROUPS_ENAB.*'
   }
-  
+
   file { '/usr/local/asfpackages/kill-old-docker.sh':
-    ensure  => file,
-    owner   => root,
-    group   => root,
-    mode    => '0755',
-    source  => 'puppet:///modules/build_slaves/kill-old-docker.sh',
+    ensure => file,
+    owner  => root,
+    group  => root,
+    mode   => '0755',
+    source => 'puppet:///modules/build_slaves/kill-old-docker.sh',
   }
 
   file {
@@ -459,19 +459,28 @@ class build_slaves::jenkins (
       ensure      => 'absent',
       hour        => '13',
       command     => '/usr/bin/docker system prune -f',
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
 
     'docker-cleanup-weekly':
       hour        => '20',
       command     => '/usr/bin/docker system prune -a -f --filter "until=168h"',
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh",; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
   }
 
   cron {
     'docker-kill-old-containers':
       hour        => '6',
       command     => '/bin/bash /usr/local/asfpackages/kill-old-docker.sh',
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
   }
 
 
