@@ -11,7 +11,7 @@ class stunnel_asf (
     ensure => $package_ensure,
   }
 
-  file { 
+  file {
     'etc_stunnel_conf':
       path    => '/etc/default/stunnel4',
       owner   => 'root',

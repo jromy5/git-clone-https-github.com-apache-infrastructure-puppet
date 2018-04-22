@@ -27,5 +27,5 @@ class mail_relay (
       group   => 'root',
       content => $mynetworks,
       notify  => Service['postfix'];
-   }
+    }
 }

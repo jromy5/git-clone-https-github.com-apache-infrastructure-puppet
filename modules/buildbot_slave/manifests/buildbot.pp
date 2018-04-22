@@ -13,7 +13,7 @@ class buildbot_slave::buildbot (
 
   require stdlib
   require buildbot_slave
-  
+
   #hax to get apt to update
   exec { 'update':
     command => '/usr/bin/apt update -y',
