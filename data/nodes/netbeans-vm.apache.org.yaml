@@ -26,6 +26,12 @@ letsencrypt::certonly:
     cron_success_command: 'service apache2 reload'
 
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+postfix::server::inet_interfaces: 'all'
+postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
 vhosts_asf::vhosts::vhosts:
   netbeans-vm.apache.org-80:
     ensure: 'present'
