@@ -4,6 +4,9 @@
 #
 # This script is run periodically via cron.
 #
+# For testing, it is helpful to create a directory structure like:
+#   ### fill this out
+#
 
 import sys
 import os.path
@@ -120,7 +123,7 @@ class AuthzFile(object):
   def generate(self, client, template, reuse):
     new_z = [ '# placeholder for CSN cache',
               ]
-    ous = set()
+    ous = set()  # Track the OUs that we pull data from, and need a CSN for.
     for line in template.lines:
       if line.startswith('#') or '={' not in line:
         new_z.append(line)
@@ -140,6 +143,7 @@ class AuthzFile(object):
     new_z[0] = gen_cache(client, ous)
 
     # Write to an intermediate file, then do an atomic move into place.
+    ### TODO: throw an alert if the new file is "too different" from the old
     tmp = '%s.%d' % (self.fname, os.getpid())
     open(tmp, 'w').write('\n'.join(new_z) + '\n')
     os.rename(tmp, self.fname + '.alt')  ### not the real file, just yet
