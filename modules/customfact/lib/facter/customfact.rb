@@ -79,6 +79,17 @@ Facter.add("asfcolo") do
   end
 end
 
+Facter.add("noderole") do
+  setcode do
+    hostname = Facter.value('hostname')
+    if hostname.include? "tlp-us"  # Only apply to azure test!
+      "tlpserver"
+    else
+      "default"
+    end
+  end
+end
+
 Facter.add("oem") do
   setcode do
     oem = Facter.value('bios_vendor')
