@@ -1,0 +1,11 @@
+---
+classes: 
+  - python
+
+python::dev: true
+python::pip: 'latest'
+python::virtualenv: true
+python::python_pips:
+  asfpy:
+    ensure: present
+
