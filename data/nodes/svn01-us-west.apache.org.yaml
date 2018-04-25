@@ -108,6 +108,8 @@ perl::module:
 python::python_pips:
   gunicorn:
     ensure: present
+  python-ldap:
+    ensure: present
     
 # svn01 gets to talk directly to hermes to bypass spam filters
 # on commit messages (svnmailer)
