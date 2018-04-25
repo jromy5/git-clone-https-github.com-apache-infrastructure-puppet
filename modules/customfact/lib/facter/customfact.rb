@@ -84,7 +84,7 @@ Facter.add("noderole") do
     hostname = Facter.value('hostname')
     if hostname.include? "tlp-us"  # Only apply to azure test!
       "tlpserver"
-    elsif hostname.incude? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
+    elsif hostname.include? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
       "jenkins"
     else
       "default"
