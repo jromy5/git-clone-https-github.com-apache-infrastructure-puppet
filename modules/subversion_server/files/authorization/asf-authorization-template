@@ -543,6 +543,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/attic]
 @attic-pmc = rw
 
+[/attic/site]
+buildbot = rw
+
 [/aurora]
 @aurora = rw
 
