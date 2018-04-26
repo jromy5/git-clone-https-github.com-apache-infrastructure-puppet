@@ -1823,6 +1823,12 @@ svn-role = rw
 [/uima]
 @uima = rw
 
+[/uima/uimafit]
+* = r
+
+[/uima/uv3/uimafit-v3]
+* = r
+
 [/usergrid]
 @usergrid = rw
 
