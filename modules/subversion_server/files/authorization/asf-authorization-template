@@ -543,6 +543,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/attic]
 @attic-pmc = rw
 
+[/attic/site]
+buildbot = rw
+
 [/aurora]
 @aurora = rw
 
@@ -665,6 +668,11 @@ buildbot = rw
 @committers = rw
 
 [/comdev/projects.apache.org/site/json]
+projects_role = rw
+
+# prepare for SVN move to introduce /trunk/ (INFRA-16355)
+# These comments and the previous stanza should be removed when complete
+[/comdev/projects.apache.org/trunk/site/json]
 projects_role = rw
 
 [/comdev/reporter.apache.org/trunk/data/history]
