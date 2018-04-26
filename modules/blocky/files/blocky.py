@@ -204,7 +204,7 @@ class Blocky(Thread):
 								message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
 								syslog.syslog(syslog.LOG_INFO, message)
 						except Exception as err:
-							syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + err)
+							syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
 						baddies[i] = time.time()
 					elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
 						baddies[i] = time.time()
@@ -252,6 +252,7 @@ Blocky.
 				time.sleep(180)
 			except Exception as err:
 				syslog.syslog(syslog.LOG_INFO, "Error while running ban check: %s" % err)
+				time.sleep(180) # Don't loop every 5ms if we hit a snag!
 
 
 
