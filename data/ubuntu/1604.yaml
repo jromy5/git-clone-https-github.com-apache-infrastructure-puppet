@@ -378,6 +378,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk1.8.0-144
   - asf-build-jdk1.8.0-144-unlimited-security
   - asf-build-jdk1.8.0-152
+  - asf-build-jdk1.8.0-172
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
@@ -528,6 +529,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk1.8.0-144
   - asf-build-jdk1.8.0-144-unlimited-security
   - asf-build-jdk1.8.0-152
+  - asf-build-jdk1.8.0-172
   - asf-build-jigsaw-jdk9-ea-b156
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
