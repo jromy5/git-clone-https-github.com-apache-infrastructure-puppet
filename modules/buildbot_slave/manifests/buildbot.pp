@@ -93,7 +93,7 @@ class buildbot_slave::buildbot (
   buildbot_slave::symlink_asfpackages  { $java_asfpackages: }
   file { '/home/buildslave/slave/tools/java/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_144',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
   }
   file { '/home/buildslave/slave/tools/java/latest1.5':
     ensure => link,

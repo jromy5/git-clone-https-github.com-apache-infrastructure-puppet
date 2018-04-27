@@ -410,7 +410,7 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/java/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_144',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
   }
   file { "/home/${build_slaves::username}/tools/java/latest1.4":
     ensure => link,
