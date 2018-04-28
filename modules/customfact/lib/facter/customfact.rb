@@ -86,6 +86,8 @@ Facter.add("noderole") do
       "tlpserver"
     elsif hostname.include? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
       "jenkins"
+    elsif hostname.include? "jenkins-win" # include all Windows nodes
+      "jenkins-win"
     else
       "default"
     end
