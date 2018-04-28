@@ -12,7 +12,7 @@ class spamassassin::spamc (
 
 ) {
 
-  class { "spamassassin::spamc::install::${::asfosname}::${::asfosrelease}":
+  class { "spamassassin::spamc::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
     spamd_peers           => $spamd_peers,
     haproxy_maxconns      => $haproxy_maxconns,
     haproxy_port          => $haproxy_port,
