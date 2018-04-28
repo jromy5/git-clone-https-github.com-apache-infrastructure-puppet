@@ -1,6 +1,6 @@
-#!/etc/puppet/modules/ldapserver/manifests/install/ubuntu/1604.pp
+#!/etc/puppet/modules/ldapserver/manifests/install/ubuntu/ubuntu_1804.pp
 
-class ldapserver::install::ubuntu::1604 (
+class ldapserver::install::ubuntu::ubuntu_1804 (
 
   $packages         = [],
   $slapd_peers      = [],

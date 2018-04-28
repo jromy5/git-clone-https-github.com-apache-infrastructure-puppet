@@ -19,13 +19,13 @@ base::basepackages:
   - apt-file
   - bash
   - bc
-  - bwm-ng
   - ca-certificates
   - htop
   - iotop
   - libnet-snmp-perl
+  - libpam-cap
+  - libpam-systemd
   - libsnmp-perl
-  - ncdu
   - nload
   - screen
   - sockstat
@@ -36,7 +36,6 @@ base::basepackages:
 base::purgedpackages:
   - 'collectd'
   - 'collectd-core'
-  - 'virtualenvwrapper'
 
 apache::mod::geoip::enable: true
 apache::mod::geoip::flag: 'MemoryCache'
@@ -44,7 +43,8 @@ apache::mod::geoip::db_file:
  - '/usr/share/GeoIP/GeoIP.dat'
  - '/usr/share/GeoIP/GeoIPCity.dat'
 
-apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
+apache::mod::ssl::ssl_cipher: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
+apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3', '-TLSv1', '-TLSv1.1']
 
 apache::log_formats:
   combined: '<%%JSON:httpd_access%%> {
@@ -75,7 +75,7 @@ apache::trace_enable: Off
 apt::sources:
   'asf_internal':
     location: 'https://packages.apache.org/asf_internal'
-    release: 'trusty'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '390EF70BB1EA12B2773962950EE62FB37A00258D'
@@ -84,16 +84,6 @@ apt::sources:
       deb: true
       src: false
     notify_update: true
-  'elasticsearch-1.7':
-    location: 'https://packages.elasticsearch.org/elasticsearch/1.7/debian'
-    release: 'stable'
-    repos: 'main'
-    key:
-      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
-      server: 'pool.sks-keyservers.net'
-    include:
-      deb: true
-      src: false
   'elasticsearch':
     location: 'https://packages.elastic.co/elasticsearch/2.x/debian'
     release: 'stable'
@@ -125,9 +115,19 @@ apt::sources:
     include:
       deb: true
       src: false
+  'elasticsearch-5.x':
+    location: 'https://artifacts.elastic.co/packages/5.x/apt'
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      server: 'pool.sks-keyservers.net'
+    include:
+      deb: true
+      src: false
   'docker-engine':
     location: 'https://apt.dockerproject.org/repo'
-    release: 'ubuntu-trusty'
+    release: 'ubuntu-bionic'
     repos: 'main'
     key:
       id: '58118E89F3A912897C070ADBF76221572C52609D'
@@ -137,7 +137,7 @@ apt::sources:
       src: false
   'nodesource-6':
     location: 'https://deb.nodesource.com/node_6.x'
-    release: 'trusty'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280'
@@ -147,7 +147,7 @@ apt::sources:
       src: false
   'puppetlabs':
     location: 'https://apt.puppetlabs.com'
-    release: 'trusty'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
@@ -157,7 +157,7 @@ apt::sources:
       src: false
   'puppetdeps':
     location: 'https://apt.puppetlabs.com'
-    release: 'trusty'
+    release: 'bionic'
     repos: 'dependencies'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
@@ -188,6 +188,7 @@ unattended_upgrades::autoclean: 7
 unattended_upgrades::clean::min: 7
 unattended_upgrades::origins:
   - '${distro_id} ${distro_codename}-security'
+  - '${distro_id} ${distro_codename}-updates'
 
 apt::always_apt_update: true
 
@@ -250,7 +251,7 @@ file:
     group: 'dd-agent'
     notify: Service[datadog-agent]
     content: |
-      # This file is managed by Puppet in the base 1404.yaml
+      # This file is managed by Puppet in the base 1804.yaml
       # and will be overwritten automatically. 
 
       init_config:
@@ -264,8 +265,8 @@ file:
            - none
            - shm
 
-ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
-ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
+ldapclient::install::ubuntu::ubuntu_1804::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::ubuntu::ubuntu_1804::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
     - ldap-auth-client
@@ -280,10 +281,12 @@ ldapclient::ldapclient_remove_packages:
     - nscd
     - libnss-ldap
 
-ldapserver::install::ubuntu::1404::packages:
+ldapserver::install::ubuntu::ubuntu_1804::packages:
   - slapd
   - slapd-dbg
 
+postfix::server::daemon_directory:       '/usr/lib/postfix/sbin'
+postfix::server::shlib_directory:        '/usr/lib/postfix'
 postfix::server::myhostname:             "%{::fqdn}"
 postfix::server::mydomain:               'apache.org'
 postfix::server::mydestination:          "%{::fqdn}, localhost.%{::domain}, localhost"
@@ -359,33 +362,16 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-ibm-java2-i386-50
   - asf-build-ibm-java-i386-60
   - asf-build-ibm-java2-x86-64-50
-  - asf-build-ibm-java-x86-64-60
   - asf-build-ibm-java-x86-64-70
   - asf-build-ibm-java-x86-64-80
   - asf-build-j2sdk1.4.2-19
   - asf-build-jbake-2.5.1
-  - asf-build-jdk1.5.0-17-32
-  - asf-build-jdk1.5.0-17-64
   - asf-build-jdk1.5.0-22-32
   - asf-build-jdk1.5.0-22-64
-  - asf-build-jdk1.6.0-11-32
-  - asf-build-jdk1.6.0-11-64
-  - asf-build-jdk1.6.0-20-32
   - asf-build-jdk1.6.0-20-32-unlimited-security
-  - asf-build-jdk1.6.0-20-64
-  - asf-build-jdk1.6.0-27-32
-  - asf-build-jdk1.6.0-27-64
-  - asf-build-jdk1.6.0-45-32
   - asf-build-jdk1.6.0-45-64
-  - asf-build-jdk1.7.0-04
-  - asf-build-jdk1.7.0-25-32
-  - asf-build-jdk1.7.0-25-64
-  - asf-build-jdk1.7.0-32
-  - asf-build-jdk1.7.0-55
-  - asf-build-jdk1.7.0-64
   - asf-build-jdk1.7.0-79-unlimited-security
   - asf-build-jdk1.7.0-80
-  - asf-build-jdk1.8.0
   - asf-build-jdk1.8.0-66-unlimited-security
   - asf-build-jdk1.8.0-121
   - asf-build-jdk1.8.0-131
@@ -397,7 +383,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1
+  - asf-build-jdk9.0.1 
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -423,15 +409,14 @@ build_slaves::distro_packages:
   - erlang-base
   - erlang-dev
   - erlang-eunit
-  - firefox
   - flex
+  - firefox
   - g++
   - g++-4.8-multilib
   - g++-multilib
   - gcc-multilib
   - ghc
   - git-core
-  - lib32bz2-1.0
   - lib32ncurses5
   - lib32z1
   - libaio1
@@ -459,7 +444,7 @@ build_slaves::distro_packages:
   - libjpeg8-dev
   - liblzo2-dev
   - liblua5.2-dev
-  - libmono-system-web2.0-cil
+  - libmono-system-web4.0-cil
   - libpcap0.8
   - libperl-dev
   - libqt4-dev
@@ -475,18 +460,19 @@ build_slaves::distro_packages:
   - libz-dev
   - lua5.2
   - docker-engine
-  - mingw32
-  - mingw32-binutils
-  - mingw32-runtime
+  - mingw-w64
+  - binutils-mingw-w64
+  - mingw-w64-tools
+  - mingw-w64-common
   - mono-devel
-  - mono-gmcs
+  - mono-complete
   - nodejs
   - nsis
-  - openjdk-7-jdk
+  - openjdk-8-jdk
+  - openjdk-9-jdk
   - php-pear
-  - php5
-  - php5-cli
-  - php5-dev
+  - php-dev
+  - php7.0-cli
   - pkg-config
   - protobuf-compiler
   - python-all
@@ -494,7 +480,6 @@ build_slaves::distro_packages:
   - python-all-dev
   - python-boto
   - python-setuptools
-  - python-support
   - python3-dev
   - re2c
   - ruby
@@ -506,6 +491,7 @@ build_slaves::distro_packages:
   - swig
   - tmux
   - unzip
+  - virtualenvwrapper
   - xvfb
 
 buildbot_slave::buildbot::buildbot_packages:
@@ -548,7 +534,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1
+  - asf-build-jdk9.0.1 
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -573,7 +559,7 @@ buildbot_slave::bb_basepackages:
   - libsqlite3-dev
   - libssl-dev
   - maven
-  - openjdk-7-jdk
+  - openjdk-9-jdk
   - pkg-config
   - python3-dev
   - python3-markdown
@@ -581,6 +567,7 @@ buildbot_slave::bb_basepackages:
   - rake
   - ruby-dev
   - unzip
+  - virtualenvwrapper
   - zip
 
 logrotate::conf:

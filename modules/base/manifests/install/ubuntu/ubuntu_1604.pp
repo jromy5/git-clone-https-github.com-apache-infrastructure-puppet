@@ -1,6 +1,6 @@
-#/etc/puppet/modules/base/manifests/install/ubuntu/1604.pp
+#/etc/puppet/modules/base/manifests/install/ubuntu/ubuntu_1604.pp
 
-class base::install::ubuntu::1604 (
+class base::install::ubuntu::ubuntu_1604 (
 ) {
 
   file {

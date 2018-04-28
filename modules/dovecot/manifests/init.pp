@@ -13,7 +13,7 @@ class dovecot (
     ensure => purged,
   }
 
-  class { "dovecot::install::${::asfosname}::${::asfosrelease}":
+  class { "dovecot::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
     ldapservers => $ldapservers, # lint:ignore:variable_scope
   }
 }
