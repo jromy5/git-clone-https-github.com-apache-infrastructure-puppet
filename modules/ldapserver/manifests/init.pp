@@ -30,7 +30,7 @@ class ldapserver (
     ensure   =>  installed,
   }
 
-  class { "ldapserver::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
+  class { "ldapserver::install::${::asfosname}::${::asfosrelease}":
     slapd_peers      => $slapd_peers,
     schemas          => $schemas,
     ldaploglevel     => $ldaploglevel,
