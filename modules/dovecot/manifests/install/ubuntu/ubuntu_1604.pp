@@ -1,6 +1,6 @@
-#/etc/puppet/modules/dovecot/manifests/install/ubuntu/1604.pp
+#/etc/puppet/modules/dovecot/manifests/install/ubuntu/ubuntu_1604.pp
 
-class dovecot::install::ubuntu::1604 (
+class dovecot::install::ubuntu::ubuntu_1604 (
   $ldapservers = hiera('ldapclient::ldapservers'),
 )
 {

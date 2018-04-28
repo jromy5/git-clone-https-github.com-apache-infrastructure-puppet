@@ -264,8 +264,8 @@ file:
            - none
            - shm
 
-ldapclient::install::ubuntu::1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
-ldapclient::install::ubuntu::1404::pamhostcheck: 'yes'
+ldapclient::install::ubuntu::ubuntu_1404::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::ubuntu::ubuntu_1404::pamhostcheck: 'yes'
 
 ldapclient::ldapclient_packages: 
     - ldap-auth-client
@@ -280,7 +280,7 @@ ldapclient::ldapclient_remove_packages:
     - nscd
     - libnss-ldap
 
-ldapserver::install::ubuntu::1404::packages:
+ldapserver::install::ubuntu::ubuntu_1404::packages:
   - slapd
   - slapd-dbg
 

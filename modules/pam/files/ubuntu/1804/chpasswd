@@ -1,0 +1,13 @@
+##
+## This file is managed by puppet, all local changes will be lost 
+## during the next puppet run.
+## 
+## Source file:  puppet/modules/pam/files/ubuntu/1604/chpasswd
+##
+
+
+# The PAM configuration file for the Shadow 'chpasswd' service
+#
+
+@include common-password
+

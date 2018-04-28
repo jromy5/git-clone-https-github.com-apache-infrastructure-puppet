@@ -1,6 +1,6 @@
-#/etc/puppet/modules/ldapclient/manifests/install/ubuntu/1404.pp
+#/etc/puppet/modules/ldapclient/manifests/install/ubuntu/ubuntu_1404.pp
 
-class ldapclient::install::ubuntu::1404 (
+class ldapclient::install::ubuntu::ubuntu_1404 (
 
   $ldapcert      = '',
   $ldapservers   = '',

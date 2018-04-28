@@ -1,0 +1,90 @@
+##
+## This file is managed by puppet, all local changes will be lost
+## during the next puppet run.
+##
+## Source file:  puppet/modules/sudoers/templates/ubuntu_1604_sudoers.erb
+##
+
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+
+# Allow members of group root-sudoers to gain root privileges
+%root-sudoers   ALL=(ALL) ALL
+
+# Allow members of group <%= scope.lookupvar('::fqdn') %>-sudoers to gain root privileges
+%<%= scope.lookupvar('::fqdn') %>-sudoers ALL=(ALL) ALL
+
+# Allow the asf999 local user account to use sudo, without a password.
+asf999 ALL=NOPASSWD: ALL
+
+# See sudoers(5) for more information on "#include" directives:
+#includedir /etc/sudoers.d
+
+
+
+
+## All of these need reviewing, and possibly making locally using includes, but for now they are here
+
+
+# command aliases, global so we can re-use for any host
+
+Cmnd_Alias APACHE2 = /usr/sbin/apache2 start, /usr/sbin/apache2 stop, /usr/sbin/apache2 restart, /usr/sbin/apache2 reload, /usr/sbin/apache2 graceful, /usr/sbin/apache2 configtest
+Cmnd_Alias MYSQL = /usr/sbin/service mysql start, /usr/sbin/service mysql stop, /usr/sbin/service mysql restart, /usr/sbin/service mysql status
+Cmnd_ALias TS = /usr/sbin/service trafficserver start, /usr/sbin/service trafficserver stop, /usr/sbin/service trafficserver restart
+Cmnd_Alias RESTART = /sbin/reboot, /sbin/shutdown -r now
+
+# allow snmp to run sudo /sbin/zpool for zpool monitoring checks
+
+snmp  ALL=NOPASSWD: /sbin/zpool status,/sbin/zpool list -H
+
+<% if @fqdn == 'hades.apache.org' -%>
+apbackup  ALL=NOPASSWD: /sbin/zfs
+www-data  ALL=NOPASSWD: /sbin/zfs
+<% end -%>
+
+<% if @fqdn == 'bloodhound-vm2.apache.org' -%>
+buildslave30 ALL=NOPASSWD: APACHE2
+<% end -%>
+
+<% if @fqdn == 'ooo-wiki2-vm.apache.org' -%>
+
+Cmnd_Alias OOOWIKI = /usr/sbin/service ooo-wiki2 start, /usr/sbin/service ooo-wiki2 stop, /usr/sbin/service ooo-wiki2 restart, /usr/sbin/service ooo-wiki2 reload, /usr/sbin/service ooo-wiki2 graceful, /usr/sbin/service ooo-wiki2 status
+
+# Allow devops team some start/stop/restart abilities
+%ooo-wiki2-vm.apache.org-devops ALL = (root) OOOWIKI, MYSQL, TS, RESTART
+<% end -%>
+
+<% if @fqdn == 'ooo-forums.apache.org' -%>
+
+# Allow devops team some start/stop/restart abilities
+%ooo-forums.apache.org-devops ALL = (root) APACHE2, MYSQL, RESTART
+<% end -%>
+
+<% if @fqdn == 'lucene1-us-west.apache.org' -%>
+# allow lucene team access to jenkins account
+%lucene ALL=(jenkins) ALL
+<% end -%>
+
+<% if @fqdn == 'lucene2-us-west.apache.org' -%>
+# allow lucene team access to jenkins account
+%lucene ALL=(jenkins) ALL
+<% end -%>
+
+<% if @fqdn == 'repository-vm2.apache.org' -%>
+# allow nexus to restart nexus
+nexus ALL= NOPASSWD: /etc/init.d/nexus
+<% end -%>
+
