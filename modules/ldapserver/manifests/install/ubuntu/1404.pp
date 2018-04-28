@@ -1,6 +1,6 @@
-#!/etc/puppet/modules/ldapserver/manifests/install/ubuntu/ubuntu_1604.pp
+#!/etc/puppet/modules/ldapserver/manifests/install/ubuntu/1404.pp
 
-class ldapserver::install::ubuntu::ubuntu_1604 (
+class ldapserver::install::ubuntu::1404 (
 
   $packages         = [],
   $slapd_peers      = [],
@@ -88,11 +88,10 @@ class ldapserver::install::ubuntu::ubuntu_1604 (
       group  => 'openldap',
       mode   => '0750';
     $backuppath:
-      ensure  => directory,
-      owner   => 'openldap',
-      group   => 'openldap',
-      mode    => '0750',
-      require => Package['slapd'];
+      ensure => directory,
+      owner  => 'openldap',
+      group  => 'openldap',
+      mode   => '0750';
   }
 
   service { 'slapd':

@@ -3,7 +3,7 @@
 class pam (
   ) {
 
-  class { "pam::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
+  class { "pam::install::${::asfosname}::${::asfosrelease}":
   }
 
 }

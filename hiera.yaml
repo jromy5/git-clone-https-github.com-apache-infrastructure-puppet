@@ -21,9 +21,9 @@
 :hierarchy:
     - "nodes/%{clientcert}"
     - "roles/%{::noderole}"
-    - "%{::asfosname}/%{::asfosname}_%{::asfosrelease}"
+    - "%{::asfosname}/%{::asfosrelease}"
     - "colo/%{asfcolo}"
-    - "%{::virtual}/%{::asfosname}/%{::asfosname}_%{::asfosrelease}"
+    - "%{::virtual}/%{::asfosname}/%{::asfosrelease}"
     - "oem/%{oem}"
     - "environment/%{::environment}"
     - "common"
