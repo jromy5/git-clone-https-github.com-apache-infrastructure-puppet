@@ -75,7 +75,7 @@ apache::trace_enable: Off
 apt::sources:
   'asf_internal':
     location: 'https://packages.apache.org/asf_internal'
-    release: 'xenial'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '390EF70BB1EA12B2773962950EE62FB37A00258D'
@@ -127,7 +127,7 @@ apt::sources:
       src: false
   'docker-engine':
     location: 'https://apt.dockerproject.org/repo'
-    release: 'ubuntu-xenial'
+    release: 'ubuntu-bionic'
     repos: 'main'
     key:
       id: '58118E89F3A912897C070ADBF76221572C52609D'
@@ -137,7 +137,7 @@ apt::sources:
       src: false
   'nodesource-6':
     location: 'https://deb.nodesource.com/node_6.x'
-    release: 'xenial'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280'
@@ -147,7 +147,7 @@ apt::sources:
       src: false
   'puppetlabs':
     location: 'https://apt.puppetlabs.com'
-    release: 'xenial'
+    release: 'bionic'
     repos: 'main'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
@@ -157,7 +157,7 @@ apt::sources:
       src: false
   'puppetdeps':
     location: 'https://apt.puppetlabs.com'
-    release: 'xenial'
+    release: 'bionic'
     repos: 'dependencies'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
