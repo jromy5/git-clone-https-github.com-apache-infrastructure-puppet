@@ -88,6 +88,8 @@ Facter.add("noderole") do
       "jenkins"
     elsif hostname.include? "jenkins-win" # include all Windows nodes
       "jenkins-win"
+    elsif hostname.include? ("jenkins-beam") || hostname.include? ("jenkins-cassandra")
+      "jenkins-external"
     else
       "default"
     end
