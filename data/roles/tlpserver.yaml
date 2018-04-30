@@ -103,10 +103,6 @@ svnwcsub::service_name:                      'svnwcsub'
 svnwcsub::shell:                             '/bin/bash'
 svnwcsub::username:                          'svnwc'
 
-rsync::package_ensure:                       'latest'
-rsync::server::use_xinetd:                   false
-rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
-
 apache::custom_config:
   closerlua:
     content: |
