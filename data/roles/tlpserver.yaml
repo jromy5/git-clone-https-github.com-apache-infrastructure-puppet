@@ -83,7 +83,6 @@ base::basepackages:
   - lua-socket
   - lua-posix
 
-
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -91,9 +90,6 @@ logrotate::rule:
     create_group: 'apbackup'
     rotate: 5
 
-ntp::interfaces:
-  - em1
-  - lo
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
@@ -132,17 +128,17 @@ apache::custom_config:
         # optionally enable per-project favicons
         RewriteCond %%{}{REQUEST_URI} ^/favicon\.ico$
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
-        RewriteCond /var/www/%1.apache.org/favicon.ico -f
-        RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/favicon.ico [L]
+        RewriteCond /www/%1.apache.org/favicon.ico -f
+        RewriteRule ^/favicon\.ico$ /www/%1.apache.org/favicon.ico [L]
 
         # optionally enable per-project favicons for cms sites too
         RewriteCond %%{}{REQUEST_URI} ^/favicon\.ico$
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
-        RewriteCond /var/www/%1.apache.org/content/favicon.ico -f
-        RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/content/favicon.ico [L]
+        RewriteCond /www/%1.apache.org/content/favicon.ico -f
+        RewriteRule ^/favicon\.ico$ /www/%1.apache.org/content/favicon.ico [L]
 
         # catchall
-        RewriteRule ^/favicon\.ico$ /var/www/www.apache.org/content/favicon.ico [L]
+        RewriteRule ^/favicon\.ico$ /www/www.apache.org/content/favicon.ico [L]
 
         # Graduated podlings
         # ### TODO: this foo.incubator.a.o->foo.a.o redirect breaks if foo ever
@@ -157,8 +153,8 @@ apache::custom_config:
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-        RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
-        RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+        RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /www/$1.apache.org/content/$2
+        RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
         AddHandler lua-script .lua
       </Macro>
 
@@ -193,7 +189,7 @@ apache::custom_config:
 
         RewriteEngine On
         RewriteOptions inherit
-        RewriteRule ^/favicon\.ico$ /var/www/ooo-site.apache.org/content/favicon.ico [L]
+        RewriteRule ^/favicon\.ico$ /www/ooo-site.apache.org/content/favicon.ico [L]
 
         RewriteMap lowercase int:tolower
 
@@ -268,7 +264,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.any23.apache.org'
-    docroot:    '/var/www/any23.apache.org'
+    docroot:    '/www/any23.apache.org'
     manage_docroot: false
     serveraliases:
       - 'any23.org'
@@ -284,7 +280,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.openoffice.org'
-    docroot: '/var/www/openoffice.apache.org'
+    docroot: '/www/openoffice.apache.org'
     manage_docroot: false
     serveraliases:
       - 'ooo-site.apache.org'
@@ -295,7 +291,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file:  'errorlog.log'
     directories:
       -
-        path: '/var/www/openoffice.apache.org/content'
+        path: '/www/openoffice.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -310,7 +306,7 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
       -
-        path: '/var/www/ooo-site.apache.org/content'
+        path: '/www/ooo-site.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -345,14 +341,14 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   aoo-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
     servername: 'www.openoffice.org'
-    docroot: '/var/www/openoffice.apache.org'
+    docroot: '/www/openoffice.apache.org'
     manage_docroot: false
     serveraliases:
       - 'ooo-site.apache.org'
@@ -366,7 +362,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/openoffice.apache.org/content'
+        path: '/www/openoffice.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -400,13 +396,13 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   apache:
     vhost_name: '*'
     port: 80
     servername: 'www.apache.org'
-    docroot: '/var/www/www.apache.org/content'
+    docroot: '/www/www.apache.org/content'
     manage_docroot: false
     default_vhost: true
     serveraliases:
@@ -417,7 +413,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www-us.apache.org'
     directories:
       -
-        path: '/var/www/www.apache.org/content'
+        path: '/www/www.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -487,7 +483,7 @@ vhosts_asf::vhosts::vhosts:
         Header set Access-Control-Allow-Origin "*"
       </LocationMatch>
 
-      <Directory /var/www/www.apache.org/content/dist>
+      <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
         HeaderName HEADER.html
@@ -496,11 +492,11 @@ vhosts_asf::vhosts::vhosts:
         Options Indexes SymLinksIfOwnerMatch
         RewriteEngine On
         RewriteCond "%%{}{REQUEST_URI}" "^/dist/([-a-zA-Z0-9]+)"
-        RewriteCond "/var/www/attic.apache.org/projects/%1.html" -f
+        RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
 
-      <Directory /var/www/www.apache.org/dist/httpd>
+      <Directory /www/www.apache.org/dist/httpd>
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
@@ -513,8 +509,8 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
       </Location>
@@ -526,7 +522,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'www.apache.org'
-    docroot: '/var/www/www.apache.org/content'
+    docroot: '/www/www.apache.org/content'
     manage_docroot: false
     serveraliases:
       - 'apache.org'
@@ -536,7 +532,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www-us.apache.org'
     directories:
       -
-        path: '/var/www/www.apache.org/content'
+        path: '/www/www.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -606,7 +602,7 @@ vhosts_asf::vhosts::vhosts:
         Header set Access-Control-Allow-Origin "*"
       </LocationMatch>
 
-      <Directory /var/www/www.apache.org/content/dist>
+      <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
         HeaderName HEADER.html
@@ -615,11 +611,11 @@ vhosts_asf::vhosts::vhosts:
         Options Indexes SymLinksIfOwnerMatch
         RewriteEngine On
         RewriteCond "%%{}{REQUEST_URI}" "^/dist/([-a-zA-Z0-9]+)"
-        RewriteCond "/var/www/attic.apache.org/projects/%1.html" -f
+        RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
 
-      <Directory /var/www/www.apache.org/dist/httpd>
+      <Directory /www/www.apache.org/dist/httpd>
         IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
       </Directory>
 
@@ -632,8 +628,8 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
       </Location>
@@ -676,7 +672,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'archive.apachecon.com'
-    docroot: '/var/www/archive.apachecon.com'
+    docroot: '/www/archive.apachecon.com'
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
@@ -688,7 +684,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'archive.apachecon.com'
-    docroot: '/var/www/archive.apachecon.com'
+    docroot: '/www/archive.apachecon.com'
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
@@ -702,7 +698,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'na11.apachecon.com'
-    docroot: '/var/www/na11.apachecon.com'
+    docroot: '/www/na11.apachecon.com'
     manage_docroot: false
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -711,7 +707,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'eu12.apachecon.com'
-    docroot: '/var/www/eu12.apachecon.com'
+    docroot: '/www/eu12.apachecon.com'
     manage_docroot: false
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -720,7 +716,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'na13.apachecon.com'
-    docroot: '/var/www/na13.apachecon.com'
+    docroot: '/www/na13.apachecon.com'
     manage_docroot: false
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
@@ -729,7 +725,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'eu.apachecon.com'
-    docroot: '/var/www/html'
+    docroot: '/www/html'
     manage_docroot: false
     serveraliases:
       - 'apachecon.eu'
@@ -743,7 +739,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'na14.apachecon.com'
-    docroot: '/var/www/archive.apachecon.com'
+    docroot: '/www/archive.apachecon.com'
     manage_docroot: false
     serveraliases:
       - 'us.apachecon.com'
@@ -757,7 +753,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'apacheextras.org'
-    docroot: '/var/www/html'
+    docroot: '/www/html'
     serveraliases:
       - 'apache-extras.org'
       - 'apachextras.org'
@@ -773,7 +769,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.cloudstack.org'
-    docroot: '/var/www/cloudstack.apache.org'
+    docroot: '/www/cloudstack.apache.org'
     manage_docroot: false
     serveraliases:
       - 'cloudstack.org'
@@ -791,7 +787,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'docs.cloudstack.org'
-    docroot: '/var/www/cloudstack.apache.org'
+    docroot: '/www/cloudstack.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -803,7 +799,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.couchapp.org'
-    docroot: '/var/www/couchdb.apache.org'
+    docroot: '/www/couchdb.apache.org'
     manage_docroot: false
     serveraliases:
       - 'couchapp.org'
@@ -821,7 +817,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.deltaspike.org'
-    docroot: '/var/www/deltaspike.apache.org'
+    docroot: '/www/deltaspike.apache.org'
     manage_docroot: false
     serveraliases:
       - 'deltaspike.org'
@@ -835,7 +831,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'drat.apache.org'
-    docroot: '/var/www/drat.apache.org'
+    docroot: '/www/drat.apache.org'
     manage_docroot: false
     serveraliases:
       - 'drat.apache.org'
@@ -850,7 +846,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'drat.apache.org'
-    docroot: '/var/www/drat.apache.org'
+    docroot: '/www/drat.apache.org'
     manage_docroot: false
     serveraliases:
       - 'drat.apache.org'
@@ -875,7 +871,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.freemarker.org'
-    docroot: '/var/www/freemarker.apache.org'
+    docroot: '/www/freemarker.apache.org'
     manage_docroot: false
     serveraliases:
       - 'freemarker.org'
@@ -886,7 +882,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/freemarker.apache.org'
+        path: '/www/freemarker.apache.org'
         allow_override:
               - 'FileInfo'
     custom_fragment: |
@@ -896,7 +892,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'gump.apache.org'
-    docroot: '/var/www/gump.apache.org'
+    docroot: '/www/gump.apache.org'
     manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
@@ -905,7 +901,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/gump.apache.org'
+        path: '/www/gump.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -940,14 +936,14 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   gump-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
     servername: 'gump.apache.org'
-    docroot: '/var/www/gump.apache.org'
+    docroot: '/www/gump.apache.org'
     manage_docroot: false
     serveraliases:
       - 'gump.*.apache.org'
@@ -956,7 +952,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/gump.apache.org'
+        path: '/www/gump.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -991,13 +987,13 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   httpcomponents:
     vhost_name: '*'
     port: 80
     servername: 'httpcomponents.apache.org'
-    docroot: '/var/www/hc.apache.org'
+    docroot: '/www/hc.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1011,7 +1007,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'httpcomponents.apache.org'
-    docroot: '/var/www/hc.apache.org'
+    docroot: '/www/hc.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1023,13 +1019,13 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'httpd.apache.org'
-    docroot: '/var/www/httpd.apache.org/content'
+    docroot: '/www/httpd.apache.org/content'
     manage_docroot: false
     serveraliases:
       - 'httpd.*.apache.org'
     directories:
       -
-        path: '/var/www/httpd.apache.org'
+        path: '/www/httpd.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1065,7 +1061,7 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
 
-      <Directory /var/www/httpd.apache.org/content/docs/1.3>
+      <Directory /www/httpd.apache.org/content/docs/1.3>
         SSILegacyExprParser on
         <Files ~ "\.html">
           SetOutputFilter INCLUDES
@@ -1074,14 +1070,14 @@ vhosts_asf::vhosts::vhosts:
 
       # virtualize the language sub"directories"
       AliasMatch ^(/docs/(?:2\.[0-6]|trunk))(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1$2
+        /www/httpd.apache.org/content$1$2
 
       # Add an alias, so that /docs/current/ -> /docs/2.4/
       # and virtualize the language sub"directories"
       AliasMatch ^(/docs)/current(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1/2.4$2
+        /www/httpd.apache.org/content$1/2.4$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
+      <DirectoryMatch "/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
         Options -Multiviews
         <Files *.html>
           SetHandler type-map
@@ -1104,7 +1100,7 @@ vhosts_asf::vhosts::vhosts:
       AliasMatch ^(/mod_ftp)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
         /var/www/httpd.apache.org/content$1$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_ftp/[\w.]+">
+      <DirectoryMatch "/www/httpd.apache.org/content/mod_ftp/[\w.]+">
         Options -Multiviews
         <FilesMatch "^[^.]+\.html$">
           SetHandler type-map
@@ -1135,7 +1131,7 @@ vhosts_asf::vhosts::vhosts:
       AliasMatch ^(/mod_fcgid)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
         /var/www/httpd.apache.org/content$1$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
+      <DirectoryMatch "/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
         Options -Multiviews
         <FilesMatch "^[^.]+\.html$">
           SetHandler type-map
@@ -1174,10 +1170,10 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
-      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
       </Location>
@@ -1188,13 +1184,13 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'httpd.apache.org'
-    docroot: '/var/www/httpd.apache.org/content'
+    docroot: '/www/httpd.apache.org/content'
     manage_docroot: false
     serveraliases:
       - 'httpd.*.apache.org'
     directories:
       -
-        path: '/var/www/httpd.apache.org'
+        path: '/www/httpd.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1229,7 +1225,7 @@ vhosts_asf::vhosts::vhosts:
       RemoveType es
       AddDefaultCharset off
 
-      <Directory /var/www/httpd.apache.org/content/docs/1.3>
+      <Directory /www/httpd.apache.org/content/docs/1.3>
         SSILegacyExprParser on
         <Files ~ "\.html">
           SetOutputFilter INCLUDES
@@ -1238,14 +1234,14 @@ vhosts_asf::vhosts::vhosts:
 
       # virtualize the language sub"directories"
       AliasMatch ^(/docs/(?:2\.[0-6]|trunk))(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1$2
+        /www/httpd.apache.org/content$1$2
 
       # Add an alias, so that /docs/current/ -> /docs/2.4/
       # and virtualize the language sub"directories"
       AliasMatch ^(/docs)/current(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1/2.4$2
+        /www/httpd.apache.org/content$1/2.4$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
+      <DirectoryMatch "/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
         Options -Multiviews
         <Files *.html>
           SetHandler type-map
@@ -1266,9 +1262,9 @@ vhosts_asf::vhosts::vhosts:
 
       # virtualize the language sub"directories"
       AliasMatch ^(/mod_ftp)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1$2
+        /www/httpd.apache.org/content$1$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_ftp/[\w.]+">
+      <DirectoryMatch "/www/httpd.apache.org/content/mod_ftp/[\w.]+">
         Options -Multiviews
         <FilesMatch "^[^.]+\.html$">
           SetHandler type-map
@@ -1297,9 +1293,9 @@ vhosts_asf::vhosts::vhosts:
 
       # virtualize the language sub"directories"
       AliasMatch ^(/mod_fcgid)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
-        /var/www/httpd.apache.org/content$1$2
+        /www/httpd.apache.org/content$1$2
 
-      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
+      <DirectoryMatch "/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
         Options -Multiviews
         <FilesMatch "^[^.]+\.html$">
           SetHandler type-map
@@ -1338,10 +1334,10 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
-      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
       </Location>
@@ -1350,7 +1346,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'modssl.com'
-    docroot: '/var/www/httpd.apache.org'
+    docroot: '/www/httpd.apache.org'
     manage_docroot: false
     serveraliases:
       - 'modssl.net'
@@ -1370,12 +1366,12 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - '*.incubator.apache.org'
       - '*.incubator.*.apache.org'
-    virtual_docroot: '/var/www/%1.0.apache.org'
-    docroot: '/var/www'
+    virtual_docroot: '/www/%1.0.apache.org'
+    docroot: '/www'
     manage_docroot: false
     directories:
       -
-        path: '/var/www'
+        path: '/www'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1393,7 +1389,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
@@ -1405,7 +1401,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1442,7 +1438,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - '*.incubator.*.apache.org'
       - '*.incubator.apache.org'
-    virtual_docroot: '/var/www/%1.0.apache.org'
+    virtual_docroot: '/www/%1.0.apache.org'
     docroot: '/var/www'
     manage_docroot: false
     ssl_cert: '/etc/ssl/certs/wildcard.incubator.apache.org.crt'
@@ -1450,7 +1446,7 @@ vhosts_asf::vhosts::vhosts:
     ssl_key: '/etc/ssl/private/wildcard.incubator.apache.org.key'
     directories:
       -
-        path: '/var/www'
+        path: '/www'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1468,7 +1464,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
@@ -1480,7 +1476,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1513,7 +1509,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jackrabbit.apache.org'
     serveraliases:
       - 'jackrabbit.*.apache.org'
-    docroot: '/var/www/jackrabbit.apache.org'
+    docroot: '/www/jackrabbit.apache.org'
     manage_docroot: false
     override:
       - 'All'
@@ -1522,7 +1518,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/jackrabbit.apache.org'
+        path: '/www/jackrabbit.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1555,7 +1551,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   jackrabbit-ssl:
     vhost_name: '*'
@@ -1564,7 +1560,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'jackrabbit.apache.org'
     serveraliases:
       - 'jackrabbit.*.apache.org'
-    docroot: '/var/www/jackrabbit.apache.org'
+    docroot: '/www/jackrabbit.apache.org'
     manage_docroot: false
     override:
       - 'All'
@@ -1573,7 +1569,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/jackrabbit.apache.org'
+        path: '/www/jackrabbit.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1590,7 +1586,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
-      RewriteRule ^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico
+      RewriteRule ^/favicon.ico /www/jackrabbit.apache.org/favicon.ico
 
       Use BlockSvn
 
@@ -1606,7 +1602,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   jclouds:
     vhost_name: '*'
@@ -1618,7 +1614,7 @@ vhosts_asf::vhosts::vhosts:
       - 'jclouds.org'
       - 'jclouds.net'
       - 'jclouds.com'
-    docroot: '/var/www/jclouds.apache.org'
+    docroot: '/www/jclouds.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1632,7 +1628,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'www.jspwiki.org'
     serveraliases:
       - 'jspwiki.org'
-    docroot: '/var/www/jspwiki.apache.org'
+    docroot: '/www/jspwiki.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1644,7 +1640,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'jspwiki.apache.org'
-    docroot: '/var/www/jspwiki.apache.org/content'
+    docroot: '/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1661,7 +1657,7 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'jspwiki.org'
       - 'www.jspwiki.org'
-    docroot: '/var/www/jspwiki.apache.org/content'
+    docroot: '/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -1674,7 +1670,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.libcloud.org'
-    docroot: '/var/www/libcloud.apache.org'
+    docroot: '/www/libcloud.apache.org'
     manage_docroot: false
     serveraliases:
       - 'libcloud.org'
@@ -1692,7 +1688,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.myfaces.org'
-    docroot: '/var/www/myfaces.apache.org'
+    docroot: '/www/myfaces.apache.org'
     manage_docroot: false
     serveraliases:
       - 'myfaces.org'
@@ -1706,7 +1702,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.odftoolkit.org'
-    docroot: '/var/www/odftoolkit.apache.org'
+    docroot: '/www/odftoolkit.apache.org'
     manage_docroot: false
     serveraliases:
       - 'odftoolkit.org'
@@ -1736,7 +1732,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.ofbiz.org'
-    docroot: '/var/www/ofbiz.apache.org'
+    docroot: '/www/ofbiz.apache.org'
     manage_docroot: false
     serveraliases:
       - 'ofbiz.org'
@@ -1757,7 +1753,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'perl.apache.org'
-    docroot: '/var/www/perl.apache.org'
+    docroot: '/www/perl.apache.org'
     manage_docroot: false
     serveraliases:
       - 'apache.perl.org'
@@ -1765,7 +1761,7 @@ vhosts_asf::vhosts::vhosts:
       - 'perl.*.apache.org'
     directories:
       -
-        path: '/var/www/perl.apache.org'
+        path: '/www/perl.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1794,7 +1790,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
@@ -1907,7 +1903,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'perl.apache.org'
-    docroot: '/var/www/perl.apache.org'
+    docroot: '/www/perl.apache.org'
     manage_docroot: false
     serveraliases:
       - 'apache.perl.org'
@@ -1915,7 +1911,7 @@ vhosts_asf::vhosts::vhosts:
       - 'perl.*.apache.org'
     directories:
       -
-        path: '/var/www/perl.apache.org'
+        path: '/www/perl.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -1944,7 +1940,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
@@ -2055,7 +2051,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.projectgeode.org'
-    docroot: '/var/www/geode.apache.org'
+    docroot: '/www/geode.apache.org'
     manage_docroot: false
     serveraliases:
       - 'projectgeode.org'
@@ -2069,7 +2065,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.qi4j.org'
-    docroot: '/var/www/polygene.apache.org'
+    docroot: '/www/polygene.apache.org'
     manage_docroot: false
     serveraliases:
       - 'qi4j.org'
@@ -2085,7 +2081,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'www.zest.apache.org'
-    docroot: '/var/www/polygene.apache.org'
+    docroot: '/www/polygene.apache.org'
     manage_docroot: false
     serveraliases:
       - 'zest.apache.org'
@@ -2099,7 +2095,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'quetzalcoatl.apache.org'
-    docroot: '/var/www/quetz.apache.org'
+    docroot: '/www/quetz.apache.org'
     manage_docroot: false
     serveraliases:
       - 'python.apache.org'
@@ -2114,7 +2110,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'quetzalcoatl.apache.org'
-    docroot: '/var/www/quetz.apache.org'
+    docroot: '/www/quetz.apache.org'
     manage_docroot: false
     serveraliases:
       - 'python.apache.org'
@@ -2127,14 +2123,14 @@ vhosts_asf::vhosts::vhosts:
   spamassassin:
     vhost_name: '*'
     port: 80
-    docroot: '/var/www/spamassassin.apache.org'
+    docroot: '/www/spamassassin.apache.org'
     manage_docroot: false
     servername: 'spamassassin.apache.org'
     serveraliases:
       - 'spamassassin.*.apache.org'
     directories:
       -
-        path: '/var/www/spamassassin.apache.org'
+        path: '/www/spamassassin.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2160,11 +2156,11 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
-      RewriteRule ^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico
+      RewriteRule ^/favicon.ico /www/spamassassin.apache.org/images/favicon.ico
       Use BlockSvn
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
@@ -2177,14 +2173,14 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 443
     ssl: true
-    docroot: '/var/www/spamassassin.apache.org'
+    docroot: '/www/spamassassin.apache.org'
     manage_docroot: false
     servername: 'spamassassin.apache.org'
     serveraliases:
       - 'spamassassin.*.apache.org'
     directories:
       -
-        path: '/var/www/spamassassin.apache.org'
+        path: '/www/spamassassin.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2210,11 +2206,11 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
-      RewriteRule ^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico
+      RewriteRule ^/favicon.ico /www/spamassassin.apache.org/images/favicon.ico
       Use BlockSvn
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
@@ -2227,7 +2223,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.spamassassin.org'
-    docroot: '/var/www/spamassassin.apache.org'
+    docroot: '/www/spamassassin.apache.org'
     manage_docroot: false
     serveraliases:
       - 'spamassassin.org'
@@ -2262,7 +2258,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.subversion.org'
-    docroot: '/var/www/subversion.apache.org'
+    docroot: '/www/subversion.apache.org'
     manage_docroot: false
     serveraliases:
       - 'subversion.org'
@@ -2280,7 +2276,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'svn.collab.net'
-    docroot: '/var/www/subversion.apache.org'
+    docroot: '/www/subversion.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -2292,7 +2288,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.tinkerpop.com'
-    docroot: '/var/www/tinkerpop.apache.org'
+    docroot: '/www/tinkerpop.apache.org'
     manage_docroot: false
     serveraliases:
       - 'tinkerpop.com'
@@ -2307,8 +2303,8 @@ vhosts_asf::vhosts::vhosts:
     priority: 99
     port: 80
     servername: 'www.apache.org'
-    virtual_docroot: '/var/www/%1.0.apache.org'
-    docroot: '/var/www'
+    virtual_docroot: '/www/%1.0.apache.org'
+    docroot: '/www'
     manage_docroot: false
     serveraliases:
       - '*.apache.org'
@@ -2332,23 +2328,23 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
-      <Directory /var/www/trafficserver.apache.org>
+      <Directory /www/trafficserver.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/subversion.apache.org>
+      <Directory /www/subversion.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/subversion-staging.apache.org>
+      <Directory /www/subversion-staging.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/serf.apache.org>
+      <Directory /www/serf.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
@@ -2361,7 +2357,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -2395,8 +2391,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
-      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+      LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
         AddOutputFilter attic html
       </If>
 
@@ -2407,14 +2403,14 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'www.apache.org'
-    virtual_docroot: '/var/www/%1.0.apache.org'
-    docroot: '/var/www'
+    virtual_docroot: '/www/%1.0.apache.org'
+    docroot: '/www'
     manage_docroot: false
     serveraliases:
       - '*.apache.org'
     directories:
       -
-        path: '/var/www'
+        path: '/www'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2432,23 +2428,23 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     custom_fragment: |
-      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
-      <Directory /var/www/trafficserver.apache.org>
+      <Directory /www/trafficserver.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/subversion.apache.org>
+      <Directory /www/subversion.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/subversion-staging.apache.org>
+      <Directory /www/subversion-staging.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
-      <Directory /var/www/serf.apache.org>
+      <Directory /www/serf.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
       </Directory>
@@ -2461,7 +2457,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -2495,8 +2491,8 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
-      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+      LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
         AddOutputFilter attic html
       </If>
 
@@ -2504,25 +2500,25 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'tomee.apache.org'
-    docroot: '/var/www/tomee.apache.org/content'
+    docroot: '/www/tomee.apache.org/content'
     manage_docroot: false
     serveraliases:
       - 'tomee.*.apache.org'
       - 'openejb.apache.org'
       - 'openejb.*.apache.org'
-    scriptalias: '/cgi-bin/ /var/www/tomee.apache.org/cgi-bin/'
+    scriptalias: '/cgi-bin/ /www/tomee.apache.org/cgi-bin/'
     override:
       - 'All'
     rewrites:
       -
         rewrite_rule:
-          - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
+          - '^/favicon.ico /www/tomee.apache.org/content/favicon.ico'
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/tomee.apache.org/content'
+        path: '/www/tomee.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2548,32 +2544,32 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   tomee-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
     servername: 'tomee.apache.org'
-    docroot: '/var/www/tomee.apache.org/content'
+    docroot: '/www/tomee.apache.org/content'
     manage_docroot: false
     serveraliases:
       - 'tomee.*.apache.org'
       - 'openejb.apache.org'
       - 'openejb.*.apache.org'
-    scriptalias: '/cgi-bin/ /var/www/tomee.apache.org/cgi-bin/'
+    scriptalias: '/cgi-bin/ /www/tomee.apache.org/cgi-bin/'
     override:
       - 'All'
     rewrites:
       -
         rewrite_rule:
-          - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
+          - '^/favicon.ico /www/tomee.apache.org/content/favicon.ico'
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/tomee.apache.org/content'
+        path: '/www/tomee.apache.org/content'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2599,19 +2595,19 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   uima:
     vhost_name: '*'
     port: 80
     servername: 'uima.apache.org'
-    docroot: '/var/www/uima.apache.org/pubsub'
+    docroot: '/www/uima.apache.org/pubsub'
     manage_docroot: false
     serveraliases:
       - 'uima.*.apache.org'
     directories:
       -
-        path: '/var/www/uima.apache.org/pubsub'
+        path: '/www/uima.apache.org/pubsub'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2634,7 +2630,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2647,13 +2643,13 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'uima.apache.org'
-    docroot: '/var/www/uima.apache.org/pubsub'
+    docroot: '/www/uima.apache.org/pubsub'
     manage_docroot: false
     serveraliases:
       - 'uima.*.apache.org'
     directories:
       -
-        path: '/var/www/uima.apache.org/pubsub'
+        path: '/www/uima.apache.org/pubsub'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2676,7 +2672,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2688,7 +2684,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'webservices.apache.org'
-    docroot: '/var/www/ws.apache.org'
+    docroot: '/www/ws.apache.org'
     manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
@@ -2703,7 +2699,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'webservices.apache.org'
-    docroot: '/var/www/ws.apache.org'
+    docroot: '/www/ws.apache.org'
     manage_docroot: false
     serveraliases:
       - 'webservices.*.apache.org'
@@ -2717,7 +2713,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'wicketframework.apache.org'
-    docroot: '/var/www/wicket.apache.org'
+    docroot: '/www/wicket.apache.org'
     manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
@@ -2732,7 +2728,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'wicketframework.apache.org'
-    docroot: '/var/www/wicket.apache.org'
+    docroot: '/www/wicket.apache.org'
     manage_docroot: false
     serveraliases:
       - 'wicket-framework.apache.org'
@@ -2746,7 +2742,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'wiki.spamassassin.org'
-    docroot: '/var/www/spamassassin.apache.org'
+    docroot: '/www/spamassassin.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
     access_log_file: 'weblog.log'
@@ -2759,14 +2755,14 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'ws.apache.org'
-    docroot: '/var/www/ws.apache.org'
+    docroot: '/www/ws.apache.org'
     manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/ws.apache.org'
+        path: '/www/ws.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2793,7 +2789,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2806,14 +2802,14 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'ws.apache.org'
-    docroot: '/var/www/ws.apache.org'
+    docroot: '/www/ws.apache.org'
     manage_docroot: false
     serveraliases:
       - 'ws.*.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/ws.apache.org'
+        path: '/www/ws.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2840,7 +2836,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2852,7 +2848,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'www.jspwiki.org'
-    docroot: '/var/www/jspwiki.apache.org'
+    docroot: '/www/jspwiki.apache.org'
     manage_docroot: false
     serveraliases:
       - 'jspwiki.org'
@@ -2866,7 +2862,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'xalan.apache.org'
-    docroot: '/var/www/xalan.apache.org'
+    docroot: '/www/xalan.apache.org'
     manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
@@ -2875,7 +2871,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/xalan.apache.org'
+        path: '/www/xalan.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2907,14 +2903,14 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   xalan-ssl:
     vhost_name: '*'
     port: 443
     ssl: true
     servername: 'xalan.apache.org'
-    docroot: '/var/www/xalan.apache.org'
+    docroot: '/www/xalan.apache.org'
     manage_docroot: false
     serveraliases:
       - 'xalan.*.apache.org'
@@ -2923,7 +2919,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'errorlog.log'
     directories:
       -
-        path: '/var/www/xalan.apache.org'
+        path: '/www/xalan.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2955,7 +2951,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   xerces:
     vhost_name: '*'
@@ -2967,7 +2963,7 @@ vhosts_asf::vhosts::vhosts:
       - 'xerces.*.apache.org'
     directories:
       -
-        path: '/var/www/xerces.apache.org'
+        path: '/www/xerces.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -2997,7 +2993,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
@@ -3010,13 +3006,13 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'xerces.apache.org'
-    docroot: '/var/www/xerces.apache.org'
+    docroot: '/www/xerces.apache.org'
     manage_docroot: false
     serveraliases:
       - 'xerces.*.apache.org'
     directories:
       -
-        path: '/var/www/xerces.apache.org'
+        path: '/www/xerces.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -3046,7 +3042,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
@@ -3058,14 +3054,14 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'xml.apache.org'
-    docroot: '/var/www/xml.apache.org'
+    docroot: '/www/xml.apache.org'
     manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/xml.apache.org'
+        path: '/www/xml.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -3100,7 +3096,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
@@ -3113,14 +3109,14 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'xml.apache.org'
-    docroot: '/var/www/xml.apache.org'
+    docroot: '/www/xml.apache.org'
     manage_docroot: false
     serveraliases:
       - 'xml.*.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/xml.apache.org'
+        path: '/www/xml.apache.org'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -3155,7 +3151,7 @@ vhosts_asf::vhosts::vhosts:
 
       LuaScope thread
       LuaCodeCache stat
-      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
@@ -3167,7 +3163,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     servername: 'infra.apache.org'
-    docroot: '/var/www/infra.apache.org/output'
+    docroot: '/www/infra.apache.org/output'
     manage_docroot: false
     serveraliases:
       - 'infra-test.apache.org'
@@ -3175,7 +3171,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/infra.apache.org/output'
+        path: '/www/infra.apache.org/output'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
@@ -3192,7 +3188,7 @@ vhosts_asf::vhosts::vhosts:
     port: 443
     ssl: true
     servername: 'infra.apache.org'
-    docroot: '/var/www/infra.apache.org/output'
+    docroot: '/www/infra.apache.org/output'
     manage_docroot: false
     serveraliases:
       - 'infra.*.apache.org'
@@ -3200,7 +3196,7 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'users@infra.apache.org'
     directories:
       -
-        path: '/var/www/infra.apache.org/output'
+        path: '/www/infra.apache.org/output'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
