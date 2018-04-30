@@ -1,6 +1,6 @@
-#/etc/puppet/modules/base/manifests/install/ubuntu/1404.pp
+#/etc/puppet/modules/base/manifests/install/ubuntu/ubuntu_1804.pp
 
-class base::install::ubuntu::1404 (
+class base::install::ubuntu::ubuntu_1804 (
 ) {
 
   file {

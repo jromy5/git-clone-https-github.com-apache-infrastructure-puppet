@@ -11,7 +11,7 @@ class sudoers (
     ensure => installed,
   }
 
-  class { "sudoers::install::${::asfosname}::${::asfosrelease}":
+  class { "sudoers::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 
 
