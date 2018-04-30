@@ -1,11 +1,3220 @@
 ---
-classes: 
-  - python
+classes:
+  - apache
+  - apache::mod::actions
+  - apache::mod::autoindex
+  - apache::mod::dir
+  - apache::mod::expires
+  - apache::mod::geoip
+  - apache::mod::headers
+  - apache::mod::include
+  - apache::mod::negotiation
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::reqtimeout
+  - apache::mod::rewrite
+  - apache::mod::setenvif
+  - apache::mod::speling
+  - apache::mod::ssl
+  - apache::mod::status
+  - apache::mod::vhost_alias
+  - apbackup
+  - apbackup::backup
+  - apmirror
+  - blocky
+  - datadog_asf::integrations::network
+  - loggy
+  - rootbin_asf
+  - ssl::name::wildcard_apache_org
+  - ssl::name::apachecon_com
+  - ssl::name::archive_apachecon_com
+  - ssl::name::wildcard_incubator_apache_org
+  - ssl::name::wildcard_openoffice_org
+  - svnwcsub
+  - tlp_vhosts::compat
+  - vhosts_asf::custom_config
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+  - gitwcsub
 
-python::dev: true
-python::pip: 'latest'
-python::virtualenv: true
-python::python_pips:
-  asfpy:
-    ensure: present
+apache::keepalive:                           'On'
+apache::keepalive_timeout:                   '30'
+apache::default_vhost:                       false
 
+apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
+apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
+apache::default_ssl_key:                     '/etc/ssl/private/wildcard.apache.org.key'
+
+apache::mod::dir::indexes:
+  - 'index.html'
+  - 'index.html.var'
+  - 'index.pl'
+  - 'index.php'
+  - 'index.xhtml'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '2500'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '2500'
+apache::mod::event::maxsparethreads:         '800'
+apache::mod::event::minsparethreads:         '500'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '2500'
+apache::mod::event::threadsperchild:         '100'
+apache::mod::status::allow_from:
+  - 'All'
+apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+apache::mod::status::status_path:            '/server-status-dd'
+
+apache::mpm_module:                          'event'
+apache::serveradmin:                         'users@infra.apache.org'
+
+apmirror::uid:                               '508'
+apmirror::gid:                               '508'
+apmirror::groups:
+  - 'svnwc'
+  - 'apbackup'
+apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
+apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
+
+base::basepackages:
+  - lua5.2
+  - lua-socket
+  - lua-posix
+
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    create_owner: 'root'
+    create_group: 'apbackup'
+    rotate: 5
+
+ntp::interfaces:
+  - em1
+  - lo
+
+svnwcsub::gid:                               '9997'
+svnwcsub::uid:                               '9997'
+svnwcsub::conf_file:                         'svnwcsub.conf'
+svnwcsub:::conf_path:                        '/etc/'
+svnwcsub::groupname:                         'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_ensure:                    'running'
+svnwcsub::service_name:                      'svnwcsub'
+svnwcsub::shell:                             '/bin/bash'
+svnwcsub::username:                          'svnwc'
+
+rsync::package_ensure:                       'latest'
+rsync::server::use_xinetd:                   false
+rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
+
+apache::custom_config:
+  svn:
+    content: |
+      <Macro BlockSvn>
+        <DirectoryMatch /\.svn>
+          Order allow,deny
+          Deny from all
+        </DirectoryMatch>
+      </Macro>
+
+  tlp:
+    content: |
+      <Macro CatchAll>
+        RewriteEngine On
+        RewriteOptions inherit
+
+        RewriteMap lowercase int:tolower
+
+        # optionally enable per-project favicons
+        RewriteCond %%{}{REQUEST_URI} ^/favicon\.ico$
+        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+        RewriteCond /var/www/%1.apache.org/favicon.ico -f
+        RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/favicon.ico [L]
+
+        # optionally enable per-project favicons for cms sites too
+        RewriteCond %%{}{REQUEST_URI} ^/favicon\.ico$
+        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+        RewriteCond /var/www/%1.apache.org/content/favicon.ico -f
+        RewriteRule ^/favicon\.ico$ /var/www/%1.apache.org/content/favicon.ico [L]
+
+        # catchall
+        RewriteRule ^/favicon\.ico$ /var/www/www.apache.org/content/favicon.ico [L]
+
+        # Graduated podlings
+        # ### TODO: this foo.incubator.a.o->foo.a.o redirect breaks if foo ever
+        # ###       moves to the attic.
+        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)\.incubator(\.\w+)?\.apache\.org$
+        RewriteCond /dist/%1 -d
+        RewriteRule ^(.*)$ http://%1%2.apache.org$1 [R,L]
+
+        # change the DocumentRoot to ${DocumentRoot}/content if it exists
+        RewriteCond %%{}{REQUEST_URI}              !^/cgi-bin/
+        RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
+        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+        RewriteCond /var/www/%1.apache.org/content -d
+        RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
+        RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /var/www/$1.apache.org/content/$2
+        RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+        AddHandler lua-script .lua
+      </Macro>
+
+  aoo:
+    content: |
+      <Macro OpenOffice $proto>
+        DocumentRoot /var/www/ooo-site.apache.org/content
+        ServerName www.openoffice.org
+        ServerAlias ooo-site.apache.org
+        ServerAlias *.openoffice.org
+        ServerAlias openoffice.org
+        UseCanonicalName On
+
+        # Silence PROPFIND mod_allowmethods errors
+        # for Apache OO update check requests
+        <LocationMatch "/projects/update[^/]*/ProductUpdateService/check\.Update">
+          LogLevel allowmethods:crit
+        </LocationMatch>
+
+        # Silence PROPFIND mod_allowmethods errors
+        # for Apache OO accesses by "Microsoft-WebDAV-MiniRedir"
+        # (typical URI is "/3")
+        <If "%%{}{REQUEST_METHOD} == 'PROPFIND' && %%{}{HTTP_USER_AGENT} =~ /^Microsoft-WebDAV-MiniRedir/">
+          LogLevel allowmethods:crit
+        </If>
+
+        <Location /projects>
+          ErrorDocument 404 default
+        </Location>
+
+        ErrorDocument 404 /docs/custom_404.html
+
+        RewriteEngine On
+        RewriteOptions inherit
+        RewriteRule ^/favicon\.ico$ /var/www/ooo-site.apache.org/content/favicon.ico [L]
+
+        RewriteMap lowercase int:tolower
+
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^openoffice.org$
+        RewriteRule (.*) $proto://www.openoffice.org$1 [L]
+
+        # kill update.services.openoffice.org
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^update.services.openoffice.org$
+        RewriteRule (.*) - [G,L]
+
+
+        # qa|www.openoffice.org
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^(?:qa|www)(?:\.\w+)?\.openoffice\.org$
+        RewriteRule /issues/(.*) $proto://issues.apache.org/ooo/$1 [NE,L]
+
+        # [registration2|survey].openoffice.org
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^(?:registration2|survey)(?:\.\w+)?\.openoffice\.org$
+        RewriteRule (.*) $proto://www.openoffice.org/legacy/thankyou.html [NE,L]
+
+        # contributing.openoffice.org
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^contributing(?:\.\w+)?\.openoffice\.org$
+        RewriteRule (.*) $proto://openoffice.apache.org/get-involved.html [L]
+
+        RewriteRule /contributing/(.*) $proto://openoffice.apache.org/get-involved.html [L]
+
+        # security.openoffice.org
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^security(?:\.\w+)?\.openoffice\.org$
+        RewriteRule (.*) $proto://openoffice.apache.org/security.html [L]
+
+        # br-pt.openoffice.org typos
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^br-pt(?:\.\w+)?\.openoffice\.org$
+        RewriteRule (.*) $proto://www.openoffice.org/pt-br$1 [L]
+
+        # change foo.openoffice.org/... to www.openoffice.org/foo/... if foo dir exists
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^(\w+)(?:\.\w+)?\.openoffice\.org$
+        RewriteCond /var/www/ooo-site.apache.org/content/%1 -d
+        RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
+        RewriteRule ^(\w+)(?:\.\w+)?\.openoffice\.org/(.*) $proto://www.openoffice.org/$1/$2 [NE,L,R=permanent]
+
+        # change *.openoffice.org/?lang=foo to www.openoffice.org/foo/
+        RewriteCond ${lowercase:%%{}{QUERY_STRING}} lang=([a-z\-]+)
+        RewriteCond /var/www/ooo-site.apache.org/content/%1 -d
+        RewriteRule .* $proto://www.openoffice.org/%1? [NE,L,R=permanent]
+
+        # fallback for proj.openoffice.org/... to openoffice.org/projects/proj/...
+        # The most common case is redirecting
+        #    $proto://updateXXX.services.openoffice.org/ProductUpdateService/check.Update
+        # to $proto://www.openoffice.org/projects/updateXXX/ProductUpdateService/check.Update
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^(?!www)(\w+)(?:\.\w+)?\.openoffice\.org$
+        RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
+        RewriteRule ^(\w+)(?:\.\w+)?\.openoffice\.org/(.*) $proto://www.openoffice.org/projects/$1/$2 [NE,L]
+      </Macro>
+
+vhosts_asf::modules::modules:
+  allowmethods:
+    name: 'allowmethods'
+  asis:
+    name: 'asis'
+  cgi:
+    name: 'cgi'
+  cgid:
+    name: 'cgid'
+  lua:
+    name: 'lua'
+  macro:
+    name: 'macro'
+  unique_id:
+    name: 'unique_id'
+
+vhosts_asf::vhosts::vhosts:
+  any23:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.any23.apache.org'
+    docroot:    '/var/www/any23.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'any23.org'
+      - 'any23.com'
+      - 'www.any23.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file:  'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://any23.apache.org
+
+  aoo:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.openoffice.org'
+    docroot: '/var/www/openoffice.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'ooo-site.apache.org'
+      - '*.openoffice.org'
+      - 'openoffice.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file:  'errorlog.log'
+    directories:
+      -
+        path: '/var/www/openoffice.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+      -
+        path: '/var/www/ooo-site.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+
+    custom_fragment: |
+      Use OpenOffice http
+      Use BlockSvn
+      <Files ~ "\.html$">
+        Options +Includes
+        SetOutputFilter INCLUDES
+      </Files>
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#openoffice [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/openoffice-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  aoo-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.openoffice.org'
+    docroot: '/var/www/openoffice.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'ooo-site.apache.org'
+      - '*.openoffice.org'
+      - 'openoffice.org'
+    ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/openoffice.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      Use OpenOffice https
+      Use BlockSvn
+      <Files ~ "\.html$">
+        Options +Includes
+        SetOutputFilter INCLUDES
+      </Files>
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#openoffice [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/openoffice-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  apache:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.apache.org'
+    docroot: '/var/www/www.apache.org/content'
+    manage_docroot: false
+    default_vhost: true
+    serveraliases:
+      - 'apache.org'
+      - 'apachegroup.org'
+      - 'www.apachegroup.org'
+      - 'www.*.apache.org'
+      - 'www-us.apache.org'
+    directories:
+      -
+        path: '/var/www/www.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /docs/vif.info http://httpd.apache.org/docs/misc/vif-info
+      Redirect permanent /docs/directives.html http://httpd.apache.org/docs/mod/directives.html
+      Redirect permanent /docs/API.html http://httpd.apache.org/docs/misc/API.html
+      Redirect permanent /docs/FAQ.html http://httpd.apache.org/docs/misc/FAQ.html
+      Redirect permanent /manual-index.cgi/docs http://www.apache.org/search.html
+      Redirect permanent /bugdb.cgi/ http://bugs.apache.org/index/
+      Redirect permanent /bugdb.cgi http://bugs.apache.org/
+      Redirect permanent /Conference1998 http://www.apachecon.com
+      Redirect permanent /java http://archive.apache.org/dist/java/
+      Redirect permanent /perl http://perl.apache.org
+      Redirect permanent /docs/manual http://httpd.apache.org/docs
+      Redirect permanent /docs http://httpd.apache.org/docs
+      Redirect permanent /httpd http://httpd.apache.org
+      Redirect permanent /httpd/ http://httpd.apache.org/
+      Redirect permanent /httpd.html http://httpd.apache.org/
+      Redirect permanent /index/full http://www.apache.org
+      Redirect permanent /info/css-security http://httpd.apache.org/info/css-security
+      Redirect permanent /websrc/ http://cvs.apache.org/
+      Redirect permanent /from-cvs/ http://cvs.apache.org/snapshots/
+      Redirect permanent /travel/application http://tac-apply.apache.org
+      RedirectMatch permanent ^/LICENSE.* http://www.apache.org/licenses/
+      RedirectMatch permanent /flyers(.*) http://www.apache.org/foundation/contributing.html
+
+      RewriteEngine on
+      RewriteOptions inherit
+      RewriteRule /docs/mod_(.*)$ http://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#asf-wide [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
+
+      # Grab referals from www.apache.com and explain where
+      # they landed.
+      RewriteCond %%{}{HTTP_REFERER} ^http://([^/]*\.)?apache\.com/
+      RewriteRule ^/dist/.* http://www.apache.org/info/referer-dotcom.html [R,L]
+
+      # odd ddos coming from aouu.com
+      RewriteCond %%{}{HTTP_REFERER} aouu.com
+      RewriteRule ^ - [F,L]
+
+      <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault A3600
+      </IfModule>
+
+      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
+      <LocationMatch ^/dist/.*>
+        Header set Access-Control-Allow-Origin "*"
+      </LocationMatch>
+
+      <Directory /var/www/www.apache.org/content/dist>
+        IndexOptions FancyIndexing NameWidth=* FoldersFirst \
+          ScanHTMLTitles DescriptionWidth=*
+        HeaderName HEADER.html
+        ReadmeName README.html
+        AllowOverride FileInfo Indexes
+        Options Indexes SymLinksIfOwnerMatch
+        RewriteEngine On
+        RewriteCond "%%{}{REQUEST_URI}" "^/dist/([-a-zA-Z0-9]+)"
+        RewriteCond "/var/www/attic.apache.org/projects/%1.html" -f
+        RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
+      </Directory>
+
+      <Directory /var/www/www.apache.org/dist/httpd>
+        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
+      </Directory>
+
+      <Location "/server-status-dd">
+        SetHandler server-status
+      </Location>
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
+
+      Use BlockSvn
+
+  apache-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.apache.org'
+    docroot: '/var/www/www.apache.org/content'
+    manage_docroot: false
+    serveraliases:
+      - 'apache.org'
+      - 'apachegroup.org'
+      - 'www.apachegroup.org'
+      - 'www.*.apache.org'
+      - 'www-us.apache.org'
+    directories:
+      -
+        path: '/var/www/www.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /docs/vif.info https://httpd.apache.org/docs/misc/vif-info
+      Redirect permanent /docs/directives.html https://httpd.apache.org/docs/mod/directives.html
+      Redirect permanent /docs/API.html https://httpd.apache.org/docs/misc/API.html
+      Redirect permanent /docs/FAQ.html https://httpd.apache.org/docs/misc/FAQ.html
+      Redirect permanent /manual-index.cgi/docs https://www.apache.org/search.html
+      Redirect permanent /bugdb.cgi/ https://bugs.apache.org/index/
+      Redirect permanent /bugdb.cgi https://bugs.apache.org/
+      Redirect permanent /Conference1998 https://www.apachecon.com
+      Redirect permanent /java https://archive.apache.org/dist/java/
+      Redirect permanent /perl https://perl.apache.org
+      Redirect permanent /docs/manual https://httpd.apache.org/docs
+      Redirect permanent /docs https://httpd.apache.org/docs
+      Redirect permanent /httpd https://httpd.apache.org
+      Redirect permanent /httpd/ https://httpd.apache.org/
+      Redirect permanent /httpd.html https://httpd.apache.org/
+      Redirect permanent /index/full https://www.apache.org
+      Redirect permanent /info/css-security https://httpd.apache.org/info/css-security
+      Redirect permanent /websrc/ https://cvs.apache.org/
+      Redirect permanent /from-cvs/ https://cvs.apache.org/snapshots/
+      Redirect permanent /travel/application https://tac-apply.apache.org
+      RedirectMatch permanent ^/LICENSE.* https://www.apache.org/licenses/
+      RedirectMatch permanent /flyers(.*) https://www.apache.org/foundation/contributing.html
+
+      RewriteEngine on
+      RewriteOptions inherit
+      RewriteRule /docs/mod_(.*)$ https://httpd.apache.org/docs/mod/mod_$1 [R=permanent]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#asf-wide [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
+
+      # Grab referals from www.apache.com and explain where
+      # they landed.
+      RewriteCond %%{}{HTTP_REFERER} ^http://([^/]*\.)?apache\.com/
+      RewriteRule ^/dist/.* https://www.apache.org/info/referer-dotcom.html [R,L]
+
+      # odd ddos coming from aouu.com
+      RewriteCond %%{}{HTTP_REFERER} aouu.com
+      RewriteRule ^ - [F,L]
+
+      <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault A3600
+      </IfModule>
+
+      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
+      <LocationMatch ^/dist/.*>
+        Header set Access-Control-Allow-Origin "*"
+      </LocationMatch>
+
+      <Directory /var/www/www.apache.org/content/dist>
+        IndexOptions FancyIndexing NameWidth=* FoldersFirst \
+          ScanHTMLTitles DescriptionWidth=*
+        HeaderName HEADER.html
+        ReadmeName README.html
+        AllowOverride FileInfo Indexes
+        Options Indexes SymLinksIfOwnerMatch
+        RewriteEngine On
+        RewriteCond "%%{}{REQUEST_URI}" "^/dist/([-a-zA-Z0-9]+)"
+        RewriteCond "/var/www/attic.apache.org/projects/%1.html" -f
+        RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
+      </Directory>
+
+      <Directory /var/www/www.apache.org/dist/httpd>
+        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
+      </Directory>
+
+      <Location "/server-status-dd">
+        SetHandler server-status
+      </Location>
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
+
+      Use BlockSvn
+
+  apachecon:
+    vhost_name: '*'
+    port: 80
+    servername: 'apachecon.com'
+    docroot: '/var/www/apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'apachecon.com'
+      - 'www.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /c http://archive.apachecon.com/c
+
+  apachecon-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'apachecon.com'
+    docroot: '/var/www/apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'apachecon.com'
+      - 'www.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
+    ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
+    ssl_key: '/etc/ssl/private/apachecon.com.key'
+    custom_fragment: |
+      Redirect permanent /c http://archive.apachecon.com/c
+
+  apachecon-archive:
+    vhost_name: '*'
+    port: 80
+    servername: 'archive.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'archive.*.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'archive.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'archive.*.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    ssl_cert: '/etc/ssl/certs/archive.apachecon.com.crt'
+    ssl_chain: '/etc/ssl/certs/archive.apachecon.com.chain'
+    ssl_key: '/etc/ssl/private/archive.apachecon.com.key'
+
+  apachecon-archive-na11:
+    vhost_name: '*'
+    port: 80
+    servername: 'na11.apachecon.com'
+    docroot: '/var/www/na11.apachecon.com'
+    manage_docroot: false
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-eu12:
+    vhost_name: '*'
+    port: 80
+    servername: 'eu12.apachecon.com'
+    docroot: '/var/www/eu12.apachecon.com'
+    manage_docroot: false
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-archive-na13:
+    vhost_name: '*'
+    port: 80
+    servername: 'na13.apachecon.com'
+    docroot: '/var/www/na13.apachecon.com'
+    manage_docroot: false
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+
+  apachecon-eu:
+    vhost_name: '*'
+    port: 80
+    servername: 'eu.apachecon.com'
+    docroot: '/var/www/html'
+    manage_docroot: false
+    serveraliases:
+      - 'apachecon.eu'
+      - 'www.apachecon.eu'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
+
+  apachecon-na:
+    vhost_name: '*'
+    port: 80
+    servername: 'na14.apachecon.com'
+    docroot: '/var/www/archive.apachecon.com'
+    manage_docroot: false
+    serveraliases:
+      - 'us.apachecon.com'
+      - 'na.apachecon.com'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect / http://events.linuxfoundation.org/events/apachecon-north-america/
+
+  apacheextras:
+    vhost_name: '*'
+    port: 80
+    servername: 'apacheextras.org'
+    docroot: '/var/www/html'
+    serveraliases:
+      - 'apache-extras.org'
+      - 'apachextras.org'
+      - 'www.apache-extras.org'
+      - 'www.apaceextras.org'
+      - 'www.apachextras.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://code.google.com/a/apache-extras.org
+
+  cloudstack:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.cloudstack.org'
+    docroot: '/var/www/cloudstack.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'cloudstack.org'
+      - 'cloudstack.com'
+      - 'www.cloudstack.com'
+      - 'cloudstack.org.uk'
+      - 'www.cloudstack.org.uk'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://cloudstack.apache.org
+
+  cloudstack-docs:
+    vhost_name: '*'
+    port: 80
+    servername: 'docs.cloudstack.org'
+    docroot: '/var/www/cloudstack.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://cloudstack.apache.org/docs/
+
+  couchapp:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.couchapp.org'
+    docroot: '/var/www/couchdb.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'couchapp.org'
+      - 'couchapp.com'
+      - 'couchhack.org'
+      - 'www.couchapp.com'
+      - 'www.couchhack.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html
+
+  deltaspike:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.deltaspike.org'
+    docroot: '/var/www/deltaspike.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'deltaspike.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://deltaspike.apache.org/
+
+  drat:
+    vhost_name: '*'
+    port: 80
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    redirect_source: '/'
+    redirect_dest: 'https://drat.apache.org/'
+
+  drat-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'drat.apache.org'
+    docroot: '/var/www/drat.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'drat.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    proxy_pass:
+      -
+        path: '/asfgit'
+        url: 'http://drat-vm.apache.org:8080/viz'
+      -
+        path: '/demo'
+        url: 'http://drat-vm.apache.org:8080/proteus'
+      -
+        path: '/oodt'
+        url: 'http://drat-vm.apache.org:8080/opsui'
+      -
+        path: '/solr'
+        url: 'http://drat-vm.apache.org:8080/solr'
+
+  freemarker:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.freemarker.org'
+    docroot: '/var/www/freemarker.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'freemarker.org'
+      - 'freemarker.incubator.apache.org'
+      - 'freemarker.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/freemarker.apache.org'
+        allow_override:
+              - 'FileInfo'
+    custom_fragment: |
+      RewriteRule ^/(.*)$ http://freemarker.incubator.apache.org/$1 [R]
+
+  gump:
+    vhost_name: '*'
+    port: 80
+    servername: 'gump.apache.org'
+    docroot: '/var/www/gump.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'gump.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/gump.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      ExpiresActive On
+      ExpiresByType text/css "access plus 1 day"
+      ExpiresByType text/javascript "access plus 1 day"
+      ExpiresByType image/gif "access plus 1 day"
+      ExpiresByType image/jpeg "access plus 1 day"
+      ExpiresByType image/png "access plus 1 day"
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#gump [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  gump-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'gump.apache.org'
+    docroot: '/var/www/gump.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'gump.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/gump.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      ExpiresActive On
+      ExpiresByType text/css "access plus 1 day"
+      ExpiresByType text/javascript "access plus 1 day"
+      ExpiresByType image/gif "access plus 1 day"
+      ExpiresByType image/jpeg "access plus 1 day"
+      ExpiresByType image/png "access plus 1 day"
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#gump [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  httpcomponents:
+    vhost_name: '*'
+    port: 80
+    servername: 'httpcomponents.apache.org'
+    docroot: '/var/www/hc.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://hc.apache.org/
+
+
+  httpcomponents-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'httpcomponents.apache.org'
+    docroot: '/var/www/hc.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://hc.apache.org/
+
+  httpd:
+    vhost_name: '*'
+    port: 80
+    servername: 'httpd.apache.org'
+    docroot: '/var/www/httpd.apache.org/content'
+    manage_docroot: false
+    serveraliases:
+      - 'httpd.*.apache.org'
+    directories:
+      -
+        path: '/var/www/httpd.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /from-cvs/ http://cvs.apache.org/snapshots/
+      RedirectMatch permanent ^/dist.* http://httpd.apache.org/download.cgi
+      Redirect permanent /info/security_bulletin_20020908a.txt http://httpd.apache.org/info/security_bulletin_20020809a.txt
+      RedirectMatch permanent ^/cli.* http://httpd.apache.org/modules/#mod_aspdotnet
+      RedirectMatch permanent ^/mod_aspdotnet.* http://httpd.apache.org/modules/#mod_aspdotnet
+
+      AddLanguage da .da
+      RemoveType es
+      AddDefaultCharset off
+
+      RewriteEngine On
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#asf-wide [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
+
+      <Directory /var/www/httpd.apache.org/content/docs/1.3>
+        SSILegacyExprParser on
+        <Files ~ "\.html">
+          SetOutputFilter INCLUDES
+        </Files>
+      </Directory>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/docs/(?:2\.[0-6]|trunk))(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      # Add an alias, so that /docs/current/ -> /docs/2.4/
+      # and virtualize the language sub"directories"
+      AliasMatch ^(/docs)/current(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1/2.4$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
+        Options -Multiviews
+        <Files *.html>
+          SetHandler type-map
+        </Files>
+        # .tr is text/troff in mime.types!
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/docs/(?:2\.[0-6]|trunk|current)/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+          prefer-language=$1
+
+        # Deal with language switching (/docs/2.0/de/en/... -> /docs/2.0/en/...)
+        RedirectMatch 301 ^(/docs/(?:2\.[0-6]|trunk|current))(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+      </DirectoryMatch>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/mod_ftp)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_ftp/[\w.]+">
+        Options -Multiviews
+        <FilesMatch "^[^.]+\.html$">
+          SetHandler type-map
+        </FilesMatch>
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/mod_ftp/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+        prefer-language=$1
+
+        # Deal with language switching (/mod_ftp/de/en/... -> /mod_ftp/en/...)
+        RedirectMatch 301 ^(/mod_ftp)(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+
+        # Now fail-over for all not-found's from /mod_ftp/... into /docs/trunk/...
+        # since we point to httpd doc pages for reference.
+        RewriteEngine On
+        RewriteBase /mod_ftp
+        RewriteOptions inherit
+        RewriteCond %%{}{REQUEST_FILENAME} !-d
+        RewriteCond %%{}{REQUEST_FILENAME} !-f
+        RewriteRule ^(.+) http://httpd.apache.org/docs/trunk/$1 [R=301,L]
+      </DirectoryMatch>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/mod_fcgid)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
+        Options -Multiviews
+        <FilesMatch "^[^.]+\.html$">
+          SetHandler type-map
+        </FilesMatch>
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/mod_fcgid/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+          prefer-language=$1
+
+        RedirectMatch 301 ^(/mod_fcgid)(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+
+        # Now fail-over for all not-found's from /mod_fcgid/... into /docs/trunk/...
+        # since we point to httpd doc pages for reference.
+        RewriteEngine On
+        RewriteBase /mod_fcgid
+        RewriteOptions inherit
+        RewriteCond %%{}{REQUEST_FILENAME} !-d
+        RewriteCond %%{}{REQUEST_FILENAME} !-f
+        RewriteRule ^(.+) http://httpd.apache.org/docs/trunk/$1 [R=301,L]
+
+      </DirectoryMatch>
+
+      # If it isn't a specific version or asking for trunk, give it current
+      RewriteCond $1 !^(1|2|trunk|index|current)
+      RewriteRule ^/docs/(.+) /docs/current/$1 [R=301,L]
+
+      # Convert docs-2.x -> docs/2.x
+      RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      Use BlockSvn
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
+
+
+  httpd-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'httpd.apache.org'
+    docroot: '/var/www/httpd.apache.org/content'
+    manage_docroot: false
+    serveraliases:
+      - 'httpd.*.apache.org'
+    directories:
+      -
+        path: '/var/www/httpd.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /from-cvs/ https://cvs.apache.org/snapshots/
+      RedirectMatch permanent ^/dist.* https://httpd.apache.org/download.cgi
+      Redirect permanent /info/security_bulletin_20020908a.txt https://httpd.apache.org/info/security_bulletin_20020809a.txt
+      RedirectMatch permanent ^/cli.* https://httpd.apache.org/modules/#mod_aspdotnet
+      RedirectMatch permanent ^/mod_aspdotnet.* https://httpd.apache.org/modules/#mod_aspdotnet
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#asf-wide [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/asf-wide-$1 [R=301,L]
+
+      AddLanguage da .da
+      RemoveType es
+      AddDefaultCharset off
+
+      <Directory /var/www/httpd.apache.org/content/docs/1.3>
+        SSILegacyExprParser on
+        <Files ~ "\.html">
+          SetOutputFilter INCLUDES
+        </Files>
+      </Directory>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/docs/(?:2\.[0-6]|trunk))(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      # Add an alias, so that /docs/current/ -> /docs/2.4/
+      # and virtualize the language sub"directories"
+      AliasMatch ^(/docs)/current(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1/2.4$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/docs/(2\.[0-6]|trunk)">
+        Options -Multiviews
+        <Files *.html>
+          SetHandler type-map
+        </Files>
+        # .tr is text/troff in mime.types!
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/docs/(?:2\.[0-6]|trunk|current)/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+          prefer-language=$1
+
+        # Deal with language switching (/docs/2.0/de/en/... -> /docs/2.0/en/...)
+        RedirectMatch 301 ^(/docs/(?:2\.[0-6]|trunk|current))(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+      </DirectoryMatch>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/mod_ftp)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_ftp/[\w.]+">
+        Options -Multiviews
+        <FilesMatch "^[^.]+\.html$">
+          SetHandler type-map
+        </FilesMatch>
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/mod_ftp/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+        prefer-language=$1
+
+        # Deal with language switching (/mod_ftp/de/en/... -> /mod_ftp/en/...)
+        RedirectMatch 301 ^(/mod_ftp)(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+
+        # Now fail-over for all not-found's from /mod_ftp/... into /docs/trunk/...
+        # since we point to httpd doc pages for reference.
+        RewriteEngine On
+        RewriteBase /mod_ftp
+        RewriteOptions inherit
+        RewriteCond %%{}{REQUEST_FILENAME} !-d
+        RewriteCond %%{}{REQUEST_FILENAME} !-f
+        RewriteRule ^(.+) http://httpd.apache.org/docs/trunk/$1 [R=301,L]
+      </DirectoryMatch>
+
+      # virtualize the language sub"directories"
+      AliasMatch ^(/mod_fcgid)(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ \
+        /var/www/httpd.apache.org/content$1$2
+
+      <DirectoryMatch "/var/www/httpd.apache.org/content/mod_fcgid/[\w.]+">
+        Options -Multiviews
+        <FilesMatch "^[^.]+\.html$">
+          SetHandler type-map
+        </FilesMatch>
+        <Files *.html.tr.utf8>
+          ForceType "text/html; charset=utf-8"
+        </Files>
+
+        # Tell mod_negotiation which language to prefer
+        SetEnvIf Request_URI   ^/mod_fcgid/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)/ \
+          prefer-language=$1
+
+        RedirectMatch 301 ^(/mod_fcgid)(?:/(da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn)){2,}(/.*)?$ \
+          $1/$2$3
+
+        # Now fail-over for all not-found's from /mod_fcgid/... into /docs/trunk/...
+        # since we point to httpd doc pages for reference.
+        RewriteEngine On
+        RewriteBase /mod_fcgid
+        RewriteOptions inherit
+        RewriteCond %%{}{REQUEST_FILENAME} !-d
+        RewriteCond %%{}{REQUEST_FILENAME} !-f
+        RewriteRule ^(.+) https://httpd.apache.org/docs/trunk/$1 [R=301,L]
+
+      </DirectoryMatch>
+
+      # If it isn't a specific version or asking for trunk, give it current
+      RewriteCond $1 !^(1|2|trunk|index|current)
+      RewriteRule ^/docs/(.+) /docs/current/$1 [R=301,L]
+
+      # Convert docs-2.x -> docs/2.x
+      RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      Use BlockSvn
+      RewriteRule ^/server-status$ /x1/www/www.apache.org/dyn/ss.lua
+      <Location "/server-status">
+          SetHandler lua-script
+      </Location>
+
+  modssl:
+    vhost_name: '*'
+    port: 80
+    servername: 'modssl.com'
+    docroot: '/var/www/httpd.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'modssl.net'
+      - 'www.modssl.com'
+      - 'www.modssl.net'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://httpd.apache.org/docs/current/ssl/
+
+  incubator:
+    vhost_name: '*'
+    priority: 98
+    port: 80
+    servername: 'incubator.apache.org'
+    serveraliases:
+      - '*.incubator.apache.org'
+      - '*.incubator.*.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
+    docroot: '/var/www'
+    manage_docroot: false
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      UseCanonicalName Off
+      Use CatchAll
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.us.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.us.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+
+  incubator-ssl:
+    priority: 98
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'incubator.apache.org'
+    serveraliases:
+      - '*.incubator.*.apache.org'
+      - '*.incubator.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
+    docroot: '/var/www'
+    manage_docroot: false
+    ssl_cert: '/etc/ssl/certs/wildcard.incubator.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.incubator.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.incubator.apache.org.key'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      UseCanonicalName Off
+      Use CatchAll
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.us.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.us.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+  jackrabbit:
+    vhost_name: '*'
+    port: 80
+    servername: 'jackrabbit.apache.org'
+    serveraliases:
+      - 'jackrabbit.*.apache.org'
+    docroot: '/var/www/jackrabbit.apache.org'
+    manage_docroot: false
+    override:
+      - 'All'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/jackrabbit.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteOptions inherit
+      RewriteRule ^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico
+
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#jackrabbit [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  jackrabbit-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'jackrabbit.apache.org'
+    serveraliases:
+      - 'jackrabbit.*.apache.org'
+    docroot: '/var/www/jackrabbit.apache.org'
+    manage_docroot: false
+    override:
+      - 'All'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/jackrabbit.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteOptions inherit
+      RewriteRule ^/favicon.ico /var/www/jackrabbit.apache.org/favicon.ico
+
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#jackrabbit [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  jclouds:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.jclouds.org'
+    serveraliases:
+      - 'www.jclouds.net'
+      - 'www.jclouds.com'
+      - 'jclouds.org'
+      - 'jclouds.net'
+      - 'jclouds.com'
+    docroot: '/var/www/jclouds.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://jclouds.apache.org/
+
+  jspwiki.org:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.jspwiki.org'
+    serveraliases:
+      - 'jspwiki.org'
+    docroot: '/var/www/jspwiki.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://jspwiki.apache.org/
+
+  jspwiki:
+    vhost_name: '*'
+    port: 80
+    servername: 'jspwiki.apache.org'
+    docroot: '/var/www/jspwiki.apache.org/content'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /doc http://jspwiki-doc.apache.org
+      Redirect permanent /wiki http://jspwiki-wiki.apache.org
+
+  jspwiki-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'jspwiki.apache.org'
+    serveraliases:
+      - 'jspwiki.org'
+      - 'www.jspwiki.org'
+    docroot: '/var/www/jspwiki.apache.org/content'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /doc https://jspwiki-doc.apache.org
+      Redirect permanent /wiki https://jspwiki-wiki.apache.org
+
+  libcloud:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.libcloud.org'
+    docroot: '/var/www/libcloud.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'libcloud.org'
+      - 'www.libcloud.net'
+      - 'libcloud.net'
+      - 'www.libcloud.com'
+      - 'libcloud.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://libcloud.apache.org/
+
+  myfaces:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.myfaces.org'
+    docroot: '/var/www/myfaces.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'myfaces.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://myfaces.apache.org/
+
+  odftoolkit:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.odftoolkit.org'
+    docroot: '/var/www/odftoolkit.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'odftoolkit.org'
+      - 'www.odf-toolkit.com'
+      - 'odf-toolkit.com'
+      - 'www.odf-toolkit.net'
+      - 'odf-toolkit.net'
+      - 'www.odf-toolkit.org'
+      - 'odf-toolkit.org'
+      - 'www.odfcoalition.com'
+      - 'odfcoalition.com'
+      - 'www.odfcoalition.net'
+      - 'odfcoalition.net'
+      - 'www.odfcoalition.org'
+      - 'odfcoalition.org'
+      - 'www.odftoolkit.com'
+      - 'odftoolkit.com'
+      - 'www.odftoolkit.net'
+      - 'odftoolkit.net'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://incubator.apache.org/odftoolkit/
+
+  ofbiz:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.ofbiz.org'
+    docroot: '/var/www/ofbiz.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'ofbiz.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://ofbiz.apache.org/
+      UseCanonicalName On
+      RewriteEngine On
+      RewriteOptions inherit
+
+      # bigfiles.ofbiz.org
+      RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^bigfiles(?:\.\w+)?\.ofbiz\.org$
+      RewriteRule (.*) http://ofbiz-bigfiles.apache.org/ [L]
+
+  perl:
+    vhost_name: '*'
+    port: 80
+    servername: 'perl.apache.org'
+    docroot: '/var/www/perl.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'apache.perl.org'
+      - 'perl-new.apache.org'
+      - 'perl.*.apache.org'
+    directories:
+      -
+        path: '/var/www/perl.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      SetEnv SWISH_BINARY_PATH /usr/bin/swish-e
+      ProxyPass /search http://140.211.11.10/search
+      ProxyPreserveHost on
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/perl-$1 [R=301,L]
+
+      XBithack Full
+      Redirect permanent /from-cvs/ http://cvs.apache.org/snapshots/
+      # Documentation included in the old site.
+      Redirect permanent /guide http://perl.apache.org/docs/1.0/guide
+      # Distributed with mod_perl
+      Redirect permanent /src/mod_perl.html http://perl.apache.org/docs/index.html
+      Redirect permanent /src/apache-modlist.html http://perl.apache.org/products/apache-modules.html
+      Redirect permanent /src/cgi_to_mod_perl.html http://perl.apache.org/docs/index.html
+      Redirect permanent /src/mod_perl_traps.html http://perl.apache.org/docs/index.html
+      # (equivalent to those with /src above, but it seems like the dist is kept symlinked in 2 locations)
+      Redirect permanent /dist/mod_perl.html http://perl.apache.org/docs/index.html
+      Redirect permanent /dist/apache-modlist.html http://perl.apache.org/products/apache-modules.html
+      Redirect permanent /dist/cgi_to_mod_perl.html http://perl.apache.org/docs/index.html
+      Redirect permanent /dist/mod_perl_traps.html http://perl.apache.org/docs/index.html
+
+      # FAQs
+      Redirect permanent /faq/mod_perl_cgi.html http://perl.apache.org/docs/index.html
+      Redirect permanent /mod_perl_cvs.html http://perl.apache.org/contribute/svn_howto.html
+      Redirect permanent /faq/index.html http://perl.apache.org/docs/index.html
+      Redirect permanent /tuning/index.html http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_api.html http://perl.apache.org/docs/index.html
+      Redirect permanent /features/tmpl-cmp.html http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html
+      Redirect permanent /perl_myth.html http://perl.apache.org/docs/general/perl_myth.html
+      Redirect permanent /perl_myth.pod http://perl.apache.org/docs/general/perl_myth.pod.orig
+      Redirect permanent /faq/mjtg-news.txt http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_api.pod http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_cgi.pod http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.html http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.pod http://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.tar.gz http://perl.apache.org/docs/index.html
+      Redirect permanent /distributions.html http://perl.apache.org/download/index.html
+      Redirect permanent /tidbits.html http://perl.apache.org/docs/offsite/articles.html
+      Redirect permanent /products.html http://perl.apache.org/products/index.html
+      Redirect permanent /isp.html http://perl.apache.org/help/isps.html
+      Redirect permanent /sites.html http://perl.apache.org/outstanding/sites.html
+
+      # Stories
+      Redirect permanent /stories/index.html http://perl.apache.org/outstanding/success_stories/index.html
+      Redirect permanent /stories/ColbyChem.html http://perl.apache.org/outstanding/success_stories/colbychem.html
+      Redirect permanent /stories/France-Presse.html http://perl.apache.org/outstanding/success_stories/www.afp-direct.com.html
+      Redirect permanent /stories/adultad.html http://perl.apache.org/outstanding/success_stories/adultad.html
+      Redirect permanent /stories/bsat.html http://perl.apache.org/outstanding/success_stories/bsat.html
+      Redirect permanent /stories/idl-net.html http://perl.apache.org/outstanding/success_stories/idl-net.html
+      Redirect permanent /stories/imdb.html http://perl.apache.org/outstanding/success_stories/imdb.com.html
+      Redirect permanent /stories/lind-waldock.html http://perl.apache.org/outstanding/success_stories/www.lind-waldock.com.html
+      Redirect permanent /stories/presto.html http://perl.apache.org/outstanding/success_stories/presto.html
+      Redirect permanent /stories/seds-org.html http://perl.apache.org/outstanding/success_stories/seds.org.html
+      Redirect permanent /stories/singlesheaven.html http://perl.apache.org/outstanding/success_stories/singlesheaven.com.html
+      Redirect permanent /stories/tgix.html http://perl.apache.org/outstanding/success_stories/tgix.html
+      Redirect permanent /stories/uber-alles.html http://perl.apache.org/outstanding/success_stories/openscape.org.html
+      Redirect permanent /stories/webby.html http://perl.apache.org/outstanding/success_stories/imdb.com.html
+      Redirect permanent /stories/winamillion.html http://perl.apache.org/outstanding/success_stories/winamillion.msn.com.html
+      Redirect permanent /stories/wmboerse.html http://perl.apache.org/outstanding/success_stories/wmboerse.html
+
+      # Win32 docs
+      Redirect permanent /win32_binaries.html http://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_binaries.pod http://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_compile.html http://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_compile.pod http://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_multithread.html http://perl.apache.org/docs/1.0/os/win32/multithread.html
+      Redirect permanent /win32_multithread.pod http://perl.apache.org/docs/1.0/win32/multithread.pod.orig
+
+      # E-mail etiquette
+      Redirect permanent /email-etiquette.html http://perl.apache.org/maillist/email-etiquette.html
+
+      # Jobs
+      Redirect permanent /jobs.html http://perl.apache.org/jobs/jobs.html
+
+      # Stats
+      Redirect permanent /netcraft/index.html http://perl.apache.org/outstanding/stats/netcraft.html
+
+      # Old logos
+      Redirect permanent /logos/index.html http://perl.apache.org/about/link/linktous.html
+
+      # embperl
+      Redirect permanent /Embperl/ http://perl.apache.org/embperl/
+      Redirect permanent /perl/Embperl/ http://perl.apache.org/embperl/
+      Redirect permanent /embperl.html http://perl.apache.org/embperl/
+
+      # ASP
+      Redirect permanent /asp http://www.apache-asp.org/
+
+      # Contributors
+      Redirect permanent /CREDITS.html http://perl.apache.org/about/contributors/people.html
+
+      # Contribute
+      Redirect permanent /contribute/cvs_howto.html http://perl.apache.org/contribute/svn_howto.html
+
+      # Misc
+      Redirect permanent /bench.txt http://www.chamas.com/bench/
+      Redirect permanent /email-etiquette.pod http://perl.apache.org/maillist/email-etiquette.pod.orig
+      Redirect permanent /embperl.html http://perl.apache.org/embperl/
+      Redirect permanent /faqs.html http://perl.apache.org/docs/offsite/index.html
+
+
+      RewriteEngine On
+      RewriteOptions inherit
+      Use BlockSvn
+
+
+  perl-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'perl.apache.org'
+    docroot: '/var/www/perl.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'apache.perl.org'
+      - 'perl-new.apache.org'
+      - 'perl.*.apache.org'
+    directories:
+      -
+        path: '/var/www/perl.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      SetEnv SWISH_BINARY_PATH /usr/bin/swish-e
+      ProxyPass /search http://140.211.11.10/search
+      ProxyPreserveHost on
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/perl-$1 [R=301,L]
+
+      XBithack Full
+      Redirect permanent /from-cvs/ https://cvs.apache.org/snapshots/
+      # Documentation included in the old site.
+      Redirect permanent /guide https://perl.apache.org/docs/1.0/guide
+      # Distributed with mod_perl
+      Redirect permanent /src/mod_perl.html https://perl.apache.org/docs/index.html
+      Redirect permanent /src/apache-modlist.html https://perl.apache.org/products/apache-modules.html
+      Redirect permanent /src/cgi_to_mod_perl.html https://perl.apache.org/docs/index.html
+      Redirect permanent /src/mod_perl_traps.html https://perl.apache.org/docs/index.html
+      # (equivalent to those with /src above, but it seems like the dist is kept symlinked in 2 locations)
+      Redirect permanent /dist/mod_perl.html https://perl.apache.org/docs/index.html
+      Redirect permanent /dist/apache-modlist.html https://perl.apache.org/products/apache-modules.html
+      Redirect permanent /dist/cgi_to_mod_perl.html https://perl.apache.org/docs/index.html
+      Redirect permanent /dist/mod_perl_traps.html https://perl.apache.org/docs/index.html
+
+      # FAQs
+      Redirect permanent /faq/mod_perl_cgi.html https://perl.apache.org/docs/index.html
+      Redirect permanent /mod_perl_cvs.html https://perl.apache.org/contribute/svn_howto.html
+      Redirect permanent /faq/index.html https://perl.apache.org/docs/index.html
+      Redirect permanent /tuning/index.html https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_api.html https://perl.apache.org/docs/index.html
+      Redirect permanent /features/tmpl-cmp.html https://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html
+      Redirect permanent /perl_myth.html https://perl.apache.org/docs/general/perl_myth.html
+      Redirect permanent /perl_myth.pod https://perl.apache.org/docs/general/perl_myth.pod.orig
+      Redirect permanent /faq/mjtg-news.txt https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_api.pod https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_cgi.pod https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.html https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.pod https://perl.apache.org/docs/index.html
+      Redirect permanent /faq/mod_perl_faq.tar.gz https://perl.apache.org/docs/index.html
+      Redirect permanent /distributions.html https://perl.apache.org/download/index.html
+      Redirect permanent /tidbits.html https://perl.apache.org/docs/offsite/articles.html
+      Redirect permanent /products.html https://perl.apache.org/products/index.html
+      Redirect permanent /isp.html https://perl.apache.org/help/isps.html
+      Redirect permanent /sites.html https://perl.apache.org/outstanding/sites.html
+
+      # Stories
+      Redirect permanent /stories/index.html https://perl.apache.org/outstanding/success_stories/index.html
+      Redirect permanent /stories/ColbyChem.html https://perl.apache.org/outstanding/success_stories/colbychem.html
+      Redirect permanent /stories/France-Presse.html https://perl.apache.org/outstanding/success_stories/www.afp-direct.com.html
+      Redirect permanent /stories/adultad.html https://perl.apache.org/outstanding/success_stories/adultad.html
+      Redirect permanent /stories/bsat.html https://perl.apache.org/outstanding/success_stories/bsat.html
+      Redirect permanent /stories/idl-net.html https://perl.apache.org/outstanding/success_stories/idl-net.html
+      Redirect permanent /stories/imdb.html https://perl.apache.org/outstanding/success_stories/imdb.com.html
+      Redirect permanent /stories/lind-waldock.html https://perl.apache.org/outstanding/success_stories/www.lind-waldock.com.html
+      Redirect permanent /stories/presto.html https://perl.apache.org/outstanding/success_stories/presto.html
+      Redirect permanent /stories/seds-org.html https://perl.apache.org/outstanding/success_stories/seds.org.html
+      Redirect permanent /stories/singlesheaven.html https://perl.apache.org/outstanding/success_stories/singlesheaven.com.html
+      Redirect permanent /stories/tgix.html https://perl.apache.org/outstanding/success_stories/tgix.html
+      Redirect permanent /stories/uber-alles.html https://perl.apache.org/outstanding/success_stories/openscape.org.html
+      Redirect permanent /stories/webby.html https://perl.apache.org/outstanding/success_stories/imdb.com.html
+      Redirect permanent /stories/winamillion.html https://perl.apache.org/outstanding/success_stories/winamillion.msn.com.html
+      Redirect permanent /stories/wmboerse.html https://perl.apache.org/outstanding/success_stories/wmboerse.html
+
+      # Win32 docs
+      Redirect permanent /win32_binaries.html https://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_binaries.pod https://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_compile.html https://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_compile.pod https://perl.apache.org/docs/1.0/os/win32/index.html
+      Redirect permanent /win32_multithread.html https://perl.apache.org/docs/1.0/os/win32/multithread.html
+      Redirect permanent /win32_multithread.pod https://perl.apache.org/docs/1.0/win32/multithread.pod.orig
+
+      # E-mail etiquette
+      Redirect permanent /email-etiquette.html https://perl.apache.org/maillist/email-etiquette.html
+
+      # Jobs
+      Redirect permanent /jobs.html https://perl.apache.org/jobs/jobs.html
+
+      # Stats
+      Redirect permanent /netcraft/index.html https://perl.apache.org/outstanding/stats/netcraft.html
+
+      # Old logos
+      Redirect permanent /logos/index.html https://perl.apache.org/about/link/linktous.html
+
+      # embperl
+      Redirect permanent /Embperl/ https://perl.apache.org/embperl/
+      Redirect permanent /perl/Embperl/ https://perl.apache.org/embperl/
+      Redirect permanent /embperl.html https://perl.apache.org/embperl/
+
+      # ASP
+      Redirect permanent /asp https://www.apache-asp.org/
+
+      # Contributors
+      Redirect permanent /CREDITS.html https://perl.apache.org/about/contributors/people.html
+
+      # Contribute
+      Redirect permanent /contribute/cvs_howto.html https://perl.apache.org/contribute/svn_howto.html
+
+      # Misc
+      Redirect permanent /bench.txt https://www.chamas.com/bench/
+      Redirect permanent /email-etiquette.pod https://perl.apache.org/maillist/email-etiquette.pod.orig
+      Redirect permanent /embperl.html https://perl.apache.org/embperl/
+      Redirect permanent /faqs.html https://perl.apache.org/docs/offsite/index.html
+
+
+      RewriteEngine On
+      RewriteOptions inherit
+      Use BlockSvn
+
+  projectgeode:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.projectgeode.org'
+    docroot: '/var/www/geode.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'projectgeode.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://geode.apache.org
+
+  qi4j:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.qi4j.org'
+    docroot: '/var/www/polygene.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'qi4j.org'
+      - 'zest.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://polygene.apache.org/
+
+  zest-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.zest.apache.org'
+    docroot: '/var/www/polygene.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'zest.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://polygene.apache.org/
+
+  quetz:
+    vhost_name: '*'
+    port: 80
+    servername: 'quetzalcoatl.apache.org'
+    docroot: '/var/www/quetz.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'python.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://quetz.apache.org/
+
+  quetz-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'quetzalcoatl.apache.org'
+    docroot: '/var/www/quetz.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'python.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://quetz.apache.org/
+
+  spamassassin:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/spamassassin.apache.org'
+    manage_docroot: false
+    servername: 'spamassassin.apache.org'
+    serveraliases:
+      - 'spamassassin.*.apache.org'
+    directories:
+      -
+        path: '/var/www/spamassassin.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteOptions inherit
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      # Override global alias so spamassassin can have its
+      # own favicon
+      RewriteRule ^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico
+      Use BlockSvn
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#spamassassin [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/spamassassin-$1 [R=301,L]
+
+  spamassassin-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    docroot: '/var/www/spamassassin.apache.org'
+    manage_docroot: false
+    servername: 'spamassassin.apache.org'
+    serveraliases:
+      - 'spamassassin.*.apache.org'
+    directories:
+      -
+        path: '/var/www/spamassassin.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RewriteEngine On
+      RewriteOptions inherit
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      # Override global alias so spamassassin can have its
+      # own favicon
+      RewriteRule ^/favicon.ico /var/www/spamassassin.apache.org/images/favicon.ico
+      Use BlockSvn
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#spamassassin [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/spamassassin-$1 [R=301,L]
+
+  spamassassing.org:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.spamassassin.org'
+    docroot: '/var/www/spamassassin.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'spamassassin.org'
+      - 'au.spamassassin.org'
+      - 'au2.spamassassin.org'
+      - 'eu.spamassassin.org'
+      - 'eu2.spamassassin.org'
+      - 'eu3.spamassassin.org'
+      - 'ie.spamassassin.org'
+      - 'news.spamassassin.org'
+      - 'uk.spamassassin.org'
+      - 'us.spamassassin.org'
+      - 'useast.spamassassin.org'
+      - 'uswest.spamassassin.org'
+      - 'www.au.spamassassin.org'
+      - 'www.au2.spamassassin.org'
+      - 'www.eu.spamassassin.org'
+      - 'www.eu2.spamassassin.org'
+      - 'www.eu3.spamassassin.org'
+      - 'www.ie.spamassassin.org'
+      - 'www.uk.spamassassin.org'
+      - 'www.us.spamassassin.org'
+      - 'www.useast.spamassassin.org'
+      - 'www.uswest.spamassassin.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://spamassassin.apache.org/
+
+  subversion.org:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.subversion.org'
+    docroot: '/var/www/subversion.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'subversion.org'
+      - 'www.subversion.net'
+      - 'subversion.net'
+      - 'www.subversion.com'
+      - 'subversion.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch permanent ^ http://subversion.apache.org/
+
+  svn.collab.net:
+    vhost_name: '*'
+    port: 80
+    servername: 'svn.collab.net'
+    docroot: '/var/www/subversion.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch ^ https://subversion.apache.org/source-code
+
+  tinkerpop.com:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.tinkerpop.com'
+    docroot: '/var/www/tinkerpop.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'tinkerpop.com'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RedirectMatch permanent ^ http://tinkerpop.apache.org/
+
+  tlp:
+    vhost_name: '*'
+    priority: 99
+    port: 80
+    servername: 'www.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
+    docroot: '/var/www'
+    manage_docroot: false
+    serveraliases:
+      - '*.apache.org'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      UseCanonicalName Off
+      Use CatchAll
+      Use BlockSvn
+      <Directory /var/www/trafficserver.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion-staging.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/serf.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+
+      AddType text/plain sha512
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+        AddOutputFilter attic html
+      </If>
+
+
+  tlp-ssl:
+    priority: 99
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.apache.org'
+    virtual_docroot: '/var/www/%1.0.apache.org'
+    docroot: '/var/www'
+    manage_docroot: false
+    serveraliases:
+      - '*.apache.org'
+    directories:
+      -
+        path: '/var/www'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      VirtualScriptAlias /var/www/%1.0.apache.org/cgi-bin
+      UseCanonicalName Off
+      Use CatchAll
+      Use BlockSvn
+      <Directory /var/www/trafficserver.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/subversion-staging.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+      <Directory /var/www/serf.apache.org>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
+
+      AddType text/plain sha512
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail -> mail-archives.a.o/mod_mbox/#tlp
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#%1 [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
+
+      LuaOutputFilter attic "/var/www/attic.apache.org/scripts/attic_filter.lua" output_filter
+      <If "-d '/var/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+        AddOutputFilter attic html
+      </If>
+
+  tomee:
+    vhost_name: '*'
+    port: 80
+    servername: 'tomee.apache.org'
+    docroot: '/var/www/tomee.apache.org/content'
+    manage_docroot: false
+    serveraliases:
+      - 'tomee.*.apache.org'
+      - 'openejb.apache.org'
+      - 'openejb.*.apache.org'
+    scriptalias: '/cgi-bin/ /var/www/tomee.apache.org/cgi-bin/'
+    override:
+      - 'All'
+    rewrites:
+      -
+        rewrite_rule:
+          - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/tomee.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  tomee-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'tomee.apache.org'
+    docroot: '/var/www/tomee.apache.org/content'
+    manage_docroot: false
+    serveraliases:
+      - 'tomee.*.apache.org'
+      - 'openejb.apache.org'
+      - 'openejb.*.apache.org'
+    scriptalias: '/cgi-bin/ /var/www/tomee.apache.org/cgi-bin/'
+    override:
+      - 'All'
+    rewrites:
+      -
+        rewrite_rule:
+          - '^/favicon.ico /var/www/tomee.apache.org/content/favicon.ico'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/tomee.apache.org/content'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  uima:
+    vhost_name: '*'
+    port: 80
+    servername: 'uima.apache.org'
+    docroot: '/var/www/uima.apache.org/pubsub'
+    manage_docroot: false
+    serveraliases:
+      - 'uima.*.apache.org'
+    directories:
+      -
+        path: '/var/www/uima.apache.org/pubsub'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/uima-$1 [R=301,L]
+
+  uima-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'uima.apache.org'
+    docroot: '/var/www/uima.apache.org/pubsub'
+    manage_docroot: false
+    serveraliases:
+      - 'uima.*.apache.org'
+    directories:
+      -
+        path: '/var/www/uima.apache.org/pubsub'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/uima-$1 [R=301,L]
+
+  webservices:
+    vhost_name: '*'
+    port: 80
+    servername: 'webservices.apache.org'
+    docroot: '/var/www/ws.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'webservices.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://ws.apache.org/
+
+  webservices-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'webservices.apache.org'
+    docroot: '/var/www/ws.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'webservices.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+        Redirect permanent / https://ws.apache.org/
+
+  wicket:
+    vhost_name: '*'
+    port: 80
+    servername: 'wicketframework.apache.org'
+    docroot: '/var/www/wicket.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'wicket-framework.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://wicket.apache.org/
+
+  wicket-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'wicketframework.apache.org'
+    docroot: '/var/www/wicket.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'wicket-framework.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://wicket.apache.org/
+
+  wiki-spamassassin :
+    vhost_name: '*'
+    port: 80
+    servername: 'wiki.spamassassin.org'
+    docroot: '/var/www/spamassassin.apache.org'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /w/ http://wiki.apache.org/spamassassin/
+      Redirect permanent / http://wiki.apache.org/spamassassin/
+
+  ws:
+    vhost_name: '*'
+    port: 80
+    servername: 'ws.apache.org'
+    docroot: '/var/www/ws.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'ws.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/ws.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /xml-rpc http://ws.apache.org/xmlrpc
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/ws-$1 [R=301,L]
+
+  ws-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'ws.apache.org'
+    docroot: '/var/www/ws.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'ws.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/ws.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent /xml-rpc https://ws.apache.org/xmlrpc
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/ws-$1 [R=301,L]
+
+  www-jspwiki:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.jspwiki.org'
+    docroot: '/var/www/jspwiki.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'jspwiki.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://jspwiki.apache.org/
+
+  xalan:
+    vhost_name: '*'
+    port: 80
+    servername: 'xalan.apache.org'
+    docroot: '/var/www/xalan.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xalan.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/xalan.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      <Location /xalan/samples/applet>
+        deny from all
+      </Location>
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xalan [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  xalan-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'xalan.apache.org'
+    docroot: '/var/www/xalan.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xalan.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    directories:
+      -
+        path: '/var/www/xalan.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    custom_fragment: |
+      <Location /xalan/samples/applet>
+        deny from all
+      </Location>
+      Use BlockSvn
+
+      RewriteEngine On
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xalan [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+  xerces:
+    vhost_name: '*'
+    port: 80
+    servername: 'xerces.apache.org'
+    docroot: '/var/www/xerces.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xerces.*.apache.org'
+    directories:
+      -
+        path: '/var/www/xerces.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      <LocationMatch /xerces-c/faq-other.html/.*>
+        deny from all
+      </LocationMatch>
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/xerces-$1 [R=301,L]
+
+  xerces-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'xerces.apache.org'
+    docroot: '/var/www/xerces.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xerces.*.apache.org'
+    directories:
+      -
+        path: '/var/www/xerces.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      <LocationMatch /xerces-c/faq-other.html/.*>
+        deny from all
+      </LocationMatch>
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xerces-$1 [R=301,L]
+
+  xml:
+    vhost_name: '*'
+    port: 80
+    servername: 'xml.apache.org'
+    docroot: '/var/www/xml.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xml.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/xml.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # prevent some loops that robots get stuck in
+      <Location /xalan/samples/applet>
+        deny from all
+      </Location>
+      <LocationMatch /xerces-c/faq-other.html/.*>
+        deny from all
+      </LocationMatch>
+      Redirect permanent /websrc/ http://cvs.apache.org/
+      Redirect permanent /from-cvs/ http://cvs.apache.org/snapshots/
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/xml-$1 [R=301,L]
+
+  xml-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'xml.apache.org'
+    docroot: '/var/www/xml.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'xml.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/xml.apache.org'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+        addhandlers:
+          -
+            handler: 'lua-script'
+            extensions:
+              - '.lua'
+              - '.cgi'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # prevent some loops that robots get stuck in
+      <Location /xalan/samples/applet>
+        deny from all
+      </Location>
+      <LocationMatch /xerces-c/faq-other.html/.*>
+        deny from all
+      </LocationMatch>
+      Redirect permanent /websrc/ https://cvs.apache.org/
+      Redirect permanent /from-cvs/ https://cvs.apache.org/snapshots/
+      Use BlockSvn
+
+      RewriteEngine On
+
+      AddHandler lua-script .lua
+      AddHandler lua-script .cgi
+
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteRule .*\.cgi /x1/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/*
+      RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
+
+      #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
+      RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xml-$1 [R=301,L]
+
+  infra:
+    vhost_name: '*'
+    port: 80
+    servername: 'infra.apache.org'
+    docroot: '/var/www/infra.apache.org/output'
+    manage_docroot: false
+    serveraliases:
+      - 'infra-test.apache.org'
+      - 'infra.*.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/infra.apache.org/output'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # Change to infra.a.o later on.
+      Redirect / https://infra-test.apache.org/
+
+
+  infra-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'infra.apache.org'
+    docroot: '/var/www/infra.apache.org/output'
+    manage_docroot: false
+    serveraliases:
+      - 'infra.*.apache.org'
+      - 'infra-test.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directories:
+      -
+        path: '/var/www/infra.apache.org/output'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+    access_log_file: 'weblog.log'
+    error_log_file: 'errorlog.log'
+    custom_fragment: |
+      # Proxying will go here...
+      SSLProxyEngine on
+      ProxyPass /self-serve/reporeq/ https://reporeq.apache.org/
+      ProxyPass /self-serve/id/ https://id.apache.org/
+      ProxyPass /self-serve/acreq/ https://id.apache.org/acreq/
+      ## The proxypass below needs to be moved!
+      ProxyPass /self-serve/mlreq/ https://infra.apache.org/officers/mlreq/
+
+httpd_modules::dev_package:
+  - apache2-dev
