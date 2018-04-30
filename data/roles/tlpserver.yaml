@@ -108,6 +108,18 @@ rsync::server::use_xinetd:                   false
 rsync::server::gid:                  'nogroup' # group 'nobody' doesn't exist in ubuntu
 
 apache::custom_config:
+  closerlua:
+    content: |
+      LuaScope thread
+      LuaCodeCache stat
+      RewriteEngine On
+      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      <Directory /www/www.apache.org/dyn/>
+        Require all granted
+        <FilesMatch "(closer|ss)\.lua">
+          SetHandler lua-script
+          </FilesMatch>
+      </Directory>
   svn:
     content: |
       <Macro BlockSvn>
@@ -154,8 +166,6 @@ apache::custom_config:
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
         RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /www/$1.apache.org/content/$2
-        RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-        AddHandler lua-script .lua
       </Macro>
 
   aoo:
@@ -339,10 +349,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-
   aoo-ssl:
     vhost_name: '*'
     port: 443
@@ -394,9 +400,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   apache:
     vhost_name: '*'
@@ -507,9 +510,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
@@ -626,9 +626,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
           SetHandler lua-script
@@ -934,9 +931,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   gump-ssl:
     vhost_name: '*'
@@ -985,9 +979,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   httpcomponents:
     vhost_name: '*'
@@ -1168,9 +1159,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       Use BlockSvn
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
@@ -1332,10 +1320,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-
       Use BlockSvn
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
@@ -1398,10 +1382,6 @@ vhosts_asf::vhosts::vhosts:
 
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1471,12 +1451,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.incubator.apache.org$
@@ -1549,9 +1523,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   jackrabbit-ssl:
     vhost_name: '*'
@@ -1600,9 +1571,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   jclouds:
     vhost_name: '*'
@@ -1785,13 +1753,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
-
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
 
@@ -1938,9 +1899,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#perl [R=301,L,NE]
@@ -2154,9 +2112,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
@@ -2204,9 +2159,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       # Override global alias so spamassassin can have its
       # own favicon
@@ -2355,9 +2307,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -2452,12 +2401,6 @@ vhosts_asf::vhosts::vhosts:
       AddType text/plain sha512
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.apache.org$
@@ -2542,9 +2485,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   tomee-ssl:
     vhost_name: '*'
@@ -2593,9 +2533,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   uima:
     vhost_name: '*'
@@ -2628,9 +2565,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2670,9 +2604,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2787,9 +2718,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2834,9 +2762,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2901,9 +2826,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   xalan-ssl:
     vhost_name: '*'
@@ -2949,9 +2871,6 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       AddHandler lua-script .cgi
 
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
   xerces:
     vhost_name: '*'
@@ -2988,12 +2907,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
@@ -3037,12 +2950,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xerces [R=301,L,NE]
@@ -3091,12 +2998,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
@@ -3146,12 +3047,6 @@ vhosts_asf::vhosts::vhosts:
 
       RewriteEngine On
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-      LuaScope thread
-      LuaCodeCache stat
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#xml [R=301,L,NE]
