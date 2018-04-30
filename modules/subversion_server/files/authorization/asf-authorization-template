@@ -1384,6 +1384,10 @@ svn-site-role = rw
 [/maven/doxia/doxia]
 @maven = r
 
+#moved to gitbox INFRA-16361
+[/maven/doxia/site]
+*  = r
+
 [/maven/doxia/doxia-sitetools]
 @maven  = r
 
@@ -1416,6 +1420,10 @@ svn-site-role = rw
 
 [/maven/scm]
 @maven = r
+
+#moved to gitbox INFRA-16361
+[/maven/site]
+* = r
 
 [/maven/surefire]
 @maven = r
