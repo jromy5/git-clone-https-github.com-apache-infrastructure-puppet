@@ -1,5 +1,5 @@
 ---
-classes: 
+classes:
   - apt
   - apt::update
   - base
@@ -220,7 +220,7 @@ fail2ban_asf::config::jails:
     filter: sshd
     port: ssh
     action:
-      - iptables-allports 
+      - iptables-allports
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
@@ -252,7 +252,7 @@ file:
     notify: Service[datadog-agent]
     content: |
       # This file is managed by Puppet in the base 1604.yaml
-      # and will be overwritten automatically. 
+      # and will be overwritten automatically.
 
       init_config:
 
@@ -268,7 +268,7 @@ file:
 ldapclient::install::ubuntu::1604::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
 ldapclient::install::ubuntu::1604::pamhostcheck: 'yes'
 
-ldapclient::ldapclient_packages: 
+ldapclient::ldapclient_packages:
     - ldap-auth-client
     - ldap-utils
     - libldap-2.4-2
@@ -277,7 +277,7 @@ ldapclient::ldapclient_packages:
     - libpam-modules
     - nslcd
 
-ldapclient::ldapclient_remove_packages: 
+ldapclient::ldapclient_remove_packages:
     - nscd
     - libnss-ldap
 
@@ -321,12 +321,12 @@ spamassassin::spamc::haproxy_packagelist:
 
 spamassassin::sa_update: '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
 
-subversionclient::packages: 
+subversionclient::packages:
   - subversion
 subversionclient::svn_conf_config:       '/etc/subversion/config'
 subversionclient::svn_conf_servers:      '/etc/subversion/servers'
 
-subversion_server::packages: 
+subversion_server::packages:
     - p7zip
     - python-svn
     - s3cmd
@@ -383,7 +383,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1 
+  - asf-build-jdk9.0.1
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -534,7 +534,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1 
+  - asf-build-jdk9.0.1
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -552,6 +552,7 @@ buildbot_slave::bb_basepackages:
   - libapr1-dev
   - libaprutil1
   - libaprutil1-dev
+  - libjson-perl
   - libpam0g-dev
   - libserf-1-1
   - libserf-dev
