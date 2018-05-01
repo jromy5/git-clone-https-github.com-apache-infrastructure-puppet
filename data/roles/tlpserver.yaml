@@ -277,7 +277,7 @@ vhosts_asf::vhosts::vhosts:
       - 'any23.com'
       - 'www.any23.com'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
+    access_log_file: '/x1/logs/weblog.log'
     error_log_file:  'errorlog.log'
     custom_fragment: |
       Redirect permanent / http://any23.apache.org
@@ -293,7 +293,7 @@ vhosts_asf::vhosts::vhosts:
       - '*.openoffice.org'
       - 'openoffice.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
+    access_log_file: '/x1/logs/weblog.log'
     error_log_file:  'errorlog.log'
     directories:
       -
@@ -360,8 +360,8 @@ vhosts_asf::vhosts::vhosts:
     ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/openoffice.apache.org/content'
@@ -427,8 +427,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /docs/vif.info http://httpd.apache.org/docs/misc/vif-info
       Redirect permanent /docs/directives.html http://httpd.apache.org/docs/mod/directives.html
@@ -543,8 +543,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /docs/vif.info https://httpd.apache.org/docs/misc/vif-info
       Redirect permanent /docs/directives.html https://httpd.apache.org/docs/mod/directives.html
@@ -638,8 +638,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'apachecon.com'
       - 'www.apachecon.com'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /c http://archive.apachecon.com/c
 
@@ -653,8 +653,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'apachecon.com'
       - 'www.apachecon.com'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     ssl_cert: '/etc/ssl/certs/apachecon.com.crt'
     ssl_chain: '/etc/ssl/certs/apachecon.com.chain'
     ssl_key: '/etc/ssl/private/apachecon.com.key'
@@ -669,8 +669,8 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
 
   apachecon-archive-ssl:
     vhost_name: '*'
@@ -681,8 +681,8 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'archive.*.apachecon.com'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     ssl_cert: '/etc/ssl/certs/archive.apachecon.com.crt'
     ssl_chain: '/etc/ssl/certs/archive.apachecon.com.chain'
     ssl_key: '/etc/ssl/private/archive.apachecon.com.key'
@@ -693,8 +693,8 @@ vhosts_asf::vhosts::vhosts:
     servername: 'na11.apachecon.com'
     docroot: '/www/na11.apachecon.com'
     manage_docroot: false
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
 
   apachecon-archive-eu12:
     vhost_name: '*'
@@ -702,8 +702,8 @@ vhosts_asf::vhosts::vhosts:
     servername: 'eu12.apachecon.com'
     docroot: '/www/eu12.apachecon.com'
     manage_docroot: false
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
 
   apachecon-archive-na13:
     vhost_name: '*'
@@ -711,8 +711,8 @@ vhosts_asf::vhosts::vhosts:
     servername: 'na13.apachecon.com'
     docroot: '/www/na13.apachecon.com'
     manage_docroot: false
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
 
   apachecon-eu:
     vhost_name: '*'
@@ -723,8 +723,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'apachecon.eu'
       - 'www.apachecon.eu'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
 
@@ -737,8 +737,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'us.apachecon.com'
       - 'na.apachecon.com'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect / http://events.linuxfoundation.org/events/apachecon-north-america/
 
@@ -753,8 +753,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.apache-extras.org'
       - 'www.apaceextras.org'
       - 'www.apachextras.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://code.google.com/a/apache-extras.org
 
@@ -771,8 +771,8 @@ vhosts_asf::vhosts::vhosts:
       - 'cloudstack.org.uk'
       - 'www.cloudstack.org.uk'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://cloudstack.apache.org
 
@@ -783,8 +783,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/cloudstack.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://cloudstack.apache.org/docs/
 
@@ -801,8 +801,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.couchapp.com'
       - 'www.couchhack.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html
 
@@ -815,8 +815,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'deltaspike.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://deltaspike.apache.org/
 
@@ -829,8 +829,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'drat.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     redirect_source: '/'
     redirect_dest: 'https://drat.apache.org/'
 
@@ -844,8 +844,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'drat.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     proxy_pass:
       -
         path: '/asfgit'
@@ -871,8 +871,8 @@ vhosts_asf::vhosts::vhosts:
       - 'freemarker.incubator.apache.org'
       - 'freemarker.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/freemarker.apache.org'
@@ -890,8 +890,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'gump.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/gump.apache.org'
@@ -938,8 +938,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'gump.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/gump.apache.org'
@@ -983,8 +983,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/hc.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://hc.apache.org/
 
@@ -997,8 +997,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/hc.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / https://hc.apache.org/
 
@@ -1027,8 +1027,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /from-cvs/ http://cvs.apache.org/snapshots/
       RedirectMatch permanent ^/dist.* http://httpd.apache.org/download.cgi
@@ -1189,8 +1189,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /from-cvs/ https://cvs.apache.org/snapshots/
       RedirectMatch permanent ^/dist.* https://httpd.apache.org/download.cgi
@@ -1333,8 +1333,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.modssl.com'
       - 'www.modssl.net'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://httpd.apache.org/docs/current/ssl/
 
@@ -1366,8 +1366,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
@@ -1437,8 +1437,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
@@ -1484,8 +1484,8 @@ vhosts_asf::vhosts::vhosts:
     override:
       - 'All'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/jackrabbit.apache.org'
@@ -1532,8 +1532,8 @@ vhosts_asf::vhosts::vhosts:
     override:
       - 'All'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/jackrabbit.apache.org'
@@ -1581,8 +1581,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/jclouds.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://jclouds.apache.org/
 
@@ -1595,8 +1595,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/jspwiki.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://jspwiki.apache.org/
 
@@ -1607,8 +1607,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /doc http://jspwiki-doc.apache.org
       Redirect permanent /wiki http://jspwiki-wiki.apache.org
@@ -1624,8 +1624,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/jspwiki.apache.org/content'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /doc https://jspwiki-doc.apache.org
       Redirect permanent /wiki https://jspwiki-wiki.apache.org
@@ -1643,8 +1643,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.libcloud.com'
       - 'libcloud.com'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://libcloud.apache.org/
 
@@ -1657,8 +1657,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'myfaces.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://myfaces.apache.org/
 
@@ -1687,8 +1687,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.odftoolkit.net'
       - 'odftoolkit.net'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://incubator.apache.org/odftoolkit/
 
@@ -1701,8 +1701,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'ofbiz.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://ofbiz.apache.org/
       UseCanonicalName On
@@ -1740,8 +1740,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       SetEnv SWISH_BINARY_PATH /usr/bin/swish-e
       ProxyPass /search http://140.211.11.10/search
@@ -1883,8 +1883,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       SetEnv SWISH_BINARY_PATH /usr/bin/swish-e
       ProxyPass /search http://140.211.11.10/search
@@ -2010,8 +2010,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'projectgeode.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://geode.apache.org
 
@@ -2025,8 +2025,8 @@ vhosts_asf::vhosts::vhosts:
       - 'qi4j.org'
       - 'zest.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://polygene.apache.org/
 
@@ -2040,8 +2040,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'zest.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / https://polygene.apache.org/
 
@@ -2054,8 +2054,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'python.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://quetz.apache.org/
 
@@ -2069,8 +2069,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'python.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / https://quetz.apache.org/
 
@@ -2099,8 +2099,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -2146,8 +2146,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -2197,8 +2197,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.useast.spamassassin.org'
       - 'www.uswest.spamassassin.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://spamassassin.apache.org/
 
@@ -2215,8 +2215,8 @@ vhosts_asf::vhosts::vhosts:
       - 'www.subversion.com'
       - 'subversion.com'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RedirectMatch permanent ^ http://subversion.apache.org/
 
@@ -2227,8 +2227,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/subversion.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RedirectMatch ^ https://subversion.apache.org/source-code
 
@@ -2241,8 +2241,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'tinkerpop.com'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RedirectMatch permanent ^ http://tinkerpop.apache.org/
 
@@ -2273,8 +2273,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
@@ -2370,8 +2370,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       VirtualScriptAlias /www/%1.0.apache.org/cgi-bin
       UseCanonicalName Off
@@ -2453,8 +2453,8 @@ vhosts_asf::vhosts::vhosts:
         rewrite_rule:
           - '^/favicon.ico /www/tomee.apache.org/content/favicon.ico'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/tomee.apache.org/content'
@@ -2501,8 +2501,8 @@ vhosts_asf::vhosts::vhosts:
         rewrite_rule:
           - '^/favicon.ico /www/tomee.apache.org/content/favicon.ico'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/tomee.apache.org/content'
@@ -2553,8 +2553,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
 
@@ -2592,8 +2592,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
 
@@ -2616,8 +2616,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'webservices.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://ws.apache.org/
 
@@ -2631,8 +2631,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'webservices.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
         Redirect permanent / https://ws.apache.org/
 
@@ -2645,8 +2645,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'wicket-framework.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://wicket.apache.org/
 
@@ -2660,8 +2660,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'wicket-framework.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / https://wicket.apache.org/
 
@@ -2672,8 +2672,8 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/spamassassin.apache.org'
     manage_docroot: false
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /w/ http://wiki.apache.org/spamassassin/
       Redirect permanent / http://wiki.apache.org/spamassassin/
@@ -2703,8 +2703,8 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /xml-rpc http://ws.apache.org/xmlrpc
       Use BlockSvn
@@ -2747,8 +2747,8 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /xml-rpc https://ws.apache.org/xmlrpc
       Use BlockSvn
@@ -2774,8 +2774,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'jspwiki.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://jspwiki.apache.org/
 
@@ -2788,8 +2788,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'xalan.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/xalan.apache.org'
@@ -2833,8 +2833,8 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'xalan.*.apache.org'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/xalan.apache.org'
@@ -2893,8 +2893,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       <LocationMatch /xerces-c/faq-other.html/.*>
         deny from all
@@ -2936,8 +2936,8 @@ vhosts_asf::vhosts::vhosts:
               - '.lua'
               - '.cgi'
     serveradmin: 'users@infra.apache.org'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       <LocationMatch /xerces-c/faq-other.html/.*>
         deny from all
@@ -2978,8 +2978,8 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       # prevent some loops that robots get stuck in
       <Location /xalan/samples/applet>
@@ -3027,8 +3027,8 @@ vhosts_asf::vhosts::vhosts:
             extensions:
               - '.lua'
               - '.cgi'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       # prevent some loops that robots get stuck in
       <Location /xalan/samples/applet>
@@ -3067,8 +3067,8 @@ vhosts_asf::vhosts::vhosts:
           - 'Indexes'
           - 'FollowSymLinks'
           - 'MultiViews'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       # Change to infra.a.o later on.
       Redirect / https://infra-test.apache.org/
@@ -3092,8 +3092,8 @@ vhosts_asf::vhosts::vhosts:
           - 'Indexes'
           - 'FollowSymLinks'
           - 'MultiViews'
-    access_log_file: 'weblog.log'
-    error_log_file: 'errorlog.log'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       # Proxying will go here...
       SSLProxyEngine on
