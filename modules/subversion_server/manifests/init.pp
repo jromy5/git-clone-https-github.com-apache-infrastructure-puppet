@@ -644,11 +644,6 @@ class subversion_server (
     }
 
   cron {
-    'authz-rebuild':
-      minute  => '*/3',
-      hour    => '*',
-      user    => 'www-data',
-      command => '/x1/svn/scripts/authorization/gen_asf-authorization.pl template_commit > /dev/null';
     'authz-rebuild-new':
       minute  => '*/3',
       hour    => '*',

@@ -146,7 +146,7 @@ class AuthzFile(object):
     ### TODO: throw an alert if the new file is "too different" from the old
     tmp = '%s.%d' % (self.fname, os.getpid())
     open(tmp, 'w').write('\n'.join(new_z) + '\n')
-    os.rename(tmp, self.fname + '.alt')  ### not the real file, just yet
+    os.rename(tmp, self.fname)
 
   def _group_from_LDAP(self, client, line, ous):
     m = LDAP_RE.match(line)
