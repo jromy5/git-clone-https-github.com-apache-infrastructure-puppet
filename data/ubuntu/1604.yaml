@@ -1,5 +1,5 @@
 ---
-classes: 
+classes:
   - apt
   - apt::update
   - base
@@ -75,7 +75,7 @@ apache::trace_enable: Off
 apt::sources:
   'asf_internal':
     location: 'https://packages.apache.org/asf_internal'
-    release: 'bionic'
+    release: 'xenial'
     repos: 'main'
     key:
       id: '390EF70BB1EA12B2773962950EE62FB37A00258D'
@@ -127,7 +127,7 @@ apt::sources:
       src: false
   'docker-engine':
     location: 'https://apt.dockerproject.org/repo'
-    release: 'ubuntu-bionic'
+    release: 'ubuntu-xenial'
     repos: 'main'
     key:
       id: '58118E89F3A912897C070ADBF76221572C52609D'
@@ -137,7 +137,7 @@ apt::sources:
       src: false
   'nodesource-6':
     location: 'https://deb.nodesource.com/node_6.x'
-    release: 'bionic'
+    release: 'xenial'
     repos: 'main'
     key:
       id: '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280'
@@ -147,7 +147,7 @@ apt::sources:
       src: false
   'puppetlabs':
     location: 'https://apt.puppetlabs.com'
-    release: 'bionic'
+    release: 'xenial'
     repos: 'main'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
@@ -157,7 +157,7 @@ apt::sources:
       src: false
   'puppetdeps':
     location: 'https://apt.puppetlabs.com'
-    release: 'bionic'
+    release: 'xenial'
     repos: 'dependencies'
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
@@ -220,7 +220,7 @@ fail2ban_asf::config::jails:
     filter: sshd
     port: ssh
     action:
-      - iptables-allports 
+      - iptables-allports
     logpath: /var/log/auth.log
     findtime: 1800
     maxretry: 5
@@ -251,8 +251,8 @@ file:
     group: 'dd-agent'
     notify: Service[datadog-agent]
     content: |
-      # This file is managed by Puppet in the base 1804.yaml
-      # and will be overwritten automatically. 
+      # This file is managed by Puppet in the base 1604.yaml
+      # and will be overwritten automatically.
 
       init_config:
 
@@ -265,10 +265,10 @@ file:
            - none
            - shm
 
-ldapclient::install::ubuntu::ubuntu_1804::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
-ldapclient::install::ubuntu::ubuntu_1804::pamhostcheck: 'yes'
+ldapclient::install::ubuntu::1604::tlscertpath:  '/etc/ldap/cacerts/ldap-client.pem'
+ldapclient::install::ubuntu::1604::pamhostcheck: 'yes'
 
-ldapclient::ldapclient_packages: 
+ldapclient::ldapclient_packages:
     - ldap-auth-client
     - ldap-utils
     - libldap-2.4-2
@@ -277,11 +277,11 @@ ldapclient::ldapclient_packages:
     - libpam-modules
     - nslcd
 
-ldapclient::ldapclient_remove_packages: 
+ldapclient::ldapclient_remove_packages:
     - nscd
     - libnss-ldap
 
-ldapserver::install::ubuntu::ubuntu_1804::packages:
+ldapserver::install::ubuntu::1604::packages:
   - slapd
   - slapd-dbg
 
@@ -321,12 +321,12 @@ spamassassin::spamc::haproxy_packagelist:
 
 spamassassin::sa_update: '/usr/bin/sa-update && /etc/init.d/spamassassin reload'
 
-subversionclient::packages: 
+subversionclient::packages:
   - subversion
 subversionclient::svn_conf_config:       '/etc/subversion/config'
 subversionclient::svn_conf_servers:      '/etc/subversion/servers'
 
-subversion_server::packages: 
+subversion_server::packages:
     - p7zip
     - python-svn
     - s3cmd
@@ -383,7 +383,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1 
+  - asf-build-jdk9.0.1
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -409,8 +409,8 @@ build_slaves::distro_packages:
   - erlang-base
   - erlang-dev
   - erlang-eunit
-  - flex
   - firefox
+  - flex
   - g++
   - g++-4.8-multilib
   - g++-multilib
@@ -534,7 +534,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1 
+  - asf-build-jdk9.0.1
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk11-ea+8
@@ -552,6 +552,7 @@ buildbot_slave::bb_basepackages:
   - libapr1-dev
   - libaprutil1
   - libaprutil1-dev
+  - libjson-perl
   - libpam0g-dev
   - libserf-1-1
   - libserf-dev
