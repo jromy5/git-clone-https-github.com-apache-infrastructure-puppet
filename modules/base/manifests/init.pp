@@ -103,6 +103,6 @@ class base (
   $dbfile = hiera_hash('postfix::dbfile', {})
   create_resources(postfix::dbfile, $dbfile)
 
-  class { "base::install::${::asfosname}::${::asfosrelease}":
+  class { "base::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 }

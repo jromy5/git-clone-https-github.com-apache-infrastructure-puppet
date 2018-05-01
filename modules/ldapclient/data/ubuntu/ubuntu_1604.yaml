@@ -1,0 +1,11 @@
+---
+
+ldapclient::ldapclient_packages:
+  - 'ldap-utils'
+  - 'libnss-ldap'
+  - 'libpam-ldap'
+
+ldapclient::install::ubuntu::ubuntu_1604::tlscertpath: '/etc/ldap/cacert.pem'
+ldapclient::install::ubuntu::ubuntu_1604::pamhostcheck: 'yes'
+ldapclient::install::ubuntu::ubuntu_1604:::bashpath: '/bin/bash'
+
