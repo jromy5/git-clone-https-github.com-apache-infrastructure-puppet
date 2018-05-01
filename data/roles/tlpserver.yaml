@@ -109,7 +109,7 @@ apache::custom_config:
       LuaScope thread
       LuaCodeCache stat
       RewriteEngine On
-      RewriteRule .*\.cgi /www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /var/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       <Directory /www/www.apache.org/dyn/>
         Require all granted
         <FilesMatch "(closer|ss)\.lua">
@@ -305,13 +305,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
-      -
         path: '/www/ooo-site.apache.org/content'
         options:
           - 'Indexes'
@@ -320,13 +313,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
-
     custom_fragment: |
       Use OpenOffice http
       Use BlockSvn
@@ -341,9 +327,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/openoffice-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
   aoo-ssl:
     vhost_name: '*'
@@ -372,12 +355,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       Use OpenOffice https
       Use BlockSvn
@@ -420,12 +397,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -536,12 +507,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -902,12 +867,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       ExpiresActive On
       ExpiresByType text/css "access plus 1 day"
@@ -923,9 +882,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   gump-ssl:
@@ -950,12 +906,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       ExpiresActive On
       ExpiresByType text/css "access plus 1 day"
@@ -971,9 +921,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/gump-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   httpcomponents:
@@ -1020,12 +967,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -1152,10 +1093,6 @@ vhosts_asf::vhosts::vhosts:
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
-
       Use BlockSvn
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
@@ -1182,12 +1119,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -1313,9 +1244,6 @@ vhosts_asf::vhosts::vhosts:
       # Convert docs-2.x -> docs/2.x
       RewriteRule ^/docs-2\.(.)/(.*) /docs/2.$1/$2 [R=301,L]
 
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
       Use BlockSvn
       RewriteRule ^/server-status$ /www/www.apache.org/dyn/ss.lua
       <Location "/server-status">
@@ -1359,12 +1287,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -1430,12 +1352,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -1496,12 +1412,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -1515,10 +1425,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
   jackrabbit-ssl:
     vhost_name: '*'
@@ -1544,12 +1450,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
@@ -1563,9 +1463,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   jclouds:
@@ -1733,12 +1630,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -1876,12 +1767,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -2092,21 +1977,12 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
       # Override global alias so spamassassin can have its
@@ -2139,22 +2015,12 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
       RewriteOptions inherit
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
       # Override global alias so spamassassin can have its
       # own favicon
@@ -2266,12 +2132,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -2299,9 +2159,6 @@ vhosts_asf::vhosts::vhosts:
 
       AddType text/plain sha512
       RewriteEngine On
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
       #/mail -> mail-archives.a.o/mod_mbox/#tlp
@@ -2363,12 +2220,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -2465,21 +2316,12 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   tomee-ssl:
@@ -2513,21 +2355,12 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#tomee [R=301,L,NE]
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/tomee-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   uima:
@@ -2546,21 +2379,11 @@ vhosts_asf::vhosts::vhosts:
           - 'FollowSymLinks'
           - 'MultiViews'
           - 'ExecCGI'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2585,21 +2408,11 @@ vhosts_asf::vhosts::vhosts:
           - 'FollowSymLinks'
           - 'MultiViews'
           - 'ExecCGI'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RewriteEngine On
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#uima [R=301,L,NE]
@@ -2697,12 +2510,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
@@ -2710,10 +2517,6 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ http://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2741,12 +2544,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
@@ -2754,10 +2551,6 @@ vhosts_asf::vhosts::vhosts:
       Use BlockSvn
 
       RewriteEngine On
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
-
 
       #/mail/* -> mail-archives.a.o/mod_mbox/*
       RewriteRule ^/mail/?$ https://mail-archives.apache.org/mod_mbox/#ws [R=301,L,NE]
@@ -2800,12 +2593,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       <Location /xalan/samples/applet>
         deny from all
@@ -2818,9 +2605,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   xalan-ssl:
@@ -2845,12 +2629,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     custom_fragment: |
       <Location /xalan/samples/applet>
         deny from all
@@ -2863,9 +2641,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
-
-      AddHandler lua-script .lua
-      AddHandler lua-script .cgi
 
 
   xerces:
@@ -2886,12 +2661,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -2929,12 +2698,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
@@ -2972,12 +2735,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
@@ -3021,12 +2778,6 @@ vhosts_asf::vhosts::vhosts:
           - 'ExecCGI'
         allow_override:
           - 'All'
-        addhandlers:
-          -
-            handler: 'lua-script'
-            extensions:
-              - '.lua'
-              - '.cgi'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
