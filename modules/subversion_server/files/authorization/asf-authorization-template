@@ -1470,6 +1470,9 @@ svn-site-role = rw
 [/myfaces]
 @myfaces = rw
 
+[/myfaces/myfaces-master-pom]
+* = r
+
 [/myfaces/tobago]
 * = r
 
