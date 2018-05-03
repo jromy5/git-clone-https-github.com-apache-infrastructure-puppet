@@ -234,11 +234,6 @@ mod 'staging',
   :git => 'https://github.com/nanliu/puppet-staging.git',
   :tag => '1.0.2'
 
-
-mod 'stahnma-epel',
-  :git => 'https://github.com/stahnma/puppet-module-epel',
-  :tag => '1.0.0'
-
 mod 'stdlib',
   :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
   :tag => '4.13.1'
