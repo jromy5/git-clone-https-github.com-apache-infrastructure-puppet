@@ -2,7 +2,6 @@
 classes:
   - apbackup
   - apbackup::backup
-  - apmirror
   - blocky
   - datadog_asf::integrations::network
   - loggy
