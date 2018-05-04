@@ -1,0 +1,44 @@
+---
+classes:
+  - apbackup
+  - apbackup::backup
+  - apmirror
+  - blocky
+  - datadog_asf::integrations::network
+  - loggy
+  - rootbin_asf
+  - rsync
+  - rsync::server
+  - rsync_mirror
+  - svnwcsub
+
+apmirror::uid:                               '508'
+apmirror::gid:                               '508'
+apmirror::groups:
+  - 'svnwc'
+  - 'apbackup'
+apmirror::svnwc_group:                       "%{hiera('svnwcsub::groupname')}"
+apmirror::svnwc_user:                        "%{hiera('svnwcsub::username')}"
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    create_owner: 'root'
+    create_group: 'apbackup'
+    rotate: 5
+
+rsync::package_ensure:                       'latest'
+rsync::server::use_xinetd:                   false
+rsync::server::gid:                          'nogroup' # group 'nobody' doesn't exist in ubuntu
+
+svnwcsub::gid:                               '9997'
+svnwcsub::uid:                               '9997'
+svnwcsub::conf_file:                         'svnwcsub.conf.dist'
+svnwcsub:::conf_path:                        '/etc/'
+svnwcsub::groupname:                         'svnwc'
+svnwcsub::groups:
+  - 'svnwc'
+svnwcsub::service_ensure:                    'running'
+svnwcsub::service_name:                      'svnwcsub'
+svnwcsub::shell:                             '/bin/bash'
+svnwcsub::username:                          'svnwc'
