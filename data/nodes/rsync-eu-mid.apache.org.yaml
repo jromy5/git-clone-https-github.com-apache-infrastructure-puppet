@@ -26,7 +26,7 @@ rsync::server::gid:                          'nogroup' # group 'nobody' doesn't 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
 svnwcsub::conf_file:                         'svnwcsub.conf.dist'
-svnwcsub:::conf_path:                        '/etc/'
+svnwcsub::conf_path:                         '/etc/'
 svnwcsub::groupname:                         'svnwc'
 svnwcsub::groups:
   - 'svnwc'
