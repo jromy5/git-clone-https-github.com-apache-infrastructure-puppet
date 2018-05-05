@@ -20,6 +20,8 @@ class cwiki_asf (
   $server_port                   = '',
   $connector_port                = '',
   $context_path                  = '',
+  $synchony_path                 = '',
+  $syncrony_port                 = '',
   $docroot                       = '',
   $server_alias                  = '',
   $heap_min_size                 = '',
