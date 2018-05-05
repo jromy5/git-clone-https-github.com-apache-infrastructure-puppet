@@ -4,7 +4,7 @@ mod 'amanda',
 
 mod 'apache',
   :git => 'https://github.com/puppetlabs/puppetlabs-apache.git',
-  :tag => '1.8.1'
+  :tag => '1.11.1'
 
 
 mod 'apt',
