@@ -6,17 +6,19 @@ CATALINA_OPTS="-Djavax.net.ssl.trustStore=/x1/jenkins/jvm-sslcerts/cacerts ${CAT
 CATALINA_OPTS="-Dorg.jenkinsci.plugins.docker.workflow.client.DockerClient.CLIENT_TIMEOUT=30 ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dhudson.scm.SubversionSCM.pollFromMaster=true -Dhudson.DNSMultiCast.disabled=true ${CATALINA_OPTS}"
 CATALINA_OPTS="-Dhudson.model.DirectoryBrowserSupport.CSP= ${CATALINA_OPTS} "
-CATALINA_OPTS="-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -verbose:gc ${CATALINA_OPTS} "
+# CATALINA_OPTS="-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -verbose:gc ${CATALINA_OPTS} "
 
 # memory and performance
 CATALINA_OPTS="-Xms<%= @heap_min_size %>m -Xmx<%= @heap_max_size %>m -XX:MaxMetaspaceSize=<%= @maxmetaspacesize %>m ${CATALINA_OPTS}"
 CATALINA_OPTS="-server -XX:+AlwaysPreTouch ${CATALINA_OPTS}"
 
 # gc logging
-CATALINA_OPTS="-Xloggc:/x1/jenkins/jenkins-home/gclog/gc-%t.log -XX:NumberOfGCLogFiles=5 -XX:+UseGCLogFileRotation -XX:GCLogFileSize=20m -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCCause -XX:+PrintTenuringDistribution -XX:+PrintReferenceGC -XX:+PrintAdaptiveSizePolicy ${CATALINA_OPTS}"
+# CATALINA_OPTS="-Xloggc:/x1/jenkins/jenkins-home/gclog/gc-%t.log -XX:NumberOfGCLogFiles=5 -XX:+UseGCLogFileRotation -XX:GCLogFileSize=20m -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCCause -XX:+PrintTenuringDistribution -XX:+PrintReferenceGC -XX:+PrintAdaptiveSizePolicy ${CATALINA_OPTS}"
 
 # gc settings
-CATALINA_OPTS="-XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent -XX:+ParallelRefProcEnabled -XX:+UseStringDeduplication -XX:+UnlockDiagnosticVMOptions -XX:G1SummarizeRSetStatsPeriod=1 ${CATALINA_OPTS}"
+# CATALINA_OPTS="-XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent -XX:+ParallelRefProcEnabled -XX:+UseStringDeduplication -XX:+UnlockDiagnosticVMOptions -XX:G1SummarizeRSetStatsPeriod=1 ${CATALINA_OPTS}"
+#
+CATALINA_OPTS="-XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent -XX:+ParallelRefProcEnabled -XX:+UseStringDeduplication ${CATALINA_OPTS}"
 
 JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export CATALINA_OPTS JAVA_HOME
