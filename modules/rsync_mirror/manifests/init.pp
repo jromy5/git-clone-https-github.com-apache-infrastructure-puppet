@@ -57,7 +57,7 @@ class rsync_mirror (
             ]
 
   rsync::server::module { 'apache-dist-for-archive':
-    path            => '/www/www.apache.org/dist',
+    path            => '/dist',
     comment         => 'Identical to apache-dist, but without exclusions',
     uid             => 'nobody',
     gid             => 'nogroup',
@@ -71,7 +71,7 @@ class rsync_mirror (
   }
 
   rsync::server::module { 'apache-dist':
-    path            => '/www/www.apache.org/dist',
+    path            => '/dist',
     comment         => 'Apache software distribution (up to 90GB disk)',
     uid             => 'nobody',
     gid             => 'nogroup',
@@ -90,7 +90,7 @@ class rsync_mirror (
   }
 
   rsync::server::module { 'apache-dist-most':
-    path            => '/www/www.apache.org/dist',
+    path            => '/dist',
     comment         => 'like apache-dist, without high bandwidth projects (up to 60GB disk)',
     uid             => 'nobody',
     gid             => 'nogroup',
