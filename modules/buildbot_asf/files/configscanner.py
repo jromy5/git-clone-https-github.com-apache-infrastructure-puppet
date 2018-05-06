@@ -284,7 +284,7 @@ class PubSubClient(Thread):
                                 if m:
                                     # N.B. this loop only runs on first match as it processes the entire revision at once
                                     time.sleep(3) # why do we wait here?
-                                    print("Validating new revision %s" % revision)
+                                    print("Validating new revision %s (was %s)" % (revision, before))
                                     os.environ['HOME'] = '/x1/buildmaster'
                                     try:
                                         print("Checking out new config")
@@ -330,7 +330,7 @@ Please correct the below and commit your fixes:
 
                                     break # we process the whole revision on the first match
 
-                except ValueError as detail:
+                except (ValueError, Exception) as detail:
                     logging.warning("Bad JSON or something: %s", detail)
                     continue
             logging.info("Disconnected from %s, reconnecting" % self.url)
