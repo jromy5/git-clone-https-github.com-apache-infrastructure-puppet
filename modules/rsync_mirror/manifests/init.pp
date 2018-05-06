@@ -107,19 +107,6 @@ class rsync_mirror (
     hosts_deny      => $deny,
   }
 
-  rsync::server::module { 'archive-site':
-    path            => '/www/archive.apache.org',
-    comment         => 'historical archive of old software distributions',
-    uid             => 'nobody',
-    gid             => 'nogroup',
-    max_connections => 160,
-    read_only       => 'yes',
-    list            => 'no',
-    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-    hosts_deny      => ['*'],
-    hosts_allow     => ['128.195.24.168','24.148.31.172','192.87.106.226','192.87.106.229','99.75.140.113'],
-  }
-
   rsync::server::module { 'priv-mail-arch':
     path            => '/home/apmail/private-arch',
     comment         => 'private mail archives',
@@ -141,59 +128,4 @@ class rsync_mirror (
     list            => 'no',
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
   }
-  # This module is no longer used, but leaving for history
-#  rsync::server::module { 'SF-aoo-401':
-#    path            => '/www/www.apache.org/dist/openoffice/4.0.1',
-#    comment         => 'AOO 4.0.1 for Source Forge',
-#    uid             => 'nobody',
-#    gid             => 'nogroup',
-#    max_connections => 80,
-#    read_only       => 'yes',
-#    list            => 'yes',
-#    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-#    exclude         => ['*.md5', '*.MD5', '*.sha1', '*.sha', '*.sha256',
-#                        '*.sha512', 'MD5SUM', 'SHA*SUM*', '*.asc', '*.sig',
-#                        'KEYS', 'KEYS.txt', '.svn/', '/source'],
-#    hosts_deny      => $deny,
-#  }
-
-  rsync::server::module { 'www-bootstrap':
-    path            => '/www',
-    comment         => 'bootstrap www via rsync (not for mirrors)',
-    uid             => 'nobody',
-    gid             => 'nogroup',
-    max_connections => 80,
-    read_only       => 'yes',
-    list            => 'no',
-    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-    exclude         => ['/www.apache.org/dist/.rsync.td/'],
-    hosts_deny      => ['*'],
-    hosts_allow     => ['192.87.106.229', '140.211.11.131', '140.211.11.9',
-                        '140.211.11.105', '127.0.0.1'],
-  }
-
-  rsync::server::module { 'rsync-logs':
-    path            => '/var/log/rsync',
-    comment         => 'rsync logs for mino (not for mirrors)',
-    uid             => 'nobody',
-    gid             => 'nogroup',
-    max_connections => 80,
-    read_only       => 'yes',
-    list            => 'no',
-    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-    hosts_deny      => ['*'],
-    hosts_allow     => ['140.211.11.9', 'localhost', '37.48.69.238'],
-  }
-
-  rsync::server::module { 'x1-www-sync-peers':
-    path            => '/home/apbackup/x1-www-sync-peers',
-    comment         => 'remote machines that need to collect a \'find\' file - Generated locally to perform rsync of /x1/www',
-    max_connections => 80,
-    read_only       => 'yes',
-    list            => 'no',
-    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
-    hosts_deny      => ['*'],
-    hosts_allow     => ['140.211.11.9', 'localhost', '37.48.69.238'],
-  }
-
 }
