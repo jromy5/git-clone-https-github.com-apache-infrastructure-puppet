@@ -6,6 +6,9 @@
 # Built for Python 3, works with 2.7 with a few tweaks     #
 ############################################################
 
+SVN='/usr/bin/svn'
+BUILDBOT='/usr/bin/buildbot'
+
 buildbotDir = "/x1/buildmaster/master1"
 blamelist = ["users@infra.apache.org"]
 
@@ -277,7 +280,7 @@ class PubSubClient(Thread):
                             os.chdir(buildbotDir)
                             # get current revision; assumed good
                             # we do this in outer try block as failure is fatal
-                            before=subprocess.check_output(['/usr/bin/svn','info','--show-item','last-changed-revision', 'projects']).rstrip()
+                            before=subprocess.check_output([SVN,'info','--show-item','last-changed-revision', 'projects']).rstrip()
 
                             for path in commit['changed']:
                                 m = re.match(r"infrastructure/buildbot/aegis/buildmaster/master1/projects/(.+\.conf)", path)
@@ -285,28 +288,34 @@ class PubSubClient(Thread):
                                     # N.B. this loop only runs on first match as it processes the entire revision at once
                                     time.sleep(3) # why do we wait here?
                                     print("Validating new revision %s (was %s)" % (revision, before))
-                                    os.environ['HOME'] = '/x1/buildmaster'
+                                    os.environ['HOME'] = '/x1/buildmaster' # where SVN settings are found
                                     try:
                                         print("Checking out new config")
-                                        subprocess.check_output(['/usr/bin/svn', 'update', '-r', revision, 'projects'])
+                                        subprocess.check_output([SVN, 'update', '-r', "%u" % revision, 'projects'])
                                         print("Running config check")
-                                        subprocess.check_output(["/usr/bin/buildbot", "checkconfig"], stderr=subprocess.STDOUT)
+                                        subprocess.check_output([BUILDBOT, "checkconfig"], stderr=subprocess.STDOUT)
                                         print("Check passed, apply the new config")
-                                        subprocess.check_output(["/usr/bin/buildbot", "reconfig"], stderr=subprocess.STDOUT)
+                                        subprocess.check_output([BUILDBOT, "reconfig"], stderr=subprocess.STDOUT)
                                         if revision in broken:
                                             del broken[revision]
                                             blamelist.append(email)
-                                            for rec in blamelist:
-                                                sendEmail(
-                                                    rec,
-                                                    "Buildbot configuration back to normal for %s" % revision,
-                                                    "Looks like things got fixed, yay!"
-                                                    )
+                                            try: # Don't let mail failure cause the update to be treated as failed
+                                                for rec in blamelist:
+                                                    sendEmail(
+                                                        rec,
+                                                        "Buildbot configuration back to normal for %s" % revision,
+                                                        "Looks like things got fixed, yay!"
+                                                        )
+                                            except Exception as e:
+                                                logging.warning("Failed to send recovery mail: %s", e)
                                             blamelist.remove(email)
                                     except subprocess.CalledProcessError as err:
                                         broken[revision] = True
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
+                                        # Do this firs in case mail fails
+                                        print("Cleaning up...")
+                                        subprocess.call([SVN, 'update', '-r', before, 'projects'])
                                         blamelist.append(email)
                                         out = """
 The error(s) below happened while validating the committed changes.
@@ -316,15 +325,12 @@ Please correct the below and commit your fixes:
 %s
 """ % err.output
                                         for rec in blamelist:
-
                                             sendEmail(
                                                 rec,
                                                 "Buildbot configuration failure in %s" % revision,
                                                 out
                                                 )
                                         blamelist.remove(email)
-                                        print("Cleaning up...")
-                                        subprocess.call(['/usr/bin/svn', 'update', '-r', before, 'projects'])
 
                                     print("All done, back to listening for changes :)")
 
