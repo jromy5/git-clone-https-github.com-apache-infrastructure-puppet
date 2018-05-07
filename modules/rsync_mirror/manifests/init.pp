@@ -128,4 +128,18 @@ class rsync_mirror (
     list            => 'no',
     outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
   }
+
+  # This is for rsync stats on mirror-vm.a.o, talk to henk :)
+  rsync::server::module { 'rsync-logs':
+    path            => '/var/log/rsync',
+    comment         => 'rsync logs for mirror-vm (not for mirrors)',
+    uid             => 'nobody',
+    gid             => 'nogroup',
+    max_connections => 80,
+    read_only       => 'yes',
+    list            => 'no',
+    outgoing_chmod  => 'ug-s,Dugo+rx,Fugo+r,u+w,o-w,-t',
+    hosts_deny      => ['*'],
+    hosts_allow     => ['140.211.11.9', 'localhost', '37.48.69.238'],
+  }
 }
