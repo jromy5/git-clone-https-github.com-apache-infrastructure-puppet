@@ -21,6 +21,7 @@ cron:
 rsync::package_ensure:                       'latest'
 rsync::server::use_xinetd:                   false
 rsync::server::gid:                          'nogroup' # group 'nobody' doesn't exist in ubuntu
+rsync::server::address:                      '' # both ipv4 and ipv6
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
