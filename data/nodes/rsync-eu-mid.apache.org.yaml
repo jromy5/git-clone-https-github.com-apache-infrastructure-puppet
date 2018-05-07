@@ -16,7 +16,7 @@ cron:
     user: 'svnwc'
     minute: [0,30]
     hour: '*'
-    command: 'cd /dist && /bin/bash -c ''TIME=zzz/time.txt && FIND=zzz/find-ls.gz && echo `/bin/date +%s` `/bin/hostname` > $TIME.tmp &&  mv -f $TIME.tmp $TIME &&  find . \( -name .svn -prune \) -o -ls | gzip -c > $FIND.tmp && mv -f $FIND.tmp $FIND'''
+    command: '/dist/zzz/update-files.sh'
 
 rsync::package_ensure:                       'latest'
 rsync::server::use_xinetd:                   false
