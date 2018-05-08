@@ -1476,6 +1476,9 @@ svn-site-role = rw
 [/myfaces/myfaces-master-pom]
 * = r
 
+[/myfaces/test]
+* = r
+
 [/myfaces/tobago]
 * = r
 
