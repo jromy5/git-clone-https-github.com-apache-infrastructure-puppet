@@ -3,7 +3,7 @@
 class jenkins_slave_windows::params (
 
   $user_password    = '',
-  $ant = ['apache-ant-1.9.9','apache-ant-1.9.7','apache-ant-1.9.4','apache-ant-1.8.4','apache-ant-1.10.1'],
+  $ant = ['apache-ant-1.9.9','apache-ant-1.9.7','apache-ant-1.9.4','apache-ant-1.8.4','apache-ant-1.10.1','apache-ant-1.10.3'],
   $chromedriver = ['2.29'],
   $geckodriver = ['0.16.1'],
   $gradle = ['3.5','4.3','4.3.1'],

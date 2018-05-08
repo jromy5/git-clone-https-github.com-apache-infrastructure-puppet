@@ -41,58 +41,58 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for latest Ant':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\ant\\latest F:\\jenkins\\tools\\ant\\apache-ant-1.10.1",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\ant\\latest') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\ant\\latest & mklink /d F:\\jenkins\\tools\\ant\\latest F:\\jenkins\\tools\\ant\\apache-ant-1.10.3",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\ant).lastwritetime -eq (get-item latest).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for latest Maven':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest & mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item latest).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Maven2':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest2 F:\\jenkins\\tools\\maven\\apache-maven-2.2.1",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest2') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest2 & mklink /d F:\\jenkins\\tools\\maven\\latest2 F:\\jenkins\\tools\\maven\\apache-maven-2.2.1",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item latest2).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Maven3':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\maven\\latest3') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest3 & mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item latest3).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for latest JDK':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest F:\\jenkins\\tools\\java\\jdk9.0.1",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest & mklink /d F:\\jenkins\\tools\\java\\latest F:\\jenkins\\tools\\java\\jdk9.0.1",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK10':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest10 F:\\jenkins\\tools\\java\\jdk10_46",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest10') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest10 & mklink /d F:\\jenkins\\tools\\java\\latest10 F:\\jenkins\\tools\\java\\jdk10_46",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest10).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.9':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest9') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest9 & mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest9).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.8':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.8 F:\\jenkins\\tools\\java\\jdk1.8.0_152",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.8') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.8 & mklink /d F:\\jenkins\\tools\\java\\latest1.8 F:\\jenkins\\tools\\java\\jdk1.8.0_152",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest1.8).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.7':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.7 F:\\jenkins\\tools\\java\\jdk1.7.0_79-unlimited-security",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.7') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.7 & mklink /d F:\\jenkins\\tools\\java\\latest1.7 F:\\jenkins\\tools\\java\\jdk1.7.0_79-unlimited-security",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest1.7).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.6':
-    command  => " cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.6 F:\\jenkins\\tools\\java\\jdk1.6.0_30",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.6') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.6 & mklink /d F:\\jenkins\\tools\\java\\latest1.6 F:\\jenkins\\tools\\java\\jdk1.6.0_30",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest1.6).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.5':
-    command  => "cmd.exe /c mklink /d F:\\jenkins\\tools\\java\\latest1.5 F:\\jenkins\\tools\\java\\jdk1.5.0_22-64",
-    onlyif   => "if (Test-Path 'F:\\jenkins\\tools\\java\\latest1.5') { exit 1;}  else { exit 0; }",
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.5 & mklink /d F:\\jenkins\\tools\\java\\latest1.5 F:\\jenkins\\tools\\java\\jdk1.5.0_22-64",
+    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item latest1.5).lastwritetime) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for short path to workspaces':
