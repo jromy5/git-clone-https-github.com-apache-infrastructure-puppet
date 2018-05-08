@@ -17,6 +17,11 @@ cron:
     minute: [0,30]
     hour: '*'
     command: '/dist/zzz/update-files.sh'
+  checkrev:
+    user: 'svnwc'
+    minute: [10,40]
+    hour: '*'
+    command: '/dist/zzz/checkrev.py'
 
 rsync::package_ensure:                       'latest'
 rsync::server::use_xinetd:                   false

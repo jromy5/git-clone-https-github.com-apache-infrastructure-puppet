@@ -47,59 +47,6 @@ class tlp_vhosts::compat {
     mode   => '2775',
   }
 
-  file { '.htaccess':
-    ensure  => 'present',
-    owner   => $svnwcsub::username,
-    group   => $svnwcsub::groupname,
-    path    => '/var/www/www.apache.org/dist/.htaccess',
-    source  => 'puppet:///modules/tlp_vhosts/dist/.htaccess',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
-  file { '.message':
-    ensure  => 'present',
-    owner   => $svnwcsub::username,
-    group   => $svnwcsub::groupname,
-    path    => '/var/www/www.apache.org/dist/.message',
-    source  => 'puppet:///modules/tlp_vhosts/dist/.message',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
-  file { 'favicon.ico':
-    ensure  => 'present',
-    owner   => $svnwcsub::username,
-    group   => $svnwcsub::groupname,
-    path    => '/var/www/www.apache.org/dist/favicon.ico',
-    source  => 'puppet:///modules/tlp_vhosts/dist/favicon.ico',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
-  file { 'HEADER.html':
-    ensure  => 'present',
-    owner   => $svnwcsub::username,
-    group   => $svnwcsub::groupname,
-    path    => '/var/www/www.apache.org/dist/HEADER.html',
-    source  => 'puppet:///modules/tlp_vhosts/dist/HEADER.html',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
-  file { 'README.html':
-    ensure  => 'present',
-    owner   => $svnwcsub::username,
-    group   => $svnwcsub::groupname,
-    path    => '/var/www/www.apache.org/dist/README.html',
-    source  => 'puppet:///modules/tlp_vhosts/dist/README.html',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
-  file { '/var/www/www.apache.org/dist/zzz':
-    ensure  => 'directory',
-    owner   => $apmirror::username,
-    group   => $svnwcsub::groupname,
-    mode    => '0775',
-    require => File['/var/www/www.apache.org/dist'],
-  }
-
   $packages = ['python-geoip', 'swish-e', 'python-flup']
 
   package { $packages:
