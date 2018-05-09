@@ -16,6 +16,7 @@ classes:
 
 classes_windows:
   - asf999_windows::create_user
+  - customfact
   - datadog_agent
 
 ## MODULES
