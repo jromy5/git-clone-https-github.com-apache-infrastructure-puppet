@@ -42,57 +42,57 @@ class jenkins_slave_windows (
   }
   exec { 'create symlink for latest Ant':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\ant\\latest \"&\" mklink /d F:\\jenkins\\tools\\ant\\latest F:\\jenkins\\tools\\ant\\apache-ant-1.10.3",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\ant).lastwritetime -eq (get-item F:\\jenkins\\tools\\ant\\latest).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\ant).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for latest Maven':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item F:\\jenkins\\tools\\maven\\latest).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\maven).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Maven2':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest2 \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest2 F:\\jenkins\\tools\\maven\\apache-maven-2.2.1",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item F:\\jenkins\\tools\\maven\\latest2).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\maven).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for Maven3':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest3 \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\maven).lastwritetime -eq (get-item F:\\jenkins\\tools\\maven\\latest3).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\maven).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for latest JDK':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest \"&\" mklink /d F:\\jenkins\\tools\\java\\latest F:\\jenkins\\tools\\java\\jdk9.0.1",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK10':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest10 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest10 F:\\jenkins\\tools\\java\\jdk10_46",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest10).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.9':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest9 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest9 F:\\jenkins\\tools\\java\\jdk9.0.1",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest9).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.8':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.8 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest1.8 F:\\jenkins\\tools\\java\\jdk1.8.0_152",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest1.8).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.7':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.7 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest1.7 F:\\jenkins\\tools\\java\\jdk1.7.0_79-unlimited-security",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest1.7).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.6':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.6 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest1.6 F:\\jenkins\\tools\\java\\jdk1.6.0_30",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest1.6).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for JDK1.5':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest1.5 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest1.5 F:\\jenkins\\tools\\java\\jdk1.5.0_22-64",# lint:ignore:140chars
-    onlyif   => "if ((get-item F:\\jenkins\\tools\\java).lastwritetime -eq (get-item F:\\jenkins\\tools\\java\\latest1.5).lastwritetime) { exit 1;}  else { exit 0; }",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
   exec { 'create symlink for short path to workspaces':
