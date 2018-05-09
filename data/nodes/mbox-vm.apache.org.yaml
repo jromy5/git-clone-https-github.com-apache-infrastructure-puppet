@@ -4,6 +4,9 @@ classes:
   - mboxer
   - ssl::name::wildcard_apache_org
 
+base::basepackages:
+  - jed
+
 postfix::server::home_mailbox: 'Maildir/'
 postfix::server::inet_interfaces: 'all'
 postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
