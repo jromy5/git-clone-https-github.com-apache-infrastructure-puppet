@@ -6,6 +6,9 @@
 # Built for Python 3, works with 2.7 with a few tweaks     #
 ############################################################
 
+SVN='/usr/bin/svn'
+BUILDBOT='/usr/bin/buildbot'
+
 buildbotDir = "/x1/buildmaster/master1"
 blamelist = ["users@infra.apache.org"]
 
@@ -274,56 +277,45 @@ class PubSubClient(Thread):
                             revision = commit['id']
                             email = svnuser + "@apache.org"
 
-                            # If projects.conf is changed, then possibly a new
-                            # .conf was added. We want that handled first, so
-                            # it is on-disk when projects.conf is checked.
-                            if PROJECTS_CONF in commit['changed']:
-                              # move projects.conf to the last item.
-                              commit['changed'].remove(PROJECTS_CONF)
-                              commit['changed'].append(PROJECTS_CONF)
+                            os.chdir(buildbotDir)
+                            # get current revision; assumed good
+                            # we do this in outer try block as failure is fatal
+                            before=subprocess.check_output([SVN,'info','--show-item','last-changed-revision', 'projects']).rstrip()
 
                             for path in commit['changed']:
                                 m = re.match(r"infrastructure/buildbot/aegis/buildmaster/master1/projects/(.+\.conf)", path)
                                 if m:
-                                    buildbotFile = m.group(1)
-                                    isNewFile = False
-                                    time.sleep(3)
-                                    before = revision - 1
-                                    print("%s changed, validating..." % buildbotFile)
-                                    os.environ['HOME'] = '/x1/buildmaster'
+                                    # N.B. this loop only runs on first match as it processes the entire revision at once
+                                    time.sleep(3) # why do we wait here?
+                                    print("Validating new revision %s (was %s)" % (revision, before))
+                                    os.environ['HOME'] = '/x1/buildmaster' # where SVN settings are found
                                     try:
-                                        os.chdir(buildbotDir)
                                         print("Checking out new config")
-                                        # If this is a new file, svn cat doesn't work - we gotta check it out and test, then
-                                        # rm it if it borks.
-                                        if not os.path.exists("/x1/buildmaster/master1/projects/%s" % buildbotFile):
-                                            isNewFile = True
-                                        subprocess.check_output(["/usr/bin/svn cat https://svn.apache.org/repos/infra/infrastructure/buildbot/aegis/buildmaster/master1/projects/%s -r %u > projects/%s" % (buildbotFile, revision, buildbotFile)], shell=True, stderr=subprocess.STDOUT)
+                                        subprocess.check_output([SVN, 'update', '-r', "%u" % revision, 'projects'])
                                         print("Running config check")
-                                        subprocess.check_output(["/usr/bin/buildbot", "checkconfig"], stderr=subprocess.STDOUT)
-                                        print("Check passed, updating project file permanently")
-                                        subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
-                                        subprocess.call(["/usr/bin/svn", "up", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
-                                        subprocess.check_output(["/usr/bin/buildbot", "reconfig"], stderr=subprocess.STDOUT)
-                                        if buildbotFile in broken:
-                                            del broken[buildbotFile]
+                                        subprocess.check_output([BUILDBOT, "checkconfig"], stderr=subprocess.STDOUT)
+                                        print("Check passed, apply the new config")
+                                        subprocess.check_output([BUILDBOT, "reconfig"], stderr=subprocess.STDOUT)
+                                        if revision in broken:
+                                            del broken[revision]
                                             blamelist.append(email)
-                                            for rec in blamelist:
-                                                sendEmail(
-                                                    rec,
-                                                    "Buildbot configuration back to normal for %s" % buildbotFile,
-                                                    "Looks like things got fixed, yay!"
-                                                    )
+                                            try: # Don't let mail failure cause the update to be treated as failed
+                                                for rec in blamelist:
+                                                    sendEmail(
+                                                        rec,
+                                                        "Buildbot configuration back to normal for %s" % revision,
+                                                        "Looks like things got fixed, yay!"
+                                                        )
+                                            except Exception as e:
+                                                logging.warning("Failed to send recovery mail: %s", e)
                                             blamelist.remove(email)
                                     except subprocess.CalledProcessError as err:
-                                        broken[buildbotFile] = True
+                                        broken[revision] = True
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
-                                        if isNewFile and os.path.isfile("/x1/buildmaster/master1/projects/%s" % buildbotFile):
-                                            print("Cleaning up new file that borked")
-                                            os.unlink("/x1/buildmaster/master1/projects/%s" % buildbotFile)
-                                        else:
-                                            subprocess.call(["/usr/bin/svn", "revert", "projects/%s" % buildbotFile], stderr=subprocess.STDOUT)
+                                        # Do this firs in case mail fails
+                                        print("Cleaning up...")
+                                        subprocess.call([SVN, 'update', '-r', before, 'projects'])
                                         blamelist.append(email)
                                         out = """
 The error(s) below happened while validating the committed changes.
@@ -333,20 +325,18 @@ Please correct the below and commit your fixes:
 %s
 """ % err.output
                                         for rec in blamelist:
-
                                             sendEmail(
                                                 rec,
-                                                "Buildbot configuration failure in %s" % buildbotFile,
+                                                "Buildbot configuration failure in %s" % revision,
                                                 out
                                                 )
                                         blamelist.remove(email)
-                                        print("Cleaning up...")
-                                        # Unsure whether the below is needed or will bork things:
-#                                        subprocess.call(["/usr/bin/svn", "update", "-r", "%u" % before, "projects/%s" % buildbotFile])
 
                                     print("All done, back to listening for changes :)")
 
-                except ValueError as detail:
+                                    break # we process the whole revision on the first match
+
+                except (ValueError, Exception) as detail:
                     logging.warning("Bad JSON or something: %s", detail)
                     continue
             logging.info("Disconnected from %s, reconnecting" % self.url)
