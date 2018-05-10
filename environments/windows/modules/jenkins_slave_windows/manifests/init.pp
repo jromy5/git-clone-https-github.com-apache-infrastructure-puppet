@@ -96,7 +96,7 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for short path to workspaces':
-    command  => "cmd.exe /c mklink /d F:\\short F:\\jenkins\\jenkins-slave\\workspace",
+    command  => "cmd.exe /c mklink /d \"F:\\short\" \"F:\\jenkins\\jenkins-slave\\workspace\"",
     onlyif   => "if (Test-Path 'F:\\short') { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
