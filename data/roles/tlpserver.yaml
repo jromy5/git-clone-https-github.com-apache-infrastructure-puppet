@@ -2125,7 +2125,7 @@ vhosts_asf::vhosts::vhosts:
       - '*.apache.org'
     directories:
       -
-        path: '/var/www'
+        path: '/www'
         options:
           - 'Indexes'
           - 'FollowSymLinks'
