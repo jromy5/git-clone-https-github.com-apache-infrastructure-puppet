@@ -1468,7 +1468,22 @@ svn-site-role = rw
 [/myfaces/core]
 * = r
 
+[/myfaces/extensions/cdi]
+* = r
+
+[/myfaces/extensions/validator]
+* = r
+
+[/myfaces/extensions/scripting]
+* = r
+
 [/myfaces/myfaces-build-tools]
+* = r
+
+[/myfaces/html5]
+* = r
+
+[/myfaces/portlet-bridge]
 * = r
 
 [/myfaces/myfaces-master-pom]
