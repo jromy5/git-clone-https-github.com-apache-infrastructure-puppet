@@ -1468,6 +1468,9 @@ svn-site-role = rw
 [/myfaces/core]
 * = r
 
+[/myfaces/myfaces-build-tools]
+* = r
+
 [/myfaces/myfaces-master-pom]
 * = r
 
