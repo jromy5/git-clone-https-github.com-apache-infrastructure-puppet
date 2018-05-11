@@ -37,6 +37,13 @@ postgresql::server::pg_hba_rule:
     user: 'rep'
     address: '37.48.69.242/32'
     auth_method: 'md5'
+  jiratest-online:
+    description: 'jira test instance (online.net)'
+    type: 'host'
+    database: 'jiratest'
+    user: 'jiratest'
+    address: '62.210.60.244/32'
+    auth_method: 'md5'
   jiratest:
     description: 'jira test instance'
     type: 'host'
