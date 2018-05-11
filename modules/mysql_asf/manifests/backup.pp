@@ -3,7 +3,7 @@
 class mysql_asf::backup (
   $script_path = '/root',
   $script_name = 'dbsave_mysql.sh',
-  $hour        = 22,
+  $hour        = 03,
   $minute      = 45,
   $dumproot    = '/x1/db_dump/mysql',
   $age         = '5d',
