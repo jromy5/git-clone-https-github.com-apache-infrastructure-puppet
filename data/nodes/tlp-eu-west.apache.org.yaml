@@ -893,7 +893,7 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
               - 'FileInfo'
     custom_fragment: |
-      RewriteRule ^/(.*)$ http://freemarker.incubator.apache.org/$1 [R]
+      RewriteRule ^/(.*)$ https://freemarker.incubator.apache.org/$1 [R]
 
   gump:
     vhost_name: '*'
