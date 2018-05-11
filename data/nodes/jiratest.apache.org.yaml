@@ -1,0 +1,178 @@
+---
+classes:
+  - aardvark_asf
+  - apache
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_ajp
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::ssl
+  - apache::mod::status
+  - blocky
+  - datadog_agent::integrations::apache
+  - jira_asf
+  - oraclejava::install
+  - rsync::server
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::modules
+  - vhosts_asf::vhosts
+
+apache::default_vhost: false
+apache::mpm_module: 'event'
+
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '750'
+apache::mod::event::maxconnectionsperchild:  '200000'
+apache::mod::event::maxrequestworkers:       '3750'
+apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::minsparethreads:         '150'
+apache::mod::event::serverlimit:             '25'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '150'
+
+apache::mod::status::allow_from:
+    - 'All'
+apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
+
+apache::mod::ssl::ssl_cipher: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
+
+apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3', '-TLSv1', '-TLSv1.1']
+
+base::basepackages:
+  - issues-data
+  - procmail
+  - 'lua5.2'
+  - 'liblua5.2-dev'
+  - 'lua5.2-cjson'
+  - 'lua5.2-socket'
+  - 'lua5.2-sec'
+  - 'lua5.2-yaml'
+
+datadog_agent::integrations::apache::url: 'https://issues-test.apache.org/server-status?auto'
+
+# jira_asf class variables.
+jira_asf::jira_version: 'software-7.6.3'
+jira_asf::pgsql_connector_version: '42.0.0'
+jira_asf::parent_dir: '/x1/jira'
+jira_asf::server_port: '8008'
+jira_asf::connector_port_http: ''
+jira_asf::connector_address_ajp: '127.0.0.1'
+jira_asf::context_path: '/jira'
+jira_asf::docroot: '/var/www'
+jira_asf::jvm_min_size: '6144m'
+jira_asf::jvm_max_size: '6144m'
+
+apache::logroot: '/x1/log'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+    path: '/x1/log/*.log'
+    delaycompress: true
+    ifempty: false
+    rotate: 52
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
+postfix::server::home_mailbox: 'Maildir/'
+postfix::server::inet_interfaces: 'all'
+postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
+postfix::server::myorigin: 'apache.org'
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  jira:
+    path: '/x1/jira/'
+    hosts_allow: '207.244.88.139'
+    auth_users: 'apb-jira'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+    
+vhosts_asf::modules::modules:
+  substitute:
+    name: 'substitute'
+  lua:
+    name: 'lua'
+
+vhosts_asf::vhosts::vhosts:
+  issues-test:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    docroot: '/var/www/issues-data'
+    servername: 'jiratest-lw-us.apache.org'
+    serveraliases:
+      - 'issues-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues-test.apache.org.http_access.log'
+    error_log_file: 'issues-test.apache.org.error.log'
+    custom_fragment: |
+      Redirect / https://issues-test.apache.org/
+  issues-test-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+    ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+    ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    docroot: '/var/www/issues-data'
+    servername: 'jiratest-lw-us.apache.org'
+    serveraliases:
+      - 'issues-test.apache.org'
+    serveradmin: 'webmaster@apache.org'
+    access_log_file: 'issues-test.apache.org.ssl_access.log'
+    error_log_file: 'issues-test.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent /bugzilla https://bz.apache.org/bugzilla
+      Redirect permanent /SpamAssassin https://bz.apache.org/SpamAssassin
+      Redirect permanent /ooo https://bz.apache.org/ooo
+
+      ProxyPreserveHost on
+
+      # Need to use mod_rewrite fir Jira redirects and for when doing maintenance
+      RewriteEngine on
+
+      # Proxy requests to AJP backend but ignore server-status
+      ProxyPass /server-status !
+      ProxyPass /jira ajp://127.0.0.1:8009/jira   retry=0 timeout=1800 max=400
+
+      # Anti-spam for Aardvark
+      LuaScope thread
+      LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
+
+      <LocationMatch "^/jira/(?!secure/admin/)(.*)">
+        SetInputFilter AntiSpam
+      </LocationMatch>
+
+      # To enable system maintenance, `touch /etc/tomcat-jira-main.maint`; just remove the file to end maintenance
+      RewriteCond /etc/tomcat-jira-main.maint -f
+      RewriteCond %%{HIERA}{REQUEST_URI} !/jira/maintenance.html
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !104\.220\.47\.204
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !174\.56\.74\.156
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !140\.211\.11\.9
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !49\.183\.185\.118
+      RewriteCond %%{HIERA}{REMOTE_ADDR} !138\.201\.63\.136
+      RewriteRule ^/jira/(.*) /jira/maintenance.html
+
+      # Fix URLs in SOAP requests
+      <Location /jira/rpc/soap>
+        AddOutputFilterByType SUBSTITUTE text/xml
+        Substitute s!http://issues-test.apache.org/!https://issues-test.apache.org/!
+      </Location>
