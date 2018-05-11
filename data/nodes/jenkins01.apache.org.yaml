@@ -1,0 +1,192 @@
+---
+classes:
+  - apache
+  - apache::mod::proxy
+  - apache::mod::proxy_http
+  - apache::mod::rewrite
+  - apache::mod::headers
+  - apache::mod::ssl
+  - apache::mod::status
+  - blocky
+  - datadog_agent::integrations::apache
+  - datadog_asf::integrations::network
+  - fail2ban_asf::config
+    # - jenkins_asf
+  - kif
+  - loggy
+  - oraclejava::install
+  - rsync::server
+  - ssl::name::wildcard_apache_org
+  - sysctl_asf
+  - ulimit_asf
+  - vhosts_asf::vhosts
+
+fail2ban_asf::config::jails:
+  apache-jenkins:
+    ignoreip: 127.0.0.1 140.211.11.0/24 10.41.0.6 160.45.251.2 67.195.81.0/24 163.172.0.0/16 195.154.0.0/16 62.210.0.0/16
+    filter: apache-jenkins
+    action:
+      - iptables-allports
+    port:
+      - http
+      - https
+    logpath: /var/log/apache2/builds.apache.org.access.log
+    findtime: 1800
+    maxretry: 5
+    enable: true
+
+
+datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
+
+# jenkins_asf class variables.
+
+# jenkins_asf::jenkins_version: '2.89.4'
+# jenkins_asf::parent_dir: '/x1'
+# jenkins_asf::server_alias: 'builds.apache.org'
+# jenkins_asf::server_port: '8005'
+# jenkins_asf::connector_port: '8080'
+# jenkins_asf::heap_min_size: '8192'
+# jenkins_asf::heap_max_size: '16384'
+# jenkins_asf::maxmetaspacesize: '8192'
+# jenkins_asf::tomcat_version: '9.0.2'
+# jenkins_asf::tomcat_caching_allowed: 'true'
+# jenkins_asf::tomcat_caching_max_size: '200000'
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::timeout: 600
+apache::mpm_module:         'event'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
+
+kif::httpd_connections: 800
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+  jenkins-tomcat:
+    ensure: 'present'
+    path: '/x1/jenkins/tools/tomcat/current/logs/catalina.out'
+    copytruncate: true
+    compress: false
+    ifempty: true
+    rotate: 7
+    missingok: true
+    rotate_every: 'day'
+
+postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  jenkins:
+    path: '/x1/'
+    hosts_allow: '62.210.60.235'
+    auth_users: 'apb-jenkins'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+
+vhosts_asf::vhosts::vhosts:
+  analysis-80:
+    vhost_name: '*'
+    priority: '14'
+    servername: 'analysis-test.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'analysis.apache.org.error.log'
+    access_log_file: 'analysis.apache.org.access.log'
+    custom_fragment: |
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://builds.apache.org/analysis/$1
+
+  jenkins-master-80:
+    vhost_name: '*'
+    priority: '12'
+    servername: 'builds.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www'
+    error_log_file: 'builds.apache.org.error.log'
+    access_log_file: 'builds.apache.org.access.log'
+    custom_fragment: |
+      <Location "/server-status">
+        SetHandler server-status
+        Require local
+      </Location>
+      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://builds.apache.org/$1
+
+  jenkins-master-443:
+      vhost_name: '*'
+      default_vhost: true
+      servername: 'builds.apache.org'
+      port: 443
+      docroot: '/var/www'
+      error_log_file: 'builds.apache.org.error.log'
+      access_log_file: 'builds.apache.org.access.log'
+      ssl: true
+      ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
+      ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
+      ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+      custom_fragment: |
+        RewriteEngine On
+        RequestHeader set X-Forwarded-Proto "https"
+        RequestHeader set X-Forwarded-Port "443"
+        ProxyPreserveHost On
+        ProxyRequests     Off
+        AllowEncodedSlashes NoDecode
+        RewriteRule "/analysis$" "/analysis/" [R]
+        RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
+        ProxyPassReverse "/analysis/" "https://builds.apache.org/analysis/"
+        ProxyPass / http://127.0.0.1:8080/ nocanon
+        ProxyPassReverse / http://127.0.0.1:8080/
+        ProxyPassReverse  /  http://builds.apache.org/
+        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "X-PINGOTHER"
+        Header set Access-Control-Max-Age "1728000"
+
+sysctl:
+  fs.nr_open:
+    value: 4194304
+  fs.file-max:
+    value: 4194304
+
+ulimit::rule:
+  all-hard-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'hard'
+    ulimit_item: 'nofile'
+    ulimit_value: '4194304'
+  all-soft-nofile:
+    ulimit_domain: '*'
+    ulimit_type: 'soft'
+    ulimit_item: 'nofile'
+    ulimit_value: '4194304'
