@@ -1033,6 +1033,9 @@ buildbot = rw
 [/incubator/nuvem]
 * = r
 
+[/incubator/odf/trunk]
+* = r
+
 [/incubator/odf]
 @incubator = rw
 
