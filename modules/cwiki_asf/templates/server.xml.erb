@@ -8,10 +8,9 @@
 
 <Server port="<%= @server_port %>" shutdown="SHUTDOWN">
     <Service name="Tomcat-Standalone">
-        <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="<%= @connector_port %>" minProcessors="5"
-                   maxProcessors="75"
+        <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="<%= @connector_port %>"
                    enableLookups="false" redirectPort="8443" acceptCount="250" connectionTimeout="20000"
-                   maxThreads="500" minSpareThreads="25" maxSpareThreads="150"
+                   maxThreads="500" minSpareThreads="25"
                    URIEncoding="UTF-8"
                    scheme="https" proxyName="<%= @server_alias %>"
                    proxyPort="443" secure="true"/>
@@ -41,7 +40,7 @@
         -->
 <!--
         <Connector port="8443" maxHttpHeaderSize="8192"
-                   maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+                   maxThreads="150" minSpareThreads="25"
                    enableLookups="false" disableUploadTimeout="true"
                    acceptCount="100" scheme="https" secure="true"
                    clientAuth="false" sslProtocol="TLS" SSLEnabled="true"
