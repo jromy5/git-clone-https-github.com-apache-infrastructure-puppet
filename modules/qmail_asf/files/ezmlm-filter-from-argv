@@ -1,0 +1,18 @@
+#!/usr/bin/perl -n
+# USAGE: $0 <allowable from address>*
+use POSIX '_exit'; # bypass END block, doesn't flush io buffers
+use File::Basename;
+use lib dirname(dirname $0) . "/lib";
+use pull_header;
+
+BEGIN { $RE = join "|", map "\Q$_", @ARGV; $#ARGV=-1; }
+
+last if /^$/;
+
+/^from:/i and pull_header {
+    /\b(?:$RE)\b/i and _exit 0;
+    syswrite STDOUT, "From address doesn't match list of valid sender addresses.\n";
+    _exit 100;
+};
+
+END { exit 99 } # drop messages with no From header

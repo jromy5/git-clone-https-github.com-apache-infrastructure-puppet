@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Script to check if the apmail directory tree is synchronised with SVN
+
+# ignore unversioned files (for now)
+/usr/bin/svn -q -u status <%= @apmail_home %> --config-dir=<%= @apmail_home %>/.subversion2 | grep -v '^Status against revision:'
+ 

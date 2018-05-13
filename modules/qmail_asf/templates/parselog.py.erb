@@ -1,0 +1,64 @@
+import json, re, time, sys, os
+from datetime import datetime
+from os import listdir
+from os.path import isfile, join
+
+wsec = 604800 # Seconds per week
+now = time.time()
+now = int(now - (now % wsec)) + wsec
+gjs = {}
+gjson = {}
+
+domains = [ f for f in listdir("<%= @lists_dir %>/") if os.path.isdir(join("<%= @lists_dir %>/",f)) ]
+
+for domain in domains:
+    ls = []
+    if not (domain == ".." or domain == "." or domain == "apache.org"):
+        dirs = [ f for f in listdir("<%= @lists_dir %>/%s/" % domain) if os.path.isdir(join("<%= @lists_dir %>/%s/" % domain,f)) and (f != ".." and f != ".") ]
+        for l in dirs:
+            js = {}
+            when = now
+            for i in range(0,52*5):
+                when = now - (wsec*i)
+                js[when] = 0
+            
+            print ("Scanning <%= @lists_dir %>/%s/%s/Log" % (domain, l))
+            try:
+                if os.path.isfile("<%= @lists_dir %>/%s/%s/Log" % (domain, l)):
+                    with open("<%= @lists_dir %>/%s/%s/Log" % (domain, l), "r") as log:
+                        for line in log:
+                            m = re.match(r"(\d+) ([-+]).*", line)
+                            if m:
+                                w = int(m.group(1))
+                                w = w - (w % wsec)
+                                a = 1
+                                if (m.group(2) == "-"):
+                                    a = -1
+                                if w in js:
+                                    js[w] += a
+                                else:
+                                    js[when] += a
+                        log.close()
+                    
+#                    with open("<%= @apmail_home %>/json/output/%s-%s.json" % (domain, l), "w") as jsout:
+#                        jsout.write(json.dumps(js))
+#                        jsout.close()
+#                        print("Wrote %s-%s.json" % (domain, l))
+                        ls.append(l)
+                        gjson["%s-%s" % (domain, l)] = js
+            except Exception as err:
+                print(err)
+                
+        gjs[domain] = ls
+    
+    
+with open("<%= @apmail_home %>/json/output/global.json", "w") as f:
+    f.write(json.dumps(gjs))
+    f.close()
+
+with open("<%= @apmail_home %>/json/output/everything.json", "w") as f:
+    f.write(json.dumps(gjson))
+    f.close()
+    
+print("All done!")
+

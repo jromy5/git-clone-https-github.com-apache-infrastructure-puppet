@@ -1,0 +1,14 @@
+#!/usr/bin/perl -n
+# USAGE: $0 <address of list or alias to bcc>
+use File::Basename;
+use lib dirname(dirname $0) . "/lib";
+use pull_header;
+
+BEGIN { $address = shift }
+
+last if /^$/;
+
+/^(?:to|cc):/i and pull_header {
+    /\b\Q$address\E\b/i and print "Always BCC: $address!\n" and exit 100;
+};
+
