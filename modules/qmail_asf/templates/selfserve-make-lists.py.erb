@@ -81,7 +81,7 @@ def sendemail(rcpt, subject, message):
         receivers = rcpt
     # Weed out infra, we're adding that explicitly to every email.
     receivers = [k for k in receivers if k != INFRAML]
-    receivers.append("ASF Infrastructure <%s>"% INFRAML)
+    receivers.append("ASF Infrastructure <%%s>"% INFRAML)
     msgid = email.utils.make_msgid()
     msg = """From: %s
 Message-ID: %s
