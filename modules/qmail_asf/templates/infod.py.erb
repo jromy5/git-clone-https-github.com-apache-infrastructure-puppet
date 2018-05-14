@@ -16,7 +16,7 @@ QUEUE_DATA = '/tmp/smtpqueue.txt'
 # Secret URL for reporter.a.o(??) to read out ML stats. The actual URL (key)
 # is stored in the first line of .stats_url
 ALL_STATS = '<%= @json_dir %>/output/everything.json'
-STATS_URL = <%= @stats_url =>
+STATS_URL = <%= @stats_url %>
 
 # Precompile regexes for later use.
 RE_QUEUE = re.compile(r'messages in queue: (\d+)')
