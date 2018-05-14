@@ -122,7 +122,7 @@ class qmail_asf (
     "${logs2_dir}/rotate-logs2.sh":
       owner   => $username,
       group   => $groupname,
-      content => template('qmail_asf/rotate-logs2.py.erb'),
+      content => template('qmail_asf/rotate-logs2.sh.erb'),
       mode    => '0755';
 
   # non templated files
