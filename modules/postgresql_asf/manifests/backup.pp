@@ -2,7 +2,7 @@
 
 class postgresql_asf::backup (
   $dumproot    = '/x1/db_dump/postgres',
-  $hour        = 8,
+  $hour        = '*/4',
   $minute      = 20,
   $age         = '5d',
   $script_path = '/root',
