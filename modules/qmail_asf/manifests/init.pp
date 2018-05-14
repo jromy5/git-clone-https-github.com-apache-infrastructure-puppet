@@ -162,6 +162,12 @@ class qmail_asf (
       content => template('qmail_asf/backup-listinfo.sh.erb'),
       mode    => '0755';
 
+    "${bin_dir}/infod.py":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/infod.py.erb'),
+      mode    => '0755';
+
     "${json_dir}/parselog.py":
       owner   => $username,
       group   => $groupname,
