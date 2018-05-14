@@ -91,7 +91,6 @@ class qmail_asf (
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
       require => User[$username];
 
   # template files
