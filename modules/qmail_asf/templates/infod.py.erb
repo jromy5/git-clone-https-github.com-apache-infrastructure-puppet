@@ -1,0 +1,75 @@
+#!/usr/local/bin/python
+#      ^^ is hermes specific
+#
+# A small info daemon (served via HTTP) to fetch information about the
+# queue sizes on hermes, and historic traffic on all the mailing lists.
+#
+
+import BaseHTTPServer
+import re
+
+PORT_NUMBER = <%= @mailqsize_port %>
+
+### what keeps this up to date?
+QUEUE_DATA = '/tmp/smtpqueue.txt'
+
+# Secret URL for reporter.a.o(??) to read out ML stats. The actual URL (key)
+# is stored in the first line of .stats_url
+ALL_STATS = '<%= @json_dir %>/output/everything.json'
+STATS_URL = <%= @stats_url =>
+
+# Precompile regexes for later use.
+RE_QUEUE = re.compile(r'messages in queue: (\d+)')
+RE_PROCESSED = re.compile(r'messages in queue but not yet preprocessed: (\d+)')
+
+
+class InfoHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        if self.path == '/favicon.ico':
+            self.send_response(404)
+            self.end_headers()
+            return
+
+        self.send_response(200)
+        self.send_header('Content-type',"text/plain")
+        self.send_header('Connection', 'close')
+        self.end_headers()
+
+        data = open(QUEUE_DATA).read()
+
+        if self.path == '/queue':
+            match = RE_QUEUE.search(data)
+            if match:
+                response = match.group(1)
+            else:
+                response = '0'
+            self.wfile.write('queue:' + response)
+        elif self.path=='/preprocessed':
+            match = RE_PROCESSED.search(data)
+            if match:
+                response = match.group(1)
+            else:
+                response = '0'
+            self.wfile.write('preprocessed:' + response)
+        elif self.path == STATS_URL:
+            stats = open(ALL_STATS).read()
+            self.wfile.write(stats)
+        else:
+            self.wfile.write('Hello, world!')
+
+
+def main():
+    try:
+        server = BaseHTTPServer.HTTPServer(('', PORT_NUMBER), InfoHandler)
+        print 'Started httpserver on port:', PORT_NUMBER
+        server.serve_forever()
+
+    except KeyboardInterrupt:
+        print '^C received, shutting down the web server'
+        server.socket.close()
+
+
+if __name__ == '__main__':
+    # we should daemonize at some point
+    main()

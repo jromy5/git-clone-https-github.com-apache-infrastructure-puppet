@@ -11,17 +11,22 @@ class qmail_asf (
 
   # override below in yaml
   $parent_dir,
+
+  # override below in eyaml
+  $stats_url = '',
+
 ){
 
   # qmail specific
 
-  $apmail_home = "${parent_dir}/${username}"
-  $bin_dir     = "${apmail_home}/bin"
-  $lib_dir     = "${apmail_home}/lib"
-  $lists_dir   = "${apmail_home}/lists"
-  $logs2_dir   = "${apmail_home}/logs2"
-  $json_dir    = "${apmail_home}/json"
-  $svn_dot_dir = "${apmail_home}/.subversion2"
+  $apmail_home    = "${parent_dir}/${username}"
+  $bin_dir        = "${apmail_home}/bin"
+  $lib_dir        = "${apmail_home}/lib"
+  $lists_dir      = "${apmail_home}/lists"
+  $logs2_dir      = "${apmail_home}/logs2"
+  $json_dir       = "${apmail_home}/json"
+  $svn_dot_dir    = "${apmail_home}/.subversion2"
+  $mailqsize_port = '8083'
 
   # TODO: this dir does not exist yet
   $control_dir = '/var/qmail/control'
@@ -119,6 +124,42 @@ class qmail_asf (
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/allow-email-in-all-tlp-private-lists.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/autoresponse-apache.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/autoresponse-apache.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/autoresponse-apachecon.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/autoresponse-apachecon.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/autoresponse-human-response.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/autoresponse-human-response.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/autoresponse-ooobz.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/autoresponse-ooobz.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/autoresponse.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/autoresponse.sh.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/backup-listinfo.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/backup-listinfo.sh.erb'),
       mode    => '0755';
 
     "${json_dir}/parselog.py":
