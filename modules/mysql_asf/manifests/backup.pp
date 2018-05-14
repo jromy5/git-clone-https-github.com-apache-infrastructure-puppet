@@ -28,8 +28,8 @@ class mysql_asf::backup (
   }
 
   cron { 'mysql-dump-rsync-to-abi':
-    hour    => 22,
-    minute  => 45,
+    hour    => $hour,
+    minute  => $minute,
     command => "${script_path}/${script_name}",
   }
 }
