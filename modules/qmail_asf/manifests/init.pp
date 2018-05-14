@@ -113,6 +113,12 @@ class qmail_asf (
       content => template('qmail_asf/selfserve-make-lists.py.erb'),
       mode    => '0755';
 
+    "${bin_dir}/allow-email-in-all-tlp-private-lists.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/allow-email-in-all-tlp-private-lists.sh.erb'),
+      mode    => '0755';
+
     "${json_dir}/parselog.py":
       owner   => $username,
       group   => $groupname,
@@ -167,6 +173,13 @@ class qmail_asf (
       group   => $groupname,
       source => 'puppet:///modules/qmail_asf/whimsy/listmodsubs.sh',
       mode    => '0755';
+    "${bin_dir}/add-apcvs-to-allow-list":
+      owner   => $username,
+      group   => $groupname,
+      source => 'puppet:///modules/qmail_asf/add-apcvs-to-allow-list',
+      mode    => '0755';
+
+
 
   # symlinks
 
