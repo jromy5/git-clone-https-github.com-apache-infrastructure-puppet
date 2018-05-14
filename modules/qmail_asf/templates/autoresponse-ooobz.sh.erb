@@ -1,0 +1,14 @@
+#! /usr/local/bin/bash
+ulimit -t 15
+<%= @apmail_home %>/apache-autoanswer \
+	--file=autoanswer-ooobz.txt \
+	--from="Apache Autoresponder <donotreply@Apache.Org>" \
+	--accept-for=ooo-bugzilla-admin@apache.org \
+	--ignore-interval=30 \
+	--history-db=<%= @apmail_home %>/autoresponded-ooobz \
+	--include-original \
+	--work-dir=<%= @apmail_home %>/ooo-autoanswer.work \
+	--ignore-from=MAILER-DAEMON \
+	--ignore-from=postmaster \
+	--ignore-from="@apache.org" \
+        --ignore-precedence="list|bulk|junk"

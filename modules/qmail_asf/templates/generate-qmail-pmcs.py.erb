@@ -29,7 +29,7 @@ def main():
             pmcs += [cttee['mail_list']]
 
     fd = open(TARGET+'.t', 'w')
-    fd.write('| <<%= @apmail_home %>/bin/ezmlm-filter-bcc pmcs@apache.org\n')
+    fd.write('| <%= @apmail_home %>/bin/ezmlm-filter-bcc pmcs@apache.org\n')
     for p in sorted(set(pmcs)):
         fd.write('private@%s.apache.org\n' % p)
     fd.flush()
