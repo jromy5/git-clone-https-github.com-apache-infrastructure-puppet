@@ -11,7 +11,7 @@ do
 cd $i
 for j in  in *private/
 do
-if [ -d `pwd`/$j/allow/subscribers ]; then 
+if [ -d `pwd`/$j/allow/subscribers ]; then
 	for m in $*
 	do
 		ezmlm-sub `pwd`/$j allow $m  && echo Subscribed $m to $i/$j/allow

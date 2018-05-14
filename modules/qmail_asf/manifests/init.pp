@@ -133,8 +133,6 @@ class qmail_asf (
       content => template('qmail_asf/rotate-logs2.sh.erb'),
       mode    => '0755';
 
-  # non templated files (and not included by a recurse.
-
   # symlinks
 
     "/home/${username}":
