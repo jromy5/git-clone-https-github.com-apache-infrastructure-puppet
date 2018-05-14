@@ -52,12 +52,14 @@ class qmail_asf (
 
     $bin_dir:
       ensure  => directory,
+      recurse => true,
       owner   => $username,
       group   => $username,
       mode    => '0755',
       require => User[$username];
     $lib_dir:
       ensure  => directory,
+      recurse => true,
       owner   => $username,
       group   => $username,
       mode    => '0755',
@@ -131,55 +133,7 @@ class qmail_asf (
       content => template('qmail_asf/rotate-logs2.sh.erb'),
       mode    => '0755';
 
-  # non templated files
-
-    "${lib_dir}/pull_header.pm":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/pull_header.pm',
-      mode    => '0755';
-    "${lib_dir}/ldap_sender_address_count.pm":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/ldap_sender_address_count.pm',
-      mode    => '0755';
-    "${bin_dir}/committers-update.sh":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/committers-update.sh',
-      mode    => '0755';
-    "${bin_dir}/ezmlm-filter-bcc":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/ezmlm-filter-bcc',
-      mode    => '0755';
-    "${bin_dir}/ezmlm-filter-from-argv":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/ezmlm-filter-from-argv',
-      mode    => '0755';
-    "${bin_dir}/generate-dotqmail-availid.py":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/generate-dotqmail-availid.py',
-      mode    => '0755';
-    "${bin_dir}/whimsy_qmail_ids.sh":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/whimsy/whimsy_qmail_ids.sh',
-      mode    => '0755';
-    "${bin_dir}/listmodsubs.sh":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/whimsy/listmodsubs.sh',
-      mode    => '0755';
-    "${bin_dir}/add-apcvs-to-allow-list":
-      owner   => $username,
-      group   => $groupname,
-      source => 'puppet:///modules/qmail_asf/add-apcvs-to-allow-list',
-      mode    => '0755';
-
-
+  # non templated files (and not included by a recurse.
 
   # symlinks
 
