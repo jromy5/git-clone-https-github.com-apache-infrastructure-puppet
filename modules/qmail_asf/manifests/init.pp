@@ -55,43 +55,44 @@ class qmail_asf (
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     $lib_dir:
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     $lists_dir:
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     $logs2_dir:
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     $json_dir:
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     "${json_dir}/output":
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      require => File[$apmail_home];
+      require => User[$username];
     $svn_dot_dir:
       ensure  => directory,
       owner   => $username,
       group   => $username,
       mode    => '0755',
       require => File[$apmail_home];
+      require => User[$username];
 
   # template files
 
