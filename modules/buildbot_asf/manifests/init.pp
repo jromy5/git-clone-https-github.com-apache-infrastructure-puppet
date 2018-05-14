@@ -70,25 +70,11 @@ class buildbot_asf (
       gid    => $gid,
   }
 
-  apt::source { 'vivid':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'vivid',
-    repos    => 'main',
-  }
-
-  apt::source { 'vivid-updates':
-    location => 'http://us.archive.ubuntu.com/ubuntu/',
-    release  => 'vivid-updates',
-    repos    => 'main',
-  }
-
-  apt::pin { 'vivid-buildbot':
-    ensure   => 'present',
-    priority => 1800,
-    packages => 'buildbot',
-    codename => 'vivid',
-    require  => Apt::Source['vivid'],
-    before   => Package['buildbot'],
+  apt::pin { 'xenial-buildbot':
+    ensure          => 'present',
+    priority        => 1800,
+    packages        => 'buildbot-0.8.12-3',
+    before          => Package['buildbot'],
   }
 
   file {
