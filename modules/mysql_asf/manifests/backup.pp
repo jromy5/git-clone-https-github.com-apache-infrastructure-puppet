@@ -10,6 +10,8 @@ class mysql_asf::backup (
   $dumproot      = '/x1/db_dump/mysql',
   $age           = '5d',
   $rsync_offsite = 'false', # copy to bai if true, requires setup
+  $rsync_user    = 'apb-mysql',
+  $rsync_passwd  = '', # set in eyaml if rsync_offsite
 ) {
 
   require mysql::server
@@ -21,6 +23,22 @@ class mysql_asf::backup (
       group   => 'root',
       mode    => '0744',
       content => template('mysql_asf/dbsave_mysql.sh.erb'),
+  }
+
+  if $rsync_offsite == 'true' {
+    file {
+      '/root/rsynclogs':
+        ensure => directory,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0700';
+      '/root/.pw-abi':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0600',
+        content => $rsync_passwd;
+      }
   }
 
   tidy { 'mysql-dumps':
