@@ -37,7 +37,7 @@ mod 'datacat',
 
 
 mod 'datadog_agent',
-  :git => 'https://github.com/DataDog/puppet-datadog-agent',
+  :git => 'https://github.com/apache/puppet-datadog-agent',
   :tag => '1.7.0'
 
 
