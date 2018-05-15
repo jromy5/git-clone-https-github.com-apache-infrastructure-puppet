@@ -9,6 +9,9 @@ datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'
 datadog_agent::integrations::mysql::replication: 1
 
+mysql_asf::backup::rsync_offsite: 'true'
+mysql_asf::backup::age: '3d'
+
 mysql::server::databases:
   bugs:
     ensure: 'present'

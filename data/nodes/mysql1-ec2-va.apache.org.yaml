@@ -4,7 +4,7 @@ classes:
   - mysql_asf::backup
   - mysql::server
 
-mysql_asf::backup::rsync_offsite: true
+mysql_asf::backup::rsync_offsite: 'true'
 
 puppet_asf::daemon_opts: '--verbose --debug'
 
