@@ -152,6 +152,12 @@ rsync::server::module:
     auth_users: 'apb-svn01-us-west'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  mysql1-il-eu:
+    path: '/x1/backups/mysql1-il-eu/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.227'
+    auth_users: 'apb-mysql'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
