@@ -30,7 +30,7 @@ mysql::server::override_options:
     max_allowed_packet: '64M'
 
 mysql::server::databases:
-    asfbuildbot:
+  asfbuildbot:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
