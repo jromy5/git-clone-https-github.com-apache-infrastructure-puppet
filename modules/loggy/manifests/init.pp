@@ -22,14 +22,6 @@ class loggy (
       require => Package['gcc'];
     'certifi' :
       ensure  => present;
-    'pyopenssl' :
-      ensure  => present;
-    'ndg-httpsclient' :
-      ensure  => present;
-    'pyasn1' :
-      ensure  => present;
-    'setuptools':
-      ensure  => latest;
   } ->
 
   file {
