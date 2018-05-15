@@ -19,6 +19,7 @@ PASS=$(cd /root/ ; cat .my.cnf | grep -i -m 1 pa | sed 's/password=//g' | sed "s
 PORT='3306'
 ALLDBS=`echo "SHOW DATABASES;" | ${MYSQL} -u ${DBUSER} | egrep -v "^(Database|information_schema|performance_schema)" 2>&1`;
 DBLISTFILE="/tmp/mysql.dump.list"
+RSYNC_OFFSITE="<%= @rsync_offsite %>"
 
 
 ## ------------------------
@@ -108,7 +109,9 @@ for DBNAME in `cat "${DBLISTFILE}"` ; do
   create_dumpdir;
   backup_db
   sleep 5
-#  rsync_offsite
+  if [ $RSYNC_OFFSITE == 'true' ] ; then
+    rsync_offsite
+  fi
   sleep 5;
 done
 
