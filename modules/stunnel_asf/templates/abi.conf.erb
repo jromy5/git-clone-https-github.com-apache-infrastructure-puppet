@@ -37,7 +37,7 @@ output = stunnel.log
 
 ; use verify=3 on clients!
 verify = 3
-CAFile = <%= @cert_path %>/<%= @cert_name %>
+CAFile = <%= @cert_path %>
 
 ;; SSL options
 ;; ===========
@@ -66,6 +66,5 @@ options = NO_TICKET
 [abi-rsyncd]
 client  = yes
 accept  = localhost:1873
-connect = abi.apache.org:443
-
+connect = <%= @stunnel_host %>:<%= @stunnel_port %>
 
