@@ -73,7 +73,7 @@ rsync_offsite() {
   /usr/bin/rsync -rlRptz \
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
-  ${DUMPFILE} rsync://apb-<%= @rsync_user %>@localhost:1873/<%= @hostname %>/
+  ${DUMPFILE} rsync://<%= @rsync_user %>@localhost:1873/<%= @hostname %>/
   /etc/init.d/stunnel4 stop
 
   $RM_BIN -f $OLD_LOG
