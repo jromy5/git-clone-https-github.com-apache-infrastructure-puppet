@@ -1,0 +1,402 @@
+#!/usr/local/bin/bash
+#
+# Roy's script for making a set of lists with archives
+#
+umask 022
+lhome="<%= @apmail_hpme %>"
+ezsub="ezmlm-sub"
+ezmake="ezmlm-make"
+XCMD=
+
+month="`date +"%Y%m"`"
+lmid="lists"
+trailers="T"
+replyto="d"
+outhost=""
+mboxhost="mbox-vm.apache.org"
+
+while test -n "$1" ; do
+    case "$1" in
+        -d)		# specify a particular domain
+            shift
+            domain="$1"
+            shift
+            ;;
+        -h|--help)
+            cat <<EOF
+Usage: $0 -m moderators [ -t ] [ -s subproject ] [ -v vhost ] [ -d domain ] list ...
+
+Creates a set of mailing lists: (subproject-){list}@(vhost.){domain}
+
+Options:
+  -d domain      domain for the list (e.g., 'apache.org' or 'apachecon.com')
+  -h, --help     this help text
+  -oh            set 'outhost'
+  -m moderators  email address of owner/initial moderators
+  -n             Don't actually do anything, just display the commands
+  -r address     set Reply-To to address (default: "<l>@<h>")
+  -s subproject  subproject name
+  -t             add trailers
+  -v vhost       virtual host ("incubator" = incubator.{domain})
+  -mu            allow subscribers to post, moderate all others
+  -mU            moderate all posts
+  -Mu            allow subscribers to post, reject all others
+  -MU            allow anyone to post
+  list ...       space-separated listnames (prefixed with "." if private)
+                 (e.g., users dev commits .private)
+                 lists named 'private','security' are automatically made private
+Examples:
+
+  $0 -m you@apache.org superlist
+     will create:    superlist@apache.org
+
+  $0 -m you@apache.org -s superlist dev
+     will create:    superlist-dev@apache.org
+
+  $0 -m me@apache.org -v bar foo
+     will create:    foo@bar.apache.org
+
+  $0 -m me@apache.org -s goober -v incubator dev commits .private
+     will create:    goober-dev@incubator.apache.org
+                     goober-commits@incubator.apache.org
+                     goober-private@incubator.apache.org
+
+EOF
+            exit 0
+            ;;
+        -m)		# address of owner/initial moderators
+            shift
+            moderator="`echo $1 | sed -e 's/,/ /g'`"
+            owner="`echo $1 | sed -e 's/[ ,].*//'`"
+            shift
+            ;;
+        -n)		# No actual actions taken
+            shift
+            XCMD=echo
+            ;;
+        -oh)		# outhost (omit to set a default)
+            shift
+            outhost=$1
+            shift
+	    ;;
+        -r)		# reply-to address (-r "" or -r "off" means no reply-to)
+            shift
+            replyto=$1
+            shift
+            ;;
+        -s)		# subproject name
+            shift
+            subp=$1
+            shift
+            ;;
+        -t)		# add trailers
+            shift
+            trailers="t"
+            ;;
+        -v)		# virtualhost name
+            shift
+            vhost=$1
+            shift
+            ;;
+        -mu|-MU|-Mu|-mU) # posts moderated?
+            force_mu=${1:1:3}
+            shift
+            ;;
+        --)		# end options
+            shift
+            break
+            ;;
+        -*)		# no idea
+            echo "$0: unrecognized option '$1', seek --help"
+            exit 1
+            ;;
+        *)		# start of lists to make
+            break
+            ;;
+    esac
+done
+
+#
+# ApacheCon is deviant because it doesn't have any hosts but nevertheless
+# needs a prefix on the .qmail files.
+#
+if (echo "$domain" | grep -qi 'apachecon') ; then
+    APACHECON="true"
+    APMAILER="apachecon-"
+else
+    APMAILER="${vhost:+$vhost-}"
+fi
+#
+if test "x$domain" != "x" ; then
+    dprefix=$(echo $domain | sed -e 's/\..*//g;')
+fi
+domain="${domain:-apache.org}"
+
+if test "x$moderator" = "x" ; then
+    echo "$0: -m email address of moderator is required"
+    exit 1
+fi
+
+QMAIL_PREFIX=".qmail-$APMAILER"
+if test -n "$APACHECON" ; then
+    listhost="$domain"
+else
+    listhost="${vhost:+$vhost.}$domain"
+fi
+EZMLM_PREFIX="$lhome/$lmid/$listhost"
+if test -z "$XCMD" -a ! -d "$EZMLM_PREFIX" ; then
+    echo "$EZMLM_PREFIX doesn't exist yet"
+    echo "(If you are running mlreq/queuerun.py for a new podling,"
+    echo "stop and run <../tlpreq/mkpodling-mail-step1>.)"
+    exit 1
+fi
+
+lists=""
+
+for arg in $@ ; do
+
+    if test "${arg:0:1}" = "-" -o -z "${arg##*,*}" -o -z "${arg##*\@*}" ; then
+        echo "List name '${arg}' is invalid, not creating any lists"
+        exit 1
+    fi
+
+    lists="$lists $arg"
+
+done
+
+for arg in $lists; do
+
+    if test "${arg:0:1}" = "." ; then
+        private="y"
+        modsub="s"
+        list="${arg:1}"
+        ARCPATH="$lhome/private-arch/$APMAILER"
+    elif test "${arg}" = "private" || test "${arg}" = "security"; then
+        private="y"
+        modsub="s"
+        list="${arg}"
+        ARCPATH="$lhome/private-arch/$APMAILER"
+    else
+        private="n"
+        modsub="S"
+        list="$arg"
+        if test -n "$APACHECON" ; then
+            ARCPATH="$lhome/public-arch/apachecon.com/"
+        else
+            if test -z "$vhost" ; then
+                WWW="www."
+            else
+                WWW=""
+            fi
+            ARCPATH="$lhome/public-arch/$WWW$listhost/"
+        fi
+    fi
+    listname="${subp:+$subp-}$list"
+    ARCPATH="$ARCPATH$listname"
+    QMAIL="$QMAIL_PREFIX$listname"
+
+    if test -z "$XCMD" -a -d "$EZMLM_PREFIX/$listname" ; then
+        echo "# $listname@$listhost already exists"
+        continue
+    fi
+
+    ezopts="aBcdFgHiJklnOpqrW$modsub$trailers"
+#
+# ezmlm-make options
+#
+# -m switch means posts are moderated, -M not moderated
+#
+# -s switch means subscription moderated, -S not moderated
+#
+# -u switch depends on -m:
+#    -mu, -MU, -Mu, -mU --- see in the usage() message of this script
+#
+# -x switch results in the following non-standard actions:
+#    - Drop any messages containing Precedence: bulk
+#    - Remove many non-text MIME parts from messages (see mimeremove).
+#    - Limit posts to 2 bytes <= msg body size <= 1000000
+# -X switch means
+#    - Do not reject bulk senders, limit size, nor remove parts
+#
+# -y switch copies mail delivery to security@apache.org
+#
+# -z switch depends on -m:
+#    -mz = moderate after checking From: anyone@apache.org (e.g., announce)
+#    -Mz = unmoderated, but requires post sender to be @apache.org
+#
+# See also:
+# https://untroubled.org/ezmlm/man/man1/ezmlm-make.1.html
+# https://untroubled.org/ezmlm/man/man5/ezmlm.5.html
+
+    case $list in
+        announce)
+          if test -n "$APACHECON"; then
+            muopts="mU"; xyzopts="XYZ"
+          else
+            muopts="mU"; xyzopts="XYz"
+          fi
+          ;;
+        private)
+          muopts="mu"; xyzopts="XYZ"
+          ;;
+        security)
+          muopts="MU"; xyzopts="XyZ"
+          ;;
+        commit*|svn|scm|notice*|notif*|issue*)
+          if test -n "$APACHECON"; then
+            muopts="mu"; xyzopts="XYZ"
+          else
+            muopts="MU"; xyzopts="XYz"
+          fi
+          ;;
+        user|users)
+          muopts="Mu"; xyzopts="XYZ"
+          ;;
+        *)
+          muopts=${force_mu:-"mu"}
+          if test -n "$APACHECON"; then
+            xyzopts="XYZ"
+          else
+            xyzopts="xYZ"
+          fi
+          ;;
+    esac
+    ezopts="$muopts$xyzopts$ezopts"
+
+    echo "# Creating $listname@$listhost as -$ezopts"
+    echo "# ======= ezmlm-make -+ -? $EZMLM_PREFIX/$listname"
+
+    $XCMD $ezmake -$ezopts -5 "$owner" \
+	"$EZMLM_PREFIX/$listname" \
+	"$lhome/$QMAIL" \
+	"$listname" "$listhost"
+
+
+    ## The current running version of ezmlm-* is now sensitive about it's relative location.
+    ## as such we now need to make sure we can predict the current path reliably.
+
+    echo "# Changing directory (pushd), as ezmlm-* is now relative location sensitive..."
+    echo "# pushd EZMLM_PREFIX/$listname"
+    pushd "$EZMLM_PREFIX/$listname" >/dev/null
+
+    echo "# Subscribing $moderator to the list."
+    $XCMD $ezsub .  $moderator
+
+    echo "# Adding $moderator to the moderator list."
+    $XCMD $ezsub . mod $moderator
+
+    case $list in
+      commits|cvs|svn|notif*|issue*)
+        $XCMD $ezsub . allow root@apache.org
+        ;;
+    esac
+
+    if test -n "$outhost"; then
+        echo "# Setting outhost to [${outhost}] from [`cat outhost`]"
+        if test -n "$XCMD" ; then
+            $XCMD printf "%s\n" "$outhost" \> outhost
+        else
+            printf "%s\n" "$outhost" > outhost
+        fi
+    fi
+
+    echo "# Returning to whence we came..."
+    popd >/dev/null
+
+    if test -n "$replyto" && test x"$replyto" != x"off"; then
+        if test $replyto = "d" ; then
+            case $list in
+              commits|cvs|svn|notif*|issue*)
+                rpto="${subp:+$subp-}dev@<#h#>"
+                ;;
+              *)
+                rpto="<#l#>@<#h#>"
+                ;;
+            esac
+        else
+            rpto="$replyto"
+        fi
+        if test -n "$XCMD" ; then
+            $XCMD echo "Reply-To: $rpto" \
+                 \>\> "$EZMLM_PREFIX/$listname/headeradd"
+        else
+            echo "Reply-To: $rpto" \
+                 >> "$EZMLM_PREFIX/$listname/headeradd"
+        fi
+    fi
+
+    case $list in
+        commits|svn)
+            #
+            # add an alias for cvs if it does not exist yet
+            #
+            qcvs="$lhome/.qmail-${vhost:+$vhost-}${subp:+$subp-}cvs"
+            if test ! -e $qcvs ; then
+                if test -n "$XCMD" ; then
+                    $XCMD echo "$listname@$listhost" \> $qcvs
+                else
+                    echo "$listname@$listhost" > $qcvs
+                fi
+            fi
+            ;;
+    esac
+
+    #
+    # Set up the archives.  This is much harder than it needs to be.
+    #
+    if test -n "$XCMD" ; then
+        $XCMD echo "apmail-$APMAILER$listname-archive@locus.apache.org" \
+             \> "$lhome/$QMAIL-archive"
+    else
+        echo "apmail-$APMAILER$listname-archive@locus.apache.org" \
+             > "$lhome/$QMAIL-archive"
+    fi
+    $XCMD chmod 644 "$lhome/$QMAIL-archive"
+
+    echo "# Changing directory (pushd), as ezmlm-* is now relative location sensitive..."
+    echo "# pushd EZMLM_PREFIX/$listname"
+    pushd "$EZMLM_PREFIX/$listname" >/dev/null
+
+    $XCMD $ezsub . "$listname-archive@$listhost"
+
+    if test $private = "n" ; then
+        $XCMD $ezsub . "archiver@$mboxhost"
+        $XCMD $ezsub . "archive-asf-public@cust-asf.ponee.io"
+        $XCMD $ezsub . "archive@mail-archive.com"
+        # fetch address for markmail
+        LISTREV=`echo $listname@$listhost | perl -F\\[.@\\] -nale 'print join ".", reverse @F'`
+        MMADDR=`curl -s "http://markmail.org/manage/list/add?auth=<%= @mm_auth %>&list=$LISTREV" | sed -e 's/^.* user //; s/\.  Try again\.//'`
+        $XCMD $ezsub . "$MMADDR"
+    else
+        $XCMD $ezsub . "private@$mboxhost"
+        $XCMD $ezsub . "archive-asf-private@cust-asf.ponee.io"
+    fi
+
+    echo "# Returning to whence we came..."
+    popd >/dev/null
+
+
+    echo "# ======= on mail.apache.org, commit the addition of the following lines to ~apmail/bin/.archives:"
+    echo "# ======= (This script adds the line but doesn't commit them.)"
+
+    if test -n "$XCMD" ; then
+        echo "#    \"$APMAILER$listname\", \"$ARCPATH/\","
+    else
+        # Append the new entry, then sort the file via a filter.
+        (echo "    \"$APMAILER$listname\", \"$ARCPATH/\","; echo) \
+          | tee -a $HOME/bin/.archives | sed 's/^/# /' | grep .
+        $HOME/bin/reorder-.archives \
+                 < $HOME/bin/.archives > $HOME/bin/.archives.t \
+          && mv $HOME/bin/.archives.t $HOME/bin/.archives
+    fi
+
+    echo "# ======= on locus.apache.org, run the following as apmail"
+    echo "svn up ~apmail/bin/.archives && \\"
+    echo "~apmail/bin/archivealias -d"
+    echo ""
+
+done
+echo "# ======= mod_mbox will pick up new directories on next rsync"
+echo "# ======= don't forget to svn update both mail and locus.apache.org"
+echo "# ======= NEW LISTS WILL NOT WORK UNTIL CONFIG IS RSYNCd (hourly :55)"
+exit 0;

@@ -14,6 +14,7 @@ class qmail_asf (
 
   # override below in eyaml
   $stats_url = '',
+  $mm_auth = '',
 
 ){
 
@@ -166,6 +167,12 @@ class qmail_asf (
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/infod.py.erb'),
+      mode    => '0755';
+
+    "${bin_dir}/makelist-apache.sh":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/makelist-apache.sh.erb'),
       mode    => '0755';
 
     "${json_dir}/parselog.py":
