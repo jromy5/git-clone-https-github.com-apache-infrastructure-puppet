@@ -9,6 +9,8 @@ datadog_agent::integrations::mysql::host: "%{::ipaddress_ens3}"
 datadog_agent::integrations::mysql::user: 'datadog'
 datadog_agent::integrations::mysql::replication: 1
 
+mysql_asf::backup::rsync_offsite: 'true'
+
 mysql::server::override_options:
   mysqld:
     ft_min_word_len: 2
