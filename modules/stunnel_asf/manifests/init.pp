@@ -31,6 +31,13 @@ class stunnel_asf (
       group  => 'root',
       mode   => '0644',
       source => 'puppet:///modules/stunnel_asf/abi.apache.org.crt';
+    'abi.conf':
+      path    => '/etc/stunnel/abi.conf',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('stunnel_asf/abi.conf.erb'),
+      require => Package['stunnel4'];
   }
 
 }
