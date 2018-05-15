@@ -3,7 +3,8 @@ classes:
   - datadog_agent::integrations::mysql
   - mysql_asf::backup
   - mysql::server
-  - zmanda_asf::client
+
+mysql_asf::backup::rsync_offsite: true
 
 puppet_asf::daemon_opts: '--verbose --debug'
 

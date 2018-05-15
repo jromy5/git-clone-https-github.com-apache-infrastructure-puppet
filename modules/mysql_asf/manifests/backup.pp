@@ -1,12 +1,15 @@
 #/etc/puppet/modules/mysql_asf/manifests/backup.pp
 
+include stunnel_asf
+
 class mysql_asf::backup (
-  $script_path = '/root',
-  $script_name = 'dbsave_mysql.sh',
-  $hour        = 03,
-  $minute      = 45,
-  $dumproot    = '/x1/db_dump/mysql',
-  $age         = '5d',
+  $script_path   = '/root',
+  $script_name   = 'dbsave_mysql.sh',
+  $hour          = 03,
+  $minute        = 45,
+  $dumproot      = '/x1/db_dump/mysql',
+  $age           = '5d',
+  $rsync_offsite = 'false', # copy to bai if true, requires setup
 ) {
 
   require mysql::server
