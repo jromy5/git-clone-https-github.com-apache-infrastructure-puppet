@@ -1,6 +1,5 @@
 #/etc/puppet/modules/mysql_asf/manifests/backup.pp
 
-include stunnel_asf
 
 class mysql_asf::backup (
   $script_path   = '/root',
@@ -14,6 +13,7 @@ class mysql_asf::backup (
   $rsync_passwd  = '', # set in eyaml if rsync_offsite
 ) {
 
+  require stunnel_asf
   require mysql::server
 
   file {
