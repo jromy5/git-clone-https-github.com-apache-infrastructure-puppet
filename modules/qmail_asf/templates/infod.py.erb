@@ -5,6 +5,10 @@
 # queue sizes on hermes, and historic traffic on all the mailing lists.
 #
 
+# This file is managed by puppet, see modules:qmail_asf/templates/info.py.erb
+# Note: This file to stay a template due to stats_url being in eyaml and 
+# port number being defined in init.pp and not a common variable.
+
 import BaseHTTPServer
 import re
 

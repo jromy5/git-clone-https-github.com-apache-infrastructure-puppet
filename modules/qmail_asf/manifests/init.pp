@@ -105,7 +105,7 @@ class qmail_asf (
 
   # common.conf - global variables other scripts should use.
 
-    "${apmail_home}/common.conf":
+    "${bin_dir}/common.conf":
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/common.conf.erb'),
@@ -162,12 +162,6 @@ class qmail_asf (
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/autoresponse-ooobz.sh.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/autoresponse.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/autoresponse.sh.erb'),
       mode    => '0755';
 
     "${bin_dir}/backup-listinfo.sh":
