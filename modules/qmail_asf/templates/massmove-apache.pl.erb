@@ -1,0 +1,436 @@
+#!/usr/bin/perl
+#
+# Roy's script for moving a large set of lists with archives.
+#
+# This needs to be executed on both mail.apache.org and locus.apache.org
+# at the same time, since that allows the old and new addresses to be
+# verified on both sides before any changes are made.
+#
+# Read a list of "old@address new@address" pairs from stdin.
+# Verify that all of the addresses are valid and not apachecon.
+# Verify that all old lists do exist and the new ones do not.
+# Stop all mailing list processing.
+# If we are running on locus:
+#    remove the .qmail-{oldlist}-archive file
+#    move the old archives to the new directory
+#    create a .qmail-{newlist}-archive file
+# otherwise, when we are running on locus:
+#    remove the .qmail-{oldlist}* files (disables old list)
+#    move the old list directory to the new list directory
+#    use ezmlm-make on new list dir to recreate .qmail and info files
+#    add an alias from the old list name to the new list address
+# Restore all mailing list processing.
+#
+
+die "Port this to postfix on minotaur first!\n";
+
+my $mhost   = 'hermes.apache.org';
+my $whost   = 'minotaur.apache.org';
+
+my $ezmake  = '/usr/local/bin/ezmlm-make';
+my $ezsub   = '/usr/local/bin/ezmlm-sub';
+my $ezunsub = '/usr/local/bin/ezmlm-unsub';
+my $ezidx   = '/usr/local/bin/ezmlm-idx';
+
+my $lhome   = '/home/apmail';
+
+my ($oldaddress, $oldlist, $oldhost, $olddir, $oldqname, $oldqfile);
+my ($newaddress, $newlist, $newhost, $newdir, $newqname, $newqfile);
+my @l_oldaddress = ();
+my @l_oldlist    = ();
+my @l_oldhost    = ();
+my @l_olddir     = ();
+my @l_oldqname   = ();
+my @l_oldqfile   = ();
+my @l_newaddress = ();
+my @l_newlist    = ();
+my @l_newhost    = ();
+my @l_newdir     = ();
+my @l_newqname   = ();
+my @l_newqfile   = ();
+
+my $mode = 0755;
+
+$_ = `/bin/date +'%Y%m'`;
+chomp;
+my $month = $_;
+
+$_ = `/bin/hostname`;
+chomp;
+my $thishost = $_;
+
+$| = 1;
+
+if ($#ARGV >= 0) { die &usage; }
+
+# Read and verify the addresses before moving
+
+while (<>) {
+    if (/^(\S+)\s+(\S+)/)
+    {
+        $oldaddress = $1;
+        $newaddress = $2;
+    }
+    else { die "Bad input: $_"; }
+
+    if ($oldaddress =~ m/([0-9A-Za-z.+-]*)\@([0-9A-Za-z.-]*)/)
+    {
+        $oldlist = $1;
+        $oldhost = $2;
+        if ($oldhost eq 'apachecon.com') { die "Sorry, no can do apachecon\n"; }
+    }
+    else { die &usage; }
+
+    push @l_oldaddress, $oldaddress;
+    push @l_oldlist,    $oldlist;
+    push @l_oldhost,    $oldhost;
+
+    $_ = $oldhost;
+    s/\.?apache\.org$//;
+    $oldqname = m/^$/ ? $oldlist : $_ . '-' . $oldlist;
+    $oldqfile = "$lhome/.qmail-$oldqname";
+
+    push @l_oldqname,   $oldqname;
+    push @l_oldqfile,   $oldqfile;
+
+    if ($newaddress =~ m/([0-9A-Za-z.+-]*)\@([0-9A-Za-z.-]*)/)
+    {
+        $newlist = $1;
+        $newhost = $2;
+        if ($newhost eq 'apachecon.com') { die "Sorry, no can do apachecon\n"; }
+    }
+    else { die &usage; }
+
+    push @l_newaddress, $newaddress;
+    push @l_newlist,    $newlist;
+    push @l_newhost,    $newhost;
+
+    $_ = $newhost;
+    s/\.?apache\.org$//;
+    $newqname = m/^$/ ? $newlist : $_ . '-' . $newlist;
+    $newqfile = "$lhome/.qmail-$newqname";
+
+    push @l_newqname,   $newqname;
+    push @l_newqfile,   $newqfile;
+}
+
+if ($#l_oldaddress >= 0) {
+    print("Moving the following lists:\n");
+
+    foreach $index (0 .. $#l_oldaddress) {
+        print '  ', $l_oldaddress[$index], ' --> ', $l_newaddress[$index], "\n";
+    }
+}
+else { die &usage; }
+
+#########################################
+##          locus.apache.org           ##
+#########################################
+
+if ($thishost eq $whost)
+{
+    print "requires that the same command be run on $mhost right now!\n";
+
+    foreach $index (0 .. $#l_oldhost)
+    {
+        $oldhost  = $l_oldhost[$index];
+        $newhost  = $l_newhost[$index];
+        $oldlist  = $l_oldlist[$index];
+        $newlist  = $l_newlist[$index];
+        $oldqname = $l_oldqname[$index];
+        $newqname = $l_newqname[$index];
+        $oldqfile = $l_oldqfile[$index];
+        $newqfile = $l_newqfile[$index];
+
+        $newdir = ($newhost eq 'apache.org') ?
+                   "$lhome/public-arch/www.apache.org/$newlist" :
+                   "$lhome/public-arch/$newhost/$newlist";
+    
+        $olddir = ($oldhost eq 'apache.org') ?
+                   "$lhome/public-arch/www.apache.org/$oldlist" :
+                   "$lhome/public-arch/$oldhost/$oldlist";
+
+        print "Checking old archive at $olddir ... ";
+        if (! -d $olddir)
+        {
+            $olddir = "$lhome/private-arch/$oldqname";
+            $newdir = "$lhome/private-arch/$newqname";
+            print "not found\nChecking old archive at $olddir ... ";
+        }
+        if (! -d $olddir) { die "not found (yikes)\n"; }
+        if (! -e $oldqfile . '-archive' )
+        {
+            die ".qmail not found (yikes)\n";
+        }
+        print "found\n";
+
+        print "Checking destination at $newdir ... ";
+        if ( -e $newdir) { die "already exists (yikes)\n"; }
+        if ( -e $newqfile . '-archive' )
+        {
+            die ".qmail already exists (yikes)\n";
+        }
+        print "good\n";
+
+        push @l_olddir, $olddir;
+        push @l_newdir, $newdir;
+    }
+
+    print "Existing lists verified. Sleeping for 10 seconds [^C to quit].\n";
+    sleep 10;
+    print "Now making new archive locations.\n";
+
+    foreach $index (0 .. $#l_newdir)
+    {
+        $newdir   = $l_newdir[$index];
+        $newqfile = $l_newqfile[$index];
+
+        $mode = ($newdir =~ /private-arch/) ? 0750 : 0755;
+
+        print "Making new $newdir/\n";
+        mkdir $newdir, $mode || die "Cannot mkdir $newdir, $!\n";
+
+        print "Adding new $newqfile-archive\n";
+        open(QFILE, ">$newqfile-archive") ||
+            die "Cannot open new .qmail file for writing, $!\n";
+        print(QFILE "$newdir/$month\n");
+        close QFILE;
+    }
+
+    print "Halting e-mail deliveries with chmod +t $lhome\n";
+    chmod 01755, $lhome;
+
+    print "Moving old archives to new locations.\n";
+
+    foreach $index (0 .. $#l_newdir)
+    {
+        $newdir   = $l_newdir[$index];
+        $olddir   = $l_olddir[$index];
+        $oldqfile = $l_oldqfile[$index];
+
+        print "Moving from $olddir\n         to $newdir\n";
+        system "/bin/mv $olddir/* $newdir/";
+
+        print "Writing new location in $oldqfile-archive\n";
+        open(QFILE, ">$oldqfile-archive") ||
+            warn "Cannot open old .qmail file for writing, $!\n";
+        print(QFILE "$newdir/$month\n");
+        close QFILE;
+    }
+
+    print "Restoring e-mail deliveries with chmod -t $lhome\n";
+    chmod 0755, $lhome;
+
+    print "Finished setting up the new archives.\n",
+          "Now run the same command on $mhost while I sleep.\n",
+          "Sleeping for 30 seconds [^C to quit].\n";
+
+    sleep 30;
+
+    print "Removing the old (now empty) archive directories.\n";
+
+    foreach $index (0 .. $#l_olddir)
+    {
+        $olddir   = $l_olddir[$index];
+        $oldqfile = $l_oldqfile[$index];
+
+        rmdir $olddir || warn "Failed rmdir $olddir: $!\n";
+        unlink "$oldqfile-archive" ||
+            warn "Failed unlink $oldqfile-archive: $!\n";
+    }
+    print << "EOMSG";
+
+NOTE: I have only moved the original archives. If the archives should be
+owned by a different group, then you will need to chgrp them manually.
+You may also want to add website redirects and/or move mod_mbox archives
+as well.
+
+You must now edit and commit the archivealiasmonthly script.
+Save the following lines as "script"
+
+EOMSG
+    foreach $index (0 .. $#l_olddir)
+    {
+        $olddir   = $l_olddir[$index];
+        $newdir   = $l_newdir[$index];
+        $oldqname = $l_oldqname[$index];
+        $newqname = $l_newqname[$index];
+
+        print "s:\\\"$oldqname\\\", \\\"$olddir/\\\",:\\\"$newqname\\\", \\\"$newdir/\\\",:;\n";
+    }
+    print << "EOMSG";
+
+and then run
+   perl -pi script archivealiasmonthly
+   perl -wc archivealiasmonthly
+be sure to check the result with "svn diff" before committing.
+EOMSG
+}
+
+#########################################
+##           mail.apache.org           ##
+#########################################
+
+elsif ($thishost eq $mhost)
+{
+    print "requires that the same command be run on $whost FIRST.\n";
+
+    foreach $index (0 .. $#l_oldhost)
+    {
+        $oldhost    = $l_oldhost[$index];
+        $oldlist    = $l_oldlist[$index];
+        $newhost    = $l_newhost[$index];
+        $newlist    = $l_newlist[$index];
+
+        $olddir = "$lhome/lists/$oldhost/$oldlist";
+        $newdir = "$lhome/lists/$newhost";
+
+        if (! -d $olddir) { die "$olddir does not exist yet\n" }
+        if (! -d $newdir) { die "$newdir does not exist yet\n" }
+
+        $newdir .= "/$newlist";
+        if (  -e $newdir) { die "$newdir already exists\n" }
+
+        push @l_olddir, $olddir;
+        push @l_newdir, $newdir;
+    }
+
+    print "Existing lists verified. Sleeping for 10 seconds [^C to quit].\n";
+    sleep 10;
+
+    print "Halting e-mail deliveries with chmod +t $lhome\n";
+    chmod 01755, $lhome;
+
+    foreach $index (0 .. $#l_oldaddress)
+    {
+        $oldaddress = $l_oldaddress[$index];
+        $newaddress = $l_newaddress[$index];
+        $olddir     = $l_olddir[$index];
+        $newdir     = $l_newdir[$index];
+        $oldlist    = $l_oldlist[$index];
+        $newlist    = $l_newlist[$index];
+        $oldhost    = $l_oldhost[$index];
+        $newhost    = $l_newhost[$index];
+        $oldqname   = $l_oldqname[$index];
+        $newqname   = $l_newqname[$index];
+        $oldqfile   = $l_oldqfile[$index];
+        $newqfile   = $l_newqfile[$index];
+
+        print "==== Working on $oldaddress ==> $newaddress\n";
+        print "Removing $oldqfile\*\n";
+
+        unlink $oldqfile,
+               "$oldqfile-accept-default",
+               "$oldqfile-archive",
+               "$oldqfile-default",
+               "$oldqfile-digest-owner",
+               "$oldqfile-digest-return-default",
+               "$oldqfile-owner",
+               "$oldqfile-reject-default",
+               "$oldqfile-return-default";
+
+        if (-e $newqfile)   # possible if new list was an alias
+        {
+            print "Removing alias at $newqfile\n";
+            unlink $newqfile;
+        }
+
+        my $rep = `/usr/bin/egrep -i '^Reply-To:' $olddir/headeradd`;
+
+        print "Moving list directory\n";
+
+        if (system('/bin/mv', '-f', $olddir, $newdir) != 0)
+        {
+            warn "FAILED, $!\n";
+            next;
+        }
+
+        print "$ezmake -++ -ee -c $newdir $newqfile $newlist $newhost\n";
+
+        if (system($ezmake, '-++', '-ee', '-c', $newdir,
+                   $newqfile, $newlist, $newhost) != 0)
+        {
+            warn "FAILED, $!\n";
+            next;
+        }
+
+        print "Placing an alias in $oldqfile\n";
+        open(QFILE, ">$oldqfile") ||
+            warn "Cannot open old .qmail file for writing, $!\n";
+        print(QFILE "$newaddress\n");
+        close QFILE;
+
+        print "Adding a bounce message for ezmlm operations on the old list\n";
+        open (QFILE, ">$oldqfile-default") ||
+            warn "Cannot open old default file for writing, $!\n";
+        print(QFILE "|bouncesaying 'This mailing list has moved to "
+                  . "$newlist at $newhost.'\n");
+        close QFILE;
+
+        print "Adding $newqfile-archive\n";
+        open(QFILE, ">$newqfile-archive") ||
+            warn "Cannot open new .qmail file for writing, $!\n";
+        print(QFILE "apmail-$newqname-archive\@locus.apache.org\n");
+        close QFILE;
+
+        print "Subscribing archive address $newlist-archive\@$newhost\n";
+
+        system $ezunsub, $newdir, "apmail-$oldqname-archive\@www.apache.org",
+                                  "apmail-$oldqname-archive\@locus.apache.org",
+                                  "$oldlist-archive\@$oldhost";
+
+        system $ezsub, $newdir, "$newlist-archive\@$newhost";
+
+        if ($rep)
+        {
+            print "Copying $rep";
+            open(QFILE, ">>$newdir/headeradd") ||
+                warn "Cannot open new headeradd file for append, $!\n";
+            print(QFILE $rep);
+            close QFILE;
+        }
+    }
+
+    print "==== DONE\n";
+    print "Restoring e-mail deliveries with chmod -t $lhome\n";
+    chmod 0755, $lhome;
+
+    print <<"EOMAIL";
+
+Don't forget to commit the changes to archivealiasupdate AND run
+svn up $lhome/bin on BOTH $mhost and $whost
+EOMAIL
+}
+
+#########################################
+##           any other host            ##
+#########################################
+
+else
+{
+    print "I cannot run on $thishost\n\n";
+}
+
+exit 0;
+
+sub usage
+{
+    return <<"EOF";
+Usage: echo \"old\@olddomain new\@newdomain\" | $0
+
+Moves a list of existing mailing lists to corresponding new addresses.
+When run first on $whost it moves the archives.
+When run second on $mhost it creates the new lists and
+moves over the existing moderators, subscribers, and digesters.
+
+Examples:
+
+  echo \"foo-dev\@incubator.apache.org dev\@foo.apache.org\" > my_list.txt
+  echo \"foo-user\@incubator.apache.org user\@foo.apache.org\" >> my_list.txt
+  echo \"foo-ppmc\@incubator.apache.org private\@foo.apache.org\" >> my_list.txt
+  echo \"foo\@apache.org bar\@apache.org\" >> my_list.txt
+  # copy my_list.txt to both machines and login as apmail
+  $0 < my_list.txt
+
+EOF
+}

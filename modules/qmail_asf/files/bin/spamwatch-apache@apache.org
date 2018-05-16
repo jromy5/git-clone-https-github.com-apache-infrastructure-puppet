@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+#
+# yet another script to put in aliasempty.  This one will match spam
+# against a series of patterns.  If a pattern matches, return a 99
+# (which tells qmail to stop processing the delivery), but if there's no
+# match, then exit 0 so qmail continues on to other parts of the delivery.
+#
+# PLEASE PLEASE PLEASE if you make changes to this script, include a
+# copy of the relevant spam in the body of the commit message - some
+# sort of evidence or reason why it was added.
+
+$recip = $ENV{RECIPIENT};
+
+if($ENV{'SENDER'} eq "") {
+    print "dev-nulling message to $recip, no envelope sender\n";
+    exit 99;
+}
+
+while (<STDIN>) {
+
+    $msg .= $_;
+    # break coz we only want to look at headers for now.
+    last if (/^\s*$/);
+
+    # look for patterns we can just DROP all messages from
+    if (
+	/^Return-Path: \<\>/o 
+	) {
+	$bad = $_;
+	print "dev-nulling message to $recip, bad $bad";
+	exit 99;
+    }
+
+#    if (
+#	/^To: .*\@public.com/i
+#	) {
+#	$bad = $_;
+#	print "Blackholing to $recip, bad $bad";
+#	&dump_message($bad);
+#	exit 99;
+#    }
+}
+
+# these rules apply to the body
+
+while(<STDIN>) {
+    
+    $msg .= $_;
+
+# look for patterns we can just DROP all messages from
+
+#    if(
+#       /This is the file with the information that you ask for/o
+#       ) {
+#	$bad = $_;
+#	print "dev-nulling message to $recip, bad $bad";
+#	exit 99;
+#    }
+
+# now, log these patterns to /var/log/blackholedspam.
+#    if(
+#       /^\<HTML\>\<PRE\>/o ||
+#       ) {
+#	$bad = $_;
+#	print "Blackholing to $recip, bad $bad";
+#	&dump_message($bad);
+#	exit 99;
+#    }
+}
+
+sub dump_message {
+    $bad = shift;
+    while (<STDIN>) {
+	$msg .= $_;
+    }
+    open(DUMP, ">>/var/log/blackholedspam");
+    $date = localtime(time);
+    print DUMP "\n\nFrom $ENV{'SENDER'} $date\n";
+    print DUMP "SPAMWATCH-To: $ENV{'RECIPIENT'}\n";
+    print DUMP "SPAMWATCH-Bad: $bad";
+    print DUMP $msg;
+    close(DUMP);
+}
+
+

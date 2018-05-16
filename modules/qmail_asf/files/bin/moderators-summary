@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Helper script to list moderators of given lists (in argv).
+#
+# If no argv and in a subdir of ~/lists/, print all moderators for every list
+# of that project.
+
+usage() {
+  echo "Usage: cd lists/foo.apache.org && $0" >&2
+  echo "Usage: $0 listdir [listdir...]" >&2
+  exit 1
+}
+
+process() {
+  for listdir; do
+    printf "%-16s\t" $listdir: && ezmlm-list $listdir mod | xargs
+  done
+}
+
+if [ $# -gt 0 ]; then
+  process "$@"
+else
+  pwd | grep -x -q "$HOME/lists/[^/]*$" || usage
+  process */
+fi

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+cd && cd restricted-arch
+for i in */current; do
+  addr="`dirname "$i" | sed -e s/officers-//`@apache.org"
+  formail -s \
+    perl -lne 'print if /^Message-ID:/i;  last if /^$/'  \
+    < $i \
+  | mail -s "Archives report for restricted-arch/`dirname $i`/`readlink $i`" "$addr"
+done

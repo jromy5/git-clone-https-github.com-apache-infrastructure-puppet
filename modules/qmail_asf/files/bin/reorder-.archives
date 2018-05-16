@@ -1,0 +1,10 @@
+#!/usr/bin/env perl
+use feature qw/say/;
+$/="";
+@pars = <STDIN>;
+print shift @pars for (1..3); # leave first three paragraphs
+@pars = sort { $a cmp $b } @pars;
+@names = map /((?:incubator-)?\w+)/, @pars;
+chop $pars[$_] for grep $names[$_] eq $names[$_+1], 0..($#names-1);
+print @pars
+

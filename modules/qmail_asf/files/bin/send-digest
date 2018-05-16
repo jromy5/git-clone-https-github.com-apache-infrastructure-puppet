@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/usr/local/bin/ezmlm-tstdig -m30 -k64 -t48 "$1" || exit 0
+/usr/local/bin/ezmlm-get -f r "$1" 
+

@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+
+# Find all the lists that the given user name pattern is subscribed to
+
+use DirHandle;
+
+$listsdir = "/home/apmail/lists";
+
+$name = $ARGV[0];
+$newname = $ARGV[1];
+
+scanlists($name, $newname);
+
+sub scanlists {
+    my $name = shift(@_);
+    my $newname = shift(@_);
+    opendir HOSTSDIR, $listsdir or die "uh-oh, can't find ~/lists!";
+    # grab files, avoiding . and ..
+    @files = grep !/^\.\.?$/,readdir HOSTSDIR;
+    while ($file = shift(@files)) {
+	if (-d "$listsdir/$file") {
+	    scanhost($file, $name, $newname);
+	}
+    }
+    closedir HOSTSDIR;
+}
+
+sub scanhost {
+    my $host = @_[0];
+    my $name = @_[1];
+    my $newname = @_[2];
+    # grab files, avoiding . and ..
+    opendir HOSTDIR, "$listsdir/$host" or die "can't find dir for host $host";
+    @lists = grep !/^\.\.?$/,readdir HOSTDIR;
+    while ($list = shift(@lists)) {
+	if (-d "$listsdir/$host/$list/allow") {
+	    scanallowed($list, $host, $name, $newname);
+	}
+    }
+    closedir HOSTDIR;
+}
+
+sub scanallowed {
+
+    my $list = @_[0];
+    my $host = @_[1];
+    my $name = @_[2];
+    my $newname = @_[3];
+
+    my $printheader = true;
+
+    open (PROC, "ezmlm-list $listsdir/$host/$list/allow|");
+    while (<PROC>) {
+	@item = $_;
+	$count = grep /$name/, @item;
+	if ($count) {
+	    if ($printheader) {
+		print "$listsdir/$host/$list    ";
+    		system("ezmlm-unsub $listsdir/$host/$list/allow $name");
+    		system("ezmlm-sub $listsdir/$host/$list/allow $newname");
+	    }
+	    print "     $_";
+	}
+    }
+    close PROC;
+}
