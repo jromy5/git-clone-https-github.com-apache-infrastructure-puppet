@@ -396,6 +396,9 @@ virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev
 pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
 
+# secretary access to tlpreq
+asf-secretary={ldap:cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org}
+
 # Don't drop staff as it has rules attached to it (see r771650 log message)
 staff=
 
@@ -643,7 +646,9 @@ whimsysvn = r
 mostarda = rw
 
 [/infrastructure/trunk/tlpreq/input]
+@asf-secretary = rw
 whimsysvn = rw
+
 
 [/infrastructure/trunk/subreq]
 whimsysvn = rw
