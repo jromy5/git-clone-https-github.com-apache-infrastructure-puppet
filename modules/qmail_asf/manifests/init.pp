@@ -103,6 +103,19 @@ class qmail_asf (
 
   # template files
 
+  # common.conf - global variables other scripts should use.
+
+    "${apmail_home}/common.conf":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/common.conf.erb'),
+      mode    => '0644';
+
+  # Other template files needed for other reasons, perhaps they contain
+  # passwords or tokens and other stuff
+  # TODO: go through the below list and convert if possible to a file resource
+  #       using common.conf instead.
+
     "${bin_dir}/generate-podlings-list.py":
       owner   => $username,
       group   => $groupname,
