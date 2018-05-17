@@ -12,6 +12,9 @@ rules:
             maxmemory:   1024mb
         runlist:
             - 'service loggy restart'
+        # notify: set to 'email' for email, 'hipchat' for hipchat, or both for...both
+        # none means don't notify at all.
+        notify: none
     postfix:
         description:     'postfix memory hogging prevention'
         procid:          '/usr/lib/postfix/master'
