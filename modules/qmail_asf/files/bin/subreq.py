@@ -9,15 +9,18 @@ import subprocess
 import string
 import sys
 
+# include common path variables
+execfile("common.conf")
+
 from collections import namedtuple
 Entry = namedtuple('Entry', 'listkey availid listaddr')
 
 PROGNAME = os.path.basename(sys.argv[0])
 logging.getLogger().name = sys.argv[0]
 
-SVN_CONFIG_DIR = '<%= @apmail_home %>/.subversion2'
+SVN_CONFIG_DIR = 'APMAIL_HOME/.subversion2'
 
-BASEDIR = '<%= @apmail_home %>/lists'
+BASEDIR = 'APMAIL_HOME/lists'
 
 class Hooks:
     @staticmethod
@@ -110,7 +113,7 @@ def run_hooks(entry, hooks):
                           type(e).__name__, e)
 
 def main(op):
-    os.chdir('<%= @apmail_home %>/' + op + 'req')
+    os.chdir('APMAIL_HOME/' + op + 'req')
     success = set()
     for fn in sys.argv[1:] or glob.glob('*.json'):
         try:
