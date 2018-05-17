@@ -136,24 +136,6 @@ class qmail_asf (
       content => template('qmail_asf/selfserve-make-lists.py.erb'),
       mode    => '0755';
 
-    "${bin_dir}/allow-email-in-all-tlp-private-lists.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/allow-email-in-all-tlp-private-lists.sh.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/autoresponse-apache.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/autoresponse-apache.sh.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/autoresponse-apachecon.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/autoresponse-apachecon.sh.erb'),
-      mode    => '0755';
-
     "${bin_dir}/autoresponse-human-response.sh":
       owner   => $username,
       group   => $groupname,

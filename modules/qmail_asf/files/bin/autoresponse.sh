@@ -8,6 +8,6 @@ $APMAIL_HOME/apache-autoanswer \
 	--from="Apache Autoresponder <donotreply@Apache.Org>" \
 	--errors-to="human-response@Apache.Org" \
 	--include-original \
-	--work-dir=<%= @apmail_home %>/apache-autoanswer.work \
+	--work-dir=$APMAIL_HOME/apache-autoanswer.work \
 	--ignore-from MAILER-DAEMON \
         --ignore-precedence="list|bulk|junk"

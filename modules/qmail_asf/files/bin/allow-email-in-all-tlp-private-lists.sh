@@ -1,10 +1,14 @@
 #!/bin/sh
+
+source common.conf
+
 if [ $# -lt 1 ]; then
 	echo Usage: $0 email@address '[email@address...]'
 	exit 1
 fi
 
-cd <%= @lists_dir %>
+cd $LISTS_DIR
+
 for i in */
 do
 (

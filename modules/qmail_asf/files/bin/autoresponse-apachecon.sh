@@ -1,6 +1,9 @@
 #! /usr/local/bin/bash
 ulimit -t 15
-<%= @apmail_home %>/apache-autoanswer \
+
+source common.conf
+
+$APMAIL_HOME/apache-autoanswer \
 	--file=autoanswer-apachecon.txt \
 	--from="ApacheCon Autoresponder <donotreply@apachecon.com>" \
         --accept-for=info@apachecon.com \
