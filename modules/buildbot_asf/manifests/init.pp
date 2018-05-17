@@ -117,6 +117,24 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/asf_logo_wide_2016.png';
+    "/x1/${username}/master1/public_html/bg_gradient.jpg":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/bg_gradient.jpg';
+    "/x1/${username}/master1/public_html/default.css":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/default.css';
+    "/x1/${username}/master1/public_html/favicon.ico":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/favicon.ico';
     "/x1/${username}/master1/configscanner.py":
       ensure => 'present',
       mode   => '0755',
