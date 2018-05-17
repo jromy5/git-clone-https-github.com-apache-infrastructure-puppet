@@ -100,6 +100,11 @@ class buildbot_asf (
 
 # various required files
 
+    "/x1/${username}/master1/templates":
+      ensure => 'directory',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname;
     "/x1/${username}/master1/templates/root.html":
       ensure => 'present',
       mode   => '0664',
