@@ -136,24 +136,6 @@ class qmail_asf (
       content => template('qmail_asf/selfserve-make-lists.py.erb'),
       mode    => '0755';
 
-    "${bin_dir}/autoresponse-human-response.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/autoresponse-human-response.sh.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/autoresponse-ooobz.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/autoresponse-ooobz.sh.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/backup-listinfo.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/backup-listinfo.sh.erb'),
-      mode    => '0755';
-
     "${bin_dir}/infod.py":
       owner   => $username,
       group   => $groupname,
@@ -182,12 +164,6 @@ class qmail_asf (
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/parselog.py.erb'),
-      mode    => '0755';
-
-    "${logs2_dir}/rotate-logs2.sh":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/rotate-logs2.sh.erb'),
       mode    => '0755';
 
   # symlinks

@@ -4,11 +4,14 @@
 #
 
 # For ezmlm-list
+
+source common.conf
+
 PATH=$PATH:/usr/local/bin
 
 STATFILE=/tmp/listbackup.$$
 echo >> $STATFILE `date +%Y-%m-%d`
-PATHTO=~<%= @lists_dir =>
+PATHTO=$LISTS_DIR
 cd $PATHTO
 DOMAINS=`find . -type d -maxdepth 1 | grep -v '^\.$' | sed -e 's,^\./,,g;'`
 for DOMAIN in $DOMAINS ; do

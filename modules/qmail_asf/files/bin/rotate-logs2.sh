@@ -1,5 +1,8 @@
 #!/bin/sh
-cd <%= @logs2_dir %> || exit 1
+
+source common.conf
+
+cd $LOGS2_DIR || exit 1
 l="apache@apache.org info@apachecon.com hostmaster@apache.org postmaster@apache.org "
 date=`date +%Y-%m-%d`
 for f in $l ; do
