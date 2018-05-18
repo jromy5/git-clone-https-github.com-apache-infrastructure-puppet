@@ -103,6 +103,9 @@ class base (
   $dbfile = hiera_hash('postfix::dbfile', {})
   create_resources(postfix::dbfile, $dbfile)
 
+  $aptsources = hiera_hash('apt::sources',{})
+  create_resources(apt::sources, $aptsources)
+
   class { "base::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 }
