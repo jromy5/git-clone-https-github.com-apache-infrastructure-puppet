@@ -1,12 +1,14 @@
 ---
 classes:
-  - ssl::name::wildcard_apache_org
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
-  - vhosts_asf::vhosts
   - buildbot_asf
+  - mysql_asf::backup
+  - mysql::server
+  - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -24,6 +26,14 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+apt::source:
+  trusty-archive:
+    comment: 'trusty archive for mysql 5.6'
+    location: 'http://archive.ubuntu.com/ubuntu'
+    release: 'trusty'
+    repos: 'universe'
+    ensure: present
+
 # buildbot_asf class variables.
 buildbot_asf::buildbot_base_dir: '.'
 buildbot_asf::buildmaster_work_dir: 'master1'
@@ -39,6 +49,34 @@ buildbot_asf::log_horizon: '40'
 buildbot_asf::build_cache_size: '50'
 buildbot_asf::change_cache_size: '10000'
 buildbot_asf::projects_path: '/x1/buildmaster/master1/projects'
+
+mysql_asf::backup::rsync_offsite: 'true'
+
+mysql::server::package_name: 'mysql-server-5.6'
+
+mysql::server::override_options:
+  mysqld:
+    ft_min_word_len: 2
+    bind-address: "%{::ipaddress_ens18}"
+    server-id: 1
+    binlog-format: 'mixed'
+    log_bin: '/var/log/mysql/mysql-bin.log'
+    innodb_flush_log_at_trx_commit: '1'
+    sync_binlog: '1'
+    binlog-ignore-db: 'mysql'
+    expire-logs-days: '5'
+    character-set-server: 'utf8'
+    max_allowed_packet: '64M'
+    max_connections: '4096'
+    skip_name_resolve: '1'
+  mysqldump:
+    max_allowed_packet: '64M'
+
+mysql::server::databases:
+  asfbuildbot:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
 
 vhosts_asf::vhosts::vhosts:
   buildbot-vm-80:
