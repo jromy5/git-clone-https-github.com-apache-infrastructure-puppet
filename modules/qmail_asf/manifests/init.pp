@@ -118,18 +118,6 @@ class qmail_asf (
   # TODO: go through the below list and convert if possible to a file resource
   #       using common.conf instead.
 
-    "${bin_dir}/generate-podlings-list.py":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/generate-podlings-list.py.erb'),
-      mode    => '0755';
-
-    "${bin_dir}/generate-qmail-pmcs.py":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/generate-qmail-pmcs.py.erb'),
-      mode    => '0755';
-
     "${bin_dir}/selfserve-make-lists.py":
       owner   => $username,
       group   => $groupname,

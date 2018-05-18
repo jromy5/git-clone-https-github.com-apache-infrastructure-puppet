@@ -27,6 +27,8 @@ if sys.version_info < (2, 7):
 import xml.dom.minidom
 import urllib
 
+execfile("common.conf")
+
 PODLINGS_URL = 'http://svn.apache.org/repos/asf/incubator/public/trunk/content/podlings.xml'
 SPECIALS = ['wave','blur']
 
@@ -36,8 +38,8 @@ def processPodlings(xmlFile):
     Parse a podlings.xml stream
     """
     dom = xml.dom.minidom.parse(xmlFile)
-    with open("<%= @apmail_home %>/.qmail-incubator-podlings", "w") as f, \
-         open("<%= @apmail_home %>/.qmail-ppmcs", "w") as g:
+    with open("APMAIL_HOME/.qmail-incubator-podlings", "w") as f, \
+         open("APMAIL_HOME/.qmail-ppmcs", "w") as g:
         for row in dom.getElementsByTagName("podling"):
             if row.getAttribute("status") != 'current':
                 continue

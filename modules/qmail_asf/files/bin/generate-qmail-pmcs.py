@@ -13,10 +13,12 @@ import subprocess
 import urllib
 import json
 
+execfile("common.conf")
+
 URL = "https://whimsy.apache.org/public/committee-info.json"
 
-LISTDIR = "<%= @apmail_home %>/lists'
-TARGET = '<%= @apmail_home %>/.qmail-pmcs'
+LISTDIR = "APMAIL_HOME/lists'
+TARGET = 'APMAIL_HOME/.qmail-pmcs'
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -29,7 +31,7 @@ def main():
             pmcs += [cttee['mail_list']]
 
     fd = open(TARGET+'.t', 'w')
-    fd.write('| <%= @apmail_home %>/bin/ezmlm-filter-bcc pmcs@apache.org\n')
+    fd.write('| APMAIL_HOME/bin/ezmlm-filter-bcc pmcs@apache.org\n')
     for p in sorted(set(pmcs)):
         fd.write('private@%s.apache.org\n' % p)
     fd.flush()
