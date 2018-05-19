@@ -42,6 +42,8 @@ import smtplib
 import time
 import email.utils
 
+execfile("common.conf")
+
 # Define some vars
 QUEUE_URL =     "https://selfserve.apache.org/cgi-bin/queue.cgi"
 DEBUG =         False # Set to true to not actually make lists, just process
@@ -81,7 +83,7 @@ def sendemail(rcpt, subject, message):
         receivers = rcpt
     # Weed out infra, we're adding that explicitly to every email.
     receivers = [k for k in receivers if k != INFRAML]
-    receivers.append("ASF Infrastructure <%%s>"% INFRAML)
+    receivers.append("ASF Infrastructure <%s>"% INFRAML)
     msgid = email.utils.make_msgid()
     msg = """From: %s
 Message-ID: %s
@@ -132,7 +134,7 @@ def process_request(entry):
     if muopts not in ['mu', 'Mu', 'mU']:
         errors.append("Invalid muopts. Must be mu, Mu or mU")
     # Mailing list can't already exist
-    if os.path.exists("<%= @lists_dir %>/%s/%s" % (fqdn, listname)):
+    if os.path.exists("LISTS_DIR/%s/%s" % (fqdn, listname)):
         errors.append("This mailing list appears to already exist!")
 
     if errors:
@@ -145,12 +147,12 @@ def process_request(entry):
     # NOTE: This does NOT set up DNS entries for new podlings.
     # We'll have to that manually still, and wait for an automated
     # solution later on.
-    if not os.path.exists("<%= @lists_dir %>/%s" % fqdn):
+    if not os.path.exists("LISTS_DIR/%s" % fqdn):
         print(" - %s seems to be a new FQDN, setting up parent dir first" % fqdn)
         try:
             if not DEBUG:
-                os.mkdir("<%= @lists_dir %>/%s" % fqdn)
-                os.chmod("<%= @lists_dir %>/%s" % fqdn, 0o755)
+                os.mkdir("LISTS_DIR/%s" % fqdn)
+                os.chmod("LISTS_DIR/%s" % fqdn, 0o755)
             print(" - adding %s to rcpthosts" % fqdn)
             if not DEBUG:
                 open("/var/qmail/control/rcpthosts", "a").write("%s\n" % fqdn)
@@ -167,7 +169,7 @@ def process_request(entry):
     # Now construct the args for makelist-apache.sh:
 
     # Basic bash binary and script name
-    args = ['/usr/local/bin/bash', '<%= @bin_dir %>/makelist-apache.sh']
+    args = ['/usr/local/bin/bash', 'BIN_DIR/makelist-apache.sh']
 
     # muopts (-mu, -Mu or -mU)
     args.append('-' + muopts)
@@ -224,7 +226,7 @@ def process_request(entry):
 
     notify = [ "%s@apache.org" % requester ]
     # If there exists a private list already, notify it
-    if listname != "private" and os.path.exists("<%= @lists_dir %>/%s/private" % fqdn):
+    if listname != "private" and os.path.exists("LISTS_DIR/%s/private" % fqdn):
         notify.append('private@%s' % fqdn)
     # Notify security@apache.org of all new security list.
     if listname == 'security':
