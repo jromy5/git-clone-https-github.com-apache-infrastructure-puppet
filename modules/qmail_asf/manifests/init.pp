@@ -115,14 +115,6 @@ class qmail_asf (
 
   # Other template files needed for other reasons, perhaps they contain
   # passwords or tokens and other stuff
-  # TODO: go through the below list and convert if possible to a file resource
-  #       using common.conf instead.
-
-    "${bin_dir}/selfserve-make-lists.py":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/selfserve-make-lists.py.erb'),
-      mode    => '0755';
 
     "${bin_dir}/infod.py":
       owner   => $username,
@@ -146,12 +138,6 @@ class qmail_asf (
       owner   => $username,
       group   => $groupname,
       content => template('qmail_asf/move-allowed-poster.erb'),
-      mode    => '0755';
-
-    "${json_dir}/parselog.py":
-      owner   => $username,
-      group   => $groupname,
-      content => template('qmail_asf/parselog.py.erb'),
       mode    => '0755';
 
   # symlinks
