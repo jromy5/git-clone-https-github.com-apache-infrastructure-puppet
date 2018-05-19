@@ -280,7 +280,11 @@ class PubSubClient(Thread):
                             os.chdir(buildbotDir)
                             # get current revision; assumed good
                             # we do this in outer try block as failure is fatal
-                            before=subprocess.check_output([SVN,'info','--show-item','last-changed-revision', 'projects']).rstrip()
+
+                            # --show-item not supported by current SVN client
+                            #before=subprocess.check_output([SVN,'info','--show-item','last-changed-revision', 'projects']).rstrip()
+                            # Use this instead until SVN is updated
+                            before=re.search(r"^Last Changed Rev: (\d+)$", subprocess.check_output([SVN,'info', 'projects']), re.M).group(1)
 
                             for path in commit['changed']:
                                 m = re.match(r"infrastructure/buildbot/aegis/buildmaster/master1/projects/(.+\.conf)", path)
