@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 #
 # Match ENV['SENDER'] against a list of email addresses (stored as a
 # simple list in a file). Should SENDER match, then exit(100).
