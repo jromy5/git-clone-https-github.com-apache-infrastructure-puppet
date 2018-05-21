@@ -82,7 +82,7 @@ class daemon:
     def __init__(self, pidfile): self.pidfile = pidfile
 
     def daemonize(self):
-        """Deamonize class. UNIX double fork mechanism."""
+        """Daemonize class. UNIX double fork mechanism."""
 
         try:
             pid = os.fork()
