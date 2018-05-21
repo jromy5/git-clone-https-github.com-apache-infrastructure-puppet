@@ -32,7 +32,7 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
 # cwiki_asf class variables.
-cwiki_asf::confluence_version: '5.8.17'
+cwiki_asf::confluence_version: '6.9.0'
 cwiki_asf::conf_build_number: '5997'
 cwiki_asf::mysql_connector_version: '5.1.46'
 cwiki_asf::parent_dir: '/x1/cwiki'
