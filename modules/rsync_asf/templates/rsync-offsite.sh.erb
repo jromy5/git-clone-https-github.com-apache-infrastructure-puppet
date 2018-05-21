@@ -1,0 +1,34 @@
+#!/bin/bash
+
+DUMPLISTFILE="<%= @dumplist %>"
+
+rsync_offsite() {
+  DATE_BIN=/bin/date
+  TODAY=`$DATE_BIN +%Y%m%d`
+  FIVE_DAYS=`$DATE_BIN -d '5 days ago' +%Y%m%d`
+  OLD_LOG=/root/rsynclogs/abi/backups-<%= @hostname %>-$FIVE_DAYS.log
+  RM_BIN=/bin/rm
+
+  if [ ! -d /root/rsynclogs/abi ]; then
+      mkdir -p /root/rsynclogs/abi;
+  fi
+
+  /etc/init.d/stunnel4 start
+  sleep 1
+  echo "rsyncing file ${FSNAME} offsite to abi ..."
+  echo -e "\n\n"
+  time \
+  /usr/bin/rsync -rlRptz --delete \
+  --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
+  --password-file=/root/.pw-abi \
+  ${FSNAME} rsync://<%= @rsync_user %>@localhost:1873/<%= @hostname %>/
+  /etc/init.d/stunnel4 stop
+
+  $RM_BIN -f $OLD_LOG
+}
+
+for FSNAME in `cat "$DUMPLISTFILE"` ; do
+  date
+  rsync_offsite
+  sleep 5 
+done
