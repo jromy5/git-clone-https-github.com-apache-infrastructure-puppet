@@ -3,10 +3,19 @@
 class rsync_asf (
   $scriptpath   = '/root/rsync-offsite.sh',
   $dumplist     = '/root/dumplist',
-  $fslist       = [ '/x1' , '/x2' ], # override in yaml
-  $rsync_passwd = '', # eyaml
+
+  # override fslist with array in yaml
+  $fslist       = [ '/x1','/x2' ], 
+
+  # when to fire the rsync job
+  $cron_hour    = '22', 
+  $cron_minute  = '10',
+
+  # define the password in eyaml. add it to bai's rsync config also
+  $rsync_passwd = '', 
 ){
 
+  # needed for join function
   include stdlib
 
   file {
@@ -30,6 +39,14 @@ class rsync_asf (
       group   => 'root',
       mode    => '0600',
       content => $rsync_passwd;
+  }
+
+  cron {
+    'rsync offsite':
+      command => $scriptpath,
+      user    => 'root',
+      hour    => $cron_hour,
+      minute  => $cron_minute,
   }
 
 }

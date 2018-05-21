@@ -115,6 +115,10 @@ python::python_pips:
 
 postfix::server::relayhost: 'hermes.apache.org:2025'
 
+
+rsync_asf::cron_hour: 20
+rsync_asf::cron_minute: 20
+
 rsync_asf::fslist:
   - /x1/svn/repos/asf
   - /x1/svn/repos/dist
