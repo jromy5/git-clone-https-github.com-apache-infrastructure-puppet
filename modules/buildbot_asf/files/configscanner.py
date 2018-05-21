@@ -82,7 +82,7 @@ class daemon:
     def __init__(self, pidfile): self.pidfile = pidfile
 
     def daemonize(self):
-        """Deamonize class. UNIX double fork mechanism."""
+        """Daemonize class. UNIX double fork mechanism."""
 
         try:
             pid = os.fork()
@@ -227,7 +227,7 @@ def read_chunk(req):
 # PubSub class: handles connecting to a pubsub service and checking commits
 class PubSubClient(Thread):
     def run(self):
-        broken = {}
+        broken = False
         while True:
             logging.info("Connecting to " + self.url + "...")
             self.req = None
@@ -300,24 +300,24 @@ class PubSubClient(Thread):
                                         subprocess.check_output([BUILDBOT, "checkconfig"], stderr=subprocess.STDOUT)
                                         print("Check passed, apply the new config")
                                         subprocess.check_output([BUILDBOT, "reconfig"], stderr=subprocess.STDOUT)
-                                        if revision in broken:
-                                            del broken[revision]
+                                        if broken: # has this fixed a broken config?
+                                            broken = False
                                             blamelist.append(email)
                                             try: # Don't let mail failure cause the update to be treated as failed
                                                 for rec in blamelist:
                                                     sendEmail(
                                                         rec,
-                                                        "Buildbot configuration back to normal for %s" % revision,
+                                                        "Buildbot configuration back to normal in %s" % revision,
                                                         "Looks like things got fixed, yay!"
                                                         )
                                             except Exception as e:
                                                 logging.warning("Failed to send recovery mail: %s", e)
                                             blamelist.remove(email)
                                     except subprocess.CalledProcessError as err:
-                                        broken[revision] = True
+                                        broken = True
                                         print("Config check returned code %i" % err.returncode)
                                         print(err.output)
-                                        # Do this firs in case mail fails
+                                        # Do this first in case mail fails
                                         print("Cleaning up...")
                                         subprocess.call([SVN, 'update', '-r', before, 'projects'])
                                         blamelist.append(email)
@@ -357,6 +357,8 @@ def main():
     # Start the svn thread
     svn_thread = PubSubClient()
     svn_thread.url = "http://svn-master.apache.org:2069/commits/*"
+    if debug:
+        svn_thread.daemon = True # ensure code exits on ^C
     svn_thread.start()
 
     while True:
