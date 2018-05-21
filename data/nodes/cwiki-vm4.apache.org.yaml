@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::proxy_wstunnel
   - apache::mod::rewrite
   - apache::mod::status
   - cwiki_asf
@@ -33,11 +34,13 @@ apache::mod::event::threadsperchild: '50'
 # cwiki_asf class variables.
 cwiki_asf::confluence_version: '5.8.17'
 cwiki_asf::conf_build_number: '5997'
-cwiki_asf::mysql_connector_version: '5.1.11'
+cwiki_asf::mysql_connector_version: '5.1.46'
 cwiki_asf::parent_dir: '/x1/cwiki'
 cwiki_asf::server_port: '8008'
 cwiki_asf::connector_port: '8888'
 cwiki_asf::context_path: '/confluence'
+cwiki_asf::synchrony_path: '/synchrony'
+cwiki_asf::synchrony_port: '8091'
 cwiki_asf::docroot: '/var/www'
 cwiki_asf::server_alias: 'cwiki.apache.org'
 cwiki_asf::heap_min_size: '1512'
@@ -103,5 +106,11 @@ vhosts_asf::vhosts::vhosts:
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
         RewriteCond $1 !(confluence|intermediates|server-status)
         RewriteRule ^/(.*) https://cwiki.apache.org/confluence/display/$1 [R=301,L,END]
+        #synchrony
+        RewriteCond %%{}{HTTP:UPGRADE} ^WebSocket$ [NC]
+        RewriteCond %%{}{HTTP:CONNECTION} Upgrade$ [NC]
+        RewriteRule .* ws://127.0.0.1:8091%%{}{REQUEST_URI} [P]
+        # misc
+
         RewriteCond %%{}{QUERY_STRING} file: [NC]
         RewriteRule viewdefaultdecorator - [F,END]
