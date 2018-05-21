@@ -43,8 +43,8 @@ cwiki_asf::synchrony_path: '/synchrony'
 cwiki_asf::synchrony_port: '8091'
 cwiki_asf::docroot: '/var/www'
 cwiki_asf::server_alias: 'cwiki.apache.org'
-cwiki_asf::heap_min_size: '1512'
-cwiki_asf::heap_max_size: '2024'
+cwiki_asf::heap_min_size: '4096'
+cwiki_asf::heap_max_size: '4096'
 cwiki_asf::maxmetaspacesize: '512'
 
 logrotate::rule:

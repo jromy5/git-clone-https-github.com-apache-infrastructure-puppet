@@ -31,7 +31,12 @@
     <property name="hibernate.database.lower_non_ascii_supported">true</property>
     <property name="hibernate.dialect">com.atlassian.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.setup">true</property>
+    <property name="jwt.private.key"><%= @jwt_priv %></property>
+    <property name="jwt.public.key"><%= @jwt_pub %></property>
     <property name="lucene.index.dir">${localHome}/index</property>
+    <property name="synchrony.btf">true</property>
+    <property name="synchrony.encryption.disabled">true</property>
+    <property name="synchrony.proxy.enabled">true</property>
     <property name="webwork.multipart.saveDir">${localHome}/temp</property>
   </properties>
 </confluence-configuration>

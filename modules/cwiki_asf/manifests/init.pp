@@ -37,6 +37,9 @@ class cwiki_asf (
   $hibernate_connection_password = '',
   $hibernate_connection_username = '',
   $hibernate_connection_url      = '',
+  $jwt_priv                      = '',
+  $jwt_pub                       = '',
+
 
   $required_packages             = ['graphviz' , 'graphviz-dev'],
 ){
