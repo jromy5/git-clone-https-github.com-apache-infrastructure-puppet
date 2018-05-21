@@ -20,6 +20,7 @@ classes:
   - nfs_asf::server
   - perl
   - rootbin_asf
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - stunnel_asf
   - svnpubsub
@@ -113,6 +114,13 @@ python::python_pips:
 # on commit messages (svnmailer)
 
 postfix::server::relayhost: 'hermes.apache.org:2025'
+
+rsync_asf::fslist:
+  - /x1/svn/repos/asf
+  - /x1/svn/repos/dist
+  - /x1/svn/repos/infra
+  - /x1/svn/repos/tck
+  - /x1/svn/repos/bigdata
 
 snmp::snmpd_config:
   - 'disk /x1 10%'
