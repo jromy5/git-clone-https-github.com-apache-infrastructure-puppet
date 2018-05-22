@@ -4,6 +4,7 @@ classes:
   - ldapserver
   - loggy
   - rsync_asf
+  - stunnel_asf
   - kif
 
 
