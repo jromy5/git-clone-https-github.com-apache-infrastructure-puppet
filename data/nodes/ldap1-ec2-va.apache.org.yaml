@@ -3,4 +3,12 @@ classes:
   - blocky
   - ldapserver
   - loggy
+  - rsync_asf
   - kif
+
+
+rsync_asf::cron_hour: 19
+rsync_asf::cron_minute: 20
+
+rsync_asf::fslist:
+  - /var/lib/ldap/backup

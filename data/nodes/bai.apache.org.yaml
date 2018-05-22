@@ -170,6 +170,12 @@ rsync::server::module:
     auth_users: 'apb-mysql'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  ldap1-ec2-va:
+    path: '/x1/backups/ldap1-ec2-va/./target/'
+    hosts_allow: '127.0.0.1 50.19.201.70'
+    auth_users: 'apb-ldap1-ec2-va'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
