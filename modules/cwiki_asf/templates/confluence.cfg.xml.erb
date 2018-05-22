@@ -29,7 +29,7 @@
     <property name="hibernate.connection.url"><%= @hibernate_connection_url %></property>
     <property name="hibernate.connection.username"><%= @hibernate_connection_username %></property>
     <property name="hibernate.database.lower_non_ascii_supported">true</property>
-    <property name="hibernate.dialect">com.atlassian.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.dialect">com.atlassian.confluence.impl.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.setup">true</property>
     <property name="jwt.private.key"><%= @jwt_priv %></property>
     <property name="jwt.public.key"><%= @jwt_pub %></property>
