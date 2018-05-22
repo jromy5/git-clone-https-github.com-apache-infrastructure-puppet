@@ -10,6 +10,8 @@ datadog_agent::integrations::postgres::host: 'localhost'
 datadog_agent::integrations::postgres::user: 'datadog'
 
 ## Postgresql master in LeaseWeb US ##
+#
+postgresql_asf::backup::age: '2d'
 
 postgresql::server::listen_addresses: "*"
 postgresql::server::encoding: 'UTF-8'
