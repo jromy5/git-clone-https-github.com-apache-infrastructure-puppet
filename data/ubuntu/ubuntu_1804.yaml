@@ -419,7 +419,7 @@ build_slaves::distro_packages:
   - gcc-multilib
   - ghc
   - git-core
-  - groovy2
+  - groovy
   - lib32ncurses5
   - lib32z1
   - libaio1
