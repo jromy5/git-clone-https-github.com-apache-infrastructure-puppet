@@ -16,7 +16,14 @@ class qmail_asf (
   $stats_url = '',
   $mm_auth = '',
 
+  $required_packages             = ['qmail' , 'daemontools'],
 ){
+
+# install required packages:
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
 
   # qmail specific
 
