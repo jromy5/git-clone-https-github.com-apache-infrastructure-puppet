@@ -16,7 +16,7 @@ class qmail_asf (
   $stats_url = '',
   $mm_auth = '',
 
-  $required_packages             = ['qmail' , 'daemontools'],
+  $required_packages             = ['qmail' , 'daemontools' , 'ucspi-tcp' , 'rbldnsd' , 'djbdns' , 'dnscache-run' , 'dnsmasq' , 'clamav' , 'clamav-freshclam' , 'qpsmtpd'],
 ){
 
 # install required packages:
