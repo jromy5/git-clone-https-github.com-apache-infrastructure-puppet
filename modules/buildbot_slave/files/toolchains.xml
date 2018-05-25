@@ -41,5 +41,25 @@
       <jdkHome>/home/buildslave/slave/tools/java/latest1.8/</jdkHome>
     </configuration>
   </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.9</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/home/buildslave/slave/tools/java/latest1.9/</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>10</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/home/buildslave/slave/tools/java/latest10/</jdkHome>
+    </configuration>
+  </toolchain>
 </toolchains>
 
