@@ -1927,6 +1927,7 @@ svn-role = rw
 
 [/xmlbeans]
 @attic-pmc = rw
+@poi = rw
 
 [/xmlgraphics]
 @xmlgraphics-pmc = rw
