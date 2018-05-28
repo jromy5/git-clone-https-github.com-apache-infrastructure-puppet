@@ -41,9 +41,11 @@ class qmail_asf (
   # ezmlm specific
 
   $tarball            = "${ezmlm_version}.tar.gz"
+  $tarball            = "ezmlm-idx-${ezmlm_version}.tar.gz"
   $download_dir       = '/tmp'
   $downloaded_tarball = "${download_dir}/${tarball}"
-  $download_url       = "https://github.com/gmcdonald/ezmlm-idx/archive/${tarball}"
+  # $download_url       = "https://github.com/gmcdonald/ezmlm-idx/archive/${tarball}"
+  $download_url       = "https://untroubled.org/ezmlm/archive/7.2.2/ezmlm-idx-7.2.2.tar.gz"
   $install_dir        = "${parent_dir}/ezmlm-idx-${ezmlm_version}"
 
 
