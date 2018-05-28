@@ -98,6 +98,11 @@ class qmail_asf (
 
   # directories
 
+    $parent_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
     $bin_dir:
       ensure  => directory,
       recurse => true,
