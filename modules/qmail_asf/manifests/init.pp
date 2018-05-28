@@ -152,8 +152,8 @@ class qmail_asf (
     $install_dir:
       ensure  => directory,
       recurse => true,
-      owner   => $username,
-      group   => $username,
+      owner   => root,
+      group   => root,
       mode    => '0755',
       source  => 'puppet:///modules/qmail_asf/ezmlm/conf',
       require => [User[$username] , Exec[extract-ezmlm]];
