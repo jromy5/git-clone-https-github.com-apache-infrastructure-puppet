@@ -11,12 +11,14 @@ class qmail_asf (
 
   # override below in yaml
   $parent_dir,
+  $ezmlm_version = '',
 
   # override below in eyaml
   $stats_url = '',
   $mm_auth = '',
 
-  $required_packages             = ['qmail' , 'dot-forward' , 'daemontools' , 'ucspi-tcp' , 'rbldnsd' , 'djbdns' , 'dnscache-run' , 'dnsmasq' , 'clamav' , 'clamav-freshclam' , 'qpsmtpd'],
+  $required_packages = ['qmail', 'dot-forward', 'daemontools', 'ucspi-tcp', 'rbldnsd', 'djbdns',
+                          'dnscache-run', 'dnsmasq', 'clamav', 'clamav-freshclam', 'qpsmtpd'],
 ){
 
 # install required packages:
@@ -27,14 +29,23 @@ class qmail_asf (
 
   # qmail specific
 
-  $apmail_home    = "${parent_dir}/${username}"
-  $bin_dir        = "${apmail_home}/bin"
-  $lib_dir        = "${apmail_home}/lib"
-  $lists_dir      = "${apmail_home}/lists"
-  $logs2_dir      = "${apmail_home}/logs2"
-  $json_dir       = "${apmail_home}/json"
-  $svn_dot_dir    = "${apmail_home}/.subversion2"
-  $mailqsize_port = '8083'
+  $apmail_home        = "${parent_dir}/${username}"
+  $bin_dir            = "${apmail_home}/bin"
+  $lib_dir            = "${apmail_home}/lib"
+  $lists_dir          = "${apmail_home}/lists"
+  $logs2_dir          = "${apmail_home}/logs2"
+  $json_dir           = "${apmail_home}/json"
+  $svn_dot_dir        = "${apmail_home}/.subversion2"
+  $mailqsize_port     = '8083'
+
+  # ezmlm specific
+
+  $tarball            = "${ezmlm_version}.tar.gz"
+  $download_dir       = '/tmp'
+  $downloaded_tarball = "${download_dir}/${tarball}"
+  $download_url       = "https://github.com/gmcdonald/ezmlm-idx/archive/${tarball}"
+  $install_dir        = "${parent_dir}/ezmlm-idx-${ezmlm_version}"
+
 
   # TODO: this dir does not exist yet
   $control_dir = '/var/qmail/control'
@@ -55,6 +66,30 @@ class qmail_asf (
     $groupname:
       ensure => $group_present,
       name   => $groupname,
+  }
+
+  # download ezmlm
+  exec {
+    'download-ezmlm':
+      command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
+      creates => $downloaded_tarball,
+      timeout => 1200,
+  }
+
+  file { $downloaded_tarball:
+    ensure  => file,
+    require => Exec['download-ezmlm'],
+  }
+
+# extract the download and move it
+  exec {
+    'extract-ezmlm':
+      command => "/bin/tar -xvzf ${tarball} && mv ezmlm-idx-${ezmlm_version} ${parent_dir}",
+      cwd     => $download_dir,
+      user    => 'root',
+      creates => "${install_dir}/INSTALL",
+      timeout => 1200,
+      require => [File[$downloaded_tarball],File[$parent_dir]],
   }
 
   # various files or dirs needed

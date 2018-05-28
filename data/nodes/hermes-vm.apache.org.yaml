@@ -9,6 +9,7 @@ classes:
 # qmail_asf class variables.
 
 qmail_asf::parent_dir: '/x1'
+qmail_asf::ezmlm_version: '7.2.2'
 
 rsync::package_ensure:        'latest'
 rsync::server::use_xinetd:    false
