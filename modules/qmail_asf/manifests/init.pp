@@ -40,7 +40,7 @@ class qmail_asf (
 
   # ezmlm specific
 
-  $tarball            = "${ezmlm_version}.tar.gz"
+  # $tarball            = "${ezmlm_version}.tar.gz"
   $tarball            = "ezmlm-idx-${ezmlm_version}.tar.gz"
   $download_dir       = '/tmp'
   $downloaded_tarball = "${download_dir}/${tarball}"
