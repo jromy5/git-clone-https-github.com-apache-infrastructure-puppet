@@ -109,7 +109,7 @@ class qmail_asf (
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      source  => 'puppet:///modules/qmail_asf/bin',
+      source  => 'puppet:///modules/qmail_asf/apmail/bin',
       require => User[$username];
     $lib_dir:
       ensure  => directory,
@@ -117,7 +117,7 @@ class qmail_asf (
       owner   => $username,
       group   => $username,
       mode    => '0755',
-      source  => 'puppet:///modules/qmail_asf/lib',
+      source  => 'puppet:///modules/qmail_asf/apmail/lib',
       require => User[$username];
     $lists_dir:
       ensure  => directory,
