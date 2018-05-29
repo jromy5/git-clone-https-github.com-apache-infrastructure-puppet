@@ -186,6 +186,13 @@ class qmail_asf (
       source  => 'puppet:///modules/qmail_asf/ezmlm/conf',
       require => [User[$username] , Exec[extract-ezmlm]];
 
+    # ezmlm-test fails unless default is symlinked to en_US
+
+    "${install_dir}/lang/default":
+      ensure  => link,
+      target  => "${install_dir}/lang/en_US",
+      require => Exec['extract_ezmlm'];
+
   # template files
 
   # common.conf - global variables other scripts should use.
