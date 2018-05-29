@@ -20,6 +20,15 @@ vhosts_asf::modules::modules:
 
 datadog_agent::integrations::elasticsearch::url: 'http://localhost:9200'
 
+dnsclient::searchorder: 'apache.org'
+
+dnsclient::nameservers:
+  - '213.133.100.100'
+  - '213.133.98.98'
+  - '213.133.99.99'
+  - '8.8.8.8'
+  - '8.8.4.4'
+
 elasticsearch::init_defaults:
   DATA_DIR: '/x1/elastic/db/'
 elasticsearch::jvm_options:
