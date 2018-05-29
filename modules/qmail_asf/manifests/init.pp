@@ -27,7 +27,7 @@ class qmail_asf (
       ensure => 'present',
   }
 
-  # qmail specific
+  # apmail specific
 
   $apmail_home        = "${parent_dir}/${username}"
   $bin_dir            = "${apmail_home}/bin"
@@ -47,9 +47,10 @@ class qmail_asf (
   $install_dir        = "${parent_dir}/ezmlm-idx-${ezmlm_version}"
   $default            = "${install_dir}/lang/default"
 
+  # qmail specific 
 
-  # TODO: this dir does not exist yet
-  $control_dir = '/var/qmail/control'
+  $qmail_dir          = '/var/qmail'
+  $control_dir        = "${qmail_dir}/control"
 
   user {
     $username:
@@ -187,13 +188,18 @@ class qmail_asf (
       mode    => '0755',
       source  => 'puppet:///modules/qmail_asf/ezmlm/conf',
       require => [User[$username] , Exec[extract-ezmlm]];
-
-    # ezmlm-test fails unless default is symlinked to en_US
-
-    $default:
-      ensure  => link,
-      target  => "${install_dir}/lang/en_US",
-      require => Exec['extract-ezmlm'];
+    $qmail_dir:
+      ensure  => directory,
+      owner   => root,
+      group   => qmail,
+      mode    => '0755',
+      require => Package['qmail'];
+    $comtrol_dir:
+      ensure  => directory,
+      owner   => $username,
+      group   => qmail,
+      mode    => '0755',
+      require => [User[$username], Package['qmail']];
 
   # template files
 
@@ -238,6 +244,12 @@ class qmail_asf (
       ensure => link,
       target => $apmail_home;
 
+    # ezmlm-test fails unless default is symlinked to en_US
+
+    $default:
+      ensure  => link,
+      target  => "${install_dir}/lang/en_US",
+      require => Exec['extract-ezmlm'];
   }
 
 }
