@@ -191,7 +191,7 @@ class qmail_asf (
     "${install_dir}/lang/default":
       ensure  => link,
       target  => "${install_dir}/lang/en_US",
-      require => Exec['extract_ezmlm'];
+      require => Exec['extract-ezmlm'];
 
   # template files
 
