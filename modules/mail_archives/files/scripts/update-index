@@ -68,7 +68,7 @@ for i in ${ARCHIVES} ; do
 
     if [ -x $APACHE_DIR/bin/mod-mbox-util ]; then
       # XXX joes added these touches on 2006-06-02 to force a reindex
-      touch $mboxfile; touch $mboxfile2
+      touch -c $mboxfile; touch -c $mboxfile2 # don't create the files
       $APACHE_DIR/bin/mod-mbox-util -u $MBOX_DIR/$dirname  2>&1 | grep -v 'Reading List-Post header from.*failed'
     else
       if [ -f $mboxfile ]; then
