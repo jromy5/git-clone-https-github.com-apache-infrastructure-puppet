@@ -40,12 +40,10 @@ class qmail_asf (
 
   # ezmlm specific
 
-  # $tarball            = "${ezmlm_version}.tar.gz"
   $tarball            = "ezmlm-idx-${ezmlm_version}.tar.gz"
   $download_dir       = '/tmp'
   $downloaded_tarball = "${download_dir}/${tarball}"
-  # $download_url       = "https://github.com/gmcdonald/ezmlm-idx/archive/${tarball}"
-  $download_url       = "https://untroubled.org/ezmlm/archive/7.2.2/ezmlm-idx-7.2.2.tar.gz"
+  $download_url       = "https://untroubled.org/ezmlm/archive/${ezmlm_version}/ezmlm-idx-${ezmlm_version}.tar.gz"
   $install_dir        = "${parent_dir}/ezmlm-idx-${ezmlm_version}"
 
 
@@ -70,6 +68,8 @@ class qmail_asf (
       name   => $groupname,
   }
 
+  ### - Download, extract, configure, compile and install ezmlm-idx - ###
+
   # download ezmlm
   exec {
     'download-ezmlm':
@@ -83,7 +83,7 @@ class qmail_asf (
     require => Exec['download-ezmlm'],
   }
 
-# extract the download and move it
+  # extract the download and move it
   exec {
     'extract-ezmlm':
       command => "/bin/tar -xvzf ${tarball} && mv ezmlm-idx-${ezmlm_version} ${parent_dir}",
@@ -92,7 +92,33 @@ class qmail_asf (
       creates => "${install_dir}/INSTALL",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
+  }->
+
+  # make, make man, ezmlm-test and make install
+  exec {
+    'make-ezmlm':
+      command => 'make clean && make && make man',
+      path    => '/usr/bin',
+      cwd     => $install_dir,
+      user    => root,
+      creates => "${install_dir}/makeso",
+      timeout => 1200,
+      require => Exec['extract-ezmlm'],
+      notify  => Exec['ezmlm-test'],
+  }->
+
+  exec {
+    'ezmlm-test':
+      command     => './ezmlm-test',
+      cwd         => $install_dir,
+      user        => root,
+      timeout     => 1200,
+      refreshonly => true,
+      returns     => 0,
+      require     => Exec['make-ezmlm'],
   }
+
+  ### - End of Download, extract, configure, compile and install ezmlm-idx - ###
 
   # various files or dirs needed
 
