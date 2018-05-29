@@ -194,7 +194,7 @@ class qmail_asf (
       group   => qmail,
       mode    => '0755',
       require => Package['qmail'];
-    $comtrol_dir:
+    $control_dir:
       ensure  => directory,
       owner   => $username,
       group   => qmail,
