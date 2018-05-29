@@ -110,7 +110,7 @@ class qmail_asf (
   exec {
     'ezmlm-test':
       command     => 'ezmlm-test',
-      path        => $install_dir,
+      path        => "/bin:/usr/bin:${install_dir}",
       cwd         => $install_dir,
       user        => root,
       timeout     => 1200,
