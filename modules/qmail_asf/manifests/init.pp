@@ -98,7 +98,7 @@ class qmail_asf (
   exec {
     'make-ezmlm':
       command => 'make clean && make && make man',
-      path    => '/usr/bin',
+      path    => '/bin:/usr/bin',
       cwd     => $install_dir,
       user    => root,
       creates => "${install_dir}/makeso",
