@@ -119,6 +119,17 @@ class qmail_asf (
       refreshonly => true,
       returns     => 0,
       require     => [File[$default], Exec['make-ezmlm']],
+  }->
+
+  exec {
+    'install-ezmlm':
+      command => 'make install',
+      path    => '/bin:/usr/bin',
+      cwd     => $install_dir,
+      user    => root,
+      creates => '/usr/bin/ezmlm-make',
+      timeout => 1200,
+      require => Exec['ezmlm-test'],
   }
 
   ### - End of Download, extract, configure, compile and install ezmlm-idx - ###
