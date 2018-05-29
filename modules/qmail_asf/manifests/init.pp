@@ -45,6 +45,7 @@ class qmail_asf (
   $downloaded_tarball = "${download_dir}/${tarball}"
   $download_url       = "https://untroubled.org/ezmlm/archive/${ezmlm_version}/ezmlm-idx-${ezmlm_version}.tar.gz"
   $install_dir        = "${parent_dir}/ezmlm-idx-${ezmlm_version}"
+  $default            = "${install_dir}/lang/default"
 
 
   # TODO: this dir does not exist yet
@@ -116,7 +117,7 @@ class qmail_asf (
       timeout     => 1200,
       refreshonly => true,
       returns     => 0,
-      require     => Exec['make-ezmlm'],
+      require     => [File[$default], Exec['make-ezmlm']],
   }
 
   ### - End of Download, extract, configure, compile and install ezmlm-idx - ###
@@ -189,7 +190,7 @@ class qmail_asf (
 
     # ezmlm-test fails unless default is symlinked to en_US
 
-    "${install_dir}/lang/default":
+    $default:
       ensure  => link,
       target  => "${install_dir}/lang/en_US",
       require => Exec['extract-ezmlm'];
