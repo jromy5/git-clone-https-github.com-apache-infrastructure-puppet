@@ -103,6 +103,13 @@ apache::custom_config:
         Use RenameList "ws-general" "ws-dev"
         Use RenameList "www-infrastructure-issues" "infra-issues"
 
+        # commons-dev@xml.apache.org => xml-commons-dev@xerces.apache.org
+        Use RenameList "xml-commons-dev" "xerces-xml-commons-dev"
+
+        # rpc-user@xml.apache.org => xmlrpc-user@ws.apache.org => users@ws.apache.org
+        Use RenameList "xml-rpc-user"    "ws-users"
+        Use RenameList "ws-xmlrpc-user"  "ws-users"
+
         # Renamed on graduation
         # empire-db-* => empire-*
         RedirectMatch Permanent "^/mod_mbox/incubator-empire-db-(.*)" "/mod_mbox/empire-$1"
