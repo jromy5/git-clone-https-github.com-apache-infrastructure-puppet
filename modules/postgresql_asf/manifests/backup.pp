@@ -29,6 +29,8 @@ class postgresql_asf::backup (
     path    => $dumproot,
     age     => $age,
     recurse => true,
+    rmdirs  => true,
+    type    => 'mtime',
     matches => ['*.sql.gz'],
   }
 
