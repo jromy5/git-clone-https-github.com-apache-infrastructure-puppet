@@ -110,6 +110,9 @@ apache::custom_config:
         Use RenameList "xml-rpc-user"    "ws-users"
         Use RenameList "ws-xmlrpc-user"  "ws-users"
 
+        Use RenameList "xml-soap-dev"    "ws-soap-dev"
+        Use RenameList "xml-soap-user"    "ws-soap-user"
+
         # Renamed on graduation
         # empire-db-* => empire-*
         RedirectMatch Permanent "^/mod_mbox/incubator-empire-db-(.*)" "/mod_mbox/empire-$1"
