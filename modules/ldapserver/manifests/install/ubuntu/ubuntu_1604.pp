@@ -121,6 +121,7 @@ class ldapserver::install::ubuntu::ubuntu_1604 (
         path    => $backuppath,
         age     => '2d',
         recurse => 1,
+        type    => 'mtime',
         matches => ['ldap.*','accesslog.*'],
   }
 }
