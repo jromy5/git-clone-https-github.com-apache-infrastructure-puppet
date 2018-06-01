@@ -114,7 +114,11 @@ apache::custom_config:
         Use RenameList "ws-xmlrpc-user"  "ws-users"
 
         Use RenameList "xml-soap-dev"    "ws-soap-dev"
-        Use RenameList "xml-soap-user"    "ws-soap-user"
+        Use RenameList "xml-soap-user"   "ws-soap-user"
+
+        # axis-(dev|user)@xml.apache.org => axis-(dev|user)@ws.apache.org => java-(dev|user)@axis.apache.org
+        RedirectMatch Permanent "^/mod_mbox/xml-axis-((dev|user).*)" "/mod_mbox/axis-java-$1"
+        RedirectMatch Permanent "^/mod_mbox/ws-axis-((dev|user).*)" "/mod_mbox/axis-java-$1"
 
         # Renamed on graduation
         # empire-db-* => empire-*
