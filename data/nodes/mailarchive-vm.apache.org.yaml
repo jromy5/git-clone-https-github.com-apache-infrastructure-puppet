@@ -95,6 +95,9 @@ apache::custom_config:
         Use RenameList "lucene-java-dev"     "lucene-dev"
         Use RenameList "jakarta-lucene-user" "lucene-java-user"
         RedirectMatch Permanent "^/mod_mbox/jakarta-(jmeter-(dev|user).*)" "/mod_mbox/$1"
+        RedirectMatch Permanent "^/mod_mbox/jakarta-(struts-(dev|user).*)" "/mod_mbox/$1"
+        RedirectMatch Permanent "^/mod_mbox/jakarta-(log4j-(dev|user).*)" "/mod_mbox/logging-$1"
+        Use RenameList "jakarta-gump"  "gump-general"
 
         # individual list renames
         Use RenameList "jclouds-issues"  "jclouds-notifications"
