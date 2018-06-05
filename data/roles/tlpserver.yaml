@@ -99,7 +99,7 @@ logrotate::rule:
 logrotate::rule:
   tlp_web_logs:
     name: 'tlp_web_logs'
-    path: '/var/log/apache2/x1/logs/*.log'
+    path: '/x1/logs/*.log'
     ensure: 'absent'
     compress: true
     compressoptions: '-9'
@@ -307,7 +307,7 @@ vhosts_asf::vhosts::vhosts:
       - 'www.any23.com'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
-    error_log_file:  'errorlog.log'
+    error_log_file:  '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://any23.apache.org
 
@@ -323,7 +323,7 @@ vhosts_asf::vhosts::vhosts:
       - 'openoffice.org'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
-    error_log_file:  'errorlog.log'
+    error_log_file:  '/x1/logs/errorlog.log'
     directories:
       -
         path: '/www/openoffice.apache.org/content'
