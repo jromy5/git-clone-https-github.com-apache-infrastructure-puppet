@@ -100,7 +100,7 @@ logrotate::rule:
   tlp_web_logs:
     name: 'tlp_web_logs'
     path: '/x1/logs/*.log'
-    ensure: 'absent'
+    ensure: 'present'
     compress: true
     compressoptions: '-9'
     rotate: 7
