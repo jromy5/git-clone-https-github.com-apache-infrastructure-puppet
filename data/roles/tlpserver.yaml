@@ -95,7 +95,29 @@ logrotate::rule:
     create_owner: 'root'
     create_group: 'apbackup'
     rotate: 5
-
+    
+logrotate::rule:
+  tlp_web_logs:
+    name: 'tlp_web_logs'
+    path: '/var/log/apache2/x1/logs/*.log'
+    ensure: 'absent'
+    compress: true
+    compressoptions: '-9'
+    rotate: 7
+    create_owner: 'root'
+    create_group: 'adm'
+    rotate_every: 'day'
+    create_mode: '0644'
+    missingok: true
+    dateext: true
+    delaycompress: false
+    ifempty: false
+    create: true
+    sharedscripts: true
+    postrotate:
+      - 'if /etc/init.d/apache2 status > /dev/null ; then /etc/init.d/apache2 reload > /dev/null; fi;'
+    prerotate:
+      - 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi;'
 
 svnwcsub::gid:                               '9997'
 svnwcsub::uid:                               '9997'
