@@ -135,6 +135,24 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/favicon.ico';
+    "/x1/${username}/master1/public_html/style.css":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/style.css';
+    "/x1/${username}/master1/public_html/robots.txt":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/robots.txt';
+    "/x1/${username}/master1/public_html/sitemap-index.xml":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/sitemap-index.xml';
     "/x1/${username}/master1/configscanner.py":
       ensure => 'present',
       mode   => '0755',
