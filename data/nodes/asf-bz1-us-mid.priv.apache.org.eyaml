@@ -19,7 +19,7 @@ bugzilla::project:
     urlbase: 'https://bz.apache.org/bugzilla/'
     cookiepath: '/bugzilla/'
     bz_package: 'bugzilla-asf'
-    package_ensure: '5.0.4-20180218'
+    package_ensure: '5.0.4-20180607'
 
   sa:
     admin_email: "root@localhost.localdomain"
