@@ -415,6 +415,7 @@ vhosts_asf::vhosts::vhosts:
       - 'apachegroup.org'
       - 'www.apachegroup.org'
       - 'www.*.apache.org'
+      - 'www-eu.apache.org'
       - 'www-us.apache.org'
     directories:
       -
@@ -525,6 +526,7 @@ vhosts_asf::vhosts::vhosts:
       - 'apachegroup.org'
       - 'www.apachegroup.org'
       - 'www.*.apache.org'
+      - 'www-eu.apache.org'
       - 'www-us.apache.org'
     directories:
       -
