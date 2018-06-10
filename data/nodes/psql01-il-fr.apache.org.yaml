@@ -1,0 +1,41 @@
+---
+classes:
+  - datadog_agent::integrations::postgres
+  - postgresql::server
+  - postgresql_asf
+  - postgresql_asf::backup
+
+datadog_agent::integrations::postgres::host: 'localhost'
+datadog_agent::integrations::postgres::user: 'datadog'
+
+## Postgresql master in iliad france ##
+
+postgresql_asf::backup::age: '2d'
+
+postgresql::server::listen_addresses: "*"
+postgresql::server::encoding: 'UTF-8'
+postgresql::server::locale: 'en_US.UTF-8'
+postgresql::server::datadir: '/x1/postgresql/9.3/main'
+postgresql::server::needs_initdb: true
+
+postgresql::server::config_entry:
+  wal_level:
+    value: 'minimal'
+  max_connections:
+    value: 1024
+
+postgresql::server::pg_hba_rule:
+  jiratest-online:
+    description: 'jira test instance (online.net)'
+    type: 'host'
+    database: 'jiratest'
+    user: 'jiratest'
+    address: '62.210.60.244/32'
+    auth_method: 'md5'
+  datadog:
+    description: 'datadog monitor'
+    type: 'host'
+    database: 'postgres'
+    user: 'datadog'
+    address: '127.0.0.1/32'
+    auth_method: 'md5'
