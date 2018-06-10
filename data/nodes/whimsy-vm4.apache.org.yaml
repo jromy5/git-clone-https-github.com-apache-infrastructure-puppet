@@ -160,6 +160,7 @@ vhosts_whimsy::vhosts::vhosts:
         - app.js.map
         - ".*\\.js\\.rb"
         - "[-\\d]+/bootstrap.html"
+        - manifest.json
         - stylesheets/app.css
         - sw.js
 
