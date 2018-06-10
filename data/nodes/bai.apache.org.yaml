@@ -176,6 +176,12 @@ rsync::server::module:
     auth_users: 'apb-ldap1-ec2-va'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  psql01-il-fr:
+    path: '/x1/backups/psql01-il-fr/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.232'
+    auth_users: 'apb-psql'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
