@@ -50,7 +50,7 @@ class jenkins_asf (
   $catalina_base      = "${tomcat_dir}/${tomcat_build}"
 
   $downloaded_tarball = "${download_dir}/${tarball}"
-  $t_download_url     = "https://www-eu.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
+  $t_download_url     = "https://www.apache.org/dist/tomcat/tomcat-9/v${tomcat_version}/bin/${tarball}"
 
   user {
     $username:
