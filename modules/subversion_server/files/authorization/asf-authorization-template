@@ -1714,7 +1714,10 @@ svn-site-role = rw
 @shiro = rw
 
 [/sis]
-@sis = r
+* = r
+
+[/sis/site]
+@sis = rw
 
 [/sling]
 * = r
