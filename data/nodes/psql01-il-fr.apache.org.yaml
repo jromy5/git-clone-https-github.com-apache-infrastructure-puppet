@@ -5,6 +5,7 @@ classes:
   - postgresql_asf
   - postgresql_asf::backup
   - rsync_asf
+  - stunnel_asf
 
 datadog_agent::integrations::postgres::host: 'localhost'
 datadog_agent::integrations::postgres::user: 'datadog'
