@@ -2,7 +2,7 @@
 # modules/subversion_server/files/authorization/asf-authorization-template
 
 # In the infrastructure-puppet repo, make a pull request against the repo on
-# github https://github.com/apache/infrastructure-puppet/ with your intended 
+# github https://github.com/apache/infrastructure-puppet/ with your intended
 # changes and then ping Infra in Hipchat to get someone to look at it.
 # INFRA have a workflow document:
 
@@ -149,12 +149,12 @@ datafu={ldap:cn=datafu,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 db={ldap:cn=db,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 db-ddlutils={ldap:cn=db-ddlutils,ou=auth,ou=groups,dc=apache,dc=org}
 db-torque={ldap:cn=db-torque,ou=auth,ou=groups,dc=apache,dc=org}
-db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org} 
+db-jdo={ldap:cn=db-jdo,ou=auth,ou=groups,dc=apache,dc=org}
 db-pmc={reuse:pit-authorization:db-pmc}
 deltaspike={ldap:cn=deltaspike,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 deltaspike-pmc={reuse:pit-authorization:deltaspike-pmc}
 # depot=nicolaken,ajack,anou_mana,mmay,nickchalko
-db-derby={ldap:cn=db-derby,ou=auth,ou=groups,dc=apache,dc=org} 
+db-derby={ldap:cn=db-derby,ou=auth,ou=groups,dc=apache,dc=org}
 #directmemory=antelder,bperroud,grobmeier,iocanel,mcucchiara,olamy,raffaeleguidi,simoneg,simonetripodi,sylvain,tommaso,twilliams
 directory={ldap:cn=directory,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 directory-pmc={reuse:pit-authorization:directory-pmc}
@@ -451,7 +451,7 @@ zeppelin-pmc={reuse:pit-authorization:zeppelin-pmc}
 zookeeper={ldap:cn=zookeeper,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 zookeeper-pmc={reuse:pit-authorization:zookeeper-pmc}
 
-# Not TLPs or podlings.  
+# Not TLPs or podlings.
 apsite={reuse:pit-authorization:apsite}
 attic-pmc={reuse:pit-authorization:attic-pmc}
 comdev-pmc={reuse:pit-authorization:comdev-pmc}
@@ -815,10 +815,10 @@ projects_role = rw
 @flex = rw
 
 [/flex/asjs]
-@flex = r 
+@flex = r
 
 [/flex/external]
-@flex = r 
+@flex = r
 
 [/flex/falcon]
 @flex = r
@@ -827,13 +827,13 @@ projects_role = rw
 @flex = r
 
 [/flex/tlf]
-@flex = r 
+@flex = r
 
 [/flex/utilities]
-@flex = r 
+@flex = r
 
 [/flex/whiteboard]
-@flex = r 
+@flex = r
 
 [/flink]
 @flink = rw
@@ -1262,7 +1262,7 @@ buildbot = rw
 @attic-pmc = rw
 
 [/libcloud]
-* = r 
+* = r
 
 [/libcloud/site]
 @libcloud = rw
@@ -1427,7 +1427,7 @@ svn-site-role = rw
 @maven = r
 
 [/maven/wagon]
-@maven = r 
+@maven = r
 
 [/maven-testing]
 @maven-pmc = rw
@@ -1714,6 +1714,9 @@ svn-site-role = rw
 @shiro = rw
 
 [/sis]
+* = r
+
+[/sis/site]
 @sis = rw
 
 [/sling]
@@ -1747,7 +1750,7 @@ spamassassin_role = rw
 [/sqoop/site]
 @sqoop = rw
 # sqoop is RO because the main repo has migrated to git
-# sqoop site is rw because svn is needed for CMS, and thus 
+# sqoop site is rw because svn is needed for CMS, and thus
 # is the only portion of the svn repo needed to remain writable.
 
 [/stanbol]
