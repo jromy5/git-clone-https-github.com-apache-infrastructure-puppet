@@ -8,7 +8,7 @@
 
 from threading import Thread
 from datetime import datetime
-
+import requests
 import sys
 haveinotify = False
 try:
@@ -221,24 +221,11 @@ class JiraTicket:
         try:
             # Try to fetch JIRA username by searching for the email
             if self.email != None:
-
-                opener = None
-                url = None
-                if version == 3:
-                    opener = urllib.request.build_opener()
-                    opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                    url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib.parse.quote(self.email)))
-                else:
-                    opener = urllib2.build_opener()
-                    opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                    url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib2.quote(self.email)))
-                data = None
-                if version == 3:
-                    data = str(url.read(), 'ascii')
-                else:
-                    data = str(url.read())
-
-                obj = json.loads(data)
+                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
+                obj = requests.get(url,
+                    headers = {'Authorization': 'Basic %s' % self.auth},
+                    params = { 'username': self.email, 'maxResults': 3}
+                    ).json()
                 if len(obj) > 0 and "name" in obj[0]:
                     logging.info("Found matching email record in JIRA user database")
                     self.sender = "[~%s]" % obj[0]['name']
@@ -255,23 +242,11 @@ class JiraTicket:
                             altemail = match.group(0)
                             logging.info("Trying to look up user via alternate email (%s)", altemail)
 
-                            opener = None
-                            url = None
-                            if version == 3:
-                                opener = urllib.request.build_opener()
-                                opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                                url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib.parse.quote(altemail)))
-                            else:
-                                opener = urllib2.build_opener()
-                                opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                                url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib2.quote(altemail)))
-                            data = None
-                            if version == 3:
-                                data = str(url.read(), 'ascii')
-                            else:
-                                data = str(url.read())
-
-                            obj = json.loads(data)
+                            url = "https://issues.apache.org/jira/rest/api/latest/user/search"
+                            obj = requests.get(url,
+                                headers = {'Authorization': 'Basic %s' % self.auth},
+                                params = { 'username': altemail, 'maxResults': 3}
+                                ).json()
                             if len(obj) > 0 and "name" in obj[0]:
                                 logging.info("Found matching email record in JIRA user database")
                                 self.sender = "[~%s]" % obj[0]['name']
@@ -283,25 +258,11 @@ class JiraTicket:
 
             #If still not found, try searching for full name instead
             if self.sendIt == False and self.author:
-
-                opener = None
-                url = None
-                if version == 3:
-                    opener = urllib.request.build_opener()
-                    opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                    url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib.parse.quote(self.author)))
-                else:
-                    opener = urllib2.build_opener()
-                    opener.addheaders = [('Authorization', 'Basic %s' % self.auth)]
-                    url = opener.open("https://issues.apache.org/jira/rest/api/latest/user/search?username=%s&maxResults=3" % (urllib2.quote(self.author)))
-
-                data = None
-                if version == 3:
-                    data = str(url.read(), 'ascii')
-                else:
-                    data = str(url.read())
-
-                obj = json.loads(data)
+                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
+                obj = requests.get(url,
+                    headers = {'Authorization': 'Basic %s' % self.auth},
+                    params = { 'username': self.author, 'maxResults': 3}
+                    ).json()
                 if len(obj) > 0 and "name" in obj[0]:
                     if "displayName" in obj[0] and obj[0]['displayName'] == self.author:
                         logging.info("Found matching full name in JIRA user database")
