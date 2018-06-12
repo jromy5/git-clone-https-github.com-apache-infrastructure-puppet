@@ -65,7 +65,6 @@ vhosts_asf::vhosts::vhosts:
         order: 'allow,deny'
         allow: 'from all'
     log_level: 'warn'
-    access_log_env_var: 'combined'
     access_log_file: 'repository-vm2.apache.org.http_access.log'
     error_log_file:  'repository-vm2.apache.org.error.log'
     custom_fragment: |
@@ -124,7 +123,6 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www'
     log_level: 'warn'
-    access_log_env_var: 'combined'
     access_log_file: 'repository-vm2.apache.org.ssl_access.log'
     error_log_file:  'repository-vm2.apache.org.error.log'
     custom_fragment: |
