@@ -283,6 +283,9 @@ class JiraTicket:
             logging.info("Set sender to: %s" % self.sender)
         except Exception as info:
             logging.info("urllib error: %s", info)
+            # We're still gonna send it, even if stoopid unicode gets in our way.
+            self.sender = author if author else email
+            self.sendIt = True
 
 
     def update(self, data, where):
