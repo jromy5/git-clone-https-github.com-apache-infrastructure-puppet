@@ -21,20 +21,20 @@ svngit2jira_appdir=${svngit2jira_appdir-"/usr/local/etc/svngit2jira"}
 pidfile="${svngit2jira_pidfile}"
 
 RETVAL=0
- 
+
 start() {
     echo "Starting svngit2jira: "
     cd $svngit2jira_appdir
-    python svngit2jira.py start
+    python3 svngit2jira.py start
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
 }
- 
+
 stop() {
     echo "Stopping svngit2jira: "
     cd $svngit2jira_appdir
-    python svngit2jira.py stop
+    python3 svngit2jira.py stop
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
