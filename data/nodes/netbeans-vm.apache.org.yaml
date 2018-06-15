@@ -16,7 +16,7 @@ apache::purge_configs:      false
 logrotate::rule:
   apache2:
     ensure: 'present'
-    path: '/var/log/apache2*.log'
+    path: '/var/log/apache2/*.log'
     compress: true
     delaycompress: true
     ifempty: true
