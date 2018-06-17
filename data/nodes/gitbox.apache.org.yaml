@@ -76,6 +76,15 @@ python::python_pips:
 logrotate::rule:
   apache2:
     ensure: 'present'
+  grouper:
+    ensure: 'present'
+    path: '/x1/gitbox/matt/tools/grouper.log'
+    copytruncate: true
+    compress: true
+    ifempty: true
+    rotate: 7
+    missingok: true
+    rotate_every: 'day'
 
 vhosts_asf::modules::modules:
   sed:
