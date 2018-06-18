@@ -60,14 +60,14 @@ mailalias {
       ensure    => present,
       name      => 'private',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py private";
       notify    => Exec['newaliases'],
+      recipient => "|python3 ${install_base}/tools/archive.py private";
     'restricted':
       ensure    => present,
       name      => 'restricted',
       provider  => aliases,
-      recipient => "|python3 ${install_base}/tools/archive.py restricted";
       notify    => Exec['newaliases'],
+      recipient => "|python3 ${install_base}/tools/archive.py restricted";
     'chairman':
       ensure    => present,
       name      => 'chairman',
@@ -116,7 +116,7 @@ mailalias {
       provider  => aliases,
       notify    => Exec['newaliases'],
       recipient => "|python3 ${install_base}/tools/archive.py --lid zztest@infra.apache.org";
-  }
+}
 
 exec {"newaliases" :
     command     => "/usr/bin/newaliases",
