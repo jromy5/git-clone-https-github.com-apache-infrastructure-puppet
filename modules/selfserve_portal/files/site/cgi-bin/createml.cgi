@@ -74,6 +74,11 @@ else:
         sscommon.buggo("Invalid list name specified!")
     lists = [listname]
 
+# No Digest List, all lists have a -digest subscription anyway
+
+if 'digest' in listname
+  sscommon.buggo("Invalid list name digest.")
+
 # Get and validate mods
 mods = form.getvalue('moderators', "").split("\n")
 for mod in mods:
