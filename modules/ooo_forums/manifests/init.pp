@@ -2,9 +2,12 @@
 
 class ooo_forums (
 
+  $username      = 'phpbb',
+  $groupname     = 'phpbb',
+
   # override below in yaml
-  $pbpbb_version = '',
   $parent_dir,
+  $pbpbb_version = '',
 
   # override below in eyaml
 
@@ -18,4 +21,21 @@ class ooo_forums (
     $required_packages:
       ensure => 'present',
   }
+
+  user {
+    $username:
+      ensure  => 'present',
+      name    => $username,
+      shell   => '/usr/local/bin/bash',
+      require => Group[$groupname],
+      system  => true,
+  }
+
+  group {
+    $groupname:
+      ensure => 'present',
+      name   => $groupname,
+      system => true,
+  }
+
 }
