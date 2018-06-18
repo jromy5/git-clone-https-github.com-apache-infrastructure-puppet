@@ -182,7 +182,7 @@ def ticketComment(payload):
     fmt['text'] = comment['body']
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
-    fmt['action'] = "delete" if payload.get('action') == 'deleted' else "comment"
+    fmt['action'] = payload.get('action', 'created')
     return fmt
 
 
@@ -209,6 +209,8 @@ def formatEmail(fmt):
         'open':         "opened a new %(type)s",
         'close':        "closed %(type)s",
         'comment':      "commented on %(type)s",
+        'created':      "commented on %(type)s",
+        'edited':       "edited a comment on %(type)s",
         'deleted':      "removed a comment on %(type)s",
         'diffcomment':  "commented on a change in %(type)s"
     }
