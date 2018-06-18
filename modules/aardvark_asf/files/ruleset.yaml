@@ -12,8 +12,6 @@ ignoreurls:
     
 # Match any of these to banninate
 postmatches:
-    - "pid=12320120"
-    - "\n12320120\r?\n"
     - "mobilestrikehacktools"
     - "monsterlegendshackx"
     - "router customer service"
