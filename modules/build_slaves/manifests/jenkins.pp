@@ -20,7 +20,7 @@ class build_slaves::jenkins (
   $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = ['jira-cli-2.1.0' , 'atlassian-cli-6.9.0'],
-  $jbake = ['jbake-2.5.1'],
+  $jbake = ['jbake-2.5.1', 'jbake-2.6.1'],
   $gradle_versions = ['3.5', '4.3.1', '4.4.1'],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9', 'apache-maven-3.5.0' , 'apache-maven-3.5.2'], # lint:ignore:140chars
@@ -374,7 +374,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_jbake      { $jbake: }
   file { "/home/${build_slaves::username}/tools/jbake/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/jbake/jbake-2.5.1',
+    target => '/usr/local/asfpackages/jbake/jbake-2.6.1',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
