@@ -182,8 +182,9 @@ def ticketComment(payload):
     fmt['text'] = comment['body']
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
-    fmt['action'] = "comment"
+    fmt['action'] = payload.get('action', 'created')
     return fmt
+
 
 def reviewComment(payload):
     fmt = {}
@@ -208,6 +209,9 @@ def formatEmail(fmt):
         'open':         "opened a new %(type)s",
         'close':        "closed %(type)s",
         'comment':      "commented on %(type)s",
+        'created':      "commented on %(type)s",
+        'edited':       "edited a comment on %(type)s",
+        'deleted':      "removed a comment on %(type)s",
         'diffcomment':  "commented on a change in %(type)s"
     }
     fmt['action'] = (subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']) % fmt
@@ -224,7 +228,7 @@ def formatEmail(fmt):
 def updateTicket(ticket, name, txt, worklog):
     auth = open("/x1/jirauser.txt").read().strip()
     auth = str(base64.encodestring(bytes(auth))).strip()
-    
+
     # Post comment or worklog entry!
     headers = {"Content-type": "application/json",
                  "Accept": "*/*",
@@ -241,7 +245,7 @@ def updateTicket(ticket, name, txt, worklog):
                 'timeSpent': "10m",
                 'comment': txt
             }
-        
+
         rv = requests.post("https://issues.apache.org/jira/rest/api/latest/issue/%s/%s" % (ticket, where),headers=headers, json = data)
         if rv.status_code == 200 or rv.status_code == 201:
             return "Updated JIRA Ticket %s" % ticket
@@ -253,7 +257,7 @@ def updateTicket(ticket, name, txt, worklog):
 def remoteLink(ticket, url, prno):
     auth = open("/x1/jirauser.txt").read().strip()
     auth = str(base64.encodestring(bytes(auth))).strip()
-    
+
     # Post comment or worklog entry!
     headers = {"Content-type": "application/json",
                  "Accept": "*/*",
@@ -279,11 +283,11 @@ def remoteLink(ticket, url, prno):
             return rv.txt
     except:
         pass # Not much to do just yet
-    
+
 def addLabel(ticket):
     auth = open("/x1/jirauser.txt").read().strip()
     auth = str(base64.encodestring(bytes(auth))).strip()
-    
+
     # Post comment or worklog entry!
     headers = {"Content-type": "application/json",
                  "Accept": "*/*",
@@ -302,7 +306,7 @@ def addLabel(ticket):
     else:
         sys.stderr.write(rv.text)
         return rv.text
-    
+
 # Main function
 def main():
     # Get JSON payload from GitHub
@@ -377,7 +381,7 @@ def main():
 
     # Now do JIRA if need be
     jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'default'
-    
+
     if jiraopt and fmt:
         if 'title' in fmt:
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
