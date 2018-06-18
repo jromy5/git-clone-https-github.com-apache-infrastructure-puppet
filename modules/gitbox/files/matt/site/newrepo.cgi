@@ -36,18 +36,17 @@ ORG_READ_TOKEN = CONFIG.get('github', 'token')
 HIPCHAT_TOKEN = CONFIG.get('hipchat', 'token')
 
 # Figure out which PMCs/Podlings are allowed
-PMCS = {}
 gitdir = '/x1/repos/asf'
 allrepos = filter(lambda repo: os.path.isdir(os.path.join(gitdir, repo)), os.listdir(gitdir))
 
-# turn that into a list of projects to run the manager for
-for repo in allrepos:
-    m = re.match(r"(?:incubator-)?([^-.]+)(?:.*\.git)", repo)
-    if m: #don't see why this would fail, but best to be sure
-        project = m.group(1)
-        if not project in PMCS:
-            PMCS[project] = "tlp" if not re.match(r"incubator-", repo) else "podling" # distinguish between tlp and podling
-
+PMCS = {}
+# Grab projects from whimsy, sort by tlp/podling status
+ap = requests.get('https://whimsy.apache.org/public/public_ldap_projects.json').json()
+for project, info in ap['projects'].items():
+  if info.get('pmc', False) == True:
+    PMCS[project] = 'tlp'
+  elif info.get('podling') == 'current':
+    PMCS[project] = 'podling'
 
 # CGI
 xform = cgi.FieldStorage();
