@@ -359,7 +359,6 @@ shiro-pmc={reuse:pit-authorization:shiro-pmc}
 singa={ldap:cn=singa,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sis={ldap:cn=sis,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sis-pmc={reuse:pit-authorization:sis-pmc}
-slider={ldap:cn=slider,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling={ldap:cn=sling,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 sling-pmc={reuse:pit-authorization:sling-pmc}
 sling-emeritus={ldap:cn=sling-emeritus,ou=auth,ou=groups,dc=apache,dc=org}
@@ -1080,7 +1079,7 @@ buildbot = rw
 @committers= rw
 
 [/incubator/slider/site]
-@slider = rw
+@attic-pmc = rw
 
 [/incubator/socialsite]
 * = r
