@@ -257,9 +257,6 @@ in repository https://gitbox.apache.org/repos/asf/%(repo_shortname)s.git.
 
 FOOTER_TEMPLATE = """\
 
--- \n\
-To stop receiving notification emails like this one, please contact
-%(administrator)s.
 """
 
 
