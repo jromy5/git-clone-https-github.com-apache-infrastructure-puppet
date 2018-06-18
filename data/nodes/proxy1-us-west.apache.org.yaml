@@ -159,11 +159,6 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / http://projects-vm.apache.org/
       ProxyPreserveHost On
 
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=projects.apache.org&code=503
-
   reporter:
     vhost_name: '*'
     ensure: 'present'
@@ -206,11 +201,6 @@ vhosts_asf::vhosts::vhosts:
         RequestHeader unset Authorization
       </Location>
 
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=reporter.apache.org&code=503
-
   whimsy-old:
     vhost_name: '*'
     ensure: 'absent'
@@ -248,12 +238,6 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / http://whimsy-vm.apache.org/
       ProxyPreserveHost On
       ProxyVia On
-
-      ProxyErrorOverride On
-      ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=500
-      ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=502
-      ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=whimsy-old.apache.org&code=503
-
 
 fail2ban_asf::config::jails:
   jira:
