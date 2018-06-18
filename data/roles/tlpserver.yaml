@@ -864,7 +864,6 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'freemarker.org'
-      - 'freemarker.incubator.apache.org'
       - 'freemarker.apache.org'
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
@@ -875,7 +874,7 @@ vhosts_asf::vhosts::vhosts:
         allow_override:
               - 'FileInfo'
     custom_fragment: |
-      RewriteRule ^/(.*)$ https://freemarker.incubator.apache.org/$1 [R]
+      RewriteRule ^/(.*)$ https://freemarker.apache.org/$1 [R]
 
   gump:
     vhost_name: '*'
