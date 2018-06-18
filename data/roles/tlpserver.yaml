@@ -82,7 +82,7 @@ base::basepackages:
   - lua5.2
   - lua-socket
   - lua-posix
-  
+
 dnsclient::searchorder: 'apache.org'
 
 dnsclient::nameservers:
@@ -95,7 +95,7 @@ logrotate::rule:
     create_owner: 'root'
     create_group: 'apbackup'
     rotate: 5
-    
+
 logrotate::rule:
   tlp_web_logs:
     name: 'tlp_web_logs'
@@ -2884,6 +2884,34 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /self-serve/acreq/ https://id.apache.org/acreq/
       ## The proxypass below needs to be moved!
       ProxyPass /self-serve/mlreq/ https://infra.apache.org/officers/mlreq/
+
+
+  sponsor:
+    vhost_name: '*'
+    port: 80
+    servername: 'sponsor.apache.org'
+    docroot: '/www/www.apache.org/content'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      # INFRA-16502
+      Redirect / http://www.apache.org/foundation/sponsorship.html
+
+  sponsor-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'sponsor.apache.org'
+    docroot: '/www/www.apache.org/content'
+    manage_docroot: false
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      # INFRA-16502
+      Redirect / https://www.apache.org/foundation/sponsorship.html
 
 httpd_modules::dev_package:
   - apache2-dev
