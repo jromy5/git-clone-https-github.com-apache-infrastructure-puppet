@@ -5,24 +5,24 @@ class mboxer (
 
 ){
 
-  $archive_dir    = '/x1/archives'
-  $private_dir    = '/x1/private'
-  $root_dir    = '/x1/restricted'
-  $install_base  = '/usr/local/etc/mboxer'
+  $archive_dir  = '/x1/archives'
+  $private_dir  = '/x1/private'
+  $root_dir     = '/x1/restricted'
+  $install_base = '/usr/local/etc/mboxer'
 
 # Packages
-package {
+  package {
     'python3-yaml':
       ensure => installed;
-}
+  }
 
 # apmail user/group
-user { 'apmail':
+  user { 'apmail':
     ensure => present,
     home   => '/home/apmail'
   }
 
-file {
+  file {
 # Tools dir
     $install_base:
       ensure  => directory,
@@ -49,7 +49,8 @@ file {
       group  => 'root-sudoers',
       mode   => '0700';
   }
-mailalias {
+
+  mailalias {
     'archiver':
       ensure    => present,
       name      => 'archiver',
@@ -118,7 +119,9 @@ mailalias {
       recipient => "|python3 ${install_base}/tools/archive.py --lid zztest@infra.apache.org";
   }
 
-exec {"newaliases" :
+  exec {"newaliases" :
     command     => "/usr/bin/newaliases",
     refreshonly => true,
+  }
+
 }
