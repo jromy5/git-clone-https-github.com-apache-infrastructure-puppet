@@ -59,8 +59,8 @@ def getvalue(key):
         return val
     else:
         return None
-    
-    
+
+
 """ Get LDAP groups a user belongs to """
 def ldap_groups(uid):
     ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
@@ -71,20 +71,20 @@ def ldap_groups(uid):
     try:
         groups = []
         podlings = {}
-        
+
         # Is requester in infra-root??
         infra = getStandardGroup('infrastructure-root', 'cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org', "member")
         if infra and uid in infra:
             groups.append('infrastructure')
             search_filter= "(|(owner=*)(owner=uid=*,ou=people,dc=apache,dc=org))"
-        
+
         # Is requester IPMC?
         isIPMC = False
         ipmc = getStandardGroup('incubator')
         if ipmc and uid in ipmc:
             isIPMC = True
-            
-        
+
+
         LDAP_BASE = "ou=project,ou=groups,dc=apache,dc=org"
         results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['cn',])
         for res in results:
@@ -93,14 +93,14 @@ def ldap_groups(uid):
                 groups.append(cn) # each res is a tuple: ('cn=full,ou=ldap,dc=uri', {'cn': ['tlpname']})
                 if cn in PMCS and PMCS[cn] == "podling":
                     podlings[cn] = True
-        
+
         # If in IPMC, add all approved podlings not there yet.
         if isIPMC:
             for cn in PMCS:
                 if PMCS[cn] == "podling" and cn not in groups:
                     groups.append(cn)
                     podlings[cn] =  True
-        
+
         return [sorted(groups), sorted(podlings), uid in infra]
     except Exception as err:
         pass
@@ -119,7 +119,7 @@ def getStandardGroup(group, ldap_base = None, what = "owner"):
         ldapClient.set_option(ldap.OPT_REFERRALS, 0)
 
         ldapClient.bind(LDAP_USER, LDAP_PASSWORD)
-        
+
         # Default LDAP base if not specified
         if not ldap_base:
             ldap_base = "cn=%s,ou=project,ou=groups,dc=apache,dc=org" % group
@@ -156,7 +156,7 @@ def createRepo(repo, title, pmc):
             'has_wiki': False
             }),
             headers = {'Authorization': "token %s" % ORG_READ_TOKEN})
-    
+
     #201 == New repo created
     if r.status_code == 201:
         return True
@@ -180,16 +180,16 @@ def hipchat(msg):
             'message': msg
         }
     requests.post('https://api.hipchat.com/v1/rooms/message', data = payload)
-    
+
 def main():
     action = xform.getvalue("action")
     if action and action == "create":
-        
+
         # Check if allowed to create
         pmc = xform.getvalue("pmc")
         xuid = os.environ['REMOTE_USER']
         groups, podlings, isRoot = ldap_groups(xuid)
-        
+
         # Makle sure $uid is (P)PMC member
         if not (pmc in groups) and isRoot == False:
             print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
@@ -198,10 +198,10 @@ def main():
                         'error': "You do not have access to create repos for this project!"
                     }))
             return
-        
+
         # Make sure the project is on gitbox!
         if (pmc in PMCS) or isRoot:
-            
+
             # Repo name and title
             isPodling = xform.getvalue("ispodling")
             repo = xform.getvalue("name")
@@ -224,13 +224,13 @@ def main():
                 commitmail = cf
             if gf:
                 ghmail = gf
-            
+
             # clean up variables
             reponame = re.sub(r"[^-a-zA-Z0-9]+", "", reponame)
             title = re.sub(r"[^-a-zA-Z0-9 .,]+", "", title)
             commitmail = re.sub(r"[^-a-zA-Z0-9@.]+", "", commitmail)
             ghmail = re.sub(r"[^-a-zA-Z0-9@.]+", "", ghmail)
-            
+
             created = createRepo(reponame, title, pmc)
             if created:
                 try:
@@ -239,7 +239,7 @@ def main():
                     time.sleep(3) # Wait for GH??
                     # Set apache.dev value in config
                     subprocess.check_output("cd /x1/repos/asf/%s.git/ && git config apache.dev \"%s\"" % (reponame, ghmail), shell = True)
-                    
+
                     # Notify infra@ and private@$pmc that the repo has been set up
                     hipchat("New repository request for %s.git by %s succeeded!" % (reponame, os.environ['REMOTE_USER']))
                     msg = MIMEText("New repository %s.git was created, as requested by %s.\nYou may view it at: https://gitbox.apache.org/repos/asf/%s.git\n\nWith regards,\nApache Infrastructure." % (reponame, os.environ['REMOTE_USER'], reponame))
@@ -249,20 +249,20 @@ def main():
                     if pmc == 'infrastructure':
                         pmc = 'infra' # hack hack hack
                     msg['To'] = "users@infra.apache.org, private@%s.apache.org" % pmc
-                    
+
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", ["private@infra.apache.org", "private@%s.apache.org" % pmc], msg.as_string())
                     s.quit()
 
-                    
+
                 except subprocess.CalledProcessError as e:
                     print("Status: 500 NOT Okay\r\nContent-Type: application/json\r\n\r\n")
                     print(json.dumps({
                         'created': False,
                         'error': e['message']
                     }))
-                    
-                    
+
+
                     # Notify infra@ about this!
                     msg = MIMEText("New repository %s.git creation requested by %s FAILED: \n\n%s" % (reponame, os.environ['REMOTE_USER'], e['message']))
                     msg['Subject'] = 'New gitbox/github repository failed: %s.git' % reponame
@@ -272,7 +272,7 @@ def main():
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", "private@infra.apache.org", msg.as_string())
                     s.quit()
-                    
+
                     hipchat("New repository request for %s.git by %s failed! Check yer inbox for details." % (reponame, os.environ['REMOTE_USER']))
                     return
             else:
@@ -301,7 +301,7 @@ def main():
             'root': isroot
         }))
         return
-    
+
     print("Status: 200 Okay\r\nContent-Type: application/json\r\n\r\n")
     print(json.dumps({
         'failed': True
