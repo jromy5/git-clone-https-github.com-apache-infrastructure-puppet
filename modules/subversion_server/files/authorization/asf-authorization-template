@@ -852,6 +852,9 @@ projects_role = rw
 @fundraising = rw
 buildbot = rw
 
+[/geronimo/components/config]
+* = r
+
 [/geronimo]
 @geronimo = rw
 
