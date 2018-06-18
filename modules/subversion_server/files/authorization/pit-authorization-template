@@ -271,7 +271,6 @@ shiro-pmc={ldap:cn=shiro,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 singa={reuse:asf-authorization:singa}
 sis={reuse:asf-authorization:sis}
 sis-pmc={ldap:cn=sis,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-slider={reuse:asf-authorization:slider}
 sling={reuse:asf-authorization:sling}
 sling-pmc={ldap:cn=sling,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 spamassassin={reuse:asf-authorization:spamassassin}
@@ -1404,7 +1403,7 @@ buildbot = rw
 @sis = rw
 
 [/websites/production/slider]
-@incubator = rw
+@attic-pmc = rw
 
 [/websites/production/sling]
 * = r
