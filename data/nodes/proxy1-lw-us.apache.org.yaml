@@ -63,8 +63,6 @@ vhosts_asf::modules::modules:
     name: 'substitute'
   lua:
     name: 'lua'
-  xml2enc:
-    name: 'xml2enc'
 
 vhosts_asf::vhosts::vhosts:
   blogs:
