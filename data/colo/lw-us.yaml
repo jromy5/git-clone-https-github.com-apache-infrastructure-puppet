@@ -8,4 +8,5 @@ dnsclient::nameservers:
 
 ldapclient::ldapservers: 'ldaps://ldap-us-ro.apache.org:636 ldaps://ldap-eu-ro.apache.org:636'
 
-datadog_agent::tags: 'dc:leaseweb_us'
+datadog_agent::tags: 
+  - 'dc:leaseweb_us'
