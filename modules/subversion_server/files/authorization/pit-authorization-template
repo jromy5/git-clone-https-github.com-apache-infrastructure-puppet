@@ -1120,6 +1120,14 @@ openejb-tck = r
 @board = rw
 * =
 
+[/websites/production/maven/components]
+@infrastructure = rw
+* = r
+
+[/websites/production/maven-doxia/components]
+@infrastructure = rw
+* = r
+
 [/websites]
 @infrastructure = rw
 * = r
