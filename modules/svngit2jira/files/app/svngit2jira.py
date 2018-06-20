@@ -188,7 +188,7 @@ class daemon:
 def read_chunk(req):
     while True:
         try:
-            line = req.readline().strip()
+            line = req.readline().strip().replace(b"\x00", b"")
             if line:
                 yield line
             else:
