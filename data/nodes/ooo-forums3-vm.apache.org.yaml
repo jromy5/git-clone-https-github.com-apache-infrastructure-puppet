@@ -8,21 +8,13 @@ classes:
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
 
-apache::keepalive:          'On'
-apache::keepalive_timeout:  '15'
+apache::keepalive: 'On'
+apache::keepalive_timeout: '15'
 apache::timeout: 600
-apache::mpm_module:         'event'
+apache::mpm_module: 'prefork'
 
-apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
-apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '500'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '150'
-apache::mod::event::serverlimit: '10'
-apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
-apache::mod::event::threadsperchild: '50'
+apache::mod::prefork::maxrequestworkers: '120'
+apache::mod::prefork::startservers: '10'
 
 logrotate::rule:
   apache2:
