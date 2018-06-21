@@ -5,7 +5,7 @@ include apt
 # buildbot class for the buildbot slaves.
 class buildbot_slave::buildbot (
   $buildbot_packages = [],
-  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1', 'apache-ant-1.10.3'],
+  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.9.11', 'apache-ant-1.10.1', 'apache-ant-1.10.3'],
   $maven = ['apache-maven-2.2.1', 'apache-maven-3.0.4', 'apache-maven-3.0.5', 'apache-maven-3.2.1', 'apache-maven-3.2.5', 'apache-maven-3.3.3', 'apache-maven-3.3.9' , 'apache-maven-3.5.0' , 'apache-maven-3.5.2'], # lint:ignore:140chars
   $java_asfpackages = ['harmony-jdk-713673' , 'jdk1.5.0_22-64', 'jdk1.6.0_45-64', 'jdk1.7.0_79-unlimited-security', 'jdk1.7.0_80', 'jdk1.8.0_66-unlimited-security', 'jdk1.8.0_92', 'jdk1.8.0_102', 'jdk1.8.0_121', 'jdk1.8.0_144', 'jdk1.8.0_144-unlimited-security', 'jdk1.8.0_152' , 'jdk1.8.0_172' , 'jdk-9-ea-b132', 'jdk-9-ea-b139', 'jigsaw-jdk-9-ea-b156', 'jdk-9-ea-b179' , 'jdk-9-b181' , 'jdk-9-b181-unlimited-security' , 'IBMJava2-142' , 'IBMJava2-amd64-142' , 'ibm-java2-i386-50' , ' ibm-java-i386-60' , 'ibm-java2-x86_64-50' , 'ibm-java-x86_64-80' , 'jdk-9.0.1' , 'jdk-10-ea+36' , 'jdk-10_46' , 'jdk-10.0.1' , 'jdk-11-ea+8'], # lint:ignore:140chars
   $tools = ['ant', 'maven', 'java'],
@@ -68,11 +68,18 @@ class buildbot_slave::buildbot (
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
+  file { '/home/buildslave/slave/tools/ant/latest1.9':
+    ensure => link,
+    target => '/usr/local/asfpackages/ant/apache-ant-1.9.11',
+  }
+  file { '/home/buildslave/slave/tools/ant/latest1.10':
+    ensure => link,
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.3',
+  }
   file { '/home/buildslave/slave/tools/ant/latest':
     ensure => link,
     target => '/usr/local/asfpackages/ant/apache-ant-1.10.3',
   }
-
 
   # maven symlinks - populate array, make all symlinks, make latest symlink
   buildbot_slave::symlink_maven        { $maven: }

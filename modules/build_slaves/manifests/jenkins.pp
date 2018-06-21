@@ -15,7 +15,7 @@ class build_slaves::jenkins (
   $ssr_pw = '',
   $jenkins_packages = [],
   $tools = ['ant','clover','findbugs','forrest','java','maven', 'jiracli', 'jbake', 'gradle'],
-  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.10.1' , 'apache-ant-1.10.3'],
+  $ant = ['apache-ant-1.8.4', 'apache-ant-1.9.4', 'apache-ant-1.9.7', 'apache-ant-1.9.9', 'apache-ant-1.9.11', 'apache-ant-1.10.1' , 'apache-ant-1.10.3'],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = ['findbugs-2.0.3', 'findbugs-3.0.1'],
   $forrest = ['apache-forrest-0.9'],
@@ -351,6 +351,14 @@ class build_slaves::jenkins (
 
   # ant symlinks - populate array, make all symlinks, make latest symlink
   build_slaves::symlink_ant          { $ant: }
+  file { "/home/${build_slaves::username}/tools/ant/latest1.9":
+    ensure => link,
+    target => '/usr/local/asfpackages/ant/apache-ant-1.9.11',
+  }
+  file { "/home/${build_slaves::username}/tools/ant/latest1.10":
+    ensure => link,
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.3',
+  }
   file { "/home/${build_slaves::username}/tools/ant/latest":
     ensure => link,
     target => '/usr/local/asfpackages/ant/apache-ant-1.10.3',
