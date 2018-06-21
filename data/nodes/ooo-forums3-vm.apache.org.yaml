@@ -1,6 +1,7 @@
 ---
 classes:
   - apache
+  - apache::mod::mime
   - apache::mod::rewrite
   - ooo_forums
   - ssl::name::wildcard_openoffice_org
@@ -53,4 +54,46 @@ vhosts_asf::vhosts::vhosts:
       ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
       ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
       ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
-
+      custom_fragment: |
+        <DirectoryMatch /x1/var_www/[a-z][a-z]/forum/(avatars-upload|cache|files|includes|store)>
+          Options None
+          AllowOverride None
+          Order allow,deny
+          Deny from all
+        </DirectoryMatch>
+        <DirectoryMatch /x1/var_www/[a-z][a-z]/forum/(images|styles)>
+          ExpiresActive On
+          ExpiresDefault "access plus 1 month"
+        </DirectoryMatch>
+        <Directory /x1/var_www/fr/forum>
+          RewriteEngine On
+          #
+          # This first condition bypasses all of this crap for 99+% of requests since
+          # regular phpBB access requests match this condition
+          #
+          RewriteCond %{REQUEST_URI} !/fr/forum/(\w+\d+|equipe)
+          RewriteRule (.*) $1                                              [skip=19]
+          #
+          # The old FR Forum "SEO-friendly" URIs
+          #
+          RewriteRule ^forum([0-9]*).* /fr/forum/viewforum.php?f=$1
+          RewriteRule ^forums.* /fr/forum/index.php
+          RewriteRule ^mforum([0-9]*).* /fr/forum/viewforum.php?f=$1&mark=topics
+          RewriteRule ^viewforum([0-9]*)-([0-9]*)-([0-9]*).* /fr/forum/viewforum.php?f=$1&topicdays=$2&start=$3
+          RewriteRule ^topic([0-9]*).* /fr/forum/viewtopic.php?t=$1
+          RewriteRule ^ptopic([0-9]*).* /fr/forum/viewtopic.php?t=$1&view=previous
+          RewriteRule ^ntopic([0-9]*).* /fr/forum/viewtopic.php?t=$1&view=next
+          RewriteRule ^stopic([0-9]*)-([0-9]*).* /fr/forum/viewtopic.php?t=$1&watch=topic&start=$2
+          RewriteRule ^utopic([0-9]*)-([0-9]*).* /fr/forum/viewtopic.php?t=$1&unwatch=topic&start=$2
+          RewriteRule ^ftopic([0-9]*)-([0-9]*)-([a-zA-Z]*)-([0-9]*).* /fr/forum/viewtopic.php?t=$1&postdays=$2&postorder=$3&start=$4
+          RewriteRule ^ftopic([0-9]*)-([0-9]*).* /fr/forum/viewtopic.php?t=$1&start=$2
+          RewriteRule ^ftopic([0-9]*).* /fr/forum/viewtopic.php?t=$1
+          RewriteRule ^ftopic([0-9]*).html /fr/forum/viewtopic.php?t=$1&start=$2&postdays=$3&postorder=$4&highlight=$5
+          RewriteRule ^setopic_([0-9]*)-([a-zA-Z0-9]*).* /fr/forum/viewtopic.php?t=$1&highlight=$2
+          RewriteRule ^sutra([0-9]*).* /fr/forum/viewtopic.php?p=$1
+          RewriteRule ^newtopic([0-9]*).* /fr/forum/viewtopic.php?t=$1&view=newest
+          RewriteRule ^membre([0-9]*).* /fr/forum/memberlist.php?mode=viewprofile&u=$1
+          RewriteRule ^groupe([0-9]*).* /fr/forum/memberlist.php?mode=group&g=$1
+          RewriteRule ^equipe\.* /fr/forum/memberlist.php?mode=leaders
+        </Directory>
+        
