@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::expires
   - apache::mod::mime
+  - apache::mod::php
   - apache::mod::rewrite
   - ooo_forums
   - ssl::name::wildcard_openoffice_org
