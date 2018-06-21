@@ -45,6 +45,16 @@ class jenkins_slave_windows (
     onlyif   => "if ((Get-Item F:\\jenkins\\tools\\ant).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
+  exec { 'create symlink for latest Ant 10':
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\ant\\latest1.10 \"&\" mklink /d F:\\jenkins\\tools\\ant\\latest1.10 F:\\jenkins\\tools\\ant\\apache-ant-1.10.3",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\ant).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
+  exec { 'create symlink for latest Ant 9':
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\ant\\latest1.9 \"&\" mklink /d F:\\jenkins\\tools\\ant\\latest1.9 F:\\jenkins\\tools\\ant\\apache-ant-1.9.11",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\jenkins\\tools\\ant).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
   exec { 'create symlink for latest Maven':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest F:\\jenkins\\tools\\maven\\apache-maven-3.5.0",# lint:ignore:140chars
     onlyif   => "if ((Get-Item F:\\jenkins\\tools\\maven).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
