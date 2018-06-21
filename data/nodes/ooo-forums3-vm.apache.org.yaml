@@ -5,6 +5,7 @@ classes:
   - apache::mod::mime
   - apache::mod::php
   - apache::mod::rewrite
+  - memcached
   - ooo_forums
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
@@ -20,6 +21,10 @@ apache::mod::prefork::startservers: '10'
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+memcached::max_memory: '10%'
+memcached::listen_ip: '127.0.0.1'
+memcached::tcp_port: '11211'
 
 vhosts_asf::vhosts::vhosts:
   ooo-forums3-80:
