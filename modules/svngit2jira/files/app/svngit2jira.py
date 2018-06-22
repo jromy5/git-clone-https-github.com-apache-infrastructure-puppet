@@ -447,7 +447,7 @@ class PubSubClient(Thread):
 
             for line in read_chunk(self.req):
                 if version == 3:
-                    line = str( line, encoding='ascii' ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
+                    line = str( line, encoding='ascii' ).rstrip('\r\n,') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 else:
                     line = str( line ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 try:
@@ -563,7 +563,7 @@ class PubSubClient(Thread):
                                             if config.has_option(section, 'reviewboard') and config.get(section, 'reviewboard') == "true":
                                                 rb = ReviewBoard(ticket.group(1))
                                                 rb.update(rb_data)
-                except ValueError as detail:
+                except Exception as detail:
                     logging.warning("Bad JSON or something: %s", detail)
                     continue
             logging.info("Disconnected from %s, reconnecting" % self.url)
