@@ -6,6 +6,7 @@ classes:
   - aim_server
   - blocky
   - elasticsearch
+  - kif
   - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org

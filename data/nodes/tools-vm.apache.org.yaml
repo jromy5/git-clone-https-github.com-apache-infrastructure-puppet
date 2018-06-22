@@ -11,6 +11,7 @@ classes:
   - etherpad_lite::site
   - git_self_serve::tools
   - jenkins_node_monitor
+  - kif
   - loggy
   - pad_asf
   - selfserve
