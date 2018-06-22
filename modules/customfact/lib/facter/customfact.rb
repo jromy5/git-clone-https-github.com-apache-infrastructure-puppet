@@ -87,9 +87,9 @@ Facter.add("dd_autotag_colo") do
     # get external IP for fqdn
     external_ip_api_url = URI('http://ip-api.com/json/' + fqdn)
     # make the call to ip-api to get 'org' for external_ip_api_url
-    response = Net::HTTP.get(uri)
+    response = Net::HTTP.get(external_ip_api_url)
     json_response = JSON.parse(response)
-    dc_org = json_response["org"]
+    dc_org = json_response["org"].downcase
     dc_country = json_response["country"].downcase
     #itterate through json_response and assign yaml from ../data/colo dir
     case
