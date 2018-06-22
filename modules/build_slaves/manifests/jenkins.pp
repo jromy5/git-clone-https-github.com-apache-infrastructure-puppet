@@ -8,6 +8,7 @@ class build_slaves::jenkins (
   $groupname = 'jenkins',
   $nexus_password   = '',
   $npmrc_password    = '',
+  $dockerio_password = '',
   $jenkins_pub_key  = '',
   $gsr_user = '',
   $gsr_pw = '',
