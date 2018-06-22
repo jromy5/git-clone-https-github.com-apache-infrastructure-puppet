@@ -31,7 +31,7 @@ else:
 ############################################
 # Get path, set up logging and read config #
 ############################################
-debug = False
+debug = True
 logging.basicConfig(filename='svngit2jira.log', format='[%(asctime)s]: %(message)s', level=logging.INFO)
 
 
