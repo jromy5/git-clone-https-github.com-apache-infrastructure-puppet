@@ -23,6 +23,7 @@
     - "roles/%{::noderole}"
     - "%{::asfosname}/%{::asfosname}_%{::asfosrelease}"
     - "colo/%{asfcolo}"
+    - "colo/dd_autotag_colo/%{dd_autotag_colo}"
     - "%{::virtual}/%{::asfosname}/%{::asfosname}_%{::asfosrelease}"
     - "oem/%{oem}"
     - "environment/%{::environment}"

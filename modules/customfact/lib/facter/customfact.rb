@@ -1,4 +1,6 @@
 require 'ipaddr'
+require 'net/http'
+require 'json'
 
 Facter.add("asfosrelease") do
   setcode do
@@ -75,6 +77,50 @@ Facter.add("asfcolo") do
       else
         "default"
       end
+    end
+  end
+end
+
+Facter.add("dd_autotag_colo") do
+  setcode do
+    fqdn = Facter.value('fqdn')
+    # get external IP for fqdn
+    external_ip_api_url = URI('http://ip-api.com/json/' + fqdn)
+    # make the call to ip-api to get 'org' for external_ip_api_url
+    response = Net::HTTP.get(uri)
+    json_response = JSON.parse(response)
+    dc_org = json_response["org"]
+    dc_country = json_response["country"].downcase
+    #itterate through json_response and assign yaml from ../data/colo dir
+    case
+      when dc_org.include?('amazon')
+        "aws"
+      when dc_org.include?('google')
+        "google"
+      when dc_org.include?('hetzner')
+        "hetzner"
+      when dc_org.include?('leaseweb')
+        # split out hosts based on geolocation
+        case
+          when dc_country == "neatherlands"
+            "leaseweb_eu"
+          when dc_country == "united states"
+            "leaseweb_us"
+          end
+      when dc_org.include?('microsoft azure')
+        "azure"
+      when dc_org.include?('network for education')
+        "osu"
+      when dc_org.include?('online sas')
+        "online.net"
+      when dc_org.include?('rackspace')
+        "rackspace"
+      when dc_org.include?('secured servers')
+        "pnap"
+      when dc_org.include?('yahoo')
+        "yahoo"
+      else
+        "default"
     end
   end
 end
