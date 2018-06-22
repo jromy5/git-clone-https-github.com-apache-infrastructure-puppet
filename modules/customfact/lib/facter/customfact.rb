@@ -102,7 +102,7 @@ Facter.add("dd_autotag_colo") do
       when dc_org.include?('leaseweb')
         # split out hosts based on geolocation
         case
-          when dc_country == "neatherlands"
+          when dc_country == "netherlands"
             "leaseweb_eu"
           when dc_country == "united states"
             "leaseweb_us"
