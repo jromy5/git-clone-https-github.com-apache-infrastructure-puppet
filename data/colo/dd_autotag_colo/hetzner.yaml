@@ -1,0 +1,3 @@
+---
+datadog_agent::tags:
+  - 'dc:hetzner'
