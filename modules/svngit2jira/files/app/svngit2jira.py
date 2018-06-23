@@ -564,7 +564,7 @@ class PubSubClient(Thread):
                                                 rb = ReviewBoard(ticket.group(1))
                                                 rb.update(rb_data)
                 except Exception as detail:
-                    logging.warning("Bad JSON or something: %s", detail)
+                    logging.warning("Bad JSON or something: %s" % detail)
                     continue
             logging.info("Disconnected from %s, reconnecting" % self.url)
 
