@@ -31,7 +31,7 @@ else:
 ############################################
 # Get path, set up logging and read config #
 ############################################
-debug = True
+debug = False
 logging.basicConfig(filename='svngit2jira.log', format='[%(asctime)s]: %(message)s', level=logging.INFO)
 
 
@@ -429,6 +429,9 @@ class Bugzilla:
 
 # PubSub class: handles connecting to a pubsub service and checking commits
 class PubSubClient(Thread):
+    def __del__(self):
+        logging.warning("Pubsub client for %s died." % self.url)
+
     def run(self):
         while True:
             logging.info("Connecting to " + self.url + "...")
@@ -564,9 +567,8 @@ class PubSubClient(Thread):
                                                 rb = ReviewBoard(ticket.group(1))
                                                 rb.update(rb_data)
                 except Exception as detail:
-                    logging.warning("Bad JSON or something: %s", detail)
-                    continue
-            logging.info("Disconnected from %s, reconnecting" % self.url)
+                    logging.warning("Bad JSON or something: %s" % detail)
+            logging.warning("Disconnected from %s, reconnecting" % self.url)
 
 
 
