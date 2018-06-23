@@ -565,7 +565,7 @@ class PubSubClient(Thread):
                                                 rb.update(rb_data)
                 except Exception as detail:
                     logging.warning("Bad JSON or something: %s" % detail)
-            logging.info("Disconnected from %s, reconnecting" % self.url)
+            logging.warning("Disconnected from %s, reconnecting" % self.url)
 
 
 
