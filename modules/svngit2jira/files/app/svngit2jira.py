@@ -429,6 +429,9 @@ class Bugzilla:
 
 # PubSub class: handles connecting to a pubsub service and checking commits
 class PubSubClient(Thread):
+    def __del__(self):
+        logging.warning("Pubsub client for %s died." % self.url)
+
     def run(self):
         while True:
             logging.info("Connecting to " + self.url + "...")
