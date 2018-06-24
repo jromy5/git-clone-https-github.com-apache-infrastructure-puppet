@@ -185,12 +185,13 @@ apache::custom_config:
         RewriteRule ^(.*)$ http://%1%2.apache.org$1 [R,L]
 
         # change the DocumentRoot to ${DocumentRoot}/content if it exists
+        # accept multipart subdomains, but cut away eu|us|incubator from path
         RewriteCond %%{}{REQUEST_URI}              !^/cgi-bin/
         RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
-        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^(\w+)(?:\.\w+)?\.apache\.org$
+        RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-        RewriteRule ^(\w+)(?:\.\w+)?\.apache\.org/(.*) /www/$1.apache.org/content/$2
+        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
       </Macro>
 
   aoo:
