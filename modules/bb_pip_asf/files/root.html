@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License. 
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="compressed.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="style.css" type="text/css" media="screen, projection"/>
+        <!--[if IE]><link rel="stylesheet" href="../style/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+    <title>Build Services - The Apache Software Foundation</title>
+  
+ </head>
+ <body id="sub">
+        <div class="navigation">
+                <ul>
+                        <li><a href="../" title="Build Services Home">Home</a></li>
+                        <li><a href="https://builds.apache.org/" title="Jenkins">Jenkins</a></li>
+                        <li><a href="../buildbot.html" title="Buildbot">Buildbot</a></li>
+                        <li><a href="http://vmgump.apache.org" title="Gump">Gump</a></li>
+                        <li><a href="https://blogs.apache.org/foundation/" title="Foundation Blog">ASF Blog</a></li>
+                        <li><a href="https://blogs.apache.org/" title="Project Blogs">Project Blogs</a></li>
+                </ul>
+        </div>
+        <div class="container">
+        <hr class="space col"/>
+        <div class="block">
+                <div class="column span-24">
+      <div id="header">
+                          <!-- Add 'default' header section here. -->
+                                <h1>Build Services</h1>
+                         </div>
+      </div>
+        </div>
+        <hr/>
+        <div class="block">
+                <div class="column span-8 prepend-16 search searchsub">
+                        <form action="https://www.google.com/search" method="get">
+                         <input value="*.apache.org" name="sitesearch" type="hidden"/>
+                         <input size="10" name="q" id="query" type="text"/>
+                         <input name="Search" value="Go" type="submit"/>
+               </form>
+                </div>
+        </div>
+        <div class="block content">
+                <div class="column span-15 colborder">
+
+<div class="section-content">
+<p style="text-align:center"><a href="https://ci.apache.org/"><img src="asf_logo_wide_2016.png"></img></a></p>
+<ul>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#buildbot">Buildbot</a></li>
+      <li><a href="#gump">Gump</a></li>
+      <li><a href="#jenkins">Jenkins</a></li>
+      <li><a href="#more">More Information</a></li>
+    </ul>
+</div>
+
+<h4 id="intro">
+   Introduction
+</h4>
+<div class="section-content">
+<p>
+  This page contains information on the various build services that are
+  provided to all <acronym title="Apache Software Foundation">ASF</acronym>
+  projects for continuous integration, builds, testing, snapshots and
+  deployment.
+</p>
+<p>Projects therefore have a choice, you can choose to utilise any or all
+   of the services provided should that make sense. See the
+   <a href="#more">More Information</a> section for how to subscribe to
+   one list that all these services are subscribed to.
+</p>
+<hr />
+</div>
+
+<h4 id="buildbot">
+   Buildbot
+</h4>
+<div class="section-content">
+<p>
+  <a href="http://ci.apache.org/buildbot.html">ci.apache.org/buildbot.html</a>
+</p>
+<p>
+  Buildbot is a python based third party open source software chosen by the
+  infrastructure team to provide extra build services to any Apache project
+  that wants to utilise it.
+</p>
+<p>
+Currently Buildbot is housed on thirteen machines/VMs: <br /><br />
+<ul> <li>buildbot-vm: Ubuntu Master (VM at PhoenixNap)</li>
+     <li>bb_slave1_ubuntu: Ubuntu Slave 1 (VM at PhoenixNap)</li>
+     <li>bb_slave2_ubuntu: Ubuntu Slave 2 (VM at LeaseWeb US)</li>
+     <li>bb_slave3_ubuntu: Ubuntu Slave 3 (VM at LeaseWeb NL)</li>
+     <li>bb_slave4_ubuntu: Ubuntu Slave 4 (VM at LeaseWeb NL)</li>
+     <li>bb_slave5_ubuntu: Ubuntu Slave 5 i386 (VM at LeaseWeb NL)</li>
+     <li>bb_slave6_ubuntu: Ubuntu Slave 6 (VM in Garl at Illiad)</li>
+     <li>lares,orcus,silvanus: Ubuntu slaves (Donated by Yahoo)</li>
+     <li>hemera: Ubuntu Slave 4 (Running on a (Donated by) HP Server)</li>
+     <li>bb-fbsd2: FreeBSD 10 (VM run on a VMware Server)</li>
+     <li>bb-fedora: Fedora Core (VM run on a VMware Server)</li>
+     <li>bb-win10: Windows 10 Pro (VM in on Garl)</li>
+     <li>bb-cms: FreeBSD 8 (Jail hosted on baldr) Dedicated to CMS builds only</li>
+     <li>bb-mac-mini: OSX Server Hestia</li>
+     <li>bb-openbsd: OpenBSD 4.9 (VM run on a VMWare Server)</li>
+ </ul>
+ with plans to expand to more platforms.
+ </p>
+ <p>For a detailed list of what Buildbot can do for your project, see the main
+ <a href="http://ci.apache.org/buildbot.html">Buildbot page</a> for more info.</p>
+<hr />
+</div>
+
+<h4 id="gump">
+   Gump
+</h4>
+<div class="section-content">
+<p>
+  <a href="http://vmgump.apache.org/">vmgump.apache.org</a>
+</p>
+<p>
+<a href="http://gump.apache.org">Apache Gump</a> is a cross-project continuous integration server. It is different from
+"usual" CI servers in that it expects the individual project builds to succeed;
+its purpose is to check the integration of a project with the latest code rather
+than a fixed version of the project's dependencies. If you want a more traditional
+nightly build server Gump is not for you. Use Gump if you want to know when a
+change in your dependencies breaks your project or when your changes break other
+projects.
+</p>
+
+<p>
+Gump is written in Python and supports several build tools (shell scripts, GNU make,
+Ant, Maven 1.x and 2.x and NAnt) and version control systems (svn, CVS, git, bzr,
+hg, darcs and Perforce). The Apache installation of Gump builds many ASF projects
+and their dependencies. It started in the Java part of the foundation but also
+builds projects like APR, HTTPd and log4net.
+</p>
+<hr />
+</div>
+
+<h4 id="jenkins">
+   Jenkins
+</h4>
+<div class="section-content">
+<p>
+  <a href="https://builds.apache.org/">builds.apache.org</a>
+</p>
+<p>
+  The ASF runs a <a href="http://jenkins-ci.org/">Jenkins</a>
+  continuous-integration server at
+  <a href="https://builds.apache.org/">https://builds.apache.org/</a>.
+  The Jenkins setup consists of a master server running on an Ubuntu machine
+  (Aegis) and several build slave servers, including five Ubuntu slaves, FreeBSD
+  and Windows slaves, two Solaris slaves and an OSX Apple XServe. Thanks go to
+  Apple, Yahoo! and HP for donating some of these slaves!
+</p>
+<p>
+  Any ASF project can run build and test tasks for their projects in Jenkins.
+  See the <a href="http://wiki.apache.org/general/Hudson">wiki page</a>
+  for more information.
+</p>
+<hr />
+</div>
+
+<h4 id="more">
+   More Information
+</h4>
+<div class="section-content">
+<p>
+  There is a mailing list setup to handle everything build related for all
+  of the build service platforms mentioned above. Those involved with
+  projects are encouraged to sign up.
+</p>
+<ul>
+  <li><a href="mailto:builds-subscribe@apache.org">Subscribe</a> to the builds@apache.org mailing list.</li>
+  <li>Browse the <a href="http://mail-archives.apache.org/mod_mbox/www-builds/">Mail Archives</a></li>
+</ul>
+<p>There are admins from all above services signed up to the list and where applicable to
+   them - and in their own volunteer time, will help with your queries.
+</p>
+</div>
+         </div>
+    <div class="column span-8 last">
+      <div class="block">
+        <div class="nav column span-11">
+          <div>
+               <div class="menuheader">Apache Projects</div>
+  <ul>
+          <li><a href="http://projects.apache.org/" title="Apache projects">Apache Projects Directory Listing</a></li>
+      </ul>
+               <h6><a href="/foundation/">Foundation</a></h6>
+ <ul>
+          <li><a href="http://apache.org/foundation/faq.html">FAQ</a></li>
+          <li><a href="http://apache.org/licenses/">Licenses</a></li>
+          <li><a href="http://apache.org/foundation/news.html">News</a></li>
+          <li><a href="http://blogs.apache.org/foundation/">Blog</a></li>
+          <li><a href="http://apache.org/foundation/records/">Public Records</a></li>
+          <li><a href="http://apache.org/press/">Press Inquiries</a></li>
+          <li><a href="http://apache.org/foundation/contact.html">Contact</a></li>
+      </ul>
+      <h6><a href="http://apache.org/foundation/support-apache.html">Support Apache</a></h6>
+  <ul>
+          <li><a href="http://apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+          <li><a href="http://apache.org/foundation/contributing.html">Donations</a></li>
+          <li><a href="http://apache.org/foundation/buy_stuff.html">Buy Stuff</a></li>
+          <li><a href="http://apache.org/foundation/thanks.html">Thanks</a></li>
+      </ul>      
+    </div>
+        </div>
+        <div class="nav column prepend-1 span-12 last">
+      <h6><a href="http://apache.org/foundation/foundation-projects.html">Foundation Projects</a></h6>
+  <ul>
+          <li><a href="http://attic.apache.org/" title="Inactive project repository">Attic</a></li>
+          <li><a href="http://apache.org/foundation/conferences.html" title="Meetings of developers and users">Conferences</a></li>
+          <li><a href="http://community.apache.org/" title="Helping newcomers to the ASF">Community Development</a></li>
+          <li><a href="http://incubator.apache.org/" title="Shepherd for new projects">Incubator</a></li>
+          <li><a href="http://apache.org/dev/" title="ASF Infrastructure: Operations and howto documents for PMCs and contributors">Infrastructure</a></li>
+          <li><a href="http://apache.org/jcp/" title="Apache and the Java Community Process">JCP</a></li>
+          <li><a href="http://labs.apache.org/" title="The Innovation Laboratories of the Apache Software Foundation">Labs</a></li>
+          <li><a href="http://apache.org/legal/" title="Legal Affairs">Legal Affairs</a></li>
+          <li><a href="http://apache.org/security/" title="Security">Security</a></li>
+          <li><a href="http://apache.org/travel/" title="Travel Assistance">Travel Assistance</a></li>
+      </ul>
+      <h6>How it works</h6>
+  <ul>
+          <li><a href="http://apache.org/foundation/how-it-works.html">Introduction</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#meritocracy">Meritocracy</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#structure">Structure</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#roles">Roles</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#management">Collaboration</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#infrastructure">Infrastructure</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#incubator">Incubator</a></li>
+          <li><a href="http://apache.org/foundation/how-it-works.html#other">Other entities</a></li>
+          <li><a href="http://apache.org/foundation/glossary.html">Glossary</a></li>
+          <li><a href="http://apache.org/foundation/voting.html">Voting</a></li>
+      </ul>
+      <h6><a href="http://apache.org/foundation/getinvolved.html">Get Involved</a></h6>
+  <ul>
+          <li><a href="http://apache.org/dyn/closer.cgi">Download</a></li>
+          <li><a href="http://apache.org/foundation/mailinglists.html">Mailing Lists</a></li>
+          <li><a href="http://apache.org/dev/version-control.html">Version Control</a></li>
+          <li><a href="http://apache.org/dev/">Developer Info</a></li>
+      </ul>
+      <h6>Community</h6>
+  <ul>
+          <li><a href="http://people.apache.org/">People</a></li>
+          <li><a href="http://apache.org/memorials/">Memorials</a></li>
+      </ul>
+      <h6>Related Sites</h6>
+  <ul>
+          <li><a href="http://apachecon.com/" title="Official Apache Conference">ApacheCon</a></li>
+          <li><a href="http://feathercast.org/" title="Apache Podcasts">Feathercast</a></li>
+          <li><a href="http://planet.apache.org/committers/" title="Apache Committers' Blogs">PlanetApache</a></li>
+      </ul>
+        </div>
+      </div>
+    </div>
+    <div class="column span-24 footer">
+      <hr/>
+        <p>Copyright &#169; 2010-2017 The Apache Software Foundation, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

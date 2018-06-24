@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /waterfall
+Disallow: /builders
+Disallow: /changes
+Disallow: /buildslaves
+Disallow: /schedulers
+Disallow: /one_line_per_build
+Disallow: /grid
+Disallow: /tgrid
+Disallow: /json
+
+Sitemap: https://ci.apache.org/sitemap-index.xml

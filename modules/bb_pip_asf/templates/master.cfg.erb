@@ -1,0 +1,389 @@
+# -*- python -*-
+# ex: set syntax=python:
+
+### WARNING THIS FILE IS IN PUPPET ###
+###     See buildbot_asf module    ###
+
+FP="<%= @projects_path %>/"
+
+c = BuildmasterConfig = {}
+
+####### BUILDSLAVES
+
+# import the passwds
+
+import private
+reload (private)
+
+c['db_url'] = private.mysqlConnection
+
+# If any slave will need to invoke RAT, this will help.
+from ratutil import gen_rat_antfile
+
+# the 'slaves' list defines the set of allowable buildslaves. Each element is
+# a tuple of bot-name and bot-password. These correspond to values given to
+# the buildslave's mktap invocation.
+
+from buildbot.buildslave import BuildSlave
+
+c['slaves'] = [BuildSlave("orcus_ubuntu", private.orcus_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+			  max_builds=2,
+                          ),
+               BuildSlave("lares_ubuntu", private.lares_ubuntuPwd,
+                          notify_on_missing=["users@infra.apache.org"],
+                          missing_timeout=300,
+			  max_builds=2,
+                          ),
+               BuildSlave("svn-w2k3-local", private.slave7Pwd),
+               BuildSlave("svn-w2k3-ra", private.slave8Pwd),
+#               BuildSlave("eh-debsarge1", private.slave10Pwd),
+               BuildSlave("svn-x64-ubuntu", private.slave11Pwd),
+               BuildSlave("bb-win10", private.slave37Pwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+			  max_builds=1,
+                          ),
+	       BuildSlave("bb-cms-slave", private.slave15Pwd,
+                          notify_on_missing=["users@infra.apache.org"],
+                          missing_timeout=300,
+                          ),
+               BuildSlave("bb-bhvm2-demos", private.slave30Pwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          ),
+               BuildSlave("silvanus_ubuntu", private.silvanus_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+			  max_builds=2,
+                          ),
+               BuildSlave("svn-x64-macosx-dgvrs", private.slave33Pwd,
+                          notify_on_missing="brane@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("svn-bb-openbsd", private.slave38Pwd,
+                          notify_on_missing="stsp@apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
+# PhoenixNAP hosted Slaves
+
+               BuildSlave("bb_slave1_ubuntu", private.bb_slave1_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_slave2_ubuntu", private.bb_slave2_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_slave3_ubuntu", private.bb_slave3_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_slave4_ubuntu", private.bb_slave4_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_slave5_ubuntu", private.bb_slave5_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_slave6_ubuntu", private.bb_slave6_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
+
+# illiad hosted slaves (garl)
+
+# illiad hosted slaves (vmhost01-eu aka garl2)
+
+               BuildSlave("bb_slave7_ubuntu", private.bb_slave7_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
+# Quenda Hosted Slaves
+
+               BuildSlave("bb_qnode4_ubuntu", private.bb_qnode4_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+               BuildSlave("bb_qnode5_ubuntu", private.bb_qnode5_ubuntuPwd,
+                          notify_on_missing="users@infra.apache.org",
+                          missing_timeout=300,
+                          max_builds=2,
+                          ),
+
+              ]
+
+# to limit to two concurrent builds on a slave, use
+#  c['slaves'] = [BuildSlave("bot1name", "bot1passwd", max_builds=2)]
+
+
+# 'slavePortnum' defines the TCP port to listen on. This must match the value
+# configured into the buildslaves (with their --master option)
+
+c['slavePortnum'] = <%= @slave_port_num %>
+
+####### CHANGESOURCES
+
+# the 'change_source' setting tells the buildmaster how it should find out
+# about source code changes. Any class which implements IChangeSource can be
+# put here: there are several in buildbot/changes/*.py to choose from.
+
+from buildbot.changes.pb import PBChangeSource
+
+c['change_source'] = PBChangeSource(user=private.pbcsUser, passwd=private.pbcsPwd)
+
+# from buildbot.changes.svnpoller import SVNPoller)
+
+# For example, if you had CVSToys installed on your repository, and your
+# CVSROOT/freshcfg file had an entry like this:
+#pb = ConfigurationSet([
+#    (None, None, None, PBService(userpass=('foo', 'bar'), port=4519)),
+#    ])
+
+# then you could use the following buildmaster Change Source to subscribe to
+# the FreshCVS daemon and be notified on every commit:
+#
+#from buildbot.changes.freshcvs import FreshCVSSource
+#fc_source = FreshCVSSource("cvs.example.com", 4519, "foo", "bar")
+#c['change_source'] = fc_source
+
+# or, use a PBChangeSource, and then have your repository's commit script run
+# 'buildbot sendchange', or use contrib/svn_buildbot.py, or
+# contrib/arch_buildbot.py :
+#
+#from buildbot.changes.pb import PBChangeSource
+#c['change_source'] = PBChangeSource()
+
+####### GLOBAL EXCLUDES LIST - DO NOT TRIGGER BUILDS ON THESE FILES
+
+import re
+masterExcludes = ["STATUS" , "README" , "CHANGES" , "INSTALL"]
+
+def isGlobalImportant(change):
+    if not masterExcludes:
+        return True
+
+    for file in change.files:
+        triggerBuild = True
+        for pattern in masterExcludes:
+            match = re.match(pattern, file)
+            if match:
+                triggerBuild = False
+                break
+        if triggerBuild:
+            return True
+
+## NOTES
+#
+# add 'fileIsImportant = isGlobalImportant' to any project scheduler(s)
+# that you want to apply this global list to.
+#
+# Projects can individually extend this global default :
+#
+# Place something like this in the projects/$project.conf file:
+#
+# $projectExcludes = [masterExcludes , "exclude.me" , "andme.too" , "etc..."]
+#
+# def isProjectimportant
+#     if not $projectExcludes:
+#        return True
+#
+#   for file in change.files:
+#        triggerBuild = True
+#        for pattern in $projectExcludes:
+#            match = re.match(pattern, file)
+#            if match:
+#                triggerBuild = False
+#                break
+#        if triggerBuild:
+#            return True
+#
+##
+# Then add 'fileisImportant = is$Projectimportant' to the scheduler.
+# (replace $project in all above with actual project name!)
+##
+
+####### SCHEDULERS
+
+## configure the Schedulers
+from buildbot.scheduler import AnyBranchScheduler, Periodic, Scheduler, Nightly, Dependent
+from buildbot.schedulers.basic  import SingleBranchScheduler
+from buildbot.changes import filter
+
+c['schedulers'] = []
+
+# append project schedulers in projects/$project.conf
+
+####### BUILDERS
+
+# the 'builders' list defines the Builders. Each one is configured with a
+# dictionary, using the following keys:
+#  name (required): the name used to describe this bilder
+#  slavename (required): which slave to use, must appear in c['bots']
+#  builddir (required): which subdirectory to run the builder in
+#  factory (required): a BuildFactory to define how the build is run
+#  periodicBuildTime (optional): if set, force a build every N seconds
+
+# buildbot/process/factory.py provides several BuildFactory classes you can
+# start with, which implement build processes for common targets (GNU
+# autoconf projects, CPAN perl modules, etc). The factory.BuildFactory is the
+# base class, and is configured with a series of BuildSteps. When the build
+# is run, the appropriate buildslave is told to execute each Step in turn.
+
+# the first BuildStep is typically responsible for obtaining a copy of the
+# sources. There are source-obtaining Steps in buildbot/steps/source.py for
+# CVS, SVN, and others.
+
+# cvsroot = ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/buildbot"
+# cvsmodule = "buildbot"
+
+from buildbot.process.properties import Interpolate
+from buildbot.process import factory
+# from buildbot.steps.source import Git
+from buildbot.steps.source.git import Git
+# from buildbot.steps.source import SVN
+from buildbot.steps.source.svn import SVN
+from buildbot.steps.shell import Compile
+from buildbot.steps.python_twisted import Trial
+from buildbot.schedulers.forcesched import ForceScheduler
+from buildbot.process.factory import BuildFactory
+
+# append project builders in projects/$project.conf
+
+c['builders'] = []
+
+
+####### STATUS TARGETS
+
+# 'status' is a list of Status Targets. The results of each build will be
+# pushed to these targets. buildbot/status/*.py has a variety to choose from,
+# including web pages, email senders, and IRC bots.
+
+c['status'] = []
+
+from buildbot.status import html
+from buildbot.status.web.authz import Authz
+from buildbot.status.web.auth import BasicAuth
+
+# Add a temp authz for web GUI
+
+committers = [('committer', '')]
+authz = Authz(auth=BasicAuth(committers),
+    forceBuild='auth',
+    stopBuild='auth',
+    stopAllBuilds='auth',
+    cancelPendingBuild='auth',
+    pingBuilder=True,
+)
+
+c['status'].append(html.WebStatus(http_port="tcp:<%= @connector_port %>:interface=127.0.0.1",
+    change_hook_dialects = {
+        'github': {
+            'secret': private.githubSecret,
+        }
+    },
+    change_hook_auth = ['file:github.userpw'],
+))
+
+from buildbot.status import mail
+
+# Mail Notifier for sending lost slave emails, not tied to any builder.
+
+c['status'].append(mail.MailNotifier(fromaddr="<%= @mail_from_addr %>", builders=[]))
+
+# append mail target in projects/$project.conf
+
+from buildbot.status import words
+# c['status'].append(words.IRC(host="irc.freenode.net", nick="asf_buildbot",
+#                             channels=["#asftest"]))
+#
+# from buildbot.status import client
+# c['status'].append(client.PBListener(9988))
+
+
+# Include any global imports here that more than one project needs.
+
+from buildbot.steps.master import MasterShellCommand
+from buildbot.steps.master import SetProperty
+from buildbot.steps.transfer import FileUpload
+from buildbot.steps.transfer import FileDownload
+from buildbot.steps.transfer import DirectoryUpload
+from buildbot.steps.shell import ShellCommand, SetPropertyFromCommand
+from buildbot.steps.shell import Configure
+from buildbot.steps.shell import Test
+from buildbot.steps.python import PyFlakes
+from buildbot.process.buildstep import BuildStep
+from buildbot.process.properties import WithProperties
+from buildbot import locks
+
+# import the rat report fileupload class
+
+# from rat_report_upload import rat_report_upload
+
+# Ensure that projects include is below all definition imports.
+
+execfile(FP + "projects.conf", globals(), locals())
+
+# Data Lifetime - how long to keep old build logs and status around.
+
+c['changeHorizon'] = <%= @change_horizon %>
+c['buildHorizon'] = <%= @build_horizon %>
+c['eventHorizon'] = <%= @event_horizon %>
+c['logHorizon'] = <%= @log_horizon %>
+c['buildCacheSize'] = <%= @build_cache_size %>
+c['changeCacheSize'] = <%= @change_cache_size %>
+
+
+####### DEBUGGING OPTIONS
+
+# if you set 'debugPassword', then you can connect to the buildmaster with
+# the diagnostic tool in contrib/debugclient.py . From this tool, you can
+# manually force builds and inject changes, which may be useful for testing
+# your buildmaster without actually commiting changes to your repository (or
+# before you have a functioning 'sources' set up). The debug tool uses the
+# same port number as the slaves do: 'slavePortnum'.
+
+#c['debugPassword'] = "debugpassword"
+
+# if you set 'manhole', you can ssh into the buildmaster and get an
+# interactive python shell, which may be useful for debugging buildbot
+# internals. It is probably only useful for buildbot developers. You can also
+# use an authorized_keys file, or plain telnet.
+#from buildbot import manhole
+#c['manhole'] = manhole.PasswordManhole("tcp:9999:interface=127.0.0.1",
+#                                       "admin", "password")
+
+
+####### PROJECT IDENTITY
+
+# the 'projectName' string will be used to describe the project that this
+# buildbot is working on. For example, it is used as the title of the
+# waterfall HTML page. The 'projectURL' string will be used to provide a link
+# from buildbot HTML pages to your project's home page.
+
+c['projectName'] = "<%= @project_name %>"
+c['projectURL'] = "<%= @project_url %>"
+
+# the 'buildbotURL' string should point to the location where the buildbot's
+# internal web server (usually the html.Waterfall page) is visible. This
+# typically uses the port number set in the Waterfall 'status' entry, but
+# with an externally-visible host name which the buildbot cannot figure out
+# without some help.
+
+c['buildbotURL'] = "<%= @project_url %>"
+
