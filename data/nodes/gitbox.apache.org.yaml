@@ -12,7 +12,7 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - zmanda_asf::client
-  
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
 apache::default_vhost:      true
@@ -40,7 +40,7 @@ cron:
   # MFA: Collate MFA status for org members
   mfa:
     user: 'root'
-    minute: [0,15,30,45]
+    minute: [5,35]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
   # Grouper: invite gitbox members to their repos/teams
@@ -52,7 +52,7 @@ cron:
   # GHAdd: Invite people to ASF GH Org based on LDAP
   ghadd:
     user: 'root'
-    minute: [0,10,20,30,40,50]
+    minute: [0,30]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
   # JSONStats: collect traffic stats from GH
@@ -63,7 +63,7 @@ cron:
     command: 'cd /x1/gitbox/matt/tools/ && python json-stats.py'
 
 
-  
+
 base::gempackages:
   - 'r10k'
   - 'puppet-lint'
@@ -94,7 +94,7 @@ vhosts_asf::modules::modules:
 
 gitbox::custom_fragment_80: |
       <Directory /x1/git/htdocs>
-       Require all granted 
+       Require all granted
       </Directory>
       Redirect Permanent / https://gitbox.apache.org/
 
@@ -219,4 +219,3 @@ gitbox::custom_fragment_443: |
           Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
           Require valid-user
       </LocationMatch>
-
