@@ -76,7 +76,7 @@ else:
 
 # No Digest List, all lists have a -digest subscription anyway
 
-if 'digest' in listname
+if 'digest' in listname:
   sscommon.buggo("Invalid list name digest.")
 
 # Get and validate mods
