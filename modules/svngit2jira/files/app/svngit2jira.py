@@ -450,7 +450,7 @@ class PubSubClient(Thread):
 
             for line in read_chunk(self.req):
                 if version == 3:
-                    line = str( line, encoding='ascii' ).rstrip('\r\n,') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
+                    line = str( line, encoding='utf-8', errors = 'replace' ).rstrip('\r\n,') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 else:
                     line = str( line ).rstrip('\r\n,').replace('\x00','') # strip away any old pre-0.9 commas from gitpubsub chunks and \0 in svnpubsub chunks
                 try:
