@@ -1,4 +1,6 @@
 require 'ipaddr'
+require 'net/http'
+require 'json'
 
 Facter.add("asfosrelease") do
   setcode do
@@ -79,10 +81,53 @@ Facter.add("asfcolo") do
   end
 end
 
+Facter.add("dd_autotag_colo") do
+  setcode do
+    # should get local external IP from ip-api.com, no need for fqdn
+    external_ip_api_url = URI('http://ip-api.com/json/')
+    # make the call to ip-api to get 'org' for external_ip_api_url
+    response = Net::HTTP.get(external_ip_api_url)
+    json_response = JSON.parse(response)
+    dc_org = json_response["org"].downcase
+    dc_country = json_response["country"].downcase
+    #itterate through json_response and assign yaml from ../data/colo dir
+    case
+      when dc_org.include?('amazon')
+        "aws"
+      when dc_org.include?('google')
+        "google"
+      when dc_org.include?('hetzner')
+        "hetzner"
+      when dc_org.include?('leaseweb')
+        # split out hosts based on geolocation
+        case
+          when dc_country == "netherlands"
+            "leaseweb_eu"
+          when dc_country == "united states"
+            "leaseweb_us"
+          end
+      when dc_org.include?('microsoft azure')
+        "azure"
+      when dc_org.include?('network for education')
+        "osu"
+      when dc_org.include?('online sas')
+        "online.net"
+      when dc_org.include?('rackspace')
+        "rackspace"
+      when dc_org.include?('secured servers')
+        "pnap"
+      when dc_org.include?('yahoo')
+        "yahoo"
+      else
+        "default"
+    end
+  end
+end
+
 Facter.add("noderole") do
   setcode do
     hostname = Facter.value('hostname')
-    if hostname.include? "tlp-us"  # Only apply to azure test!
+    if hostname.include? "tlp-"  # include tlp boxes in US and EU
       "tlpserver"
     elsif hostname.include? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
       "jenkins"
