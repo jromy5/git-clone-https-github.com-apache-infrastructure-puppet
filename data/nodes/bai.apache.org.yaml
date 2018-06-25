@@ -182,6 +182,12 @@ rsync::server::module:
     auth_users: 'apb-psql'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  buildbot-vm2:
+    path: '/x1/backups/buildbot-vm2/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.225'
+    auth_users: 'apb-buildbot-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
