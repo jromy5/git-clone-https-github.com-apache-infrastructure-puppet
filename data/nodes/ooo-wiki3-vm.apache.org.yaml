@@ -37,20 +37,20 @@ vhosts_asf::vhosts::vhosts:
     priority: '12'
     servername: 'ooo-wiki3-vm.apache.org'
     serveraliases:
-      - 'wiki-test.openoffice.org'
+      - 'wikitest.openoffice.org'
     port: 80
     ssl: false
     docroot: '/var/www'
     error_log_file: 'ooo_mwiki_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://wiki-test.openoffice.org/$1
+      RedirectMatch permanent ^/(.*)$ https://wikitest.openoffice.org/$1
 
   ooo-mwiki3-443:
       vhost_name: '*'
       default_vhost: true
       servername: 'ooo-wiki3-vm.apache.org'
       serveraliases:
-        - 'wiki-test.openoffice.org'
+        - 'wikitest.openoffice.org'
       port: 443
       docroot: '/var/www'
       error_log_file: 'ooo_mwiki_error.log'
