@@ -83,9 +83,8 @@ end
 
 Facter.add("dd_autotag_colo") do
   setcode do
-    fqdn = Facter.value('fqdn')
-    # get external IP for fqdn
-    external_ip_api_url = URI('http://ip-api.com/json/' + fqdn)
+    # should get local external IP from ip-api.com, no need for fqdn
+    external_ip_api_url = URI('http://ip-api.com/json/')
     # make the call to ip-api to get 'org' for external_ip_api_url
     response = Net::HTTP.get(external_ip_api_url)
     json_response = JSON.parse(response)
