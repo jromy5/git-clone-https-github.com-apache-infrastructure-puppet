@@ -7,6 +7,8 @@ classes:
   - bb_pip_asf
   - mysql_asf::backup
   - mysql::server
+  - rsync::server
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
@@ -61,6 +63,33 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  jira:
+    path: '/x1/buildmaster/public_html/'
+    hosts_allow: '209.188.14.147'
+    auth_users: 'apb-buildbot'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+rsync_asf::cron_hour: 10
+rsync_asf::cron_minute: 10
+
+rsync_asf::fslist:
+  - /x1/buildmaster/public_html
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
 
 vhosts_asf::vhosts::vhosts:
   buildbot-vm-80:
