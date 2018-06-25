@@ -1853,6 +1853,10 @@ svn-role = rw
 [/turbine]
 @turbine = rw
 
+#moved to gitbox INFRA-16437
+[/turbine/maven/archetypes]
+* = r
+
 [/tuscany]
 @attic-pmc = rw
 
