@@ -201,7 +201,7 @@ datadog_agent::host: '%{::fqdn}'
 
 datadog_agent::integrations::process::processes:
   - name: 'puppet'
-    search_string: ['puppet agent']
+    search_string: ['puppet']
 
 fail2ban::service_status: true
 
