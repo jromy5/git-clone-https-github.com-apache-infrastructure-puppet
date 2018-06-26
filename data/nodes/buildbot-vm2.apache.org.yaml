@@ -8,7 +8,6 @@ classes:
   - mysql_asf::backup
   - mysql::server
   - rsync::server
-  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
