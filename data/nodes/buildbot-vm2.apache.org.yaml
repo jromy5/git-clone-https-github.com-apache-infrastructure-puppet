@@ -68,7 +68,7 @@ rsync::server::use_xinetd:    false
 rsync::server::gid:           'nogroup'
 
 rsync::server::module:
-  jira:
+  public_html:
     path: '/x1/buildmaster/public_html/'
     hosts_allow: '209.188.14.147'
     auth_users: 'apb-buildbot'
