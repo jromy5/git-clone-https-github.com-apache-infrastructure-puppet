@@ -69,7 +69,7 @@ rsync::server::gid:           'nogroup'
 
 rsync::server::module:
   public_html:
-    path: '/x1/buildmaster/public_html/'
+    path: '/x1/buildmaster/master1/public_html/'
     hosts_allow: '209.188.14.147'
     auth_users: 'apb-buildbot'
     secrets_file: '/etc/rsyncd.secrets'
