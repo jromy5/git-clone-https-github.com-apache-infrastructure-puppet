@@ -58,7 +58,7 @@ for i in ${ARCHIVES} ; do
 
     # We may have gotten it without .mbox suffix
     if [ -f $mboxfile2 -a ! -h $mboxfile ]; then
-        # Have we already done the symlink? 
+        # Have we already done the symlink?
         # Get rid of the old one that isn't a symlink.
         if [ -f $mboxfile ]; then
             rm $mboxfile
@@ -79,7 +79,7 @@ for i in ${ARCHIVES} ; do
 done
 
 if [ -x $APACHE_DIR/bin/mod-mbox-util ]; then
-  $SCRIPT_DIR/site-index.py > /x1/mail-archives.apache.org/mod_mbox/index.html
+  $SCRIPT_DIR/site-index.py
 else
   $SCRIPT_DIR/create-index-all $ARCHIVES_PATH
 fi

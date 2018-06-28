@@ -6,7 +6,9 @@ import os
 import sys
 
 ROOT="/x1/mail-archives/mod_mbox"
+OUTFILE = "/x1/mail-archives.apache.org/mod_mbox/index.html"
 
+OUT = ""
 # Get the list of podlings from a list the Incubator PMC maintains.
 def _get_podlings():
   rv = set()
@@ -46,7 +48,7 @@ keys.sort()
 keys.remove('asf-wide')
 keys.insert(0,'asf-wide')
 
-print """<?xml version="1.0" encoding="UTF-8"?>
+OUT += """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -95,10 +97,10 @@ document.location.hash = document.forms[0].TLP[document.forms[0].TLP.selectedInd
 """
 
 for tlp in keys:
-    print "<option value=\"%s\">%s</option>" % \
+    OUT += "<option value=\"%s\">%s</option>" % \
           (tlp, tlp.replace('.incubator', ' (incubating)'))
 
-print """
+OUT += """
 </select>
 </form>
 <table width="100%">
@@ -109,22 +111,22 @@ i = 0
 colcount = 0
 for tlp in keys:
     if tlp == "asf-wide":
-        print "<li><h3><a name='asf-wide'>ASF-wide lists:</a></h3>"
+        OUT += "<li><h3><a name='asf-wide'>ASF-wide lists:</a></h3>"
     else:
-        print "<li><h3><a name='%s'>%s.apache.org lists:</a></h3>" % (tlp, tlp)
-    print "<ul>"
+        OUT += "<li><h3><a name='%s'>%s.apache.org lists:</a></h3>" % (tlp, tlp)
+    OUT += "<ul>"
     klist = tlps[tlp].keys()
     klist.sort()
     for list in klist:
-        print "    <li><a href='%s/'>%s</a></li>" % (tlps[tlp][list], list)
+        OUT += "    <li><a href='%s/'>%s</a></li>" % (tlps[tlp][list], list)
         i = i + 1
         colcount = colcount + 1
-    print "</ul></li>"
+    OUT += "</ul></li>"
     if colcount >= count/3:
-        print """</ul></td><td><ul>"""
+        OUT += """</ul></td><td><ul>"""
         colcount = 0
 
-print """
+OUT += """
 </ul>
 </td>
 </tr>
@@ -132,3 +134,9 @@ print """
 </body>
 </html>
 """
+
+with open(OUTFILE, "w") as f:
+    f.write(OUT)
+    f.close()
+
+print("Site index generated!")
