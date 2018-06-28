@@ -227,7 +227,7 @@ class mail_archives (
       user        => $username,
       minute      => '51',
       hour        => '*/4',
-      command     => "/home/${username}/scripts/site-index.py > ${archives_www}/mod_mbox/index.html",
+      command     => "/home/${username}/scripts/site-index.py",
       environment => [
         'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
         'SHELL=/bin/sh'
