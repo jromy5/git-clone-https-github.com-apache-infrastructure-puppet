@@ -91,6 +91,8 @@ directory={reuse:asf-authorization:directory}
 directory-pmc={ldap:cn=directory,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 drill={reuse:asf-authorization:drill}
 drill-pmc={ldap:cn=drill,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+# Note PPMC, not PMC here:
+dubbo-ppmc={ldap:cn=dubbo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 eagle={reuse:asf-authorization:eagle}
 eagle-pmc={ldap:cn=eagle,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 empire-db={reuse:asf-authorization:empire-db}
@@ -928,6 +930,9 @@ openejb-tck = r
 
 [/pmc/incubator]
 @incubator-pmc = rw
+
+[/pmc/incubator/dubbo]
+@dubbo-ppmc = rw
 
 [/pmc/incubator/openwhisk]
 @openwhisk-ppmc = rw
