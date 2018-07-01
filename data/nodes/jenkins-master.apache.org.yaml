@@ -44,7 +44,7 @@ oraclejava::install::unlimited_jce: true
 
 # jenkins_asf class variables.
 
-jenkins_asf::jenkins_version: '2.89.4'
+jenkins_asf::jenkins_version: '2.121.1'
 jenkins_asf::parent_dir: '/x1'
 jenkins_asf::server_alias: 'builds.apache.org'
 jenkins_asf::server_port: '8005'
