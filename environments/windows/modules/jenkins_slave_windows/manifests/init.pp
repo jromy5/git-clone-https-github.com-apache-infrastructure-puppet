@@ -76,7 +76,7 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for JDK11':
-    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest11 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest11 F:\\jenkins\\tools\\java\\jdk11_ea+19",# lint:ignore:140chars
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest11 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest11 F:\\jenkins\\tools\\java\\jdk11-ea+19",# lint:ignore:140chars
     onlyif   => "if ((Get-Item F:\\jenkins\\tools\\java).LastWriteTime -lt (Get-Date).AddMinutes(-5)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
