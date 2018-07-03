@@ -1,0 +1,99 @@
+---
+classes:
+  - apache
+  - apache::mod::status
+  - apache::mod::headers
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
+  - projects_pvm_asf
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '15'
+apache::max_keepalive_requests: 1000
+apache::timeout: 600
+apache::default_vhost:      false
+apache::docroot:            '/var/www/htdocs'
+
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '250'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '150'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '250'
+apache::mod::event::threadsperchild: '50'
+
+apache::mod::status::allow_from:
+  - all
+apache::mod::status::apache_version: '2.3'
+
+apache::mpm_module:         'event'
+apache::serveradmin:        'dev@community.apache.org'
+
+base::basepackages:
+  - 'libcgi-pm-perl'
+  - 'libjson-perl'
+  - 'perl-doc'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
+vhosts_asf::vhosts::vhosts:
+  projects:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/projects.apache.org/site'
+    docroot_owner: "%{apache::user}"
+    docroot_group: "%{apache::group}"
+    servername: 'projects.apache.org'
+    serveraliases:
+      - 'projects-new.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    directoryindex: 'index.py index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler cgi-script .py
+      <Location />
+        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
+      </Location>
+      <Directory /var/www/projects.apache.org/site/json/>
+        Header set Access-Control-Allow-Origin "*"
+      </Directory>
+
+  reporter:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/reporter.apache.org/site'
+    docroot_owner: "%{apache::user}"
+    docroot_group: "%{apache::group}" 
+    servername: 'reporter.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    directoryindex: 'index.py index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler cgi-script .py
+      <Location />
+        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
+      </Location>
+      Alias /releases/ /var/www/reporter.apache.org/data/releases/
+
+
+# Install ldap3 for use by python cron scripts
+python::python_pips:
+  ldap3:
+    ensure: present
