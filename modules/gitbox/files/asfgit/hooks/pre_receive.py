@@ -27,8 +27,10 @@ Merges are not allowed on %s.
 """
 
 SYNC_BROKEN = u"""\
-This repository is currently out of sync, please
-contact users@infra.apache.org!
+This repository has been locked due to synchronization issues:
+ - %s exists due to a previous error, and prevents pushes.
+This could either be a benign issue, or the repositories could be out of sync.
+Please contact users@infra.apache.org to have infrastructure resolve the issue.
 """
 
 MERGEBOT_APPROVED_IPS = [
@@ -43,8 +45,9 @@ def main():
             util.abort(WRITE_LOCKED)
 
     # Check if the repo is out of sync
-    if os.path.exists("/x1/gitbox/broken/%s.txt" % cfg.repo_name):
-        util.abort(SYNC_BROKEN)
+    lockfile = "/x1/gitbox/broken/%s.txt" % cfg.repo_name
+    if os.path.exists(lockfile):
+        util.abort(SYNC_BROKEN % lockfile)
 
     # Check committer's authorization for this
     # repository.
