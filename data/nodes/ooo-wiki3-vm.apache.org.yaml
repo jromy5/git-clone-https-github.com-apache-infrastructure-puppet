@@ -1,26 +1,30 @@
 ---
 classes:
   - apache
+  - apache::mod::expires
+  - apache::mod::mime
+  - apache::mod::php
   - apache::mod::rewrite
+  - memcached
   - ooo_mwiki
   - ssl::name::wildcard_openoffice_org
   - vhosts_asf::vhosts
 
-apache::keepalive:          'On'
-apache::keepalive_timeout:  '15'
+apache::keepalive: 'On'
+apache::keepalive_timeout: '15'
 apache::timeout: 600
-apache::mpm_module:         'event'
+apache::mpm_module: 'prefork'
 
-apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
-apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '500'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '150'
-apache::mod::event::serverlimit: '10'
-apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
-apache::mod::event::threadsperchild: '50'
+apache::mod::prefork::maxrequestworkers: '120'
+apache::mod::prefork::startservers: '10'
+
+logrotate::rule:
+  apache2:
+    ensure: 'present'
+
+memcached::max_memory: '10%'
+memcached::listen_ip: '127.0.0.1'
+memcached::tcp_port: '11211'
 
 # ooo_mwiki class variables.
 
@@ -52,10 +56,29 @@ vhosts_asf::vhosts::vhosts:
       serveraliases:
         - 'wikitest.openoffice.org'
       port: 443
-      docroot: '/var/www'
+      docroot: '/x1/mwiki'
       error_log_file: 'ooo_mwiki_error.log'
       ssl: true
       ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
       ssl_chain: '/etc/ssl/certs/wildcard.openoffice.org.chain'
       ssl_key: '/etc/ssl/private/wildcard.openoffice.org.key'
 
+      custom_fragment: |
+        Alias  /htdocs    /x1/mwiki/
+        Alias  /w         /x1/mwiki/
+        Alias  /mwiki     /x1/mwiki/
+        Alias  /wiki      /x1/mwiki/index.php
+        Alias  /index.php /x1/mwiki/index.php
+
+        <Directory "/x1/mwiki">
+            Options -Indexes MultiViews FollowSymLinks
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+            ExpiresActive On
+            ExpiresByType image/x-icon "access plus 1 month"
+        </Directory>
+        <DirectoryMatch "/x1/mwiki/(skins|images|ASFLogo)">
+            ExpiresActive On
+            ExpiresDefault "access plus 1 month"
+        </DirectoryMatch>
