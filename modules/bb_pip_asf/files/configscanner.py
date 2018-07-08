@@ -7,7 +7,7 @@
 ############################################################
 
 SVN='/usr/bin/svn'
-BUILDBOT='/usr/bin/buildbot'
+BUILDBOT='/x1/buildmaster/bin/buildbot'
 
 buildbotDir = "/x1/buildmaster/master1"
 blamelist = ["users@infra.apache.org"]
@@ -25,6 +25,9 @@ from datetime import datetime
 # Rest
 import sys, os
 import argparse, grp, pwd, shutil
+
+# set pipenv
+os.environ["VIRTUAL_ENV"] = "/x1/buildmaster"
 
 version = 2
 if sys.hexversion < 0x03000000:
