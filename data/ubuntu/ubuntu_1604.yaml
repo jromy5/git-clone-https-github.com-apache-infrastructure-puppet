@@ -12,6 +12,7 @@ classes:
   - postfix::server
   - python
   - subversionclient
+  - tz16_asf
   - loggy
   - unattended_upgrades
 
