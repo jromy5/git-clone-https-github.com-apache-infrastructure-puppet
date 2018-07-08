@@ -187,6 +187,7 @@ unattended_upgrades::upgrade: 1
 unattended_upgrades::autoclean: 7
 unattended_upgrades::clean::min: 7
 unattended_upgrades::origins:
+  - '${distro_id} ${distro_codename}'
   - '${distro_id} ${distro_codename}-security'
 
 apt::always_apt_update: true
