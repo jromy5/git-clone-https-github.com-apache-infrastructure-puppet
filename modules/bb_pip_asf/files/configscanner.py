@@ -26,9 +26,6 @@ from datetime import datetime
 import sys, os
 import argparse, grp, pwd, shutil
 
-# set pipenv
-os.environ["VIRTUAL_ENV"] = "/x1/buildmaster"
-
 version = 2
 if sys.hexversion < 0x03000000:
     print("Using Python 2...")

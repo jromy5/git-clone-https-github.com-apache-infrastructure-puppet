@@ -37,7 +37,8 @@ start() {
 
     echo "Starting configscanner daemon: "
     cd $configscanner_appdir
-    python2.7 configscanner.py --daemonize --user=$configscanner_user --group=$configscanner_group
+    . /x1/buildmaster/bin/activate
+    python configscanner.py --daemonize --user=$configscanner_user --group=$configscanner_group
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
@@ -46,7 +47,8 @@ start() {
 stop() {
     echo "Stopping configscanner daemon: "
     cd $configscanner_appdir
-    python2.7 configscanner.py --stop
+    . /x1/buildmaster/bin/activate
+    python configscanner.py --stop
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
