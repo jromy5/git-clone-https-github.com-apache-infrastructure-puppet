@@ -9,9 +9,8 @@ buildbot_slave::required_packages:
   - 'graphviz'
   - 'graphviz-dev'
   - 'libtool'
-  - 'libpcre3' 
+  - 'libpcre3'
   - 'libpcre3-dev'
-  - 'libssl-dev'
   - 'sqlite3'
 
 python::python_pips:
