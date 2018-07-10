@@ -71,7 +71,7 @@ vhosts_asf::vhosts::vhosts:
         Alias  /index.php /x1/mwiki/index.php
 
         <Directory "/x1/mwiki">
-            Options Indexes MultiViews FollowSymLinks
+            Options -Indexes +MultiViews +FollowSymLinks
             AllowOverride All
             Order allow,deny
             Allow from all
