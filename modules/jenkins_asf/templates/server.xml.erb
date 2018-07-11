@@ -39,6 +39,7 @@
                connectionTimeout="20000"
                useURIValidationHack="false" URIEncoding="UTF-8"
                redirectPort="8443" secure="true"
+               maxthreads="<%= @max_threads %>"
                scheme="https" proxyName="<%= @server_alias %>" />
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
