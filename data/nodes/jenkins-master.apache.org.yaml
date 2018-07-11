@@ -52,7 +52,7 @@ jenkins_asf::connector_port: '8080'
 jenkins_asf::heap_min_size: '8192'
 jenkins_asf::heap_max_size: '16384'
 jenkins_asf::maxmetaspacesize: '8192'
-jenkins_asf::tomcat_version: '9.0.10'
+jenkins_asf::tomcat_version: '9.0.2'
 jenkins_asf::tomcat_caching_allowed: 'true'
 jenkins_asf::tomcat_caching_max_size: '200000'
 
