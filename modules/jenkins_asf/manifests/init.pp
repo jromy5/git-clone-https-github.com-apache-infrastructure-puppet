@@ -17,6 +17,7 @@ class jenkins_asf (
   $server_alias                  = '',
   $server_port                   = '',
   $connector_port                = '',
+  $max_threads                   = '',
   $heap_min_size                 = '',
   $heap_max_size                 = '',
   $maxmetaspacesize              = '',
