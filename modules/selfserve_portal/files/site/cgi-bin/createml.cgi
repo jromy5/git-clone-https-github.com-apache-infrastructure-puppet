@@ -35,22 +35,22 @@ def checkDomain(dom):
     """Check if an apache.org ML domain exists or not"""
     rv = requests.get("https://whimsy.apache.org/public/committee-info.json")
     domains = rv.json()['committees']
-    
+
     # TODO this includes retired and graduated podlings
     rv = requests.get("https://whimsy.apache.org/public/public_podlings.json")
     domains.update(rv.json()['podling'])
-    
+
     dlist = ['apache.org']
     for cmt in domains:
         info = domains[cmt]
         if not 'mail_list' in info or not ('@' in info['mail_list'] or ' ' in info['mail_list']):
             dlist.append("%s.apache.org" % (info['mail_list'] if 'mail_list' in info else cmt))
-    
+
     if not dom in dlist:
         return False
     return True
 
-    
+
 
 form = cgi.FieldStorage();
 
@@ -76,7 +76,7 @@ else:
 
 # No Digest List, all lists have a -digest subscription anyway
 
-if 'digest' in listname:
+if "digest" in listname:
   sscommon.buggo("Invalid list name digest.")
 
 # Get and validate mods
@@ -132,17 +132,16 @@ for newlist in lists:
     with open(lockfile, "w") as lock, open(filepath, "w") as f:
         fcntl.flock(lock, fcntl.LOCK_EX)
         json.dump(payload, f)
-    
+
     add = "This list has been marked as private. " if payload['private'] else ""
     sscommon.sendemail("%s@apache.org" % requser, "New mailing list queued for creation: %s@%s" % (newlist, domain),
     """
     Hi there,
     As requested by %s@apache.org, a new mailing list has been queued for creation:
     %s@%s
-    
+
     %s
     This request will automatically be processed within 24 hours.
     """ % (requser, newlist, domain, add))
     sscommon.hipchat("A new mailing list, <kbd>%s@%s</kbd>, has been queued for creation, as requested by %s@apache.org. %s" % (newlist, domain, requser, add))
 print("Status: 201 Created\r\n\r\n<h2>Mailing List request received!</h2>Your request for a new mailing list has been received and will automatically be processed within 24 hours. We will notify your PMC when the list has been created.")
-
