@@ -183,8 +183,6 @@ lucene-pmc={ldap:cn=lucene,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 # Note: 'lucene-lucy' - the lucy podling just graduated.
 lucenenet={reuse:asf-authorization:lucenenet}
 lucenenet-pmc={ldap:cn=lucenenet,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-lucy={reuse:asf-authorization:lucy}
-lucy-pmc={ldap:cn=lucy,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 mahout={reuse:asf-authorization:mahout}
 mahout-pmc={ldap:cn=mahout,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 manifoldcf={reuse:asf-authorization:manifoldcf}
@@ -980,9 +978,6 @@ openejb-tck = r
 [/pmc/lucene/committers]
 @lucene = rw
 
-[/pmc/lucy]
-@lucy = rw
-
 [/pmc/maven]
 @maven-pmc = rw
 
@@ -1311,7 +1306,7 @@ buildbot = rw
 @lucenenet = rw
 
 [/websites/production/lucy]
-@committers = rw
+@attic-pmc = rw
 
 [/websites/production/mahout]
 @mahout = rw
