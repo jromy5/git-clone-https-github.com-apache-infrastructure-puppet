@@ -259,8 +259,6 @@ lucene-orp={ldap:cn=lucene-orp,ou=auth,ou=groups,dc=apache,dc=org}
 lucene-py={ldap:cn=lucene-py,ou=auth,ou=groups,dc=apache,dc=org}
 lucenenet={ldap:cn=lucenenet,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 lucenenet-pmc={reuse:pit-authorization:lucenenet-pmc}
-# lucy={ldap:cn=lucy,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-# lucy-pmc={reuse:pit-authorization:lucy-pmc}
 mahout={ldap:cn=mahout,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 mahout-pmc={reuse:pit-authorization:mahout-pmc}
 manifoldcf={ldap:cn=manifoldcf,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1336,11 +1334,6 @@ buildbot = rw
 
 [/lucy]
 @attic-pmc=rw
-
-# [/lucy/board]
-# @lucy=rw
-# [/lucy/site]
-# @lucy=rw
 
 [/mahout]
 @mahout = r
