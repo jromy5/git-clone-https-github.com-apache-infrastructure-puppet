@@ -374,7 +374,7 @@ apsite={ldap:cn=apsite,ou=groups,dc=apache,dc=org}
 attic-pmc={ldap:cn=attic,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 audit={ldap:cn=audit,ou=groups,ou=services,dc=apache,dc=org}
 board={ldap:cn=board,ou=groups,ou=services,dc=apache,dc=org}
-comdev={ldap:cn=comdev,ou=groups,dc=apache,dc=org}
+comdev={ldap:cn=comdev,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 comdev-pmc={ldap:cn=comdev,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 concom={ldap:cn=concom,ou=groups,dc=apache,dc=org}
 exec-officers={ldap:cn=exec-officers,ou=auth,ou=groups,dc=apache,dc=org}
