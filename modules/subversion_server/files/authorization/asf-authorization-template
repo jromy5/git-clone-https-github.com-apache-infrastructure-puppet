@@ -661,7 +661,6 @@ buildbot = rw
 @cocoon = rw
 
 [/comdev]
-@comdev= rw
 @committers = rw
 
 [/comdev/projects.apache.org/trunk/site/json]
@@ -672,9 +671,6 @@ projects_role = rw
 
 [/comdev/reporter.apache.org/trunk/data/releases]
 projects_role = rw
-
-[/comdev/site]
-@committers = rw
 
 [/commons]
 @committers = rw
