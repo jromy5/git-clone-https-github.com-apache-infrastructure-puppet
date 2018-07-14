@@ -71,133 +71,6 @@ BuildBot
     except SMTPException:
         raise Exception("Could not send email - SMTP server down??")
 
-###########################################################
-# Daemon class, curtesy of an anonymous good-hearted soul #
-###########################################################
-class daemon:
-    """A generic daemon class.
-
-    Usage: subclass the daemon class and override the run() method."""
-
-    def __init__(self, pidfile): self.pidfile = pidfile
-
-    def daemonize(self):
-        """Daemonize class. UNIX double fork mechanism."""
-
-        try:
-            pid = os.fork()
-            if pid > 0:
-                # exit first parent
-                sys.exit(0)
-        except OSError as err:
-            sys.stderr.write('fork #1 failed: {0}\n'.format(err))
-            sys.exit(1)
-
-        # decouple from parent environment
-        #os.chdir('/')
-        os.setsid()
-        os.umask(0)
-
-        # do second fork
-        try:
-            pid = os.fork()
-            if pid > 0:
-
-                # exit from second parent
-                sys.exit(0)
-        except OSError as err:
-            sys.stderr.write('fork #2 failed: {0}\n'.format(err))
-            sys.exit(1)
-
-        # redirect standard file descriptors
-        sys.stdout.flush()
-        sys.stderr.flush()
-        si = open(os.devnull, 'r')
-        so = open(os.devnull, 'a+')
-        se = open(os.devnull, 'a+')
-
-        os.dup2(si.fileno(), sys.stdin.fileno())
-        os.dup2(so.fileno(), sys.stdout.fileno())
-        os.dup2(se.fileno(), sys.stderr.fileno())
-
-        # write pidfile
-        atexit.register(self.delpid)
-
-        pid = str(os.getpid())
-        with open(self.pidfile,'w+') as f:
-            f.write(pid + '\n')
-        if args.user and len(args.user) > 0:
-            print("Switching to user %s" % args.user[0])
-            uid = pwd.getpwnam(args.user[0])[2]
-            os.setuid(uid)
-
-    def delpid(self):
-        os.remove(self.pidfile)
-
-    def start(self):
-        """Start the daemon."""
-
-        # Check for a pidfile to see if the daemon already runs
-        try:
-            with open(self.pidfile,'r') as pf:
-
-                pid = int(pf.read().strip())
-        except IOError:
-            pid = None
-
-        if pid:
-            message = "pidfile {0} already exist. " + \
-                            "Daemon already running?\n"
-            sys.stderr.write(message.format(self.pidfile))
-            sys.exit(1)
-
-        # Start the daemon
-        self.daemonize()
-        self.run()
-
-    def stop(self):
-        """Stop the daemon."""
-
-        # Get the pid from the pidfile
-        try:
-            with open(self.pidfile,'r') as pf:
-                pid = int(pf.read().strip())
-        except IOError:
-            pid = None
-
-        if not pid:
-            message = "pidfile {0} does not exist. " + \
-                            "Daemon not running?\n"
-            sys.stderr.write(message.format(self.pidfile))
-            return # not an error in a restart
-
-        # Try killing the daemon process
-        try:
-            while 1:
-                os.kill(pid, signal.SIGTERM)
-                time.sleep(0.1)
-        except OSError as err:
-            e = str(err.args)
-            if e.find("No such process") > 0:
-                if os.path.exists(self.pidfile):
-                    os.remove(self.pidfile)
-            else:
-                print (str(err.args))
-                sys.exit(1)
-
-    def restart(self):
-        """Restart the daemon."""
-        self.stop()
-        self.start()
-
-    def run(self):
-        """You should override this method when you subclass Daemon.
-
-        It will be called after the process has been daemonized by
-        start() or restart()."""
-
-
-
 ####################
 # Helper functions #
 ####################
@@ -225,8 +98,8 @@ def read_chunk(req):
 #########################
 
 # PubSub class: handles connecting to a pubsub service and checking commits
-class PubSubClient(Thread):
-    def run(self):
+class PubSubClient(object):
+    def start(self):
         broken = False
         while True:
             logging.info("Connecting to " + self.url + "...")
@@ -351,27 +224,13 @@ Please correct the below and commit your fixes:
 # Main program #
 ################
 def main():
-    if debug:
-        print("Foreground test mode enabled, no updates will happen")
-
     # Start the svn thread
     svn_thread = PubSubClient()
     svn_thread.url = "http://svn-master.apache.org:2069/commits/*"
-    if debug:
-        svn_thread.daemon = True # ensure code exits on ^C
     svn_thread.start()
 
-    while True:
-        time.sleep(10)
 
-
-##############
-# Daemonizer #
-##############
-class MyDaemon(daemon):
-    def run(self):
-        main()
-
+### Run the thing ###
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Command line options.')
@@ -387,26 +246,9 @@ if __name__ == "__main__":
                        help='Kill the currently running ConfigScanner process')
     args = parser.parse_args()
 
-    pidfile = "/var/run/configscanner.pid"
-    if args.pidfile and len(args.pidfile) > 2:
-        pidfile = args.pidfile
-
     if args.group and len(args.group) > 0:
         gid = grp.getgrnam(args.group[0])
         os.setgid(gid[2])
 
-
-
-    daemon = MyDaemon(pidfile)
-
-
-
-    if args.kill:
-        daemon.stop()
-    elif args.daemon:
-        daemon.start()
-    else:
-        debug = True
-        logging.getLogger().addHandler(logging.StreamHandler())
-        main()
-    sys.exit(0)
+    logging.getLogger().addHandler(logging.StreamHandler())
+    main()
