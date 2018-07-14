@@ -159,7 +159,7 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/configscanner.py';
-    '/etc/init.d/configscanner':
+    '/usr/lib/systemd/user/configscanner.service':
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
