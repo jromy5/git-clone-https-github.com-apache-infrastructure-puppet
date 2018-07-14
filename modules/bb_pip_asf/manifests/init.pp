@@ -161,7 +161,7 @@ class bb_pip_asf (
 
     # configscanner daemon
 
-    '/usr/lib/systemd/user/configscanner.service':
+    '/etc/systemd/system/configscanner.service':
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
