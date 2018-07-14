@@ -53,7 +53,7 @@ mysql::server::databases:
     charset: 'utf8'
     collate: 'utf8_bin'
   asfbuildbot:
-    ensure: 'present'
+    ensure: 'absent'
     charset: 'utf8'
     collate: 'utf8_bin'
   reviewboard:
