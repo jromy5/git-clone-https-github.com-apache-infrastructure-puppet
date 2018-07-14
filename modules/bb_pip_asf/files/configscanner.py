@@ -124,8 +124,7 @@ class PubSubClient(object):
                 try:
                     obj = json.loads(line)
                     if "commit" in obj and "repository" in obj['commit']:
-                        if debug:
-                            logging.info("Found a commit in %s", obj['commit']['repository'])
+                        logging.info("Found a commit in %s", obj['commit']['repository'])
 
                         if obj['commit']['repository'] == "git":
 
@@ -164,14 +163,14 @@ class PubSubClient(object):
                                 if m:
                                     # N.B. this loop only runs on first match as it processes the entire revision at once
                                     time.sleep(3) # why do we wait here?
-                                    print("Validating new revision %s (was %s)" % (revision, before))
+                                    logging.info("Validating new revision %s (was %s)" % (revision, before))
                                     os.environ['HOME'] = '/x1/buildmaster' # where SVN settings are found
                                     try:
-                                        print("Checking out new config")
+                                        logging.info("Checking out new config")
                                         subprocess.check_output([SVN, 'update', '-r', "%u" % revision, 'projects'])
-                                        print("Running config check")
+                                        logging.info("Running config check")
                                         subprocess.check_output([BUILDBOT, "checkconfig"], stderr=subprocess.STDOUT)
-                                        print("Check passed, apply the new config")
+                                        logging.info("Check passed, apply the new config")
                                         subprocess.check_output([BUILDBOT, "reconfig"], stderr=subprocess.STDOUT)
                                         if broken: # has this fixed a broken config?
                                             broken = False
@@ -188,10 +187,10 @@ class PubSubClient(object):
                                             blamelist.remove(email)
                                     except subprocess.CalledProcessError as err:
                                         broken = True
-                                        print("Config check returned code %i" % err.returncode)
-                                        print(err.output)
+                                        logging.warning("Config check returned code %i" % err.returncode)
+                                        logging.warning(err.output)
                                         # Do this first in case mail fails
-                                        print("Cleaning up...")
+                                        logging.info("Cleaning up...")
                                         subprocess.call([SVN, 'update', '-r', before, 'projects'])
                                         blamelist.append(email)
                                         out = """
@@ -209,7 +208,7 @@ Please correct the below and commit your fixes:
                                                 )
                                         blamelist.remove(email)
 
-                                    print("All done, back to listening for changes :)")
+                                    logging.info("All done, back to listening for changes :)")
 
                                     break # we process the whole revision on the first match
 
