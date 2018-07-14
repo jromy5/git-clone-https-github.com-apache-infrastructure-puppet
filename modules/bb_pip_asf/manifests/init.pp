@@ -34,11 +34,11 @@ class bb_pip_asf (
 
 ){
 
-  # pip install buildbot into a venv. this approach will make for a 
+  # pip install buildbot into a venv. this approach will make for a
   # more modular install and allow for future upgrades beyond an OS
   # supported version
 
-  # set bb_version to install that version of the buildbot pip and 
+  # set bb_version to install that version of the buildbot pip and
   # its dependencies.
 
   group { $groupname:
@@ -56,7 +56,7 @@ class bb_pip_asf (
     home       => $venv_dir,
     managehome => false,
   }
-  
+
   python::virtualenv { 'buildbot':
     ensure          => 'present',
     version         => 'system',
@@ -78,7 +78,7 @@ class bb_pip_asf (
 
   # populate buildmaster's .profile to activate the venv
 
-  file { 
+  file {
     "$venv_dir/.profile":
       ensure  => present,
       mode    => '0755',
@@ -158,10 +158,10 @@ class bb_pip_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/bb_pip_asf/sitemap-index.xml';
- 
+
     # configscanner daemon
 
-    '/etc/init.d/configscanner':
+    '/usr/lib/systemd/user/configscanner.service':
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
@@ -280,8 +280,8 @@ class bb_pip_asf (
   # Buildbot config scanner app
 
   service { 'configscanner':
-    ensure    => 'stopped',
-    enable    => false,
+    ensure    => 'running',
+    enable    => true,
     hasstatus => true,
     subscribe => File['/x1/buildmaster/master1/configscanner.py'],
   }
