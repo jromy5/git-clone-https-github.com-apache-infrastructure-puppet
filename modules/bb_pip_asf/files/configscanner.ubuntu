@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/x1/buildmaster/bin/activate && python2.7 /x1/buildmaster/master1/configscanner.py
+ExecStart=/bin/bash -c "cd /x1/buildmaster && source bin/activate && python2.7 /x1/buildmaster/master1/configscanner.py"
 User=buildmaster
 Restart=always
 
