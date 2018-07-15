@@ -493,6 +493,7 @@ build_slaves::distro_packages:
   - sharutils
   - shellcheck
   - sloccount
+  - snapd
   - swig
   - tmux
   - unzip
