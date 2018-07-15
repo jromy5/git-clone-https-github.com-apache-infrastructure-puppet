@@ -188,6 +188,12 @@ rsync::server::module:
     auth_users: 'apb-buildbot-vm2'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  wilderness:
+    path: '/x1/backups/wilderness/./target/'
+    hosts_allow: '127.0.0.1 209.188.14.135'
+    auth_users: 'apb-wilderness'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
