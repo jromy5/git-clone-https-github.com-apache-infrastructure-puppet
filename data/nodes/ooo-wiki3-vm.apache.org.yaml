@@ -57,6 +57,7 @@ vhosts_asf::vhosts::vhosts:
         - 'wikitest.openoffice.org'
       port: 443
       docroot: '/x1/mwiki'
+      manage_docroot: false
       error_log_file: 'ooo_mwiki_error.log'
       ssl: true
       ssl_cert: '/etc/ssl/certs/wildcard.openoffice.org.crt'
