@@ -32,7 +32,7 @@ class projects_pvm_asf (
       hour    => [0, 6, 12, 18],
       user    => 'root',
       require => File['/var/log/www-data-root'],
-      command => 'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+\%Y-\%m").log'; # lint:ignore:140chars
+      command => 'cd /var/www/reporter.apache.org/data/releases && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnreleases_$(date "+\%Y-\%m").log 2>&1'; # lint:ignore:140chars
 
   #
   # Check in any updated data/history files
@@ -42,7 +42,7 @@ class projects_pvm_asf (
       hour    => [4, 12, 20],
       user    => 'root',
       require => File['/var/log/www-data-root'],
-      command => 'cd /var/www/reporter.apache.org/data/history && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnhistory_$(date "+\%Y-\%m").log'; # lint:ignore:140chars
+      command => 'cd /var/www/reporter.apache.org/data/history && sudo -n -u www-data svn ci -m "updating report releases data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnhistory_$(date "+\%Y-\%m").log 2>&1'; # lint:ignore:140chars
   #
   # Check in any updated/new json files under projects.apache.org
   # The "svn add" job run under www-data is run at 04:10
@@ -51,7 +51,7 @@ class projects_pvm_asf (
       hour    => 4,
       user    => 'root',
       require => File['/var/log/www-data-root'],
-      command => 'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+\%Y-\%m").log'; # lint:ignore:140chars
+      command => 'cd /var/www/projects.apache.org/site/json && sudo -n -u www-data svn ci -m "updating projects data" --username projects_role --password `cat /root/.rolepwd` --non-interactive >>/var/log/www-data-root/svnjson_$(date "+\%Y-\%m").log 2>&1'; # lint:ignore:140chars
 
   }
 
