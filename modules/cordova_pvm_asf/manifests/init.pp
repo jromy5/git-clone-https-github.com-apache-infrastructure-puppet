@@ -7,9 +7,9 @@ class cordova_pvm_asf (
   apt::ppa { 'ppa:couchdb/stable':
     ensure => present,
     before => Package['couchdb'],
-  } ->
+  }
 
-  package { $packages:
+  -> package { $packages:
     ensure => present,
   }
 

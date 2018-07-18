@@ -8,9 +8,9 @@ class gitmirrorupdater (
 
   package { $packages:
     ensure => present,
-  }->
+  }
 
-  file {
+  -> file {
     '/usr/local/etc/svn2gitupdate':
       ensure => directory,
       owner  => $git_mirror_asf::user::username,
@@ -26,9 +26,9 @@ class gitmirrorupdater (
       mode    => '0755',
       source  => "puppet:///modules/gitmirrorupdater/svn2gitupdate.${::asfosname}",
       require => User[$git_mirror_asf::user::username];
-  }->
+  }
 
-  gitmirrorupdater::download_file {
+  -> gitmirrorupdater::download_file {
     [
       'svn2gitupdate.py',
       'svn2gitupdate.cfg'
@@ -45,9 +45,9 @@ class gitmirrorupdater (
       ensure => file,
       audit  => 'content',
       notify => Service['svn2gitupdate']
-  }->
+  }
 
-  service { 'svn2gitupdate':
+  -> service { 'svn2gitupdate':
     ensure     => running,
     enable     => true,
     hasstatus  => true,

@@ -6,8 +6,8 @@ define gump_server::opt_package ($url, $linkname, $dirname = $title) {
     creates => "/opt/__versions__/${dirname}",
     path    => ['/usr/bin', '/bin', '/usr/sbin'],
     require => [ Package['curl'], Package['unzip'] ]
-  } ->
-  file { "/opt/${linkname}":
+  }
+  -> file { "/opt/${linkname}":
     ensure => link,
     force  => true,
     target => "/opt/__versions__/${dirname}"
