@@ -15,12 +15,12 @@ class zfs_on_ubuntu {
 
   package { $packages_pre:
     ensure  => installed,
-  } ~>
-  package { $packages_zfs:
+  }
+  ~> package { $packages_zfs:
     ensure  => installed,
     require => Apt::Ppa['ppa:zfs-native/stable'],
-  } ~>
-  exec { 'modprobe zfs':
+  }
+  ~> exec { 'modprobe zfs':
     command => '/sbin/modprobe zfs'
   }
 

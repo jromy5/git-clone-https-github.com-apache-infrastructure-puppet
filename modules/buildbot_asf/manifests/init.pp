@@ -58,11 +58,11 @@ class buildbot_asf (
   }
 
   python::virtualenv { 'buildbot':
-    ensure          => 'present',
-    version         => 'system',
-    owner           => $username,
-    group           => $groupname,
-    venv_dir        => $venv_dir,
+    ensure   => 'present',
+    version  => 'system',
+    owner    => $username,
+    group    => $groupname,
+    venv_dir => $venv_dir,
   }
 
   # pip install bb manually due to puppet3 limitations

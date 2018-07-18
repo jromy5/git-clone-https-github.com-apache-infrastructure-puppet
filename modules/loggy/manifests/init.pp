@@ -12,9 +12,9 @@ class loggy (
 
   package { 'gcc':
     ensure => present,
-  }->
+  }
 
-  python::pip {
+  -> python::pip {
     'elasticsearch' :
       ensure => '5.3.0';
     'python-inotify==0.6-test' :
@@ -22,9 +22,9 @@ class loggy (
       require => Package['gcc'];
     'certifi' :
       ensure  => present;
-  } ->
+  }
 
-  file {
+  -> file {
     '/usr/local/etc/loggy':
       ensure => directory,
       mode   => '0755',
@@ -50,9 +50,9 @@ class loggy (
       owner   => $username,
       group   => $group,
       content => template('loggy/loggy.cfg.erb');
-    } ->
+    }
 
-    service { $service_name:
+    -> service { $service_name:
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => true,

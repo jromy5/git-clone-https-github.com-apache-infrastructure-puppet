@@ -20,9 +20,9 @@ class dnsclient (
 
   package { 'resolvconf':
     ensure => 'purged',
-  } ~>
+  }
 
-  file {
+  ~> file {
     '/etc/resolv.conf':
       content => template('dnsclient/resolv.conf.erb');
     $dhclienthooksfile:

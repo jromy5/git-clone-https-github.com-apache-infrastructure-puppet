@@ -111,8 +111,8 @@ class jira_asf (
       creates => "${install_dir}/NOTICE",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  } ->
-  exec {
+  }
+  -> exec {
     'chown-jira-dirs':
       command => "/bin/chown -R ${username}:${username} ${install_dir}",
       timeout => 1200,
