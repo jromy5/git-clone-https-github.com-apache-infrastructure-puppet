@@ -10,9 +10,8 @@ class ghmon_server {
   exec { 'Download certbot':
     command => '/usr/bin/wget -q https://dl.eff.org/certbot-auto -O /usr/local/bin/certbot-auto',
     creates => '/usr/local/bin/certbot-auto',
-  } ->
-
-  file { '/usr/local/bin/certbot-auto':
+  }
+  -> file { '/usr/local/bin/certbot-auto':
     mode => '0755'
   }
 

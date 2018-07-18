@@ -37,15 +37,13 @@ class sonar_asf (
   class { 'oraclejava::install':
     ensure  => 'latest',
     version => '8',
-}->
-
-  group {
+}
+    -> group {
     $groupname:
       ensure => $group_present,
       system => true,
-  }->
-
-  user {
+  }
+  -> user {
     $username:
       ensure     => $user_present,
       system     => true,

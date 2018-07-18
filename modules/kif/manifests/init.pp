@@ -13,17 +13,15 @@ class kif (
 
   package { 'python-yaml':
     ensure => present,
-  }->
-
-  python::pip {
+  }
+  -> python::pip {
     'psutil' :
       ensure  => present,
       require => Package['python-yaml'];
     'requests' :
       ensure  => present;
-  } ->
-
-  file {
+  }
+  -> file {
     '/usr/local/etc/kif':
       ensure => directory,
       mode   => '0755',
@@ -59,9 +57,8 @@ class kif (
       owner   => $username,
       group   => $group,
       content => template('kif/kif.yaml.erb')
-    } ->
-
-    service { $service_name:
+    }
+    -> service { $service_name:
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => true,

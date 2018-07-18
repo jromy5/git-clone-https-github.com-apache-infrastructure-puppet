@@ -63,9 +63,8 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
     package { 'pyzor':
       ensure => $package_ensure,
       notify => [Service['spamassassin'], Service['amavis']];
-    }->
-
-    exec { 'pyzor prime':
+    }
+    -> exec { 'pyzor prime':
       command => "pyzor --homedir ${install_folder} discover",
       creates => "${install_folder}/servers",
       cwd     => $install_folder,
@@ -97,20 +96,16 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
   package { $package_list:
     ensure => $package_ensure,
     notify => [Service['spamassassin'], Service['amavis']];
-  }->
-
-  group {
+  }
+  -> group {
     'amavis':
       members => 'clamav',
       require => Package['amavisd-new'];
     'clamav':
       members => 'amavis',
       require => Package['clamav-daemon'],
-  }->
-
-
-  ## SpamAssassin Files
-  file {
+  }
+  -> file {
     "${install_folder}/init.pre":
       source  => 'puppet:///modules/spamassassin/init.pre',
       require => Package[ $package_list ],
@@ -135,10 +130,8 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       source  => 'puppet:///modules/spamassassin/v330.pre',
       require => Package[ $package_list ],
       notify  => [Service['spamassassin'], Service['amavis']];
-  }->
-
-  ## Amavis Files
-  file {
+  }
+  -> file {
     '/etc/amavis/conf.d':
       ensure  => present,
       source  => 'puppet:///modules/spamassassin/amavis/',
@@ -155,11 +148,8 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       mode    => '0755',
       require => Package[ $package_list ],
       notify  => Service['amavis'];
-  }->
-
-
-  ## ClamAV Files
-  file {
+  }
+  -> file {
     '/etc/clamav/clamd.conf':
       ensure  => present,
       content => template('spamassassin/clamav/clamd.conf.erb'),
@@ -200,9 +190,8 @@ class spamassassin::spamd ( # lint:ignore:autoloader_layout
       user    => 'root',
       hour    => '1',
       minute  => '30';
-  }->
-
-  service {
+  }
+  -> service {
     'spamassassin':
       ensure     => $service_ensure,
       enable     => $service_enable,

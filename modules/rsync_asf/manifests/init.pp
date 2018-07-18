@@ -5,14 +5,14 @@ class rsync_asf (
   $dumplist     = '/root/dumplist',
 
   # override fslist with array in yaml
-  $fslist       = [ '/x1','/x2' ], 
+  $fslist       = [ '/x1','/x2' ],
 
   # when to fire the rsync job
-  $cron_hour    = '22', 
+  $cron_hour    = '22',
   $cron_minute  = '10',
 
   # define the password in eyaml. add it to bai's rsync config also
-  $rsync_passwd = '', 
+  $rsync_passwd = '',
 ){
 
   # needed for join function

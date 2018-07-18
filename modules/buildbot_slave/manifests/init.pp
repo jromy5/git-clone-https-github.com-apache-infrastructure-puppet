@@ -30,8 +30,8 @@ class buildbot_slave (
 
   apt::ppa { 'ppa:cwchien/gradle':
     ensure => present,
-  } ->
-  package { 'gradle':
+  }
+  -> package { 'gradle':
     ensure => latest,
   }
 
@@ -57,29 +57,21 @@ class buildbot_slave (
   package {
     $bb_basepackages:
       ensure => 'present',
-  }->
-
-  # slave specific packages defined in hiera
-
-  package {
+  }
+  -> package {
     $slave_packages:
       ensure => 'present',
-  }->
-
-  class { 'oraclejava::install':
+  }
+  -> class { 'oraclejava::install':
     ensure  => 'latest',
     version => '8',
-  }->
-
-  # buildbot specific
-
-  group {
+  }
+  -> group {
     $groupname:
       ensure => $group_present,
       system => true,
-  }->
-
-  user {
+  }
+  -> user {
     $username:
       ensure     => $user_present,
       system     => true,
@@ -90,19 +82,15 @@ class buildbot_slave (
       groups     => $groups,
       managehome => true,
       require    => Group[$groupname],
-  }->
-
-  # Bootstrap the buildslave service
-
-  exec {
+  }
+  -> exec {
     'bootstrap-buildslave':
       command => "/usr/bin/buildslave create-slave --umask=002 /home/${username}/slave 10.40.0.13:9989 ${slave_name} ${slave_password}",
       creates => "/home/${username}/slave/buildbot.tac",
       user    => $username,
       timeout => 1200,
-  }->
-
-  file {
+  }
+  -> file {
     "/home/${username}/.git-credentials":
       content => template('buildbot_slave/git-credentials.erb'),
       mode    => '0640',
@@ -205,9 +193,8 @@ class buildbot_slave (
       content => template('buildbot_slave/admin.erb'),
       mode    => '0644',
       require => Exec['bootstrap-buildslave'];
-  }->
-
-  service {
+  }
+  -> service {
     $service_name:
       ensure     => $service_ensure,
       enable     => true,

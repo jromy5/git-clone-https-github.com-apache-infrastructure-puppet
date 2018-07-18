@@ -20,9 +20,8 @@ class whimsy_server::procmail (
     command => "mkdir ${keysdir}",
     unless  => "test -d ${keysdir}",
     path    => '/bin:/usr/bin'
-  } ->
-
-  file { "${keysdir}/apmail.pub":
+  }
+  -> file { "${keysdir}/apmail.pub":
     content => $apmail_keycontent,
     owner   => apmail,
     mode    => '0640',

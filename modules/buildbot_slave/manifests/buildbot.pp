@@ -57,10 +57,8 @@ class buildbot_slave::buildbot (
     owner  => 'buildslave',
     group  => 'buildslave',
     mode   => '0755',
-  }->
-
-  # populate /home/buildslave/slave/tools/ with asf_packages types
-  buildbot_slave::mkdir_tools { $tools: }
+  }
+  -> buildbot_slave::mkdir_tools { $tools: }
 
   package { $buildbot_packages:
     ensure => latest,

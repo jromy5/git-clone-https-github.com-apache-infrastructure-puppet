@@ -10,11 +10,8 @@ class wicket_pvm_asf (
   package {
     $required_packages:
       ensure => 'present',
-  }->
-
-# download wicket docker images from ASF Bintray instance - one for each version for demo.
-# for wicket-6
-  exec {
+  }
+  -> exec {
     'download-wicket-docker-6':
       command => '/usr/bin/docker pull apache-docker-wicket-docker.bintray.io/wicket-examples:LATEST-6',
       timeout => 1200,

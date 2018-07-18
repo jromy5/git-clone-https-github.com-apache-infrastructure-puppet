@@ -94,10 +94,8 @@ class qmail_asf (
       creates => "${install_dir}/INSTALL",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  }->
-
-  # make, make man, ezmlm-test and make install
-  exec {
+  }
+  -> exec {
     'make-ezmlm':
       command => 'make clean && make && make man',
       path    => '/bin:/usr/bin',
@@ -107,9 +105,8 @@ class qmail_asf (
       timeout => 1200,
       require => Exec['extract-ezmlm'],
       notify  => Exec['ezmlm-test'],
-  }->
-
-  exec {
+  }
+  -> exec {
     'ezmlm-test':
       command     => 'ezmlm-test',
       path        => "/bin:/usr/bin:${install_dir}",
@@ -119,9 +116,8 @@ class qmail_asf (
       refreshonly => true,
       returns     => 0,
       require     => [File[$default], Exec['make-ezmlm']],
-  }->
-
-  exec {
+  }
+  -> exec {
     'install-ezmlm':
       command => 'make install',
       path    => '/bin:/usr/bin',

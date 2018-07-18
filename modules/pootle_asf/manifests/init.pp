@@ -23,31 +23,27 @@ class pootle_asf (
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
-  } ->
-
-  file { $pootle_wwwroot:
+  }
+  -> file { $pootle_wwwroot:
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
     mode    => '0775',
     require => File['/x1'],
-  } ->
-
-  file { $pootle_root:
+  }
+  -> file { $pootle_root:
     ensure => directory,
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0775',
-  } ->
-
-  file { $pootle_poroot:
+  }
+  -> file { $pootle_poroot:
     ensure => directory,
     owner  => 'www-data',
     group  => 'www-data',
     mode   => '0775',
-  } ->
-
-  file { $pootle_reporoot:
+  }
+  -> file { $pootle_reporoot:
     ensure => directory,
     owner  => 'www-data',
     group  => 'www-data',
@@ -68,9 +64,8 @@ class pootle_asf (
     owner   => 'www-data',
     group   => 'www-data',
     mode    => '0644',
-  } ->
-
-  file { "${pootle_venv}/lib/python2.7/site-packages/pootle/asf_db.py":
+  }
+  -> file { "${pootle_venv}/lib/python2.7/site-packages/pootle/asf_db.py":
     ensure => link,
     target => "${pootle_root}/asf_db.py",
   }
@@ -81,9 +76,8 @@ class pootle_asf (
     owner   => 'www-data',
     group   => 'www-data',
     mode    => '0644',
-  } ->
-
-  file { "${pootle_venv}/lib/python2.7/site-packages/pootle/settings.py":
+  }
+  -> file { "${pootle_venv}/lib/python2.7/site-packages/pootle/settings.py":
     ensure => link,
     target => "${pootle_root}/settings.py",
   }

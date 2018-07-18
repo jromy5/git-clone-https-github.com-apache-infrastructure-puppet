@@ -60,18 +60,16 @@ class pdns_recursor (
 
   package { $package:
     ensure => present,
-  }->
-
-  file { "${config_dir}/recursor.conf":
+  }
+  -> file { "${config_dir}/recursor.conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     notify  => Service[$service],
     content => template('pdns_recursor/recursor.conf.erb'),
-  }->
-
-  service { $service:
+  }
+  -> service { $service:
     ensure    => running,
     enable    => true,
     hasstatus => false,

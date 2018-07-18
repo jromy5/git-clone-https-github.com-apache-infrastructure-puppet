@@ -28,9 +28,8 @@ class git_mirror_asf (
       source  => 'puppet:///modules/git_mirror_asf/images',
       recurse => true,
       require => File['/x1/git/mirrors'];
-  }->
-
-  cron{
+  }
+  -> cron{
     'check git and clean stale connections':
       command => '/bin/bash /root/bin/check_git.sh',
       user    => 'root',

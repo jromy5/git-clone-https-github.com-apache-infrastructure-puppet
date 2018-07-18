@@ -30,9 +30,8 @@ class blocky (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/blocky/blocky.cfg';
-    } ->
-
-    service { $service_name:
+    }
+    -> service { $service_name:
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => true,

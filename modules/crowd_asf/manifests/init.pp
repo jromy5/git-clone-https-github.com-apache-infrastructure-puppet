@@ -98,9 +98,8 @@ class crowd_asf (
       onlyif  => "/usr/bin/test ! -d ${install_dir}",
       timeout => 1200,
       require => [File[$downloaded_tarball],File[$parent_dir]],
-  } ->
-
-  exec {
+  }
+  -> exec {
     'chown-crowd-dirs':
       command => "/bin/chown -R ${username}:${groupname} ${install_dir}",
       timeout => 1200,

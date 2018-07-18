@@ -17,16 +17,14 @@ class puppet_asf::master(
     ensure  => '3.8.7-1puppetlabs1',
     require => Apt::Source['puppetlabs', 'puppetdeps'],
     notify  => Service[$puppetmaster_enabled_service],
-  }->
-
-  service { $puppetmaster_disabled_service:
+  }
+  -> service { $puppetmaster_disabled_service:
     ensure     => stopped,
     notify     => Service[$puppetmaster_enabled_service],
     hasstatus  => true,
     hasrestart => true,
-  }->
-
-  file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
+  }
+  -> file { '/usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
     ensure  => present,
     require => Package['puppetmaster'],
     notify  => Service[$puppetmaster_enabled_service],
@@ -34,34 +32,30 @@ class puppet_asf::master(
     group   => 'puppet',
     mode    => '0755',
     source  => 'puppet:///modules/puppet_asf/foreman.rb'
-  }->
-
-  file { '/etc/puppet/foreman.yaml':
+  }
+  -> file { '/etc/puppet/foreman.yaml':
     ensure  => present,
     require => Package['puppetmaster'],
     owner   => 'root',
     group   => 'puppet',
     mode    => '0644',
     source  => 'puppet:///modules/puppet_asf/foreman.yaml',
-  }->
-
-  file { 'puppetmaster':
+  }
+  -> file { 'puppetmaster':
     ensure  => directory,
     require => Package['puppetmaster'],
     path    => '/usr/share/puppet/rack/puppetmasterd',
     owner   => 'puppet',
     group   => 'puppet',
-  }->
-
-  file { '/usr/share/puppet/rack/puppetmasterd/config.ru':
+  }
+  -> file { '/usr/share/puppet/rack/puppetmasterd/config.ru':
     ensure  => present,
     require => File['puppetmaster'],
     owner   => 'puppet',
     group   => 'puppet',
     mode    => '0644',
-  }->
-
-  file  {
+  }
+  -> file  {
     '/usr/share/puppet/rack/puppetmasterd/public':
       ensure  => directory,
       require => File['puppetmaster'],
@@ -74,16 +68,14 @@ class puppet_asf::master(
       owner   => 'puppet',
       group   => 'puppet',
       mode    => '0755';
-  }->
-
-  service { $puppetmaster_enabled_service:
+  }
+  -> service { $puppetmaster_enabled_service:
     ensure     => running,
     require    => Package['puppetmaster'],
     hasstatus  => true,
     hasrestart => true,
-  }->
-
-  cron { 'clean puppet reports':
+  }
+  -> cron { 'clean puppet reports':
     ensure  => present,
     command => 'find /var/lib/puppet/reports/ -type f -iname "*.yaml" -mtime +7 -delete',
     user    => 'root',

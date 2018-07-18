@@ -9,18 +9,16 @@ class git_mirror_asf::user (
   group { $groupname:
     ensure => present,
     system => true,
-  }->
-
-  user { $username:
+  }
+  -> user { $username:
     ensure     => present,
     groups     => [$groupname],
     home       => "/home/${username}",
     managehome => true,
     shell      => '/bin/bash',
     require    => Group[$groupname],
-  }->
-
-  file {
+  }
+  -> file {
     "/home/${username}/.ssh":
       ensure  => directory,
       owner   => $username,

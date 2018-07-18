@@ -45,31 +45,23 @@ class whimsy_server (
     command => 'curl https://deb.nodesource.com/setup_8.x | bash -',
     creates => '/etc/apt/sources.list.d/nodesource.list',
     path    => ['/usr/bin', '/bin', '/usr/sbin']
-  } ->
-
-  package { $packages: ensure => installed } ->
-
-  ############################################################
-  #               Web Server / Application content           #
-  ############################################################
-
-  class { 'rvm::passenger::apache':
+  }
+  -> package { $packages: ensure => installed }
+  -> class { 'rvm::passenger::apache':
     version            => '5.1.12',
     ruby_version       => "ruby-${ruby_version}",
     mininstances       => '3',
     maxinstancesperapp => '0',
     maxpoolsize        => '30',
     spawnmethod        => 'smart-lv2',
-  } ->
-
-  vcsrepo { '/x1/srv/whimsy':
+  }
+  -> vcsrepo { '/x1/srv/whimsy':
     ensure   => latest,
     provider => git,
     source   => 'https://gitbox.apache.org/repos/asf/whimsy.git',
     before   => Apache::Vhost[whimsy-vm-80]
-  } ~>
-
-  exec { 'rake::update':
+  }
+  ~> exec { 'rake::update':
     command     => "/usr/local/bin/rake${ruby_version} update",
     cwd         => '/x1/srv/whimsy',
     refreshonly => true,
@@ -135,13 +127,11 @@ class whimsy_server (
 
   file { '/etc/init/whimsy-pubsub.conf' :
     source => 'puppet:///modules/whimsy_server/whimsy-pubsub.conf'
-  } ->
-
-  file { '/etc/systemd/system/whimsy-pubsub.service' :
+  }
+  -> file { '/etc/systemd/system/whimsy-pubsub.service' :
     source => 'puppet:///modules/whimsy_server/whimsy-pubsub.service'
-  } ->
-
-  service { 'whimsy-pubsub':
+  }
+  -> service { 'whimsy-pubsub':
     ensure  => running,
     require => Vcsrepo['/x1/srv/whimsy']
   }
@@ -152,13 +142,11 @@ class whimsy_server (
 
   file { '/etc/init/board-agenda-websocket.conf' :
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.conf'
-  } ->
-
-  file { '/etc/systemd/system/board-agenda-websocket.service' :
+  }
+  -> file { '/etc/systemd/system/board-agenda-websocket.service' :
     source => 'puppet:///modules/whimsy_server/board-agenda-websocket.service'
-  } ->
-
-  service { 'board-agenda-websocket':
+  }
+  -> service { 'board-agenda-websocket':
     ensure  => running,
     require => Vcsrepo['/x1/srv/whimsy']
   }

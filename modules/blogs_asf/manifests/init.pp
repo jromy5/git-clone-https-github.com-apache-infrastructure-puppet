@@ -56,22 +56,13 @@ class blogs_asf (
       command => "/usr/bin/wget -O ${downloaded_tarball} ${download_url}",
       creates => $downloaded_tarball,
       timeout => 1200,
-  } ->
-
-# purge the default tomcat8 exploded ROOT.war if roller-ui isn't there
-# this won't run if roller's already been exploded
-
-  exec {
+  }
+  -> exec {
     'purge-root':
       command => '/bin/rm -rf /var/lib/tomcat8/webapps/ROOT',
       onlyif  => '/usr/bin/test ! -d /var/lib/tomcat8/webapps/ROOT/roller-ui',
-  } ->
-
-# extract the download and move it to tomcat as ROOT.war
-# flag NOTICE.txt in the extracted download so we don't keep extracting 
-# if it's already there
-
-  exec {
+  }
+  -> exec {
     'extract-roller':
       command => "/bin/tar -xvzf ${r_tarball} && mv ${roller_build} ${parent_dir}",
       cwd     => $download_dir,
@@ -79,12 +70,8 @@ class blogs_asf (
       creates => "${install_dir}/NOTICE.txt",
       timeout => 1200,
       require => [Exec['download-roller'],File[$parent_dir]],
-  } ->
-
-# DEPLOY ROLLER
-# sleep 10 sec after cp to allow tomcat time to explode the war
-
-  exec {
+  }
+  -> exec {
     'deploy-roller':
       command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
       cwd     => $install_dir,
