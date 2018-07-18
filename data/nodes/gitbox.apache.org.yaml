@@ -219,3 +219,14 @@ gitbox::custom_fragment_443: |
           Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
           Require valid-user
       </LocationMatch>
+      # Infra private area
+      <Location /repos/private>
+          SetEnv GIT_PROJECT_ROOT /x1/repos/private/
+          AuthType Basic
+          AuthName "ASF Private Repos"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+      </Location>
